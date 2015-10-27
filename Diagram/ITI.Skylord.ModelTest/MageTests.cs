@@ -11,7 +11,16 @@ namespace ITI.Skylord.ModelTest
     [TestFixture]
     class MageTests
     {
-        Island _defaultIsland = new Island("Ivry", new Coordinate(), true);
+        Island _defaultIsland;
+        World _world;
+
+        public MageTests()
+        {
+            _world = new World();
+            _world.addNewIsland( "Ivry", new Coordinate(), true );
+            _defaultIsland = _world.Map.Islands.Values.First();
+        }
+
         [Test]
         public void Create_new_Mage()
         {

@@ -12,8 +12,18 @@ namespace ITI.Skylord.ModelTest
     public class UnitTests
     {
 
-        Player _defaultPlayer = new Player("Thanur");
-        Island _defaultIsland = new Island("Ivry", new Coordinate(), true);
+        Player _defaultPlayer;
+        Island _defaultIsland;
+        World _world;
+
+        public UnitTests()
+        {
+            _world = new World();
+            _defaultPlayer = new Player( "Thanur" );
+            _world.addNewIsland( "Ivry", new Coordinate(), true );
+            _defaultIsland = _world.Map.Islands.Values.First();
+
+        }
         [Test]
         public void Create_new_soldier()
         {

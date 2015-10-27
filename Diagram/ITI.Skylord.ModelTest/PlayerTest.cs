@@ -11,8 +11,16 @@ namespace ITI.Skylord.ModelTest
     [TestFixture]
     class PlayerTest
     {
-        Island _defaultIsland = new Island("Ivry", new Coordinate(), true);
-        Message _defaultMessage = new Message(new Player("Thanur"), new Player("Cora"), "Introduction","Voilà l'introduction que tu voulais. Bisous");
+        Island _defaultIsland;
+        World _world;
+
+        public PlayerTest()
+        {
+            _world = new World();
+            _world.addNewIsland( "Ivry", new Coordinate(), true );
+            _defaultIsland = _world.Map.Islands.Values.First();
+        }
+
         [Test]
         public void Create_new_player()
         {

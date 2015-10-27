@@ -17,7 +17,7 @@ namespace Diagram
         private int _loyalty;
         private bool _capital;
 
-        public Island( string name, Coordinate coordinates, bool capital, Player owner = null )
+        internal Island( string name, Coordinate coordinates, bool capital, Player owner = null )
         {
             if( name.Length > 50 ) throw new ArgumentOutOfRangeException( " Maximum lenght of name is 50. Your name lenght is " + name.Length + " at the moment." );
             this._name = name;
