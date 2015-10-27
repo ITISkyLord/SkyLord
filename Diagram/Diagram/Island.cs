@@ -10,7 +10,6 @@ namespace Diagram
       //  private readonly int _id;
         private string _name;
         private List<Army> _armies; // Une île n'a qu'une armée en défense, peut en avoir plusieurs en mouvement et en suppport.
-        private Mage _mage;
         private Player _owner;
         private List<Building> _buildings;
         private Ressource _allRessources;
@@ -18,13 +17,13 @@ namespace Diagram
         private int _loyalty;
         private bool _capital;
 
-        public Island( string name, Player ower, List<Army> armies, Mage mage, List<Building> buildings, Coordinate coordinates, bool capital )
+        public Island( string name, Coordinate coordinates, bool capital, Player owner = null )
         {
+            if( name.Length > 50 ) throw new ArgumentOutOfRangeException( " Maximum lenght of name is 50. Your name lenght is " + name.Length + " at the moment." );
             this._name = name;
-            this._owner = ower;
-            this._armies = armies;
-            this._mage = mage;
-            this._buildings = buildings;
+            this._owner = owner;
+            this._armies = new List<Army>();
+            this._buildings = new List<Building>();
             this._allRessources = new Ressource();
             this._coordinates = coordinates;
             this._loyalty = 100;
@@ -74,18 +73,6 @@ namespace Diagram
             set
             {
                 _armies = value;
-            }
-        }
-        public Mage Mage
-        {
-            get
-            {
-                return _mage;
-            }
-
-            set
-            {
-                _mage = value;
             }
         }
         public List<Building> Buildings

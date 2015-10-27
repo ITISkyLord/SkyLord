@@ -58,7 +58,6 @@
     <Compile Include="GuildStatus.cs" />
     <Compile Include="Island.cs" />
     <Compile Include="IslandSpecialization.cs" />
-    <Compile Include="IRegiment.cs" />
     <Compile Include="Level.cs" />
     <Compile Include="Mage.cs" />
     <Compile Include="MageLevel.cs" />
@@ -77,6 +76,7 @@
     <Compile Include="Unit.cs" />
     <Compile Include="UnitStat.cs" />
     <Compile Include="UnitType.cs" />
+    <Compile Include="World.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DiagramDeClass.cd" />

@@ -11,11 +11,47 @@ namespace ITI.Skylord.ModelTest
     [TestFixture]
     class PlayerTest
     {
+        Island _defaultIsland = new Island("Ivry", new Coordinate(), true);
+        Message _defaultMessage = new Message(new Player("Thanur"), new Player("Cora"), "Introduction","Voilà l'introduction que tu voulais. Bisous");
         [Test]
         public void Create_new_player()
         {
-            Player _player = new Player();
+            Player _player = new Player( "Thanur" );
             Assert.IsNotNull( _player );
         }
+
+        [Test]
+        public void Create_new_player_with_name_more_than_50characters_throws_outOfRangeException()
+        {
+            Assert.Throws<ArgumentOutOfRangeException>( () => new Player("VariableNameQuiEstLePrénomAvecPlusDeCinquanteCaractèresDeLongueur"));
+        }
+        [Test]
+        public void Create_new_player_with_password_more_than_50characters_throws_outOfRangeException()
+        {
+            Assert.Throws<ArgumentOutOfRangeException>( () => new Player( "VariableNameQuiEstLePrénom", "toto@gmail.com", "VariablePasswordQuiEstLeMotDePasseAvecPlusDeSoizanteQuinzeCaractèresDeLongueur" ) );
+        }
+        [Test]
+        public void Create_new_player_with_invalid_email_throws_ArgumentException()
+        {
+            Assert.Throws<ArgumentException>( () => new Player( "VariableNameQuiEstLePrénom", "toto" ) );
+        }
+        [Test]
+        public void Create_new_player_with_null_or_whiteSpaceName_throw_ArgumentNullException()
+        {
+            Assert.Throws<ArgumentNullException>( () => new Player( " ") );
+        }
+        [Test]
+        public void Create_new_player_with_null_or_whiteSpacePassword_throw_ArgumentNullException()
+        {
+            Assert.Throws<ArgumentNullException>( () => new Player( " Thanur ", "toto@gmail.com", " " ) );
+        }
+        [Test]
+        public void Add_an_island_on_a_player_works()
+        {
+            Player _player = new Player( "Thanur" );
+            _player.Islands.Add( _defaultIsland );
+            Assert.That( _player.Islands.Contains( _defaultIsland ) );
+        }
+
     }
 }

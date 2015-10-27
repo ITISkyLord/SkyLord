@@ -11,8 +11,8 @@ namespace ITI.Skylord.ModelTest
     [TestFixture]
     class ArmyTests
     {
-        Player _defaultPlayer = new Player();
-        Island _defaultIsland = new Island("Ivry", new Player(), new List<Army>(), new Mage(), new List<Building>(), new Coordinate(), true);
+        Player _defaultPlayer = new Player("Thanur");
+        Island _defaultIsland = new Island("Ivry", new Coordinate(), true);
 
         [Test]
         public void Create_new_army()
