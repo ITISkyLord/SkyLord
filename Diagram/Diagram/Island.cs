@@ -25,7 +25,7 @@ namespace Diagram
             this._armies = armies;
             this._mage = mage;
             this._buildings = buildings;
-            this._allRessources = new Ressource();
+            this._allRessources = new Ressource(1000, 1000, 1000, 1000);
             this._coordinates = coordinates;
             this._loyalty = 100;
             this._capital = capital;

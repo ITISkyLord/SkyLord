@@ -50,7 +50,6 @@
     <Compile Include="ArmyState.cs" />
     <Compile Include="Building.cs" />
     <Compile Include="BuildingLevel.cs" />
-    <Compile Include="Class1.cs" />
     <Compile Include="CombatReport.cs" />
     <Compile Include="Coordinate.cs" />
     <Compile Include="Guild.cs" />
@@ -71,11 +70,11 @@
     <Compile Include="Regiment.cs" />
     <Compile Include="Ressource.cs" />
     <Compile Include="Spell.cs" />
-    <Compile Include="Tech.cs" />
-    <Compile Include="TechLevel.cs" />
+    <Compile Include="Technology.cs" />
+    <Compile Include="TechnologyLevel.cs" />
     <Compile Include="Guard.cs" />
     <Compile Include="Unit.cs" />
-    <Compile Include="UnitStat.cs" />
+    <Compile Include="UnitStatisitcs.cs" />
     <Compile Include="UnitType.cs" />
   </ItemGroup>
   <ItemGroup>

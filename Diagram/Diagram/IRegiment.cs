@@ -20,7 +20,7 @@ namespace Diagram
         {
             get;
         }
-        UnitStat UnitStat
+        UnitStatisitcs UnitStat
         {
             get;
         }

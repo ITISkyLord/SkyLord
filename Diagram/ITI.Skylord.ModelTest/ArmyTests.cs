@@ -24,7 +24,6 @@ namespace ITI.Skylord.ModelTest
         [Test]
         public void Add_units_in_army()
         {
-            
             Diagram.Guard guard = new Diagram.Guard(_defaultIsland);
             Regiment regiment = new Regiment();
             regiment.Units.Add( guard.Name, 50 );

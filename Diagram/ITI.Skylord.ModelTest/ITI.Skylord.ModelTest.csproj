@@ -45,8 +45,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArmyTests.cs" />
+    <Compile Include="BuildingTests.cs" />
+    <Compile Include="GuildTests.cs" />
     <Compile Include="IslandTests.cs" />
     <Compile Include="PlayerTest.cs" />
+    <Compile Include="RessourceTests.cs" />
+    <Compile Include="TechnologyTests.cs" />
     <Compile Include="UnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

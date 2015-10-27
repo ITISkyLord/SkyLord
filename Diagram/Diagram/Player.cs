@@ -13,6 +13,6 @@ namespace Diagram
         private List<Island> islands;
         private List<Message> messages;
         private Guild guild;
-        private List<Tech> techs;
+        private List<Technology> techs;
     }
 }

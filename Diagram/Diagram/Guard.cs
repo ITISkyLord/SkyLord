@@ -11,7 +11,7 @@ namespace Diagram
         {
             _island = island;
             _unitType = UnitType.soldier;
-            _unitStat = new UnitStat( 70, 50, 20, 15, 15, 5 );
+            _unitStatistics = new UnitStatisitcs( 70, 50, 20, 15, 15, 5 );
         }
 
     }

@@ -10,6 +10,5 @@ namespace Diagram
         private int _id;
         private string _name;
         private BuildingLevel _level;
-        
     }
 }
