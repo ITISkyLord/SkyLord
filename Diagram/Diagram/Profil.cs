@@ -7,12 +7,52 @@ namespace Diagram
 {
     public class Profil
     {
-        private int id;
-        private string mail;
-        private string password;
+        private string _mail;
+        private string _password;
         // Avatar
-        private string description;
+        private string _description;
 
+        public Profil( string mail, string password )
+        {
+            this._mail = mail;
+            this._password = password;
+        }
 
+        public string Mail
+        {
+            get
+            {
+                return _mail;
+            }
+
+            set
+            {
+                _mail = value;
+            }
+        }
+        public string Password
+        {
+            get
+            {
+                return _password;
+            }
+
+            set
+            {
+                _password = value;
+            }
+        }
+        public string Description
+        {
+            get
+            {
+                return _description;
+            }
+
+            set
+            {
+                _description = value;
+            }
+        }
     }
 }

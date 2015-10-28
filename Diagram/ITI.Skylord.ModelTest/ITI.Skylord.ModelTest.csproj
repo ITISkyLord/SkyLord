@@ -44,10 +44,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApprenticeTests.cs" />
     <Compile Include="ArmyTests.cs" />
+    <Compile Include="CoordinateTests.cs" />
     <Compile Include="BuildingTests.cs" />
     <Compile Include="GuildTests.cs" />
     <Compile Include="IslandTests.cs" />
+    <Compile Include="MageTests.cs" />
+    <Compile Include="MessageTests.cs" />
     <Compile Include="PlayerTest.cs" />
     <Compile Include="RessourceTests.cs" />
     <Compile Include="TechnologyTests.cs" />

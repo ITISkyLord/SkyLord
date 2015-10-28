@@ -11,13 +11,31 @@ namespace ITI.Skylord.ModelTest
     [TestFixture]
     class IslandTests
     {
+        World _world;
 
-        Player _defaultPlayer = new Player();
+        public IslandTests()
+        {
+            _world = new World();
+        }
         [Test]
         public void Create_new_island()
         {
-            Island island = new Island("Ivry", _defaultPlayer, new List<Army>(), new Mage(), new List<Building>(), new Coordinate(), true); //Erwan attention j'ai modifié le constrcteur
+            Island island = _world.addNewIsland( "Ivry", new Coordinate(), true );
+
             Assert.IsNotNull( island.Name );
         }
+        [Test]
+        public void Create_new_island_with_name_more_than_50characters_throws_outOfRangeException()
+        {
+            Assert.Throws<ArgumentOutOfRangeException>( () => _world.addNewIsland( "IvrycestUneSuperVilleMaisIlFautQuelleSoitDePlusDeCinquanteCaracteresIci", new Coordinate(), true ));
+        }
+        //[Test]
+        //public void Create_an_island_on_an_other_island_throws_ArgumentException()
+        //{
+
+        //    Island island = new Island("Ivry", new Coordinate(), true);
+        //    Assert.Throws<ArgumentException>( () => new Island( "Ivry", new Coordinate(), true ));
+
+        //}
     }
 }

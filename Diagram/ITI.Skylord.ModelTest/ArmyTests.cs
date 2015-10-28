@@ -11,9 +11,18 @@ namespace ITI.Skylord.ModelTest
     [TestFixture]
     class ArmyTests
     {
-        Player _defaultPlayer = new Player();
-        Island _defaultIsland = new Island("Ivry", new Player(), new List<Army>(), new Mage(), new List<Building>(), new Coordinate(), true);
+        World _world;
+        Player _defaultPlayer;
+        Island _defaultIsland;
 
+        public ArmyTests()
+        {
+            _world = new World();
+            _defaultPlayer = new Player( "Thanur" );
+            _world.addNewIsland( "Ivry", new Coordinate(), true );
+            _defaultIsland = _world.Map.Islands.Values.First();
+
+        }
         [Test]
         public void Create_new_army()
         {
