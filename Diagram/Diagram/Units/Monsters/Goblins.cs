@@ -8,12 +8,11 @@ namespace Diagram
 {
     public class Goblins : Unit
     {
-        public Goblins( Island island )
+        public Goblins()
         {
-            if( island == null ) throw new ArgumentNullException( "island is null." );
-            _island = island;
+            _unitDamageType = UnitDamageType.physical;
             _unitType = UnitType.monster;
-            _unitStat = new UnitStat( 30, 15, 15, 15, 15, 5 );
+            _unitStatistics = new UnitStatistics( 30, 15, 15, 15, 15, 5 );
         }
 
     }

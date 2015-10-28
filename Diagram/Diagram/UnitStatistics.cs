@@ -5,26 +5,26 @@ using System.Text;
 
 namespace Diagram
 {
-    public struct UnitStatisitcs
+    public struct UnitStatistics
     {
         int _attack;
         int _armor;
-        int _shield;
+        int _magicResist;
         int _speed;
         int _capacity;
         int _consumption; // Magic consumption by the hour
 
-        public UnitStatisitcs(int attack, int armor, int shield, int speed, int capacity, int consumption)
+        public UnitStatistics(int attack, int armor, int magicResist, int speed, int capacity, int consumption)
         {
             if ( attack > 100 || attack < 0) throw new ArgumentOutOfRangeException( "The attack value of a unit cannot be over 100 or under 0." );
-            if ( armor > 100 || shield > 100 || armor < 0 || shield < 0) throw new ArgumentOutOfRangeException( "The defense (shield or armor) value of a unit cannot be over 100 or under 0." );
+            if ( armor > 100 || magicResist > 100 || armor < 0 || magicResist < 0) throw new ArgumentOutOfRangeException( "The defense (shield or armor) value of a unit cannot be over 100 or under 0." );
             if ( speed < 0 ) throw new ArgumentOutOfRangeException( "The speed of a unit cannot be under 0." );
             if ( capacity < 0 ) throw new ArgumentOutOfRangeException( "The capacity of a unit cannot be under 0." );
             if ( consumption < 0 ) throw new ArgumentOutOfRangeException( "The speed of a unit cannot be under 0." );
 
             _attack = attack;
             _armor = armor;
-            _shield = shield;
+            _magicResist = magicResist;
             _speed = speed;
             _capacity = capacity;
             _consumption = consumption;
@@ -48,11 +48,11 @@ namespace Diagram
 
         }
 
-        public int Shield
+        public int MagicResist
         {
             get
             {
-                return _shield;
+                return _magicResist;
             }
         }
 

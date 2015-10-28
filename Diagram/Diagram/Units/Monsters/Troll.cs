@@ -8,12 +8,11 @@ namespace Diagram
 {
     public class Troll : Unit
     {
-        public Troll( Island island )
+        public Troll()
         {
-            if( island == null ) throw new ArgumentNullException( "island is null." );
-            _island = island;
+            _unitDamageType = UnitDamageType.physical;
             _unitType = UnitType.monster;
-            _unitStat = new UnitStat( 75, 15, 30, 10, 40, 10 );
+            _unitStatistics = new UnitStatistics( 75, 15, 30, 10, 40, 10 );
         }
     }
 }

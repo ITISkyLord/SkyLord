@@ -7,12 +7,11 @@ namespace Diagram
 {
     public class Guard : Unit
     {
-        public Guard(Island island)
+        public Guard()
         {
-            if( island == null ) throw new ArgumentNullException( "island is null." );
-            _island = island;
+            _unitDamageType = UnitDamageType.physical;
             _unitType = UnitType.soldier;
-            _unitStat = new UnitStat( 50, 70, 30, 15, 15, 5 );
+            _unitStatistics = new UnitStatistics( 50, 70, 30, 15, 15, 5 );
         }
 
     }

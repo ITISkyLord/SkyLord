@@ -8,12 +8,11 @@ namespace Diagram
 {
     public class Warrior : Unit
     {
-        public Warrior( Island island )
+        public Warrior()
         {
-            if( island == null ) throw new ArgumentNullException( "island is null." );
-            _island = island;
+            _unitDamageType = UnitDamageType.physical;
             _unitType = UnitType.soldier;
-            _unitStat = new UnitStat( 70, 50, 25, 25, 15, 5 );
+            _unitStatistics = new UnitStatistics( 70, 50, 25, 25, 15, 5 );
         }
 
     }

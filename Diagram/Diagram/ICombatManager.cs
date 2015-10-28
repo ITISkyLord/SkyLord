@@ -6,13 +6,9 @@ using System.Threading.Tasks;
 
 namespace Diagram
 {
-    public enum UnitType
+    public interface ICombatManager
     {
-        soldier,
-        monster,
-        magic,
-        mecanical,
-        spy,
-        utility
+        Island Resolve( Army attackingArmy, Army defendingArmy );
+
     }
 }

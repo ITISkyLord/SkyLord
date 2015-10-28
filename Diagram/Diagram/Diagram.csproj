@@ -50,11 +50,15 @@
     <Compile Include="ArmyState.cs" />
     <Compile Include="Building.cs" />
     <Compile Include="BuildingLevel.cs" />
-    <Compile Include="Class1.cs" />
+    <Compile Include="CombatManager.cs" />
     <Compile Include="CombatReport.cs" />
     <Compile Include="Coordinate.cs" />
-    <Compile Include="Units\Cyclop.cs" />
-    <Compile Include="Units\Goblins.cs" />
+    <Compile Include="ICombatManager.cs" />
+    <Compile Include="Technology.cs" />
+    <Compile Include="TechnologyLevel.cs" />
+    <Compile Include="UnitStatistics.cs" />
+    <Compile Include="Units\Magic\Cyclop.cs" />
+    <Compile Include="Units\Monsters\Goblins.cs" />
     <Compile Include="Guild.cs" />
     <Compile Include="GuildRole.cs" />
     <Compile Include="GuildStatus.cs" />
@@ -66,21 +70,19 @@
     <Compile Include="Map.cs" />
     <Compile Include="MemberRight.cs" />
     <Compile Include="Message.cs" />
-    <Compile Include="Units\Necromancer.cs" />
+    <Compile Include="Units\Magic\Necromancer.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Profil.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Regiment.cs" />
     <Compile Include="Ressource.cs" />
     <Compile Include="Spell.cs" />
-    <Compile Include="Tech.cs" />
-    <Compile Include="TechLevel.cs" />
-    <Compile Include="Units\Guard.cs" />
-    <Compile Include="Units\Troll.cs" />
-    <Compile Include="Unit.cs" />
-    <Compile Include="UnitStat.cs" />
+    <Compile Include="Units\Soldiers\Guard.cs" />
+    <Compile Include="Units\Monsters\Troll.cs" />
+    <Compile Include="Units\Unit.cs" />
+    <Compile Include="UnitDamageType.cs" />
+    <Compile Include="Units\Soldiers\Warrior.cs" />
     <Compile Include="UnitType.cs" />
-    <Compile Include="Units\Warrior.cs" />
     <Compile Include="World.cs" />
   </ItemGroup>
   <ItemGroup>

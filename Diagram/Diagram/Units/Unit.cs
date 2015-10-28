@@ -9,10 +9,10 @@ namespace Diagram
     public abstract class Unit
     {
         protected int _id;
+        protected UnitDamageType _unitDamageType;
         protected UnitType _unitType;
-        protected UnitStatisitcs _unitStatistics;
-        protected Island _island;
-        protected Regiment _regiment;
+        protected UnitStatistics _unitStatistics;
+     //   protected Regiment _regiment;
 
         #region Properties
         public string Name
@@ -29,6 +29,13 @@ namespace Diagram
                 return _id;
             }
         }
+        public UnitDamageType UnitDamageType
+        {
+            get
+            {
+                return _unitDamageType;
+            }
+        }
         public UnitType UnitType
         {
             get
@@ -36,37 +43,25 @@ namespace Diagram
                 return _unitType;
             }
         }
-        public UnitStatisitcs UnitStatistics
+        public UnitStatistics UnitStatistics
         {
             get
             {
                 return _unitStatistics;
             }
         }
-        public Island Island
-        {
-            get
-            {
-                return _island;
-            }
+        //protected Regiment Regiment
+        //{
+        //    get
+        //    {
+        //        return _regiment;
+        //    }
 
-            set
-            {
-                _island = value;
-            }
-        }
-        protected Regiment Regiment
-        {
-            get
-            {
-                return _regiment;
-            }
-
-            set
-            {
-                _regiment = value;
-            }
-        } 
+        //    set
+        //    {
+        //        _regiment = value;
+        //    }
+        //} 
         #endregion
     }
 }

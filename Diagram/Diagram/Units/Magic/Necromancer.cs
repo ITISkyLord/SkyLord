@@ -8,13 +8,11 @@ namespace Diagram
 {
     public class Necromancer : Unit
     {
-        public Necromancer( Island island )
+        public Necromancer()
         {
-            if( island == null ) throw new ArgumentNullException( "island is null." );
-            _island = island;
+            _unitDamageType = UnitDamageType.magical;
             _unitType = UnitType.magic;
-            
-            _unitStat = new UnitStat( 75, 30, 15, 10, 10, 5 );
+            _unitStatistics = new UnitStatistics( 75, 30, 15, 10, 10, 5 );
         }
     }
 }

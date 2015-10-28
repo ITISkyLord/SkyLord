@@ -8,27 +8,34 @@ namespace Diagram
     public class Army
     {
       //  private int _id;
-        private List<Regiment> _regiments;
+       // private Regiment _regiment;
         private ArmyState _armyState;
+        private Island _island;
+        private readonly Dictionary<Unit, int> _regiments;
 
-        public Army( List<Regiment> regiments, ArmyState armyState )
+        public Army( ArmyState armyState, Island island )
         {
-            this._regiments = regiments;
+            this._island = island;
+            //this._regiment = new Regiment();
             this._armyState = armyState;
-        }
-        public List<Regiment> Regiments
-        {
-            get
-            {
-                return _regiments;
-            }
-
-            set
-            {
-                _regiments = value;
-            }
+            this._regiments = new Dictionary<Unit, int>();
         }
 
+
+        //public Regiment Regiment
+        //{
+        //    get
+        //    {
+        //        return _regiment;
+        //    }
+
+        //    set
+        //    {
+        //        _regiment = value;
+        //    }
+        //}
+
+        #region Properties
         public ArmyState ArmyState
         {
             get
@@ -41,5 +48,27 @@ namespace Diagram
                 _armyState = value;
             }
         }
+
+        public Dictionary<Unit, int> Regiments
+        {
+            get
+            {
+                return _regiments;
+            }
+        }
+
+        public Island Island
+        {
+            get
+            {
+                return _island;
+            }
+
+            set
+            {
+                _island = value;
+            }
+        } 
+        #endregion
     }
 }

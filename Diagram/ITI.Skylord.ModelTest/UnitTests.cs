@@ -27,59 +27,44 @@ namespace ITI.Skylord.ModelTest
         [Test]
         public void Create_new_guard()
         {
-            Diagram.Guard guard = new Diagram.Guard( _defaultIsland );
+            Diagram.Guard guard = new Diagram.Guard();
             Assert.IsNotNull( guard );
         }
-
-        [Test]
-        public void Create_new_guard_has_an_island()
-        {
-            Diagram.Guard guard = new Diagram.Guard( _defaultIsland );
-            Assert.That( guard.Island != null );
-        }
-
         [Test]
         public void Create_new_warrior_has_the_good_unitType()
         {
-            Warrior warrior = new Warrior( _defaultIsland );
-            Assert.That( warrior.UnitType == UnitType.soldier );
+            Warrior warrior = new Warrior();
+            Assert.That( warrior.UnitDamageType == UnitDamageType.physical );
         }
         [Test]
         public void Create_new_goblins_has_the_good_unitType()
         {
-            Goblins goblins = new Goblins( _defaultIsland );
-            Assert.That( goblins.UnitType == UnitType.monster );
+            Goblins goblins = new Goblins();
+            Assert.That( goblins.UnitDamageType == UnitDamageType.physical );
         }
         [Test]
         public void Create_new_troll_has_the_good_unitType()
         {
-            Troll troll = new Troll( _defaultIsland );
-            Assert.That( troll.UnitType == UnitType.monster );
+            Troll troll = new Troll();
+            Assert.That( troll.UnitDamageType == UnitDamageType.physical );
         }
 
         [Test]
         public void Create_new_necromancer_has_the_good_unitType()
         {
-            Necromancer necromancer = new Necromancer( _defaultIsland );
-            Assert.That( necromancer.UnitType == UnitType.magic );
+            Necromancer necromancer = new Necromancer();
+            Assert.That( necromancer.UnitDamageType == UnitDamageType.magical );
         }
         [Test]
         public void Create_new_cyclop_has_the_good_unitType()
         {
-            Cyclop cyclop = new Cyclop( _defaultIsland );
-            Assert.That( cyclop.UnitType == UnitType.magic );
+            Cyclop cyclop = new Cyclop();
+            Assert.That( cyclop.UnitDamageType == UnitDamageType.magical );
         }
-
-        [Test]
-        public void Create_new_unit_without_island_or_nullIsland_throw_ArgumentNulException()
-        {
-            Assert.Throws<ArgumentNullException>( () => new Warrior( null ) );
-        }
-
         [Test]
         public void Create_stats_works()
         {
-            UnitStatisitcs unitStat = new UnitStatisitcs( 70, 50, 20, 15, 15, 5 );
+            UnitStatistics unitStat = new UnitStatistics( 70, 50, 20, 15, 15, 5 );
             Assert.IsNotNull( unitStat );
         }
 
@@ -87,23 +72,23 @@ namespace ITI.Skylord.ModelTest
         public void unitStats_out_of_range_constructor_throws_ArgumentOutOfRangeException()
         {
             // Attack over 100
-            Assert.Throws<ArgumentOutOfRangeException>( () => new UnitStatisitcs( 101, 100, 99, 80, 50, 50 ) );
+            Assert.Throws<ArgumentOutOfRangeException>( () => new UnitStatistics( 101, 100, 99, 80, 50, 50 ) );
             // Attack under 0
-            Assert.Throws<ArgumentOutOfRangeException>( () => new UnitStatisitcs( -1, 100, 99, 80, 50, 50 ) );
+            Assert.Throws<ArgumentOutOfRangeException>( () => new UnitStatistics( -1, 100, 99, 80, 50, 50 ) );
             // Armor over 100
-            Assert.Throws<ArgumentOutOfRangeException>( () => new UnitStatisitcs( 100, 101, 99, 80, 50, 50 ) );
+            Assert.Throws<ArgumentOutOfRangeException>( () => new UnitStatistics( 100, 101, 99, 80, 50, 50 ) );
             // Armor under 0
-            Assert.Throws<ArgumentOutOfRangeException>( () => new UnitStatisitcs( 100, -1, 99, 80, 50, 50 ) );
+            Assert.Throws<ArgumentOutOfRangeException>( () => new UnitStatistics( 100, -1, 99, 80, 50, 50 ) );
             // Shield over 100
-            Assert.Throws<ArgumentOutOfRangeException>( () => new UnitStatisitcs( 100, 100, 101, 80, 50, 50 ) );
+            Assert.Throws<ArgumentOutOfRangeException>( () => new UnitStatistics( 100, 100, 101, 80, 50, 50 ) );
             // Shield under 0
-            Assert.Throws<ArgumentOutOfRangeException>( () => new UnitStatisitcs( 100, 100, -1, 80, 50, 50 ) );
+            Assert.Throws<ArgumentOutOfRangeException>( () => new UnitStatistics( 100, 100, -1, 80, 50, 50 ) );
             // Speed under 0
-            Assert.Throws<ArgumentOutOfRangeException>( () => new UnitStatisitcs( 100, 100, 100, -1, 50, 50 ) );
+            Assert.Throws<ArgumentOutOfRangeException>( () => new UnitStatistics( 100, 100, 100, -1, 50, 50 ) );
             // Capacity under 0
-            Assert.Throws<ArgumentOutOfRangeException>( () => new UnitStatisitcs( 100, 100, 100, 100, -1, 50 ) );
+            Assert.Throws<ArgumentOutOfRangeException>( () => new UnitStatistics( 100, 100, 100, 100, -1, 50 ) );
             // Cunsumption under 0
-            Assert.Throws<ArgumentOutOfRangeException>( () => new UnitStatisitcs( 100, 100, 100, 100, 100, -1 ) );
+            Assert.Throws<ArgumentOutOfRangeException>( () => new UnitStatistics( 100, 100, 100, 100, 100, -1 ) );
         }
     }
 }

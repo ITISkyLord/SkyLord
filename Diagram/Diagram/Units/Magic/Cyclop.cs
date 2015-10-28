@@ -8,13 +8,11 @@ namespace Diagram
 {
     public class Cyclop : Unit
     {
-        public Cyclop( Island island )
+        public Cyclop()
         {
-            if( island == null ) throw new ArgumentNullException( "island is null." );
-            _island = island;
+            _unitDamageType = UnitDamageType.magical;
             _unitType = UnitType.magic;
-
-            _unitStat = new UnitStat( 50, 40, 20, 5, 10, 10 );
+            _unitStatistics = new UnitStatistics( 50, 40, 20, 5, 10, 10 );
         }
     }
 }
