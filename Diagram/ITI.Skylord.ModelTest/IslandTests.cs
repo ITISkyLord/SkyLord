@@ -29,7 +29,6 @@ namespace ITI.Skylord.ModelTest
         {
             Assert.Throws<ArgumentOutOfRangeException>( () => _world.addNewIsland( "IvrycestUneSuperVilleMaisIlFautQuelleSoitDePlusDeCinquanteCaracteresIci", new Coordinate(), true ));
         }
-
         //[Test]
         //public void Create_an_island_on_an_other_island_throws_ArgumentException()
         //{
@@ -38,6 +37,5 @@ namespace ITI.Skylord.ModelTest
         //    Assert.Throws<ArgumentException>( () => new Island( "Ivry", new Coordinate(), true ));
 
         //}
-
     }
 }

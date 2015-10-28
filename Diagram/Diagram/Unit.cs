@@ -10,7 +10,7 @@ namespace Diagram
     {
         protected int _id;
         protected UnitType _unitType;
-        protected UnitStat _unitStat;
+        protected UnitStatisitcs _unitStatistics;
         protected Island _island;
         protected Regiment _regiment;
 
@@ -36,11 +36,11 @@ namespace Diagram
                 return _unitType;
             }
         }
-        public UnitStat UnitStat
+        public UnitStatisitcs UnitStatistics
         {
             get
             {
-                return _unitStat;
+                return _unitStatistics;
             }
         }
         public Island Island

@@ -24,7 +24,7 @@ namespace Diagram
             this._owner = owner;
             this._armies = new List<Army>();
             this._buildings = new List<Building>();
-            this._allRessources = new Ressource();
+            this._allRessources = new Ressource(1000, 1000, 1000, 1000);
             this._coordinates = coordinates;
             this._loyalty = 100;
             this._capital = capital;

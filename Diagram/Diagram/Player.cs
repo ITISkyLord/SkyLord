@@ -13,7 +13,7 @@ namespace Diagram
         private readonly Profil _profil;
         private List<Island> _islands;
         private Guild _guild;
-        private List<Tech> _techs;
+        private List<Technology> _techs;
         private bool invalid = false;
 
 
@@ -27,7 +27,7 @@ namespace Diagram
             this._name = name;
             this._profil = new Profil(mail, password);
             this._islands = new List<Island>();
-            this._techs = new List<Tech>();
+            this._techs = new List<Technology>();
             
         }
 
@@ -69,7 +69,7 @@ namespace Diagram
                 _guild = value;
             }
         }
-        public List<Tech> Techs
+        public List<Technology> Techs
         {
             get
             {

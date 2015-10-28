@@ -79,8 +79,31 @@ namespace ITI.Skylord.ModelTest
         [Test]
         public void Create_stats_works()
         {
-            UnitStat unitStat = new UnitStat( 70, 50, 20, 15, 15, 5 );
+            UnitStatisitcs unitStat = new UnitStatisitcs( 70, 50, 20, 15, 15, 5 );
             Assert.IsNotNull( unitStat );
+        }
+
+        [Test]
+        public void unitStats_out_of_range_constructor_throws_ArgumentOutOfRangeException()
+        {
+            // Attack over 100
+            Assert.Throws<ArgumentOutOfRangeException>( () => new UnitStatisitcs( 101, 100, 99, 80, 50, 50 ) );
+            // Attack under 0
+            Assert.Throws<ArgumentOutOfRangeException>( () => new UnitStatisitcs( -1, 100, 99, 80, 50, 50 ) );
+            // Armor over 100
+            Assert.Throws<ArgumentOutOfRangeException>( () => new UnitStatisitcs( 100, 101, 99, 80, 50, 50 ) );
+            // Armor under 0
+            Assert.Throws<ArgumentOutOfRangeException>( () => new UnitStatisitcs( 100, -1, 99, 80, 50, 50 ) );
+            // Shield over 100
+            Assert.Throws<ArgumentOutOfRangeException>( () => new UnitStatisitcs( 100, 100, 101, 80, 50, 50 ) );
+            // Shield under 0
+            Assert.Throws<ArgumentOutOfRangeException>( () => new UnitStatisitcs( 100, 100, -1, 80, 50, 50 ) );
+            // Speed under 0
+            Assert.Throws<ArgumentOutOfRangeException>( () => new UnitStatisitcs( 100, 100, 100, -1, 50, 50 ) );
+            // Capacity under 0
+            Assert.Throws<ArgumentOutOfRangeException>( () => new UnitStatisitcs( 100, 100, 100, 100, -1, 50 ) );
+            // Cunsumption under 0
+            Assert.Throws<ArgumentOutOfRangeException>( () => new UnitStatisitcs( 100, 100, 100, 100, 100, -1 ) );
         }
     }
 }
