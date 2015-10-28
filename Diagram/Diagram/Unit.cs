@@ -14,6 +14,7 @@ namespace Diagram
         protected Island _island;
         protected Regiment _regiment;
 
+        #region Properties
         public string Name
         {
             get
@@ -65,6 +66,7 @@ namespace Diagram
             {
                 _regiment = value;
             }
-        }
+        } 
+        #endregion
     }
 }

@@ -9,9 +9,10 @@ namespace Diagram
     {
         public Guard(Island island)
         {
+            if( island == null ) throw new ArgumentNullException( "island is null." );
             _island = island;
             _unitType = UnitType.soldier;
-            _unitStat = new UnitStat( 70, 50, 20, 15, 15, 5 );
+            _unitStat = new UnitStat( 50, 70, 30, 15, 15, 5 );
         }
 
     }
