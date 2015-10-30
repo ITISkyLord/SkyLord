@@ -5,8 +5,11 @@ using System.Text;
 
 namespace Diagram
 {
+    [Obsolete]
     public enum GuildStatus
     {
-        
+        war,
+        peace,
+        love
     }
 }

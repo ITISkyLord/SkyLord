@@ -7,10 +7,10 @@ namespace Diagram
 {
     public class Ressource
     {
-        private readonly int _wood;
-        private readonly int _metal;
-        private readonly int _cristal;
-        private readonly int _magic;
+        private int _wood;
+        private int _metal;
+        private int _cristal;
+        private int _magic;
 
         public Ressource( int wood, int metal, int cristal, int magic )
         {

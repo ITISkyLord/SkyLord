@@ -18,28 +18,32 @@ namespace ITI.Skylord.ModelTest
         public ArmyTests()
         {
             _world = new World();
-            _defaultPlayer = new Player( "Thanur" );
-            _world.addNewIsland( "Ivry", new Coordinate(), true );
+            _defaultPlayer = new Player( _world, "Thanur" );
+            _world.addNewIsland( new Coordinate() );
             _defaultIsland = _world.Map.Islands.Values.First();
-
         }
-   //     [Test]
-        //public void Create_new_army()
-        //{
-        //    Army army = new Army(new List<Regiment>(), ArmyState.defense, _defaultIsland);
-        //    Assert.IsNotNull( army.Regiments );
-        //}
+        [Test]
+        public void Create_new_army()
+        {
+            Army army = new Army( ArmyState.defense, _defaultIsland);
+            Assert.IsNotNull( army.Regiments );
+        }
 
-        //[Test]
-        //public void Add_units_in_army()
-        //{
-        //    Diagram.Guard guard = new Diagram.Guard();
-        //    Regiment regiment = new Regiment();
-        //    regiment.Units.Add( guard.Name, 50 );
-        //    List<Regiment> regiments = new List<Regiment>();
-        //    regiments.Add( regiment );
-        //    Army army = new Army( regiments, ArmyState.defense, _defaultIsland );
-        //    Assert.IsNotNull( army.Regiments );
-        //}
+        [Test]
+        public void Add_unit_in_army()
+        {
+            Army army = new Army( ArmyState.defense, _defaultIsland );
+            army.Regiments.Add( new Diagram.Guard(), 1 );
+            Assert.That( army.Regiments.Count == 1 );
+        }
+        [Test]
+        public void Add_different_units_in_army()
+        {
+            Army army = new Army( ArmyState.defense, _defaultIsland );
+            army.Regiments.Add( new Diagram.Guard(), 1 );
+            army.Regiments.Add( new Necromancer(), 10 );
+            army.Regiments.Add( new Warrior(), 15 );
+            Assert.That( army.Regiments.Count == 3 );
+        }
     }
 }

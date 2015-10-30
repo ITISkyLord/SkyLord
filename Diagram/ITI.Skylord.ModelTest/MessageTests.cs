@@ -11,10 +11,11 @@ namespace ITI.Skylord.ModelTest
     [TestFixture]
     class MessageTests
     {
+        World _world = new World();
         [Test]
         public void Create_new_message()
         {
-            Message message = new Message(new Player("Thanur"), new Player("Cora"), "Introduction","Voilà l'introduction que tu voulais. Bisous");
+            Message message = new Message(new Player(_world,"Thanur"), new Player(_world,"Cora"), "Introduction","Voilà l'introduction que tu voulais. Bisous");
             Assert.That( message.MessageObject == "Introduction" );
         }
     }

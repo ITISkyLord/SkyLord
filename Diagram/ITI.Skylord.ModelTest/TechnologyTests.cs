@@ -12,15 +12,15 @@ namespace ITI.Skylord.ModelTest
     class TechnologyTests
     {
         [Test]
-        public void create_technology()
+        public void Create_technology()
         {
-            Technology techno = new Technology("Info");
-            Assert.IsNotNull( techno.Name );
-            Assert.IsNotNull( techno.Level );
+            Technology technology = new Technology("Info");
+            Assert.IsNotNull( technology.Name );
+            Assert.IsNotNull( technology.Level );
         }
 
         [Test]
-        public void create_technoogy_with_null_or_white_space_name_throws_argumentException()
+        public void Create_technology_with_null_or_white_space_name_throws_argumentException()
         {
             Assert.Throws<ArgumentException>( () => new Technology( "" ) );
             Assert.Throws<ArgumentException>( () => new Technology( null ) );

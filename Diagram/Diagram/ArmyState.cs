@@ -9,6 +9,6 @@ namespace Diagram
     {
         defense,
         movement,
-        supporting,
+        supporting
     }
 }

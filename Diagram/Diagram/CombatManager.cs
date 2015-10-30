@@ -27,7 +27,7 @@ namespace Diagram
             foreach( KeyValuePair<Unit, int> kvp in defendingArmy.Regiments )
             {
                 if( kvp.Key.UnitDamageType == UnitDamageType.physical )
-                    armor += (kvp.Value * kvp.Key.UnitStatistics.Armor);
+                    armor += (kvp.Value * kvp.Key.UnitStatistics.PhysicResist);
                 else
                     magicResist += (kvp.Value * kvp.Key.UnitStatistics.MagicResist);
             }
