@@ -66,11 +66,14 @@ namespace Diagram
 
         public override bool Equals( object obj )
         {
-            if( obj == null ) throw new ArgumentNullException( "obj == null" );
             Unit other = obj as Unit;
-            if( other == null ) throw new ArgumentException( "obj != Unit" );
-            return (this.Name == other.Name);
-          
+            return other != null && other.Name == this.Name;
+        }
+
+        public override int GetHashCode()
+        {
+            if ( Name == null ) return 0;
+            return Name.GetHashCode();
         }
     }
 }

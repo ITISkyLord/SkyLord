@@ -69,10 +69,10 @@ namespace Diagram
         #endregion
 
         /// <summary>
-        /// Find a regiment corresponding to a Unit in an army
+        /// Find a regiment corresponding to a Unit in an army.
         /// </summary>
-        /// <param name="unit">The unit to look for in the army</param>
-        /// <returns>A keyValuePair that represents the regiment found. If the regiment is not found the key will be null</returns>
+        /// <param name="unit">The unit to look for in the army.</param>
+        /// <returns>A keyValuePair that represents the regiment found. If the regiment is not found the key will be null.</returns>
         internal KeyValuePair<Unit, int> FindRegiment( Unit unit )
         {
             return _regiments.Where( u => u.Key.Name == unit.Name ).FirstOrDefault();
@@ -83,6 +83,10 @@ namespace Diagram
             return _regiments.Where( kvp => kvp.Key.UnitDamageType == unitDamageType ).ToDictionary( kvp => kvp.Key, kvp => kvp.Value);
         }
 
+        /// <summary>
+        /// Gets the army's ratio of physical attack.
+        /// </summary>
+        /// <returns>The ratio.</returns>
         internal double GetPhysicalAttackRatio()
         {
             double totalAttack = 0;
@@ -95,6 +99,42 @@ namespace Diagram
             }
 
             return physicalAttack / totalAttack;
+        }
+
+        /// <summary>
+        /// Substracts a number of units from a regiment in a army, if the final number is under 0, it removes the regiment.
+        /// </summary>
+        /// <param name="unit">The unit type to remove.</param>
+        /// <param name="numberToRemove">The number of units to substract.</param>
+        internal void SubstractFromRegiment( Unit unit, int numberToRemove )
+        {
+            KeyValuePair<Unit, int> KvP = FindRegiment( unit );
+
+            if ( KvP.Key == null ) throw new ArgumentException( "The unit you are trying to handle is not present in the army." );
+
+            int initialUnitNumber = KvP.Value;
+            int finalUnitNumber = initialUnitNumber - numberToRemove;
+            _regiments.Remove( unit );
+
+            if ( finalUnitNumber > 0 )
+                _regiments.Add( unit, finalUnitNumber );
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <param name="numberToAdd"></param>
+        internal void AddToRegiment(Unit unit, int numberToAdd )
+        {
+            KeyValuePair<Unit, int> KvP = FindRegiment( unit );
+
+            if ( KvP.Key == null ) throw new ArgumentException( "The unit you are trying to handle is not present in the army." );
+
+            int initialUnitNumber = KvP.Value;
+            int finalUnitNumber = initialUnitNumber + numberToAdd;
+            _regiments.Remove( unit );
+            _regiments.Add( unit, finalUnitNumber );
         }
     }
 }

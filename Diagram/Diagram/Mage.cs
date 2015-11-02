@@ -7,6 +7,7 @@ namespace Diagram
 {
     public class Mage
     {
+        private string _name;
         private MageLevel _mageLevel;
         private readonly List<Apprentice> _apprentices;
         private Island _island;
@@ -21,9 +22,27 @@ namespace Diagram
             _island = island;
             this._mageLevel = new MageLevel();
             this._apprentices = new List<Apprentice>();
+            // TODO : générer un nom de mage rigolo
+            this._name = "Mage";
         }
 
         #region Properties
+        /// <summary>
+        /// Gets or sets the Name of the mage
+        /// </summary>
+        public string Name
+        {
+            get
+            {
+                return _name;
+            }
+
+            set
+            {
+                _name = value;
+            }
+        }
+
         /// <summary>
         /// Gets or sets the MageLevel.
         /// </summary>
@@ -49,7 +68,7 @@ namespace Diagram
             {
                 return _apprentices;
             }
-        } 
+        }
         #endregion
     }
 }
