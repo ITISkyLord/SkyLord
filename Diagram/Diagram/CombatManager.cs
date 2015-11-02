@@ -139,34 +139,36 @@ namespace Diagram
                     totalNumberInRegiments += kvp.Value;
                     unitsWithDamage.Add( kvp.Key, kvp.Value * kvp.Key.UnitStatistics.Attack );
                 }
-                result = totalNumberInRegiments * Math.Pow( ratio, 1.5 );
 
                 foreach( KeyValuePair<Unit,int> kvp in unitsWithDamage )
                 {
-                    unitsWithratio.Add( kvp.Key, kvp.Value / attackPoints );
+                    double res = (double)kvp.Value / attackPoints;
+                    unitsWithratio.Add( kvp.Key, res );
                 }
 
                 foreach( KeyValuePair<Unit, int> kvp in physicRegiments )
                 {
                     foreach( KeyValuePair<Unit, double> kvp2 in unitsWithratio )
                     {
-                        if( kvp.Key == kvp2.Key ) 
+                        if(kvp2.Key == kvp.Key)
                         {
 
+                       
+                            result = kvp.Value * Math.Pow( ratio, 1.5 );
+
+                            int res = (int)(result * kvp2.Value);
+                            Console.WriteLine( "Unit = "+kvp.Key );
+                            Console.WriteLine( "res = "+res );
+                            Console.WriteLine( "Avant le substract, winningArmy warrior = " + _winningArmy.Regiments.Values.First() );
+                            Console.WriteLine( "winningArmyState = " + _winningArmy.ArmyState );
+
+                            _winningArmy.SubstractFromRegiment( kvp.Key, res );
+                             Console.WriteLine( "Après le substract, winningArmy warrior = " + _winningArmy.Regiments.Values.First() );
                         }
                     }
                 }
-
             }
-            int regiment = _winningArmy.Regiments.Count;
-            
-            
 
-            regiment -= (int)result;
-            _winningArmy.Regiments.Remove( _winningArmy.Regiments.Keys.First() );
-            _winningArmy.Regiments.Add( new Warrior(), regiment );
-            Console.WriteLine( "Regiment = " + regiment );
-            Console.WriteLine( " result = " + result );
             return _winningArmy;
         }
     }

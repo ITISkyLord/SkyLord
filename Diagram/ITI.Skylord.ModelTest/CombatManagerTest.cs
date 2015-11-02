@@ -34,8 +34,9 @@ namespace ITI.Skylord.ModelTest
         public void Two_armies_fights_army_attack_wins_50warriors_vs_15warriors_return_CombatResult()
         {
             // Ajouter plusieurs armées en même temps ?
-            _armyAttack.Regiments.Add( new Warrior(), 50 );
-            _armyDefense.Regiments.Add( new Warrior(), 15 );
+            _armyAttack.Regiments.Add( new Warrior(), 90 );
+            _armyAttack.Regiments.Add( new Diagram.Guard(), 50 );
+            _armyDefense.Regiments.Add( new Warrior(), 575 );
             CombatManager combatManager = new CombatManager();
             CombatResult combatResult = combatManager.Resolve( _armyAttack, _armyDefense );
           //  Assert.That(  combatResult.Resolve() == _armyAttack );
