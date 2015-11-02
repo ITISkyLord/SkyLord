@@ -8,22 +8,22 @@ namespace Diagram
     public struct UnitStatistics
     {
         int _attack;
-        int _armor;
+        int _physicResist;
         int _magicResist;
         int _speed;
         int _capacity;
         int _consumption; // Magic consumption by the hour
 
-        public UnitStatistics(int attack, int armor, int magicResist, int speed, int capacity, int consumption)
+        public UnitStatistics(int attack, int physicResist, int magicResist, int speed, int capacity, int consumption)
         {
             if ( attack > 100 || attack < 0) throw new ArgumentOutOfRangeException( "The attack value of a unit cannot be over 100 or under 0." );
-            if ( armor > 100 || magicResist > 100 || armor < 0 || magicResist < 0) throw new ArgumentOutOfRangeException( "The defense (shield or armor) value of a unit cannot be over 100 or under 0." );
+            if ( physicResist > 100 || magicResist > 100 || physicResist < 0 || magicResist < 0) throw new ArgumentOutOfRangeException( "The defense (shield or armor) value of a unit cannot be over 100 or under 0." );
             if ( speed < 0 ) throw new ArgumentOutOfRangeException( "The speed of a unit cannot be under 0." );
             if ( capacity < 0 ) throw new ArgumentOutOfRangeException( "The capacity of a unit cannot be under 0." );
             if ( consumption < 0 ) throw new ArgumentOutOfRangeException( "The speed of a unit cannot be under 0." );
 
             _attack = attack;
-            _armor = armor;
+            _physicResist = physicResist;
             _magicResist = magicResist;
             _speed = speed;
             _capacity = capacity;
@@ -39,11 +39,11 @@ namespace Diagram
             }
         }
 
-        public int Armor
+        public int PhysicResist
         {
             get
             {
-                return _armor;
+                return _physicResist;
             }
 
         }

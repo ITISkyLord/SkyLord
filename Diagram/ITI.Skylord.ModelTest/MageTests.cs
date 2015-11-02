@@ -17,7 +17,7 @@ namespace ITI.Skylord.ModelTest
         public MageTests()
         {
             _world = new World();
-            _world.addNewIsland( "Ivry", new Coordinate(), true );
+            _world.addNewIsland( new Coordinate() );
             _defaultIsland = _world.Map.Islands.Values.First();
         }
 

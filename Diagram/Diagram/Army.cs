@@ -7,12 +7,15 @@ namespace Diagram
 {
     public class Army
     {
-      //  private int _id;
-       // private Regiment _regiment;
         private ArmyState _armyState;
         private Island _island;
         private readonly Dictionary<Unit, int> _regiments;
 
+        /// <summary>
+        /// Create new army.
+        /// </summary>
+        /// <param name="armyState">Army state</param>
+        /// <param name="island">This is the island where is from the army.</param>
         public Army( ArmyState armyState, Island island )
         {
             this._island = island;
@@ -20,22 +23,10 @@ namespace Diagram
             this._armyState = armyState;
             this._regiments = new Dictionary<Unit, int>();
         }
-
-
-        //public Regiment Regiment
-        //{
-        //    get
-        //    {
-        //        return _regiment;
-        //    }
-
-        //    set
-        //    {
-        //        _regiment = value;
-        //    }
-        //}
-
         #region Properties
+        /// <summary>
+        /// Gets or sets ArmyState
+        /// </summary>
         public ArmyState ArmyState
         {
             get
@@ -49,6 +40,9 @@ namespace Diagram
             }
         }
 
+        /// <summary>
+        /// Gets dictionnary Unit,int Regiments
+        /// </summary>
         public Dictionary<Unit, int> Regiments
         {
             get
@@ -57,6 +51,9 @@ namespace Diagram
             }
         }
 
+        /// <summary>
+        /// Gets or sets the Island where is from the Army.
+        /// </summary>
         public Island Island
         {
             get

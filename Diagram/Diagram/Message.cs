@@ -7,13 +7,19 @@ namespace Diagram
 {
     public class Message
     {
-    //    private int _id;
         private readonly string _messageObject;
         private readonly string _coreMessage;
         private readonly Player _receiver;
         private readonly Player _sender; // À voir si l'admin doit lancer un message à tout le monde.
         // Lu ou pas lu
 
+        /// <summary>
+        /// Create new message.
+        /// </summary>
+        /// <param name="receiver">The receiver of the message.</param>
+        /// <param name="sender">The sender of the message.</param>
+        /// <param name="messageObject">The object of the message.</param>
+        /// <param name="coreMessage">The message.</param>
         public Message( Player receiver, Player sender, string messageObject, string coreMessage )
         {
             if( receiver == null ) throw new ArgumentNullException( "Receiver is null" );
@@ -30,6 +36,9 @@ namespace Diagram
         }
 
         #region Properties
+        /// <summary>
+        /// Gets the message object.
+        /// </summary>
         public string MessageObject
         {
             get
@@ -38,6 +47,9 @@ namespace Diagram
             }
         }
 
+        /// <summary>
+        /// Gets the message.
+        /// </summary>
         public string CoreMessage
         {
             get
@@ -46,6 +58,9 @@ namespace Diagram
             }
         }
 
+        /// <summary>
+        /// Gets the receiver of the message.
+        /// </summary>
         public Player Receiver
         {
             get
@@ -54,6 +69,9 @@ namespace Diagram
             }
         }
 
+        /// <summary>
+        /// Gets the sender of the message.
+        /// </summary>
         public Player Sender
         {
             get

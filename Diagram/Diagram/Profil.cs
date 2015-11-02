@@ -9,15 +9,21 @@ namespace Diagram
     {
         private string _mail;
         private string _password;
+        private readonly Player _owner;
         // Avatar
         private string _description;
 
-        public Profil( string mail, string password )
+        public Profil( Player player, string mail, string password )
         {
+            if( !IsValidEmailStatic.IsValidEmail( mail ) ) throw new ArgumentException( "Invalid mail" );
+            if( String.IsNullOrWhiteSpace( password ) ) throw new ArgumentNullException( "password is null or has white space." );
+            if( player == null ) throw new ArgumentNullException();
             this._mail = mail;
+            this._owner = player;
             this._password = password;
         }
 
+        #region Properties
         public string Mail
         {
             get
@@ -54,5 +60,14 @@ namespace Diagram
                 _description = value;
             }
         }
+
+        public Player Owner
+        {
+            get
+            {
+                return _owner;
+            }
+        } 
+        #endregion
     }
 }

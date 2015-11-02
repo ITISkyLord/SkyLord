@@ -38,12 +38,12 @@ namespace Diagram
 
         public Player addNewPlayer( string name, string mail = "toto@gmail.com", string password = "password" )
         {
-            Player player = new Player( name, mail, password );
+            Player player = new Player( this, name, mail, password );
             _players.Add( player );
             return player;
         }
 
-        public Island addNewIsland ( string name, Coordinate coordinates, bool capital, Player owner = null )
+        public Island addNewIsland ( Coordinate coordinates, string name = "Île inhabitée.", bool capital = false, Player owner = null )
         {
             if( name.Length > 50 ) throw new ArgumentOutOfRangeException( " Maximum lenght of name is 50. Your name lenght is " + name.Length + " at the moment." );
             if( _map.Islands.ContainsKey( coordinates ) ) throw new ArgumentException( " There is already an island on these coordinates." );
