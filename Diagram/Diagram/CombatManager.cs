@@ -8,7 +8,8 @@ namespace Diagram
 {
     public class CombatManager : ICombatManager
     {
-        public Island Resolve( Army attackingArmy, Army defendingArmy )
+
+        public CombatResult Resolve( Army attackingArmy, Army defendingArmy )
         {
             double attackPointsPhysic = 1.0;
             double armor = 1.0;
@@ -31,55 +32,82 @@ namespace Diagram
                 else
                     magicResist += (kvp.Value * kvp.Key.UnitStatistics.MagicResist);
             }
-            double result1 = 1.0;
-            double result2 = 1.0;
-            bool a;
-            bool b;
+            double ratioWinnerPhysic = 1.0;
+            double ratioWinnerMagic = 1.0;
+            double ratioLooserPhysic = 1.0;
+            double ratioLooserMagic = 1.0;
+            bool isAttackingArmyWinPhysic;
+            bool isAttackingArmyWinMagic;
+            Army _winningArmy = null;
+            Army _loosingArmy = null;
 
             if( attackPointsPhysic > armor )
             {
-                result1 = attackPointsPhysic / armor;
-                a = true;
+                ratioWinnerPhysic = attackPointsPhysic / armor;
+                ratioLooserPhysic = armor / attackPointsPhysic;
+                isAttackingArmyWinPhysic = true;
             }
-
             else
             {
-                result1 = armor / attackPointsPhysic;
-                a = false;
+                ratioWinnerPhysic = armor / attackPointsPhysic;
+                ratioLooserPhysic = attackPointsPhysic / armor;
+                isAttackingArmyWinPhysic = false;
             }
+
 
             if( attackPointsMagic > magicResist )
             {
-                result2 = attackPointsMagic / magicResist;
-                b = true;
+                ratioWinnerMagic = attackPointsMagic / magicResist;
+                ratioLooserMagic = magicResist / attackPointsMagic;
+                isAttackingArmyWinMagic = true;
             }
             else
             {
-                b = false;
-                result2 = magicResist / attackPointsMagic;
+                isAttackingArmyWinMagic = false;
+                ratioWinnerMagic = magicResist / attackPointsMagic;
+                ratioLooserMagic = attackPointsMagic / magicResist;
             }
 
-            if( a && b)
+
+
+
+
+            if( isAttackingArmyWinPhysic && isAttackingArmyWinMagic)
             {
-                return attackingArmy.Island;
-            } else if (!a && !b)
+                _winningArmy = attackingArmy;
+                _loosingArmy = defendingArmy;
+            } else if (!isAttackingArmyWinPhysic && !isAttackingArmyWinMagic)
             {
-                return defendingArmy.Island;
-            } else if (a && !b)
+                _winningArmy = defendingArmy;
+                _loosingArmy = attackingArmy;
+            } else if (isAttackingArmyWinPhysic && !isAttackingArmyWinMagic)
             {
-                if( result1 > result2)
-                    return attackingArmy.Island;
+                if( ratioWinnerPhysic > ratioWinnerMagic)
+                {
+                    _winningArmy = attackingArmy;
+                    _loosingArmy = defendingArmy;
+                }
                 else
-                    return defendingArmy.Island;
-            } else if (!a && b)
-                if( result2 > result1 )
-                    return attackingArmy.Island;
-                else
-                    return defendingArmy.Island;
-            else
+                {
+                    _winningArmy = defendingArmy;
+                    _loosingArmy = attackingArmy;
+                }
+
+            } else if (!isAttackingArmyWinPhysic && isAttackingArmyWinMagic)
             {
-                return null; //Egalité.
+                if( ratioWinnerMagic > ratioWinnerPhysic )
+                {
+                    _winningArmy = attackingArmy;
+                    _loosingArmy = defendingArmy;
+                }
+                else
+                {
+                    _winningArmy = defendingArmy;
+                    _loosingArmy = attackingArmy;
+                }
             }
+
+            return new CombatResult( _winningArmy, _loosingArmy, ratioLooserPhysic, ratioLooserMagic );
         }
     }
 }

@@ -12,7 +12,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyProduct("ITI.Skylord.ModelTest")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
+[assembly: AssemblyCulture( "" )]
+
 
 // L'affectation de la valeur false à ComVisible rend les types invisibles dans cet assembly 
 // aux composants COM.  Si vous devez accéder à un type dans cet assembly à partir de 
