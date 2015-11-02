@@ -67,5 +67,25 @@ namespace Diagram
             }
         } 
         #endregion
+
+        internal KeyValuePair<Unit, int> FindRegiment( Unit unit )
+        {
+            return _regiments.Where( u => u.Key.Name == unit.Name ).FirstOrDefault();
+        }
+
+        internal Dictionary<Unit, int> GetPhysicalRegiments()
+        {
+            return _regiments.Where( kvp => kvp.Key.UnitDamageType == UnitDamageType.physical ).ToDictionary( kvp => kvp.Key, kvp => kvp.Value);
+        }
+
+        internal Dictionary<Unit, int> GetMagicalRegiments()
+        {
+            return _regiments.Where( kvp => kvp.Key.UnitDamageType == UnitDamageType.magical ).ToDictionary( kvp => kvp.Key, kvp => kvp.Value );
+        }
+
+        //public bool addUnitsToRegiment(Unit unit, int nbToAdd )
+        //{
+
+        //}
     }
 }

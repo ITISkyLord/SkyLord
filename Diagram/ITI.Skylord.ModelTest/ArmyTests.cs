@@ -45,5 +45,45 @@ namespace ITI.Skylord.ModelTest
             army.Regiments.Add( new Warrior(), 15 );
             Assert.That( army.Regiments.Count == 3 );
         }
+        [Test]
+        public void Find_regiment_in_army_with_FindRegiment_method()
+        {
+            Army army = new Army( ArmyState.defense, _defaultIsland );
+            Warrior war = new Warrior();
+            army.Regiments.Add( war, 50 );
+            KeyValuePair<Unit, int> KvP = army.FindRegiment( new Diagram.Warrior() );
+
+            Assert.That( KvP.Key == war && KvP.Value == 50 );
+        }
+
+        [Test]
+        public void Get_physical_regiments()
+        {
+            Army army = new Army( ArmyState.defense, _defaultIsland );
+            Warrior war = new Warrior();
+            Cyclop cyc = new Cyclop();
+            army.Regiments.Add( war, 50 );
+            army.Regiments.Add( cyc, 10 );
+
+            Dictionary<Unit, int> dic = army.GetPhysicalRegiments();
+
+            Assert.That( dic.Count == 1 );
+            Assert.That( dic.ContainsKey( war) && !dic.ContainsKey( cyc ));
+        }
+
+        [Test]
+        public void Get_magical_regiments()
+        {
+            Army army = new Army( ArmyState.defense, _defaultIsland );
+            Warrior war = new Warrior();
+            Cyclop cyc = new Cyclop();
+            army.Regiments.Add( war, 50 );
+            army.Regiments.Add( cyc, 10 );
+
+            Dictionary<Unit, int> dic = army.GetMagicalRegiments();
+
+            Assert.That( dic.Count == 1 );
+            Assert.That( dic.ContainsKey( cyc ) && !dic.ContainsKey( war ) );
+        }
     }
 }

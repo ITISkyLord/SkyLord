@@ -58,7 +58,7 @@
     <Compile Include="IsValidEmailStatic.cs" />
     <Compile Include="Technology.cs" />
     <Compile Include="TechnologyLevel.cs" />
-    <Compile Include="UnitStatistics.cs" />
+    <Compile Include="Units\UnitStatistics.cs" />
     <Compile Include="Units\Magic\Cyclop.cs" />
     <Compile Include="Units\Monsters\Goblins.cs" />
     <Compile Include="Guild.cs" />
@@ -81,9 +81,9 @@
     <Compile Include="Units\Soldiers\Guard.cs" />
     <Compile Include="Units\Monsters\Troll.cs" />
     <Compile Include="Units\Unit.cs" />
-    <Compile Include="UnitDamageType.cs" />
+    <Compile Include="Units\UnitDamageType.cs" />
     <Compile Include="Units\Soldiers\Warrior.cs" />
-    <Compile Include="UnitType.cs" />
+    <Compile Include="Units\UnitType.cs" />
     <Compile Include="World.cs" />
   </ItemGroup>
   <ItemGroup>
