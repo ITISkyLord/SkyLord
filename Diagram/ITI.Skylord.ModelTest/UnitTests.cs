@@ -39,7 +39,7 @@ namespace ITI.Skylord.ModelTest
         [Test]
         public void Create_new_goblins_has_the_good_unitType()
         {
-            Goblins goblins = new Goblins();
+            Goblin goblins = new Goblin();
             Assert.That( goblins.UnitDamageType == UnitDamageType.physical );
         }
         [Test]
