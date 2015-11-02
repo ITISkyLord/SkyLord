@@ -68,6 +68,11 @@ namespace Diagram
         } 
         #endregion
 
+        /// <summary>
+        /// Find a regiment corresponding to a Unit in an army
+        /// </summary>
+        /// <param name="unit">The unit to look for in the army</param>
+        /// <returns>A keyValuePair that represents the regiment found. If the regiment is not found the key will be null</returns>
         internal KeyValuePair<Unit, int> FindRegiment( Unit unit )
         {
             return _regiments.Where( u => u.Key.Name == unit.Name ).FirstOrDefault();
@@ -76,6 +81,20 @@ namespace Diagram
         internal Dictionary<Unit, int> GetRegimentsByDamagetype( UnitDamageType unitDamageType)
         {
             return _regiments.Where( kvp => kvp.Key.UnitDamageType == unitDamageType ).ToDictionary( kvp => kvp.Key, kvp => kvp.Value);
+        }
+
+        internal double GetPhysicalAttackRatio()
+        {
+            double totalAttack = 0;
+            double physicalAttack = 0;
+            foreach(Unit u in _regiments.Keys )
+            {
+                totalAttack += u.UnitStatistics.Attack;
+                if ( u.UnitDamageType == UnitDamageType.physical )
+                    physicalAttack += u.UnitStatistics.Attack;
+            }
+
+            return physicalAttack / totalAttack;
         }
     }
 }

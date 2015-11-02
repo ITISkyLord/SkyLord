@@ -57,6 +57,18 @@ namespace ITI.Skylord.ModelTest
         }
 
         [Test]
+        public void FindRegiment_returns_a_null_key_if_unit_is_not_in_army()
+        {
+            Army army = new Army( ArmyState.defense, _defaultIsland );
+            army.Regiments.Add( new Diagram.Guard(), 1 );
+            army.Regiments.Add( new Necromancer(), 10 );
+            army.Regiments.Add( new Warrior(), 15 );
+
+            KeyValuePair<Unit, int> KvP = army.FindRegiment( new Goblin() );
+            Assert.IsNull( KvP.Key );
+        }
+
+        [Test]
         public void Get_physical_regiments_with_GetRegimentsByDamagetype_method()
         {
             Army army = new Army( ArmyState.defense, _defaultIsland );
@@ -84,6 +96,17 @@ namespace ITI.Skylord.ModelTest
 
             Assert.That( dic.Count == 1 );
             Assert.That( dic.ContainsKey( cyc ) && !dic.ContainsKey( war ) );
+        }
+
+        [Test]
+        public void Get_an_army_s_ratio_of_physical_damage_with_GetPhysicalAttackRatio_method()
+        {
+            Army army = new Army( ArmyState.defense, _defaultIsland );
+            army.Regiments.Add( new Necromancer(), 10 );
+            army.Regiments.Add( new Warrior(), 10 );
+
+            double ratio = army.GetPhysicalAttackRatio();
+            Assert.That( ratio == 0.5);
         }
     }
 }

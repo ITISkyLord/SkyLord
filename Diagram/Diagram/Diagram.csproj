@@ -60,7 +60,7 @@
     <Compile Include="TechnologyLevel.cs" />
     <Compile Include="Units\UnitStatistics.cs" />
     <Compile Include="Units\Magic\Cyclop.cs" />
-    <Compile Include="Units\Monsters\Goblins.cs" />
+    <Compile Include="Units\Monsters\Goblin.cs" />
     <Compile Include="Guild.cs" />
     <Compile Include="GuildRole.cs" />
     <Compile Include="GuildStatus.cs" />

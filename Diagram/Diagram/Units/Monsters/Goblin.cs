@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Diagram
 {
-    public class Goblins : Unit
+    public class Goblin : Unit
     {
-        public Goblins()
+        public Goblin()
         {
             _unitDamageType = UnitDamageType.physical;
             _unitType = UnitType.monster;

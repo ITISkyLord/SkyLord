@@ -12,7 +12,7 @@ namespace Diagram
         {
             _unitDamageType = UnitDamageType.magical;
             _unitType = UnitType.magic;
-            _unitStatistics = new UnitStatistics( 75, 30, 15, 10, 10, 5 );
+            _unitStatistics = new UnitStatistics( 70, 30, 15, 10, 10, 5 );
         }
     }
 }
