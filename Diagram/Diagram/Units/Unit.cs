@@ -63,5 +63,14 @@ namespace Diagram
         //    }
         //} 
         #endregion
+
+        public override bool Equals( object obj )
+        {
+            if( obj == null ) throw new ArgumentNullException( "obj == null" );
+            Unit other = obj as Unit;
+            if( other == null ) throw new ArgumentException( "obj != Unit" );
+            return (this.Name == other.Name);
+          
+        }
     }
 }

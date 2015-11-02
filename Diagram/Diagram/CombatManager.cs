@@ -10,21 +10,20 @@ namespace Diagram
     {
         private Army _winningArmy;
         private Army _loosingArmy;
+        double _attackPointsPhysic = 1.0;
+        double _attackPointsMagic = 1.0;
 
         public CombatResult Resolve( Army attackingArmy, Army defendingArmy )
         {
-            double attackPointsPhysic = 1.0;
             double physicResist = 1.0;
-            double attackPointsMagic = 1.0;
             double magicResist = 1.0;
 
             foreach( KeyValuePair<Unit, int> kvp in attackingArmy.Regiments )
             {
                 if( kvp.Key.UnitDamageType == UnitDamageType.physical )
-                    attackPointsPhysic += (kvp.Value * kvp.Key.UnitStatistics.Attack);
+                    _attackPointsPhysic += (kvp.Value * kvp.Key.UnitStatistics.Attack);
                 else
-                    attackPointsMagic += (kvp.Value * kvp.Key.UnitStatistics.Attack);
-
+                    _attackPointsMagic += (kvp.Value * kvp.Key.UnitStatistics.Attack);
             }
 
             foreach( KeyValuePair<Unit, int> kvp in defendingArmy.Regiments )
@@ -32,9 +31,9 @@ namespace Diagram
                 physicResist += (kvp.Value * kvp.Key.UnitStatistics.PhysicResist);
                 magicResist += (kvp.Value * kvp.Key.UnitStatistics.MagicResist);
             }
-            if( attackPointsMagic < 5 || attackPointsPhysic < 5 )
+            if( _attackPointsMagic < 5 || _attackPointsPhysic < 5 )
             {
-                SimpleAttack( attackingArmy, defendingArmy, attackPointsPhysic, physicResist, attackPointsMagic, magicResist );
+                SimpleAttack( attackingArmy, defendingArmy, _attackPointsPhysic, physicResist, _attackPointsMagic, magicResist );
             }
             return null;
 
@@ -92,7 +91,7 @@ namespace Diagram
                     _winningArmy = defendingArmy;
                     _loosingArmy = attackingArmy;
                 }
-                SimpleLossResult( ratioLooserPhysic );
+                SimpleLossResult( ratioLooserPhysic, true );
             }
             else if( attackPointsPhysic < 5 )
             {
@@ -110,16 +109,59 @@ namespace Diagram
                     _winningArmy = defendingArmy;
                     _loosingArmy = attackingArmy;
                 }
-                SimpleLossResult( ratioLooserMagic );
+                SimpleLossResult( ratioLooserMagic, false );
 
             }
             
         }
 
-        private Army SimpleLossResult( double ratio )
+        private Army SimpleLossResult( double ratio, bool isPhysical )
         {
-            double result = _winningArmy.Regiments.Values.First() * Math.Pow( ratio , 1.5);
-            int regiment = _winningArmy.Regiments.Values.First();
+
+            //double result = _winningArmy.Regiments.Values.First() * Math.Pow( _ratioPhysic , 1.5);
+            //int regiment = _winningArmy.Regiments.Values.First();
+            int totalNumberInRegiments = 0;
+            double result = 0;
+            Dictionary<Unit,int> unitsWithDamage = new Dictionary<Unit, int>();
+            Dictionary<Unit, double> unitsWithratio = new Dictionary<Unit, double>();
+            if( isPhysical )
+            {
+                int attackPoints = 0;
+                
+                Dictionary<Unit,int> physicRegiments = _winningArmy.GetRegimentsByDamagetype( UnitDamageType.physical );
+
+                foreach( KeyValuePair<Unit, int> kvp in physicRegiments )
+                {
+                    attackPoints += kvp.Value * kvp.Key.UnitStatistics.Attack;
+                }
+                foreach( KeyValuePair<Unit, int> kvp in physicRegiments )
+                {
+                    totalNumberInRegiments += kvp.Value;
+                    unitsWithDamage.Add( kvp.Key, kvp.Value * kvp.Key.UnitStatistics.Attack );
+                }
+                result = totalNumberInRegiments * Math.Pow( ratio, 1.5 );
+
+                foreach( KeyValuePair<Unit,int> kvp in unitsWithDamage )
+                {
+                    unitsWithratio.Add( kvp.Key, kvp.Value / attackPoints );
+                }
+
+                foreach( KeyValuePair<Unit, int> kvp in physicRegiments )
+                {
+                    foreach( KeyValuePair<Unit, double> kvp2 in unitsWithratio )
+                    {
+                        if( kvp.Key == kvp2.Key ) 
+                        {
+
+                        }
+                    }
+                }
+
+            }
+            int regiment = _winningArmy.Regiments.Count;
+            
+            
+
             regiment -= (int)result;
             _winningArmy.Regiments.Remove( _winningArmy.Regiments.Keys.First() );
             _winningArmy.Regiments.Add( new Warrior(), regiment );
