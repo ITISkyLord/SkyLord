@@ -52,6 +52,7 @@
     <Compile Include="BuildingLevel.cs" />
     <Compile Include="CombatManager.cs" />
     <Compile Include="CombatReport.cs" />
+    <Compile Include="CombatResult.cs" />
     <Compile Include="Coordinate.cs" />
     <Compile Include="ICombatManager.cs" />
     <Compile Include="IsValidEmailStatic.cs" />

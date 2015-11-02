@@ -8,7 +8,7 @@ namespace Diagram
 {
     public interface ICombatManager
     {
-        Island Resolve( Army attackingArmy, Army defendingArmy );
+        CombatResult Resolve( Army attackingArmy, Army defendingArmy );
 
     }
 }
