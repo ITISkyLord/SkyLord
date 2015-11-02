@@ -4,15 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D9E29326-AF90-4C11-A7A5-689FB6240FB6}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{95E6946C-BCA7-40AF-8F4D-8B523F696764}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ITI.Skylord.ModelTest</RootNamespace>
-    <AssemblyName>ITI.Skylord.ModelTest</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <RootNamespace>ITI.SkyLord.EFTest</RootNamespace>
+    <AssemblyName>ITI.SkyLord.EFTest</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +24,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -38,10 +41,6 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="nunit.framework, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
-      <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -53,28 +52,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApprenticeTests.cs" />
-    <Compile Include="ArmyTests.cs" />
-    <Compile Include="CombatManagerTest.cs" />
-    <Compile Include="CoordinateTests.cs" />
-    <Compile Include="BuildingTests.cs" />
-    <Compile Include="GuildTests.cs" />
-    <Compile Include="IslandTests.cs" />
-    <Compile Include="MageTests.cs" />
-    <Compile Include="MessageTests.cs" />
-    <Compile Include="PlayerTest.cs" />
-    <Compile Include="ProfilTest.cs" />
-    <Compile Include="RessourceTests.cs" />
-    <Compile Include="TechnologyTests.cs" />
-    <Compile Include="UnitTests.cs" />
+    <Compile Include="AccountModelContext.cs" />
+    <Compile Include="AccountPlayer.cs" />
+    <Compile Include="AccountProfil.cs" />
+    <Compile Include="MyInitializer.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WorldTest.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Diagram\Diagram.csproj">
-      <Project>{89b60141-cedb-4ed5-a7a8-412a4e1340c3}</Project>
-      <Name>Diagram</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

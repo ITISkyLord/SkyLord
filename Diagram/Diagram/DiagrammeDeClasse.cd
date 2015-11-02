@@ -28,14 +28,14 @@
       <FileName>Units\Monsters\Troll.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Diagram.Guard" Collapsed="true">
+  <Class Name="Diagram.Guard">
     <Position X="9.5" Y="7.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Units\Soldiers\Guard.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Diagram.Warrior" Collapsed="true">
+  <Class Name="Diagram.Warrior">
     <Position X="11.75" Y="7.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
@@ -64,7 +64,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Diagram.Army" Collapsed="true">
-    <Position X="6" Y="5" Width="1.5" />
+    <Position X="6" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAACAAQCAAAAAAAAAAIAAAAAAgAAAAAAAAAAAAABAA=</HashCode>
       <FileName>Army.cs</FileName>
@@ -116,7 +116,7 @@
   <Class Name="Diagram.Island" Collapsed="true">
     <Position X="6" Y="2" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAQohCAAAAIgAAAEACAAAQAIAAEAAgAQAAAAAAAAAg=</HashCode>
+      <HashCode>AAAQohCAAAAIgAAQkACAAAQAIAAEAAAAAAAAAAAAAAg=</HashCode>
       <FileName>Island.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -130,11 +130,11 @@
   <Class Name="Diagram.Mage" Collapsed="true">
     <Position X="6" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAACAgAAAAAAAAAAAAAAAAQAAAAAAAAAgAEAAA=</HashCode>
+      <HashCode>AAAAIAAACAgAAAAAAAAAAAQAAAAQAAAAAAAAAgAEAAA=</HashCode>
       <FileName>Mage.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Diagram.MageLevel" Collapsed="true">
+  <Class Name="Diagram.MageLevel">
     <Position X="16" Y="5.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
@@ -155,28 +155,28 @@
       <FileName>Message.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Diagram.Player">
+  <Class Name="Diagram.Player" Collapsed="true">
     <Position X="8.75" Y="1.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AQAAIQAAAACABAQAAAEAAAQCAAAAQAAAAABAAAAAAAA=</HashCode>
+      <HashCode>AAAAIQAAAQCABAQAAAEAAAQCAAAAQAAAAAAAAAAAAEA=</HashCode>
       <FileName>Player.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Diagram.Profil" Collapsed="true">
     <Position X="8.75" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>gAQAAAAAAAAgAAAEAAAAAAAAAAAAAAACAAAAAQAAAAA=</HashCode>
+      <HashCode>gAQAgACAAAAgAAAEAAAAAAAAAAAAAAACAAAAAQAAAAA=</HashCode>
       <FileName>Profil.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Diagram.Ressource" Collapsed="true">
-    <Position X="6" Y="4.25" Width="1.5" />
+    <Position X="10.75" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AIEAEAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAwAAAg=</HashCode>
       <FileName>Ressource.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Diagram.Spell" Collapsed="true">
+  <Class Name="Diagram.Spell">
     <Position X="2.5" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAIAAAAAAAAAAEAABAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
@@ -225,7 +225,7 @@
       <FileName>ICombatManager.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Enum Name="Diagram.ArmyState" Collapsed="true">
+  <Enum Name="Diagram.ArmyState">
     <Position X="4.25" Y="5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAEAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAI=</HashCode>

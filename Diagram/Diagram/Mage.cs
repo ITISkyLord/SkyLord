@@ -10,17 +10,22 @@ namespace Diagram
         private MageLevel _mageLevel;
         private readonly List<Apprentice> _apprentices;
         private Island _island;
+        private string _name;
 
         /// <summary>
         /// Create a new mage who is associated to an island.
         /// </summary>
         /// <param name="island">It's the island associated to the mage.</param>
-        public Mage( Island island )
+        public Mage( Island island, string name )
         {
             if( island == null ) throw new ArgumentNullException( "island is null" );
             _island = island;
             this._mageLevel = new MageLevel();
             this._apprentices = new List<Apprentice>();
+            if (name == null ) throw new ArgumentNullException("Name cannot be null.");
+            if (name.Length < 4) throw new InvalidOperationException("Enter a name with more than 3 caracters.");
+            _name = name;
+
         }
 
         #region Properties
@@ -37,6 +42,18 @@ namespace Diagram
             set
             {
                 _mageLevel = value;
+            }
+        }
+
+        public string Name
+        {
+            get
+            {
+                return _name;
+            }
+            set
+            {
+                _name = value;
             }
         }
 

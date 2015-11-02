@@ -24,21 +24,40 @@ namespace ITI.Skylord.ModelTest
         [Test]
         public void Create_new_Mage()
         {
-            Mage mage = new Mage( _defaultIsland );
+            Mage mage = new Mage( _defaultIsland,"Mage" );
             Assert.IsNotNull( mage.Apprentices );
         }
 
         [Test]
         public void Mage_begin_level1()
         {
-            Mage mage = new Mage( _defaultIsland );
+            Mage mage = new Mage( _defaultIsland,"Mage" );
             Assert.That( mage.MageLevel.Number == 1 );
+        }
+
+        [Test]
+        public void Create_mage_with_w_name()
+        {
+            Mage mage = new Mage(_defaultIsland, "Mage");
+            Assert.That(mage.Name == "Mage");
         }
 
         [Test]
         public void Create_mage_with_null_island_throw_ArgumentNullException()
         {
-            Assert.Throws<ArgumentNullException>( () => new Mage( null ));
+            Assert.Throws<ArgumentNullException>( () => new Mage( null,"Mage" ));
+        }
+
+        [Test]
+        public void Create_mage_with_null_name_throw_ArgumentNullException()
+        {
+            Assert.Throws<ArgumentNullException>(() => new Mage(_defaultIsland, null));
+        }
+
+        [Test]
+        public void Create_mage_with_a_name_with_3_caracters_throw_InvalidOperationException()
+        {
+            Assert.Throws<InvalidOperationException>(() => new Mage(_defaultIsland, "mag"));
         }
     }
 }
