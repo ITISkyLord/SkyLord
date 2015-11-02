@@ -121,10 +121,10 @@ namespace Diagram
         }
 
         /// <summary>
-        /// 
+        /// Adds a number of units to a regiment in the army.
         /// </summary>
-        /// <param name="unit"></param>
-        /// <param name="numberToAdd"></param>
+        /// <param name="unit">The type of unit to add</param>
+        /// <param name="numberToAdd">The number of units to add.</param>
         internal void AddToRegiment(Unit unit, int numberToAdd )
         {
             KeyValuePair<Unit, int> KvP = FindRegiment( unit );

@@ -11,6 +11,15 @@ namespace Diagram
         private readonly List<Player> _players;
         private readonly Map _map;
 
+        /// <summary>
+        /// Creates a world.
+        /// </summary>
+        public World()
+        {
+            _players = new List<Player>();
+            _map = new Map(this);
+        }
+
         #region Properties
         public List<Player> Players
         {
@@ -27,14 +36,8 @@ namespace Diagram
             {
                 return _map;
             }
-        } 
-        #endregion
-
-        public World()
-        {
-            _players = new List<Player>();
-            _map = new Map(this);
         }
+        #endregion
 
         public Player addNewPlayer( string name, string mail = "toto@gmail.com", string password = "password" )
         {
