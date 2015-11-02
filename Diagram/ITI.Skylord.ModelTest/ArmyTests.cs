@@ -57,7 +57,7 @@ namespace ITI.Skylord.ModelTest
         }
 
         [Test]
-        public void Get_physical_regiments()
+        public void Get_physical_regiments_with_GetRegimentsByDamagetype_method()
         {
             Army army = new Army( ArmyState.defense, _defaultIsland );
             Warrior war = new Warrior();
@@ -65,14 +65,14 @@ namespace ITI.Skylord.ModelTest
             army.Regiments.Add( war, 50 );
             army.Regiments.Add( cyc, 10 );
 
-            Dictionary<Unit, int> dic = army.GetPhysicalRegiments();
+            Dictionary<Unit, int> dic = army.GetRegimentsByDamagetype(UnitDamageType.physical);
 
             Assert.That( dic.Count == 1 );
             Assert.That( dic.ContainsKey( war) && !dic.ContainsKey( cyc ));
         }
 
         [Test]
-        public void Get_magical_regiments()
+        public void Get_magical_regiments_with_GetRegimentsByDamagetype_method()
         {
             Army army = new Army( ArmyState.defense, _defaultIsland );
             Warrior war = new Warrior();
@@ -80,7 +80,7 @@ namespace ITI.Skylord.ModelTest
             army.Regiments.Add( war, 50 );
             army.Regiments.Add( cyc, 10 );
 
-            Dictionary<Unit, int> dic = army.GetMagicalRegiments();
+            Dictionary<Unit, int> dic = army.GetRegimentsByDamagetype( UnitDamageType.magical );
 
             Assert.That( dic.Count == 1 );
             Assert.That( dic.ContainsKey( cyc ) && !dic.ContainsKey( war ) );

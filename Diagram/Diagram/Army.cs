@@ -73,19 +73,9 @@ namespace Diagram
             return _regiments.Where( u => u.Key.Name == unit.Name ).FirstOrDefault();
         }
 
-        internal Dictionary<Unit, int> GetPhysicalRegiments()
+        internal Dictionary<Unit, int> GetRegimentsByDamagetype( UnitDamageType unitDamageType)
         {
-            return _regiments.Where( kvp => kvp.Key.UnitDamageType == UnitDamageType.physical ).ToDictionary( kvp => kvp.Key, kvp => kvp.Value);
+            return _regiments.Where( kvp => kvp.Key.UnitDamageType == unitDamageType ).ToDictionary( kvp => kvp.Key, kvp => kvp.Value);
         }
-
-        internal Dictionary<Unit, int> GetMagicalRegiments()
-        {
-            return _regiments.Where( kvp => kvp.Key.UnitDamageType == UnitDamageType.magical ).ToDictionary( kvp => kvp.Key, kvp => kvp.Value );
-        }
-
-        //public bool addUnitsToRegiment(Unit unit, int nbToAdd )
-        //{
-
-        //}
     }
 }
