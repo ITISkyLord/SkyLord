@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITI.Skylord.ModelTest", "IT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITI.SkyLord.DAL", "ITI.SkyLord.DAL\ITI.SkyLord.DAL.csproj", "{887B07CD-217F-4CE8-A66D-A28567A0776C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITI.SkyLord. ConsoleApplication", "ITI.SkyLord. ConsoleApplication\ITI.SkyLord. ConsoleApplication.csproj", "{CD3D81BD-A9CA-4530-8FA0-C36C401690FF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{887B07CD-217F-4CE8-A66D-A28567A0776C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{887B07CD-217F-4CE8-A66D-A28567A0776C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{887B07CD-217F-4CE8-A66D-A28567A0776C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD3D81BD-A9CA-4530-8FA0-C36C401690FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD3D81BD-A9CA-4530-8FA0-C36C401690FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD3D81BD-A9CA-4530-8FA0-C36C401690FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD3D81BD-A9CA-4530-8FA0-C36C401690FF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

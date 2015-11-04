@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace ITI.SkyLord.DAL.Contexts.GameModel
 {
-    public partial class Spell
+    public class ArmyState
     {
-        public long SpellId { get; set; }
-        public string Description { get; set; }
-        public string Name { get; set; }
+        public long ID { get; set; }
     }
 }

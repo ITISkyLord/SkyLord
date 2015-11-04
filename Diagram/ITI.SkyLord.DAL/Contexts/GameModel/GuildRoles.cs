@@ -1,5 +1,4 @@
-﻿using Diagram;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,12 +6,10 @@ using System.Threading.Tasks;
 
 namespace ITI.SkyLord.DAL.Contexts.GameModel
 {
-    public partial class Technology
+    public class GuildRoles
     {
-        public long TechnologyId { get; set; }
+        public long ID { get; set; }
         public string Name { get; set; }
-
-        public TechnologyLevel TechnologyLevel { get; set; }
-
+        public MemberRight MemberRight { get; set; }
     }
 }

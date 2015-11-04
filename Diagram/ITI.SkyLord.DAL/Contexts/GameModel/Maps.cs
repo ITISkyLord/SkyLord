@@ -5,13 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ITI.SkyLord.DAL.Contexts.GameModel
-{
-   public class Ressources
+{ 
+   public class Maps
     {
         public long ID { get; set; }
-        public int Cristal { get; set; }
-        public int Magic { get; set; }
-        public int Metal { get; set; }
-        public int Wood { get; set; }
+
+        public ICollection<Islands> Island { get; set; }
+//        public Worlds World { get; set; }
     }
 }

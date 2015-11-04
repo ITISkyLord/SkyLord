@@ -34,6 +34,11 @@ namespace Diagram
 
         }
 
+        public Player(string name)
+        {
+            _name = name;
+        }
+
         public string Name
         {
             get

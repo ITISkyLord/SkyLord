@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace ITI.SkyLord.DAL.Contexts.GameModel
 {
-   public class Ressources
+    public class Worlds
     {
         public long ID { get; set; }
-        public int Cristal { get; set; }
-        public int Magic { get; set; }
-        public int Metal { get; set; }
-        public int Wood { get; set; }
+
+        public ICollection<Players> Players { get; set; }
+        public Maps Map { get; set; }
     }
 }

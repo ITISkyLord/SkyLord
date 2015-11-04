@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ITI.SkyLord.DAL.Contexts.MessageModel
 {
-     public partial class MessageModelContext : DbContext
+     public   class MessageModelContext : DbContext
     {
         public MessageModelContext()
         {
@@ -19,7 +19,7 @@ namespace ITI.SkyLord.DAL.Contexts.MessageModel
             throw new UnintentionalCodeFirstException();
         }
 
-        public virtual DbSet<Message> Message { get; set; }
-        public virtual DbSet<Player> Player { get; set; }
+        public virtual DbSet<Messages> Messages { get; set; }
+        public virtual DbSet<Players> Players { get; set; }
     }
 }

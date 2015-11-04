@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace ITI.SkyLord.DAL.Contexts.GameModel
 {
-   public partial class Coordinate
+    public class UnitDamageType
     {
-        public long CoordinateId { get; set; }
-        public int X { get; set; }
-        public int Y { get; set; }
+        public long ID { get; set; }
     }
 }

@@ -4,15 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{887B07CD-217F-4CE8-A66D-A28567A0776C}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{CD3D81BD-A9CA-4530-8FA0-C36C401690FF}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ITI.SkyLord.DAL</RootNamespace>
-    <AssemblyName>ITI.SkyLord.DAL</AssemblyName>
+    <RootNamespace>ITI.SkyLord.ConsoleApplication</RootNamespace>
+    <AssemblyName>ITI.SkyLord.ConsoleApplication</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +24,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -49,41 +52,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Contexts\GameModel\Apprentices.cs" />
-    <Compile Include="Contexts\GameModel\ApprenticesLevel.cs" />
-    <Compile Include="Contexts\GameModel\Armys.cs" />
-    <Compile Include="Contexts\GameModel\ArmyState.cs" />
-    <Compile Include="Contexts\GameModel\Buildings.cs" />
-    <Compile Include="Contexts\GameModel\BuildingsLevel.cs" />
-    <Compile Include="Contexts\GameModel\Coordinates.cs" />
-    <Compile Include="Contexts\GameModel\GameModelContext.cs" />
-    <Compile Include="Contexts\GameModel\MagesLevel.cs" />
-    <Compile Include="Contexts\GameModel\MemberRight.cs" />
-    <Compile Include="Contexts\GameModel\Players.cs" />
-    <Compile Include="Contexts\GameModel\Profils.cs" />
-    <Compile Include="Contexts\GameModel\Guilds.cs" />
-    <Compile Include="Contexts\GameModel\GuildRoles.cs" />
-    <Compile Include="Contexts\GameModel\Islands.cs" />
-    <Compile Include="Contexts\GameModel\Mages.cs" />
-    <Compile Include="Contexts\GameModel\Maps.cs" />
-    <Compile Include="Contexts\GameModel\Ressources.cs" />
-    <Compile Include="Contexts\GameModel\Spells.cs" />
-    <Compile Include="Contexts\GameModel\Technologys.cs" />
-    <Compile Include="Contexts\GameModel\TechnologysLevel.cs" />
-    <Compile Include="Contexts\GameModel\UnitDamageType.cs" />
-    <Compile Include="Contexts\GameModel\Units.cs" />
-    <Compile Include="Contexts\GameModel\UnitStatistics.cs" />
-    <Compile Include="Contexts\GameModel\UnitType.cs" />
-    <Compile Include="Contexts\GameModel\Worlds.cs" />
-    <Compile Include="Contexts\MessageModel\Messages.cs" />
-    <Compile Include="Contexts\MessageModel\MessageModelContext.cs" />
-    <Compile Include="Contexts\MessageModel\Players.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ITI.SkyLord.DAL\ITI.SkyLord.DAL.csproj">
+      <Project>{887b07cd-217f-4ce8-a66d-a28567a0776c}</Project>
+      <Name>ITI.SkyLord.DAL</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
