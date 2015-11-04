@@ -57,6 +57,7 @@
     <Compile Include="Contexts\GameModel\BuildingsLevel.cs" />
     <Compile Include="Contexts\GameModel\Coordinates.cs" />
     <Compile Include="Contexts\GameModel\GameModelContext.cs" />
+    <Compile Include="Contexts\GameModel\GuildStatus.cs" />
     <Compile Include="Contexts\GameModel\MagesLevel.cs" />
     <Compile Include="Contexts\GameModel\MemberRight.cs" />
     <Compile Include="Contexts\GameModel\Players.cs" />

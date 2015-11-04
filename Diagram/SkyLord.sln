@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Diagram", "Diagram\Diagram.csproj", "{89B60141-CEDB-4ED5-A7A8-412A4E1340C3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITI.SkyLord", "Diagram\ITI.SkyLord.csproj", "{89B60141-CEDB-4ED5-A7A8-412A4E1340C3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITI.Skylord.ModelTest", "ITI.Skylord.ModelTest\ITI.Skylord.ModelTest.csproj", "{D9E29326-AF90-4C11-A7A5-689FB6240FB6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITI.SkyLord.DAL", "ITI.SkyLord.DAL\ITI.SkyLord.DAL.csproj", "{887B07CD-217F-4CE8-A66D-A28567A0776C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITI.SkyLord. ConsoleApplication", "ITI.SkyLord. ConsoleApplication\ITI.SkyLord. ConsoleApplication.csproj", "{CD3D81BD-A9CA-4530-8FA0-C36C401690FF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITI.SkyLord.ConsoleApplication", "ITI.SkyLord. ConsoleApplication\ITI.SkyLord.ConsoleApplication.csproj", "{CD3D81BD-A9CA-4530-8FA0-C36C401690FF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

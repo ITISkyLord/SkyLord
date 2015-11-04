@@ -6,8 +6,12 @@ using System.Threading.Tasks;
 
 namespace ITI.SkyLord.DAL.Contexts.GameModel
 {
-   public class MemberRight
+   public enum MemberRight
     {
-        public long ID { get; set; }
+        admin,
+        recruting,
+        firing,
+        diplomaty,
+        allyMessage      
     }
 }

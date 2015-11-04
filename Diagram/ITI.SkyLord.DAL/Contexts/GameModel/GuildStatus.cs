@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace ITI.SkyLord.DAL.Contexts.GameModel
 {
-    public enum TechnologysLevel
+    public enum GuildStatus
     {
+        war,
+        peace,
+        love
     }
 }

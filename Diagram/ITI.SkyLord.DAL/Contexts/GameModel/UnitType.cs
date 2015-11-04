@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace ITI.SkyLord.DAL.Contexts.GameModel
 {
-    public class UnitType
+    public enum UnitType
     {
-        public long ID { get; set; }
     }
 }

@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace ITI.SkyLord.DAL.Contexts.GameModel
 {
-    public class BuildingsLevel
+    public enum BuildingsLevel
     {
-        public long ID { get; set; }
+       
     }
 }

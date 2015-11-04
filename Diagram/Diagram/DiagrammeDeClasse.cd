@@ -260,7 +260,7 @@
       <FileName>UnitType.cs</FileName>
     </TypeIdentifier>
   </Enum>
-  <Enum Name="Diagram.GuildStatus" Collapsed="true">
+  <Enum Name="Diagram.GuildStatus">
     <Position X="12.25" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAECAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>

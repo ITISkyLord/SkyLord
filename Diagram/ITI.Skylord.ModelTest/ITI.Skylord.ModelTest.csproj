@@ -71,9 +71,9 @@
     <Compile Include="WorldTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Diagram\Diagram.csproj">
+    <ProjectReference Include="..\Diagram\ITI.SkyLord.csproj">
       <Project>{89b60141-cedb-4ed5-a7a8-412a4e1340c3}</Project>
-      <Name>Diagram</Name>
+      <Name>ITI.SkyLord</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
