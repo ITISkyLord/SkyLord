@@ -8,31 +8,12 @@ namespace Diagram
 {
     public class CombatResult
     {
-        Island _winningIsland;
-        Island _loosingIsland;
         Ressource _pillagedRessources;
         Army _winningArmy;
         Army _loosingArmy;
-        double _ratioPhysic;
-        double _ratioMagic;
 
         #region Properties
-        public Island WinningIsland
-        {
-            get
-            {
-                return _winningIsland;
-            }
-        }
-
-        public Island LoosingIsland
-        {
-            get
-            {
-                return _loosingIsland;
-            }
-        }
-
+        
         public Ressource PillagedRessources
         {
             get
@@ -60,11 +41,12 @@ namespace Diagram
 
         public CombatResult( Army winningArmy, Army loosingArmy )
         {
-            // result est null egalité
+            if ( winningArmy == null ) throw new ArgumentNullException( "Winning Army", "The winning army cannot be null" );
+            if ( loosingArmy == null ) throw new ArgumentNullException( "Loosing Army", "The loosing army cannot be null" );
+
             this._winningArmy = winningArmy;
             this._loosingArmy = loosingArmy;
-            this._winningIsland = winningArmy.Island;
-            this._loosingIsland = loosingArmy.Island;
+            // _pillagedRessources = winningArmy.GetPillagedRessources;
         }
 
         // Renvoie les armées avec pertes et/ou ce qui reste dedans

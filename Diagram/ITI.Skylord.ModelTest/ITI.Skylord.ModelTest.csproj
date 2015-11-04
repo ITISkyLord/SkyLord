@@ -47,6 +47,7 @@
     <Compile Include="ApprenticeTests.cs" />
     <Compile Include="ArmyTests.cs" />
     <Compile Include="CombatManagerTest.cs" />
+    <Compile Include="CombatResultTests.cs" />
     <Compile Include="CoordinateTests.cs" />
     <Compile Include="BuildingTests.cs" />
     <Compile Include="GuildTests.cs" />

@@ -149,5 +149,18 @@ namespace ITI.Skylord.ModelTest
 
             Assert.That( army.Regiments[ _necromancer ] == 50 && army.Regiments[ _guard ] == 50 );
         }
+
+        [Test]
+        public void GetArmyByRatio_works()
+        {
+            Army army = new Army( ArmyState.defense, _defaultIsland );
+
+            army.Regiments.Add( _guard, 100 );
+            army.Regiments.Add( _necromancer, 56 );
+
+            Army modifiedArmy = army.GetArmyByRatio( 0.256 );
+
+            Assert.That( modifiedArmy.FindRegiment( _guard ).Value == 26 && modifiedArmy.FindRegiment( _necromancer ).Value == 14 );
+        }
     }
 }

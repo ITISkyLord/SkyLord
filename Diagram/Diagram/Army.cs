@@ -147,5 +147,19 @@ namespace Diagram
 
             return army;
         }
+
+        internal Army GetArmyByRatio( double ratio )
+        {
+            Army army = new Army( this.ArmyState, this.Island );
+            int newValue;
+
+            foreach( KeyValuePair<Unit, int> kvp in _regiments )
+            {
+                newValue = (int)Math.Round( (double)kvp.Value * ratio );
+                army.Regiments.Add( kvp.Key, newValue );
+            }
+
+            return army;
+        }
     }
 }

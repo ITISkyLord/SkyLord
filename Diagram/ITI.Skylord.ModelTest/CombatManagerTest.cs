@@ -38,7 +38,7 @@ namespace ITI.Skylord.ModelTest
             _armyAttack.Regiments.Add( new Warrior(), 50 );
             _armyDefense.Regiments.Add( new Warrior(), 15 );
             CombatManager combatManager = new CombatManager();
-            CombatResult combatResult = combatManager.Resolve(_armyAttack, _armyDefense);
+            CombatResult combatResult = combatManager.Resolve( _armyAttack, _armyDefense );
             Assert.That( combatResult.WinningArmy == _armyAttack );
         }
 
@@ -50,7 +50,7 @@ namespace ITI.Skylord.ModelTest
             _armyAttack.Regiments.Add( new Necromancer(), 50 );
             _armyDefense.Regiments.Add( new Necromancer(), 15 );
             CombatManager combatManager = new CombatManager();
-            CombatResult combatResult = combatManager.Resolve(_armyAttack, _armyDefense);
+            CombatResult combatResult = combatManager.Resolve( _armyAttack, _armyDefense );
             Assert.That( combatResult.WinningArmy == _armyAttack );
         }
 
@@ -66,7 +66,7 @@ namespace ITI.Skylord.ModelTest
             _armyDefense.Regiments.Add( new Diagram.Guard(), 10 );
 
             CombatManager combatManager = new CombatManager();
-            CombatResult combatResult = combatManager.Resolve(_armyAttack, _armyDefense);
+            CombatResult combatResult = combatManager.Resolve( _armyAttack, _armyDefense );
             Assert.That( combatResult.WinningArmy == _armyAttack );
         }
         #endregion
