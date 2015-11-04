@@ -125,10 +125,10 @@ namespace Diagram
         }
 
         /// <summary>
-        /// 
+        /// Adds a number of units to a regiment in the army.
         /// </summary>
-        /// <param name="unit"></param>
-        /// <param name="numberToAdd"></param>
+        /// <param name="unit">The type of unit to add</param>
+        /// <param name="numberToAdd">The number of units to add.</param>
         internal void AddToRegiment(Unit unit, int numberToAdd )
         {
             KeyValuePair<Unit, int> KvP = FindRegiment( unit );
@@ -147,6 +147,20 @@ namespace Diagram
             foreach( KeyValuePair<Unit, int> kvp in this.Regiments)
             {
                 army.Regiments.Add( kvp.Key, kvp.Value );
+            }
+
+            return army;
+        }
+
+        internal Army GetArmyByRatio( double ratio )
+        {
+            Army army = new Army( this.ArmyState, this.Island );
+            int newValue;
+
+            foreach( KeyValuePair<Unit, int> kvp in _regiments )
+            {
+                newValue = (int)Math.Round( (double)kvp.Value * ratio );
+                army.Regiments.Add( kvp.Key, newValue );
             }
 
             return army;
