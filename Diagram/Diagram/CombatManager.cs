@@ -88,7 +88,7 @@ namespace Diagram
                 }
                 return SimpleLossResult( ratioLooserMagic, attackPointsMagic, false );
             }
-
+            return null;
         }
 
         private Army SimpleLossResult( double ratio, double attackPoints, bool isPhysical )
@@ -212,13 +212,15 @@ namespace Diagram
 
             if( physicWin && magicWin )
             {
-                _winningArmy = attackingPhysicArmy.Join( attackingMagicArmy )();
-
+                // _winningArmy = attackingPhysicArmy.Join( attackingMagicArmy )();
+                Console.WriteLine( "Victoire de l'attaquant !" );
             } else if( !physicWin && !magicWin )
             {
-                _winningArmy = defendingAgainstPhysicArmy.Join( defendingAgainstMagicArmy )();
+                //  _winningArmy = defendingAgainstPhysicArmy.Join( defendingAgainstMagicArmy )();
+                Console.WriteLine( "Victoire du défenseur !" );
 
-            } else
+            }
+            else
             {
                 throw new NotImplementedException();
             }
