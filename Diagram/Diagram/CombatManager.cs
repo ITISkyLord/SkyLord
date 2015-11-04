@@ -10,13 +10,17 @@ namespace Diagram
     {
         private Army _winningArmy;
         private Army _loosingArmy;
-        double _attackPointsPhysic = 1.0;
-        double _attackPointsMagic = 1.0;
+        private Army _attackingArmy;
+        private Army _defendingArmy;
+        double _attackPointsPhysic = 0;
+        double _attackPointsMagic = 0;
 
         public CombatResult Resolve( Army attackingArmy, Army defendingArmy )
         {
             double physicResist = 1.0;
             double magicResist = 1.0;
+            this._attackingArmy = attackingArmy;
+            this._defendingArmy = defendingArmy;
 
             foreach( KeyValuePair<Unit, int> kvp in attackingArmy.Regiments )
             {
@@ -35,37 +39,7 @@ namespace Diagram
             {
                 SimpleAttack( attackingArmy, defendingArmy, _attackPointsPhysic, physicResist, _attackPointsMagic, magicResist );
             }
-            return null;
-
-            //else if( isAttackingArmyWinPhysic && !isAttackingArmyWinMagic )
-            //{
-            //    if( ratioWinnerPhysic > ratioWinnerMagic )
-            //    {
-            //        _winningArmy = attackingArmy;
-            //        _loosingArmy = defendingArmy;
-            //    }
-            //    else
-            //    {
-            //        _winningArmy = defendingArmy;
-            //        _loosingArmy = attackingArmy;
-            //    }
-
-            //}
-            //else if( !isAttackingArmyWinPhysic && isAttackingArmyWinMagic )
-            //{
-            //    if( ratioWinnerMagic > ratioWinnerPhysic )
-            //    {
-            //        _winningArmy = attackingArmy;
-            //        _loosingArmy = defendingArmy;
-            //    }
-            //    else
-            //    {
-            //        _winningArmy = defendingArmy;
-            //        _loosingArmy = attackingArmy;
-            //    }
-            //}
-
-
+            return new CombatResult(_winningArmy, _loosingArmy);
         }
 
         private void SimpleAttack( Army attackingArmy, Army defendingArmy, double attackPointsPhysic, double physicResist, double attackPointsMagic, double magicResist )
@@ -91,7 +65,7 @@ namespace Diagram
                     _winningArmy = defendingArmy;
                     _loosingArmy = attackingArmy;
                 }
-                SimpleLossResult( ratioLooserPhysic, true );
+                SimpleLossResult( ratioLooserPhysic, attackPointsPhysic, true );
             }
             else if( attackPointsPhysic < 5 )
             {
@@ -109,67 +83,94 @@ namespace Diagram
                     _winningArmy = defendingArmy;
                     _loosingArmy = attackingArmy;
                 }
-                SimpleLossResult( ratioLooserMagic, false );
-
+                SimpleLossResult( ratioLooserMagic, attackPointsMagic, false );
             }
-            
+
         }
 
-        private Army SimpleLossResult( double ratio, bool isPhysical )
+        private void SimpleLossResult( double ratio, double attackPoints, bool isPhysical )
         {
 
             //double result = _winningArmy.Regiments.Values.First() * Math.Pow( _ratioPhysic , 1.5);
             //int regiment = _winningArmy.Regiments.Values.First();
             int totalNumberInRegiments = 0;
             double result = 0;
+            Dictionary<Unit,int> typeRegiments = new Dictionary<Unit, int>();
             Dictionary<Unit,int> unitsWithDamage = new Dictionary<Unit, int>();
-            Dictionary<Unit, double> unitsWithratio = new Dictionary<Unit, double>();
+            Dictionary<Unit,double> unitsWithratio = new Dictionary<Unit, double>();
+
+
             if( isPhysical )
             {
-                int attackPoints = 0;
-                
-                Dictionary<Unit,int> physicRegiments = _winningArmy.GetRegimentsByDamagetype( UnitDamageType.physical );
+                typeRegiments = _winningArmy.GetRegimentsByDamagetype( UnitDamageType.physical );
+            }
+            else
+            {
+                typeRegiments = _winningArmy.GetRegimentsByDamagetype( UnitDamageType.magical );
+            }
 
-                foreach( KeyValuePair<Unit, int> kvp in physicRegiments )
-                {
-                    attackPoints += kvp.Value * kvp.Key.UnitStatistics.Attack;
-                }
-                foreach( KeyValuePair<Unit, int> kvp in physicRegiments )
+            if( _winningArmy.ArmyState == ArmyState.movement )
+            {
+                //foreach( KeyValuePair<Unit, int> kvp in typeRegiments )
+                //{
+                //    attackPoints += kvp.Value * kvp.Key.UnitStatistics.Attack;
+                //}
+                foreach( KeyValuePair<Unit, int> kvp in typeRegiments )
                 {
                     totalNumberInRegiments += kvp.Value;
                     unitsWithDamage.Add( kvp.Key, kvp.Value * kvp.Key.UnitStatistics.Attack );
                 }
 
-                foreach( KeyValuePair<Unit,int> kvp in unitsWithDamage )
+                foreach( KeyValuePair<Unit, int> kvp in unitsWithDamage )
                 {
                     double res = (double)kvp.Value / attackPoints;
                     unitsWithratio.Add( kvp.Key, res );
                 }
 
-                foreach( KeyValuePair<Unit, int> kvp in physicRegiments )
+                foreach( KeyValuePair<Unit, int> kvp in typeRegiments )
                 {
+                    result = kvp.Value * Math.Pow( ratio, 1.5 );
+
                     foreach( KeyValuePair<Unit, double> kvp2 in unitsWithratio )
                     {
-                        if(kvp2.Key == kvp.Key)
+                        if( kvp2.Key == kvp.Key )
                         {
 
-                       
-                            result = kvp.Value * Math.Pow( ratio, 1.5 );
-
-                            int res = (int)(result * kvp2.Value);
-                            Console.WriteLine( "Unit = "+kvp.Key );
-                            Console.WriteLine( "res = "+res );
-                            Console.WriteLine( "Avant le substract, winningArmy warrior = " + _winningArmy.Regiments.Values.First() );
+                            int loss = (int)(result * kvp2.Value);
+                            Console.Write( "Unit = " + kvp.Key );
+                            Console.WriteLine( " : loss = " + loss );
+                            Console.WriteLine( "Avant le substract, winningArmy première unité dans le dico = " + _winningArmy.Regiments.Values.First() );
                             Console.WriteLine( "winningArmyState = " + _winningArmy.ArmyState );
 
-                            _winningArmy.SubstractFromRegiment( kvp.Key, res );
-                             Console.WriteLine( "Après le substract, winningArmy warrior = " + _winningArmy.Regiments.Values.First() );
+                            _winningArmy.SubstractFromRegiment( kvp.Key, loss );
+                            Console.WriteLine( "Après le substract, winningArmy première unité dans le dico = " + _winningArmy.Regiments.Values.First() );
                         }
                     }
                 }
             }
+            else
+            {
+                int numberOfDefendingTroops = 0;
+                int numberOfUnits = 0;
+                foreach( int i in _defendingArmy.Regiments.Values )
+                {
+                    numberOfDefendingTroops += i;
+                    numberOfUnits++;
+                }
+                result = numberOfDefendingTroops * Math.Pow( ratio, 1.5 );
+                int resultByUnits = (int)result / numberOfUnits;
+                Army tmpArmy = _winningArmy.Copy();
+                foreach( Unit u in tmpArmy.Regiments.Keys )
+                {
+                    Console.Write( "Unit = " + u );
+                    Console.WriteLine( " : loss = " + resultByUnits );
+                    Console.WriteLine( "winningArmyState = " + _winningArmy.ArmyState );
+                    Console.WriteLine( "Avant le substract, winningArmy warrior = " + _winningArmy.Regiments.Values.First() );
+                    _winningArmy.SubstractFromRegiment( u, resultByUnits );
+                    Console.WriteLine( "Après le substract, winningArmy warrior = " + _winningArmy.Regiments.Values.First() );
 
-            return _winningArmy;
+                }
+            }
         }
     }
 }

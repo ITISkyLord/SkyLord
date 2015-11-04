@@ -41,7 +41,7 @@ namespace Diagram
             }
         }
 
-        public Army AttackingArmy
+        public Army WinningArmy
         {
             get
             {
@@ -49,7 +49,7 @@ namespace Diagram
             }
         }
 
-        public Army DefendingArmy
+        public Army LoosingArmy
         {
             get
             {
@@ -58,13 +58,13 @@ namespace Diagram
         } 
         #endregion
 
-        public CombatResult( Army attackingArmy, Army defendingArmy )
+        public CombatResult( Army winningArmy, Army loosingArmy )
         {
             // result est null egalité
-            this._winningArmy = attackingArmy;
-            this._loosingArmy = defendingArmy;
-            this._winningIsland = attackingArmy.Island;
-            this._loosingIsland = defendingArmy.Island;
+            this._winningArmy = winningArmy;
+            this._loosingArmy = loosingArmy;
+            this._winningIsland = winningArmy.Island;
+            this._loosingIsland = loosingArmy.Island;
         }
 
         // Renvoie les armées avec pertes et/ou ce qui reste dedans
