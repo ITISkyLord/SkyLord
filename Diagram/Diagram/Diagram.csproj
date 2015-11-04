@@ -58,6 +58,7 @@
     <Compile Include="IsValidEmailStatic.cs" />
     <Compile Include="Technology.cs" />
     <Compile Include="TechnologyLevel.cs" />
+    <Compile Include="Units\UnitName.cs" />
     <Compile Include="Units\UnitStatistics.cs" />
     <Compile Include="Units\Magic\Cyclop.cs" />
     <Compile Include="Units\Monsters\Goblin.cs" />

@@ -8,6 +8,7 @@ namespace Diagram
     public abstract class Level
     {
         private int _number;
+        private Ressource _cost;
         public Level( int number = 1 )
         {
             _number = number;
