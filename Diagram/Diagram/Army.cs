@@ -136,5 +136,16 @@ namespace Diagram
             _regiments.Remove( unit );
             _regiments.Add( unit, finalUnitNumber );
         }
+
+        internal Army Copy()
+        {
+            Army army = new Army(this.ArmyState, this.Island);
+            foreach( KeyValuePair<Unit, int> kvp in this.Regiments)
+            {
+                army.Regiments.Add( kvp.Key, kvp.Value );
+            }
+
+            return army;
+        }
     }
 }
