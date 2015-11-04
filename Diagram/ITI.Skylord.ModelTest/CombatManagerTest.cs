@@ -43,6 +43,18 @@ namespace ITI.Skylord.ModelTest
         }
 
         [Test]
+        public void Two_armies_physics_fights_armyattack_loose_15warriors_vs_50warriors_return_CombatResult_with_the_winner()
+        {
+            _armyAttack.Regiments.Clear();
+            _armyDefense.Regiments.Clear();
+            _armyAttack.Regiments.Add( new Warrior(), 15 );
+            _armyDefense.Regiments.Add( new Warrior(), 50 );
+            CombatManager combatManager = new CombatManager();
+            CombatResult combatResult = combatManager.Resolve(_armyAttack, _armyDefense);
+            Assert.That( combatResult.WinningArmy == _armyDefense );
+        }
+
+        [Test]
         public void Two_armies_magics_fights_armyattack_wins_50necromancer_vs_15necromancer_return_CombatResult_with_the_winner()
         {
             _armyAttack.Regiments.Clear();
@@ -52,6 +64,17 @@ namespace ITI.Skylord.ModelTest
             CombatManager combatManager = new CombatManager();
             CombatResult combatResult = combatManager.Resolve(_armyAttack, _armyDefense);
             Assert.That( combatResult.WinningArmy == _armyAttack );
+        }
+        [Test]
+        public void Two_armies_magics_fights_armyattack_looses_15necromancer_vs_100necromancer_return_CombatResult_with_the_winner()
+        {
+            _armyAttack.Regiments.Clear();
+            _armyDefense.Regiments.Clear();
+            _armyAttack.Regiments.Add( new Necromancer(), 15 );
+            _armyDefense.Regiments.Add( new Necromancer(), 100 );
+            CombatManager combatManager = new CombatManager();
+            CombatResult combatResult = combatManager.Resolve(_armyAttack, _armyDefense);
+            Assert.That( combatResult.WinningArmy == _armyDefense );
         }
 
         [Test]

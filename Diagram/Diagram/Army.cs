@@ -9,7 +9,7 @@ namespace Diagram
     {
         private ArmyState _armyState;
         private Island _island;
-        private readonly Dictionary<Unit, int> _regiments;
+        private Dictionary<Unit, int> _regiments;
 
         /// <summary>
         /// Create new army.
@@ -48,6 +48,10 @@ namespace Diagram
             get
             {
                 return _regiments;
+            }
+            set
+            {
+                _regiments = value;
             }
         }
 

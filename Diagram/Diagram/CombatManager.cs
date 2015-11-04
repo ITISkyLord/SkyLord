@@ -10,39 +10,42 @@ namespace Diagram
     {
         private Army _winningArmy;
         private Army _loosingArmy;
-        private Army _attackingArmy;
-        private Army _defendingArmy;
-        double _attackPointsPhysic = 0;
-        double _attackPointsMagic = 0;
 
         public CombatResult Resolve( Army attackingArmy, Army defendingArmy )
         {
             double physicResist = 1.0;
             double magicResist = 1.0;
-            this._attackingArmy = attackingArmy;
-            this._defendingArmy = defendingArmy;
+            double ratioPhysicAttack;
+            double ratioMagicAttack;
+            double attackTotal;
+            double attackPointsPhysic = 0;
+            double attackPointsMagic = 0;
 
             foreach( KeyValuePair<Unit, int> kvp in attackingArmy.Regiments )
             {
                 if( kvp.Key.UnitDamageType == UnitDamageType.physical )
-                    _attackPointsPhysic += (kvp.Value * kvp.Key.UnitStatistics.Attack);
+                    attackPointsPhysic += (kvp.Value * kvp.Key.UnitStatistics.Attack);
                 else
-                    _attackPointsMagic += (kvp.Value * kvp.Key.UnitStatistics.Attack);
+                    attackPointsMagic += (kvp.Value * kvp.Key.UnitStatistics.Attack);
             }
+            attackTotal = attackPointsPhysic + attackPointsMagic;
+            ratioPhysicAttack = attackPointsPhysic / attackTotal;
+            ratioMagicAttack = attackPointsMagic / attackTotal;
 
-            foreach( KeyValuePair<Unit, int> kvp in defendingArmy.Regiments )
+            physicResist = GetPhysicResist( defendingArmy );
+            magicResist = GetMagicResist( defendingArmy );
+
+            if( attackPointsMagic == 0 || attackPointsPhysic == 0 )
             {
-                physicResist += (kvp.Value * kvp.Key.UnitStatistics.PhysicResist);
-                magicResist += (kvp.Value * kvp.Key.UnitStatistics.MagicResist);
-            }
-            if( _attackPointsMagic < 5 || _attackPointsPhysic < 5 )
+                SimpleAttack( attackingArmy, defendingArmy, attackPointsPhysic, physicResist, attackPointsMagic, magicResist );
+            } else
             {
-                SimpleAttack( attackingArmy, defendingArmy, _attackPointsPhysic, physicResist, _attackPointsMagic, magicResist );
+                ComplexeAttack( attackingArmy, defendingArmy, attackPointsPhysic, attackPointsMagic, physicResist, magicResist, ratioPhysicAttack, ratioMagicAttack);
             }
-            return new CombatResult(_winningArmy, _loosingArmy);
+            return new CombatResult( _winningArmy, _loosingArmy );
         }
 
-        private void SimpleAttack( Army attackingArmy, Army defendingArmy, double attackPointsPhysic, double physicResist, double attackPointsMagic, double magicResist )
+        private Army SimpleAttack( Army attackingArmy, Army defendingArmy, double attackPointsPhysic, double physicResist, double attackPointsMagic, double magicResist )
         {
             double ratioWinnerPhysic = 1.0;
             double ratioWinnerMagic = 1.0;
@@ -65,7 +68,7 @@ namespace Diagram
                     _winningArmy = defendingArmy;
                     _loosingArmy = attackingArmy;
                 }
-                SimpleLossResult( ratioLooserPhysic, attackPointsPhysic, true );
+                return SimpleLossResult( ratioLooserPhysic, attackPointsPhysic, true );
             }
             else if( attackPointsPhysic < 5 )
             {
@@ -83,16 +86,13 @@ namespace Diagram
                     _winningArmy = defendingArmy;
                     _loosingArmy = attackingArmy;
                 }
-                SimpleLossResult( ratioLooserMagic, attackPointsMagic, false );
+                return SimpleLossResult( ratioLooserMagic, attackPointsMagic, false );
             }
 
         }
 
-        private void SimpleLossResult( double ratio, double attackPoints, bool isPhysical )
+        private Army SimpleLossResult( double ratio, double attackPoints, bool isPhysical )
         {
-
-            //double result = _winningArmy.Regiments.Values.First() * Math.Pow( _ratioPhysic , 1.5);
-            //int regiment = _winningArmy.Regiments.Values.First();
             int totalNumberInRegiments = 0;
             double result = 0;
             Dictionary<Unit,int> typeRegiments = new Dictionary<Unit, int>();
@@ -111,10 +111,6 @@ namespace Diagram
 
             if( _winningArmy.ArmyState == ArmyState.movement )
             {
-                //foreach( KeyValuePair<Unit, int> kvp in typeRegiments )
-                //{
-                //    attackPoints += kvp.Value * kvp.Key.UnitStatistics.Attack;
-                //}
                 foreach( KeyValuePair<Unit, int> kvp in typeRegiments )
                 {
                     totalNumberInRegiments += kvp.Value;
@@ -152,7 +148,7 @@ namespace Diagram
             {
                 int numberOfDefendingTroops = 0;
                 int numberOfUnits = 0;
-                foreach( int i in _defendingArmy.Regiments.Values )
+                foreach( int i in _winningArmy.Regiments.Values )
                 {
                     numberOfDefendingTroops += i;
                     numberOfUnits++;
@@ -171,6 +167,82 @@ namespace Diagram
 
                 }
             }
+            _loosingArmy.Regiments.Clear();
+            return _winningArmy;
+        }
+
+        private void ComplexeAttack( Army attackingArmy, Army defendingArmy, double attackPointsPhysic, double attackPointsMagic, double physicResist, double magicResist, double ratioPhysicAttack, double ratioMagicAttack )
+        {
+            bool physicWin = false;
+            bool magicWin = false;
+            Army attackingPhysicArmy = attackingArmy.Copy();
+            attackingPhysicArmy.Regiments = attackingPhysicArmy.GetRegimentsByDamagetype( UnitDamageType.physical );
+            Army attackingMagicArmy = attackingArmy.Copy();
+            attackingMagicArmy.Regiments = attackingMagicArmy.GetRegimentsByDamagetype( UnitDamageType.magical );
+
+            Army defendingAgainstPhysicArmy = defendingArmy.GetArmyByRatio( ratioPhysicAttack );
+            Army defendingAgainstMagicArmy = defendingArmy.GetArmyByRatio( ratioMagicAttack );
+
+            Army tmpArmyPhysic = SimpleAttack( attackingPhysicArmy, defendingAgainstPhysicArmy, attackPointsPhysic, GetPhysicResist( defendingAgainstPhysicArmy ), 0, 0 );
+            if( tmpArmyPhysic == attackingPhysicArmy)
+            {
+                attackingPhysicArmy = _winningArmy; // Voir si ça marche ou s'il faut pas mettre tmpArmyPhysic
+                defendingAgainstPhysicArmy = _loosingArmy;
+                physicWin = true;
+
+            } else if( tmpArmyPhysic == defendingAgainstPhysicArmy)
+            {
+                attackingPhysicArmy = _loosingArmy;
+                defendingAgainstPhysicArmy = _winningArmy;  // Voir si ça marche ou s'il faut pas mettre tmpArmyPhysic
+                physicWin = false;
+            }
+            Army tmpArmyMagic = SimpleAttack(attackingMagicArmy, defendingAgainstMagicArmy, 0,0,attackPointsMagic, GetMagicResist(defendingAgainstMagicArmy));
+            if( tmpArmyMagic == attackingMagicArmy )
+            {
+                attackingMagicArmy = _winningArmy; // Voir si ça marche ou s'il faut pas mettre tmpArmyPhysic
+                defendingAgainstMagicArmy = _loosingArmy;
+                magicWin = true;
+            }
+            else if( tmpArmyMagic == defendingAgainstMagicArmy )
+            {
+                attackingMagicArmy = _loosingArmy; 
+                defendingAgainstMagicArmy = _winningArmy; // Voir si ça marche ou s'il faut pas mettre tmpArmyMagic
+                magicWin = false;
+            }
+
+            if( physicWin && magicWin )
+            {
+                _winningArmy = attackingPhysicArmy.Join( attackingMagicArmy )();
+
+            } else if( !physicWin && !magicWin )
+            {
+                _winningArmy = defendingAgainstPhysicArmy.Join( defendingAgainstMagicArmy )();
+
+            } else
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        private double GetPhysicResist( Army army )
+        {
+            double physicResist = 0;
+            foreach( KeyValuePair<Unit,int> kvp in army.Regiments)
+            {
+                physicResist += (kvp.Value * kvp.Key.UnitStatistics.PhysicResist);
+            }
+
+            return physicResist;
+        }
+        private double GetMagicResist( Army army )
+        {
+            double magicResist = 0;
+            foreach( KeyValuePair<Unit, int> kvp in army.Regiments)
+            {
+                magicResist += (kvp.Value * kvp.Key.UnitStatistics.MagicResist);
+            }
+
+            return magicResist;
         }
     }
 }
