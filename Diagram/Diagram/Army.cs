@@ -161,5 +161,29 @@ namespace Diagram
 
             return army;
         }
+
+        internal void JoinArmies( Army armyToJoin )
+        {
+            Army joinedArmy = this.Copy();
+
+            foreach(KeyValuePair<Unit, int> kvp in armyToJoin.Regiments )
+            {
+                if ( joinedArmy.Regiments.Any( r => r.Key == kvp.Key ) )
+                {
+                    KeyValuePair<Unit, int> reg = armyToJoin.FindRegiment( kvp.Key );
+                    joinedArmy.AddToRegiment( reg.Key, reg.Value );
+                }
+                else
+                {
+                    joinedArmy.Regiments.Add( kvp.Key, kvp.Value );
+                }
+            }
+
+            _regiments.Clear();
+            foreach( KeyValuePair<Unit, int> kvp in joinedArmy.Regiments )
+            {
+                _regiments.Add( kvp.Key, kvp.Value );
+            }
+        }
     }
 }

@@ -52,13 +52,13 @@ namespace ITI.Skylord.ModelTest
         [Test]
         public void Create_new_necromancer_has_the_good_unitType()
         {
-            Unit necromancer = new Unit( UnitName.necromancer, UnitDamageType.physical, UnitType.magic, new UnitStatistics( 70, 30, 15, 10, 10, 5 ), new Ressource( 10, 10, 10, 10 ) );
+            Unit necromancer = new Unit( UnitName.necromancer, UnitDamageType.magical, UnitType.magic, new UnitStatistics( 70, 30, 15, 10, 10, 5 ), new Ressource( 10, 10, 10, 10 ) );
             Assert.That( necromancer.UnitDamageType == UnitDamageType.magical );
         }
         [Test]
         public void Create_new_cyclop_has_the_good_unitType()
         {
-            Unit cyclop = new Unit( UnitName.necromancer, UnitDamageType.physical, UnitType.magic, new UnitStatistics( 50, 40, 20, 5, 10, 10 ), new Ressource( 10, 10, 10, 10 ) );
+            Unit cyclop = new Unit( UnitName.cyclop, UnitDamageType.magical, UnitType.magic, new UnitStatistics( 50, 40, 20, 5, 10, 10 ), new Ressource( 10, 10, 10, 10 ) );
             Assert.That( cyclop.UnitDamageType == UnitDamageType.magical );
         }
         [Test]

@@ -27,8 +27,8 @@ namespace ITI.Skylord.ModelTest
             _defaultIsland = _world.Map.Islands.Values.First();
             _warrior = new Unit( UnitName.warrior, UnitDamageType.physical, UnitType.soldier, new UnitStatistics( 70, 50, 25, 25, 15, 5 ), new Ressource( 10, 10, 10, 10 ) );
             _guard = new Unit( UnitName.guard, UnitDamageType.physical, UnitType.soldier, new UnitStatistics( 50, 70, 30, 15, 15, 5 ), new Ressource( 10, 10, 10, 10 ) );
-            _necromancer = new Unit( UnitName.necromancer, UnitDamageType.physical, UnitType.magic, new UnitStatistics( 70, 30, 15, 10, 10, 5 ), new Ressource( 10, 10, 10, 10 ) );
-            _cyclop = new Unit( UnitName.necromancer, UnitDamageType.physical, UnitType.magic, new UnitStatistics( 50, 40, 20, 5, 10, 10 ), new Ressource( 10, 10, 10, 10 ) );
+            _necromancer = new Unit( UnitName.necromancer, UnitDamageType.magical, UnitType.magic, new UnitStatistics( 70, 30, 15, 10, 10, 5 ), new Ressource( 10, 10, 10, 10 ) );
+            _cyclop = new Unit( UnitName.cyclop, UnitDamageType.magical, UnitType.magic, new UnitStatistics( 50, 40, 20, 5, 10, 10 ), new Ressource( 10, 10, 10, 10 ) );
         }
         [Test]
         public void Create_new_army()
@@ -161,6 +161,23 @@ namespace ITI.Skylord.ModelTest
             Army modifiedArmy = army.GetArmyByRatio( 0.256 );
 
             Assert.That( modifiedArmy.FindRegiment( _guard ).Value == 26 && modifiedArmy.FindRegiment( _necromancer ).Value == 14 );
+        }
+
+        [Test]
+        public void JoinArmies_works()
+        {
+            Island island2 = new Island( "TestIsland2", new Coordinate( 1, 1 ), false );
+            Army army = new Army( ArmyState.defense, _defaultIsland );
+            Army army2 = new Army( ArmyState.movement, island2 );
+            army.Regiments.Add( _guard, 100 );
+            army.Regiments.Add( _necromancer, 100 );
+            army2.Regiments.Add( _guard, 125 );
+            army2.Regiments.Add( _cyclop, 100 );
+
+            army.JoinArmies( army2 );
+
+            Assert.That( army.Regiments[ _guard ] == 225 && army.Regiments[_necromancer] == 100 && army.Regiments[_cyclop] == 100);
+            Assert.That( army.Regiments.Count == 3 );
         }
     }
 }
