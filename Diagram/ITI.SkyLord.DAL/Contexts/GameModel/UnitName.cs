@@ -1,4 +1,4 @@
-﻿namespace ITI.SkyLord.Units
+﻿namespace ITI.SkyLord.DAL.Contexts.GameModel
 {
     public enum UnitName
     {

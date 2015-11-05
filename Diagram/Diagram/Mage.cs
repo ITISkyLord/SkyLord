@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Diagram
+namespace ITI.SkyLord
 {
     public class Mage
     {
@@ -11,7 +11,6 @@ namespace Diagram
         private MageLevel _mageLevel;
         private readonly List<Apprentice> _apprentices;
         private Island _island;
-        private string _name;
 
         /// <summary>
         /// Create a new mage who is associated to an island.
@@ -61,18 +60,7 @@ namespace Diagram
                 _mageLevel = value;
             }
         }
-
-        public string Name
-        {
-            get
-            {
-                return _name;
-            }
-            set
-            {
-                _name = value;
-            }
-        }
+        
 
         /// <summary>
         /// Gets the list of apprentices of the mage.

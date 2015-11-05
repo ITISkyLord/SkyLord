@@ -9,9 +9,10 @@ namespace ITI.SkyLord.DAL.Contexts.GameModel
    public class Unit
     {
         public long UnitId { get; set; }
-        public string Name { get; set; }
-        public UnitStatistics UnitStatistics { get; set; }
+        public UnitName Name { get; set; }
+        public UnitStatistic UnitStatistics { get; set; }
         public UnitType UnitType { get; set; }
-        public UnitDamageType UnitDamageType { get; set;}
+        public UnitDamageType UnitDamageType { get; set; }
+        public Ressource UnitCost { get; set; }
     }
 }

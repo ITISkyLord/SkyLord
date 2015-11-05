@@ -9,16 +9,21 @@ using System.Threading.Tasks;
 namespace ITI.SkyLord.Ef.Test
 {
     [TestFixture]
-    public class Player
+    public class PlayerTest
     {
         [Test]
-        public void CreatePlayer()
+        public void Add2Players()
         {
+            Player testPlayer = new Player { Name = "Lolo" };
+            Player testPlayer2 = new Player { Name = "Lili" };
             using (GameEntity context = new GameEntity())
             {
-                context.Players.Add(new Players { Name = "Boss" });
+                context.Players.Add(testPlayer);
+                context.Players.Add(testPlayer2);
                 context.SaveChanges();
             }
+            Console.WriteLine("Player saved");
+            Console.ReadLine();
         }
 
         [Test]
@@ -26,9 +31,9 @@ namespace ITI.SkyLord.Ef.Test
         {
             using (GameEntity context = new GameEntity())
             {
-                foreach(Players P in context.Players)
+                foreach(Player p in context.Players)
                 {
-                    Console.WriteLine("Name: {0}", P.Name);
+                    Console.WriteLine("Name: {0}", p.Name);
                 }
             }
         }

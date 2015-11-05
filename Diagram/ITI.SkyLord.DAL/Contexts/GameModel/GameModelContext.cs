@@ -8,32 +8,28 @@ using System.Threading.Tasks;
 
 namespace ITI.SkyLord.DAL.Contexts.GameModel
 {
-    public   class GameEntity : DbContext
+    public partial class GameEntity : DbContext
     {
         public GameEntity()
+            :base("SkyLordDb")
         {          
         }
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            //throw new UnintentionalCodeFirstException();
-        }
-
-        public virtual DbSet<Profils> Profils { get; set; }
-        public virtual DbSet<Players> Players { get; set; }
-        public virtual DbSet<Worlds> Worlds { get; set; }
-        public virtual DbSet<Apprentices> Apprentices { get; set; }
-        public virtual DbSet<Armys> Armys { get; set; }
-        public virtual DbSet<Buildings> Buildings { get; set; }
-        public virtual DbSet<Guilds> Guilds { get; set; }
-        public virtual DbSet<Coordinates> Coordinates { get; set; }
-        public virtual DbSet<GuildRoles> GuildRoles { get; set; }
-        public virtual DbSet<Islands> Islands { get; set; }
-        public virtual DbSet<Mages> Mages { get; set; }
-        public virtual DbSet<Ressources> Ressources { get; set; }
-        public virtual DbSet<Spells> Spells { get; set; }
-        public virtual DbSet<Units> Units { get; set; }
-        public virtual DbSet<Technologys> Technologys { get; set; }
-        public virtual DbSet<UnitStatistics> UnitStatistics { get; set; }
+        public virtual DbSet<Profil> Profils { get; set; }
+        public virtual DbSet<Player> Players { get; set; }
+        public virtual DbSet<World> Worlds { get; set; }
+        public virtual DbSet<Apprentice> Apprentices { get; set; }
+        public virtual DbSet<Army> Armys { get; set; }
+        public virtual DbSet<Building> Buildings { get; set; }
+        public virtual DbSet<Guild> Guilds { get; set; }
+        public virtual DbSet<Coordinate> Coordinates { get; set; }
+        public virtual DbSet<GuildRole> GuildRoles { get; set; }
+        public virtual DbSet<Island> Islands { get; set; }
+        public virtual DbSet<Mage> Mages { get; set; }
+        public virtual DbSet<Ressource> Ressources { get; set; }
+        public virtual DbSet<Spell> Spells { get; set; }
+        public virtual DbSet<Unit> Units { get; set; }
+        public virtual DbSet<Technology> Technologys { get; set; }
+        public virtual DbSet<UnitStatistic> UnitStatistics { get; set; }
     }
 }

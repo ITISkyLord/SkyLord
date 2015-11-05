@@ -15,6 +15,7 @@ namespace ITI.SkyLord.DAL.Contexts.GameModel
         public string PublicMessage { get; set; }
         public bool Recrutement { get; set; }
 
+        //TODO : ça fonctionne sur EF ?
         public ICollection<KeyValuePair<Player,GuildRole>> Members { get; set; }
     }
 }

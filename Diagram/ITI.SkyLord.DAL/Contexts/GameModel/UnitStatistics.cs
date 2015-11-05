@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace ITI.SkyLord.DAL.Contexts.GameModel
 {
-   public class UnitStatistics
+   public class UnitStatistic
     {
-        public long ID { get; set; }
+        public int UnitStatisticId { get; set; }
         public int Attack { get; set; }
         public int Capacity { get; set; }
         public int Consumption { get; set; }
