@@ -9,7 +9,9 @@ namespace Diagram
     {
         private ArmyState _armyState;
         private Island _island;
-        private readonly Dictionary<Unit, int> _regiments;
+        private readonly RegimentList _regiments;
+
+        //private readonly Dictionary<Unit, int> _regiments;
 
         /// <summary>
         /// Create new army.
@@ -21,7 +23,7 @@ namespace Diagram
             this._island = island;
             //this._regiment = new Regiment();
             this._armyState = armyState;
-            this._regiments = new Dictionary<Unit, int>();
+            this._regiments = new RegimentList();
         }
         #region Properties
         /// <summary>
@@ -43,7 +45,7 @@ namespace Diagram
         /// <summary>
         /// Gets dictionnary Unit,int Regiments
         /// </summary>
-        public Dictionary<Unit, int> Regiments
+        public RegimentList Regiments
         {
             get
             {
@@ -72,15 +74,27 @@ namespace Diagram
         /// Find a regiment corresponding to a Unit in an army.
         /// </summary>
         /// <param name="unit">The unit to look for in the army.</param>
-        /// <returns>A keyValuePair that represents the regiment found. If the regiment is not found the key will be null.</returns>
-        internal KeyValuePair<Unit, int> FindRegiment( Unit unit )
+        /// <returns>The regiment found. If the regiment is not found it returns null.</returns>
+        internal Regiment FindRegiment( Unit unit )
         {
-            return _regiments.Where( u => u.Key.Name == unit.Name ).FirstOrDefault();
+            return _regiments.Where( u => u.Name == unit.Name ).FirstOrDefault();
         }
 
-        internal Dictionary<Unit, int> GetRegimentsByDamagetype( UnitDamageType unitDamageType)
+        /// <summary>
+        /// Gets all the regiments containing units that deal physical damage
+        /// </summary>
+        /// <param name="unitDamageType"></param>
+        /// <returns></returns>
+        internal RegimentList GetRegimentsByDamagetype( UnitDamageType unitDamageType)
         {
-            return _regiments.Where( kvp => kvp.Key.UnitDamageType == unitDamageType ).ToDictionary( kvp => kvp.Key, kvp => kvp.Value);
+            IEnumerable<Regiment> regs = _regiments.Where( r => r.Unit.UnitDamageType == unitDamageType );
+            RegimentList newRegiments = new RegimentList();
+            foreach(Regiment r in regs )
+            {
+                newRegiments.Add( r );
+            }
+
+            return newRegiments;
         }
 
         /// <summary>
@@ -91,7 +105,7 @@ namespace Diagram
         {
             double totalAttack = 0;
             double physicalAttack = 0;
-            foreach(Unit u in _regiments.Keys )
+            foreach(Unit u in _regiments.Select( r => r.Unit) )
             {
                 totalAttack += u.UnitStatistics.Attack;
                 if ( u.UnitDamageType == UnitDamageType.physical )
@@ -108,16 +122,16 @@ namespace Diagram
         /// <param name="numberToRemove">The number of units to substract.</param>
         internal void SubstractFromRegiment( Unit unit, int numberToRemove )
         {
-            KeyValuePair<Unit, int> KvP = FindRegiment( unit );
+            Regiment r = FindRegiment( unit );
 
-            if ( KvP.Key == null ) throw new ArgumentException( "The unit you are trying to handle is not present in the army." );
+            if ( r == null ) throw new ArgumentException( "The unit you are trying to handle is not present in the army." );
 
-            int initialUnitNumber = KvP.Value;
+            int initialUnitNumber = r.Number;
             int finalUnitNumber = initialUnitNumber - numberToRemove;
-            _regiments.Remove( unit );
+            _regiments.Remove( r );
 
             if ( finalUnitNumber > 0 )
-                _regiments.Add( unit, finalUnitNumber );
+                _regiments.Add( new Regiment(unit, finalUnitNumber ) );
         }
 
         /// <summary>
@@ -127,22 +141,22 @@ namespace Diagram
         /// <param name="numberToAdd">The number of units to add.</param>
         internal void AddToRegiment(Unit unit, int numberToAdd )
         {
-            KeyValuePair<Unit, int> KvP = FindRegiment( unit );
+            Regiment r = FindRegiment( unit );
 
-            if ( KvP.Key == null ) throw new ArgumentException( "The unit you are trying to handle is not present in the army." );
+            if ( r == null ) throw new ArgumentException( "The unit you are trying to handle is not present in the army." );
 
-            int initialUnitNumber = KvP.Value;
+            int initialUnitNumber = r.Number;
             int finalUnitNumber = initialUnitNumber + numberToAdd;
-            _regiments.Remove( unit );
-            _regiments.Add( unit, finalUnitNumber );
+            _regiments.Remove( r );
+            _regiments.Add( new Regiment( unit, finalUnitNumber ) );
         }
 
         internal Army Copy()
         {
             Army army = new Army(this.ArmyState, this.Island);
-            foreach( KeyValuePair<Unit, int> kvp in this.Regiments)
+            foreach( Regiment r in this.Regiments )
             {
-                army.Regiments.Add( kvp.Key, kvp.Value );
+                army.Regiments.Add( r );
             }
 
             return army;
@@ -153,10 +167,10 @@ namespace Diagram
             Army army = new Army( this.ArmyState, this.Island );
             int newValue;
 
-            foreach( KeyValuePair<Unit, int> kvp in _regiments )
+            foreach( Regiment r in this.Regiments )
             {
-                newValue = (int)Math.Round( (double)kvp.Value * ratio );
-                army.Regiments.Add( kvp.Key, newValue );
+                newValue = (int)Math.Round( (double)r.Number * ratio );
+                army.Regiments.Add( new Regiment(r.Unit, newValue ) );
             }
 
             return army;
@@ -166,23 +180,23 @@ namespace Diagram
         {
             Army joinedArmy = this.Copy();
 
-            foreach(KeyValuePair<Unit, int> kvp in armyToJoin.Regiments )
+            foreach(Regiment r in armyToJoin.Regiments )
             {
-                if ( joinedArmy.Regiments.Any( r => r.Key == kvp.Key ) )
+                if ( joinedArmy.Regiments.Any( reg => reg.Unit == r.Unit ) )
                 {
-                    KeyValuePair<Unit, int> reg = armyToJoin.FindRegiment( kvp.Key );
-                    joinedArmy.AddToRegiment( reg.Key, reg.Value );
+                    Regiment reg = armyToJoin.FindRegiment( r.Unit );
+                    joinedArmy.AddToRegiment( reg.Unit, reg.Number );
                 }
                 else
                 {
-                    joinedArmy.Regiments.Add( kvp.Key, kvp.Value );
+                    joinedArmy.Regiments.Add( new Regiment(r.Unit, r.Number ) );
                 }
             }
 
             _regiments.Clear();
-            foreach( KeyValuePair<Unit, int> kvp in joinedArmy.Regiments )
+            foreach( Regiment r in joinedArmy.Regiments )
             {
-                _regiments.Add( kvp.Key, kvp.Value );
+                _regiments.Add( new Regiment(r.Unit, r.Number ) );
             }
         }
     }
