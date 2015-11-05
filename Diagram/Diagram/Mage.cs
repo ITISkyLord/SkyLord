@@ -7,6 +7,7 @@ namespace Diagram
 {
     public class Mage
     {
+        private string _name;
         private MageLevel _mageLevel;
         private readonly List<Apprentice> _apprentices;
         private Island _island;
@@ -22,13 +23,29 @@ namespace Diagram
             _island = island;
             this._mageLevel = new MageLevel();
             this._apprentices = new List<Apprentice>();
-            if (name == null ) throw new ArgumentNullException("Name cannot be null.");
-            if (name.Length < 4) throw new InvalidOperationException("Enter a name with more than 3 caracters.");
+            // TODO : générer un nom de mage rigolo
+            this._name = "Mage";
             _name = name;
 
         }
 
         #region Properties
+        /// <summary>
+        /// Gets or sets the Name of the mage
+        /// </summary>
+        public string Name
+        {
+            get
+            {
+                return _name;
+            }
+
+            set
+            {
+                _name = value;
+            }
+        }
+
         /// <summary>
         /// Gets or sets the MageLevel.
         /// </summary>
@@ -66,7 +83,7 @@ namespace Diagram
             {
                 return _apprentices;
             }
-        } 
+        }
         #endregion
     }
 }

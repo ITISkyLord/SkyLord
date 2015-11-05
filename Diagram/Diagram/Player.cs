@@ -17,6 +17,13 @@ namespace Diagram
         private readonly World _world;
 
         //TODO Changer les valeurs par défauts. À voir avec le profil.
+        /// <summary>
+        /// Creates a Player.
+        /// </summary>
+        /// <param name="world">The world in wich the player is playing.</param>
+        /// <param name="name">The name of the player.</param>
+        /// <param name="mail">The email adress of the player.</param>
+        /// <param name="password">The password of the player.</param>
         public Player( World world, string name, string mail = "toto@gmail.com", string password = "password" )
         {
             if( String.IsNullOrWhiteSpace( name ) ) throw new ArgumentNullException( "name is null or has white space." );
@@ -30,13 +37,11 @@ namespace Diagram
             this._islands = new List<Island>();
             this._technologies = new List<Technology>();
             this._profil = new Profil( this, mail, password );
-
-
         }
 
-        public Player(string name)
-        {
-            _name = name;
+        /// <summary>
+        /// Gets the Name of the Player.
+        /// </summary>
         }
 
         public string Name
@@ -46,6 +51,9 @@ namespace Diagram
                 return _name;
             }
         }
+        /// <summary>
+        /// Gets the Profile of the Player.
+        /// </summary>
         public Profil Profil
         {
             get
@@ -53,6 +61,9 @@ namespace Diagram
                 return _profil;
             }
         }
+        /// <summary>
+        /// Gets or sets the list of Islands the Player controls.
+        /// </summary>
         public List<Island> Islands
         {
             get
@@ -65,6 +76,9 @@ namespace Diagram
                 _islands = value;
             }
         }
+        /// <summary>
+        /// Gets or sets the guild the player belongs to.
+        /// </summary>
         public Guild Guild
         {
             get
@@ -77,6 +91,9 @@ namespace Diagram
                 _guild = value;
             }
         }
+        /// <summary>
+        /// Gets or sets the technology the Player has developped.
+        /// </summary>
         public List<Technology> Technologies
         {
             get
