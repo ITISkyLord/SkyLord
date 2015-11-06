@@ -1,10 +1,10 @@
 ﻿using ITI.SkyLord.DAL.Contexts.GameModel;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.Entity;
 
 namespace ITI.SkyLord.DAL.Contexts.MessageModel
 {
