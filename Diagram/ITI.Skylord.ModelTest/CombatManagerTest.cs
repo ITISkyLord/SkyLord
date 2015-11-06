@@ -38,8 +38,8 @@ namespace ITI.Skylord.ModelTest
             _armyDefense.Regiments.Clear();
             _armyAttack.Regiments.Add(new Unit(UnitName.warrior, UnitDamageType.physical, UnitType.soldier,new UnitStatistics(70,0,0,0,0,0), new Ressource(1,1,1,1)), 130 );
             _armyAttack.Regiments.Add(new Unit(UnitName.necromancer, UnitDamageType.magical, UnitType.magic,new UnitStatistics(70,0,0,0,0,0), new Ressource(1,1,1,1)), 50 );
-            _armyDefense.Regiments.Add( new Unit( UnitName.guard, UnitDamageType.physical, UnitType.soldier, new UnitStatistics( 70, 70, 70, 0, 0, 0 ), new Ressource( 1, 1, 1, 1 ) ), 100 );
-            _armyDefense.Regiments.Add( new Unit( UnitName.cyclop, UnitDamageType.magical, UnitType.magic, new UnitStatistics( 70, 70, 70, 0, 0, 0 ), new Ressource( 1, 1, 1, 1 ) ), 80 );
+            _armyDefense.Regiments.Add( new Unit( UnitName.guard, UnitDamageType.physical, UnitType.soldier, new UnitStatistics( 70, 30, 70, 0, 0, 0 ), new Ressource( 1, 1, 1, 1 ) ), 10 );
+            _armyDefense.Regiments.Add( new Unit( UnitName.cyclop, UnitDamageType.magical, UnitType.magic, new UnitStatistics( 70, 70, 30, 0, 0, 0 ), new Ressource( 1, 1, 1, 1 ) ), 80 );
 
             CombatManager combatManager = new CombatManager();
             CombatResult combatResult = combatManager.Resolve( _armyAttack, _armyDefense );

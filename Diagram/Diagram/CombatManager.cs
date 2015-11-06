@@ -11,8 +11,16 @@ namespace Diagram
         private Army _winningArmy;
         private Army _loosingArmy;
 
+        /// <summary>
+        /// Resolve the fight beetween 2 armies.
+        /// </summary>
+        /// <param name="attackingArmy"></param>
+        /// <param name="defendingArmy"></param>
+        /// <returns></returns>
         public CombatResult Resolve( Army attackingArmy, Army defendingArmy )
         {
+            if( attackingArmy == null ) throw new ArgumentNullException( "attackingArmy is null" );
+            if( defendingArmy == null ) throw new ArgumentNullException( "defendingArmy is null" );
             double physicResist = 1.0;
             double magicResist = 1.0;
             double ratioPhysicAttack;
@@ -21,12 +29,12 @@ namespace Diagram
             double attackPointsPhysic = 0;
             double attackPointsMagic = 0;
 
-            foreach( KeyValuePair<Unit, int> kvp in attackingArmy.Regiments )
+            foreach( Regiment r in attackingArmy.Regiments )
             {
-                if( kvp.Key.UnitDamageType == UnitDamageType.physical )
-                    attackPointsPhysic += (kvp.Value * kvp.Key.UnitStatistics.Attack);
+                if( r.Unit.UnitDamageType == UnitDamageType.physical )
+                    attackPointsPhysic += (r.Number * r.Unit.UnitStatistics.Attack);
                 else
-                    attackPointsMagic += (kvp.Value * kvp.Key.UnitStatistics.Attack);
+                    attackPointsMagic += (r.Number * r.Unit.UnitStatistics.Attack);
             }
             attackTotal = attackPointsPhysic + attackPointsMagic;
             ratioPhysicAttack = attackPointsPhysic / attackTotal;
@@ -34,12 +42,21 @@ namespace Diagram
 
             physicResist = GetPhysicResist( defendingArmy );
             magicResist = GetMagicResist( defendingArmy );
-            fight( attackingArmy, defendingArmy, attackPointsPhysic, physicResist, attackPointsMagic, magicResist, ratioPhysicAttack, ratioMagicAttack );
+            Fight( attackingArmy, defendingArmy, attackPointsPhysic, physicResist, attackPointsMagic, magicResist, ratioPhysicAttack, ratioMagicAttack );
 
             return new CombatResult( _winningArmy, _loosingArmy );
         }
 
-
+        /// <summary>
+        /// Simple attack in case of round combat, Obsolete at the moment.
+        /// </summary>
+        /// <param name="attackingArmy"></param>
+        /// <param name="defendingArmy"></param>
+        /// <param name="attackPointsPhysic"></param>
+        /// <param name="physicResist"></param>
+        /// <param name="attackPointsMagic"></param>
+        /// <param name="magicResist"></param>
+        /// <returns></returns>
         [Obsolete]
         private Army SimpleAttack( Army attackingArmy, Army defendingArmy, double attackPointsPhysic, double physicResist, double attackPointsMagic, double magicResist )
         {
@@ -87,12 +104,19 @@ namespace Diagram
             return null;
         }
 
+        /// <summary>
+        /// Calculate the losses of the simple attack and complexe attack in case of round combat. Obsolete at the moment.
+        /// </summary>
+        /// <param name="ratio"></param>
+        /// <param name="attackPoints"></param>
+        /// <param name="isPhysical"></param>
+        /// <returns></returns>
         [Obsolete]
         private Army SimpleLossResult( double ratio, double attackPoints, bool isPhysical )
         {
             int totalNumberInRegiments = 0;
             double result = 0;
-            Dictionary<Unit,int> typeRegiments = new Dictionary<Unit, int>();
+            List<Regiment> typeRegiments = new List<Regiment>();
             Dictionary<Unit,int> unitsWithDamage = new Dictionary<Unit, int>();
             Dictionary<Unit,double> unitsWithratio = new Dictionary<Unit, double>();
 
@@ -108,10 +132,10 @@ namespace Diagram
 
             if( _winningArmy.ArmyState == ArmyState.movement )
             {
-                foreach( KeyValuePair<Unit, int> kvp in typeRegiments )
+                foreach( Regiment r in typeRegiments )
                 {
-                    totalNumberInRegiments += kvp.Value;
-                    unitsWithDamage.Add( kvp.Key, kvp.Value * kvp.Key.UnitStatistics.Attack );
+                    totalNumberInRegiments += r.Number;
+                    unitsWithDamage.Add( r.Unit, r.Number * r.Unit.UnitStatistics.Attack );
                 }
 
                 foreach( KeyValuePair<Unit, int> kvp in unitsWithDamage )
@@ -120,23 +144,23 @@ namespace Diagram
                     unitsWithratio.Add( kvp.Key, res );
                 }
 
-                foreach( KeyValuePair<Unit, int> kvp in typeRegiments )
+                foreach( Regiment r in typeRegiments )
                 {
-                    result = kvp.Value * Math.Pow( ratio, 1.5 );
+                    result = r.Number * Math.Pow( ratio, 1.5 );
 
                     foreach( KeyValuePair<Unit, double> kvp2 in unitsWithratio )
                     {
-                        if( kvp2.Key == kvp.Key )
+                        if( kvp2.Key == r.Unit )
                         {
 
                             int loss = (int)(result * kvp2.Value);
-                            Console.Write( "Unit = " + kvp.Key );
+                            Console.Write( "Unit = " + r.Name );
                             Console.WriteLine( " : loss = " + loss );
-                            Console.WriteLine( "Avant le substract, winningArmy première unité dans le dico = " + _winningArmy.Regiments.Values.First() );
+                            Console.WriteLine( "Avant le substract, winningArmy première unité dans le dico = " + _winningArmy.Regiments.First() );
                             Console.WriteLine( "winningArmyState = " + _winningArmy.ArmyState );
 
-                            _winningArmy.SubstractFromRegiment( kvp.Key, loss );
-                            Console.WriteLine( "Après le substract, winningArmy première unité dans le dico = " + _winningArmy.Regiments.Values.First() );
+                            _winningArmy.SubstractFromRegiment( r.Unit, loss );
+                            Console.WriteLine( "Après le substract, winningArmy première unité dans le dico = " + _winningArmy.Regiments.First() );
                         }
                     }
                 }
@@ -145,22 +169,22 @@ namespace Diagram
             {
                 int numberOfDefendingTroops = 0;
                 int numberOfUnits = 0;
-                foreach( int i in _winningArmy.Regiments.Values )
+                foreach( Regiment r in _winningArmy.Regiments )
                 {
-                    numberOfDefendingTroops += i;
+                    numberOfDefendingTroops += r.Number;
                     numberOfUnits++;
                 }
                 result = numberOfDefendingTroops * Math.Pow( ratio, 1.5 );
                 int resultByUnits = (int)result / numberOfUnits;
                 Army tmpArmy = _winningArmy.Copy();
-                foreach( Unit u in tmpArmy.Regiments.Keys )
+                foreach( Regiment r in tmpArmy.Regiments )
                 {
-                    Console.Write( "Unit = " + u );
+                    Console.Write( "Unit = " + r.Unit );
                     Console.WriteLine( " : loss = " + resultByUnits );
                     Console.WriteLine( "winningArmyState = " + _winningArmy.ArmyState );
-                    Console.WriteLine( "Avant le substract, winningArmy warrior = " + _winningArmy.Regiments.Values.First() );
-                    _winningArmy.SubstractFromRegiment( u, resultByUnits );
-                    Console.WriteLine( "Après le substract, winningArmy warrior = " + _winningArmy.Regiments.Values.First() );
+                    Console.WriteLine( "Avant le substract, winningArmy warrior = " + _winningArmy.Regiments.First() );
+                    _winningArmy.SubstractFromRegiment( r.Unit, resultByUnits );
+                    Console.WriteLine( "Après le substract, winningArmy warrior = " + _winningArmy.Regiments.First() );
 
                 }
             }
@@ -168,6 +192,17 @@ namespace Diagram
             return _winningArmy;
         }
 
+        /// <summary>
+        /// Complexe attack in case of round combat. Obsolete at the moment.
+        /// </summary>
+        /// <param name="attackingArmy"></param>
+        /// <param name="defendingArmy"></param>
+        /// <param name="attackPointsPhysic"></param>
+        /// <param name="attackPointsMagic"></param>
+        /// <param name="physicResist"></param>
+        /// <param name="magicResist"></param>
+        /// <param name="ratioPhysicAttack"></param>
+        /// <param name="ratioMagicAttack"></param>
         [Obsolete]
         private void ComplexeAttack( Army attackingArmy, Army defendingArmy, double attackPointsPhysic, double attackPointsMagic, double physicResist, double magicResist, double ratioPhysicAttack, double ratioMagicAttack )
         {
@@ -226,28 +261,58 @@ namespace Diagram
             }
         }
 
+        /// <summary>
+        /// Return the physic resist of an army.
+        /// </summary>
+        /// <param name="army"></param>
+        /// <returns></returns>
         private double GetPhysicResist( Army army )
         {
             double physicResist = 0;
-            foreach( KeyValuePair<Unit,int> kvp in army.Regiments)
+            foreach( Regiment r in army.Regiments)
             {
-                physicResist += (kvp.Value * kvp.Key.UnitStatistics.PhysicResist);
+                physicResist += r.Number * r.Unit.UnitStatistics.PhysicResist;
             }
 
             return physicResist;
         }
+        /// <summary>
+        /// Return the magic resist of an army.
+        /// </summary>
+        /// <param name="army"></param>
+        /// <returns></returns>
         private double GetMagicResist( Army army )
         {
             double magicResist = 0;
-            foreach( KeyValuePair<Unit, int> kvp in army.Regiments)
+            foreach( Regiment r in army.Regiments)
             {
-                magicResist += (kvp.Value * kvp.Key.UnitStatistics.MagicResist);
+                magicResist += (r.Number * r.Unit.UnitStatistics.MagicResist);
             }
 
             return magicResist;
         }
-        private void fight( Army attackingArmy, Army defendingArmy, double attackPointsPhysic, double physicResist, double attackPointsMagic, double magicResist, double ratioPhysicAttack, double ratioMagicAttack )
+
+        /// <summary>
+        /// General fight. Modify winning army and loosing army. LossingArmy is cleared. Winning army get losses.
+        /// </summary>
+        /// <param name="attackingArmy"></param>
+        /// <param name="defendingArmy"></param>
+        /// <param name="attackPointsPhysic"></param>
+        /// <param name="physicResist"></param>
+        /// <param name="attackPointsMagic"></param>
+        /// <param name="magicResist"></param>
+        /// <param name="ratioPhysicAttack"></param>
+        /// <param name="ratioMagicAttack"></param>
+        private void Fight( Army attackingArmy, Army defendingArmy, double attackPointsPhysic, double physicResist, double attackPointsMagic, double magicResist, double ratioPhysicAttack, double ratioMagicAttack )
         {
+            if( attackingArmy == null ) throw new ArgumentNullException( "attackingArmy is null" );
+            if( defendingArmy == null ) throw new ArgumentNullException( "defendingArmy is null" );
+            if( attackPointsPhysic < 0 ) throw new ArgumentException( "attackPointsPhysic under 0 is anormal." );
+            if( physicResist < 0 ) throw new ArgumentException( "physicResist under 0 is anormal." );
+            if( magicResist < 0 ) throw new ArgumentException( "magicResist under 0 is anormal." );
+            if( ratioPhysicAttack < 0 ) throw new ArgumentException( "ratioPhysicAttack under 0 is anormal." );
+            if( ratioMagicAttack < 0 ) throw new ArgumentException( "ratioMagicAttack under 0 is anormal." );
+
             double totalAttack = attackPointsMagic + attackPointsPhysic;
             double totalDefense = physicResist * (ratioPhysicAttack+0.05) + magicResist * (ratioMagicAttack+0.05);
             double totalWinner;
