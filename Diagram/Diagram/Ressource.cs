@@ -13,7 +13,7 @@ namespace ITI.SkyLord
         private int _magic;
 
         /// <summary>
-        /// Create ressource
+        /// Create a Ressource object with quantities
         /// </summary>
         /// <param name="wood">The wood the ressource contains.</param>
         /// <param name="metal">The metal the ressource contains.</param>
@@ -26,6 +26,17 @@ namespace ITI.SkyLord
             this._metal = metal;
             this._cristal = cristal;
             this._magic = magic;
+        }
+
+        /// <summary>
+        /// Creates a Ressource object with every quantity at 0
+        /// </summary>
+        public Ressource()
+        {
+            this._wood = 0;
+            this._metal = 0;
+            this._cristal = 0;
+            this._magic = 0;
         }
 
         #region Properties

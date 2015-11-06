@@ -65,6 +65,8 @@
     <Compile Include="Coordinate.cs" />
     <Compile Include="ICombatManager.cs" />
     <Compile Include="IsValidEmailStatic.cs" />
+    <Compile Include="Regiment.cs" />
+    <Compile Include="RegimentList.cs" />
     <Compile Include="Technology.cs" />
     <Compile Include="TechnologyLevel.cs" />
     <Compile Include="Units\UnitName.cs" />
