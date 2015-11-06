@@ -34,17 +34,13 @@ namespace Diagram
 
             physicResist = GetPhysicResist( defendingArmy );
             magicResist = GetMagicResist( defendingArmy );
+            fight( attackingArmy, defendingArmy, attackPointsPhysic, physicResist, attackPointsMagic, magicResist, ratioPhysicAttack, ratioMagicAttack );
 
-            if( attackPointsMagic == 0 || attackPointsPhysic == 0 )
-            {
-                SimpleAttack( attackingArmy, defendingArmy, attackPointsPhysic, physicResist, attackPointsMagic, magicResist );
-            } else
-            {
-                ComplexeAttack( attackingArmy, defendingArmy, attackPointsPhysic, attackPointsMagic, physicResist, magicResist, ratioPhysicAttack, ratioMagicAttack);
-            }
             return new CombatResult( _winningArmy, _loosingArmy );
         }
 
+
+        [Obsolete]
         private Army SimpleAttack( Army attackingArmy, Army defendingArmy, double attackPointsPhysic, double physicResist, double attackPointsMagic, double magicResist )
         {
             double ratioWinnerPhysic = 1.0;
@@ -91,6 +87,7 @@ namespace Diagram
             return null;
         }
 
+        [Obsolete]
         private Army SimpleLossResult( double ratio, double attackPoints, bool isPhysical )
         {
             int totalNumberInRegiments = 0;
@@ -171,6 +168,7 @@ namespace Diagram
             return _winningArmy;
         }
 
+        [Obsolete]
         private void ComplexeAttack( Army attackingArmy, Army defendingArmy, double attackPointsPhysic, double attackPointsMagic, double physicResist, double magicResist, double ratioPhysicAttack, double ratioMagicAttack )
         {
             bool physicWin = false;
@@ -212,11 +210,13 @@ namespace Diagram
 
             if( physicWin && magicWin )
             {
-                // _winningArmy = attackingPhysicArmy.Join( attackingMagicArmy )();
+                attackingPhysicArmy.JoinArmies( attackingMagicArmy );
+                _winningArmy = attackingPhysicArmy;
                 Console.WriteLine( "Victoire de l'attaquant !" );
             } else if( !physicWin && !magicWin )
             {
-                //  _winningArmy = defendingAgainstPhysicArmy.Join( defendingAgainstMagicArmy )();
+                 defendingAgainstPhysicArmy.JoinArmies( defendingAgainstMagicArmy );
+                _winningArmy = defendingAgainstPhysicArmy;
                 Console.WriteLine( "Victoire du défenseur !" );
 
             }
@@ -246,6 +246,42 @@ namespace Diagram
 
             return magicResist;
         }
+        private void fight( Army attackingArmy, Army defendingArmy, double attackPointsPhysic, double physicResist, double attackPointsMagic, double magicResist, double ratioPhysicAttack, double ratioMagicAttack )
+        {
+            double totalAttack = attackPointsMagic + attackPointsPhysic;
+            double totalDefense = physicResist * (ratioPhysicAttack+0.05) + magicResist * (ratioMagicAttack+0.05);
+            double totalWinner;
+            double totalLooser;
+
+
+            if( totalAttack > totalDefense )
+            {
+                _winningArmy = attackingArmy;
+                _loosingArmy = defendingArmy;
+                totalWinner = totalAttack;
+                totalLooser = totalDefense;
+            } else
+            {
+                _winningArmy = defendingArmy;
+                _loosingArmy = attackingArmy;
+                totalWinner = totalDefense;
+                totalLooser = totalAttack;
+            }
+            double numberInWinnerArmy = _winningArmy.Count();
+            double numberInLooserArmy = _loosingArmy.Count();
+            double result = 100 * Math.Pow((totalLooser/totalWinner), (1.5 - 0.08 * Math.Log10(( numberInWinnerArmy + numberInLooserArmy ) / 1000 )));
+            Console.WriteLine( "result est : " + result );
+
+            _winningArmy.SubstractFromArmy( result / 100 );
+            _loosingArmy.Regiments.Clear();
+
+            //100·(pp/pg)^X 
+      //      X = 1,5 - 0,08·log10( N / 1000 ) où N correspond
+      //au nombre de troupes( au nombres de troupes et non a la consomation de
+      //céréales!)
+
+        }
+
     }
 }
 

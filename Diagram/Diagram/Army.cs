@@ -124,6 +124,19 @@ namespace Diagram
                 _regiments.Add( unit, finalUnitNumber );
         }
 
+        internal void SubstractFromArmy( double ratio )
+        {
+            Army tmpArmy = this.Copy();
+            foreach(KeyValuePair<Unit,int> kvp in tmpArmy.Regiments)
+            {
+                int number = (int)(kvp.Value * ratio);
+                Console.WriteLine( "number in the unit : " + kvp.Key.UnitName + " = " + kvp.Value );
+                Console.WriteLine( "loss = " + number );
+                SubstractFromRegiment( kvp.Key, number );
+
+            }
+        }
+
         /// <summary>
         /// Adds a number of units to a regiment in the army.
         /// </summary>
@@ -188,6 +201,17 @@ namespace Diagram
             {
                 _regiments.Add( kvp.Key, kvp.Value );
             }
+        }
+
+        internal double Count()
+        {
+            double number = 0;
+
+            foreach( int i in this.Regiments.Values)
+            {
+                number += i;
+            }
+            return number;
         }
     }
 }
