@@ -67,6 +67,7 @@
     <Compile Include="Contexts\GameModel\Island.cs" />
     <Compile Include="Contexts\GameModel\Mage.cs" />
     <Compile Include="Contexts\GameModel\Map.cs" />
+    <Compile Include="Contexts\GameModel\Regiment.cs" />
     <Compile Include="Contexts\GameModel\Ressource.cs" />
     <Compile Include="Contexts\GameModel\Spell.cs" />
     <Compile Include="Contexts\GameModel\Technology.cs" />
@@ -77,7 +78,9 @@
     <Compile Include="Contexts\GameModel\UnitStatistics.cs" />
     <Compile Include="Contexts\GameModel\UnitType.cs" />
     <Compile Include="Contexts\GameModel\World.cs" />
-    <Compile Include="Contexts\GameModel\Message.cs" />
+    <Compile Include="Contexts\MessageModel\Message.cs" />
+    <Compile Include="Contexts\MessageModel\MessageContext.cs" />
+    <Compile Include="Contexts\MessageModel\Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

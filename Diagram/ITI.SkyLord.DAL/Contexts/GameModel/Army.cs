@@ -12,6 +12,6 @@ namespace ITI.SkyLord.DAL.Contexts.GameModel
 
         public ArmyState ArmyState { get; set; }
         public Island Island { get; set; }
-        public ICollection<KeyValuePair<Unit,int>> Regiment { get; set; }
+        public ICollection<Regiment> Regiment { get; set; }
     }
 }

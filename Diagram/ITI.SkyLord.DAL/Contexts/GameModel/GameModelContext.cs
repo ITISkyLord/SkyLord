@@ -31,5 +31,6 @@ namespace ITI.SkyLord.DAL.Contexts.GameModel
         public virtual DbSet<Unit> Units { get; set; }
         public virtual DbSet<Technology> Technologys { get; set; }
         public virtual DbSet<UnitStatistic> UnitStatistics { get; set; }
+        public virtual DbSet<Regiment> Regiments { get; set; }
     }
 }
