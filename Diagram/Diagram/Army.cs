@@ -189,7 +189,7 @@ namespace Diagram
                 }
                 else
                 {
-                    joinedArmy.Regiments.Add( new Regiment(r.Unit, r.Number ) );
+                    joinedArmy.Regiments.Add( new Regiment( r.Unit, r.Number ) );
                 }
             }
 
