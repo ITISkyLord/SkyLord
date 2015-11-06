@@ -58,9 +58,9 @@ namespace ITI.Skylord.ModelTest
         {
             Army army = new Army( ArmyState.defense, _defaultIsland );
             army.Regiments.Add( _warrior, 50 );
-            KeyValuePair<Unit, int> KvP = army.FindRegiment( _warrior );
+            Regiment r = army.FindRegiment( _warrior );
 
-            Assert.That( KvP.Key.Name == _warrior.Name && KvP.Value == 50 );
+            Assert.That( r.Name == _warrior.Name && r.Number == 50 );
         }
 
         [Test]
@@ -71,8 +71,8 @@ namespace ITI.Skylord.ModelTest
             army.Regiments.Add( _necromancer, 10 );
             army.Regiments.Add( _warrior, 15 );
 
-            KeyValuePair<Unit, int> KvP = army.FindRegiment( _cyclop );
-            Assert.IsNull( KvP.Key );
+            Regiment r = army.FindRegiment( _cyclop );
+            Assert.IsNull( r );
         }
 
         [Test]
@@ -82,10 +82,10 @@ namespace ITI.Skylord.ModelTest
             army.Regiments.Add( _warrior, 50 );
             army.Regiments.Add( _cyclop, 10 );
 
-            Dictionary<Unit, int> dic = army.GetRegimentsByDamagetype(UnitDamageType.physical);
+            RegimentList regs = army.GetRegimentsByDamagetype(UnitDamageType.physical);
 
-            Assert.That( dic.Count == 1 );
-            Assert.That( dic.ContainsKey( _warrior ) && !dic.ContainsKey( _cyclop ) );
+            Assert.That( regs.Count == 1 );
+            Assert.That( regs.Exists( r => r.Unit == _warrior ) && !regs.Exists( r => r.Unit == _cyclop ) );
         }
 
         [Test]
@@ -95,10 +95,10 @@ namespace ITI.Skylord.ModelTest
             army.Regiments.Add( _warrior, 50 );
             army.Regiments.Add( _cyclop, 10 );
 
-            Dictionary<Unit, int> dic = army.GetRegimentsByDamagetype( UnitDamageType.magical );
+            RegimentList regs = army.GetRegimentsByDamagetype( UnitDamageType.magical );
 
-            Assert.That( dic.Count == 1 );
-            Assert.That( dic.ContainsKey( _cyclop ) && !dic.ContainsKey( _warrior ) );
+            Assert.That( regs.Count == 1 );
+            Assert.That( regs.Exists( r => r.Unit ==_cyclop ) && !regs.Exists( r => r.Unit == _warrior ) );
         }
 
         [Test]
@@ -122,7 +122,7 @@ namespace ITI.Skylord.ModelTest
             army.SubstractFromRegiment( _guard, 10 );
             army.SubstractFromRegiment( _necromancer, 20 );
 
-            Assert.That( army.Regiments[ _necromancer ] == 30 && army.Regiments[ _guard ] == 40 );
+            Assert.That( army.Regiments.Find( r => r.Unit == _necromancer).Number == 30 && army.Regiments.Find( r => r.Unit == _guard ).Number == 40 );
         }
 
         [Test]
@@ -147,7 +147,7 @@ namespace ITI.Skylord.ModelTest
             army.AddToRegiment( _guard, 10 );
             army.AddToRegiment( _necromancer, 20 );
 
-            Assert.That( army.Regiments[ _necromancer ] == 50 && army.Regiments[ _guard ] == 50 );
+            Assert.That( army.Regiments[ 0 ].Number == 50 && army.Regiments[ 1 ].Number == 50 );
         }
 
         [Test]
@@ -160,7 +160,7 @@ namespace ITI.Skylord.ModelTest
 
             Army modifiedArmy = army.GetArmyByRatio( 0.256 );
 
-            Assert.That( modifiedArmy.FindRegiment( _guard ).Value == 26 && modifiedArmy.FindRegiment( _necromancer ).Value == 14 );
+            Assert.That( modifiedArmy.Regiments[ 0 ].Number == 26 && modifiedArmy.Regiments[ 1 ].Number == 14 );
         }
 
         [Test]
@@ -176,7 +176,13 @@ namespace ITI.Skylord.ModelTest
 
             army.JoinArmies( army2 );
 
-            Assert.That( army.Regiments[ _guard ] == 225 && army.Regiments[_necromancer] == 100 && army.Regiments[_cyclop] == 100);
+            Console.WriteLine( "Count : " + army.Regiments.Count );
+            Console.WriteLine( "Reg1 : " + army.Regiments[ 0 ].Number + "Reg2 : " + army.Regiments[ 1 ].Number + "Reg3 : " + army.Regiments[ 2 ].Number );
+
+            Assert.That( army.Regiments.Find( r => r.Unit == _guard ).Number == 225 
+                && army.Regiments.Find( r => r.Unit == _necromancer ).Number == 100 
+                && army.Regiments.Find( r => r.Unit == _cyclop ).Number == 100 );
+
             Assert.That( army.Regiments.Count == 3 );
         }
     }

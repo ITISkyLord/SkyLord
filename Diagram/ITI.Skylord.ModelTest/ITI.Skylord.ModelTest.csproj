@@ -57,6 +57,7 @@
     <Compile Include="MessageTests.cs" />
     <Compile Include="PlayerTest.cs" />
     <Compile Include="ProfilTest.cs" />
+    <Compile Include="RegimentTests.cs" />
     <Compile Include="RessourceTests.cs" />
     <Compile Include="TechnologyTests.cs" />
     <Compile Include="UnitTests.cs" />
