@@ -34,12 +34,12 @@ namespace ITI.Skylord.ModelTest
         public void Two_armies_physics_fights_armyattack_wins_50Warriors_and_20guards_vs_15warrior_and_10_guard_return_CombatResult_with_the_winner()
         {
             // Ajouter plusieurs armées en même temps ?
-            _armyAttack.Regiments.Clear();
-            _armyDefense.Regiments.Clear();
-            _armyAttack.Regiments.Add(new Unit(UnitName.warrior, UnitDamageType.physical, UnitType.soldier,new UnitStatistics(70,0,0,0,0,0), new Ressource(1,1,1,1)), 130 );
-            _armyAttack.Regiments.Add(new Unit(UnitName.necromancer, UnitDamageType.magical, UnitType.magic,new UnitStatistics(70,0,0,0,0,0), new Ressource(1,1,1,1)), 50 );
-            _armyDefense.Regiments.Add( new Unit( UnitName.guard, UnitDamageType.physical, UnitType.soldier, new UnitStatistics( 70, 30, 70, 0, 0, 0 ), new Ressource( 1, 1, 1, 1 ) ), 10 );
-            _armyDefense.Regiments.Add( new Unit( UnitName.cyclop, UnitDamageType.magical, UnitType.magic, new UnitStatistics( 70, 70, 30, 0, 0, 0 ), new Ressource( 1, 1, 1, 1 ) ), 80 );
+            _armyAttack.ClearRegiments();
+            _armyDefense.ClearRegiments();
+            _armyAttack.AddRegiment(new Unit(UnitName.warrior, UnitDamageType.physical, UnitType.soldier,new UnitStatistics(70,0,0,0,0,0), new Ressource(1,1,1,1)), 130 );
+            _armyAttack.AddRegiment(new Unit(UnitName.necromancer, UnitDamageType.magical, UnitType.magic,new UnitStatistics(70,0,0,0,0,0), new Ressource(1,1,1,1)), 50 );
+            _armyDefense.AddRegiment( new Unit( UnitName.guard, UnitDamageType.physical, UnitType.soldier, new UnitStatistics( 70, 30, 70, 0, 0, 0 ), new Ressource( 1, 1, 1, 1 ) ), 10 );
+            _armyDefense.AddRegiment( new Unit( UnitName.cyclop, UnitDamageType.magical, UnitType.magic, new UnitStatistics( 70, 70, 30, 0, 0, 0 ), new Ressource( 1, 1, 1, 1 ) ), 80 );
 
             CombatManager combatManager = new CombatManager();
             CombatResult combatResult = combatManager.Resolve( _armyAttack, _armyDefense );

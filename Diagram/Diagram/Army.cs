@@ -51,10 +51,6 @@ namespace Diagram
             {
                 return _regiments.AsReadOnly();
             }
-            internal set
-            {
-                _regiments = value;
-            }
         }
 
         /// <summary>
@@ -124,6 +120,11 @@ namespace Diagram
         internal void RemoveRegiment( Unit unit )
         {
             _regiments.Remove( FindRegiment( unit ) );
+        }
+
+        internal void ClearRegiments()
+        {
+            _regiments.Clear();
         }
 
         /// <summary>
