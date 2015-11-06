@@ -9,7 +9,7 @@ namespace Diagram
     {
         private ArmyState _armyState;
         private Island _island;
-        private readonly RegimentList _regiments;
+        private RegimentList _regiments;
 
         //private readonly Dictionary<Unit, int> _regiments;
 
@@ -50,6 +50,10 @@ namespace Diagram
             get
             {
                 return _regiments.AsReadOnly();
+            }
+            internal set
+            {
+                _regiments = value;
             }
         }
 
@@ -177,6 +181,24 @@ namespace Diagram
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ratio"></param>
+        internal void SubstractFromArmy( double ratio )
+        {
+            Army tmpArmy = this.Copy();
+
+            foreach( Regiment r in tmpArmy.Regiments )
+            {
+                int number = (int)(r.Number * ratio);
+                Console.WriteLine( "number in the unit : " + r.Name + " = " + r.Number );
+                Console.WriteLine( "loss = " + number );
+                SubstractFromRegiment( r.Unit, number );
+
+            }
+        }
+
+        /// <summary>
         /// Adds a number of units to a regiment in the army.
         /// </summary>
         /// <param name="unit">The type of unit to add</param>
@@ -193,6 +215,10 @@ namespace Diagram
             _regiments.Add( new Regiment( unit, finalUnitNumber ) );
         }
 
+        /// <summary>
+        /// Return a new army copied.
+        /// </summary>
+        /// <returns></returns>
         internal Army Copy()
         {
             Army army = new Army(this.ArmyState, this.Island);
@@ -204,6 +230,11 @@ namespace Diagram
             return army;
         }
 
+        /// <summary>
+        /// Return a new army
+        /// </summary>
+        /// <param name="ratio"></param>
+        /// <returns></returns>
         internal Army GetArmyByRatio( double ratio )
         {
             Army army = new Army( this.ArmyState, this.Island );
@@ -218,6 +249,10 @@ namespace Diagram
             return army;
         }
 
+        /// <summary>
+        /// Join armies to Army.this. Used in round combat. Obsolete.
+        /// </summary>
+        /// <param name="armyToJoin"></param>
         internal void JoinArmies( Army armyToJoin )
         {
             Army joinedArmy = this.Copy();
@@ -240,6 +275,21 @@ namespace Diagram
             {
                 _regiments.Add( new Regiment(r.Unit, r.Number ) );
             }
+        }
+
+        /// <summary>
+        /// Count the number of unit in a army.
+        /// </summary>
+        /// <returns></returns>
+        internal double Count()
+        {
+            double number = 0;
+
+            foreach( Regiment r in this.Regiments )
+            {
+                number += r.Number;
+            }
+            return number;
         }
     }
 }
