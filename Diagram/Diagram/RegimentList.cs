@@ -12,5 +12,20 @@ namespace Diagram
         {
             Add( new Regiment( unit, number ) );
         }
+
+        //private Regiment GetAgregatedRegiment( Unit unit, int number )
+        //{
+        //    if ( this.Any( r => r.Unit == unit ) )
+        //    {
+        //        int initialUnitNumber = this.Where( r => r.Unit == unit ).Select(r => r.Number).SingleOrDefault();
+        //        int finalUnitNumber = initialUnitNumber + number;
+
+        //        this.Remove( this.Where( r => r.Unit == unit ).SingleOrDefault() );
+        //        return new Regiment( unit, finalUnitNumber );
+        //    }
+        //    else
+        //        return new Regiment( unit, number );
+        //}
+
     }
 }

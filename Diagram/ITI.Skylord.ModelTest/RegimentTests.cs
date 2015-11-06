@@ -34,5 +34,34 @@ namespace ITI.Skylord.ModelTest
 
             Assert.Throws<ArgumentOutOfRangeException>( () => new Regiment( _warrior, 0 ) );
         }
+
+        [Test]
+        public void Create_new_RegimentList()
+        {
+            RegimentList regimentList = new RegimentList();
+
+            Assert.IsNotNull( regimentList );
+        }
+
+        [Test]
+        public void Add_a_regiment_to_RegimentList_using_normal_Add_Method()
+        {
+            Regiment reg = new Regiment( _warrior, 10 );
+            RegimentList regimentList = new RegimentList();
+
+            regimentList.Add( reg );
+
+            Assert.That( reg.Unit == _warrior && reg.Number == 10 );
+        }
+
+        [Test]
+        public void Add_a_regiment_to_RegimentList_using_overloaded_Add_Method()
+        {
+            RegimentList regimentList = new RegimentList();
+
+            regimentList.Add( _warrior, 10 );
+
+            Assert.That( regimentList[0].Unit == _warrior && regimentList[0].Number == 10 );
+        }
     }
 }

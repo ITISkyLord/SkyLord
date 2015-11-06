@@ -41,23 +41,23 @@ namespace ITI.Skylord.ModelTest
         public void Add_unit_in_army()
         {
             Army army = new Army( ArmyState.defense, _defaultIsland );
-            army.Regiments.Add( _guard, 1 );
+            army.AddRegiment( _guard, 1 );
             Assert.That( army.Regiments.Count == 1 );
         }
         [Test]
         public void Add_different_units_in_army()
         {
             Army army = new Army( ArmyState.defense, _defaultIsland );
-            army.Regiments.Add( _guard, 1 );
-            army.Regiments.Add( _necromancer, 10 );
-            army.Regiments.Add( _warrior, 15 );
+            army.AddRegiment( _guard, 1 );
+            army.AddRegiment( _necromancer, 10 );
+            army.AddRegiment( _warrior, 15 );
             Assert.That( army.Regiments.Count == 3 );
         }
         [Test]
         public void Find_regiment_in_army_with_FindRegiment_method()
         {
             Army army = new Army( ArmyState.defense, _defaultIsland );
-            army.Regiments.Add( _warrior, 50 );
+            army.AddRegiment( _warrior, 50 );
             Regiment r = army.FindRegiment( _warrior );
 
             Assert.That( r.Name == _warrior.Name && r.Number == 50 );
@@ -67,9 +67,9 @@ namespace ITI.Skylord.ModelTest
         public void FindRegiment_returns_a_null_key_if_unit_is_not_in_army()
         {
             Army army = new Army( ArmyState.defense, _defaultIsland );
-            army.Regiments.Add( _guard, 1 );
-            army.Regiments.Add( _necromancer, 10 );
-            army.Regiments.Add( _warrior, 15 );
+            army.AddRegiment( _guard, 1 );
+            army.AddRegiment( _necromancer, 10 );
+            army.AddRegiment( _warrior, 15 );
 
             Regiment r = army.FindRegiment( _cyclop );
             Assert.IsNull( r );
@@ -79,8 +79,8 @@ namespace ITI.Skylord.ModelTest
         public void Get_physical_regiments_with_GetRegimentsByDamagetype_method()
         {
             Army army = new Army( ArmyState.defense, _defaultIsland );
-            army.Regiments.Add( _warrior, 50 );
-            army.Regiments.Add( _cyclop, 10 );
+            army.AddRegiment( _warrior, 50 );
+            army.AddRegiment( _cyclop, 10 );
 
             RegimentList regs = army.GetRegimentsByDamagetype(UnitDamageType.physical);
 
@@ -92,8 +92,8 @@ namespace ITI.Skylord.ModelTest
         public void Get_magical_regiments_with_GetRegimentsByDamagetype_method()
         {
             Army army = new Army( ArmyState.defense, _defaultIsland );
-            army.Regiments.Add( _warrior, 50 );
-            army.Regiments.Add( _cyclop, 10 );
+            army.AddRegiment( _warrior, 50 );
+            army.AddRegiment( _cyclop, 10 );
 
             RegimentList regs = army.GetRegimentsByDamagetype( UnitDamageType.magical );
 
@@ -105,8 +105,8 @@ namespace ITI.Skylord.ModelTest
         public void Get_an_army_s_ratio_of_physical_damage_with_GetPhysicalAttackRatio_method()
         {
             Army army = new Army( ArmyState.defense, _defaultIsland );
-            army.Regiments.Add( _necromancer, 10 );
-            army.Regiments.Add( _warrior, 10 );
+            army.AddRegiment( _necromancer, 10 );
+            army.AddRegiment( _warrior, 10 );
 
             double ratio = army.GetPhysicalAttackRatio();
             Assert.That( ratio == 0.5);
@@ -116,20 +116,21 @@ namespace ITI.Skylord.ModelTest
         public void Subtract_units_from_regiment_with_SubtractFromRegiment_method()
         {
             Army army = new Army( ArmyState.defense, _defaultIsland );
-            army.Regiments.Add( _guard, 50 );
-            army.Regiments.Add( _necromancer, 50 );
+            army.AddRegiment( _guard, 50 );
+            army.AddRegiment( _necromancer, 50 );
 
             army.SubstractFromRegiment( _guard, 10 );
             army.SubstractFromRegiment( _necromancer, 20 );
 
-            Assert.That( army.Regiments.Find( r => r.Unit == _necromancer).Number == 30 && army.Regiments.Find( r => r.Unit == _guard ).Number == 40 );
+            Assert.That( army.Regiments.Where( r => r.Unit == _necromancer).SingleOrDefault().Number == 30 
+                && army.Regiments.Where( r => r.Unit == _guard ).SingleOrDefault().Number == 40 );
         }
 
         [Test]
         public void If_unit_number_in_regiment_is_under_0_the_regiment_is_removed()
         {
             Army army = new Army( ArmyState.defense, _defaultIsland );
-            army.Regiments.Add( _guard, 50 );
+            army.AddRegiment( _guard, 50 );
 
             army.SubstractFromRegiment( _guard, 60 );
 
@@ -141,13 +142,14 @@ namespace ITI.Skylord.ModelTest
         {
             Army army = new Army( ArmyState.defense, _defaultIsland );
 
-            army.Regiments.Add( _guard, 40 );
-            army.Regiments.Add( _necromancer, 30 );
+            army.AddRegiment( _guard, 40 );
+            army.AddRegiment( _necromancer, 30 );
 
             army.AddToRegiment( _guard, 10 );
             army.AddToRegiment( _necromancer, 20 );
 
-            Assert.That( army.Regiments[ 0 ].Number == 50 && army.Regiments[ 1 ].Number == 50 );
+            Assert.That( army.Regiments.Where( r => r.Unit == _guard ).SingleOrDefault().Number == 50 
+                && army.Regiments.Where( r => r.Unit == _necromancer ).SingleOrDefault().Number == 50 );
         }
 
         [Test]
@@ -155,12 +157,13 @@ namespace ITI.Skylord.ModelTest
         {
             Army army = new Army( ArmyState.defense, _defaultIsland );
 
-            army.Regiments.Add( _guard, 100 );
-            army.Regiments.Add( _necromancer, 56 );
+            army.AddRegiment( _guard, 100 );
+            army.AddRegiment( _necromancer, 56 );
 
             Army modifiedArmy = army.GetArmyByRatio( 0.256 );
 
-            Assert.That( modifiedArmy.Regiments[ 0 ].Number == 26 && modifiedArmy.Regiments[ 1 ].Number == 14 );
+            Assert.That( modifiedArmy.Regiments.Where( r => r.Unit == _guard ).SingleOrDefault().Number == 26 
+                && modifiedArmy.Regiments.Where( r => r.Unit == _necromancer ).SingleOrDefault().Number == 14 );
         }
 
         [Test]
@@ -169,19 +172,16 @@ namespace ITI.Skylord.ModelTest
             Island island2 = new Island( "TestIsland2", new Coordinate( 1, 1 ), false );
             Army army = new Army( ArmyState.defense, _defaultIsland );
             Army army2 = new Army( ArmyState.movement, island2 );
-            army.Regiments.Add( _guard, 100 );
-            army.Regiments.Add( _necromancer, 100 );
-            army2.Regiments.Add( _guard, 125 );
-            army2.Regiments.Add( _cyclop, 100 );
+            army.AddRegiment( _guard, 100 );
+            army.AddRegiment( _necromancer, 100 );
+            army2.AddRegiment( _guard, 125 );
+            army2.AddRegiment( _cyclop, 100 );
 
             army.JoinArmies( army2 );
 
-            Console.WriteLine( "Count : " + army.Regiments.Count );
-            Console.WriteLine( "Reg1 : " + army.Regiments[ 0 ].Number + "Reg2 : " + army.Regiments[ 1 ].Number + "Reg3 : " + army.Regiments[ 2 ].Number );
-
-            Assert.That( army.Regiments.Find( r => r.Unit == _guard ).Number == 225 
-                && army.Regiments.Find( r => r.Unit == _necromancer ).Number == 100 
-                && army.Regiments.Find( r => r.Unit == _cyclop ).Number == 100 );
+            Assert.That( army.Regiments.Where( r => r.Unit == _guard ).SingleOrDefault().Number == 225
+                && army.Regiments.Where( r => r.Unit == _necromancer ).SingleOrDefault().Number == 100
+                && army.Regiments.Where( r => r.Unit == _cyclop ).SingleOrDefault().Number == 100 );
 
             Assert.That( army.Regiments.Count == 3 );
         }
