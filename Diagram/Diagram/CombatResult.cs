@@ -46,7 +46,30 @@ namespace Diagram
 
             this._winningArmy = winningArmy;
             this._loosingArmy = loosingArmy;
+            if( winningArmy.ArmyState == ArmyState.movement )
+                _pillagedRessources = CalculatePillagedResult();
+            else
+                _pillagedRessources = null;
             // _pillagedRessources = winningArmy.GetPillagedRessources;
+        }
+
+        private Ressource CalculatePillagedResult()
+        {
+            int wood;
+            int metal;
+            int cristal;
+            int magic;
+            int capacityOfPillaged = 1;
+            
+            foreach( Regiment r in _winningArmy.Regiments )
+            {
+                capacityOfPillaged = r.Unit.UnitStatistics.Capacity * r.Number;
+            }
+            Ressource ressources = new Ressource(capacityOfPillaged/4, capacityOfPillaged/4, capacityOfPillaged/4, capacityOfPillaged/4);
+            _loosingArmy.Island.AllRessources.ChangeRessources( ressources, false );
+            _winningArmy.Island.AllRessources.ChangeRessources( ressources);
+            return ressources;
+
         }
 
         // Renvoie les armées avec pertes et/ou ce qui reste dedans
