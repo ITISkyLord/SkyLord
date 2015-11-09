@@ -19,7 +19,7 @@ namespace Diagram
         public Mage( Island island )
         {
             if( island == null ) throw new ArgumentNullException( "island is null" );
-            _island = island;
+            Island = island;
             this._mageLevel = new MageLevel();
             this._apprentices = new List<Apprentice>();
             // TODO : générer un nom de mage rigolo
@@ -67,6 +67,19 @@ namespace Diagram
             get
             {
                 return _apprentices;
+            }
+        }
+
+        public Island Island
+        {
+            get
+            {
+                return _island;
+            }
+
+            set
+            {
+                _island =  value ;
             }
         }
         #endregion

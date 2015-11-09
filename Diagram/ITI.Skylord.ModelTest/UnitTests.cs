@@ -21,7 +21,7 @@ namespace ITI.Skylord.ModelTest
             _world = new World();
             _defaultPlayer = new Player( _world, "Thanur" );
             _world.addNewIsland(  new Coordinate() );
-            _defaultIsland = _world.Map.Islands.Values.First();
+            _defaultIsland = _world.Map.Islands.First();
 
         }
         [Test]
