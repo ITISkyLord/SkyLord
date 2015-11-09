@@ -15,7 +15,6 @@ namespace ITI.SkyLord.DAL.Contexts.MessageContext
         
 
         public DbSet<Message> Messages { get; set; }
-        []
         public DbSet<PlayerForMessageContext> Players { get; set; }
 
     }

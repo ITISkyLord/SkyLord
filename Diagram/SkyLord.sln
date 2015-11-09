@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITI.SkyLord", "Diagram\ITI.SkyLord.csproj", "{89B60141-CEDB-4ED5-A7A8-412A4E1340C3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITI.SkyLord.Model", "Diagram\ITI.SkyLord.Model.csproj", "{89B60141-CEDB-4ED5-A7A8-412A4E1340C3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITI.Skylord.ModelTest", "ITI.Skylord.ModelTest\ITI.Skylord.ModelTest.csproj", "{D9E29326-AF90-4C11-A7A5-689FB6240FB6}"
 EndProject
