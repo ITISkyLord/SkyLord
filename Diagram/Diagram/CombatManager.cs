@@ -188,7 +188,7 @@ namespace Diagram
 
                 }
             }
-            _loosingArmy.Regiments.Clear();
+            _loosingArmy.ClearRegiments();
             return _winningArmy;
         }
 
@@ -209,9 +209,12 @@ namespace Diagram
             bool physicWin = false;
             bool magicWin = false;
             Army attackingPhysicArmy = attackingArmy.Copy();
-            attackingPhysicArmy.Regiments = attackingPhysicArmy.GetRegimentsByDamagetype( UnitDamageType.physical );
+            //
+            // A CHANGER SI LA METHODE EST EXPLITÉE UN JOUR
+            //
+            // attackingPhysicArmy.Regiments = attackingPhysicArmy.GetRegimentsByDamagetype( UnitDamageType.physical );
             Army attackingMagicArmy = attackingArmy.Copy();
-            attackingMagicArmy.Regiments = attackingMagicArmy.GetRegimentsByDamagetype( UnitDamageType.magical );
+            // attackingMagicArmy.Regiments = attackingMagicArmy.GetRegimentsByDamagetype( UnitDamageType.magical );
 
             Army defendingAgainstPhysicArmy = defendingArmy.GetArmyByRatio( ratioPhysicAttack );
             Army defendingAgainstMagicArmy = defendingArmy.GetArmyByRatio( ratioMagicAttack );
@@ -338,7 +341,7 @@ namespace Diagram
             Console.WriteLine( "result est : " + result );
 
             _winningArmy.SubstractFromArmy( result / 100 );
-            _loosingArmy.Regiments.Clear();
+            _loosingArmy.ClearRegiments();
 
             //100·(pp/pg)^X 
       //      X = 1,5 - 0,08·log10( N / 1000 ) où N correspond

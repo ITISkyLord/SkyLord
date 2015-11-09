@@ -21,7 +21,7 @@ namespace Diagram
         /// <param name="magic">The magic the ressource contains.</param>
         public Ressource( int wood, int metal, int cristal, int magic )
         {
-            if( wood < 0 || metal < 0 || cristal < 0 || magic < 0) throw new ArgumentOutOfRangeException( "Ressources cannot be under 0." );
+            if( wood < 0 || metal < 0 || cristal < 0 || magic < 0) throw new ArgumentOutOfRangeException( "Ressource values cannot be under 0." );
             this._wood = wood;
             this._metal = metal;
             this._cristal = cristal;
@@ -102,6 +102,7 @@ namespace Diagram
         /// <param name="magicQuantity">The magic quantity to add or remove.</param>
         public void ChangeRessources(int woodQuantity, int metalQuantity, int cristalQuantity, int magicQuantity )
         {
+            // Remplacer par un bool, demander à Spi !
             if ( _wood + woodQuantity < 0 ) throw new ArgumentException( "Wood cannot be negative." );
             if ( _metal + metalQuantity < 0 ) throw new ArgumentException( "Metal cannot be negative." );
             if ( _cristal + cristalQuantity < 0 ) throw new ArgumentException( "Cristal cannot be negative." );

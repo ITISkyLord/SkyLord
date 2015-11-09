@@ -45,15 +45,11 @@ namespace Diagram
         /// <summary>
         /// Gets dictionnary Unit,int Regiments
         /// </summary>
-        public RegimentList Regiments
+        public IReadOnlyCollection<Regiment> Regiments
         {
             get
             {
-                return _regiments;
-            }
-            internal set
-            {
-                _regiments = value;
+                return _regiments.AsReadOnly();
             }
         }
 
@@ -71,8 +67,13 @@ namespace Diagram
             {
                 _island = value;
             }
-        } 
+        }
         #endregion
+
+        internal Regiment FindRegiment( Regiment regiment )
+        {
+            return _regiments.Where( r => r.Unit == regiment.Unit ).FirstOrDefault();
+        }
 
         /// <summary>
         /// Find a regiment corresponding to a Unit in an army.
@@ -82,6 +83,48 @@ namespace Diagram
         internal Regiment FindRegiment( Unit unit )
         {
             return _regiments.Where( u => u.Name == unit.Name ).FirstOrDefault();
+        }
+
+        internal void AddRegiment( Regiment regiment )
+        {
+            if( _regiments.Any( r => r.Unit == regiment.Unit ) )
+            {
+                int initialUnitNumber = _regiments.Where( r => r.Unit == regiment.Unit ).Select( r => r.Number ).SingleOrDefault();
+                int finalUnitNumber = initialUnitNumber + regiment.Number;
+
+                _regiments.Remove( FindRegiment(regiment) );
+                _regiments.Add( regiment.Unit, finalUnitNumber );
+            }
+            else
+                _regiments.Add( regiment.Unit, regiment.Number );
+        }
+
+        internal void AddRegiment( Unit unit, int number )
+        {
+            if ( _regiments.Any( r => r.Unit == unit ) )
+            {
+                int initialUnitNumber = _regiments.Where( r => r.Unit == unit ).Select( r => r.Number ).SingleOrDefault();
+                int finalUnitNumber = initialUnitNumber + number;
+
+                _regiments.Remove( FindRegiment(unit) );
+                _regiments.Add( unit, finalUnitNumber );
+            }
+            else
+                _regiments.Add( unit, number );
+        }
+
+        internal void RemoveRegiment( Regiment regiment )
+        {
+            _regiments.Remove( regiment );
+        }
+        internal void RemoveRegiment( Unit unit )
+        {
+            _regiments.Remove( FindRegiment( unit ) );
+        }
+
+        internal void ClearRegiments()
+        {
+            _regiments.Clear();
         }
 
         /// <summary>
@@ -182,7 +225,7 @@ namespace Diagram
             Army army = new Army(this.ArmyState, this.Island);
             foreach( Regiment r in this.Regiments )
             {
-                army.Regiments.Add( r );
+                army.AddRegiment( r );
             }
 
             return army;
@@ -201,7 +244,7 @@ namespace Diagram
             foreach( Regiment r in this.Regiments )
             {
                 newValue = (int)Math.Round( (double)r.Number * ratio );
-                army.Regiments.Add( new Regiment(r.Unit, newValue ) );
+                army.AddRegiment( r.Unit, newValue );
             }
 
             return army;
@@ -224,7 +267,7 @@ namespace Diagram
                 }
                 else
                 {
-                    joinedArmy.Regiments.Add( new Regiment( r.Unit, r.Number ) );
+                    joinedArmy.AddRegiment( r.Unit, r.Number );
                 }
             }
 
