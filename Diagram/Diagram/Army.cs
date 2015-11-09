@@ -1,9 +1,10 @@
-﻿using System;
+﻿using ITI.SkyLord.Units;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Diagram
+namespace ITI.SkyLord
 {
     public class Army
     {

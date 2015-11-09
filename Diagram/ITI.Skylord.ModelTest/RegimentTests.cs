@@ -1,4 +1,6 @@
 ﻿using Diagram;
+using ITI.SkyLord;
+using ITI.SkyLord.Units;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;

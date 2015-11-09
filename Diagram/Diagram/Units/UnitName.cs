@@ -1,4 +1,4 @@
-﻿namespace Diagram
+﻿namespace ITI.SkyLord.Units
 {
     public enum UnitName
     {
