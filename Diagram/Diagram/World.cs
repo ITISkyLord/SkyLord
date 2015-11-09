@@ -64,9 +64,9 @@ namespace ITI.SkyLord
         public Island addNewIsland ( Coordinate coordinates, string name = "Île inhabitée.", bool capital = false, Player owner = null )
         {
             if( name.Length > 50 ) throw new ArgumentOutOfRangeException( " Maximum lenght of name is 50. Your name lenght is " + name.Length + " at the moment." );
-            if( _map.Islands.ContainsKey( coordinates ) ) throw new ArgumentException( " There is already an island on these coordinates." );
+            if( _map.Islands.Any( i => i.Coordinates.X == coordinates.X && i.Coordinates.Y == coordinates.Y ) ) throw new ArgumentException( " There is already an island on these coordinates." );
             Island island = new Island( name, coordinates, capital, owner = null );
-            _map.Islands.Add(coordinates, island );
+            _map.Islands.Add(island );
             return island;
         }
     }

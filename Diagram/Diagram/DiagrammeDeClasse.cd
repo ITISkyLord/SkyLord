@@ -1,270 +1,236 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="Diagram.Cyclop" Collapsed="true">
-    <Position X="0.5" Y="7.25" Width="1.5" />
+  <Class Name="Diagram.World" Collapsed="true">
+    <Position X="14.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Units\Magic\Cyclop.cs</FileName>
+      <HashCode>AAAAAAAAABAQAAAAAAAAAAIAABAgAAAAAEAAAAAAAAA=</HashCode>
+      <FileName>World.cs</FileName>
     </TypeIdentifier>
-  </Class>
-  <Class Name="Diagram.Necromancer" Collapsed="true">
-    <Position X="2.75" Y="7.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Units\Magic\Necromancer.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Diagram.Goblins" Collapsed="true">
-    <Position X="5" Y="7.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Units\Monsters\Goblins.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Diagram.Troll" Collapsed="true">
-    <Position X="7.25" Y="7.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Units\Monsters\Troll.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Diagram.Guard">
-    <Position X="9.5" Y="7.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Units\Soldiers\Guard.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Diagram.Warrior">
-    <Position X="11.75" Y="7.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Units\Soldiers\Warrior.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Diagram.Unit" Collapsed="true">
-    <Position X="6" Y="6" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAACAAASAAAAAAAAAABAAAQAAAAABAAAAAABAQBAAAA=</HashCode>
-      <FileName>Units\Unit.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Diagram.Apprentice" Collapsed="true">
-    <Position X="4.25" Y="3.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAQAAAAAAAAABAAAAAAAAAAA=</HashCode>
-      <FileName>Apprentice.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Diagram.ApprenticeLevel" Collapsed="true">
-    <Position X="13.75" Y="5.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ApprenticeLevel.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Diagram.Army" Collapsed="true">
-    <Position X="6" Y="4.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAACAAQCAAAAAAAAAAIAAAAAAgAAAAAAAAAAAAABAA=</HashCode>
-      <FileName>Army.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Diagram.Building" Collapsed="true">
-    <Position X="6" Y="2.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAIAAAAAAAAAAAAABAAQAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Building.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Diagram.BuildingLevel" Collapsed="true">
-    <Position X="18.25" Y="5.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>BuildingLevel.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Diagram.CombatManager" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="0.75" Y="5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>CombatManager.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
-  </Class>
-  <Class Name="Diagram.CombatReport" Collapsed="true">
-    <Position X="10.5" Y="2.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>BAAAAAAAQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
-      <FileName>CombatReport.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Diagram.Guild" Collapsed="true">
-    <Position X="8.75" Y="2" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAIABAAAAgAABEAAACAAQACACAAkAAAAAEAAAAAAA=</HashCode>
-      <FileName>Guild.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Diagram.GuildRole" Collapsed="true">
-    <Position X="10.5" Y="2" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAIAAAAAAAAAAAAADAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>GuildRole.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Diagram.Island" Collapsed="true">
-    <Position X="6" Y="2" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAQohCAAAAIgAAQkACAAAQAIAAEAAAAAAAAAAAAAAg=</HashCode>
-      <FileName>Island.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Diagram.Level" Collapsed="true">
-    <Position X="17" Y="4" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
-      <FileName>Level.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Diagram.Mage" Collapsed="true">
-    <Position X="6" Y="3.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAIAAACAgAAAAAAAAAAAQAAAAQAAAAAAAAAgAEAAA=</HashCode>
-      <FileName>Mage.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Diagram.MageLevel">
-    <Position X="16" Y="5.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>MageLevel.cs</FileName>
-    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Map" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Players" />
+    </ShowAsCollectionAssociation>
   </Class>
   <Class Name="Diagram.Map" Collapsed="true">
-    <Position X="6" Y="1.25" Width="1.5" />
+    <Position X="9.75" Y="0.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAABAAAAAEAAAAAAAAAAAAAAAAAAAAAAEA=</HashCode>
       <FileName>Map.cs</FileName>
     </TypeIdentifier>
-  </Class>
-  <Class Name="Diagram.Message" Collapsed="true">
-    <Position X="8.75" Y="2.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>BAAAAAEAAAAAAgAAAAAAAAAAAgAEAAAAAAAAAAAIEIA=</HashCode>
-      <FileName>Message.cs</FileName>
-    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Islands" />
+    </ShowAsCollectionAssociation>
   </Class>
   <Class Name="Diagram.Player" Collapsed="true">
-    <Position X="8.75" Y="1.25" Width="1.5" />
+    <Position X="14.75" Y="2.75" Width="1.5" />
+    <AssociationLine Name="Profil" Type="Diagram.Profil" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="16.156" Y="2.75" />
+        <Point X="16.156" Y="1.312" />
+        <Point X="15.458" Y="1.312" Type="JumpStart" />
+        <Point X="15.292" Y="1.312" Type="JumpEnd" />
+        <Point X="14" Y="1.312" />
+      </Path>
+    </AssociationLine>
     <TypeIdentifier>
       <HashCode>AAAAIQAAAQCABAQAAAEAAAQCAAAAQAAAAAAAAAAAAEA=</HashCode>
       <FileName>Player.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Profil" />
+      <Property Name="Guild" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Islands" />
+      <Property Name="Technologies" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Diagram.Island" Collapsed="true">
+    <Position X="4" Y="1.5" Width="1.5" />
+    <AssociationLine Name="Owner" Type="Diagram.Player" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="5.5" Y="1.695" />
+        <Point X="15" Y="1.695" />
+        <Point X="15" Y="2.75" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="Buildings" Type="Diagram.Building" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="4.094" Y="2.062" />
+        <Point X="4.094" Y="5.625" />
+        <Point X="3.125" Y="5.625" />
+        <Point X="3.125" Y="6" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="Armies" Type="Diagram.Army" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="5.133" Y="2.062" />
+        <Point X="5.133" Y="2.437" />
+        <Point X="5.562" Y="2.437" />
+        <Point X="5.562" Y="3.75" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAQohCAAAAIgAAQkACAAAQAIAAEAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>Island.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Owner" />
+      <Property Name="Coordinates" />
+      <Property Name="AllRessources" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Buildings" />
+      <Property Name="Armies" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Diagram.Guild" Collapsed="true">
+    <Position X="14" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIABAAAAgAABEAAACAAQACACAAkAAAAAEAAAAAAA=</HashCode>
+      <FileName>Guild.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Members" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Diagram.Technology" Collapsed="true">
+    <Position X="9.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAAAAAAAAAAAQQAAAAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>Technology.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Level" />
+    </ShowAsAssociation>
   </Class>
   <Class Name="Diagram.Profil" Collapsed="true">
-    <Position X="8.75" Y="3.5" Width="1.5" />
+    <Position X="12.5" Y="0.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>gAQAgACAAAAgAAAEAAAAAAAAAAAAAAACAAAAAQAAAAA=</HashCode>
       <FileName>Profil.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Diagram.Ressource" Collapsed="true">
-    <Position X="10.75" Y="3.75" Width="1.5" />
+    <Position X="1.25" Y="2.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AIEAEAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAwAAAg=</HashCode>
+      <HashCode>AIEAEAAQAAAAAAAAAAAAAAAAgAgAIBAAAAAAAAwAAQg=</HashCode>
       <FileName>Ressource.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Diagram.Spell">
-    <Position X="2.5" Y="3.5" Width="1.5" />
+  <Class Name="Diagram.Army" Collapsed="true">
+    <Position X="5.25" Y="3.75" Width="1.5" />
+    <AssociationLine Name="Island" Type="Diagram.Island" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="5.438" Y="3.75" />
+        <Point X="5.438" Y="3.375" />
+        <Point X="4.703" Y="3.375" />
+        <Point X="4.703" Y="2.062" />
+      </Path>
+    </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAAAIAAAAAAAAAAEAABAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Spell.cs</FileName>
+      <HashCode>AACASAIQiAAEAAAAAAAIKAQAAggAAAABAAAAAAAADAA=</HashCode>
+      <FileName>Army.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ArmyState" />
+      <Property Name="Island" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Regiments" />
+    </ShowAsCollectionAssociation>
   </Class>
-  <Class Name="Diagram.Technology" Collapsed="true">
-    <Position X="8.75" Y="4.25" Width="1.5" />
+  <Class Name="Diagram.Building" Collapsed="true">
+    <Position X="2.25" Y="6" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAIAAAAAAAAAAAAAAAAQQAAAAAAAABAAAAAAAAAAA=</HashCode>
-      <FileName>Technology.cs</FileName>
+      <HashCode>AAACIAAAAAAAAAAAAABAAQQAAAAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>Building.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Level" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Diagram.Regiment" Collapsed="true">
+    <Position X="5.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIEAAAAQAAAAAAAAAAAgAAABAAgI=</HashCode>
+      <FileName>Regiment.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Diagram.TechnologyLevel" Collapsed="true">
-    <Position X="20.5" Y="5.5" Width="1.5" />
+    <Position X="8" Y="8.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>TechnologyLevel.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Diagram.World" Collapsed="true">
-    <Position X="7.5" Y="0.5" Width="1.5" />
+  <Class Name="Diagram.GuildRole" Collapsed="true">
+    <Position X="14" Y="5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAABAQAAAAAAAAAAIAABAgAAAAAEAAAAAAAAA=</HashCode>
-      <FileName>World.cs</FileName>
+      <HashCode>AAAAIAAAAAAAAAAAAADAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GuildRole.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Diagram.Level" Collapsed="true">
+    <Position X="6" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAEAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>Level.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Diagram.BuildingLevel" Collapsed="true">
+    <Position X="2.75" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BuildingLevel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Diagram.MageLevel" Collapsed="true">
+    <Position X="6.25" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MageLevel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Diagram.Mage" Collapsed="true">
+    <Position X="7.75" Y="6.5" Width="1.5" />
+    <AssociationLine Name="Island" Type="Diagram.Island" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="9.062" Y="6.5" />
+        <Point X="9.062" Y="1.91" />
+        <Point X="5.5" Y="1.91" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAKAAACAgAAAAAAAAAAAQAAAAQAAAAAAAAAgAEAAA=</HashCode>
+      <FileName>Mage.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Island" />
+      <Property Name="MageLevel" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Diagram.ApprenticeLevel" Collapsed="true">
+    <Position X="4.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ApprenticeLevel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Struct Name="Diagram.Coordinate" Collapsed="true">
-    <Position X="4.25" Y="1.25" Width="1.5" />
+    <Position X="1" Y="1.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAIAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAA=</HashCode>
       <FileName>Coordinate.cs</FileName>
     </TypeIdentifier>
   </Struct>
-  <Struct Name="Diagram.UnitStatistics" Collapsed="true">
-    <Position X="2.5" Y="6" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAgAAAAAAQAAAAAAAAQDAIAAAIAAhAAAAAACAEA=</HashCode>
-      <FileName>UnitStatistics.cs</FileName>
-    </TypeIdentifier>
-  </Struct>
-  <Interface Name="Diagram.ICombatManager" Collapsed="true">
-    <Position X="2.5" Y="5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ICombatManager.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
-  <Enum Name="Diagram.ArmyState">
-    <Position X="4.25" Y="5" Width="1.5" />
+  <Enum Name="Diagram.ArmyState" Collapsed="true">
+    <Position X="7.25" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAEAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
       <FileName>ArmyState.cs</FileName>
-    </TypeIdentifier>
-  </Enum>
-  <Enum Name="Diagram.IslandSpecialization" Collapsed="true">
-    <Position X="4.25" Y="2" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAABAAAAAAAAAAAACAAAAAAAAAAAAAAAAAABABA=</HashCode>
-      <FileName>IslandSpecialization.cs</FileName>
-    </TypeIdentifier>
-  </Enum>
-  <Enum Name="Diagram.MemberRight" Collapsed="true">
-    <Position X="14" Y="2" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAACAAAAAAAAAAAAACEAIBAAAAAAAAAAAAA=</HashCode>
-      <FileName>MemberRight.cs</FileName>
-    </TypeIdentifier>
-  </Enum>
-  <Enum Name="Diagram.UnitDamageType" Collapsed="true">
-    <Position X="8.75" Y="5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAQA=</HashCode>
-      <FileName>UnitDamageType.cs</FileName>
-    </TypeIdentifier>
-  </Enum>
-  <Enum Name="Diagram.UnitType" Collapsed="true">
-    <Position X="4.25" Y="6" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAIAAAAAIAAAAAgAIAABA=</HashCode>
-      <FileName>UnitType.cs</FileName>
-    </TypeIdentifier>
-  </Enum>
-  <Enum Name="Diagram.GuildStatus">
-    <Position X="12.25" Y="2" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAECAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>GuildStatus.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Font Name="Segoe UI" Size="9" />

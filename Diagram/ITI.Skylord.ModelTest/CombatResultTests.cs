@@ -29,7 +29,6 @@ namespace ITI.Skylord.ModelTest
 
             CombatResult combatResult = new CombatResult( army, army2 );
 
-            Assert.IsNotNull( combatResult );
             Assert.That( combatResult.WinningArmy == army && combatResult.LoosingArmy == army2 );
         }
 

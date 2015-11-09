@@ -19,7 +19,9 @@ namespace ITI.SkyLord
         public Mage( Island island, string name )
         {
             if( island == null ) throw new ArgumentNullException( "island is null" );
-            _island = island;
+            if( String.IsNullOrWhiteSpace( name ) ) throw new ArgumentNullException( "The name of the mage can not be null or a white space." );
+            if( name.Count() < 4 ) throw new InvalidOperationException( "The name of the mage must be at least 4 characters" );
+            Island = island;
             this._mageLevel = new MageLevel();
             this._apprentices = new List<Apprentice>();
             // TODO : générer un nom de mage rigolo
@@ -70,6 +72,19 @@ namespace ITI.SkyLord
             get
             {
                 return _apprentices;
+            }
+        }
+
+        public Island Island
+        {
+            get
+            {
+                return _island;
+            }
+
+            set
+            {
+                _island =  value ;
             }
         }
         #endregion

@@ -83,6 +83,14 @@ namespace ITI.SkyLord
                 return _magic;
             }
         }
+
+        public int Total
+        {
+            get
+            {
+                return (_magic + _cristal + _wood + _metal);
+            }
+        }
         #endregion
 
         /// <summary>
@@ -104,6 +112,32 @@ namespace ITI.SkyLord
             _metal += metalQuantity;
             _cristal += cristalQuantity;
             _magic += magicQuantity;
+        }
+        /// <summary>
+        /// Only for add ressources.
+        /// </summary>
+        /// <param name="ressource"></param>
+        public void ChangeRessources( Ressource ressource, bool b = true )
+        {
+            if(b)
+            {
+                _wood += ressource.Wood;
+                _metal += ressource.Metal;
+                _cristal += ressource.Cristal;
+                _magic += ressource.Magic;
+            } else
+            {
+                if( _wood - ressource.Wood < 0 ) throw new ArgumentException( "Wood cannot be negative." );
+                if( _metal - ressource.Metal < 0 ) throw new ArgumentException( "Metal cannot be negative." );
+                if( _cristal - ressource.Cristal < 0 ) throw new ArgumentException( "Cristal cannot be negative." );
+                if( _magic - ressource.Magic < 0 ) throw new ArgumentException( "Magic cannot be negative." );
+                _wood -= ressource.Wood;
+                _metal -= ressource.Metal;
+                _cristal -= ressource.Cristal;
+                _magic -= ressource.Magic;
+            }
+
+
         }
 
         /// <summary>

@@ -26,7 +26,7 @@ namespace ITI.Skylord.ModelTest
             _world = new World();
             _defaultPlayer = new Player( _world, "Thanur" );
             _world.addNewIsland( new Coordinate() );
-            _defaultIsland = _world.Map.Islands.Values.First();
+            _defaultIsland = _world.Map.Islands.First();
             _warrior = new Unit( UnitName.warrior, UnitDamageType.physical, UnitType.soldier, new UnitStatistics( 70, 50, 25, 25, 15, 5 ), new Ressource( 10, 10, 10, 10 ) );
             _guard = new Unit( UnitName.guard, UnitDamageType.physical, UnitType.soldier, new UnitStatistics( 50, 70, 30, 15, 15, 5 ), new Ressource( 10, 10, 10, 10 ) );
             _necromancer = new Unit( UnitName.necromancer, UnitDamageType.magical, UnitType.magic, new UnitStatistics( 70, 30, 15, 10, 10, 5 ), new Ressource( 10, 10, 10, 10 ) );
