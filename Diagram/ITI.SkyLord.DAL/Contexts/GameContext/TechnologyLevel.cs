@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace ITI.SkyLord.DAL.Contexts.GameContext
 {
-    public enum TechnologyLevel
+    public class TechnologyLevel : Level
     {
+        public long TechnologyLevelId { get; set; }
     }
 }

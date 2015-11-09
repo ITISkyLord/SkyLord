@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ITI.SkyLord.DAL.Contexts.GameContext
 {
-    public class ApprenticeLevel
+    public class ApprenticeLevel : Level
     {
         public int ApprenticeLevelId { get; set; }
     }

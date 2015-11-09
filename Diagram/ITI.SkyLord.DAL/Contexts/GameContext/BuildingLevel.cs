@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ITI.SkyLord.DAL.Contexts.GameContext
 {
-    public enum BuildingLevel
+    public class BuildingLevel : Level
     {
        
     }

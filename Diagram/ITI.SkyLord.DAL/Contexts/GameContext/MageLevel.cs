@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace ITI.SkyLord.DAL.Contexts.GameContext
 {
-    public enum MageLevel
+    public class MageLevel : Level
     {
-
+        public long MageLevelId { get; set; }
     }
 }
