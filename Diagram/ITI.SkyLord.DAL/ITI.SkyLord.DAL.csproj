@@ -55,11 +55,15 @@
     <Compile Include="Contexts\GameModel\ArmyState.cs" />
     <Compile Include="Contexts\GameModel\Building.cs" />
     <Compile Include="Contexts\GameModel\BuildingLevel.cs" />
+    <Compile Include="Contexts\GameModel\CombatReport.cs" />
     <Compile Include="Contexts\GameModel\Coordinate.cs" />
     <Compile Include="Contexts\GameModel\GameModelContext.cs" />
     <Compile Include="Contexts\GameModel\GuildStatus.cs" />
+    <Compile Include="Contexts\GameModel\IslandSpecialization.cs" />
+    <Compile Include="Contexts\GameModel\Level.cs" />
     <Compile Include="Contexts\GameModel\MageLevel.cs" />
     <Compile Include="Contexts\GameModel\MemberRight.cs" />
+    <Compile Include="Contexts\GameModel\Message.cs" />
     <Compile Include="Contexts\GameModel\Player.cs" />
     <Compile Include="Contexts\GameModel\Profil.cs" />
     <Compile Include="Contexts\GameModel\Guild.cs" />
@@ -78,9 +82,6 @@
     <Compile Include="Contexts\GameModel\UnitStatistics.cs" />
     <Compile Include="Contexts\GameModel\UnitType.cs" />
     <Compile Include="Contexts\GameModel\World.cs" />
-    <Compile Include="Contexts\MessageModel\Message.cs" />
-    <Compile Include="Contexts\MessageModel\MessageContext.cs" />
-    <Compile Include="Contexts\MessageModel\Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

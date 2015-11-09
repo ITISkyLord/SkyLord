@@ -1,4 +1,4 @@
-﻿using ITI.SkyLord.DAL.Contexts.GameModel;
+﻿using ITI.SkyLord.DAL.Contexts.GameContext;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;

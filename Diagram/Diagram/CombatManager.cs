@@ -1,10 +1,13 @@
 ﻿//using ITI.SkyLord.Units;
+using ITI.SkyLord;
+using ITI.SkyLord.Units;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-//namespace ITI.SkyLord
+namespace ITI.SkyLord
 {
     public class CombatManager : ICombatManager
     {
