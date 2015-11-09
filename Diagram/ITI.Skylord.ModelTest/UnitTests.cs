@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Diagram;
 using NUnit.Framework;
+using ITI.SkyLord;
+using ITI.SkyLord.Units;
 
 namespace ITI.Skylord.ModelTest
 {
@@ -21,44 +23,44 @@ namespace ITI.Skylord.ModelTest
             _world = new World();
             _defaultPlayer = new Player( _world, "Thanur" );
             _world.addNewIsland(  new Coordinate() );
-            _defaultIsland = _world.Map.Islands.Values.First();
+            _defaultIsland = _world.Map.Islands.First();
 
         }
         [Test]
-        public void Create_new_guard()
+        public void Create_new_unit()
         {
-            Diagram.Guard guard = new Diagram.Guard();
+            Unit guard = new Unit( UnitName.guard, UnitDamageType.physical, UnitType.soldier, new UnitStatistics( 50, 70, 30, 15, 15, 5 ), new Ressource( 10, 10, 10, 10 ) );
             Assert.IsNotNull( guard );
         }
         [Test]
         public void Create_new_warrior_has_the_good_unitType()
         {
-            Warrior warrior = new Warrior();
+            Unit warrior = new Unit( UnitName.warrior, UnitDamageType.physical, UnitType.soldier, new UnitStatistics( 70, 50, 25, 25, 15, 5 ), new Ressource( 10, 10, 10, 10 ) );
             Assert.That( warrior.UnitDamageType == UnitDamageType.physical );
         }
         [Test]
         public void Create_new_goblins_has_the_good_unitType()
         {
-            Goblins goblins = new Goblins();
-            Assert.That( goblins.UnitDamageType == UnitDamageType.physical );
+            Unit goblin = new Unit( UnitName.gobelin, UnitDamageType.physical, UnitType.monster, new UnitStatistics( 30, 15, 15, 15, 15, 5 ), new Ressource( 10, 10, 10, 10 ) );
+            Assert.That( goblin.UnitDamageType == UnitDamageType.physical );
         }
         [Test]
         public void Create_new_troll_has_the_good_unitType()
         {
-            Troll troll = new Troll();
+            Unit troll = new Unit( UnitName.troll, UnitDamageType.physical, UnitType.monster, new UnitStatistics( 75, 15, 30, 10, 40, 10 ), new Ressource( 10, 10, 10, 10 ) );
             Assert.That( troll.UnitDamageType == UnitDamageType.physical );
         }
 
         [Test]
         public void Create_new_necromancer_has_the_good_unitType()
         {
-            Necromancer necromancer = new Necromancer();
+            Unit necromancer = new Unit( UnitName.necromancer, UnitDamageType.magical, UnitType.magic, new UnitStatistics( 70, 30, 15, 10, 10, 5 ), new Ressource( 10, 10, 10, 10 ) );
             Assert.That( necromancer.UnitDamageType == UnitDamageType.magical );
         }
         [Test]
         public void Create_new_cyclop_has_the_good_unitType()
         {
-            Cyclop cyclop = new Cyclop();
+            Unit cyclop = new Unit( UnitName.cyclop, UnitDamageType.magical, UnitType.magic, new UnitStatistics( 50, 40, 20, 5, 10, 10 ), new Ressource( 10, 10, 10, 10 ) );
             Assert.That( cyclop.UnitDamageType == UnitDamageType.magical );
         }
         [Test]

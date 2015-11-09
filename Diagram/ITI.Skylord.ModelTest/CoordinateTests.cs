@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Diagram;
+using ITI.SkyLord;
 
 namespace ITI.Skylord.ModelTest
 {

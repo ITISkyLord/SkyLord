@@ -4,24 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Diagram
+namespace ITI.SkyLord.Units
 {
-    public abstract class Unit
+    public class Unit
     {
         protected int _id;
+        private UnitName _unitName;
         protected UnitDamageType _unitDamageType;
         protected UnitType _unitType;
         protected UnitStatistics _unitStatistics;
-     //   protected Regiment _regiment;
+        protected Ressource _unitCost;
 
         #region Properties
-        public string Name
-        {
-            get
-            {
-                return this.GetType().Name;
-            }
-        }
+
         public int Id
         {
             get
@@ -29,6 +24,23 @@ namespace Diagram
                 return _id;
             }
         }
+
+        public UnitName UnitName
+        {
+            get
+            {
+                return _unitName;
+            }
+        }
+
+        public string Name
+        {
+            get
+            {
+                return _unitName.ToString();
+            }
+        }
+
         public UnitDamageType UnitDamageType
         {
             get
@@ -50,6 +62,15 @@ namespace Diagram
                 return _unitStatistics;
             }
         }
+
+        public Ressource UnitCost
+        {
+            get
+            {
+                return _unitCost;
+            }
+        }
+
         //protected Regiment Regiment
         //{
         //    get
@@ -63,5 +84,25 @@ namespace Diagram
         //    }
         //} 
         #endregion
+
+        internal Unit( UnitName unitName, UnitDamageType unitDamageType, UnitType unitType, UnitStatistics unitStatistics, Ressource unitCost )
+        {
+            _unitName = unitName;
+            _unitDamageType = unitDamageType;
+            _unitType = unitType;
+            _unitStatistics = unitStatistics;
+            _unitCost = unitCost;
+        }
+        public override bool Equals( object obj )
+        {
+            Unit other = obj as Unit;
+            return other != null && other.Name == this.Name;
+        }
+
+        public override int GetHashCode()
+        {
+            if ( Name == null ) return 0;
+            return Name.GetHashCode();
+        }
     }
 }

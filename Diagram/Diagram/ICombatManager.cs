@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Diagram
+namespace ITI.SkyLord
 {
     public interface ICombatManager
     {
-        Island Resolve( Army attackingArmy, Army defendingArmy );
+        CombatResult Resolve( Army attackingArmy, Army defendingArmy );
 
     }
 }

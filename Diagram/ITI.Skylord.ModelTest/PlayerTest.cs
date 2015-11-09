@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Diagram;
+using ITI.SkyLord;
 
 namespace ITI.Skylord.ModelTest
 {
@@ -18,7 +19,7 @@ namespace ITI.Skylord.ModelTest
         {
             _world = new World();
             _world.addNewIsland( new Coordinate() );
-            _defaultIsland = _world.Map.Islands.Values.First();
+            _defaultIsland = _world.Map.Islands.First();
         }
 
         [Test]

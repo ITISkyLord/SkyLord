@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 
 
-namespace Diagram
+namespace ITI.SkyLord
 {
-
+    // TODO : passer en class
     public struct Coordinate
     {
         private readonly int _x;
