@@ -46,10 +46,10 @@ namespace Diagram
 
             this._winningArmy = winningArmy;
             this._loosingArmy = loosingArmy;
-            if( winningArmy.ArmyState == ArmyState.movement )
-                _pillagedRessources = CalculatePillagedResult();
-            else
-                _pillagedRessources = null;
+            //if( winningArmy.ArmyState == ArmyState.movement )
+            //    _pillagedRessources = CalculatePillagedResult();
+            //else
+            //    _pillagedRessources = null;
             // _pillagedRessources = winningArmy.GetPillagedRessources;
         }
 
@@ -66,6 +66,7 @@ namespace Diagram
                 capacityOfPillaged = r.Unit.UnitStatistics.Capacity * r.Number;
             }
             Ressource ressources = new Ressource(capacityOfPillaged/4, capacityOfPillaged/4, capacityOfPillaged/4, capacityOfPillaged/4);
+            if( ressources.Wood > _loosingArmy.Island.AllRessources.Wood)
             _loosingArmy.Island.AllRessources.ChangeRessources( ressources, false );
             _winningArmy.Island.AllRessources.ChangeRessources( ressources);
             return ressources;
