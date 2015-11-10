@@ -17,14 +17,23 @@ namespace ITI.SkyLord.DAL.Contexts.GameContext
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            // Configure StudentId as PK for StudentAddress
+            // Configure PlayerId as PK for Profile
             modelBuilder.Entity<Profil>()
                 .HasKey(e => e.PlayerId);
 
-            // Configure StudentId as FK for StudentAddress
+            // Configure PlayerId as FK for Profile
             modelBuilder.Entity<Player>()
-                        .HasOptional(s => s.Profil) // Mark StudentAddress is optional for Student
+                        .HasOptional(s => s.Profil) // Mark Profile is optional for Player
                         .WithRequired(ad => ad.Owner); // Create inverse relationship
+
+            // Configure WorldId as PK for Map
+            modelBuilder.Entity<Map>()
+                .HasKey(e => e.WorldId);
+
+            // Configure WorldId as FK for Mpa
+            modelBuilder.Entity<World>()
+                        .HasOptional(s => s.Map) // Mark Map is optional for World
+                        .WithRequired(ad => ad.World); // Create inverse relationship
 
         }
 

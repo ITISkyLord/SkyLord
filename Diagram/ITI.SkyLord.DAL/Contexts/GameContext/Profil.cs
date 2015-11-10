@@ -10,9 +10,7 @@ namespace ITI.SkyLord.DAL.Contexts.GameContext
 {
    public class Profil
     {
-        //[Key,ForeignKey("Player")]
         public long PlayerId { get; set; }
-        public long ProfilId { get; set; }
         public string Description { get; set; }
         public string Mail { get; set; }
         public string Password { get; set; }

@@ -70,7 +70,8 @@ namespace ITI.SkyLord.Ef.Test
             {
                 foreach (Profil p in context.Profils.Include(p => p.Owner))
                 {
-                    Console.WriteLine("Mail : {0}, Name : {1}", p.Mail, p.Owner.Name);
+                    Console.WriteLine("Mail : {0}, Name : {1}, Id {2}, ProfilId : {3}",
+                        p.Mail, p.Owner.Name,p.Owner.PlayerId);
                 }
             }
         }
@@ -78,22 +79,28 @@ namespace ITI.SkyLord.Ef.Test
         [Test]
         public void CreateWorld()
         {
-            World w = new World();
+            Map m1 = new Map();
+            Map m2 = new Map();
+            World w = new World { Map = m1 };
+            World w2 = new World { Map = m2 };
             using (GameEntity context = new GameEntity())
             {
+                context.Maps.Add(m1);
+                context.Maps.Add(m2);
                 context.Worlds.Add(w);
+                context.Worlds.Add(w2);
                 context.SaveChanges();
             }
         }
 
         [Test]
-        public void getWorld()
+        public void DisplayWorld()
         {
             using (GameEntity context = new GameEntity())
             {
                 foreach(World world in context.Worlds.Include(world => world.Map))
                 {
-                    Console.WriteLine(world.Map);
+                    Console.WriteLine("WordId : {0}", world.WorldId);
                 }
             }
         }
