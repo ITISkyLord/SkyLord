@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
@@ -15,7 +16,7 @@ namespace ITI.SkyLord.DAL.Contexts.MessageContext
         
 
         public DbSet<Message> Messages { get; set; }
-        public DbSet<Player> Players { get; set; }
+        public DbSet<Players> Players { get; set; }
 
     }
 }

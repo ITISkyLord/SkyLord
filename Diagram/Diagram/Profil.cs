@@ -19,15 +19,23 @@ namespace ITI.SkyLord
         /// <param name="player">The player the profile belongs to.</param>
         /// <param name="mail">The mail of the player.</param>
         /// <param name="password">The password of the player.</param>
-        public Profil( Player player, string mail, string password )
+        public Profil(Player player, string mail, string password)
         {
-            if( !IsValidEmailStatic.IsValidEmail( mail ) ) throw new ArgumentException( "Invalid mail" );
-            if( String.IsNullOrWhiteSpace( password ) ) throw new ArgumentNullException( "password is null or has white space." );
-            if( player == null ) throw new ArgumentNullException();
+            if (!IsValidEmailStatic.IsValidEmail(mail)) throw new ArgumentException("Invalid mail");
+            if (String.IsNullOrWhiteSpace(password)) throw new ArgumentNullException("password is null or has white space.");
+            if (player == null) throw new ArgumentNullException();
             this._mail = mail;
             this._owner = player;
             this._password = password;
         }
+
+        //public Profil( string mail, string password)
+        //{
+        //    if (!IsValidEmailStatic.IsValidEmail(mail)) throw new ArgumentException("Invalid mail");
+        //    if (String.IsNullOrWhiteSpace(password)) throw new ArgumentNullException("password is null or has white space.");
+        //    this._mail = mail;
+        //    this._password = password;
+        //}
 
         #region Properties
         /// <summary>

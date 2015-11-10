@@ -46,10 +46,10 @@ namespace ITI.SkyLord
         /// <param name="mail">The mail of the player.</param>
         /// <param name="password">The password of the player.</param>
         /// <returns>The player added.</returns>
-        public Player addNewPlayer( string name, string mail = "toto@gmail.com", string password = "password" )
+        public Player addNewPlayer(string name, string mail = "toto@gmail.com", string password = "password")
         {
-            Player player = new Player( this, name, mail, password );
-            _players.Add( player );
+            Player player = new Player(this, name, mail, password);
+            _players.Add(player);
             return player;
         }
 

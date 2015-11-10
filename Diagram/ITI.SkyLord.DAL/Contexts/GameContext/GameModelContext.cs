@@ -15,6 +15,19 @@ namespace ITI.SkyLord.DAL.Contexts.GameContext
         {          
         }
 
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            // Configure StudentId as PK for StudentAddress
+            modelBuilder.Entity<Profil>()
+                .HasKey(e => e.PlayerId);
+
+            // Configure StudentId as FK for StudentAddress
+            modelBuilder.Entity<Player>()
+                        .HasOptional(s => s.Profil) // Mark StudentAddress is optional for Student
+                        .WithRequired(ad => ad.Owner); // Create inverse relationship
+
+        }
+
         public virtual DbSet<Profil> Profils { get; set; }
         public virtual DbSet<Player> Players { get; set; }
         public virtual DbSet<World> Worlds { get; set; }

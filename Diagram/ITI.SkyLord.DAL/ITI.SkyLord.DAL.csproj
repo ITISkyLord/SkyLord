@@ -84,7 +84,7 @@
     <Compile Include="Contexts\GameContext\World.cs" />
     <Compile Include="Contexts\MessageContext\Message.cs" />
     <Compile Include="Contexts\MessageContext\MessageContext.cs" />
-    <Compile Include="Contexts\MessageContext\Player.cs" />
+    <Compile Include="Contexts\MessageContext\Players.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

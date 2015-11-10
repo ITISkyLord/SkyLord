@@ -14,8 +14,8 @@ namespace ITI.SkyLord.Ef.Test
         [Test]
         public void createMessage()
         {
-            Player testPlayer = new Player {PlayerId = 541, Name = "Loic"};
-            Player testPlayer2 = new Player {PlayerId = 448, Name = "Aizen"};
+            Players testPlayer = new Players {PlayerId = 541, Name = "Loic"};
+            Players testPlayer2 = new Players {PlayerId = 448, Name = "Aizen"};
             Message meg = new Message
             {
                 MessageObject = "Coucou",
@@ -28,7 +28,6 @@ namespace ITI.SkyLord.Ef.Test
             {
                 context.Players.Add(testPlayer);
                 context.Players.Add(testPlayer2);
-                context.SaveChanges();
                 context.Messages.Add(meg);
                 context.SaveChanges();
             }
