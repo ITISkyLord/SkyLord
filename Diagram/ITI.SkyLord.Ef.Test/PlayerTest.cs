@@ -16,6 +16,7 @@ namespace ITI.SkyLord.Ef.Test
         {
             Player testPlayer = new Player { Name = "Lolo" };
             Player testPlayer2 = new Player { Name = "Lili" };
+
             using (GameEntity context = new GameEntity())
             {
                 context.Players.Add(testPlayer);

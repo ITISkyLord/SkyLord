@@ -12,13 +12,14 @@ namespace ITI.SkyLord.DAL.Contexts.GameContext
     {
         public long PlayerId { get; set; }
         public string Name { get; set; }
-
         public Guild Guild { get; set; }
-        public ICollection<Island> Islands { get; set; }
-        [Required]
-        public Profil Profil { get; set; }
-        public ICollection<Technology> Technologies { get; set; }
+        public IList<Island> Islands { get; set; }
+        
+        public IList<Technology> Technologies { get; set; }
         public World World { get; set; }
+
+        public int ProfilId { get; set; }
+        public Profil Profil { get; set; }
 
     }
 }

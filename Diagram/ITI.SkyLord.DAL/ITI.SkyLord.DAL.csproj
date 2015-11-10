@@ -84,13 +84,12 @@
     <Compile Include="Contexts\GameContext\World.cs" />
     <Compile Include="Contexts\MessageContext\Message.cs" />
     <Compile Include="Contexts\MessageContext\MessageContext.cs" />
-    <Compile Include="Contexts\MessageContext\PlayerForMessageContext.cs" />
+    <Compile Include="Contexts\MessageContext\Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Contexts\GuildContext\" />
     <Folder Include="Contexts\IslandContext\" />
-    <Folder Include="Contexts\NewFolder1\" />
     <Folder Include="Contexts\PlayerContext\" />
     <Folder Include="Contexts\WorldContext\" />
   </ItemGroup>

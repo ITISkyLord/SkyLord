@@ -8,15 +8,15 @@ using System.Threading.Tasks;
 
 namespace ITI.SkyLord.DAL.Contexts.MessageContext
 {
-    public class PlayerForMessageContext
+    public class Player
     {
         public long PlayerId { get; set; }
         public string Name { get; set; }
 
-        public int Guild { get; set; }
-        public ICollection<int> Islands { get; set; }
-        public int Profil { get; set; }
-        public ICollection<int> Technologies { get; set; }
-        public int World { get; set; }
+        public long Guild_GuildId { get; set; }
+        public ICollection<long> Islands { get; set; }
+        public long Profil { get; set; }
+        public ICollection<long> Technologies { get; set; }
+        public long World_WorldId { get; set; }
     }
 }
