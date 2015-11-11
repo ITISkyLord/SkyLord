@@ -11,8 +11,9 @@ namespace ITI.SkyLord.DAL.Contexts.GameContext
     public partial class GameEntity : DbContext
     {
         public GameEntity()
-            :base("SkyLordDb")
-        {          
+            :base("SkyLordDB")
+        {
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<GameEntity, ITI.SkyLord.DAL.Migrations.Configuration>("SkyLordDB"));
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -36,7 +37,6 @@ namespace ITI.SkyLord.DAL.Contexts.GameContext
                         .WithRequired(ad => ad.World); // Create inverse relationship
 
         }
-
         public virtual DbSet<Profil> Profils { get; set; }
         public virtual DbSet<Player> Players { get; set; }
         public virtual DbSet<World> Worlds { get; set; }

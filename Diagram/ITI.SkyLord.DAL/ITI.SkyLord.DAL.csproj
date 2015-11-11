@@ -85,6 +85,7 @@
     <Compile Include="Contexts\MessageContext\Message.cs" />
     <Compile Include="Contexts\MessageContext\MessageContext.cs" />
     <Compile Include="Contexts\MessageContext\Players.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -31,6 +31,7 @@ namespace ITI.SkyLord.Ef.Test
                 {
                     context.SaveChanges();
                 }
+                // Give detail of the Exception : DbEntityValidationException
                 catch (DbEntityValidationException e)
                 {
                     foreach (var eve in e.EntityValidationErrors)
