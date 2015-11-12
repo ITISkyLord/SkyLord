@@ -16,6 +16,7 @@ namespace ITI.SkyLord.DAL.Contexts.GameContext
         public string Name { get; set; }
         public Guild Guild { get; set; }
         public IList<Island> Islands { get; set; }
+        public int Number { get; set; }
 
         public IList<Technology> Technologies { get; set; }
         public World World { get; set; }

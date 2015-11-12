@@ -10,7 +10,7 @@ namespace ITI.SkyLord.DAL.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
-            //AutomaticMigrationDataLossAllowed = true;
+            AutomaticMigrationDataLossAllowed = true;
         }
 
         protected override void Seed(ITI.SkyLord.DAL.Contexts.GameContext.GameEntity context)
