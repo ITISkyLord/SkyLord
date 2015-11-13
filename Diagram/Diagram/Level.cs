@@ -3,16 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Diagram
+namespace ITI.SkyLord
 {
     public abstract class Level
     {
         private int _number;
         private Ressource _cost;
+
         public Level( int number = 1 )
         {
             _number = number;
         }
+
         public int Number
         {
             get

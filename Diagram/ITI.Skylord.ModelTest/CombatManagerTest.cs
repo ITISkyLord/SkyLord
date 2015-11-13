@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Diagram;
 using NUnit.Framework;
+using ITI.SkyLord;
+using ITI.SkyLord.Units;
 
 namespace ITI.Skylord.ModelTest
 {
@@ -27,8 +29,8 @@ namespace ITI.Skylord.ModelTest
             _world = new World();
             _world.addNewIsland( new Coordinate() );
             _world.addNewIsland( new Coordinate( 1, 1 ) );
-            _defenseIsland = _world.Map.Islands.Values.First();
-            _attackIsland = _world.Map.Islands.Values.Where( i => i.Coordinates.X == 1 && i.Coordinates.Y == 1 ).Single();
+            _defenseIsland = _world.Map.Islands.First();
+            _attackIsland = _world.Map.Islands.Where( i => i.Coordinates.X == 1 && i.Coordinates.Y == 1 ).Single();
             _armyAttack = new Army( ArmyState.movement, _attackIsland );
             _armyDefense = new Army( ArmyState.defense, _defenseIsland );
             _warrior = new Unit(UnitName.warrior, UnitDamageType.physical, UnitType.soldier,new UnitStatistics(70,50,20,0,40,0), new Ressource(1,1,1,1));

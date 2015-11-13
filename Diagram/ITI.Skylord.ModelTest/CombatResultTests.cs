@@ -1,4 +1,5 @@
 ﻿using Diagram;
+using ITI.SkyLord;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -28,7 +29,6 @@ namespace ITI.Skylord.ModelTest
 
             CombatResult combatResult = new CombatResult( army, army2 );
 
-            Assert.IsNotNull( combatResult );
             Assert.That( combatResult.WinningArmy == army && combatResult.LoosingArmy == army2 );
         }
 
