@@ -40,8 +40,10 @@ namespace ITI.Skylord.ModelTest
         [Test]
         public void Two_armies_physics_fights_armyattack_wins_130Warriors_and_50guards_vs_80warrior_and_10_guard_return_CombatResult_with_the_winner()
         {
-            _armyAttack.ClearRegiments();
-            _armyDefense.ClearRegiments();
+            _attackIsland = new Island( "titi", new Coordinate( 1, 2 ), false );
+            _defenseIsland = new Island( "toto", new Coordinate( 1, 2 ), false );
+            _armyAttack = new Army( ArmyState.movement, _attackIsland );
+            _armyDefense = new Army( ArmyState.defense, _defenseIsland );
             _armyAttack.AddRegiment(_warrior, 130 );
             _armyAttack.AddRegiment(_guard, 50 );
             _armyDefense.AddRegiment( _warrior, 80 );
@@ -55,8 +57,10 @@ namespace ITI.Skylord.ModelTest
         [Test]
         public void OneArmy_attack_an_empty_army_return_CombatResult_with_the_winner()
         {
-            _armyAttack.ClearRegiments();
-            _armyDefense.ClearRegiments();
+            _attackIsland = new Island( "titi", new Coordinate( 1, 2 ), false );
+            _defenseIsland = new Island( "toto", new Coordinate( 1, 2 ), false );
+            _armyAttack = new Army( ArmyState.movement, _attackIsland );
+            _armyDefense = new Army( ArmyState.defense, _defenseIsland );
             _armyAttack.AddRegiment( _warrior, 130 );
             _armyAttack.AddRegiment( _necromancer, 50 );
 
@@ -67,8 +71,10 @@ namespace ITI.Skylord.ModelTest
         [Test]
         public void OneArmy_attack_1warrior_army_return_CombatResult_with_the_winner()
         {
-            _armyAttack.ClearRegiments();
-            _armyDefense.ClearRegiments();
+            _attackIsland = new Island( "titi", new Coordinate( 1, 2 ), false );
+            _defenseIsland = new Island( "toto", new Coordinate( 1, 2 ), false );
+            _armyAttack = new Army( ArmyState.movement, _attackIsland );
+            _armyDefense = new Army( ArmyState.defense, _defenseIsland );
             _armyAttack.AddRegiment( _warrior, 80 );
             _armyAttack.AddRegiment( _necromancer, 50 );
 
@@ -82,8 +88,10 @@ namespace ITI.Skylord.ModelTest
         [Test]
         public void Two_armies_mixte_fights_armyattack_wins_130Warriors_and_50necromancers_vs_80warrior_and_10_cyclop_return_CombatResult_with_the_winner()
         {
-            _armyAttack.ClearRegiments();
-            _armyDefense.ClearRegiments();
+            _attackIsland = new Island( "titi", new Coordinate( 1, 2 ), false );
+            _defenseIsland = new Island( "toto", new Coordinate( 1, 2 ), false );
+            _armyAttack = new Army( ArmyState.movement, _attackIsland );
+            _armyDefense = new Army( ArmyState.defense, _defenseIsland );
             _armyAttack.AddRegiment( _warrior, 130 );
             _armyAttack.AddRegiment( _necromancer, 50 );
             _armyDefense.AddRegiment( _guard, 80 );
@@ -98,8 +106,10 @@ namespace ITI.Skylord.ModelTest
         [Test]
         public void OneArmy_attack_with_only_1_warrior_against_50warriors_and_20cyclops_return_CombatResult_with_the_winner()
         {
-            _armyAttack.ClearRegiments();
-            _armyDefense.ClearRegiments();
+            _attackIsland = new Island( "titi", new Coordinate( 1, 2 ), false );
+            _defenseIsland = new Island( "toto", new Coordinate( 1, 2 ), false );
+            _armyAttack = new Army( ArmyState.movement, _attackIsland );
+            _armyDefense = new Army( ArmyState.defense, _defenseIsland );
             _armyAttack.AddRegiment( _warrior, 1 );
             _armyDefense.AddRegiment( _warrior, 50 );
             _armyDefense.AddRegiment( _cyclop, 10 );
@@ -112,8 +122,10 @@ namespace ITI.Skylord.ModelTest
         [Test]
         public void Two_armies_mixte_fights_armyattack_wins_1300Warriors_and_500necromancers_vs_800warrior_and_100_cyclop_return_CombatResult_with_the_winner()
         {
-            _armyAttack.ClearRegiments();
-            _armyDefense.ClearRegiments();
+            _attackIsland = new Island( "titi", new Coordinate( 1, 2 ), false );
+            _defenseIsland = new Island( "toto", new Coordinate( 1, 2 ), false );
+            _armyAttack = new Army( ArmyState.movement, _attackIsland );
+            _armyDefense = new Army( ArmyState.defense, _defenseIsland );
             _armyAttack.AddRegiment( _warrior, 1300 );
             _armyAttack.AddRegiment( _necromancer, 500 );
             _armyDefense.AddRegiment( _guard, 800 );
@@ -127,8 +139,10 @@ namespace ITI.Skylord.ModelTest
         [Test]
         public void One_army_physics_attacks_fights_armyattack_wins_1300Warriorsvs_500_guards_and_100_cyclop_return_CombatResult_with_the_winner()
         {
-            _armyAttack.ClearRegiments();
-            _armyDefense.ClearRegiments();
+            _attackIsland = new Island( "titi", new Coordinate( 1, 2 ), false );
+            _defenseIsland = new Island( "toto", new Coordinate( 1, 2 ), false );
+            _armyAttack = new Army( ArmyState.movement, _attackIsland );
+            _armyDefense = new Army( ArmyState.defense, _defenseIsland );
             _armyAttack.AddRegiment( _warrior, 1300 );
             _armyDefense.AddRegiment( _guard, 500 );
             _armyDefense.AddRegiment( _cyclop, 100 );

@@ -180,5 +180,17 @@ namespace Diagram
 
             _magic += magicQuantity;
         }
+
+        public override bool Equals( object obj )
+        {
+            Ressource other = obj as Ressource;
+            return other != null && (other.Wood == this.Wood && other.Metal == this.Metal && other.Cristal == this.Cristal && other.Magic == this.Magic);
+        }
+
+        public override int GetHashCode()
+        {
+            if( Wood == -1 ) return 0;
+            return Wood.GetHashCode();
+        }
     }
 }
