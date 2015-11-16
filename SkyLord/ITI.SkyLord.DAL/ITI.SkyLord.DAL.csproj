@@ -64,6 +64,10 @@
     <Compile Include="MageEntities\MageLevel.cs" />
     <Compile Include="GuildEntities\MemberRight.cs" />
     <Compile Include="MessageEntities\Message.cs" />
+    <Compile Include="Migrations\201511160935190_InitialCreate.cs" />
+    <Compile Include="Migrations\201511160935190_InitialCreate.Designer.cs">
+      <DependentUpon>201511160935190_InitialCreate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PlayerEntities\Player.cs" />
     <Compile Include="PlayerEntities\Profile.cs" />
@@ -90,7 +94,11 @@
     <Compile Include="Contexts\WorldContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201511160935190_InitialCreate.resx">
+      <DependentUpon>201511160935190_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
       <SubType>Designer</SubType>

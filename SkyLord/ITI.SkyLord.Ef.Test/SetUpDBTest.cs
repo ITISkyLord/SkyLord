@@ -22,11 +22,24 @@ namespace ITI.SkyLord.Ef.Test
         }
 
         [Test]
+        public void Return_false_if_db_already_exist()
+        {
+            using (SetUpContext context = new SetUpContext())
+            {
+               bool testCreation = context.Database.CreateIfNotExists();
+                Assert.That(testCreation == false);
+
+            }
+        }
+
+        [Test]
         public void DeleteDatabase()
         {
             using (SetUpContext context = new SetUpContext())
             {
-                context.Database.Delete();
+              context.Database.Delete();
+              bool isExists = context.Database.Exists();
+              Assert.That(isExists == false);
             }
         }
     }
