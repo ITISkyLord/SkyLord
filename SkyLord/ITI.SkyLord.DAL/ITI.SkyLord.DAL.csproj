@@ -64,6 +64,7 @@
     <Compile Include="MageEntities\MageLevel.cs" />
     <Compile Include="GuildEntities\MemberRight.cs" />
     <Compile Include="MessageEntities\Message.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PlayerEntities\Player.cs" />
     <Compile Include="PlayerEntities\Profile.cs" />
     <Compile Include="GuildEntities\Guild.cs" />
@@ -91,7 +92,9 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

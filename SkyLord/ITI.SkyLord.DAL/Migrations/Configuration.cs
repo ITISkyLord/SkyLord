@@ -5,15 +5,15 @@ namespace ITI.SkyLord.DAL.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<ITI.SkyLord.DAL.Contexts>
+    internal sealed class Configuration : DbMigrationsConfiguration<ITI.SkyLord.DAL.Contexts.SetUpContext>
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
-            AutomaticMigrationDataLossAllowed = true;
+            AutomaticMigrationsEnabled = false;
+            ContextKey = "ITI.SkyLord.DAL.Contexts.SetUpContext";
         }
 
-        protected override void Seed(ITI.SkyLord.DAL.Contexts context)
+        protected override void Seed(ITI.SkyLord.DAL.Contexts.SetUpContext context)
         {
             //  This method will be called after migrating to the latest version.
 

@@ -21,7 +21,7 @@ namespace ITI.SkyLord.DAL.Contexts
         public SetUpContext()
             :base("SkyLordDB")
         {
-
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<SetUpContext, ITI.SkyLord.DAL.Migrations.Configuration>("SkyLordDB"));     
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
