@@ -83,14 +83,6 @@ namespace ITI.SkyLord
                 return _magic;
             }
         }
-
-        public int Total
-        {
-            get
-            {
-                return (_magic + _cristal + _wood + _metal);
-            }
-        }
         #endregion
 
         /// <summary>

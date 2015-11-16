@@ -11,5 +11,39 @@ namespace ITI.SkyLord
         private Player _receiver;
         private string _objectReport;
         private string _report;
+
+        public Player Receiver
+        {
+            get
+            {
+                return _receiver;
+            }
+        }
+
+        public string ObjectReport
+        {
+            get
+            {
+                return _objectReport;
+            }
+
+            set
+            {
+                _objectReport = value;
+            }
+        }
+
+        public string Report
+        {
+            get
+            {
+                return _report;
+            }
+
+            set
+            {
+                _report = value;
+            }
+        }
     }
 }
