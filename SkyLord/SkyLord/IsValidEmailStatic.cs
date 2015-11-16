@@ -6,7 +6,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace ITI.SkyLord
+namespace ITI.SkyLord.Model
 {
     public static class IsValidEmailStatic
     {

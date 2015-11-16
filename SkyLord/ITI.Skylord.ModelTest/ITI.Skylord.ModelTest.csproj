@@ -77,6 +77,12 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SkyLord\ITI.SkyLord.Model.csproj">
+      <Project>{89b60141-cedb-4ed5-a7a8-412a4e1340c3}</Project>
+      <Name>ITI.SkyLord.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Diagram;
 using NUnit.Framework;
 using ITI.SkyLord;
-using ITI.SkyLord.Units;
+using ITI.SkyLord.Model;
+using ITI.SkyLord.Model.Units;
 
 namespace ITI.Skylord.ModelTest
 {

@@ -1,10 +1,10 @@
-﻿using ITI.SkyLord.Units;
+﻿using ITI.SkyLord.Model.Units;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ITI.SkyLord
+namespace ITI.SkyLord.Model
 {
     public class Army
     {

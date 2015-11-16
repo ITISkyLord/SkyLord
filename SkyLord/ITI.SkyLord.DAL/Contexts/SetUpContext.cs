@@ -21,7 +21,7 @@ namespace ITI.SkyLord.DAL.Contexts
         public SetUpContext()
             :base("SkyLordDB")
         {
-            //Database.SetInitializer(new MigrateDatabaseToLatestVersion<SetUpContext, ITI.SkyLord.DAL.Contexts..Migrations.Configuration>("SkyLordDB"));
+
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -46,7 +46,7 @@ namespace ITI.SkyLord.DAL.Contexts
 
         }
 
-        public virtual DbSet<Profile> Profils { get; set; }
+        public virtual DbSet<Profile> Profiles { get; set; }
 
         public virtual DbSet<Player> Players { get; set; }
         public virtual DbSet<World> Worlds { get; set; }
@@ -61,7 +61,7 @@ namespace ITI.SkyLord.DAL.Contexts
         public virtual DbSet<Ressource> Ressources { get; set; }
         public virtual DbSet<Spell> Spells { get; set; }
         public virtual DbSet<Unit> Units { get; set; }
-        public virtual DbSet<Technology> Technologys { get; set; }
+        public virtual DbSet<Technology> Technologies { get; set; }
         public virtual DbSet<UnitStatistic> UnitStatistics { get; set; }
         public virtual DbSet<Regiment> Regiments { get; set; }
         public virtual DbSet<Level> Levels { get; set; }

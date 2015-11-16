@@ -12,6 +12,6 @@ namespace ITI.SkyLord.DAL.WorldEntities
         public long WorldId { get; set; }
 
         public ICollection<Player> Players { get; set; }
-        public Map Map { get; set; }
+        public virtual Map Map { get; set; }
     }
 }

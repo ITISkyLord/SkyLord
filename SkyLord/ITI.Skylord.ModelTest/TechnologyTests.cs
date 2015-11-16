@@ -1,5 +1,5 @@
-﻿using Diagram;
-using ITI.SkyLord;
+﻿using ITI.SkyLord;
+using ITI.SkyLord.Model;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace ITI.SkyLord
+namespace ITI.SkyLord.Model
 {
     public class Player
     {

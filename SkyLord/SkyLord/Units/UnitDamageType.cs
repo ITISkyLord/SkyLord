@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ITI.SkyLord.Model
+namespace ITI.SkyLord.Model.Units
 {
-    public class TechnologyLevel : Level
+    public enum UnitDamageType
     {
+        magical,
+        physical,
     }
 }

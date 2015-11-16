@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using Diagram;
 using ITI.SkyLord;
+using ITI.SkyLord.Model;
 
 namespace ITI.Skylord.ModelTest
 {

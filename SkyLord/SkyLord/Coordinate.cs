@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 
 
-namespace ITI.SkyLord
+namespace ITI.SkyLord.Model
 {
     // TODO : passer en class
     public struct Coordinate
