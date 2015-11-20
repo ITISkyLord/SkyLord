@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 
@@ -7,8 +8,9 @@ namespace ITI.SkyLord
 {
     public class Guild
     {
+        private long _guildId;
         private string _name;
-        private readonly Dictionary<Player, GuildRole> _members;
+        private  Dictionary<Player, GuildRole> _members;
         private string _description;
         private string _internalMessage;
         private string _publicMessage;
@@ -31,97 +33,39 @@ namespace ITI.SkyLord
         }
 
         #region Properties
+        [Key]
+        public long GuildId { get; set; }
 
         /// <summary>
         /// Gets or sets the Name of the guild.
         /// </summary>
-        public string Name
-        {
-            get
-            {
-                return _name;
-            }
-
-            set
-            {
-                _name = value;
-            }
-        }
+        public string Name { get; set; }
 
         /// <summary>
         /// Gets the dictionnary Player,GuildRole of the Members of the guild.
         /// </summary>
-        public Dictionary<Player, GuildRole> Members
-        {
-            get
-            {
-                return _members;
-            }
-        }
+        public Dictionary<Player, GuildRole> Members { get; set; }
 
         /// <summary>
         /// Gets or sets the description of the guild.
         /// </summary>
-        public string Description
-        {
-            get
-            {
-                return _description;
-            }
-
-            set
-            {
-                _description = value;
-            }
-        }
+        public string Description { get; set; }
 
         /// <summary>
         /// Gets or sets the internal message of the guild.
         /// </summary>
-        public string InternalMessage
-        {
-            get
-            {
-                return _internalMessage;
-            }
-
-            set
-            {
-                _internalMessage = value;
-            }
-        }
+        public string InternalMessage { get; set; }
 
         /// <summary>
         /// Gets or sets the Public message of the guild.
         /// </summary>
-        public string PublicMessage
-        {
-            get
-            {
-                return _publicMessage;
-            }
-
-            set
-            {
-                _publicMessage = value;
-            }
-        }
+        public string PublicMessage { get; set; }
 
         /// <summary>
         /// Gets or sets if recrutement is active or inactive. True of false.
         /// </summary>
-        public bool Recrutement
-        {
-            get
-            {
-                return _recrutement;
-            }
+        public bool Recrutement { get; set; }
 
-            set
-            {
-                _recrutement = value;
-            }
-        } 
         #endregion
     }
 }

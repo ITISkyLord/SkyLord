@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 
@@ -7,7 +8,7 @@ namespace ITI.SkyLord
 {
     public class Apprentice
     {
-        //private int _id;
+        private long _apprenticeId;
         private ApprenticeLevel _level;
 
         public Apprentice()
@@ -15,17 +16,8 @@ namespace ITI.SkyLord
             this._level = new ApprenticeLevel();
         }
 
-        public ApprenticeLevel Level
-        {
-            get
-            {
-                return _level;
-            }
-
-            set
-            {
-                _level = value;
-            }
-        }
+        [Key]
+        public long ApprenticeId { get; set; }
+        public ApprenticeLevel Level { get; set; }
     }
 }
