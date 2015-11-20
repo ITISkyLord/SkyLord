@@ -1,0 +1,23 @@
+﻿{
+  "version": "1.0.0-*",
+  "description": "ITI.SkyLord.Tests Class Library",
+  "authors": [ "SkyLord" ],
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
+    "frameworks": {
+        "dnx451": { },
+        "dnxcore50": {
+            "dependencies": {
+            }
+        }
+    },
+    "dependencies": {
+        "ITI.SkyLord": "1.0.0-*",
+        "NUnitLite": "3.0.0"
+    },
+    "commands": {
+        "test" : "ITI.SkyLord.Tests"
+    }
+
+}

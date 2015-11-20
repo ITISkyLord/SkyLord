@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{89B60141-CEDB-4ED5-A7A8-412A4E1340C3}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Diagram</RootNamespace>
+    <AssemblyName>Diagram</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="nunit.framework, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Apprentice.cs" />
+    <Compile Include="ApprenticeLevel.cs" />
+    <Compile Include="Army.cs" />
+    <Compile Include="ArmyState.cs" />
+    <Compile Include="Building.cs" />
+    <Compile Include="BuildingLevel.cs" />
+    <Compile Include="CombatManager.cs" />
+    <Compile Include="CombatReport.cs" />
+    <Compile Include="CombatResult.cs" />
+    <Compile Include="Coordinate.cs" />
+    <Compile Include="ICombatManager.cs" />
+    <Compile Include="IsValidEmailStatic.cs" />
+    <Compile Include="Regiment.cs" />
+    <Compile Include="RegimentList.cs" />
+    <Compile Include="Technology.cs" />
+    <Compile Include="TechnologyLevel.cs" />
+    <Compile Include="Units\UnitName.cs" />
+    <Compile Include="Units\UnitStatistics.cs" />
+    <Compile Include="Units\Obsolete units classes\Magic\Cyclop.cs" />
+    <Compile Include="Units\Obsolete units classes\Monsters\Goblin.cs" />
+    <Compile Include="Guild.cs" />
+    <Compile Include="GuildRole.cs" />
+    <Compile Include="GuildStatus.cs" />
+    <Compile Include="Island.cs" />
+    <Compile Include="IslandSpecialization.cs" />
+    <Compile Include="Level.cs" />
+    <Compile Include="Mage.cs" />
+    <Compile Include="MageLevel.cs" />
+    <Compile Include="Map.cs" />
+    <Compile Include="MemberRight.cs" />
+    <Compile Include="Message.cs" />
+    <Compile Include="Units\Obsolete units classes\Magic\Necromancer.cs" />
+    <Compile Include="Player.cs" />
+    <Compile Include="Profil.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Ressource.cs" />
+    <Compile Include="Spell.cs" />
+    <Compile Include="Units\Obsolete units classes\Soldiers\Guard.cs" />
+    <Compile Include="Units\Obsolete units classes\Monsters\Troll.cs" />
+    <Compile Include="Units\Unit.cs" />
+    <Compile Include="Units\UnitDamageType.cs" />
+    <Compile Include="Units\Obsolete units classes\Soldiers\Warrior.cs" />
+    <Compile Include="Units\UnitType.cs" />
+    <Compile Include="World.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="DiagrammeDeClasse.cd" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
