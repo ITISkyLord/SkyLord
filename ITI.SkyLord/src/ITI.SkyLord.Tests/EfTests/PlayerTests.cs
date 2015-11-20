@@ -1,4 +1,5 @@
 ﻿using ITI.SkyLord.Models.Entity_Framework.Contexts;
+using ITI.SkyLord.Models.Entity_Framework.Entites;
 using Microsoft.Data.Entity;
 using NUnit.Framework;
 using System;
@@ -15,8 +16,8 @@ namespace ITI.SkyLord.Tests.EfTests
         public void Add2Players()
         {
             World _world = new World();
-            Player testPlayer = new Player (_world,"Lolo" );
-            Player testPlayer2 = new Player (_world,"Lili" );
+            Player testPlayer = new Player(_world, "Thanur");
+            Player testPlayer2 = new Player(_world, "Nathos");
             using (PlayerContext context = new PlayerContext())
             {
                 context.Players.Add(testPlayer);

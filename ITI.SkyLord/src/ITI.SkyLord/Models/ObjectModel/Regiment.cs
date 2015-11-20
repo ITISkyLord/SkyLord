@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace ITI.SkyLord
 {
     public class Regiment
     {
-        private int _regimentId;
+        private long _regimentId;
         private Unit _unit;
         private int _number;
 
@@ -22,52 +23,14 @@ namespace ITI.SkyLord
         }
 
         #region Properties
-        public int RegimentId
-        {
-            get
-            {
-                return _regimentId;
-            }
+        [Key]
+        public long RegimentId { get; set; }
 
-            set
-            {
-                _regimentId = value;
-            }
-        }
+        public Unit Unit { get; set; }
 
-        public Unit Unit
-        {
-            get
-            {
-                return _unit;
-            }
+        public int Number { get; set; }
 
-            set
-            {
-                _unit = value;
-            }
-        }
-
-        public int Number
-        {
-            get
-            {
-                return _number;
-            }
-
-            set
-            {
-                _number = value;
-            }
-        }
-
-        internal string Name
-        {
-            get
-            {
-                return _unit.Name;
-            }
-        }
+        internal string Name { get; set; }
         #endregion
     }
 }

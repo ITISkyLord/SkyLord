@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,8 +9,9 @@ namespace ITI.SkyLord
 {
     public class World
     {
-        private readonly List<Player> _players;
-        private readonly Map _map;
+        private long _worldId;
+        private List<Player> _players;
+        private Map _map;
 
         /// <summary>
         /// Creates a world.
@@ -21,22 +23,14 @@ namespace ITI.SkyLord
         }
 
         #region Properties
-        public List<Player> Players
-        {
-            get
-            {
-                return _players;
-            }
+        [Key]
+        public long WorldId { get; set; }
 
-        }
+        public List<Player> Players { get; set; }
 
-        public Map Map
-        {
-            get
-            {
-                return _map;
-            }
-        }
+        public Map Map { get; set; }
+
+    
         #endregion
 
         /// <summary>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 
@@ -7,12 +8,12 @@ namespace ITI.SkyLord
 {
     public class Message
     {
-        private readonly string _messageObject;
-        private readonly string _coreMessage;
-        private readonly Player _receiver;
-        private readonly Player _sender; // À voir si l'admin doit lancer un message à tout le monde.
-        // Lu ou pas lu
-
+        private long _messageId;
+        private string _messageObject;
+        private string _coreMessage;
+        private Player _receiver;
+        private Player _sender; // À voir si l'admin doit lancer un message à tout le monde.
+ 
         /// <summary>
         /// Create new message.
         /// </summary>
@@ -34,51 +35,32 @@ namespace ITI.SkyLord
             this._receiver = receiver;
             this._sender = sender;
         }
+        #region Properties                          
+        [Key]
+        public long MessageId { get; set; }
 
-        #region Properties
+
         /// <summary>
         /// Gets the message object.
         /// </summary>
-        public string MessageObject
-        {
-            get
-            {
-                return _messageObject;
-            }
-        }
+        public string MessageObject { get; set; }
 
         /// <summary>
         /// Gets the message.
         /// </summary>
-        public string CoreMessage
-        {
-            get
-            {
-                return _coreMessage;
-            }
-        }
+        public string CoreMessage { get; set; }
 
         /// <summary>
         /// Gets the receiver of the message.
         /// </summary>
-        public Player Receiver
-        {
-            get
-            {
-                return _receiver;
-            }
-        }
+        public Player Receiver { get; set; }
 
         /// <summary>
         /// Gets the sender of the message.
         /// </summary>
-        public Player Sender
-        {
-            get
-            {
-                return _sender;
-            }
-        } 
+        public Player Sender { get; set; }
+
+
         #endregion
     }
 }
