@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 
@@ -7,9 +8,10 @@ namespace ITI.SkyLord
 {
     public class Profil
     {
+        private long _profilId;
         private string _mail;
         private string _password;
-        private readonly Player _owner;
+        private Player _owner;
         // Avatar
         private string _description;
 
@@ -30,62 +32,26 @@ namespace ITI.SkyLord
         }
 
         #region Properties
+        [Key]
+        public long ProfilId { get; set; }
         /// <summary>
         /// Gets or sets the mail.
         /// </summary>
-        public string Mail
-        {
-            get
-            {
-                return _mail;
-            }
-
-            set
-            {
-                _mail = value;
-            }
-        }
+        public string Mail { get; set; }
         /// <summary>
         /// Gets or sets the password.
         /// </summary>
-        public string Password
-        {
-            get
-            {
-                return _password;
-            }
-
-            set
-            {
-                _password = value;
-            }
-        }
+        public string Password { get; set; }
         /// <summary>
         /// Gets or sets the description of the player.
         /// </summary>
-        public string Description
-        {
-            get
-            {
-                return _description;
-            }
-
-            set
-            {
-                _description = value;
-            }
-        }
+        public string Description { get; set; }
 
         /// <summary>
         /// Gets the player that this profile belongs to.
         /// </summary>
-        public Player Owner
-        {
-            get
-            {
-                return _owner;
-            }
-        } 
+        public Player Owner { get; set; }
+
         #endregion
     }
 }

@@ -11,6 +11,6 @@ namespace ITI.SkyLord.Models.Entity_Framework.Entites
         [Key]
         public long WorldId { get; set; }
 
-        public ICollection<EPlayer> Players { get; set; }
+        public ICollection<Player> Players { get; set; }
     }
 }

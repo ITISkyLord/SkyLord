@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 
@@ -7,6 +8,7 @@ namespace ITI.SkyLord
 {
     public class Ressource
     {
+        private long _ressourceId;
         private int _wood;
         private int _metal;
         private int _cristal;
@@ -43,46 +45,25 @@ namespace ITI.SkyLord
         /// <summary>
         /// Gets the wood of this ressource.
         /// </summary>
-        public int Wood
-        {
-            get
-            {
-                return _wood;
-            }
-        }
+        public int Wood { get; set; }
 
         /// <summary>
         /// Gets the metal of this ressource.
         /// </summary>
-        public int Metal
-        {
-            get
-            {
-                return _metal;
-            }
-        }
-
+        public int Metal { get; set; }
         /// <summary>
         /// Gets the cristal of this ressource.
         /// </summary>
-        public int Cristal
-        {
-            get
-            {
-                return _cristal;
-            }
-        }
+        public int Cristal { get; set; }
 
         /// <summary>
         /// Gets the magic of this ressource.
         /// </summary>
-        public int Magic
-        {
-            get
-            {
-                return _magic;
-            }
-        }
+        public int Magic { get; set; }
+
+        [Key]
+        public long RessourceId { get; set; }
+    
         #endregion
 
         /// <summary>

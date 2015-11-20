@@ -28,7 +28,7 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
         }
 
         public DbSet<EProfil> Profils { get; set; }
-        public DbSet<EPlayer> Players { get; set; }
+        public DbSet<Player> Players { get; set; }
         public DbSet<EWorld> Worlds { get; set; }
     }
 }

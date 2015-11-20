@@ -15,8 +15,9 @@ namespace ITI.SkyLord.Tests.EfTests
         [Test]
         public void Add2Players()
         {
-            EPlayer testPlayer = new EPlayer { Name = "Lolo" };
-            EPlayer testPlayer2 = new EPlayer { Name = "Lili" };
+            World _world = new World();
+            Player testPlayer = new Player(_world, "Thanur");
+            Player testPlayer2 = new Player(_world, "Nathos");
             using (PlayerContext context = new PlayerContext())
             {
                 context.Players.Add(testPlayer);
@@ -31,7 +32,7 @@ namespace ITI.SkyLord.Tests.EfTests
         {
             using (PlayerContext context = new PlayerContext())
             {
-                foreach (EPlayer p in context.Players.Include( p => p.Profil))
+                foreach (Player p in context.Players.Include( p => p.Profil))
                 {
                     Console.WriteLine("Name: {0}", p.Name);
                 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -9,12 +10,13 @@ namespace ITI.SkyLord
 {
     public class Player
     {
-        private readonly string _name;
-        private readonly Profil _profil;
+        private long _playerId;
+        private string _name;
+        private Profil _profil;
         private List<Island> _islands;
         private Guild _guild;
         private List<Technology> _technologies;
-        private readonly World _world;
+        private World _world;
 
         //TODO Changer les valeurs par défauts. À voir avec le profil.
         /// <summary>
@@ -39,71 +41,28 @@ namespace ITI.SkyLord
             this._profil = new Profil(this, mail, password);
         }
 
+        [Key]
+        public long PlayerId { get; set; }
         /// <summary>
         /// Gets the Name of the Player.
         /// </summary>
-
-        public string Name
-        {
-            get
-            {
-                return _name;
-            }
-        }
+        public string Name { get; set; }
         /// <summary>
         /// Gets the Profile of the Player.
         /// </summary>
-        public Profil Profil
-        {
-            get
-            {
-                return _profil;
-            }
-        }
+        public Profil Profil { get; set; }
         /// <summary>
         /// Gets or sets the list of Islands the Player controls.
         /// </summary>
-        public List<Island> Islands
-        {
-            get
-            {
-                return _islands;
-            }
-
-            set
-            {
-                _islands = value;
-            }
-        }
+        public List<Island> Islands { get; set; }
         /// <summary>
         /// Gets or sets the guild the player belongs to.
         /// </summary>
-        public Guild Guild
-        {
-            get
-            {
-                return _guild;
-            }
-
-            set
-            {
-                _guild = value;
-            }
-        }
+        public Guild Guild { get; set; }
         /// <summary>
         /// Gets or sets the technology the Player has developped.
         /// </summary>
-        public List<Technology> Technologies
-        {
-            get
-            {
-                return _technologies;
-            }
+        public List<Technology> Technologies { get; set; }
 
-            set
-            {
-                _technologies = value;
-            }
-        }
     }
 }
