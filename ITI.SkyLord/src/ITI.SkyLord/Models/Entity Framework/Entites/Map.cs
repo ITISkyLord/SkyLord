@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 
@@ -7,7 +8,8 @@ namespace ITI.SkyLord
 {
     public class Map
     {
-        private readonly List<Island> _islands;
+        private long _mapId;
+        private List<Island> _islands;
         World _world;
 
         /// <summary>
@@ -25,13 +27,11 @@ namespace ITI.SkyLord
         /// <summary>
         /// Gets the dictionary of islands presents on the map.
         /// </summary>
-        public List<Island> Islands
-        {
-            get
-            {
-                return _islands;
-            }
-        } 
+        /// 
+        [Key]
+        public long MapId { get; set; }
+        public List<Island> Islands { get; set; }
+        public World World { get; set; }
         #endregion
     }
 }

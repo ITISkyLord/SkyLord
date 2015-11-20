@@ -9,12 +9,12 @@ namespace ITI.SkyLord
 {
     public class Player
     {
-        private readonly string _name;
-        private readonly Profil _profil;
+        private  string _name;
+        private  Profil _profil;
         private List<Island> _islands;
         private Guild _guild;
         private List<Technology> _technologies;
-        private readonly World _world;
+        private World _world;
 
         //TODO Changer les valeurs par défauts. À voir avec le profil.
         /// <summary>
@@ -43,13 +43,7 @@ namespace ITI.SkyLord
         /// Gets the Name of the Player.
         /// </summary>
 
-        public string Name
-        {
-            get
-            {
-                return _name;
-            }
-        }
+        public string Name { get; set; }
         /// <summary>
         /// Gets the Profile of the Player.
         /// </summary>
@@ -105,5 +99,7 @@ namespace ITI.SkyLord
                 _technologies = value;
             }
         }
+
+        public World World { get; set; }
     }
 }

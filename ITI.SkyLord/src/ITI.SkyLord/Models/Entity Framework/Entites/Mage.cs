@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 
@@ -7,9 +8,10 @@ namespace ITI.SkyLord
 {
     public class Mage
     {
+        private long _mageId;
         private string _name;
         private MageLevel _mageLevel;
-        private readonly List<Apprentice> _apprentices;
+        private List<Apprentice> _apprentices;
         private Island _island;
 
         /// <summary>
@@ -34,59 +36,22 @@ namespace ITI.SkyLord
         /// <summary>
         /// Gets or sets the Name of the mage
         /// </summary>
-        public string Name
-        {
-            get
-            {
-                return _name;
-            }
-
-            set
-            {
-                _name = value;
-            }
-        }
+        /// 
+        [Key]
+        public long MageId { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the MageLevel.
         /// </summary>
-        public MageLevel MageLevel
-        {
-            get
-            {
-                return _mageLevel;
-            }
-
-            set
-            {
-                _mageLevel = value;
-            }
-        }
-        
+        public MageLevel MageLevel { get; set; }
 
         /// <summary>
         /// Gets the list of apprentices of the mage.
         /// </summary>
-        public List<Apprentice> Apprentices
-        {
-            get
-            {
-                return _apprentices;
-            }
-        }
+        public List<Apprentice> Apprentices { get; set; }
 
-        public Island Island
-        {
-            get
-            {
-                return _island;
-            }
-
-            set
-            {
-                _island =  value ;
-            }
-        }
+        public Island Island { get; set; }
         #endregion
     }
 }
