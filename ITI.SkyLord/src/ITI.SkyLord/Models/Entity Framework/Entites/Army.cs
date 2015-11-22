@@ -1,6 +1,7 @@
 ﻿using ITI.SkyLord.Units;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 
@@ -8,11 +9,12 @@ namespace ITI.SkyLord
 {
     public class Army
     {
+        private long _armyId;
         private ArmyState _armyState;
         private Island _island;
         private RegimentList _regiments;
 
-        //private readonly Dictionary<Unit, int> _regiments;
+        //private  Dictionary<Unit, int> _regiments;
 
         /// <summary>
         /// Create new army.
@@ -28,48 +30,23 @@ namespace ITI.SkyLord
         }
 
         #region Properties
+        [Key]
+        public long ArmyId { get; set; }
+
         /// <summary>
         /// Gets or sets ArmyState
         /// </summary>
-        public ArmyState ArmyState
-        {
-            get
-            {
-                return _armyState;
-            }
-
-            set
-            {
-                _armyState = value;
-            }
-        }
+        public ArmyState ArmyState { get; set; }
 
         /// <summary>
         /// Gets dictionnary Unit,int Regiments
         /// </summary>
-        public IReadOnlyCollection<Regiment> Regiments
-        {
-            get
-            {
-                return _regiments.AsReadOnly();
-            }
-        }
+        public ICollection<Regiment> Regiments { get; set; }
 
         /// <summary>
         /// Gets or sets the Island where is from the Army.
         /// </summary>
-        public Island Island
-        {
-            get
-            {
-                return _island;
-            }
-
-            set
-            {
-                _island = value;
-            }
-        }
+        public Island Island { get; set; }
         #endregion
 
         internal Regiment FindRegiment( Regiment regiment )

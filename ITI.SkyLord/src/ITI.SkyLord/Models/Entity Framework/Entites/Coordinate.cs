@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 
@@ -7,11 +8,23 @@ using System.Text;
 namespace ITI.SkyLord
 {
     // TODO : passer en class
-    public struct Coordinate
+    public class Coordinate
     {
-        private readonly int _x;
-        private readonly int _y;
-        
+        private long _coordinateId;
+        private  int _x;
+        private  int _y;
+
+        /// <summary>
+        /// Create pair of coordinate x and y
+        /// </summary>
+        /// <param name="x">No limit</param>
+        /// <param name="y">No limit</param>
+        public Coordinate()
+        {
+            this._x = 0;
+            this._y = 0;
+        }
+
         /// <summary>
         /// Create pair of coordinate x and y
         /// </summary>
@@ -24,26 +37,17 @@ namespace ITI.SkyLord
         }
 
         #region Properties
+        [Key]
+        public long CoordinateId { get; set;
+        }
         /// <summary>
         /// Gets the coordinate X
         /// </summary>
-        public int X
-        {
-            get
-            {
-                return _x;
-            }
-        }
+        public int X { get; set; }
         /// <summary>
         /// Gets the coordinate Y
         /// </summary>
-        public int Y
-        {
-            get
-            {
-                return _y;
-            }
-        } 
-        #endregion
+        public int Y { get; set; }
+    #endregion
     }
 }
