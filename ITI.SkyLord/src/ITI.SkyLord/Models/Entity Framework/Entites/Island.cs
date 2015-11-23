@@ -8,7 +8,6 @@ namespace ITI.SkyLord
 {
     public class Island
     {
-        public long _islandId;
         private string _name;
         private List<Army> _armies; // Une île n'a qu'une armée en défense, peut en avoir plusieurs en mouvement et en suppport.
         private Player _owner;
@@ -28,58 +27,127 @@ namespace ITI.SkyLord
         internal Island( string name, Coordinate coordinates, bool capital, Player owner = null )
         {
             if( name.Length > 50 ) throw new ArgumentOutOfRangeException( " Maximum lenght of name is 50. Your name lenght is " + name.Length + " at the moment." );
-            this._name = name;
-            this._owner = owner;
-            this._armies = new List<Army>();
-            this._buildings = new List<Building>();
-            this._allRessources = new Ressource(10000, 1000, 5000, 1000);
-            this._coordinates = coordinates;
-            this._loyalty = 100;
-            this._isCapital = capital;
+            this.Name = name;
+            this.Owner = owner;
+            this.Armies = new List<Army>();
+            this.Buildings = new List<Building>();
+            this.AllRessources = new Ressource(10000, 1000, 5000, 1000);
+            this.Coordinates = coordinates;
+            this.Loyalty = 100;
+            this.IsCapital = capital;
         }
 
         #region Properties
         [Key]
         public long IslandId { get; set; }
+
+        public string Name
+        {
+            get
+            {
+                return _name;
+            }
+
+            set
+            {
+                _name = value;
+            }
+        }
+
+        public List<Army> Armies
+        {
+            get
+            {
+                return _armies;
+            }
+
+            set
+            {
+                _armies = value;
+            }
+        }
+
+        public Player Owner
+        {
+            get
+            {
+                return _owner;
+            }
+
+            set
+            {
+                _owner = value;
+            }
+        }
+
+        public List<Building> Buildings
+        {
+            get
+            {
+                return _buildings;
+            }
+
+            set
+            {
+                _buildings = value;
+            }
+        }
+
+        public Ressource AllRessources
+        {
+            get
+            {
+                return _allRessources;
+            }
+
+            set
+            {
+                _allRessources = value;
+            }
+        }
+
+        public Coordinate Coordinates
+        {
+            get
+            {
+                return _coordinates;
+            }
+
+            set
+            {
+                _coordinates = value;
+            }
+        }
+
+        public int Loyalty
+        {
+            get
+            {
+                return _loyalty;
+            }
+
+            set
+            {
+                _loyalty = value;
+            }
+        }
+
+        public bool IsCapital
+        {
+            get
+            {
+                return _isCapital;
+            }
+
+            set
+            {
+                _isCapital = value;
+            }
+        }
+
         /// <summary>
         /// Gets or sets the name of island.
         /// </summary>
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Gets or sets the owner of the island.
-        /// </summary>
-        public Player Owner { get; set; }
-
-        /// <summary>
-        /// Gets the list of armies of the island.
-        /// </summary>
-        public List<Army> Armies { get; set; }
-
-        /// <summary>
-        /// Gets the list of buildlings of the island.
-        /// </summary>
-        public List<Building> Buildings { get; set; }
-
-        /// <summary>
-        /// Gets ressources of the island. Use methods of Ressources to update ressources.
-        /// </summary>
-        public Ressource AllRessources { get; set; }
-
-        /// <summary>
-        /// Gets the coordinates X and Y of the island.
-        /// </summary>
-        public Coordinate Coordinates { get; set; }
-
-        /// <summary>
-        /// Gets or sets the Loyalty of the island.
-        /// </summary>
-        public int Loyalty { get; set; }
-
-        /// <summary>
-        /// Gets or sets if this island is the capital of the island.
-        /// </summary>
-        public bool IsCapital { get; set; }
         #endregion
     }
 }

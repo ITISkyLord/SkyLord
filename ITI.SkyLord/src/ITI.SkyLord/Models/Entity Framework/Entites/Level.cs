@@ -8,7 +8,6 @@ namespace ITI.SkyLord
 {
     public abstract class Level
     {
-        private long _levelId;
         private int _number;
         private Ressource _cost;
 
@@ -19,9 +18,31 @@ namespace ITI.SkyLord
 
         [Key]
         public long LevelId { get; set; }
-        public int Number { get; set; }
-        // Coût en ressources à voir avec le XML et la base de données.
-        // Le reste ce sera des méthodes.
-        public Ressource Cost { get; set; }
+
+        public int Number
+        {
+            get
+            {
+                return _number;
+            }
+
+            set
+            {
+                _number = value;
+            }
+        }
+
+        public Ressource Cost
+        {
+            get
+            {
+                return _cost;
+            }
+
+            set
+            {
+                _cost = value;
+            }
+        }
     }
 }
