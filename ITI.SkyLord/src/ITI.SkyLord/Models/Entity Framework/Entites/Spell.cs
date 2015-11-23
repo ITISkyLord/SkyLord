@@ -9,17 +9,38 @@ namespace ITI.SkyLord
 
     public class Spell
     {
-
-        private long _spellId;
         private string _name;
         private string _description;
 
         [Key]
         public long SpellId { get; set; }
 
-        public string Name { get; set; }
+        public string Name
+        {
+            get
+            {
+                return _name;
+            }
 
-        public string Description { get; set; }
+            set
+            {
+                _name = value;
+            }
+        }
+
+        public string Description
+        {
+            get
+            {
+                return _description;
+            }
+
+            set
+            {
+                _description = value;
+            }
+        }
+
 
 
         //        Découverte de buffs temporaires qu’on peut activer(?)
