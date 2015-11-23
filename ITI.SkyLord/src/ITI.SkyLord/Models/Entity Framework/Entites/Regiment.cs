@@ -10,7 +10,6 @@ namespace ITI.SkyLord
 {
     public class Regiment
     {
-        private long _regimentId;
         private Unit _unit;
         private int _number;
 
@@ -18,19 +17,42 @@ namespace ITI.SkyLord
         {
             if ( number < 1 ) throw new ArgumentOutOfRangeException( "number", "The number of units cannot be under 1." );
 
-            _unit = unit;
-            _number = number;
+            Unit = unit;
+            Number = number;
         }
 
         #region Properties
         [Key]
         public long RegimentId { get; set; }
 
-        public Unit Unit { get; set; }
-
-        public int Number { get; set; }
 
         internal string Name { get; set; }
+
+        public Unit Unit
+        {
+            get
+            {
+                return _unit;
+            }
+
+            set
+            {
+                _unit = value;
+            }
+        }
+
+        public int Number
+        {
+            get
+            {
+                return _number;
+            }
+
+            set
+            {
+                _number = value;
+            }
+        }
         #endregion
     }
 }

@@ -8,11 +8,8 @@ namespace ITI.SkyLord
 {
     public class Profil
     {
-        private long _profilId;
         private string _mail;
         private string _password;
-        private Player _owner;
-        // Avatar
         private string _description;
 
         /// <summary>
@@ -26,31 +23,58 @@ namespace ITI.SkyLord
             if( !IsValidEmailStatic.IsValidEmail( mail ) ) throw new ArgumentException( "Invalid mail" );
             if( String.IsNullOrWhiteSpace( password ) ) throw new ArgumentNullException( "password is null or has white space." );
             if( player == null ) throw new ArgumentNullException();
-            this._mail = mail;
-            this._owner = player;
-            this._password = password;
+            this.Mail = mail;
+            // this._owner = player;
+            this.Password = password;
         }
 
         #region Properties
         [Key]
         public long ProfilId { get; set; }
+
+        public string Mail
+        {
+            get
+            {
+                return _mail;
+            }
+
+            set
+            {
+                _mail = value;
+            }
+        }
+
+        public string Password
+        {
+            get
+            {
+                return _password;
+            }
+
+            set
+            {
+                _password = value;
+            }
+        }
+
+        public string Description
+        {
+            get
+            {
+                return _description;
+            }
+
+            set
+            {
+                _description = value;
+            }
+        }
+
         /// <summary>
         /// Gets or sets the mail.
         /// </summary>
-        public string Mail { get; set; }
-        /// <summary>
-        /// Gets or sets the password.
-        /// </summary>
-        public string Password { get; set; }
-        /// <summary>
-        /// Gets or sets the description of the player.
-        /// </summary>
-        public string Description { get; set; }
 
-        /// <summary>
-        /// Gets the player that this profile belongs to.
-        /// </summary>
-        public Player Owner { get; set; }
 
         #endregion
     }

@@ -8,16 +8,36 @@ namespace ITI.SkyLord
 {
     public abstract class Building
     {
-        private long _buildingId;
         private string _name;
         private BuildingLevel _level;
 
         [Key]
         public int BuildingId { get; set; }
 
-        public string Name { get; set; }
+        public string Name
+        {
+            get
+            {
+                return _name;
+            }
 
-        public BuildingLevel Level { get; set; }
+            set
+            {
+                _name = value;
+            }
+        }
 
+        public BuildingLevel Level
+        {
+            get
+            {
+                return _level;
+            }
+
+            set
+            {
+                _level =  value ;
+            }
+        }
     }
 }

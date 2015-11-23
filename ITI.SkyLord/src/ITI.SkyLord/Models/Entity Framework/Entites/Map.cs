@@ -10,7 +10,7 @@ namespace ITI.SkyLord
     {
         private long _mapId;
         private List<Island> _islands;
-        World _world;
+        // World _world;
 
         /// <summary>
         /// Create a new map. Only one map on a world.
@@ -19,7 +19,7 @@ namespace ITI.SkyLord
         public Map( World world )
         {
             if( world == null ) throw new ArgumentNullException( "world is null." );
-            _world = world;
+            // _world = world;
             _islands = new List<Island>();
         }
 
@@ -31,7 +31,7 @@ namespace ITI.SkyLord
         [Key]
         public long MapId { get; set; }
         public List<Island> Islands { get; set; }
-        public World World { get; set; }
+        // public World World { get; set; }
         #endregion
     }
 }

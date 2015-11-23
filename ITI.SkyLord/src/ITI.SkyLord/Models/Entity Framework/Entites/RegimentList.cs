@@ -10,7 +10,6 @@ namespace ITI.SkyLord
 {
     public class RegimentList : List<Regiment>
     {
-        private long _regimentListId;
 
         [Key]
         public long RegimentListId { get; set; }

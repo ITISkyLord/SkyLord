@@ -8,17 +8,50 @@ namespace ITI.SkyLord
 {
     public class CombatReport
     {
-        private long _combatReportId;
         private Player _receiver;
         private string _objectReport;
         private string _report;
 
         [Key]
         public long CombatreportId { get; set; }
-        public Player Receiver { get; set; }
 
-        public string ObjectReport { get; set; }
+        public Player Receiver
+        {
+            get
+            {
+                return _receiver;
+            }
 
-        public string Report { get; set; }
+            set
+            {
+                _receiver = value;
+            }
+        }
+
+        public string ObjectReport
+        {
+            get
+            {
+                return _objectReport;
+            }
+
+            set
+            {
+                _objectReport = value;
+            }
+        }
+
+        public string Report
+        {
+            get
+            {
+                return _report;
+            }
+
+            set
+            {
+                _report =  value ;
+            }
+        }
     }
 }

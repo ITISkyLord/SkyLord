@@ -9,7 +9,6 @@ namespace ITI.SkyLord
 {
     public class Army
     {
-        private long _armyId;
         private ArmyState _armyState;
         private Island _island;
         private RegimentList _regiments;
@@ -23,35 +22,59 @@ namespace ITI.SkyLord
         /// <param name="island">This is the island where is from the army.</param>
         public Army( ArmyState armyState, Island island )
         {
-            this._island = island;
+            this.Island = island;
             //this._regiment = new Regiment();
-            this._armyState = armyState;
-            this._regiments = new RegimentList();
+            this.ArmyState = armyState;
+            this.Regiments = new RegimentList();
         }
 
         #region Properties
         [Key]
         public long ArmyId { get; set; }
 
-        /// <summary>
-        /// Gets or sets ArmyState
-        /// </summary>
-        public ArmyState ArmyState { get; set; }
+        public ArmyState ArmyState
+        {
+            get
+            {
+                return _armyState;
+            }
 
-        /// <summary>
-        /// Gets dictionnary Unit,int Regiments
-        /// </summary>
-        public ICollection<Regiment> Regiments { get; set; }
+            set
+            {
+                _armyState = value;
+            }
+        }
 
-        /// <summary>
-        /// Gets or sets the Island where is from the Army.
-        /// </summary>
-        public Island Island { get; set; }
+        public Island Island
+        {
+            get
+            {
+                return _island;
+            }
+
+            set
+            {
+                _island = value;
+            }
+        }
+
+        public RegimentList Regiments
+        {
+            get
+            {
+                return _regiments;
+            }
+
+            set
+            {
+                _regiments =  value ;
+            }
+        }
         #endregion
 
         internal Regiment FindRegiment( Regiment regiment )
         {
-            return _regiments.Where( r => r.Unit == regiment.Unit ).FirstOrDefault();
+            return Regiments.Where( r => r.Unit == regiment.Unit ).FirstOrDefault();
         }
 
         /// <summary>
@@ -61,49 +84,49 @@ namespace ITI.SkyLord
         /// <returns>The regiment found. If the regiment is not found it returns null.</returns>
         internal Regiment FindRegiment( Unit unit )
         {
-            return _regiments.Where( u => u.Name == unit.Name ).FirstOrDefault();
+            return Regiments.Where( u => u.Name == unit.Name ).FirstOrDefault();
         }
 
         internal void AddRegiment( Regiment regiment )
         {
-            if( _regiments.Any( r => r.Unit == regiment.Unit ) )
+            if( Regiments.Any( r => r.Unit == regiment.Unit ) )
             {
-                int initialUnitNumber = _regiments.Where( r => r.Unit == regiment.Unit ).Select( r => r.Number ).SingleOrDefault();
+                int initialUnitNumber = Regiments.Where( r => r.Unit == regiment.Unit ).Select( r => r.Number ).SingleOrDefault();
                 int finalUnitNumber = initialUnitNumber + regiment.Number;
 
-                _regiments.Remove( FindRegiment(regiment) );
-                _regiments.Add( regiment.Unit, finalUnitNumber );
+                Regiments.Remove( FindRegiment(regiment) );
+                Regiments.Add( regiment.Unit, finalUnitNumber );
             }
             else
-                _regiments.Add( regiment.Unit, regiment.Number );
+                Regiments.Add( regiment.Unit, regiment.Number );
         }
 
         internal void AddRegiment( Unit unit, int number )
         {
-            if ( _regiments.Any( r => r.Unit == unit ) )
+            if ( Regiments.Any( r => r.Unit == unit ) )
             {
-                int initialUnitNumber = _regiments.Where( r => r.Unit == unit ).Select( r => r.Number ).SingleOrDefault();
+                int initialUnitNumber = Regiments.Where( r => r.Unit == unit ).Select( r => r.Number ).SingleOrDefault();
                 int finalUnitNumber = initialUnitNumber + number;
 
-                _regiments.Remove( FindRegiment(unit) );
-                _regiments.Add( unit, finalUnitNumber );
+                Regiments.Remove( FindRegiment(unit) );
+                Regiments.Add( unit, finalUnitNumber );
             }
             else
-                _regiments.Add( unit, number );
+                Regiments.Add( unit, number );
         }
 
         internal void RemoveRegiment( Regiment regiment )
         {
-            _regiments.Remove( regiment );
+            Regiments.Remove( regiment );
         }
         internal void RemoveRegiment( Unit unit )
         {
-            _regiments.Remove( FindRegiment( unit ) );
+            Regiments.Remove( FindRegiment( unit ) );
         }
 
         internal void ClearRegiments()
         {
-            _regiments.Clear();
+            Regiments.Clear();
         }
 
         /// <summary>
@@ -113,7 +136,7 @@ namespace ITI.SkyLord
         /// <returns></returns>
         internal RegimentList GetRegimentsByDamagetype( UnitDamageType unitDamageType)
         {
-            IEnumerable<Regiment> regs = _regiments.Where( r => r.Unit.UnitDamageType == unitDamageType );
+            IEnumerable<Regiment> regs = Regiments.Where( r => r.Unit.UnitDamageType == unitDamageType );
             RegimentList newRegiments = new RegimentList();
             foreach(Regiment r in regs )
             {
@@ -131,7 +154,7 @@ namespace ITI.SkyLord
         {
             double totalAttack = 0;
             double physicalAttack = 0;
-            foreach(Unit u in _regiments.Select( r => r.Unit) )
+            foreach(Unit u in Regiments.Select( r => r.Unit) )
             {
                 totalAttack += u.UnitStatistics.Attack;
                 if ( u.UnitDamageType == UnitDamageType.physical )
@@ -154,10 +177,10 @@ namespace ITI.SkyLord
 
             int initialUnitNumber = r.Number;
             int finalUnitNumber = initialUnitNumber - numberToRemove;
-            _regiments.Remove( r );
+            Regiments.Remove( r );
 
             if ( finalUnitNumber > 0 )
-                _regiments.Add( new Regiment(unit, finalUnitNumber ) );
+                Regiments.Add( new Regiment(unit, finalUnitNumber ) );
         }
 
         /// <summary>
@@ -191,8 +214,8 @@ namespace ITI.SkyLord
 
             int initialUnitNumber = r.Number;
             int finalUnitNumber = initialUnitNumber + numberToAdd;
-            _regiments.Remove( r );
-            _regiments.Add( new Regiment( unit, finalUnitNumber ) );
+            Regiments.Remove( r );
+            Regiments.Add( new Regiment( unit, finalUnitNumber ) );
         }
 
         /// <summary>
@@ -250,10 +273,10 @@ namespace ITI.SkyLord
                 }
             }
 
-            _regiments.Clear();
+            Regiments.Clear();
             foreach( Regiment r in joinedArmy.Regiments )
             {
-                _regiments.Add( new Regiment(r.Unit, r.Number ) );
+                Regiments.Add( new Regiment(r.Unit, r.Number ) );
             }
         }
 
