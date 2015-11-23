@@ -15,15 +15,15 @@ namespace ITI.SkyLord.Tests.EfTests
         public void Add2Players()
         {
             World _world = new World();
-            Player testPlayer = new Player(_world, "Thanur");
-            Player testPlayer2 = new Player(_world, "Nathos");
-            using (PlayerContext context = new PlayerContext())
+            Player testPlayer = new Player( _world, "Thanur" );
+            Player testPlayer2 = new Player( _world, "Nathos" );
+            using ( PlayerContext context = new PlayerContext() )
             {
-                context.Players.Add(testPlayer);
-                context.Players.Add(testPlayer2);
+                context.Players.Add( testPlayer );
+                context.Players.Add( testPlayer2 );
                 context.SaveChanges();
             }
-            Console.WriteLine("Player saved");
+            Console.WriteLine( "Player saved" );
         }
 
         [Test]
@@ -31,9 +31,9 @@ namespace ITI.SkyLord.Tests.EfTests
         {
             using (PlayerContext context = new PlayerContext())
             {
-                foreach (Player p in context.Players.Include( p => p.Profil))
+                foreach (Player p in context.Players.Include(p => p.Profil))
                 {
-                    Console.WriteLine("Name: {0}", p.Name);
+                    Console.WriteLine("Name: {0}, ProfilPass : {1}", p.PlayerId, p.Profil.Password);
                 }
             }
         }
