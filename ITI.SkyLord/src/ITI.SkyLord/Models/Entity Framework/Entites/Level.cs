@@ -14,8 +14,9 @@ namespace ITI.SkyLord
 
         public Level( int number = 1 )
         {
-            _number = number;
+            Number = number;
         }
+
         [Key]
         public long LevelId { get; set; }
         public int Number { get; set; }

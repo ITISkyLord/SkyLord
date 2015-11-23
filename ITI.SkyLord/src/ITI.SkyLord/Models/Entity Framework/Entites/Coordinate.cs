@@ -38,8 +38,7 @@ namespace ITI.SkyLord
 
         #region Properties
         [Key]
-        public long CoordinateId { get; set;
-        }
+        public long CoordinateId { get; set; }
         /// <summary>
         /// Gets the coordinate X
         /// </summary>
