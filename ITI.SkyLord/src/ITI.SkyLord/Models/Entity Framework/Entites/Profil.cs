@@ -11,7 +11,7 @@ namespace ITI.SkyLord
         private long _profilId;
         private string _mail;
         private string _password;
-        private Player _owner;
+        // private Player _owner;
         // Avatar
         private string _description;
 
@@ -27,7 +27,7 @@ namespace ITI.SkyLord
             if( String.IsNullOrWhiteSpace( password ) ) throw new ArgumentNullException( "password is null or has white space." );
             if( player == null ) throw new ArgumentNullException();
             this._mail = mail;
-            this._owner = player;
+            // this._owner = player;
             this._password = password;
         }
 
@@ -50,7 +50,7 @@ namespace ITI.SkyLord
         /// <summary>
         /// Gets the player that this profile belongs to.
         /// </summary>
-        public Player Owner { get; set; }
+        // public Player Owner { get; set; }
 
         #endregion
     }

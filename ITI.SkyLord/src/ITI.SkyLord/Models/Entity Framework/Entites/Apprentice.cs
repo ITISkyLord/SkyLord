@@ -8,12 +8,9 @@ namespace ITI.SkyLord
 {
     public class Apprentice
     {
-        private long _apprenticeId;
-        private ApprenticeLevel _level;
-
         public Apprentice()
         {
-            this._level = new ApprenticeLevel();
+            this.Level = new ApprenticeLevel();
         }
 
         [Key]
