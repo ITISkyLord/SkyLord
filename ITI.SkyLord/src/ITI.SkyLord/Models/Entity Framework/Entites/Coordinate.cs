@@ -10,7 +10,6 @@ namespace ITI.SkyLord
     // TODO : passer en class
     public class Coordinate
     {
-        private long _coordinateId;
         private  int _x;
         private  int _y;
 
@@ -21,8 +20,8 @@ namespace ITI.SkyLord
         /// <param name="y">No limit</param>
         public Coordinate()
         {
-            this._x = 0;
-            this._y = 0;
+            this.X = 0;
+            this.Y = 0;
         }
 
         /// <summary>
@@ -32,21 +31,39 @@ namespace ITI.SkyLord
         /// <param name="y">No limit</param>
         public Coordinate( int x, int y )
         {
-            this._x = x;
-            this._y = y;
+            this.X = x;
+            this.Y = y;
         }
 
         #region Properties
         [Key]
         public long CoordinateId { get; set; }
-        /// <summary>
-        /// Gets the coordinate X
-        /// </summary>
-        public int X { get; set; }
-        /// <summary>
-        /// Gets the coordinate Y
-        /// </summary>
-        public int Y { get; set; }
-    #endregion
+
+        public int X
+        {
+            get
+            {
+                return _x;
+            }
+
+            set
+            {
+                _x = value;
+            }
+        }
+
+        public int Y
+        {
+            get
+            {
+                return _y;
+            }
+
+            set
+            {
+                _y =  value ;
+            }
+        }
+        #endregion
     }
 }

@@ -9,7 +9,11 @@ namespace ITI.SkyLord
 {
     public class Army
     {
-        //private  Dictionary<Unit, int> Regiments;
+        private ArmyState _armyState;
+        private Island _island;
+        private RegimentList _regiments;
+
+        //private  Dictionary<Unit, int> _regiments;
 
         /// <summary>
         /// Create new army.
@@ -28,20 +32,44 @@ namespace ITI.SkyLord
         [Key]
         public long ArmyId { get; set; }
 
-        /// <summary>
-        /// Gets or sets ArmyState
-        /// </summary>
-        public ArmyState ArmyState { get; set; }
+        public ArmyState ArmyState
+        {
+            get
+            {
+                return _armyState;
+            }
 
-        /// <summary>
-        /// Gets dictionnary Unit,int Regiments
-        /// </summary>
-        public RegimentList Regiments { get; set; }
+            set
+            {
+                _armyState = value;
+            }
+        }
 
-        /// <summary>
-        /// Gets or sets the Island where is from the Army.
-        /// </summary>
-        public Island Island { get; set; }
+        public Island Island
+        {
+            get
+            {
+                return _island;
+            }
+
+            set
+            {
+                _island = value;
+            }
+        }
+
+        public RegimentList Regiments
+        {
+            get
+            {
+                return _regiments;
+            }
+
+            set
+            {
+                _regiments =  value ;
+            }
+        }
         #endregion
 
         internal Regiment FindRegiment( Regiment regiment )

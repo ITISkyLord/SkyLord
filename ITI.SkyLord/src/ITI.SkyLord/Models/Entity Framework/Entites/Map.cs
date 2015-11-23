@@ -8,7 +8,6 @@ namespace ITI.SkyLord
 {
     public class Map
     {
-        private long _mapId;
         private List<Island> _islands;
         // World _world;
 
@@ -20,8 +19,10 @@ namespace ITI.SkyLord
         {
             if( world == null ) throw new ArgumentNullException( "world is null." );
             // _world = world;
-            _islands = new List<Island>();
+            Islands = new List<Island>();
         }
+
+       
 
         #region Properties
         /// <summary>
@@ -30,8 +31,19 @@ namespace ITI.SkyLord
         /// 
         [Key]
         public long MapId { get; set; }
-        public List<Island> Islands { get; set; }
-        // public World World { get; set; }
+        public List<Island> Islands
+        {
+            get
+            {
+                return _islands;
+            }
+
+            set
+            {
+                _islands = value;
+            }
+        }
+
         #endregion
     }
 }

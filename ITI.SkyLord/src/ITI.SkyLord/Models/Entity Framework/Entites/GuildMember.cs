@@ -8,13 +8,36 @@ namespace ITI.SkyLord.Models.Entity_Framework.Entites
 {
     public class GuildMember
     {
-        private long _guildMemberId;
         private Guild _guild;
         private GuildRole _guildRole;
 
         [Key]
         public long GuildMemberId { get; set; }
-        public Guild Guild { get; set; }
-        public GuildRole GuildRole { get; set; }
+
+        public Guild Guild
+        {
+            get
+            {
+                return _guild;
+            }
+
+            set
+            {
+                _guild = value;
+            }
+        }
+
+        public GuildRole GuildRole
+        {
+            get
+            {
+                return _guildRole;
+            }
+
+            set
+            {
+                _guildRole =  value ;
+            }
+        }
     }
 }

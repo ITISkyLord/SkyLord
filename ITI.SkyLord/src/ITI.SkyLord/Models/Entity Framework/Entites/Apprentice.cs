@@ -8,6 +8,7 @@ namespace ITI.SkyLord
 {
     public class Apprentice
     {
+        private ApprenticeLevel _level;
         public Apprentice()
         {
             this.Level = new ApprenticeLevel();
@@ -15,6 +16,18 @@ namespace ITI.SkyLord
 
         [Key]
         public long ApprenticeId { get; set; }
-        public ApprenticeLevel Level { get; set; }
+
+        public ApprenticeLevel Level
+        {
+            get
+            {
+                return _level;
+            }
+
+            set
+            {
+                _level =  value ;
+            }
+        }
     }
 }

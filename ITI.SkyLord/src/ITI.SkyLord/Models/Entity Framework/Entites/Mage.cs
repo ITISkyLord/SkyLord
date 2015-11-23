@@ -8,7 +8,7 @@ namespace ITI.SkyLord
 {
     public class Mage
     {
-        private long _mageId;
+       
         private string _name;
         private MageLevel _mageLevel;
         private List<Apprentice> _apprentices;
@@ -24,11 +24,11 @@ namespace ITI.SkyLord
             if( String.IsNullOrWhiteSpace( name ) ) throw new ArgumentNullException( "The name of the mage can not be null or a white space." );
             if( name.Count() < 4 ) throw new InvalidOperationException( "The name of the mage must be at least 4 characters" );
             Island = island;
-            this._mageLevel = new MageLevel();
-            this._apprentices = new List<Apprentice>();
+            this.MageLevel = new MageLevel();
+            this.Apprentices = new List<Apprentice>();
             // TODO : générer un nom de mage rigolo
-            this._name = "Mage";
-            _name = name;
+            this.Name = "Mage";
+            Name = name;
 
         }
 
@@ -39,19 +39,59 @@ namespace ITI.SkyLord
         /// 
         [Key]
         public long MageId { get; set; }
-        public string Name { get; set; }
 
-        /// <summary>
-        /// Gets or sets the MageLevel.
-        /// </summary>
-        public MageLevel MageLevel { get; set; }
+        public string Name
+        {
+            get
+            {
+                return _name;
+            }
 
-        /// <summary>
-        /// Gets the list of apprentices of the mage.
-        /// </summary>
-        public List<Apprentice> Apprentices { get; set; }
+            set
+            {
+                _name = value;
+            }
+        }
 
-        public Island Island { get; set; }
+        public MageLevel MageLevel
+        {
+            get
+            {
+                return _mageLevel;
+            }
+
+            set
+            {
+                _mageLevel = value;
+            }
+        }
+
+        public List<Apprentice> Apprentices
+        {
+            get
+            {
+                return _apprentices;
+            }
+
+            set
+            {
+                _apprentices = value;
+            }
+        }
+
+        public Island Island
+        {
+            get
+            {
+                return _island;
+            }
+
+            set
+            {
+                _island = value;
+            }
+        }
+
         #endregion
     }
 }
