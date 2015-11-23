@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using ITI.SkyLord.Units;
 using ITI.SkyLord;
 
 namespace ITI.Skylord.ModelTest
@@ -142,6 +141,8 @@ namespace ITI.Skylord.ModelTest
         public void Add_units_to_regiment_with_AddToRegiment_method()
         {
             Army army = new Army( ArmyState.defense, _defaultIsland );
+
+            Console.WriteLine( "Fesses" );
 
             army.AddRegiment( _guard, 40 );
             army.AddRegiment( _necromancer, 30 );
