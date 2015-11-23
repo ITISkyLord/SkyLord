@@ -10,7 +10,6 @@ namespace ITI.SkyLord
 {
     public class Player
     {
-        private long _playerId;
         private string _name;
         private Profil _profil;
         private List<Island> _islands;
@@ -34,35 +33,92 @@ namespace ITI.SkyLord
             if (!IsValidEmailStatic.IsValidEmail(mail)) throw new ArgumentException("Invalid mail");
             if (name.Length > 50) throw new ArgumentOutOfRangeException(" Maximum lenght of name is 50. Your name lenght is " + name.Length + " at the moment.");
             if (password.Length > 75) throw new ArgumentOutOfRangeException(" Maximum lenght of password is 75. Your name lenght is " + password.Length + " at the moment.");
-            this._name = name;
-            this._world = world;
-            this._islands = new List<Island>();
-            this._technologies = new List<Technology>();
-            this._profil = new Profil(this, mail, password);
+            this.Name = name;
+            this.World = world;
+            this.Islands = new List<Island>();
+            this.Technologies = new List<Technology>();
+            this.Profil = new Profil(this, mail, password);
         }
 
         [Key]
         public long PlayerId { get; set; }
-        /// <summary>
-        /// Gets the Name of the Player.
-        /// </summary>
-        public string Name { get; set; }
-        /// <summary>
-        /// Gets the Profile of the Player.
-        /// </summary>
-        public Profil Profil { get; set; }
-        /// <summary>
-        /// Gets or sets the list of Islands the Player controls.
-        /// </summary>
-        public List<Island> Islands { get; set; }
-        /// <summary>
-        /// Gets or sets the guild the player belongs to.
-        /// </summary>
-        public Guild Guild { get; set; }
-        /// <summary>
-        /// Gets or sets the technology the Player has developped.
-        /// </summary>
-        public List<Technology> Technologies { get; set; }
 
+        public string Name
+        {
+            get
+            {
+                return _name;
+            }
+
+            set
+            {
+                _name = value;
+            }
+        }
+
+        public Profil Profil
+        {
+            get
+            {
+                return _profil;
+            }
+
+            set
+            {
+                _profil = value;
+            }
+        }
+
+        public List<Island> Islands
+        {
+            get
+            {
+                return _islands;
+            }
+
+            set
+            {
+                _islands = value;
+            }
+        }
+
+        public Guild Guild
+        {
+            get
+            {
+                return _guild;
+            }
+
+            set
+            {
+                _guild = value;
+            }
+        }
+
+        public List<Technology> Technologies
+        {
+            get
+            {
+                return _technologies;
+            }
+
+            set
+            {
+                _technologies = value;
+            }
+        }
+
+        public World World
+        {
+            get
+            {
+                return _world;
+            }
+
+            set
+            {
+                _world = value;
+            }
+        }
     }
 }

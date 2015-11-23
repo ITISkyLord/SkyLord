@@ -9,7 +9,6 @@ namespace ITI.SkyLord
 {
     public class World
     {
-        private long _worldId;
         private List<Player> _players;
         private Map _map;
 
@@ -18,19 +17,42 @@ namespace ITI.SkyLord
         /// </summary>
         public World()
         {
-            _players = new List<Player>();
-            _map = new Map(this);
+            Players = new List<Player>();
+            Map = new Map(this);
         }
 
         #region Properties
         [Key]
         public long WorldId { get; set; }
 
-        public List<Player> Players { get; set; }
+        public List<Player> Players
+        {
+            get
+            {
+                return _players;
+            }
 
-        public Map Map { get; set; }
+            set
+            {
+                _players = value;
+            }
+        }
 
-    
+        public Map Map
+        {
+            get
+            {
+                return _map;
+            }
+
+            set
+            {
+                _map = value;
+            }
+        }
+
+
+
         #endregion
 
         /// <summary>
@@ -43,7 +65,7 @@ namespace ITI.SkyLord
         public Player addNewPlayer( string name, string mail = "toto@gmail.com", string password = "password" )
         {
             Player player = new Player( this, name, mail, password );
-            _players.Add( player );
+            Players.Add( player );
             return player;
         }
 
@@ -58,9 +80,9 @@ namespace ITI.SkyLord
         public Island addNewIsland ( Coordinate coordinates, string name = "Île inhabitée.", bool capital = false, Player owner = null )
         {
             if( name.Length > 50 ) throw new ArgumentOutOfRangeException( " Maximum lenght of name is 50. Your name lenght is " + name.Length + " at the moment." );
-            if( _map.Islands.Any( i => i.Coordinates.X == coordinates.X && i.Coordinates.Y == coordinates.Y ) ) throw new ArgumentException( " There is already an island on these coordinates." );
+            if( Map.Islands.Any( i => i.Coordinates.X == coordinates.X && i.Coordinates.Y == coordinates.Y ) ) throw new ArgumentException( " There is already an island on these coordinates." );
             Island island = new Island( name, coordinates, capital, owner = null );
-            _map.Islands.Add(island );
+            Map.Islands.Add(island );
             return island;
         }
     }
