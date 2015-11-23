@@ -4,34 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ITI.SkyLord.Units
+namespace ITI.SkyLord
 {
     public class Unit
     {
-        protected int _id;
         private UnitName _unitName;
-        protected UnitDamageType _unitDamageType;
-        protected UnitType _unitType;
-        protected UnitStatistics _unitStatistics;
-        protected Ressource _unitCost;
+        private UnitDamageType unitDamageType;
+        private UnitType unitType;
+        private UnitStatistics unitStatistics;
+        private Ressource unitCost;
 
         #region Properties
 
-        public int Id
-        {
-            get
-            {
-                return _id;
-            }
-        }
+        public int UnitId { get; set; }
 
-        public UnitName UnitName
-        {
-            get
-            {
-                return _unitName;
-            }
-        }
 
         public string Name
         {
@@ -41,25 +27,55 @@ namespace ITI.SkyLord.Units
             }
         }
 
+        public UnitName UnitName
+        {
+            get
+            {
+                return _unitName;
+            }
+
+            set
+            {
+                _unitName = value;
+            }
+        }
+
         public UnitDamageType UnitDamageType
         {
             get
             {
-                return _unitDamageType;
+                return unitDamageType;
+            }
+
+            set
+            {
+                unitDamageType = value;
             }
         }
+
         public UnitType UnitType
         {
             get
             {
-                return _unitType;
+                return unitType;
+            }
+
+            set
+            {
+                unitType = value;
             }
         }
+
         public UnitStatistics UnitStatistics
         {
             get
             {
-                return _unitStatistics;
+                return unitStatistics;
+            }
+
+            set
+            {
+                unitStatistics = value;
             }
         }
 
@@ -67,31 +83,25 @@ namespace ITI.SkyLord.Units
         {
             get
             {
-                return _unitCost;
+                return unitCost;
+            }
+
+            set
+            {
+                unitCost =  value ;
             }
         }
 
-        //protected Regiment Regiment
-        //{
-        //    get
-        //    {
-        //        return _regiment;
-        //    }
 
-        //    set
-        //    {
-        //        _regiment = value;
-        //    }
-        //} 
         #endregion
 
         internal Unit( UnitName unitName, UnitDamageType unitDamageType, UnitType unitType, UnitStatistics unitStatistics, Ressource unitCost )
         {
-            _unitName = unitName;
-            _unitDamageType = unitDamageType;
-            _unitType = unitType;
-            _unitStatistics = unitStatistics;
-            _unitCost = unitCost;
+            UnitName = unitName;
+            UnitDamageType = unitDamageType;
+            UnitType = unitType;
+            UnitStatistics = unitStatistics;
+            UnitCost = unitCost;
         }
         public override bool Equals( object obj )
         {

@@ -1,6 +1,6 @@
 {
   "webroot": "wwwroot",
-  "userSecretsId": "aspnet5-ITI.SkyLord-95eb6eea-d6f6-4f75-a574-ef819fbbd729",
+  "userSecretsId": "Skylord",
   "version": "1.0.0-*",
 
     "dependencies": {
