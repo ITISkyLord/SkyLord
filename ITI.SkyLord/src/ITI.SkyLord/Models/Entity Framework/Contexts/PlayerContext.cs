@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Framework.Configuration;
 
 namespace ITI.SkyLord.Models.Entity_Framework.Contexts
 {
@@ -26,12 +27,17 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
             //builder.Entity<EProfil>()
             //    .HasAlternateKey(p => p.Owner);
         }
+        public IConfigurationRoot Configuration { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            var builder = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json");
+
+            Configuration = builder.Build();
             var appEnv = CallContextServiceLocator.Locator.ServiceProvider
                             .GetRequiredService<IApplicationEnvironment>();
-            optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=aspnet5-ITI.SkyLord-95eb6eea-d6f6-4f75-a574-ef819fbbd729;Trusted_Connection=True;MultipleActiveResultSets=true");
+            optionsBuilder.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]);
         }
 
         public DbSet<Profil> Profils { get; set; }

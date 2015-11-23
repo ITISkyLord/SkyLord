@@ -9,7 +9,7 @@ namespace ITI.SkyLord
     public class TechnologyLevel : Level
     {
 
-        [Key]
-        public long TechnologyLevelId { get; set; }
+        //[Key]
+        //public long TechnologyLevelId { get; set; }
     }
 }

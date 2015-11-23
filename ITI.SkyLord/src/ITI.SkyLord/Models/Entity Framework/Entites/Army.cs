@@ -84,7 +84,7 @@ namespace ITI.SkyLord
         /// <returns>The regiment found. If the regiment is not found it returns null.</returns>
         internal Regiment FindRegiment( Unit unit )
         {
-            return Regiments.Where( u => u.Name == unit.Name ).FirstOrDefault();
+            return Regiments.Where( u => u.Unit.Name == unit.Name ).FirstOrDefault();
         }
 
         internal void AddRegiment( Regiment regiment )

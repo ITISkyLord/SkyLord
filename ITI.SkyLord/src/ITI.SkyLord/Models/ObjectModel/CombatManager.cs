@@ -157,13 +157,13 @@ namespace ITI.SkyLord
                         {
 
                             int loss = (int)(result * kvp2.Value);
-                            Console.Write( "Unit = " + r.Name );
-                            Console.WriteLine( " : loss = " + loss );
-                            Console.WriteLine( "Avant le substract, winningArmy première unité dans le dico = " + _winningArmy.Regiments.First() );
-                            Console.WriteLine( "winningArmyState = " + _winningArmy.ArmyState );
+                            //Console.Write( "Unit = " + r.Name );
+                            //Console.WriteLine( " : loss = " + loss );
+                            //Console.WriteLine( "Avant le substract, winningArmy première unité dans le dico = " + _winningArmy.Regiments.First() );
+                            //Console.WriteLine( "winningArmyState = " + _winningArmy.ArmyState );
 
                             _winningArmy.SubstractFromRegiment( r.Unit, loss );
-                            Console.WriteLine( "Après le substract, winningArmy première unité dans le dico = " + _winningArmy.Regiments.First() );
+                         //   Console.WriteLine( "Après le substract, winningArmy première unité dans le dico = " + _winningArmy.Regiments.First() );
                         }
                     }
                 }
@@ -182,12 +182,12 @@ namespace ITI.SkyLord
                 Army tmpArmy = _winningArmy.Copy();
                 foreach( Regiment r in tmpArmy.Regiments )
                 {
-                    Console.Write( "Unit = " + r.Unit );
-                    Console.WriteLine( " : loss = " + resultByUnits );
-                    Console.WriteLine( "winningArmyState = " + _winningArmy.ArmyState );
-                    Console.WriteLine( "Avant le substract, winningArmy warrior = " + _winningArmy.Regiments.First() );
+                    //Console.Write( "Unit = " + r.Unit );
+                    //Console.WriteLine( " : loss = " + resultByUnits );
+                    //Console.WriteLine( "winningArmyState = " + _winningArmy.ArmyState );
+                    //Console.WriteLine( "Avant le substract, winningArmy warrior = " + _winningArmy.Regiments.First() );
                     _winningArmy.SubstractFromRegiment( r.Unit, resultByUnits );
-                    Console.WriteLine( "Après le substract, winningArmy warrior = " + _winningArmy.Regiments.First() );
+                    //Console.WriteLine( "Après le substract, winningArmy warrior = " + _winningArmy.Regiments.First() );
 
                 }
             }
