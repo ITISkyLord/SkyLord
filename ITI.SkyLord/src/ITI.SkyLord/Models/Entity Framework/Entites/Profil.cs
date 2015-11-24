@@ -39,6 +39,7 @@ namespace ITI.SkyLord
         [Key]
         public long ProfilId { get; set; }
 
+        [EmailAddress]
         public string Mail
         {
             get
@@ -52,6 +53,7 @@ namespace ITI.SkyLord
             }
         }
 
+        [StringLength( 60, MinimumLength = 3 ) ]
         public string Password
         {
             get

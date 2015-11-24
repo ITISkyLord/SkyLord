@@ -51,6 +51,22 @@ namespace ITI.SkyLord.Controllers
             return View( "Index" );
         }
 
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        public IActionResult LoginForm(string name, string password )
+        {
+            PlayerContext pc = new PlayerContext();
+            if ( pc.IsPlayerValid( name, password ) )
+            {
+                return View( "../Logged/Index" );
+            }
+            // TODO Login devient Index quand login/inscription sont proprement faits
+            return View( "Login" );
+        }
+
 
         public IActionResult Error()
         {
