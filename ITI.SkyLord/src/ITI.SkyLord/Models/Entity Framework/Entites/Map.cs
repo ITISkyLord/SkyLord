@@ -15,15 +15,10 @@ namespace ITI.SkyLord
         /// Create a new map. Only one map on a world.
         /// </summary>
         /// <param name="world"></param>
-        public Map( World world )
+        public Map()
         {
-            if( world == null ) throw new ArgumentNullException( "world is null." );
-            // _world = world;
             Islands = new List<Island>();
         }
-
-       
-
         #region Properties
         /// <summary>
         /// Gets the dictionary of islands presents on the map.

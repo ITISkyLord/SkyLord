@@ -43,5 +43,15 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
         public DbSet<Profil> Profils { get; set; }
         public DbSet<Player> Players { get; set; }
         public DbSet<World> Worlds { get; set; }
+
+        public void AddPlayer( Player p )
+        {
+            using( PlayerContext context = new PlayerContext() )
+            {
+                context.Add( p );
+                context.SaveChanges();
+            }
+        }
+
     }
 }
