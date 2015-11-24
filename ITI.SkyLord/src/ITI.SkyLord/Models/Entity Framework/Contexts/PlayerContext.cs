@@ -49,7 +49,16 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
             using( PlayerContext context = new PlayerContext() )
             {
                 context.Add( p );
+                context.Add( p.Profil );
                 context.SaveChanges();
+            }
+        }
+
+        public World GetWorld()
+        {
+            using( PlayerContext context = new PlayerContext() )
+            {
+                return context.Worlds.FirstOrDefault();
             }
         }
 

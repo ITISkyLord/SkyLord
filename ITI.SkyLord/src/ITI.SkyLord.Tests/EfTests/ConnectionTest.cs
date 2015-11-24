@@ -13,6 +13,11 @@ namespace ITI.SkyLord.Tests.EfTests
         public ConnectionTest()
         {
             _world = new World();
+            //using( PlayerContext context = new PlayerContext() )
+            //{
+            //    context.Add( _world );
+            //    context.SaveChanges();
+            //}
         }
         [Test]
         public void Create_a_new_player_and_save_it()

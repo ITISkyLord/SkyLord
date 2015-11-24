@@ -38,7 +38,7 @@ namespace ITI.SkyLord
             this.World = world;
             this.Islands = new List<Island>();
             this.Technologies = new List<Technology>();
-            this.Profil = new Profil();
+            this.Profil = new Profil( mail, password );
         }
 
         /// <summary>
@@ -49,10 +49,6 @@ namespace ITI.SkyLord
             this.Profil = new Profil();
             this.Islands = new List<Island>();
             this.Technologies = new List<Technology>();
-        }
-        public Player()
-        {
-
         }
         [Key]
         public long PlayerId { get; set; }
