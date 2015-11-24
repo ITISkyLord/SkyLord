@@ -8,7 +8,7 @@ using ITI.SkyLord.Models.Entity_Framework.Contexts;
 namespace ITI.SkyLord.Migrations
 {
     [DbContext(typeof(SetupContext))]
-    [Migration("20151123101147_Setup")]
+    [Migration("20151124101334_Setup")]
     partial class Setup
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -16,6 +16,30 @@ namespace ITI.SkyLord.Migrations
             modelBuilder
                 .Annotation("ProductVersion", "7.0.0-beta8-15964")
                 .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("ITI.SkyLord.Apprentice", b =>
+                {
+                    b.Property<long>("ApprenticeId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<long?>("LevelLevelId");
+
+                    b.Property<long?>("MageMageId");
+
+                    b.HasKey("ApprenticeId");
+                });
+
+            modelBuilder.Entity("ITI.SkyLord.ApprenticeLevel", b =>
+                {
+                    b.Property<long>("LevelId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<long?>("CostRessourceId");
+
+                    b.Property<int>("Number");
+
+                    b.HasKey("LevelId");
+                });
 
             modelBuilder.Entity("ITI.SkyLord.Army", b =>
                 {
@@ -55,6 +79,20 @@ namespace ITI.SkyLord.Migrations
                     b.HasKey("LevelId");
                 });
 
+            modelBuilder.Entity("ITI.SkyLord.CombatReport", b =>
+                {
+                    b.Property<long>("CombatreportId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ObjectReport");
+
+                    b.Property<long?>("ReceiverPlayerId");
+
+                    b.Property<string>("Report");
+
+                    b.HasKey("CombatreportId");
+                });
+
             modelBuilder.Entity("ITI.SkyLord.Coordinate", b =>
                 {
                     b.Property<long>("CoordinateId")
@@ -83,6 +121,18 @@ namespace ITI.SkyLord.Migrations
                     b.Property<bool>("Recrutement");
 
                     b.HasKey("GuildId");
+                });
+
+            modelBuilder.Entity("ITI.SkyLord.GuildMember", b =>
+                {
+                    b.Property<long>("GuildMemberId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<long?>("GuildGuildId");
+
+                    b.Property<long?>("GuildRoleGuildRoleId");
+
+                    b.HasKey("GuildMemberId");
                 });
 
             modelBuilder.Entity("ITI.SkyLord.GuildRole", b =>
@@ -117,6 +167,44 @@ namespace ITI.SkyLord.Migrations
                     b.HasKey("IslandId");
                 });
 
+            modelBuilder.Entity("ITI.SkyLord.Level", b =>
+                {
+                    b.Property<long>("LevelId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<long?>("CostRessourceId");
+
+                    b.Property<int>("Number");
+
+                    b.HasKey("LevelId");
+                });
+
+            modelBuilder.Entity("ITI.SkyLord.Mage", b =>
+                {
+                    b.Property<long>("MageId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<long?>("IslandIslandId");
+
+                    b.Property<long?>("MageLevelLevelId");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("MageId");
+                });
+
+            modelBuilder.Entity("ITI.SkyLord.MageLevel", b =>
+                {
+                    b.Property<long>("LevelId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<long?>("CostRessourceId");
+
+                    b.Property<int>("Number");
+
+                    b.HasKey("LevelId");
+                });
+
             modelBuilder.Entity("ITI.SkyLord.Map", b =>
                 {
                     b.Property<long>("MapId")
@@ -125,16 +213,20 @@ namespace ITI.SkyLord.Migrations
                     b.HasKey("MapId");
                 });
 
-            modelBuilder.Entity("ITI.SkyLord.Models.Entity_Framework.Entites.GuildMember", b =>
+            modelBuilder.Entity("ITI.SkyLord.Message", b =>
                 {
-                    b.Property<long>("GuildMemberId")
+                    b.Property<long>("MessageId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<long?>("GuildGuildId");
+                    b.Property<string>("CoreMessage");
 
-                    b.Property<long?>("GuildRoleGuildRoleId");
+                    b.Property<string>("MessageObject");
 
-                    b.HasKey("GuildMemberId");
+                    b.Property<long?>("ReceiverPlayerId");
+
+                    b.Property<long?>("SenderPlayerId");
+
+                    b.HasKey("MessageId");
                 });
 
             modelBuilder.Entity("ITI.SkyLord.Player", b =>
@@ -197,6 +289,18 @@ namespace ITI.SkyLord.Migrations
                     b.Property<int>("Wood");
 
                     b.HasKey("RessourceId");
+                });
+
+            modelBuilder.Entity("ITI.SkyLord.Spell", b =>
+                {
+                    b.Property<long>("SpellId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("SpellId");
                 });
 
             modelBuilder.Entity("ITI.SkyLord.Technology", b =>
@@ -273,6 +377,24 @@ namespace ITI.SkyLord.Migrations
                     b.HasKey("WorldId");
                 });
 
+            modelBuilder.Entity("ITI.SkyLord.Apprentice", b =>
+                {
+                    b.HasOne("ITI.SkyLord.ApprenticeLevel")
+                        .WithMany()
+                        .ForeignKey("LevelLevelId");
+
+                    b.HasOne("ITI.SkyLord.Mage")
+                        .WithMany()
+                        .ForeignKey("MageMageId");
+                });
+
+            modelBuilder.Entity("ITI.SkyLord.ApprenticeLevel", b =>
+                {
+                    b.HasOne("ITI.SkyLord.Ressource")
+                        .WithMany()
+                        .ForeignKey("CostRessourceId");
+                });
+
             modelBuilder.Entity("ITI.SkyLord.Army", b =>
                 {
                     b.HasOne("ITI.SkyLord.Island")
@@ -298,6 +420,24 @@ namespace ITI.SkyLord.Migrations
                         .ForeignKey("CostRessourceId");
                 });
 
+            modelBuilder.Entity("ITI.SkyLord.CombatReport", b =>
+                {
+                    b.HasOne("ITI.SkyLord.Player")
+                        .WithMany()
+                        .ForeignKey("ReceiverPlayerId");
+                });
+
+            modelBuilder.Entity("ITI.SkyLord.GuildMember", b =>
+                {
+                    b.HasOne("ITI.SkyLord.Guild")
+                        .WithMany()
+                        .ForeignKey("GuildGuildId");
+
+                    b.HasOne("ITI.SkyLord.GuildRole")
+                        .WithMany()
+                        .ForeignKey("GuildRoleGuildRoleId");
+                });
+
             modelBuilder.Entity("ITI.SkyLord.Island", b =>
                 {
                     b.HasOne("ITI.SkyLord.Ressource")
@@ -317,15 +457,40 @@ namespace ITI.SkyLord.Migrations
                         .ForeignKey("OwnerPlayerId");
                 });
 
-            modelBuilder.Entity("ITI.SkyLord.Models.Entity_Framework.Entites.GuildMember", b =>
+            modelBuilder.Entity("ITI.SkyLord.Level", b =>
                 {
-                    b.HasOne("ITI.SkyLord.Guild")
+                    b.HasOne("ITI.SkyLord.Ressource")
                         .WithMany()
-                        .ForeignKey("GuildGuildId");
+                        .ForeignKey("CostRessourceId");
+                });
 
-                    b.HasOne("ITI.SkyLord.GuildRole")
+            modelBuilder.Entity("ITI.SkyLord.Mage", b =>
+                {
+                    b.HasOne("ITI.SkyLord.Island")
                         .WithMany()
-                        .ForeignKey("GuildRoleGuildRoleId");
+                        .ForeignKey("IslandIslandId");
+
+                    b.HasOne("ITI.SkyLord.MageLevel")
+                        .WithMany()
+                        .ForeignKey("MageLevelLevelId");
+                });
+
+            modelBuilder.Entity("ITI.SkyLord.MageLevel", b =>
+                {
+                    b.HasOne("ITI.SkyLord.Ressource")
+                        .WithMany()
+                        .ForeignKey("CostRessourceId");
+                });
+
+            modelBuilder.Entity("ITI.SkyLord.Message", b =>
+                {
+                    b.HasOne("ITI.SkyLord.Player")
+                        .WithMany()
+                        .ForeignKey("ReceiverPlayerId");
+
+                    b.HasOne("ITI.SkyLord.Player")
+                        .WithMany()
+                        .ForeignKey("SenderPlayerId");
                 });
 
             modelBuilder.Entity("ITI.SkyLord.Player", b =>

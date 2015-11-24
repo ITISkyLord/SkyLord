@@ -30,13 +30,14 @@ namespace ITI.SkyLord.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Description = table.Column<string>(nullable: true),
                     InternalMessage = table.Column<string>(nullable: true),
-                    Name = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: false),
                     PublicMessage = table.Column<string>(nullable: true),
                     Recrutement = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Guild", x => x.GuildId);
+                    table.UniqueConstraint("UC_Guild_Name", y => y.Name);
                 });
             migrationBuilder.CreateTable(
                 name: "GuildRole",
@@ -49,6 +50,7 @@ namespace ITI.SkyLord.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_GuildRole", x => x.GuildRoleId);
+                    table.UniqueConstraint("UC_GuildRole_Name", y => y.Name);
                 });
             migrationBuilder.CreateTable(
                 name: "Map",
@@ -68,12 +70,13 @@ namespace ITI.SkyLord.Migrations
                     ProfilId = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Description = table.Column<string>(nullable: true),
-                    Mail = table.Column<string>(nullable: true),
-                    Password = table.Column<string>(nullable: true)
+                    Mail = table.Column<string>(nullable: false),
+                    Password = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Profil", x => x.ProfilId);
+                    table.UniqueConstraint("UC_Profil_Mail", y => y.Mail);
                 });
             migrationBuilder.CreateTable(
                 name: "Ressource",
@@ -89,6 +92,20 @@ namespace ITI.SkyLord.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Ressource", x => x.RessourceId);
+                });
+            migrationBuilder.CreateTable(
+                name: "Spell",
+                columns: table => new
+                {
+                    SpellId = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Description = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Spell", x => x.SpellId);
+                    table.UniqueConstraint("UC_Spell_Name", y => y.Name);
                 });
             migrationBuilder.CreateTable(
                 name: "UnitStatistics",
@@ -113,19 +130,19 @@ namespace ITI.SkyLord.Migrations
                 {
                     GuildMemberId = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    GuildGuildId = table.Column<long>(nullable: true),
-                    GuildRoleGuildRoleId = table.Column<long>(nullable: true)
+                    GuildGuildId = table.Column<long>(nullable: false),
+                    GuildRoleGuildRoleId = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_GuildMember", x => x.GuildMemberId);
                     table.ForeignKey(
-                        name: "FK_GuildMember_Guild_GuildGuildId",
+                        name: "FK_GuildMember_Guild",
                         column: x => x.GuildGuildId,
                         principalTable: "Guild",
                         principalColumn: "GuildId");
                     table.ForeignKey(
-                        name: "FK_GuildMember_GuildRole_GuildRoleGuildRoleId",
+                        name: "FK_GuildMember_GuildRole",
                         column: x => x.GuildRoleGuildRoleId,
                         principalTable: "GuildRole",
                         principalColumn: "GuildRoleId");
@@ -148,6 +165,24 @@ namespace ITI.SkyLord.Migrations
                         principalColumn: "MapId");
                 });
             migrationBuilder.CreateTable(
+                name: "ApprenticeLevel",
+                columns: table => new
+                {
+                    LevelId = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CostRessourceId = table.Column<long>(nullable: true),
+                    Number = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ApprenticeLevel", x => x.LevelId);
+                    table.ForeignKey(
+                        name: "FK_ApprenticeLevel_Ressource_CostRessourceId",
+                        column: x => x.CostRessourceId,
+                        principalTable: "Ressource",
+                        principalColumn: "RessourceId");
+                });
+            migrationBuilder.CreateTable(
                 name: "BuildingLevel",
                 columns: table => new
                 {
@@ -161,6 +196,42 @@ namespace ITI.SkyLord.Migrations
                     table.PrimaryKey("PK_BuildingLevel", x => x.LevelId);
                     table.ForeignKey(
                         name: "FK_BuildingLevel_Ressource_CostRessourceId",
+                        column: x => x.CostRessourceId,
+                        principalTable: "Ressource",
+                        principalColumn: "RessourceId");
+                });
+            migrationBuilder.CreateTable(
+                name: "Level",
+                columns: table => new
+                {
+                    LevelId = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CostRessourceId = table.Column<long>(nullable: true),
+                    Number = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Level", x => x.LevelId);
+                    table.ForeignKey(
+                        name: "FK_Level_Ressource_CostRessourceId",
+                        column: x => x.CostRessourceId,
+                        principalTable: "Ressource",
+                        principalColumn: "RessourceId");
+                });
+            migrationBuilder.CreateTable(
+                name: "MageLevel",
+                columns: table => new
+                {
+                    LevelId = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CostRessourceId = table.Column<long>(nullable: true),
+                    Number = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MageLevel", x => x.LevelId);
+                    table.ForeignKey(
+                        name: "FK_MageLevel_Ressource_CostRessourceId",
                         column: x => x.CostRessourceId,
                         principalTable: "Ressource",
                         principalColumn: "RessourceId");
@@ -240,6 +311,25 @@ namespace ITI.SkyLord.Migrations
                         principalColumn: "WorldId");
                 });
             migrationBuilder.CreateTable(
+                name: "CombatReport",
+                columns: table => new
+                {
+                    CombatreportId = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    ObjectReport = table.Column<string>(nullable: true),
+                    ReceiverPlayerId = table.Column<long>(nullable: true),
+                    Report = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CombatReport", x => x.CombatreportId);
+                    table.ForeignKey(
+                        name: "FK_CombatReport_Player_ReceiverPlayerId",
+                        column: x => x.ReceiverPlayerId,
+                        principalTable: "Player",
+                        principalColumn: "PlayerId");
+                });
+            migrationBuilder.CreateTable(
                 name: "Island",
                 columns: table => new
                 {
@@ -274,6 +364,31 @@ namespace ITI.SkyLord.Migrations
                     table.ForeignKey(
                         name: "FK_Island_Player_OwnerPlayerId",
                         column: x => x.OwnerPlayerId,
+                        principalTable: "Player",
+                        principalColumn: "PlayerId");
+                });
+            migrationBuilder.CreateTable(
+                name: "Message",
+                columns: table => new
+                {
+                    MessageId = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CoreMessage = table.Column<string>(nullable: true),
+                    MessageObject = table.Column<string>(nullable: true),
+                    ReceiverPlayerId = table.Column<long>(nullable: true),
+                    SenderPlayerId = table.Column<long>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Message", x => x.MessageId);
+                    table.ForeignKey(
+                        name: "FK_Message_Player_ReceiverPlayerId",
+                        column: x => x.ReceiverPlayerId,
+                        principalTable: "Player",
+                        principalColumn: "PlayerId");
+                    table.ForeignKey(
+                        name: "FK_Message_Player_SenderPlayerId",
+                        column: x => x.SenderPlayerId,
                         principalTable: "Player",
                         principalColumn: "PlayerId");
                 });
@@ -344,6 +459,30 @@ namespace ITI.SkyLord.Migrations
                         principalColumn: "LevelId");
                 });
             migrationBuilder.CreateTable(
+                name: "Mage",
+                columns: table => new
+                {
+                    MageId = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    IslandIslandId = table.Column<long>(nullable: true),
+                    MageLevelLevelId = table.Column<long>(nullable: true),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Mage", x => x.MageId);
+                    table.ForeignKey(
+                        name: "FK_Mage_Island_IslandIslandId",
+                        column: x => x.IslandIslandId,
+                        principalTable: "Island",
+                        principalColumn: "IslandId");
+                    table.ForeignKey(
+                        name: "FK_Mage_MageLevel_MageLevelLevelId",
+                        column: x => x.MageLevelLevelId,
+                        principalTable: "MageLevel",
+                        principalColumn: "LevelId");
+                });
+            migrationBuilder.CreateTable(
                 name: "Regiment",
                 columns: table => new
                 {
@@ -368,19 +507,50 @@ namespace ITI.SkyLord.Migrations
                         principalTable: "Unit",
                         principalColumn: "UnitId");
                 });
+            migrationBuilder.CreateTable(
+                name: "Apprentice",
+                columns: table => new
+                {
+                    ApprenticeId = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    LevelLevelId = table.Column<long>(nullable: true),
+                    MageMageId = table.Column<long>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Apprentice", x => x.ApprenticeId);
+                    table.ForeignKey(
+                        name: "FK_Apprentice_ApprenticeLevel_LevelLevelId",
+                        column: x => x.LevelLevelId,
+                        principalTable: "ApprenticeLevel",
+                        principalColumn: "LevelId");
+                    table.ForeignKey(
+                        name: "FK_Apprentice_Mage_MageMageId",
+                        column: x => x.MageMageId,
+                        principalTable: "Mage",
+                        principalColumn: "MageId");
+                });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable("Apprentice");
             migrationBuilder.DropTable("Building");
+            migrationBuilder.DropTable("CombatReport");
             migrationBuilder.DropTable("GuildMember");
+            migrationBuilder.DropTable("Level");
+            migrationBuilder.DropTable("Message");
             migrationBuilder.DropTable("Regiment");
+            migrationBuilder.DropTable("Spell");
             migrationBuilder.DropTable("Technology");
+            migrationBuilder.DropTable("ApprenticeLevel");
+            migrationBuilder.DropTable("Mage");
             migrationBuilder.DropTable("BuildingLevel");
             migrationBuilder.DropTable("GuildRole");
             migrationBuilder.DropTable("Army");
             migrationBuilder.DropTable("Unit");
             migrationBuilder.DropTable("TechnologyLevel");
+            migrationBuilder.DropTable("MageLevel");
             migrationBuilder.DropTable("Island");
             migrationBuilder.DropTable("UnitStatistics");
             migrationBuilder.DropTable("Ressource");

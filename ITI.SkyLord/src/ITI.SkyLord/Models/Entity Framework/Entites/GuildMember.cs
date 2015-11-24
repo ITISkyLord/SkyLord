@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ITI.SkyLord.Models.Entity_Framework.Entites
+namespace ITI.SkyLord
 {
     public class GuildMember
     {
