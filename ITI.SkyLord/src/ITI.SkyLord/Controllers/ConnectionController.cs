@@ -69,11 +69,11 @@ namespace ITI.SkyLord.Controllers
             return Convert.ToBase64String( protectedBytes );
         }
 
-        private string UnprotectPassword( string protectedPassword )
-        {
-            byte[] protectedBytes = Convert.FromBase64String(protectedPassword);
-            byte[] bytes = ProtectedData.Unprotect(protectedBytes, null, DataProtectionScope.CurrentUser);
-            return Encoding.UTF8.GetString( bytes );
-        }
+        //private string UnprotectPassword( string protectedPassword )
+        //{
+        //    byte[] protectedBytes = Convert.FromBase64String(protectedPassword);
+        //    byte[] bytes = ProtectedData.Unprotect(protectedBytes, null, DataProtectionScope.CurrentUser);
+        //    return Encoding.UTF8.GetString( bytes );
+        //}
     }
 }

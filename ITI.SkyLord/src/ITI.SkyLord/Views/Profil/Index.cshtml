@@ -1,0 +1,12 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    <h1>Bienvenue sur votre profil</h1>
+    <h3>@ViewData["name"]</h3>
+    <p>@ViewData["description"]</p>
+    <form action="changeDescription">
+        <label for="description" id="description">Description</label><input type="text" name="description" placeholder="@ViewData["description"]" />
+        <input type="submit" name="Changer description" />
+    </form>
+}

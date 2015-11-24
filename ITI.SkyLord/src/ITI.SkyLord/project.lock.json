@@ -1059,6 +1059,26 @@
           "lib/dnx451/Microsoft.AspNet.Server.Kestrel.dll": {}
         }
       },
+      "Microsoft.AspNet.Session/1.0.0-beta5": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Http.Extensions": "1.0.0-beta5",
+          "Microsoft.Framework.Caching.Memory": "1.0.0-beta5",
+          "Microsoft.Framework.Logging.Abstractions": "1.0.0-beta5"
+        },
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "lib/dnx451/Microsoft.AspNet.Session.dll": {}
+        },
+        "runtime": {
+          "lib/dnx451/Microsoft.AspNet.Session.dll": {}
+        }
+      },
       "Microsoft.AspNet.StaticFiles/1.0.0-beta8": {
         "type": "package",
         "dependencies": {
@@ -2832,6 +2852,21 @@
           "lib/dnxcore50/Microsoft.AspNet.Server.Kestrel.dll": {}
         }
       },
+      "Microsoft.AspNet.Session/1.0.0-beta5": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Http.Extensions": "1.0.0-beta5",
+          "Microsoft.Framework.Caching.Memory": "1.0.0-beta5",
+          "Microsoft.Framework.Logging.Abstractions": "1.0.0-beta5",
+          "System.Security.Cryptography.RandomNumberGenerator": "4.0.0-beta-23019"
+        },
+        "compile": {
+          "lib/dnxcore50/Microsoft.AspNet.Session.dll": {}
+        },
+        "runtime": {
+          "lib/dnxcore50/Microsoft.AspNet.Session.dll": {}
+        }
+      },
       "Microsoft.AspNet.StaticFiles/1.0.0-beta8": {
         "type": "package",
         "dependencies": {
@@ -4316,6 +4351,22 @@
           "ref/dotnet/System.Security.Cryptography.Encoding.dll": {}
         }
       },
+      "System.Security.Cryptography.Encryption/4.0.0-beta-23019": {
+        "type": "package",
+        "dependencies": {
+          "System.Globalization": "4.0.0-beta-23019",
+          "System.IO": "4.0.0-beta-23019",
+          "System.Resources.ResourceManager": "4.0.0-beta-23019",
+          "System.Runtime": "4.0.0-beta-23019",
+          "System.Threading.Tasks": "4.0.0-beta-23019"
+        },
+        "compile": {
+          "ref/dotnet/System.Security.Cryptography.Encryption.dll": {}
+        },
+        "runtime": {
+          "lib/DNXCore50/System.Security.Cryptography.Encryption.dll": {}
+        }
+      },
       "System.Security.Cryptography.Primitives/4.0.0-beta-23409": {
         "type": "package",
         "dependencies": {
@@ -4332,6 +4383,21 @@
         },
         "runtime": {
           "lib/dotnet/System.Security.Cryptography.Primitives.dll": {}
+        }
+      },
+      "System.Security.Cryptography.RandomNumberGenerator/4.0.0-beta-23019": {
+        "type": "package",
+        "dependencies": {
+          "System.Resources.ResourceManager": "4.0.0-beta-23019",
+          "System.Runtime": "4.0.0-beta-23019",
+          "System.Runtime.InteropServices": "4.0.0-beta-23019",
+          "System.Security.Cryptography.Encryption": "4.0.0-beta-23019"
+        },
+        "compile": {
+          "ref/dotnet/System.Security.Cryptography.RandomNumberGenerator.dll": {}
+        },
+        "runtime": {
+          "lib/DNXCore50/System.Security.Cryptography.RandomNumberGenerator.dll": {}
         }
       },
       "System.Security.Cryptography.X509Certificates/4.0.0-beta-23409": {
@@ -5631,6 +5697,26 @@
         },
         "native": {
           "runtimes/win7-x86/native/libuv.dll": {}
+        }
+      },
+      "Microsoft.AspNet.Session/1.0.0-beta5": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Http.Extensions": "1.0.0-beta5",
+          "Microsoft.Framework.Caching.Memory": "1.0.0-beta5",
+          "Microsoft.Framework.Logging.Abstractions": "1.0.0-beta5"
+        },
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "lib/dnx451/Microsoft.AspNet.Session.dll": {}
+        },
+        "runtime": {
+          "lib/dnx451/Microsoft.AspNet.Session.dll": {}
         }
       },
       "Microsoft.AspNet.StaticFiles/1.0.0-beta8": {
@@ -7572,6 +7658,26 @@
           "runtimes/win7-x64/native/libuv.dll": {}
         }
       },
+      "Microsoft.AspNet.Session/1.0.0-beta5": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Http.Extensions": "1.0.0-beta5",
+          "Microsoft.Framework.Caching.Memory": "1.0.0-beta5",
+          "Microsoft.Framework.Logging.Abstractions": "1.0.0-beta5"
+        },
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "lib/dnx451/Microsoft.AspNet.Session.dll": {}
+        },
+        "runtime": {
+          "lib/dnx451/Microsoft.AspNet.Session.dll": {}
+        }
+      },
       "Microsoft.AspNet.StaticFiles/1.0.0-beta8": {
         "type": "package",
         "dependencies": {
@@ -9346,6 +9452,21 @@
         },
         "native": {
           "runtimes/win7-x86/native/libuv.dll": {}
+        }
+      },
+      "Microsoft.AspNet.Session/1.0.0-beta5": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Http.Extensions": "1.0.0-beta5",
+          "Microsoft.Framework.Caching.Memory": "1.0.0-beta5",
+          "Microsoft.Framework.Logging.Abstractions": "1.0.0-beta5",
+          "System.Security.Cryptography.RandomNumberGenerator": "4.0.0-beta-23019"
+        },
+        "compile": {
+          "lib/dnxcore50/Microsoft.AspNet.Session.dll": {}
+        },
+        "runtime": {
+          "lib/dnxcore50/Microsoft.AspNet.Session.dll": {}
         }
       },
       "Microsoft.AspNet.StaticFiles/1.0.0-beta8": {
@@ -11194,6 +11315,22 @@
           "ref/dotnet/System.Security.Cryptography.Encoding.dll": {}
         }
       },
+      "System.Security.Cryptography.Encryption/4.0.0-beta-23019": {
+        "type": "package",
+        "dependencies": {
+          "System.Globalization": "4.0.0-beta-23019",
+          "System.IO": "4.0.0-beta-23019",
+          "System.Resources.ResourceManager": "4.0.0-beta-23019",
+          "System.Runtime": "4.0.0-beta-23019",
+          "System.Threading.Tasks": "4.0.0-beta-23019"
+        },
+        "compile": {
+          "ref/dotnet/System.Security.Cryptography.Encryption.dll": {}
+        },
+        "runtime": {
+          "lib/DNXCore50/System.Security.Cryptography.Encryption.dll": {}
+        }
+      },
       "System.Security.Cryptography.Primitives/4.0.0-beta-23409": {
         "type": "package",
         "dependencies": {
@@ -11210,6 +11347,21 @@
         },
         "runtime": {
           "lib/dotnet/System.Security.Cryptography.Primitives.dll": {}
+        }
+      },
+      "System.Security.Cryptography.RandomNumberGenerator/4.0.0-beta-23019": {
+        "type": "package",
+        "dependencies": {
+          "System.Resources.ResourceManager": "4.0.0-beta-23019",
+          "System.Runtime": "4.0.0-beta-23019",
+          "System.Runtime.InteropServices": "4.0.0-beta-23019",
+          "System.Security.Cryptography.Encryption": "4.0.0-beta-23019"
+        },
+        "compile": {
+          "ref/dotnet/System.Security.Cryptography.RandomNumberGenerator.dll": {}
+        },
+        "runtime": {
+          "lib/DNXCore50/System.Security.Cryptography.RandomNumberGenerator.dll": {}
         }
       },
       "System.Security.Cryptography.X509Certificates/4.0.0-beta-23409": {
@@ -12346,6 +12498,21 @@
         },
         "native": {
           "runtimes/win7-x64/native/libuv.dll": {}
+        }
+      },
+      "Microsoft.AspNet.Session/1.0.0-beta5": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Http.Extensions": "1.0.0-beta5",
+          "Microsoft.Framework.Caching.Memory": "1.0.0-beta5",
+          "Microsoft.Framework.Logging.Abstractions": "1.0.0-beta5",
+          "System.Security.Cryptography.RandomNumberGenerator": "4.0.0-beta-23019"
+        },
+        "compile": {
+          "lib/dnxcore50/Microsoft.AspNet.Session.dll": {}
+        },
+        "runtime": {
+          "lib/dnxcore50/Microsoft.AspNet.Session.dll": {}
         }
       },
       "Microsoft.AspNet.StaticFiles/1.0.0-beta8": {
@@ -14194,6 +14361,22 @@
           "ref/dotnet/System.Security.Cryptography.Encoding.dll": {}
         }
       },
+      "System.Security.Cryptography.Encryption/4.0.0-beta-23019": {
+        "type": "package",
+        "dependencies": {
+          "System.Globalization": "4.0.0-beta-23019",
+          "System.IO": "4.0.0-beta-23019",
+          "System.Resources.ResourceManager": "4.0.0-beta-23019",
+          "System.Runtime": "4.0.0-beta-23019",
+          "System.Threading.Tasks": "4.0.0-beta-23019"
+        },
+        "compile": {
+          "ref/dotnet/System.Security.Cryptography.Encryption.dll": {}
+        },
+        "runtime": {
+          "lib/DNXCore50/System.Security.Cryptography.Encryption.dll": {}
+        }
+      },
       "System.Security.Cryptography.Primitives/4.0.0-beta-23409": {
         "type": "package",
         "dependencies": {
@@ -14210,6 +14393,21 @@
         },
         "runtime": {
           "lib/dotnet/System.Security.Cryptography.Primitives.dll": {}
+        }
+      },
+      "System.Security.Cryptography.RandomNumberGenerator/4.0.0-beta-23019": {
+        "type": "package",
+        "dependencies": {
+          "System.Resources.ResourceManager": "4.0.0-beta-23019",
+          "System.Runtime": "4.0.0-beta-23019",
+          "System.Runtime.InteropServices": "4.0.0-beta-23019",
+          "System.Security.Cryptography.Encryption": "4.0.0-beta-23019"
+        },
+        "compile": {
+          "ref/dotnet/System.Security.Cryptography.RandomNumberGenerator.dll": {}
+        },
+        "runtime": {
+          "lib/DNXCore50/System.Security.Cryptography.RandomNumberGenerator.dll": {}
         }
       },
       "System.Security.Cryptography.X509Certificates/4.0.0-beta-23409": {
@@ -15213,6 +15411,20 @@
         "runtimes/win7-x64/native/libuv.dll",
         "runtimes/win7-x86/native/libuv.dll",
         "thirdpartynotices.txt"
+      ]
+    },
+    "Microsoft.AspNet.Session/1.0.0-beta5": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "azPSWSL7fTC1ZIOob5h2nsHfZJ1l2XJh7arpkdBBBXypBQFNq7EI8RhtJhfRAa1aKZIhYYQzGTk1w/9FMrEBIw==",
+      "files": [
+        "lib/dnx451/Microsoft.AspNet.Session.dll",
+        "lib/dnx451/Microsoft.AspNet.Session.xml",
+        "lib/dnxcore50/Microsoft.AspNet.Session.dll",
+        "lib/dnxcore50/Microsoft.AspNet.Session.xml",
+        "Microsoft.AspNet.Session.1.0.0-beta5.nupkg",
+        "Microsoft.AspNet.Session.1.0.0-beta5.nupkg.sha512",
+        "Microsoft.AspNet.Session.nuspec"
       ]
     },
     "Microsoft.AspNet.StaticFiles/1.0.0-beta8": {
@@ -18754,6 +18966,19 @@
         "System.Security.Cryptography.Encoding.nuspec"
       ]
     },
+    "System.Security.Cryptography.Encryption/4.0.0-beta-23019": {
+      "type": "package",
+      "sha512": "W95rPBfpgVShPysa/TcLKYQvKjFO0Uq6Obo2DYpKM2+N6SoEVHaBWTxxoImq7vJT/jSlDf0K+SREFBGSj6Gj5A==",
+      "files": [
+        "lib/DNXCore50/System.Security.Cryptography.Encryption.dll",
+        "lib/net46/System.Security.Cryptography.Encryption.dll",
+        "ref/dotnet/System.Security.Cryptography.Encryption.dll",
+        "ref/net46/System.Security.Cryptography.Encryption.dll",
+        "System.Security.Cryptography.Encryption.4.0.0-beta-23019.nupkg",
+        "System.Security.Cryptography.Encryption.4.0.0-beta-23019.nupkg.sha512",
+        "System.Security.Cryptography.Encryption.nuspec"
+      ]
+    },
     "System.Security.Cryptography.Primitives/4.0.0-beta-23409": {
       "type": "package",
       "serviceable": true,
@@ -18774,6 +18999,19 @@
         "System.Security.Cryptography.Primitives.4.0.0-beta-23409.nupkg",
         "System.Security.Cryptography.Primitives.4.0.0-beta-23409.nupkg.sha512",
         "System.Security.Cryptography.Primitives.nuspec"
+      ]
+    },
+    "System.Security.Cryptography.RandomNumberGenerator/4.0.0-beta-23019": {
+      "type": "package",
+      "sha512": "EG5695gHeA13DOkGSomxniAg/HqL+jab9Q+krNFYPsgeHk6wQhyEkjTfc2cjqcOZGpyV5k7XKNkhmx9E3vtvrA==",
+      "files": [
+        "lib/DNXCore50/System.Security.Cryptography.RandomNumberGenerator.dll",
+        "lib/net46/System.Security.Cryptography.RandomNumberGenerator.dll",
+        "ref/dotnet/System.Security.Cryptography.RandomNumberGenerator.dll",
+        "ref/net46/System.Security.Cryptography.RandomNumberGenerator.dll",
+        "System.Security.Cryptography.RandomNumberGenerator.4.0.0-beta-23019.nupkg",
+        "System.Security.Cryptography.RandomNumberGenerator.4.0.0-beta-23019.nupkg.sha512",
+        "System.Security.Cryptography.RandomNumberGenerator.nuspec"
       ]
     },
     "System.Security.Cryptography.X509Certificates/4.0.0-beta-23409": {
@@ -19381,7 +19619,8 @@
       "Microsoft.AspNet.Diagnostics.Entity >= 7.0.0-beta8",
       "Microsoft.Framework.Configuration.UserSecrets >= 1.0.0-beta8",
       "Microsoft.Dnx.Runtime.Abstractions >= 1.0.0-beta8",
-      "Microsoft.Framework.DependencyInjection.Abstractions >= 1.0.0-beta8"
+      "Microsoft.Framework.DependencyInjection.Abstractions >= 1.0.0-beta8",
+      "Microsoft.AspNet.Session >= 1.0.0-beta5"
     ],
     "DNX,Version=v4.5.1": [],
     "DNXCore,Version=v5.0": []
