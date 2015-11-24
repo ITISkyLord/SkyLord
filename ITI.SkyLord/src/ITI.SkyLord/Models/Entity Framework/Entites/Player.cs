@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -37,7 +38,17 @@ namespace ITI.SkyLord
             this.World = world;
             this.Islands = new List<Island>();
             this.Technologies = new List<Technology>();
-            this.Profil = new Profil(this, mail, password);
+            this.Profil = new Profil();
+        }
+
+        /// <summary>
+        /// Empty Constructor for EF
+        /// </summary>
+        public Player()
+        {
+            this.Profil = new Profil();
+            this.Islands = new List<Island>();
+            this.Technologies = new List<Technology>();
         }
         public Player()
         {
@@ -58,7 +69,7 @@ namespace ITI.SkyLord
                 _name = value;
             }
         }
-
+        
         public Profil Profil
         {
             get

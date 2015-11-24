@@ -23,7 +23,7 @@ namespace ITI.Skylord.ModelTest
         [Test]
         public void Create_new_profile()
         {
-            Profil profil = new Profil( _defaultPlayer, "toto@gmail.com", "password" );
+            Profil profil = new Profil( "toto@gmail.com", "password" );
             //Assert.IsNotNull( profil.Owner );
             Assert.IsNotNull( profil );
         }
@@ -31,26 +31,19 @@ namespace ITI.Skylord.ModelTest
         [Test]
         public void Create_profile_with_null_or_white_space_password_throws_ArgumentNullException()
         {
-            Assert.Throws<ArgumentNullException>( () => new Profil( _defaultPlayer, "toto@gmail.com", "" ) );
+            Assert.Throws<ArgumentNullException>( () => new Profil( "toto@gmail.com", "" ) );
         }
 
         [Test]
         public void Create_profile_with_invalid_mail_throws_ArgumentException()
         {
-            Assert.Throws<ArgumentException>( () => new Profil( _defaultPlayer, "toto", "password" ) );
-        }
-
-        [Test]
-        public void Create_profile_with_null_player_throws_ArgumentNullException()
-        {
-            Assert.Throws<ArgumentNullException>( () => new Profil( null, "toto@gmail.com", "" ) );
-
+            Assert.Throws<ArgumentException>( () => new Profil( "toto", "password" ) );
         }
 
         [Test]
         public void Edit_description_works()
         {
-            Profil profil = new Profil( _defaultPlayer, "toto@gmail.com", "password" );
+            Profil profil = new Profil( "toto@gmail.com", "password" );
             profil.Description = "Bonjour, je cherche une guilde.\n À bientôt.";
             Assert.That( profil.Description == "Bonjour, je cherche une guilde.\n À bientôt." );
 
