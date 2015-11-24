@@ -39,7 +39,10 @@ namespace ITI.SkyLord
             this.Technologies = new List<Technology>();
             this.Profil = new Profil(this, mail, password);
         }
+        public Player()
+        {
 
+        }
         [Key]
         public long PlayerId { get; set; }
 

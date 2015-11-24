@@ -22,6 +22,7 @@ namespace ITI.SkyLord.Tests.EfTests
                 context.Players.Add(testPlayer);
                 context.Players.Add(testPlayer2);
                 context.SaveChanges();
+
             }
             Console.WriteLine("Player saved");
         }
@@ -29,9 +30,9 @@ namespace ITI.SkyLord.Tests.EfTests
         [Test]
         public void DisplayPlayers()
         {
-            using (PlayerContext context = new PlayerContext())
+            using( PlayerContext context = new PlayerContext())
             {
-                foreach (Player p in context.Players.Include( p => p.Profil))
+                foreach( Player p in context.Players)
                 {
                     Console.WriteLine("Name: {0}", p.Name);
                 }
