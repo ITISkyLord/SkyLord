@@ -53,6 +53,7 @@ namespace ITI.SkyLord
         [Key]
         public long PlayerId { get; set; }
 
+        [StringLength( 20, MinimumLength = 3 ) ]
         public string Name
         {
             get

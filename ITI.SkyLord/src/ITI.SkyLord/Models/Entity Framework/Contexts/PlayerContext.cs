@@ -62,5 +62,23 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
             }
         }
 
+        /// <summary>
+        /// Check if a player with the same name, mail and password can be found in the database
+        /// </summary>
+        /// <param name="player">The player to check</param>
+        /// <returns>True if the player is found, false if it is not</returns>
+        public bool IsPlayerValid( string name, string password )
+        {
+            bool valid = false;
+            Player playerFound;
+            using ( this )
+            {
+                valid = this.Players.Any( p => p.Name == name
+                && p.Profil.Password == password );
+            }
+
+            return valid;
+        }
+
     }
 }
