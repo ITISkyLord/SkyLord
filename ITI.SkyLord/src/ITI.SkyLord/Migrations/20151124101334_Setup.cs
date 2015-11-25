@@ -37,7 +37,7 @@ namespace ITI.SkyLord.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Guild", x => x.GuildId);
-                    table.UniqueConstraint("UC_Guild_Name", y => y.Name);
+                    //table.UniqueConstraint("UC_Guild_Name", y => y.Name);
                 });
             migrationBuilder.CreateTable(
                 name: "GuildRole",
@@ -50,7 +50,7 @@ namespace ITI.SkyLord.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_GuildRole", x => x.GuildRoleId);
-                    table.UniqueConstraint("UC_GuildRole_Name", y => y.Name);
+                    //table.UniqueConstraint("UC_GuildRole_Name", y => y.Name);
                 });
             migrationBuilder.CreateTable(
                 name: "Map",
@@ -76,7 +76,7 @@ namespace ITI.SkyLord.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Profil", x => x.ProfilId);
-                    table.UniqueConstraint("UC_Profil_Mail", y => y.Mail);
+                    //table.UniqueConstraint("UC_Profil_Mail", y => y.Mail);
                 });
             migrationBuilder.CreateTable(
                 name: "Ressource",
@@ -105,7 +105,7 @@ namespace ITI.SkyLord.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Spell", x => x.SpellId);
-                    table.UniqueConstraint("UC_Spell_Name", y => y.Name);
+                    //table.UniqueConstraint("UC_Spell_Name", y => y.Name);
                 });
             migrationBuilder.CreateTable(
                 name: "UnitStatistics",
@@ -289,7 +289,7 @@ namespace ITI.SkyLord.Migrations
                     GuildGuildId = table.Column<long>(nullable: true),
                     Name = table.Column<string>(nullable: false),
                     ProfilProfilId = table.Column<long>(nullable: true),
-                    WorldWorldId = table.Column<long>(nullable: false)
+                    WorldWorldId = table.Column<long>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -382,12 +382,12 @@ namespace ITI.SkyLord.Migrations
                 {
                     table.PrimaryKey("PK_Message", x => x.MessageId);
                     table.ForeignKey(
-                        name: "FK_Message_Player",
+                        name: "FK_Message_Player_Receiver",
                         column: x => x.ReceiverPlayerId,
                         principalTable: "Player",
                         principalColumn: "PlayerId");
                     table.ForeignKey(
-                        name: "FK_Message_Player",
+                        name: "FK_Message_Player_Sender",
                         column: x => x.SenderPlayerId,
                         principalTable: "Player",
                         principalColumn: "PlayerId");

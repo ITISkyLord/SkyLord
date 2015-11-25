@@ -25,19 +25,14 @@ namespace ITI.Skylord.ModelTest
         [Test]
         public void Create_new_player()
         {
-            Player _player = new Player( _world, "Thanur" );
-            Assert.IsNotNull( _player );
+            Player _player = new Player(_world, "Thanur");
+            Assert.IsNotNull(_player);
         }
 
         [Test]
         public void Create_new_player_with_name_more_than_50characters_throws_outOfRangeException()
         {
             Assert.Throws<ArgumentOutOfRangeException>( () => new Player( _world, "VariableNameQuiEstLePrénomAvecPlusDeCinquanteCaractèresDeLongueur" ));
-        }
-        [Test]
-        public void Create_new_player_with_password_more_than_50characters_throws_outOfRangeException()
-        {
-            Assert.Throws<ArgumentOutOfRangeException>( () => new Player( _world, "VariableNameQuiEstLePrénom", "toto@gmail.com", "VariablePasswordQuiEstLeMotDePasseAvecPlusDeSoizanteQuinzeCaractèresDeLongueur" ) );
         }
         [Test]
         public void Create_new_player_with_invalid_email_throws_ArgumentException()
@@ -57,9 +52,9 @@ namespace ITI.Skylord.ModelTest
         [Test]
         public void Add_an_island_on_a_player_works()
         {
-            Player _player = new Player( _world,"Thanur" );
-            _player.Islands.Add( _defaultIsland );
-            Assert.That( _player.Islands.Contains( _defaultIsland ) );
+            Player _player = new Player(_world, "Thanur");
+            _player.Islands.Add(_defaultIsland);
+            Assert.That(_player.Islands.Contains(_defaultIsland));
         }
 
     }

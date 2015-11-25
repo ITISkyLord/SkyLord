@@ -50,6 +50,7 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
             {
                 context.Add( p );
                 context.Add( p.Profil );
+                context.Add(GetWorld());
                 context.SaveChanges();
             }
         }
