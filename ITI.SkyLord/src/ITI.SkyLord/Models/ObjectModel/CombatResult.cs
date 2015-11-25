@@ -66,16 +66,16 @@ namespace ITI.SkyLord
         {
             int eachCapacityPillaged = 0;
             Ressource ressources;
-            Console.WriteLine( "Avant : _loosingArmy wood : " + _loosingArmy.Island.AllRessources.Wood );
-            Console.WriteLine( "Avant : _loosingArmy metal : " + _loosingArmy.Island.AllRessources.Metal );
-            Console.WriteLine( "Avant : _loosingArmy cristal : " + _loosingArmy.Island.AllRessources.Cristal );
-            Console.WriteLine( "Avant : _loosingArmy magic : " + _loosingArmy.Island.AllRessources.Magic );
-            Console.WriteLine();
-            Console.WriteLine( "Avant : _winningArmy wood : " + _winningArmy.Island.AllRessources.Wood );
-            Console.WriteLine( "Avant : _winningArmy metal : " + _winningArmy.Island.AllRessources.Metal );
-            Console.WriteLine( "Avant : _winningArmy cristal : " + _winningArmy.Island.AllRessources.Cristal );
-            Console.WriteLine( "Avant : _winningArmy magic : " + _winningArmy.Island.AllRessources.Magic );
-            Console.WriteLine();
+            //Console.WriteLine( "Avant : _loosingArmy wood : " + _loosingArmy.Island.AllRessources.Wood );
+            //Console.WriteLine( "Avant : _loosingArmy metal : " + _loosingArmy.Island.AllRessources.Metal );
+            //Console.WriteLine( "Avant : _loosingArmy cristal : " + _loosingArmy.Island.AllRessources.Cristal );
+            //Console.WriteLine( "Avant : _loosingArmy magic : " + _loosingArmy.Island.AllRessources.Magic );
+            //Console.WriteLine();
+            //Console.WriteLine( "Avant : _winningArmy wood : " + _winningArmy.Island.AllRessources.Wood );
+            //Console.WriteLine( "Avant : _winningArmy metal : " + _winningArmy.Island.AllRessources.Metal );
+            //Console.WriteLine( "Avant : _winningArmy cristal : " + _winningArmy.Island.AllRessources.Cristal );
+            //Console.WriteLine( "Avant : _winningArmy magic : " + _winningArmy.Island.AllRessources.Magic );
+            //Console.WriteLine();
 
 
             foreach( Regiment r in _winningArmy.Regiments )
@@ -117,16 +117,16 @@ namespace ITI.SkyLord
                 }
             }
 
-            Console.WriteLine( "Après : _loosingArmy wood : " + _loosingArmy.Island.AllRessources.Wood );
-            Console.WriteLine( "Après : _loosingArmy metal : " + _loosingArmy.Island.AllRessources.Metal );
-            Console.WriteLine( "Après : _loosingArmy cristal : " + _loosingArmy.Island.AllRessources.Cristal );
-            Console.WriteLine( "Après : _loosingArmy magic : " + _loosingArmy.Island.AllRessources.Magic );
-            Console.WriteLine();
-            Console.WriteLine( "Après : _winningArmy wood : " + _winningArmy.Island.AllRessources.Wood );
-            Console.WriteLine( "Après : _winningArmy metal : " + _winningArmy.Island.AllRessources.Metal );
-            Console.WriteLine( "Après : _winningArmy cristal : " + _winningArmy.Island.AllRessources.Cristal );
-            Console.WriteLine( "Après : _winningArmy magic : " + _winningArmy.Island.AllRessources.Magic );
-            Console.WriteLine();
+            //Console.WriteLine( "Après : _loosingArmy wood : " + _loosingArmy.Island.AllRessources.Wood );
+            //Console.WriteLine( "Après : _loosingArmy metal : " + _loosingArmy.Island.AllRessources.Metal );
+            //Console.WriteLine( "Après : _loosingArmy cristal : " + _loosingArmy.Island.AllRessources.Cristal );
+            //Console.WriteLine( "Après : _loosingArmy magic : " + _loosingArmy.Island.AllRessources.Magic );
+            //Console.WriteLine();
+            //Console.WriteLine( "Après : _winningArmy wood : " + _winningArmy.Island.AllRessources.Wood );
+            //Console.WriteLine( "Après : _winningArmy metal : " + _winningArmy.Island.AllRessources.Metal );
+            //Console.WriteLine( "Après : _winningArmy cristal : " + _winningArmy.Island.AllRessources.Cristal );
+            //Console.WriteLine( "Après : _winningArmy magic : " + _winningArmy.Island.AllRessources.Magic );
+            //Console.WriteLine();
 
             return ressources;
 

@@ -23,7 +23,7 @@ namespace ITI.SkyLord.TestAvecEntity
         public Startup(IHostingEnvironment env, IApplicationEnvironment appEnv)
         {
             // Setup configuration sources.
-
+            
             var builder = new ConfigurationBuilder()
                 .SetBasePath(appEnv.ApplicationBasePath)
                 .AddJsonFile("appsettings.json")
@@ -88,6 +88,12 @@ namespace ITI.SkyLord.TestAvecEntity
                 // sends the request to the following path or controller action.
                 app.UseExceptionHandler("/Home/Error");
             }
+
+            app.UseInMemorySession();
+
+            // If you want sessions to expire 30 minutes after the last activity, you would do so like this:
+          //  app.UseInMemorySession( configure: s => s.IdleTimeout = TimeSpan.FromMinutes( 30 ) );
+
 
             // Add static files to the request pipeline.
             app.UseStaticFiles();

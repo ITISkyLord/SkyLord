@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -32,18 +33,27 @@ namespace ITI.SkyLord
             if (world == null) throw new ArgumentNullException("world is null.");
             if (!IsValidEmailStatic.IsValidEmail(mail)) throw new ArgumentException("Invalid mail");
             if (name.Length > 50) throw new ArgumentOutOfRangeException(" Maximum lenght of name is 50. Your name lenght is " + name.Length + " at the moment.");
-            if (password.Length > 75) throw new ArgumentOutOfRangeException(" Maximum lenght of password is 75. Your name lenght is " + password.Length + " at the moment.");
+            if (password.Length > 1000) throw new ArgumentOutOfRangeException(" Maximum lenght of password is 1000. Your password lenght is " + password.Length + " at the moment.");
             this.Name = name;
             this.World = world;
             this.Islands = new List<Island>();
             this.Technologies = new List<Technology>();
-            this.Profil = new Profil(this, mail, password);
+            this.Profil = new Profil( mail, password );
         }
 
-
+        /// <summary>
+        /// Empty Constructor for EF
+        /// </summary>
+        public Player()
+        {
+            this.Profil = new Profil();
+            this.Islands = new List<Island>();
+            this.Technologies = new List<Technology>();
+        }
         [Key]
         public long PlayerId { get; set; }
 
+        [StringLength( 20, MinimumLength = 3 ) ]
         public string Name
         {
             get
@@ -56,7 +66,7 @@ namespace ITI.SkyLord
                 _name = value;
             }
         }
-
+        
         public Profil Profil
         {
             get

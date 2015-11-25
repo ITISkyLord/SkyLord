@@ -18,7 +18,7 @@ namespace ITI.SkyLord
         public World()
         {
             Players = new List<Player>();
-            Map = new Map(this);
+            Map = new Map();
         }
 
         #region Properties
