@@ -40,6 +40,7 @@ namespace ITI.SkyLord
             this.Profil = new Profil(this, mail, password);
         }
 
+
         [Key]
         public long PlayerId { get; set; }
 

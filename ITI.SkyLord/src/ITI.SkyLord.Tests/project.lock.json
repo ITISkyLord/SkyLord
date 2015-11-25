@@ -3740,6 +3740,37 @@
           "ref/dotnet/System.Diagnostics.Debug.dll": {}
         }
       },
+      "System.Diagnostics.Process/4.0.0-beta-23225": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Win32.Primitives": "4.0.0",
+          "Microsoft.Win32.Registry": "4.0.0-beta-23225",
+          "System.Collections": "4.0.10",
+          "System.Diagnostics.Debug": "4.0.10",
+          "System.Globalization": "4.0.10",
+          "System.IO": "4.0.10",
+          "System.IO.FileSystem": "4.0.0",
+          "System.IO.FileSystem.Primitives": "4.0.0",
+          "System.Resources.ResourceManager": "4.0.0",
+          "System.Runtime": "4.0.20",
+          "System.Runtime.Extensions": "4.0.10",
+          "System.Runtime.Handles": "4.0.0",
+          "System.Runtime.InteropServices": "4.0.20",
+          "System.Security.SecureString": "4.0.0-beta-23225",
+          "System.Text.Encoding": "4.0.10",
+          "System.Text.Encoding.Extensions": "4.0.10",
+          "System.Threading": "4.0.10",
+          "System.Threading.Tasks": "4.0.10",
+          "System.Threading.Thread": "4.0.0-beta-23225",
+          "System.Threading.ThreadPool": "4.0.10-beta-23225"
+        },
+        "compile": {
+          "ref/dotnet/System.Diagnostics.Process.dll": {}
+        },
+        "runtime": {
+          "lib/DNXCore50/System.Diagnostics.Process.dll": {}
+        }
+      },
       "System.Diagnostics.StackTrace/4.0.1-beta-23409": {
         "type": "package",
         "dependencies": {
@@ -4364,6 +4395,23 @@
         },
         "runtime": {
           "lib/DNXCore50/System.Security.Principal.Windows.dll": {}
+        }
+      },
+      "System.Security.SecureString/4.0.0-beta-23225": {
+        "type": "package",
+        "dependencies": {
+          "System.Resources.ResourceManager": "4.0.0",
+          "System.Runtime": "4.0.20",
+          "System.Runtime.Handles": "4.0.0",
+          "System.Runtime.InteropServices": "4.0.20",
+          "System.Security.Cryptography.Primitives": "4.0.0-beta-23225",
+          "System.Threading": "4.0.10"
+        },
+        "compile": {
+          "ref/dotnet/System.Security.SecureString.dll": {}
+        },
+        "runtime": {
+          "lib/DNXCore50/System.Security.SecureString.dll": {}
         }
       },
       "System.Text.Encoding/4.0.11-beta-23409": {
@@ -10469,6 +10517,37 @@
           "ref/dotnet/System.Diagnostics.Debug.dll": {}
         }
       },
+      "System.Diagnostics.Process/4.0.0-beta-23225": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Win32.Primitives": "4.0.0",
+          "Microsoft.Win32.Registry": "4.0.0-beta-23225",
+          "System.Collections": "4.0.10",
+          "System.Diagnostics.Debug": "4.0.10",
+          "System.Globalization": "4.0.10",
+          "System.IO": "4.0.10",
+          "System.IO.FileSystem": "4.0.0",
+          "System.IO.FileSystem.Primitives": "4.0.0",
+          "System.Resources.ResourceManager": "4.0.0",
+          "System.Runtime": "4.0.20",
+          "System.Runtime.Extensions": "4.0.10",
+          "System.Runtime.Handles": "4.0.0",
+          "System.Runtime.InteropServices": "4.0.20",
+          "System.Security.SecureString": "4.0.0-beta-23225",
+          "System.Text.Encoding": "4.0.10",
+          "System.Text.Encoding.Extensions": "4.0.10",
+          "System.Threading": "4.0.10",
+          "System.Threading.Tasks": "4.0.10",
+          "System.Threading.Thread": "4.0.0-beta-23225",
+          "System.Threading.ThreadPool": "4.0.10-beta-23225"
+        },
+        "compile": {
+          "ref/dotnet/System.Diagnostics.Process.dll": {}
+        },
+        "runtime": {
+          "lib/DNXCore50/System.Diagnostics.Process.dll": {}
+        }
+      },
       "System.Diagnostics.StackTrace/4.0.1-beta-23409": {
         "type": "package",
         "dependencies": {
@@ -11179,6 +11258,23 @@
         },
         "runtime": {
           "lib/DNXCore50/System.Security.Principal.Windows.dll": {}
+        }
+      },
+      "System.Security.SecureString/4.0.0-beta-23225": {
+        "type": "package",
+        "dependencies": {
+          "System.Resources.ResourceManager": "4.0.0",
+          "System.Runtime": "4.0.20",
+          "System.Runtime.Handles": "4.0.0",
+          "System.Runtime.InteropServices": "4.0.20",
+          "System.Security.Cryptography.Primitives": "4.0.0-beta-23225",
+          "System.Threading": "4.0.10"
+        },
+        "compile": {
+          "ref/dotnet/System.Security.SecureString.dll": {}
+        },
+        "runtime": {
+          "lib/DNXCore50/System.Security.SecureString.dll": {}
         }
       },
       "System.Text.Encoding/4.0.11-beta-23409": {
@@ -13502,6 +13598,37 @@
           "ref/dotnet/System.Diagnostics.Debug.dll": {}
         }
       },
+      "System.Diagnostics.Process/4.0.0-beta-23225": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Win32.Primitives": "4.0.0",
+          "Microsoft.Win32.Registry": "4.0.0-beta-23225",
+          "System.Collections": "4.0.10",
+          "System.Diagnostics.Debug": "4.0.10",
+          "System.Globalization": "4.0.10",
+          "System.IO": "4.0.10",
+          "System.IO.FileSystem": "4.0.0",
+          "System.IO.FileSystem.Primitives": "4.0.0",
+          "System.Resources.ResourceManager": "4.0.0",
+          "System.Runtime": "4.0.20",
+          "System.Runtime.Extensions": "4.0.10",
+          "System.Runtime.Handles": "4.0.0",
+          "System.Runtime.InteropServices": "4.0.20",
+          "System.Security.SecureString": "4.0.0-beta-23225",
+          "System.Text.Encoding": "4.0.10",
+          "System.Text.Encoding.Extensions": "4.0.10",
+          "System.Threading": "4.0.10",
+          "System.Threading.Tasks": "4.0.10",
+          "System.Threading.Thread": "4.0.0-beta-23225",
+          "System.Threading.ThreadPool": "4.0.10-beta-23225"
+        },
+        "compile": {
+          "ref/dotnet/System.Diagnostics.Process.dll": {}
+        },
+        "runtime": {
+          "lib/DNXCore50/System.Diagnostics.Process.dll": {}
+        }
+      },
       "System.Diagnostics.StackTrace/4.0.1-beta-23409": {
         "type": "package",
         "dependencies": {
@@ -14212,6 +14339,23 @@
         },
         "runtime": {
           "lib/DNXCore50/System.Security.Principal.Windows.dll": {}
+        }
+      },
+      "System.Security.SecureString/4.0.0-beta-23225": {
+        "type": "package",
+        "dependencies": {
+          "System.Resources.ResourceManager": "4.0.0",
+          "System.Runtime": "4.0.20",
+          "System.Runtime.Handles": "4.0.0",
+          "System.Runtime.InteropServices": "4.0.20",
+          "System.Security.Cryptography.Primitives": "4.0.0-beta-23225",
+          "System.Threading": "4.0.10"
+        },
+        "compile": {
+          "ref/dotnet/System.Security.SecureString.dll": {}
+        },
+        "runtime": {
+          "lib/DNXCore50/System.Security.SecureString.dll": {}
         }
       },
       "System.Text.Encoding/4.0.11-beta-23409": {
@@ -16821,6 +16965,28 @@
         "System.Diagnostics.Debug.nuspec"
       ]
     },
+    "System.Diagnostics.Process/4.0.0-beta-23225": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "Pt6QAiXPNKIobDWHcNqX/wz6+YaTqqxw7f245sX1lz4rZxCmGwlUI0yhV/fXXvT7iPJRDLXSEXTnS3F8GsxK9g==",
+      "files": [
+        "lib/DNXCore50/System.Diagnostics.Process.dll",
+        "lib/MonoAndroid10/_._",
+        "lib/MonoTouch10/_._",
+        "lib/net46/System.Diagnostics.Process.dll",
+        "lib/xamarinios10/_._",
+        "lib/xamarinmac20/_._",
+        "ref/dotnet/System.Diagnostics.Process.dll",
+        "ref/MonoAndroid10/_._",
+        "ref/MonoTouch10/_._",
+        "ref/net46/System.Diagnostics.Process.dll",
+        "ref/xamarinios10/_._",
+        "ref/xamarinmac20/_._",
+        "System.Diagnostics.Process.4.0.0-beta-23225.nupkg",
+        "System.Diagnostics.Process.4.0.0-beta-23225.nupkg.sha512",
+        "System.Diagnostics.Process.nuspec"
+      ]
+    },
     "System.Diagnostics.StackTrace/4.0.1-beta-23409": {
       "type": "package",
       "serviceable": true,
@@ -17671,7 +17837,7 @@
     "System.Reflection/4.1.0-beta-23225": {
       "type": "package",
       "serviceable": true,
-      "sha512": "nlguo6AocBKGccv4CFSMCOR2/vU+93u/yvzFKO6ViNJ/SBz2VEZ1nOeW93vqKKpOMJkt3YtTvMWmS+kUGz/1bA==",
+      "sha512": "WbLtaCxoe5XdqEyZuGpemSQ8YBJ8cj11zx+yxOxJfHbNrmu7oMQ29+J50swaqg3soUc3BVBMqfIhb/7gocDHQA==",
       "files": [
         "lib/DNXCore50/System.Reflection.dll",
         "lib/MonoAndroid10/_._",
@@ -18583,6 +18749,28 @@
         "System.Security.Principal.Windows.nuspec"
       ]
     },
+    "System.Security.SecureString/4.0.0-beta-23225": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "fWZiVly2v05MLJFbtJBwThJmSQAh1slsEUqVxjy/K58RWHN8ar8BNz/1h318eHNd5vcTA7155awMNNMzY/Cbag==",
+      "files": [
+        "lib/DNXCore50/System.Security.SecureString.dll",
+        "lib/MonoAndroid10/_._",
+        "lib/MonoTouch10/_._",
+        "lib/net46/System.Security.SecureString.dll",
+        "lib/xamarinios10/_._",
+        "lib/xamarinmac20/_._",
+        "ref/dotnet/System.Security.SecureString.dll",
+        "ref/MonoAndroid10/_._",
+        "ref/MonoTouch10/_._",
+        "ref/net46/System.Security.SecureString.dll",
+        "ref/xamarinios10/_._",
+        "ref/xamarinmac20/_._",
+        "System.Security.SecureString.4.0.0-beta-23225.nupkg",
+        "System.Security.SecureString.4.0.0-beta-23225.nupkg.sha512",
+        "System.Security.SecureString.nuspec"
+      ]
+    },
     "System.Text.Encoding/4.0.11-beta-23409": {
       "type": "package",
       "serviceable": true,
@@ -18999,6 +19187,8 @@
       "NUnitLite >= 3.0.0"
     ],
     "DNX,Version=v4.5.1": [],
-    "DNXCore,Version=v5.0": []
+    "DNXCore,Version=v5.0": [
+      "System.Diagnostics.Process >= 4.0.0-beta-23225"
+    ]
   }
 }
