@@ -8,14 +8,14 @@ using ITI.SkyLord.Models.Entity_Framework.Contexts;
 namespace ITI.SkyLord.Migrations
 {
     [DbContext(typeof(SetupContext))]
-    [Migration("20151123101147_Setup")]
+    [Migration("20151127112006_Setup")]
     partial class Setup
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .Annotation("ProductVersion", "7.0.0-beta8-15964")
-                .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "7.0.0-rc1-16348")
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("ITI.SkyLord.Army", b =>
                 {
@@ -92,6 +92,8 @@ namespace ITI.SkyLord.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<int>("Rights");
+
                     b.HasKey("GuildRoleId");
                 });
 
@@ -144,7 +146,8 @@ namespace ITI.SkyLord.Migrations
 
                     b.Property<long?>("GuildGuildId");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .HasAnnotation("MaxLength", 20);
 
                     b.Property<long?>("ProfilProfilId");
 
@@ -162,7 +165,8 @@ namespace ITI.SkyLord.Migrations
 
                     b.Property<string>("Mail");
 
-                    b.Property<string>("Password");
+                    b.Property<string>("Password")
+                        .HasAnnotation("MaxLength", 60);
 
                     b.HasKey("ProfilId");
                 });
@@ -230,6 +234,8 @@ namespace ITI.SkyLord.Migrations
                     b.Property<int>("UnitId")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("Name");
+
                     b.Property<long?>("UnitCostRessourceId");
 
                     b.Property<int>("UnitDamageType");
@@ -277,117 +283,117 @@ namespace ITI.SkyLord.Migrations
                 {
                     b.HasOne("ITI.SkyLord.Island")
                         .WithMany()
-                        .ForeignKey("IslandIslandId");
+                        .HasForeignKey("IslandIslandId");
                 });
 
             modelBuilder.Entity("ITI.SkyLord.Building", b =>
                 {
                     b.HasOne("ITI.SkyLord.Island")
                         .WithMany()
-                        .ForeignKey("IslandIslandId");
+                        .HasForeignKey("IslandIslandId");
 
                     b.HasOne("ITI.SkyLord.BuildingLevel")
                         .WithMany()
-                        .ForeignKey("LevelLevelId");
+                        .HasForeignKey("LevelLevelId");
                 });
 
             modelBuilder.Entity("ITI.SkyLord.BuildingLevel", b =>
                 {
                     b.HasOne("ITI.SkyLord.Ressource")
                         .WithMany()
-                        .ForeignKey("CostRessourceId");
+                        .HasForeignKey("CostRessourceId");
                 });
 
             modelBuilder.Entity("ITI.SkyLord.Island", b =>
                 {
                     b.HasOne("ITI.SkyLord.Ressource")
                         .WithMany()
-                        .ForeignKey("AllRessourcesRessourceId");
+                        .HasForeignKey("AllRessourcesRessourceId");
 
                     b.HasOne("ITI.SkyLord.Coordinate")
                         .WithMany()
-                        .ForeignKey("CoordinatesCoordinateId");
+                        .HasForeignKey("CoordinatesCoordinateId");
 
                     b.HasOne("ITI.SkyLord.Map")
                         .WithMany()
-                        .ForeignKey("MapMapId");
+                        .HasForeignKey("MapMapId");
 
                     b.HasOne("ITI.SkyLord.Player")
                         .WithMany()
-                        .ForeignKey("OwnerPlayerId");
+                        .HasForeignKey("OwnerPlayerId");
                 });
 
             modelBuilder.Entity("ITI.SkyLord.Models.Entity_Framework.Entites.GuildMember", b =>
                 {
                     b.HasOne("ITI.SkyLord.Guild")
                         .WithMany()
-                        .ForeignKey("GuildGuildId");
+                        .HasForeignKey("GuildGuildId");
 
                     b.HasOne("ITI.SkyLord.GuildRole")
                         .WithMany()
-                        .ForeignKey("GuildRoleGuildRoleId");
+                        .HasForeignKey("GuildRoleGuildRoleId");
                 });
 
             modelBuilder.Entity("ITI.SkyLord.Player", b =>
                 {
                     b.HasOne("ITI.SkyLord.Guild")
                         .WithMany()
-                        .ForeignKey("GuildGuildId");
+                        .HasForeignKey("GuildGuildId");
 
                     b.HasOne("ITI.SkyLord.Profil")
                         .WithMany()
-                        .ForeignKey("ProfilProfilId");
+                        .HasForeignKey("ProfilProfilId");
 
                     b.HasOne("ITI.SkyLord.World")
                         .WithMany()
-                        .ForeignKey("WorldWorldId");
+                        .HasForeignKey("WorldWorldId");
                 });
 
             modelBuilder.Entity("ITI.SkyLord.Regiment", b =>
                 {
                     b.HasOne("ITI.SkyLord.Army")
                         .WithMany()
-                        .ForeignKey("ArmyArmyId");
+                        .HasForeignKey("ArmyArmyId");
 
                     b.HasOne("ITI.SkyLord.Unit")
                         .WithMany()
-                        .ForeignKey("UnitUnitId");
+                        .HasForeignKey("UnitUnitId");
                 });
 
             modelBuilder.Entity("ITI.SkyLord.Technology", b =>
                 {
                     b.HasOne("ITI.SkyLord.TechnologyLevel")
                         .WithMany()
-                        .ForeignKey("LevelLevelId");
+                        .HasForeignKey("LevelLevelId");
 
                     b.HasOne("ITI.SkyLord.Player")
                         .WithMany()
-                        .ForeignKey("PlayerPlayerId");
+                        .HasForeignKey("PlayerPlayerId");
                 });
 
             modelBuilder.Entity("ITI.SkyLord.TechnologyLevel", b =>
                 {
                     b.HasOne("ITI.SkyLord.Ressource")
                         .WithMany()
-                        .ForeignKey("CostRessourceId");
+                        .HasForeignKey("CostRessourceId");
                 });
 
             modelBuilder.Entity("ITI.SkyLord.Unit", b =>
                 {
                     b.HasOne("ITI.SkyLord.Ressource")
                         .WithMany()
-                        .ForeignKey("UnitCostRessourceId");
+                        .HasForeignKey("UnitCostRessourceId");
 
                     b.HasOne("ITI.SkyLord.UnitStatistics")
                         .WithMany()
-                        .ForeignKey("UnitStatisticsUnitStatisticsId");
+                        .HasForeignKey("UnitStatisticsUnitStatisticsId");
                 });
 
             modelBuilder.Entity("ITI.SkyLord.World", b =>
                 {
                     b.HasOne("ITI.SkyLord.Map")
                         .WithMany()
-                        .ForeignKey("MapMapId");
+                        .HasForeignKey("MapMapId");
                 });
         }
     }
