@@ -13,14 +13,14 @@
 //        public ConnectionTest()
 //        {
 //            _world = new World();
-          
+
 //        }
 
 //        [Test]
 //        public void Create_a_new_player_and_save_it()
 //        {
-            
-//            Player p = new Player(_world, "Thanur", "toto@intechinfo.fr", "toto");
+
+//            Player p = new Player(_world, "Marvin", "cdk@tft.fr", "thought");
 //            _world.Players.Add(p);
 //            PlayerContext pc = new PlayerContext();
 //            pc.AddPlayer(p);

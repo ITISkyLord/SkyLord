@@ -10,29 +10,30 @@ namespace ITI.SkyLord.Tests
     [TestFixture]
     public class SeeOtherPlayers
     {
-        [Test]
-        public void Display_other_players()
-        {
-            using (PlayerContext pc = new PlayerContext())
-            {
-                foreach(Player p in pc.Players)
-                {
-                    Console.WriteLine("Name : {0}", p.Name);
-                }
-            }
-        }
+        //[Test]
+        //public void Display_other_players()
+        //{
+        //    using (PlayerContext pc = new PlayerContext())
+        //    {
+        //        foreach (Player p in pc.Players)
+        //        {
+        //            Console.WriteLine("Name : {0}", p.Name);
+        //        }
+        //    }
+        //}
 
         [Test]
         public void See_information_of_a_player()
         {
             using (PlayerContext pc = new PlayerContext())
             {
-                //Player x = pc.Players.First(o => o.Name == "Loic");
+                Player x = pc.Players.First(o => o.Name == "Marvin");
+                Profil t = pc.Profils.First(u => u.ProfilId == x.Profil.ProfilId);
 
-                var t = pc.Profils.First();
-                //var player = pc.Players.First( p => p.Profil.ProfilId == t.ProfilId);
-                var Loic = pc.Players.First();
-                Console.WriteLine("Name : {0}, Profil : {1}, Monde : {2}", Loic.Name, Loic.Profil.ProfilId, Loic.World);
+                //Profil t = pc.Profils.First(a => a.ProfilId == 6);
+                //Player x = pc.Players.First(o => o.Profil.ProfilId == t.ProfilId);
+
+                Console.WriteLine("Name : {0}, Password : {1}, Description {2}, Monde : {3}", x.Name, x.Profil.Password, x.Profil.Description, x.World);
             }
         }
     }

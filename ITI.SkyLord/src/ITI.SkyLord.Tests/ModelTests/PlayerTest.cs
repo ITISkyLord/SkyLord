@@ -42,7 +42,7 @@ namespace ITI.Skylord.ModelTest
         [Test]
         public void Create_new_player_with_null_or_whiteSpaceName_throw_ArgumentNullException()
         {
-            Assert.Throws<ArgumentNullException>( () => new Player( _world, " " ) );
+            Assert.Throws<ArgumentNullException>( () => new Player( _world, " ") );
         }
         [Test]
         public void Create_new_player_with_null_or_whiteSpacePassword_throw_ArgumentNullException()

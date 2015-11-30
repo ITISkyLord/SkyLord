@@ -18,6 +18,8 @@ namespace ITI.SkyLord
         private List<Technology> _technologies;
         private World _world;
 
+        #region Constructor
+
         //TODO Changer les valeurs par défauts. À voir avec le profil.
         /// <summary>
         /// Creates a Player.
@@ -26,7 +28,7 @@ namespace ITI.SkyLord
         /// <param name="name">The name of the player.</param>
         /// <param name="mail">The email adress of the player.</param>
         /// <param name="password">The password of the player.</param>
-        public Player(World world, string name, string mail = "toto@gmail.com", string password = "password")
+        public Player(World world, string name, string mail, string password, string description)
         {
             if (String.IsNullOrWhiteSpace(name)) throw new ArgumentNullException("name is null or has white space.");
             if (String.IsNullOrWhiteSpace(password)) throw new ArgumentNullException("password is null or has white space.");
@@ -38,7 +40,45 @@ namespace ITI.SkyLord
             this.World = world;
             this.Islands = new List<Island>();
             this.Technologies = new List<Technology>();
-            this.Profil = new Profil( mail, password );
+            this.Profil = new Profil( mail, password, description );
+        }
+
+        public Player(World world, string name, string mail, string password)
+        {
+            if (String.IsNullOrWhiteSpace(name)) throw new ArgumentNullException("name is null or has white space.");
+            if (String.IsNullOrWhiteSpace(password)) throw new ArgumentNullException("password is null or has white space.");
+            if (world == null) throw new ArgumentNullException("world is null.");
+            if (!IsValidEmailStatic.IsValidEmail(mail)) throw new ArgumentException("Invalid mail");
+            if (name.Length > 50) throw new ArgumentOutOfRangeException(" Maximum lenght of name is 50. Your name lenght is " + name.Length + " at the moment.");
+            if (password.Length > 1000) throw new ArgumentOutOfRangeException(" Maximum lenght of password is 1000. Your password lenght is " + password.Length + " at the moment.");
+            this.Name = name;
+            this.World = world;
+            this.Islands = new List<Island>();
+            this.Technologies = new List<Technology>();
+            this.Profil = new Profil(mail, password);
+        }
+
+        public Player(World world, string name, string mail)
+        {
+            if (String.IsNullOrWhiteSpace(name)) throw new ArgumentNullException("name is null or has white space.");
+            if (world == null) throw new ArgumentNullException("world is null.");
+            if (name.Length > 50) throw new ArgumentOutOfRangeException(" Maximum lenght of name is 50. Your name lenght is " + name.Length + " at the moment.");
+            if (!IsValidEmailStatic.IsValidEmail(mail)) throw new ArgumentException("Invalid mail");
+            this.Name = name;
+            this.World = world;
+            this.Islands = new List<Island>();
+            this.Technologies = new List<Technology>();
+        }
+
+        public Player(World world, string name)
+        {
+            if (String.IsNullOrWhiteSpace(name)) throw new ArgumentNullException("name is null or has white space.");
+            if (world == null) throw new ArgumentNullException("world is null.");
+            if (name.Length > 50) throw new ArgumentOutOfRangeException(" Maximum lenght of name is 50. Your name lenght is " + name.Length + " at the moment.");
+            this.Name = name;
+            this.World = world;
+            this.Islands = new List<Island>();
+            this.Technologies = new List<Technology>();
         }
 
         /// <summary>
@@ -50,6 +90,9 @@ namespace ITI.SkyLord
             this.Islands = new List<Island>();
             this.Technologies = new List<Technology>();
         }
+        #endregion
+
+
         [Key]
         public long PlayerId { get; set; }
 

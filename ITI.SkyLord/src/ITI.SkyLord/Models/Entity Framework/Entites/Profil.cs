@@ -18,12 +18,21 @@ namespace ITI.SkyLord
         /// <param name="player">The player the profile belongs to.</param>
         /// <param name="mail">The mail of the player.</param>
         /// <param name="password">The password of the player.</param>
-        public Profil( string mail = "toto@gmail.com", string password = "password" )
+        /// <param name="description">The description of the player</param>
+        public Profil( string mail, string password, string description )
         {
             if( !IsValidEmailStatic.IsValidEmail( mail ) ) throw new ArgumentException( "Invalid mail" );
             if( String.IsNullOrWhiteSpace( password ) ) throw new ArgumentNullException( "password is null or has white space." );
             this.Mail = mail;
-            // this._owner = player;
+            this.Password = password;
+            this.Description = description;
+        }
+
+        public Profil(string mail, string password)
+        {
+            if (!IsValidEmailStatic.IsValidEmail(mail)) throw new ArgumentException("Invalid mail");
+            if (String.IsNullOrWhiteSpace(password)) throw new ArgumentNullException("password is null or has white space.");
+            this.Mail = mail;
             this.Password = password;
         }
 
@@ -32,8 +41,9 @@ namespace ITI.SkyLord
         /// </summary>
         public Profil()
         {
-            _mail = "toto@gmail.com";
-            _password = "password";
+            this.Description = _description;
+            this.Mail = _mail;
+            this.Password = _password;
         }
         #region Properties
         [Key]
