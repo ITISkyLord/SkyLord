@@ -17,11 +17,7 @@ namespace ITI.SkyLord.Tests
             {
                 foreach(Player p in pc.Players)
                 {
-                    if(p.Name == "Loic")
-                    {
-                        continue;
-                    }
-                   else Console.WriteLine("Name : {0}, WorldId : {1}",p.Name,p.World);
+                    Console.WriteLine("Name : {0}", p.Name);
                 }
             }
         }
@@ -31,6 +27,8 @@ namespace ITI.SkyLord.Tests
         {
             using (PlayerContext pc = new PlayerContext())
             {
+                //Player x = pc.Players.First(o => o.Name == "Loic");
+
                 var t = pc.Profils.First();
                 //var player = pc.Players.First( p => p.Profil.ProfilId == t.ProfilId);
                 var Loic = pc.Players.First();
