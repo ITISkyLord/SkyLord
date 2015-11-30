@@ -37,6 +37,7 @@ namespace ITI.SkyLord.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Guild", x => x.GuildId);
+                    // TODO : ajouter une contrainte d'unicité
                     //table.UniqueConstraint("UC_Guild_Name", y => y.Name);
                 });
             migrationBuilder.CreateTable(
@@ -50,6 +51,7 @@ namespace ITI.SkyLord.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_GuildRole", x => x.GuildRoleId);
+                    // TODO : ajouter une contrainte d'unicité
                     //table.UniqueConstraint("UC_GuildRole_Name", y => y.Name);
                 });
             migrationBuilder.CreateTable(
@@ -76,6 +78,7 @@ namespace ITI.SkyLord.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Profil", x => x.ProfilId);
+                    // TODO : ajouter une contrainte d'unicité
                     //table.UniqueConstraint("UC_Profil_Mail", y => y.Mail);
                 });
             migrationBuilder.CreateTable(
@@ -105,6 +108,7 @@ namespace ITI.SkyLord.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Spell", x => x.SpellId);
+                    // TODO : ajouter une contrainte d'unicité
                     //table.UniqueConstraint("UC_Spell_Name", y => y.Name);
                 });
             migrationBuilder.CreateTable(

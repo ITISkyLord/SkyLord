@@ -1,12 +1,8 @@
 ﻿using Microsoft.Data.Entity;
-using Microsoft.Dnx.Runtime;
-using Microsoft.Dnx.Runtime.Infrastructure;
-using Microsoft.Framework.DependencyInjection;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.Framework.Configuration;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.PlatformAbstractions;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace ITI.SkyLord.Models.Entity_Framework.Contexts
 {
@@ -50,17 +46,13 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
             {
                 context.Add( p );
                 context.Add( p.Profil );
-                context.Add(GetWorld());
                 context.SaveChanges();
             }
         }
 
         public World GetWorld()
-        {
-            using( PlayerContext context = new PlayerContext() )
-            {
-                return context.Worlds.FirstOrDefault();
-            }
+        {   
+            return Worlds.FirstOrDefault();   
         }
 
         /// <summary>

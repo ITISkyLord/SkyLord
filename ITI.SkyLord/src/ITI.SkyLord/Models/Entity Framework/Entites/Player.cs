@@ -12,7 +12,7 @@ namespace ITI.SkyLord
     public class Player
     {
         private string _name;
-        private Profil _profil;
+        public Profil _profil;
         private List<Island> _islands;
         private Guild _guild;
         private List<Technology> _technologies;

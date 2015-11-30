@@ -1,20 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNet.Builder;
+﻿using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Data.Entity;
-using Microsoft.Dnx.Runtime;
-using Microsoft.Framework.Configuration;
-using Microsoft.Framework.DependencyInjection;
-using Microsoft.Framework.Logging;
-using ITI.SkyLord.Models;
 using ITI.SkyLord.Services;
-using Microsoft.AspNet.Diagnostics.Entity;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.PlatformAbstractions;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
 using ITI.SkyLord.Models.Entity_Framework.Contexts;
 using ITI.SkyLord.Models.Entity_Framework;
+using Microsoft.AspNet.Diagnostics.Entity;
 
 namespace ITI.SkyLord.TestAvecEntity
 {
@@ -80,7 +75,7 @@ namespace ITI.SkyLord.TestAvecEntity
             {
                 app.UseBrowserLink();
                 app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage(DatabaseErrorPageOptions.ShowAll);
+                app.UseDatabaseErrorPage();
             }
             else
             {
@@ -89,7 +84,6 @@ namespace ITI.SkyLord.TestAvecEntity
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            app.UseInMemorySession();
 
             // If you want sessions to expire 30 minutes after the last activity, you would do so like this:
           //  app.UseInMemorySession( configure: s => s.IdleTimeout = TimeSpan.FromMinutes( 30 ) );
