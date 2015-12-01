@@ -29,7 +29,6 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
             optionsBuilder.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]);
         }
         public DbSet<World> Worlds { get; set; }
-        public DbSet<Map> Maps { get; set; }
         public DbSet<Island> Islands { get; set; }
     }
 }

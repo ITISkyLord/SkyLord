@@ -6,44 +6,18 @@ using System.Text;
 
 namespace ITI.SkyLord
 {
-
     public class Spell
     {
-        private string _name;
-        private string _description;
-
         [Key]
         public long SpellId { get; set; }
 
-        public string Name
-        {
-            get
-            {
-                return _name;
-            }
+        public string Name { get; set; }
 
-            set
-            {
-                _name = value;
-            }
-        }
-
-        public string Description
-        {
-            get
-            {
-                return _description;
-            }
-
-            set
-            {
-                _description = value;
-            }
-        }
+        public string Description { get; set; }
 
 
 
-        //        Découverte de buffs temporaires qu’on peut activer(?)
+        // Découverte de buffs temporaires qu’on peut activer(?)
         //Buff d’attaque / défense
         //Vitesse de déplacement
         //Illusion d’optique ⇒ Beaucoup de ressources sont cachées en même temps.
