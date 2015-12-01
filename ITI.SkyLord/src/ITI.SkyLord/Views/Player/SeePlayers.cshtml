@@ -1,0 +1,21 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+    @model ITI.SkyLord.ViewModel.SeePlayers.SeePlayers
+    @using ITI.SkyLord
+    
+@{
+    ViewData["Title"] = "View Players";
+    Layout = "_Layout";
+}
+
+<ul>
+    @foreach (Player p in Model.Players)
+    {
+        <li>@p.Name</li>
+    }
+</ul>
+
+
+
