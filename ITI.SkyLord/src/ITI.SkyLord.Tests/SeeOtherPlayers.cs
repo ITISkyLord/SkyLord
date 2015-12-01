@@ -33,7 +33,7 @@ namespace ITI.SkyLord.Tests
                 //Profil t = pc.Profils.First(a => a.ProfilId == 6);
                 //Player x = pc.Players.First(o => o.Profil.ProfilId == t.ProfilId);
 
-                Console.WriteLine("Name : {0}, Password : {1}, Description {2}, Monde : {3}", x.Name, x.Profil.Password, x.Profil.Description, x.World);
+                Console.WriteLine("Name : {0}, Password : {1}, Description {2}, Monde : {3}", x.Name, x.Password, x.Profil.Description, x.World);
             }
         }
     }
