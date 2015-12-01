@@ -144,6 +144,7 @@
           "Microsoft.AspNet.Mvc.TagHelpers": "6.0.0-rc1-final",
           "Microsoft.AspNet.Server.Kestrel": "1.0.0-rc1-final",
           "Microsoft.AspNet.StaticFiles": "1.0.0-rc1-final",
+          "Microsoft.AspNet.Tooling.Razor": "1.0.0-rc1-final",
           "Microsoft.Dnx.Runtime": "1.0.0-rc1-final",
           "Microsoft.Extensions.Configuration.Abstractions": "1.0.0-rc1-final",
           "Microsoft.Extensions.Configuration.UserSecrets": "1.0.0-rc1-final",
@@ -1104,6 +1105,25 @@
         },
         "runtime": {
           "lib/net451/Microsoft.AspNet.StaticFiles.dll": {}
+        }
+      },
+      "Microsoft.AspNet.Tooling.Razor/1.0.0-rc1-final": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Razor.Runtime": "4.0.0-rc1-final",
+          "Newtonsoft.Json": "6.0.6"
+        },
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "lib/net451/Microsoft.AspNet.Tooling.Razor.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNet.Tooling.Razor.dll": {}
         }
       },
       "Microsoft.AspNet.WebUtilities/1.0.0-rc1-final": {
@@ -2100,6 +2120,7 @@
           "Microsoft.AspNet.Mvc.TagHelpers": "6.0.0-rc1-final",
           "Microsoft.AspNet.Server.Kestrel": "1.0.0-rc1-final",
           "Microsoft.AspNet.StaticFiles": "1.0.0-rc1-final",
+          "Microsoft.AspNet.Tooling.Razor": "1.0.0-rc1-final",
           "Microsoft.Dnx.Runtime": "1.0.0-rc1-final",
           "Microsoft.Extensions.Configuration.Abstractions": "1.0.0-rc1-final",
           "Microsoft.Extensions.Configuration.UserSecrets": "1.0.0-rc1-final",
@@ -2918,6 +2939,21 @@
         },
         "runtime": {
           "lib/dotnet5.4/Microsoft.AspNet.StaticFiles.dll": {}
+        }
+      },
+      "Microsoft.AspNet.Tooling.Razor/1.0.0-rc1-final": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Razor.Runtime": "4.0.0-rc1-final",
+          "Newtonsoft.Json": "6.0.6",
+          "System.Console": "4.0.0-beta-23516",
+          "System.Runtime": "4.0.21-beta-23516"
+        },
+        "compile": {
+          "lib/dotnet5.4/Microsoft.AspNet.Tooling.Razor.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet5.4/Microsoft.AspNet.Tooling.Razor.dll": {}
         }
       },
       "Microsoft.AspNet.WebUtilities/1.0.0-rc1-final": {
@@ -4796,6 +4832,7 @@
           "Microsoft.AspNet.Mvc.TagHelpers": "6.0.0-rc1-final",
           "Microsoft.AspNet.Server.Kestrel": "1.0.0-rc1-final",
           "Microsoft.AspNet.StaticFiles": "1.0.0-rc1-final",
+          "Microsoft.AspNet.Tooling.Razor": "1.0.0-rc1-final",
           "Microsoft.Dnx.Runtime": "1.0.0-rc1-final",
           "Microsoft.Extensions.Configuration.Abstractions": "1.0.0-rc1-final",
           "Microsoft.Extensions.Configuration.UserSecrets": "1.0.0-rc1-final",
@@ -5759,6 +5796,25 @@
         },
         "runtime": {
           "lib/net451/Microsoft.AspNet.StaticFiles.dll": {}
+        }
+      },
+      "Microsoft.AspNet.Tooling.Razor/1.0.0-rc1-final": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Razor.Runtime": "4.0.0-rc1-final",
+          "Newtonsoft.Json": "6.0.6"
+        },
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "lib/net451/Microsoft.AspNet.Tooling.Razor.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNet.Tooling.Razor.dll": {}
         }
       },
       "Microsoft.AspNet.WebUtilities/1.0.0-rc1-final": {
@@ -6780,6 +6836,7 @@
           "Microsoft.AspNet.Mvc.TagHelpers": "6.0.0-rc1-final",
           "Microsoft.AspNet.Server.Kestrel": "1.0.0-rc1-final",
           "Microsoft.AspNet.StaticFiles": "1.0.0-rc1-final",
+          "Microsoft.AspNet.Tooling.Razor": "1.0.0-rc1-final",
           "Microsoft.Dnx.Runtime": "1.0.0-rc1-final",
           "Microsoft.Extensions.Configuration.Abstractions": "1.0.0-rc1-final",
           "Microsoft.Extensions.Configuration.UserSecrets": "1.0.0-rc1-final",
@@ -7743,6 +7800,25 @@
         },
         "runtime": {
           "lib/net451/Microsoft.AspNet.StaticFiles.dll": {}
+        }
+      },
+      "Microsoft.AspNet.Tooling.Razor/1.0.0-rc1-final": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Razor.Runtime": "4.0.0-rc1-final",
+          "Newtonsoft.Json": "6.0.6"
+        },
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "lib/net451/Microsoft.AspNet.Tooling.Razor.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNet.Tooling.Razor.dll": {}
         }
       },
       "Microsoft.AspNet.WebUtilities/1.0.0-rc1-final": {
@@ -8739,6 +8815,7 @@
           "Microsoft.AspNet.Mvc.TagHelpers": "6.0.0-rc1-final",
           "Microsoft.AspNet.Server.Kestrel": "1.0.0-rc1-final",
           "Microsoft.AspNet.StaticFiles": "1.0.0-rc1-final",
+          "Microsoft.AspNet.Tooling.Razor": "1.0.0-rc1-final",
           "Microsoft.Dnx.Runtime": "1.0.0-rc1-final",
           "Microsoft.Extensions.Configuration.Abstractions": "1.0.0-rc1-final",
           "Microsoft.Extensions.Configuration.UserSecrets": "1.0.0-rc1-final",
@@ -9560,6 +9637,21 @@
         },
         "runtime": {
           "lib/dotnet5.4/Microsoft.AspNet.StaticFiles.dll": {}
+        }
+      },
+      "Microsoft.AspNet.Tooling.Razor/1.0.0-rc1-final": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Razor.Runtime": "4.0.0-rc1-final",
+          "Newtonsoft.Json": "6.0.6",
+          "System.Console": "4.0.0-beta-23516",
+          "System.Runtime": "4.0.21-beta-23516"
+        },
+        "compile": {
+          "lib/dotnet5.4/Microsoft.AspNet.Tooling.Razor.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet5.4/Microsoft.AspNet.Tooling.Razor.dll": {}
         }
       },
       "Microsoft.AspNet.WebUtilities/1.0.0-rc1-final": {
@@ -11887,6 +11979,7 @@
           "Microsoft.AspNet.Mvc.TagHelpers": "6.0.0-rc1-final",
           "Microsoft.AspNet.Server.Kestrel": "1.0.0-rc1-final",
           "Microsoft.AspNet.StaticFiles": "1.0.0-rc1-final",
+          "Microsoft.AspNet.Tooling.Razor": "1.0.0-rc1-final",
           "Microsoft.Dnx.Runtime": "1.0.0-rc1-final",
           "Microsoft.Extensions.Configuration.Abstractions": "1.0.0-rc1-final",
           "Microsoft.Extensions.Configuration.UserSecrets": "1.0.0-rc1-final",
@@ -12708,6 +12801,21 @@
         },
         "runtime": {
           "lib/dotnet5.4/Microsoft.AspNet.StaticFiles.dll": {}
+        }
+      },
+      "Microsoft.AspNet.Tooling.Razor/1.0.0-rc1-final": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Razor.Runtime": "4.0.0-rc1-final",
+          "Newtonsoft.Json": "6.0.6",
+          "System.Console": "4.0.0-beta-23516",
+          "System.Runtime": "4.0.21-beta-23516"
+        },
+        "compile": {
+          "lib/dotnet5.4/Microsoft.AspNet.Tooling.Razor.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet5.4/Microsoft.AspNet.Tooling.Razor.dll": {}
         }
       },
       "Microsoft.AspNet.WebUtilities/1.0.0-rc1-final": {
@@ -15690,6 +15798,23 @@
         "Microsoft.AspNet.StaticFiles.nuspec"
       ]
     },
+    "Microsoft.AspNet.Tooling.Razor/1.0.0-rc1-final": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "ZWDxJ4sqrZyrtmlRKeBYrxguRNBnTGV2LNgyZrSyVQ8DcQjPkSqFwu18BeER+j6Od2mgV5aOCdCLDN0QnjYI7Q==",
+      "files": [
+        "app/project.json",
+        "app/razor-tooling",
+        "app/razor-tooling.cmd",
+        "lib/dotnet5.4/Microsoft.AspNet.Tooling.Razor.dll",
+        "lib/dotnet5.4/Microsoft.AspNet.Tooling.Razor.xml",
+        "lib/net451/Microsoft.AspNet.Tooling.Razor.dll",
+        "lib/net451/Microsoft.AspNet.Tooling.Razor.xml",
+        "Microsoft.AspNet.Tooling.Razor.1.0.0-rc1-final.nupkg",
+        "Microsoft.AspNet.Tooling.Razor.1.0.0-rc1-final.nupkg.sha512",
+        "Microsoft.AspNet.Tooling.Razor.nuspec"
+      ]
+    },
     "Microsoft.AspNet.WebUtilities/1.0.0-rc1-final": {
       "type": "package",
       "serviceable": true,
@@ -15706,7 +15831,7 @@
     },
     "Microsoft.CodeAnalysis.Analyzers/1.0.0": {
       "type": "package",
-      "sha512": "E7VdmGw6xO3VHWapC+pNLZmo6yncS53UY3bmb5WZm9wliJBB1A6brgzKA4fcqiLrmJFx71r0M2zEbRDphRLUNg==",
+      "sha512": "2+V/VDgZu59Thrlp+FQH38H/SmPBegMKsG0ie1ZZyHtx7kJNEozIx/p9zs0UrolX0uyYX7Ouoj3Q3Be15lqXxA==",
       "files": [
         "analyzers/dotnet/cs/Microsoft.CodeAnalysis.Analyzers.dll",
         "analyzers/dotnet/cs/Microsoft.CodeAnalysis.CSharp.Analyzers.dll",
@@ -18484,7 +18609,7 @@
     "System.Net.Sockets/4.1.0-beta-23225": {
       "type": "package",
       "serviceable": true,
-      "sha512": "9wupz6i8AONzdzaLglcYImU25ivdcKmBXnf9GxE0eS1QqRGWQcWkKyv4dyxMc9E0gt4UuTIktn2FLjrz8ir6sw==",
+      "sha512": "ZB+ZE/Bo52Zr38mIX4Wb1mrq9zHCbl7Oz9iv8IL3dQ2RZqMdUZpPI/PLTRI+/BgUNnycK53VY8kp8QGJIzqTiQ==",
       "files": [
         "lib/DNXCore50/System.Net.Sockets.dll",
         "lib/MonoAndroid10/_._",
@@ -18941,7 +19066,7 @@
     "System.Reflection.TypeExtensions/4.0.1-beta-23409": {
       "type": "package",
       "serviceable": true,
-      "sha512": "n8m144jjCwhN/qtLih35a2sO33fLWm1U3eg51KxqAcAjJcw0nq1zWie8FZognBTPv7BXdW/G8xGbbvDGFoJwZA==",
+      "sha512": "Q3FiCsJ/4s2nuyhOHAFhc0Te10LzPjv6QzVcywA3oWI1msfDg583RIXQ9YifDfOuig+wg+SX0p133qV71HVfyw==",
       "files": [
         "lib/DNXCore50/de/System.Reflection.TypeExtensions.xml",
         "lib/DNXCore50/es/System.Reflection.TypeExtensions.xml",
@@ -19557,7 +19682,7 @@
     "System.Runtime.Serialization.Primitives/4.0.11-beta-23409": {
       "type": "package",
       "serviceable": true,
-      "sha512": "AQywM01eG8EgYde/RRrJDVdHmOOI3KkgK9GEjLQqvTLsrWsamNHN/j7Pxwa3XX7klSSrfDpvTNfUl40855idVg==",
+      "sha512": "0JLo0iSVWtuVwNo51/ArH+WtTTriWs80roj32aBMDiFBtSMoNbBDQ5BxzqbbDjLw17mtLFHMBqIjeUVsGeRMlQ==",
       "files": [
         "lib/dotnet/de/System.Runtime.Serialization.Primitives.xml",
         "lib/dotnet/es/System.Runtime.Serialization.Primitives.xml",
