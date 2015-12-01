@@ -3,6 +3,8 @@ using Microsoft.AspNet.Mvc;
 using ITI.SkyLord.Models.Entity_Framework.Contexts;
 using System.Security.Cryptography;
 using System.Text;
+using Microsoft.AspNet.Cryptography.KeyDerivation;
+using Microsoft.Data.Entity;
 
 namespace ITI.SkyLord.Controllers
 {
@@ -13,75 +15,74 @@ namespace ITI.SkyLord.Controllers
             return View();
         }
 
-        public IActionResult TestDb()
-        {
-            //using (var db = new ApplicationDbContext())
-            //{
-            //    db.Merdes.Add(new Merde() { Message = "coucou" });
-            //    db.SaveChanges();
-            //}
-            return View();
-
-        }
-        public ActionResult connectionForm( string name, string mail, string password )
-        {
-            // if( String.IsNullOrWhiteSpace( name ) ) return View();
-            PlayerContext pc = new PlayerContext();
-            try
-            {
-                Console.WriteLine( password );
-
-                password = ProtectPassword( password );
-                Console.WriteLine( password );
-                Player p = new Player( pc.GetWorld(), name, mail, password );
-                pc.AddPlayer( p );
-            }
-            catch( ArgumentException e )
-            {
-                ViewData["mailError"] = "Erreur de mail";
-            }
-            return View( "Index" );
-        }
-
         public IActionResult Login()
         {
             return View();
         }
 
-        public IActionResult LoginForm(string name, string password )
+        public IActionResult LoginForm( string mail, string password )
         {
-            PlayerContext pc = new PlayerContext();
-            if ( pc.IsPlayerValid( name, password ) )
+            // TODO : RENDRE MAIL UNIQUE !!
+            using ( PlayerContext context = new PlayerContext() )
             {
-                return View( "../Logged/Index" );
+                if ( context.IsPlayerValid( mail, ProtectPassword( password ) ) )
+                {
+                    Player playerFound = context.FindPlayer( mail );
+                    Response.Cookies.Append( "PlayerId", playerFound.PlayerId.ToString() );
+                    return RedirectToAction( "Index", "Logged" );
+                }
             }
-            // TODO Login devient Index quand login/inscription sont proprement faits
-            return View( "Login" );
+           
+           return RedirectToAction( "Index", "Connection" );
         }
 
+        public IActionResult SignUp()
+        {
+            return View();
+        }
+
+        public IActionResult SignupForm( string name, string mail, string password )
+        {
+            // TODO : RENDRE MAIL UNIQUE !!
+            PlayerContext pc = new PlayerContext();
+            try
+            {
+                password = ProtectPassword( password );
+
+                Player p = new Player( pc.GetWorld(), name, mail, password );
+                pc.AddPlayer( p );
+            }
+            catch ( ArgumentException e )
+            {
+                ViewData[ "mailError" ] = "Erreur de mail";
+            }
+
+            return RedirectToAction( "Index", "Connection" );
+        }
 
         public IActionResult Error()
         {
             return View( "~/Views/Shared/Error.cshtml" );
         }
 
-        private string ProtectPassword( string clearPassword )
+        private string ProtectPassword( string clearpassword )
         {
-            byte[] bytes = Encoding.UTF8.GetBytes(clearPassword);
-            byte[] protectedBytes;
-#if DNX451
-            protectedBytes =  ProtectedData.Protect(bytes, null, DataProtectionScope.CurrentUser);
-#else
-            protectedBytes = bytes;
-#endif
-            return Convert.ToBase64String( protectedBytes );
-        }
+            // generate a 128-bit salt using a secure PRNG
+            byte[ ] salt = new byte[ 128 / 8 ];
+            //using ( var rng = RandomNumberGenerator.Create() )
+            //{
+            //    rng.GetBytes( salt );
+            //}
 
-        //private string UnprotectPassword( string protectedPassword )
-        //{
-        //    byte[] protectedBytes = Convert.FromBase64String(protectedPassword);
-        //    byte[] bytes = ProtectedData.Unprotect(protectedBytes, null, DataProtectionScope.CurrentUser);
-        //    return Encoding.UTF8.GetString( bytes );
-        //}
+            // TODO : garded le salt dans la table Player
+
+            // derive a 256-bit subkey (use HMACSHA1 with 10,000 iterations)
+            return Convert.ToBase64String( KeyDerivation.Pbkdf2(
+                password: clearpassword,
+                salt: salt,
+                prf: KeyDerivationPrf.HMACSHA1,
+                iterationCount: 10000,
+                numBytesRequested: 256 / 8 ) );
+        }
     }
 }
