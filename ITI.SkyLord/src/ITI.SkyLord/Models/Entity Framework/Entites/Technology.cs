@@ -8,48 +8,14 @@ namespace ITI.SkyLord
 {
     public class Technology
     {
-        private string _name;
-        private TechnologyLevel _level;
-        // Implémentation XML pour les avantages et description
 
-        public Technology(string name )
-        {
-            if ( String.IsNullOrWhiteSpace( name ) ) throw new ArgumentException( "The technology name cannot be null or white space." );
-
-            Name = name;
-            Level = new TechnologyLevel();
-        }
+        #region Properties
         [Key]
         public long TechnologyId { get; set; }
 
-        public string Name
-        {
-            get
-            {
-                return _name;
-            }
+        public string Name { get; set; }
 
-            set
-            {
-                _name = value;
-            }
-        }
-
-        public TechnologyLevel Level
-        {
-            get
-            {
-                return _level;
-            }
-
-            set
-            {
-                _level = value;
-            }
-        }
-
-        #region Properties
-
+        public TechnologyLevel Level { get; set; }
         #endregion
 
     }

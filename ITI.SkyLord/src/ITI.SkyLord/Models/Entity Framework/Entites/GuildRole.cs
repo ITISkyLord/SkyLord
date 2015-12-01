@@ -8,36 +8,12 @@ namespace ITI.SkyLord
 {
     public class GuildRole
     {
-        private string _name;
-        private MemberRight _rights; //Rajouter des rôles dans MemberRight si nécessaire.
 
         [Key]
         public long GuildRoleId { get; set; }
 
-        public string Name
-        {
-            get
-            {
-                return _name;
-            }
+        public string Name { get; set; }
 
-            set
-            {
-                _name = value;
-            }
-        }
-
-        public MemberRight Rights
-        {
-            get
-            {
-                return _rights;
-            }
-
-            set
-            {
-                _rights = value;
-            }
-        }
+        public MemberRight Rights { get; set; }
     }
 }

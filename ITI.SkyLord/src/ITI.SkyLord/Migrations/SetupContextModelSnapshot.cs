@@ -159,8 +159,6 @@ namespace ITI.SkyLord.Migrations
 
                     b.Property<int>("Loyalty");
 
-                    b.Property<long?>("MapMapId");
-
                     b.Property<string>("Name");
 
                     b.Property<long?>("OwnerPlayerId");
@@ -201,14 +199,6 @@ namespace ITI.SkyLord.Migrations
                     b.HasKey("MageId");
                 });
 
-            modelBuilder.Entity("ITI.SkyLord.Map", b =>
-                {
-                    b.Property<long>("MapId")
-                        .ValueGeneratedOnAdd();
-
-                    b.HasKey("MapId");
-                });
-
             modelBuilder.Entity("ITI.SkyLord.Message", b =>
                 {
                     b.Property<long>("MessageId")
@@ -232,8 +222,12 @@ namespace ITI.SkyLord.Migrations
 
                     b.Property<long?>("GuildGuildId");
 
+                    b.Property<string>("Mail");
+
                     b.Property<string>("Name")
                         .HasAnnotation("MaxLength", 20);
+
+                    b.Property<string>("Password");
 
                     b.Property<long?>("ProfilProfilId");
 
@@ -248,11 +242,6 @@ namespace ITI.SkyLord.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Description");
-
-                    b.Property<string>("Mail");
-
-                    b.Property<string>("Password")
-                        .HasAnnotation("MaxLength", 60);
 
                     b.HasKey("ProfilId");
                 });
@@ -372,8 +361,6 @@ namespace ITI.SkyLord.Migrations
                     b.Property<long>("WorldId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<long?>("MapMapId");
-
                     b.HasKey("WorldId");
                 });
 
@@ -455,10 +442,6 @@ namespace ITI.SkyLord.Migrations
                     b.HasOne("ITI.SkyLord.Coordinate")
                         .WithMany()
                         .HasForeignKey("CoordinatesCoordinateId");
-
-                    b.HasOne("ITI.SkyLord.Map")
-                        .WithMany()
-                        .HasForeignKey("MapMapId");
 
                     b.HasOne("ITI.SkyLord.Player")
                         .WithMany()
@@ -547,13 +530,6 @@ namespace ITI.SkyLord.Migrations
                     b.HasOne("ITI.SkyLord.UnitStatistics")
                         .WithMany()
                         .HasForeignKey("UnitStatisticsUnitStatisticsId");
-                });
-
-            modelBuilder.Entity("ITI.SkyLord.World", b =>
-                {
-                    b.HasOne("ITI.SkyLord.Map")
-                        .WithMany()
-                        .HasForeignKey("MapMapId");
                 });
 
             modelBuilder.Entity("ITI.SkyLord.MageLevel", b =>

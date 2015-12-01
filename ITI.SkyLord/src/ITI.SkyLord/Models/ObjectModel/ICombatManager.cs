@@ -8,7 +8,7 @@ namespace ITI.SkyLord
 {
     public interface ICombatManager
     {
-        CombatResult Resolve( Army attackingArmy, Army defendingArmy );
+        //CombatResult Resolve( Army attackingArmy, Army defendingArmy );
 
     }
 }

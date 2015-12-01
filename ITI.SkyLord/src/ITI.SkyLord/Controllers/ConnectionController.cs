@@ -44,19 +44,16 @@ namespace ITI.SkyLord.Controllers
         public IActionResult SignupForm( string name, string mail, string password )
         {
             // TODO : RENDRE MAIL UNIQUE !!
-            PlayerContext pc = new PlayerContext();
-            try
+            using ( PlayerContext context = new PlayerContext() )
             {
                 password = ProtectPassword( password );
+                Player p = new Player { World = context.GetWorld(), Name = name, Mail = mail, Password = password };
 
-                Player p = new Player( pc.GetWorld(), name, mail, password );
-                pc.AddPlayer( p );
+                if ( ModelState.IsValid )
+                {
+                    context.AddPlayer( p );
+                }
             }
-            catch ( ArgumentException e )
-            {
-                ViewData[ "mailError" ] = "Erreur de mail";
-            }
-
             return RedirectToAction( "Index", "Connection" );
         }
 

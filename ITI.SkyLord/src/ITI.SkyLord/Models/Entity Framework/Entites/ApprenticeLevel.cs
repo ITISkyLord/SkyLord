@@ -8,7 +8,5 @@ namespace ITI.SkyLord
 {
     public class ApprenticeLevel : Level
     {
-        //[Key]
-        //public long ApprenticeId { get; set; }
     }
 }

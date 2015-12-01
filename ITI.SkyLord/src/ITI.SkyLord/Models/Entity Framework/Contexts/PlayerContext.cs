@@ -43,6 +43,7 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
 
         public void AddPlayer( Player p )
         {
+            p.Profil = new Profil { Description = "Aucune description." };
             Add( p );
             Add( p.Profil );
             SaveChanges();
@@ -53,7 +54,7 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
              return this.Worlds.FirstOrDefault();
         }
 
-        public bool RemovePlayer (long playerId )
+        public bool RemovePlayer ( long playerId )
         {
             Player playerFound = FindPlayer( playerId );
             if ( playerFound == null ) return false;
@@ -73,7 +74,7 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
 
         public Player FindPlayer( string playerMail )
         {
-            return Players.Include( p => p.Profil ).FirstOrDefault( p => p.Profil.Mail == playerMail );
+            return Players.FirstOrDefault( p => p.Mail == playerMail );
         }
 
         /// <summary>
@@ -85,8 +86,8 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
         {
             bool valid = false;
 
-            valid = this.Players.Include( p => p.Profil).Any( p => p.Profil.Mail == mail
-            && p.Profil.Password == password );
+            valid = this.Players.Any( p => p.Mail == mail
+            && p.Password == password );
 
             return valid;
         }

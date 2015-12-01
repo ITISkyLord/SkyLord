@@ -8,101 +8,23 @@ namespace ITI.SkyLord
 {
     public class Unit
     {
-        private UnitName _unitName;
-        private UnitDamageType unitDamageType;
-        private UnitType unitType;
-        private UnitStatistics unitStatistics;
-        private Ressource unitCost;
-
         #region Properties
-
         public int UnitId { get; set; }
 
 
-        public string Name
-        {
-            get
-            {
-                return _unitName.ToString();
-            }
-        }
+        public string Name { get; set; }
 
-        public UnitName UnitName
-        {
-            get
-            {
-                return _unitName;
-            }
+        public UnitName UnitName { get; set; }
 
-            set
-            {
-                _unitName = value;
-            }
-        }
+        public UnitDamageType UnitDamageType { get; set; }
 
-        public UnitDamageType UnitDamageType
-        {
-            get
-            {
-                return unitDamageType;
-            }
+        public UnitType UnitType { get; set; }
 
-            set
-            {
-                unitDamageType = value;
-            }
-        }
+        public UnitStatistics UnitStatistics { get; set; }
 
-        public UnitType UnitType
-        {
-            get
-            {
-                return unitType;
-            }
-
-            set
-            {
-                unitType = value;
-            }
-        }
-
-        public UnitStatistics UnitStatistics
-        {
-            get
-            {
-                return unitStatistics;
-            }
-
-            set
-            {
-                unitStatistics = value;
-            }
-        }
-
-        public Ressource UnitCost
-        {
-            get
-            {
-                return unitCost;
-            }
-
-            set
-            {
-                unitCost =  value ;
-            }
-        }
-
-
+        public Ressource UnitCost { get; set; }
         #endregion
 
-        internal Unit( UnitName unitName, UnitDamageType unitDamageType, UnitType unitType, UnitStatistics unitStatistics, Ressource unitCost )
-        {
-            UnitName = unitName;
-            UnitDamageType = unitDamageType;
-            UnitType = unitType;
-            UnitStatistics = unitStatistics;
-            UnitCost = unitCost;
-        }
         public override bool Equals( object obj )
         {
             Unit other = obj as Unit;

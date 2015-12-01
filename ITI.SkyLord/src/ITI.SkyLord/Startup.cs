@@ -105,6 +105,17 @@ namespace ITI.SkyLord.TestAvecEntity
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            using ( WorldContext context = new WorldContext() )
+            {
+                if ( env.IsDevelopment() )
+                {
+                    World firstWorld = new World();
+                    context.Add( firstWorld );
+
+                    context.SaveChanges();
+                }
+            }
         }
     }
 }

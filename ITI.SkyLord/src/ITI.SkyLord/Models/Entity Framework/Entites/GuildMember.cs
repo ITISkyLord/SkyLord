@@ -8,36 +8,12 @@ namespace ITI.SkyLord
 {
     public class GuildMember
     {
-        private Guild _guild;
-        private GuildRole _guildRole;
 
         [Key]
         public long GuildMemberId { get; set; }
 
-        public Guild Guild
-        {
-            get
-            {
-                return _guild;
-            }
+        public Guild Guild { get; set; }
 
-            set
-            {
-                _guild = value;
-            }
-        }
-
-        public GuildRole GuildRole
-        {
-            get
-            {
-                return _guildRole;
-            }
-
-            set
-            {
-                _guildRole =  value ;
-            }
-        }
+        public GuildRole GuildRole { get; set; }
     }
 }
