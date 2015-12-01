@@ -31,5 +31,10 @@ namespace ITI.SkyLord.Controllers
             sp.ActivePlayer = playerActif;
             return View(sp);
         }
+
+        public IActionResult SeeInformationOfAnPlayer(int id)
+        {
+            return View();
+        }
     }
 }

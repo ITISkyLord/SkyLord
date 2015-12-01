@@ -1,6 +1,4 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@addTagHelper "*, Microsoft.AspNet.Mvc.TagHelpers"
 
     @model ITI.SkyLord.ViewModel.SeePlayers.SeePlayers
     @using ITI.SkyLord
@@ -10,12 +8,22 @@
     Layout = "_Layout";
 }
 
-<ul>
+    <h1>Liste des joueurs</h1>
+
+<table>
+    <tr>
+        <th>Nom du joueur</th>
+    </tr>
     @foreach (Player p in Model.Players)
     {
-        <li>@p.Name</li>
+        <tr>    
+            <td>@p.Name</td>
+            <td><a asp-action="SeeInformationOfAnPlayer" asp-route-id="@p.PlayerId" asp-controller="Player" >Voir plus d'info</a></td>
+        </tr>
+       
     }
-</ul>
+</table>
+   
 
 
 
