@@ -29,6 +29,7 @@ namespace ITI.SkyLord.Controllers
                 {
                     Player playerFound = context.FindPlayer( mail );
                     Response.Cookies.Append( "PlayerId", playerFound.PlayerId.ToString() );
+                    Console.WriteLine( "Cookie Current PlayerId (login) = " + Request.Cookies[ "PlayerId" ] );
                     return RedirectToAction( "Index", "Logged" );
                 }
             }
@@ -55,6 +56,16 @@ namespace ITI.SkyLord.Controllers
                 }
             }
             return RedirectToAction( "Index", "Connection" );
+        }
+
+        public IActionResult Logout()
+        {
+            if ( !String.IsNullOrEmpty( Request.Cookies[ "PlayerId" ] ) )
+                Response.Cookies.Delete( "PlayerId" );
+
+            string cookie = Request.Cookies[ "PlayerId" ];
+            Console.WriteLine( "Cookie current PlayerId (Logout) = " + cookie );
+            return RedirectToAction( "Index", "Home" );
         }
 
         public IActionResult Error()

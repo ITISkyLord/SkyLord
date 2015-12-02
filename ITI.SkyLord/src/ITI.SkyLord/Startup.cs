@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using ITI.SkyLord.Models.Entity_Framework.Contexts;
 using ITI.SkyLord.Models.Entity_Framework;
 using Microsoft.AspNet.Diagnostics.Entity;
+using System.Linq;
 
 namespace ITI.SkyLord.TestAvecEntity
 {
@@ -110,10 +111,12 @@ namespace ITI.SkyLord.TestAvecEntity
             {
                 if ( env.IsDevelopment() )
                 {
-                    World firstWorld = new World();
-                    context.Add( firstWorld );
-
-                    context.SaveChanges();
+                    if ( context.Worlds.FirstOrDefault() == null )
+                    {
+                        World firstWorld = new World();
+                        context.Add( firstWorld );
+                        context.SaveChanges();
+                    }
                 }
             }
         }
