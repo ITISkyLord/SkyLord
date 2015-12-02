@@ -7,7 +7,7 @@ using ITI.SkyLord.Models.Entity_Framework.Contexts;
 
 namespace ITI.SkyLord.Migrations
 {
-    [DbContext(typeof(SetupContext))]
+    [DbContext(typeof(Setup))]
     partial class SetupContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
