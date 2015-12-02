@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Data.Entity;
 
 namespace ITI.SkyLord.Controllers
 {
@@ -34,7 +35,13 @@ namespace ITI.SkyLord.Controllers
 
         public IActionResult SeeInformationOfAnPlayer(int id)
         {
-            return View();
+            Player choosen = PlayerContext.Players.Include(z => z.Profil).Where(p => p.PlayerId == id).SingleOrDefault();
+            List<Player> player = new List<Player>();
+            player.Add(choosen);
+            SeePlayers sp = new SeePlayers();
+            sp.Players = player;
+
+            return View(sp);
         }
     }
 }
