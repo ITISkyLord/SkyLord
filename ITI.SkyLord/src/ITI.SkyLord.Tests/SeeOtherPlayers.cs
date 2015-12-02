@@ -4,36 +4,46 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Data.Entity;
 
 namespace ITI.SkyLord.Tests
 {
     [TestFixture]
     public class SeeOtherPlayers
     {
-        //[Test]
-        //public void Display_other_players()
-        //{
-        //    using (PlayerContext pc = new PlayerContext())
-        //    {
-        //        foreach (Player p in pc.Players)
-        //        {
-        //            Console.WriteLine("Name : {0}", p.Name);
-        //        }
-        //    }
-        //}
+        World _world = new World();
+
+        public SeeOtherPlayers()
+        {
+            using (PlayerContext context = new PlayerContext())
+            {
+               _world = context.GetWorld();
+            }
+        }
 
         [Test]
         public void See_information_of_a_player()
         {
+            Player p1 = new Player { World = _world, Name = "Marvin", Mail = "marvin@cdk.fr", Password = "tought" };
+
             using (PlayerContext pc = new PlayerContext())
             {
-                Player x = pc.Players.First(o => o.Name == "Marvin");
-                Profil t = pc.Profils.First(u => u.ProfilId == x.Profil.ProfilId);
+                
+                if (pc.Players.Where( (p) => p.Name==p1.Name).FirstOrDefault() != null)
+                {
+                    Player x = pc.Players.Include(p => p.Profil).Include(z => z.World).First(o => o.Name == "Marvin");
 
-                //Profil t = pc.Profils.First(a => a.ProfilId == 6);
-                //Player x = pc.Players.First(o => o.Profil.ProfilId == t.ProfilId);
+                    Console.WriteLine("Name : {0}, Password : {1}, Description {2}, Monde : {3}", x.Name, x.Password, x.Profil.Description, x.World.WorldId);
+                }
+                else
+                {
+                    pc.AddPlayer(p1);
+                    pc.SaveChanges();
 
-                Console.WriteLine("Name : {0}, Password : {1}, Description {2}, Monde : {3}", x.Name, x.Password, x.Profil.Description, x.World);
+                    Player x = pc.Players.Include(p => p.Profil).First(o => o.Name == "Marvin");
+
+                    Console.WriteLine("Name : {0}, Password : {1}, Description {2}, Monde : {3}", x.Name, x.Password, x.Profil.Description, x.World.WorldId);
+                }       
             }
         }
     }

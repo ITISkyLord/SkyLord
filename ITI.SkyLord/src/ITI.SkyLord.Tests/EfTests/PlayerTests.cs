@@ -46,8 +46,8 @@ namespace ITI.SkyLord.Tests.EfTests
             {
                 using ( PlayerContext context = new PlayerContext() )
                 {
-                    playerFromDatabase = context.FindPlayer( p.Mail );
-                    context.RemovePlayer( p.PlayerId );
+                    playerFromDatabase = context.FindPlayer(p.Mail);
+                    context.RemovePlayer(p.PlayerId);
                 }
             }
         }
@@ -75,8 +75,8 @@ namespace ITI.SkyLord.Tests.EfTests
             {
                 using ( PlayerContext context = new PlayerContext() )
                 {
-                    context.RemovePlayer( p1.PlayerId );
-                    context.RemovePlayer( p2.PlayerId );
+                    context.RemovePlayer(p1.PlayerId);
+                    context.RemovePlayer(p2.PlayerId);
                 }
             }
         }
