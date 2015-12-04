@@ -1,0 +1,32 @@
+﻿@addTagHelper "*, Microsoft.AspNet.Mvc.TagHelpers"
+
+@model ITI.SkyLord.ViewModel.SeeIslands.SeeIslands
+@using ITI.SkyLord
+
+@{
+    ViewData["Title"] = "View Islands";
+    Layout = "_Layout";
+}
+
+<h1>Liste d'îles</h1>
+
+<table>
+    <tr>
+        <th>Ile(s) :</th>
+    </tr>
+    @foreach (Island i in Model.Islands)
+    {
+        <tr>
+            <td>@i.Name</td>
+            <td>Ses coordonnées sont : [@i.Coordinates.X;@i.Coordinates.Y]</td>
+        </tr>
+
+    }
+</table>
+
+<br />
+<td><a asp-action="AddIsland" asp-controller="Island">Ajouter une nouvelle île</a></td>
+
+
+
+
