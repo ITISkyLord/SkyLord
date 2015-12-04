@@ -11,9 +11,6 @@ namespace ITI.SkyLord
         #region Properties
         public int UnitId { get; set; }
 
-
-        public string Name { get; set; }
-
         public UnitName UnitName { get; set; }
 
         public UnitDamageType UnitDamageType { get; set; }
@@ -25,16 +22,16 @@ namespace ITI.SkyLord
         public Ressource UnitCost { get; set; }
         #endregion
 
-        public override bool Equals( object obj )
-        {
-            Unit other = obj as Unit;
-            return other != null && other.Name == this.Name;
-        }
+        //public override bool Equals( object obj )
+        //{
+        //    Unit other = obj as Unit;
+        //    return other != null && other.Name == this.Name;
+        //}
 
-        public override int GetHashCode()
-        {
-            if ( Name == null ) return 0;
-            return Name.GetHashCode();
-        }
+        //public override int GetHashCode()
+        //{
+        //    if ( Name == null ) return 0;
+        //    return Name.GetHashCode();
+        //}
     }
 }

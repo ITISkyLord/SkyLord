@@ -1,5 +1,6 @@
 ﻿@addTagHelper "*, Microsoft.AspNet.Mvc.TagHelpers"
-@*@model ITI.SkyLord.ViewModel.Logged.ViewArmyModel*@
+@model ITI.SkyLord.ViewModel.Armies.SeeArmyViewModel
+@using ITI.SkyLord
 
 @{
     ViewData["Title"] = "View Army";
@@ -8,7 +9,20 @@
 }
 
 <h1>Armée</h1>
-@*@Model.Player.Name*@
+<table>
+    <tr>
+        <th>Nom de l'île</th>
+    </tr>
+    @foreach ( Regiment r in Model.CurrentArmy.Regiments )
+    {
+        <tr>
+            <td>@r.Name</td>
+            <td>@r.Number</td>
+        </tr>
+    }
+</table>
+
+<a asp-action="Index" asp-controller="Logged">Retour</a>
 
 
 
