@@ -1,15 +1,16 @@
 ﻿using System;
 using Microsoft.AspNet.Mvc;
 using ITI.SkyLord.Models.Entity_Framework.Contexts;
-using System.Security.Cryptography;
-using System.Text;
 using Microsoft.AspNet.Cryptography.KeyDerivation;
-using Microsoft.Data.Entity;
+using Microsoft.AspNet.Http;
 
 namespace ITI.SkyLord.Controllers
 {
     public class ConnectionController : Controller
     {
+        [FromServices]
+        public PlayerContext PlayerContext { get; set; }
+
         public IActionResult Index()
         {
             return View();
@@ -29,7 +30,6 @@ namespace ITI.SkyLord.Controllers
                 {
                     Player playerFound = context.FindPlayer( mail );
                     Response.Cookies.Append( "PlayerId", playerFound.PlayerId.ToString() );
-                    Console.WriteLine( "Cookie Current PlayerId (login) = " + Request.Cookies[ "PlayerId" ] );
                     return RedirectToAction( "Index", "Logged" );
                 }
             }
@@ -61,10 +61,10 @@ namespace ITI.SkyLord.Controllers
         public IActionResult Logout()
         {
             if ( !String.IsNullOrEmpty( Request.Cookies[ "PlayerId" ] ) )
-                Response.Cookies.Delete( "PlayerId" );
-
-            string cookie = Request.Cookies[ "PlayerId" ];
-            Console.WriteLine( "Cookie current PlayerId (Logout) = " + cookie );
+            {
+                Response.Cookies.Append( "PlayerId", "SHOULD BE NULL", new CookieOptions { Expires = DateTime.Now.AddDays( -1 ) } );
+                Response.Cookies.Delete( "PlayerId", new CookieOptions { Expires = DateTime.Now.AddDays( -1 ) } );
+            }
             return RedirectToAction( "Index", "Home" );
         }
 
