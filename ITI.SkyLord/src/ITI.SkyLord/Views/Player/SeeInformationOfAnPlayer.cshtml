@@ -1,4 +1,32 @@
 ﻿
-HELLO IT'S ME
+@addTagHelper "*, Microsoft.AspNet.Mvc.TagHelpers"
+
+@model ITI.SkyLord.ViewModel.SeePlayers.SeePlayers
+@using ITI.SkyLord
+
 @{
+    ViewData["Title"] = "Information sur le joueur";
+    Layout = "_Layout";
 }
+
+<h1>Joueurs</h1>
+
+<table>
+    <tr>
+        <th>Nom du joueur</th>
+        <th>Email</th>
+        <th>Description</th>
+        <th>Mot de passe</th>
+    </tr>
+    @foreach (Player p in Model.Players)
+    {
+        <tr>
+            <td>@p.Name</td>
+            <td>@p.Mail</td>
+            <td>@p.Profil.Description</td>
+            <td>@p.Password</td>         
+        </tr>
+    }
+</table>
+
+<br /><td><a asp-action="SeeInformationOfAnPlayer" asp-controller="Player">Retour vers la liste des joueurs</a></td>
