@@ -3,11 +3,11 @@ using System.Linq;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.Extensions.DependencyInjection;
-
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace ITI.SkyLord.Models.Entity_Framework.Contexts
 {
-    public class WorldContext : DbContext
+    public class WorldContext : IdentityDbContext
     {
         protected override void OnModelCreating(ModelBuilder builder)
         {

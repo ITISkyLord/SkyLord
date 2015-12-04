@@ -4,10 +4,11 @@ using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace ITI.SkyLord.Models.Entity_Framework.Contexts
 {
-    public class PlayerContext : DbContext
+    public class PlayerContext : IdentityDbContext
     {
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -36,11 +37,16 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
                             .GetRequiredService<IApplicationEnvironment>();
             optionsBuilder.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]);
         }
+        public Player GetPlayer(string userId)
+        {
+            return Players.Where( pl => pl.UserPlayer.User.Id == userId ).First();
+          //  return Players.Include( p => p.Profil ).FirstOrDefault( p => p.PlayerId == playerId );
 
+        }
         public DbSet<Profil> Profils { get; set; }
         public DbSet<Player> Players { get; set; }
         public DbSet<World> Worlds { get; set; }
-
+        public DbSet<User_Player> User_Players { get; set; }
         public void AddPlayer( Player p )
         {
             p.Profil = new Profil { Description = "Aucune description." };

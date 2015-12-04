@@ -2,10 +2,11 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace ITI.SkyLord.Models.Entity_Framework.Contexts
 {
-    public class SetupContext : DbContext
+    public class SetupContext : IdentityDbContext
     {
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -48,6 +49,8 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
         public DbSet<Unit> Units { get; set; }
         public DbSet<UnitStatistics> UnitStatistics { get; set; }
         public DbSet<World> Worlds { get; set; }
+
+        public DbSet<User_Player> UserPlayers { get; set; }
         //public DbSet<BuildingLevel> BuildingLevels { get; set; }
         //public DbSet<MageLevel> MageLevels { get; set; }
         //public DbSet<TechnologyLevel> TechnologiesLevel { get; set; }

@@ -1,12 +1,17 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using ITI.SkyLord.ViewModels.Profil;
+
+@model ProfilViewModel
 @{
     <h1>Bienvenue sur votre profil</h1>
     <h3>@ViewData["name"]</h3>
-    <p>@ViewData["description"]</p>
-    <form action="changeDescription">
-        <label for="description" id="description">Description</label><input type="text" name="description" placeholder="@ViewData["description"]" />
-        <input type="submit" name="Changer description" />
+    <p>@Model.Description</p>
+    <form asp-controller="Profil" asp-action="changeDescription" role="form" method="post">
+        <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="Description"></label>
+            <textarea asp-for="Description">@Model.Description</textarea>
+            <span asp-validation-for="Description"></span>
+        </div>
+        <button>Changer description</button>
     </form>
 }

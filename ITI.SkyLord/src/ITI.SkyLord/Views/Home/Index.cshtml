@@ -1,5 +1,22 @@
-﻿@{
+﻿@using System.Security.Claims
+@{
     ViewData["Title"] = "Home Page";
     Layout = "_Layout";
 }
-<p>Hello World! How are you ?</p>
+<p>Hello World! How are you ? @User.Identity.Name</p>
+<a asp-controller="Account" asp-action="Register">Inscription</a><br />
+<a asp-controller="Profil">Profil</a><br />
+
+@if( User.IsSignedIn() )
+{
+    <form asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm" class="navbar-right">
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <a asp-controller="Manage" asp-action="Index" title="Manage">Hello @User.GetUserName()!</a>
+            </li>
+            <li>
+                <button type="submit" class="btn btn-link navbar-btn navbar-link">Log off</button>
+            </li>
+        </ul>
+    </form>
+}
