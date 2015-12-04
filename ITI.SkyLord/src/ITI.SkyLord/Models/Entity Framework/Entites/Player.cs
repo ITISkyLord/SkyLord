@@ -32,5 +32,6 @@ namespace ITI.SkyLord
         public IList<Technology> Technologies { get; set; }
 
         public World World { get; set; }
+        public User_Player UserPlayer { get; set; }
     }
 }

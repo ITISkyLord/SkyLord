@@ -11,7 +11,7 @@ using ITI.SkyLord.Models.Entity_Framework.Contexts;
 using ITI.SkyLord.Models.Entity_Framework;
 using Microsoft.AspNet.Diagnostics.Entity;
 
-namespace ITI.SkyLord.TestAvecEntity
+namespace ITI.SkyLord
 {
     public class Startup
     {
@@ -46,7 +46,14 @@ namespace ITI.SkyLord.TestAvecEntity
                     options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
 
             // Add Identity services to the services container.
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddIdentity<ApplicationUser, IdentityRole>( options =>
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequiredLength = 6;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonLetterOrDigit = false;
+                options.Password.RequireUppercase = false;
+            } )
                 .AddEntityFrameworkStores<SetupContext>()
                 .AddDefaultTokenProviders();
 

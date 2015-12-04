@@ -120,6 +120,44 @@ namespace ITI.SkyLord.Migrations
                     table.PrimaryKey("PK_World", x => x.WorldId);
                 });
             migrationBuilder.CreateTable(
+                name: "AspNetRoles",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    ConcurrencyStamp = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: true),
+                    NormalizedName = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_IdentityRole", x => x.Id);
+                });
+            migrationBuilder.CreateTable(
+                name: "AspNetUsers",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    ConcurrencyStamp = table.Column<string>(nullable: true),
+                    Discriminator = table.Column<string>(nullable: false),
+                    Email = table.Column<string>(nullable: true),
+                    EmailConfirmed = table.Column<bool>(nullable: false),
+                    LockoutEnabled = table.Column<bool>(nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
+                    NormalizedEmail = table.Column<string>(nullable: true),
+                    NormalizedUserName = table.Column<string>(nullable: true),
+                    PasswordHash = table.Column<string>(nullable: true),
+                    PhoneNumber = table.Column<string>(nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
+                    SecurityStamp = table.Column<string>(nullable: true),
+                    TwoFactorEnabled = table.Column<bool>(nullable: false),
+                    UserName = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_IdentityUser", x => x.Id);
+                });
+            migrationBuilder.CreateTable(
                 name: "GuildMember",
                 columns: table => new
                 {
@@ -251,11 +289,110 @@ namespace ITI.SkyLord.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
             migrationBuilder.CreateTable(
+                name: "AspNetRoleClaims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    ClaimType = table.Column<string>(nullable: true),
+                    ClaimValue = table.Column<string>(nullable: true),
+                    RoleId = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_IdentityRoleClaim<string>", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_IdentityRoleClaim<string>_IdentityRole_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+            migrationBuilder.CreateTable(
+                name: "User_Player",
+                columns: table => new
+                {
+                    User_PlayerId = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    UserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_User_Player", x => x.User_PlayerId);
+                    table.ForeignKey(
+                        name: "FK_User_Player_ApplicationUser_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+            migrationBuilder.CreateTable(
+                name: "AspNetUserClaims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    ClaimType = table.Column<string>(nullable: true),
+                    ClaimValue = table.Column<string>(nullable: true),
+                    UserId = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_IdentityUserClaim<string>", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_IdentityUserClaim<string>_IdentityUser_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+            migrationBuilder.CreateTable(
+                name: "AspNetUserLogins",
+                columns: table => new
+                {
+                    LoginProvider = table.Column<string>(nullable: false),
+                    ProviderKey = table.Column<string>(nullable: false),
+                    ProviderDisplayName = table.Column<string>(nullable: true),
+                    UserId = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_IdentityUserLogin<string>", x => new { x.LoginProvider, x.ProviderKey });
+                    table.ForeignKey(
+                        name: "FK_IdentityUserLogin<string>_IdentityUser_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+            migrationBuilder.CreateTable(
+                name: "AspNetUserRoles",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(nullable: false),
+                    RoleId = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_IdentityUserRole<string>", x => new { x.UserId, x.RoleId });
+                    table.ForeignKey(
+                        name: "FK_IdentityUserRole<string>_IdentityRole_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_IdentityUserRole<string>_IdentityUser_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+            migrationBuilder.CreateTable(
                 name: "Player",
                 columns: table => new
                 {
-                    PlayerId = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    PlayerId = table.Column<long>(nullable: false),
                     GuildGuildId = table.Column<long>(nullable: true),
                     Mail = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
@@ -272,6 +409,12 @@ namespace ITI.SkyLord.Migrations
                         principalTable: "Guild",
                         principalColumn: "GuildId",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Player_User_Player_PlayerId",
+                        column: x => x.PlayerId,
+                        principalTable: "User_Player",
+                        principalColumn: "User_PlayerId",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Player_Profil_ProfilProfilId",
                         column: x => x.ProfilProfilId,
@@ -516,6 +659,18 @@ namespace ITI.SkyLord.Migrations
                         principalColumn: "MageId",
                         onDelete: ReferentialAction.Restrict);
                 });
+            migrationBuilder.CreateIndex(
+                name: "RoleNameIndex",
+                table: "AspNetRoles",
+                column: "NormalizedName");
+            migrationBuilder.CreateIndex(
+                name: "EmailIndex",
+                table: "AspNetUsers",
+                column: "NormalizedEmail");
+            migrationBuilder.CreateIndex(
+                name: "UserNameIndex",
+                table: "AspNetUsers",
+                column: "NormalizedUserName");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -528,6 +683,10 @@ namespace ITI.SkyLord.Migrations
             migrationBuilder.DropTable("Regiment");
             migrationBuilder.DropTable("Spell");
             migrationBuilder.DropTable("Technology");
+            migrationBuilder.DropTable("AspNetRoleClaims");
+            migrationBuilder.DropTable("AspNetUserClaims");
+            migrationBuilder.DropTable("AspNetUserLogins");
+            migrationBuilder.DropTable("AspNetUserRoles");
             migrationBuilder.DropTable("ApprenticeLevel");
             migrationBuilder.DropTable("Mage");
             migrationBuilder.DropTable("BuildingLevel");
@@ -535,6 +694,7 @@ namespace ITI.SkyLord.Migrations
             migrationBuilder.DropTable("Army");
             migrationBuilder.DropTable("Unit");
             migrationBuilder.DropTable("TechnologyLevel");
+            migrationBuilder.DropTable("AspNetRoles");
             migrationBuilder.DropTable("Level");
             migrationBuilder.DropTable("Island");
             migrationBuilder.DropTable("UnitStatistics");
@@ -542,8 +702,10 @@ namespace ITI.SkyLord.Migrations
             migrationBuilder.DropTable("Coordinate");
             migrationBuilder.DropTable("Player");
             migrationBuilder.DropTable("Guild");
+            migrationBuilder.DropTable("User_Player");
             migrationBuilder.DropTable("Profil");
             migrationBuilder.DropTable("World");
+            migrationBuilder.DropTable("AspNetUsers");
         }
     }
 }
