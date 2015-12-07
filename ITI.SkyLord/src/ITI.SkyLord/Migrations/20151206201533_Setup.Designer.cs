@@ -8,8 +8,8 @@ using ITI.SkyLord.Models.Entity_Framework.Contexts;
 namespace ITI.SkyLord.Migrations
 {
     [DbContext(typeof(SetupContext))]
-    [Migration("20151204154323_Setup2")]
-    partial class Setup2
+    [Migration("20151206201533_Setup")]
+    partial class Setup
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -252,7 +252,8 @@ namespace ITI.SkyLord.Migrations
                     b.Property<long>("RegimentId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<long?>("ArmyArmyId");
+                    b.Property<long?>("ArmyId")
+                        .HasAnnotation("Relational:ColumnName", "ArmyArmyId");
 
                     b.Property<string>("Name");
 
@@ -495,7 +496,7 @@ namespace ITI.SkyLord.Migrations
                 {
                     b.HasOne("ITI.SkyLord.Army")
                         .WithMany()
-                        .HasForeignKey("ArmyArmyId");
+                        .HasForeignKey("ArmyId");
 
                     b.HasOne("ITI.SkyLord.Unit")
                         .WithMany()

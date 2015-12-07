@@ -227,7 +227,6 @@ namespace ITI.SkyLord.Migrations
                 {
                     UnitId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true),
                     UnitCostRessourceId = table.Column<long>(nullable: true),
                     UnitDamageType = table.Column<int>(nullable: false),
                     UnitName = table.Column<int>(nullable: false),
@@ -479,7 +478,7 @@ namespace ITI.SkyLord.Migrations
                 {
                     table.PrimaryKey("PK_Regiment", x => x.RegimentId);
                     table.ForeignKey(
-                        name: "FK_Regiment_Army_ArmyArmyId",
+                        name: "FK_Regiment_Army_ArmyId",
                         column: x => x.ArmyArmyId,
                         principalTable: "Army",
                         principalColumn: "ArmyId",
