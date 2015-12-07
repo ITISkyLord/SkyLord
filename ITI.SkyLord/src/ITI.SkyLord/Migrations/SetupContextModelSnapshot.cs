@@ -251,7 +251,8 @@ namespace ITI.SkyLord.Migrations
                     b.Property<long>("RegimentId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<long?>("ArmyArmyId");
+                    b.Property<long?>("ArmyId")
+                        .HasAnnotation("Relational:ColumnName", "ArmyArmyId");
 
                     b.Property<string>("Name");
 
@@ -494,7 +495,7 @@ namespace ITI.SkyLord.Migrations
                 {
                     b.HasOne("ITI.SkyLord.Army")
                         .WithMany()
-                        .HasForeignKey("ArmyArmyId");
+                        .HasForeignKey("ArmyId");
 
                     b.HasOne("ITI.SkyLord.Unit")
                         .WithMany()

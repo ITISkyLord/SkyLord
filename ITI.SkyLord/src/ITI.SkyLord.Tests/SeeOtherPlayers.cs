@@ -28,22 +28,21 @@ namespace ITI.SkyLord.Tests
 
             using (PlayerContext pc = new PlayerContext())
             {
-                
-                if (pc.Players.Where( (p) => p.Name==p1.Name).FirstOrDefault() != null)
-                {
-                    Player x = pc.Players.Include(p => p.Profil).Include(z => z.World).First(o => o.Name == "Marvin");
-
-                    Console.WriteLine("Name : {0}, Password : {1}, Description {2}, Monde : {3}", x.Name, x.Password, x.Profil.Description, x.World.WorldId);
-                }
-                else
+                try
                 {
                     pc.AddPlayer(p1);
                     pc.SaveChanges();
 
                     Player x = pc.Players.Include(p => p.Profil).First(o => o.Name == "Marvin");
 
-                    Console.WriteLine("Name : {0}, Password : {1}, Description {2}, Monde : {3}", x.Name, x.Password, x.Profil.Description, x.World.WorldId);
-                }       
+                    Console.WriteLine("Name : {0}, Password : {1}, Description {2}", x.Name, x.Password, x.Profil.Description);
+                }
+                finally
+                {
+                    pc.RemovePlayer(p1.PlayerId);
+                    pc.SaveChanges();
+                }
+  
             }
         }
     }

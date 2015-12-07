@@ -74,6 +74,33 @@ namespace ITI.SkyLord.Tests.EfTests
             }
         }
 
+        [Test]
+        public void cascade_delete()
+        {
+            Player p = new Player { World = _world, Name = "Thanur", Mail = "toto@intechinfo.fr", Password = "toto" };
+
+            try
+            {
+                using (PlayerContext context = new PlayerContext())
+                {
+                    context.AddPlayer(p);
+                }
+            }
+            finally
+            {
+                using (PlayerContext context = new PlayerContext())
+                {
+                    Profil profil = context.FindPlayer(p.PlayerId).Profil;
+
+                    context.RemovePlayer(p.PlayerId);
+                    context.SaveChanges();
+
+                    Assert.IsNull(context.FindPlayer(p.PlayerId));
+                    Assert.IsFalse(context.Profils.Any(pr => pr.ProfilId == profil.ProfilId));
+                }
+            }
+
+        }
         //[Test]
         //public void CreateAPlayerCreateAlsoAIsland()
         //{
@@ -103,6 +130,6 @@ namespace ITI.SkyLord.Tests.EfTests
         //        context.Islands.Add(i1);
         //        context.SaveChanges();
         //    }      
-    //}
-}
+        //}
+    }
         }
