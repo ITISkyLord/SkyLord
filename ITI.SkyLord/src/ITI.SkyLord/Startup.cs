@@ -122,7 +122,19 @@ namespace ITI.SkyLord
                 {
                     World firstWorld = new World();
                     context.Add( firstWorld );
+                    for( int i = 0; i<100; i++ )
+                    {
+                        Island island = new Island();
+                        Coordinate coord = new Coordinate();
+                        coord.X = i;
+                        coord.Y = i;
+                        context.Coordinates.Add( coord );
+                        context.SaveChanges();
 
+                        island.Coordinates = coord;
+                        island.IsCapital = false;
+                        context.Islands.Add( island );
+                    }
                     context.SaveChanges();
                 }
             }

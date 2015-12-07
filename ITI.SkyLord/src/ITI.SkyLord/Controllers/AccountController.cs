@@ -14,6 +14,7 @@ using ITI.SkyLord.Models.Entity_Framework.Contexts;
 using ITI.SkyLord.ViewModels.Account;
 using ITI.SkyLord.Services;
 using ITI.SkyLord.Controllers;
+using ITI.SkyLord.Models.ObjectModel;
 
 namespace ITI.SkyLord.Models.Entity_Framework.Controllers
 {
@@ -25,7 +26,6 @@ namespace ITI.SkyLord.Models.Entity_Framework.Controllers
         private readonly IEmailSender _emailSender;
         private readonly ISmsSender _smsSender;
         private readonly ILogger _logger;
-
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
@@ -129,6 +129,10 @@ namespace ITI.SkyLord.Models.Entity_Framework.Controllers
                         p.Password = model.Password;
                         p.Profil = new Profil();
                         p.Profil.Description = "";
+                        Island island = context.Islands.Include(i => i.Coordinates).Where(i => i.Owner == null ).OrderBy(i => IslandManager.DistanceFromCenter(i)).First();
+                        p.Islands = new List<Island>();
+                        p.Islands.Add( island );
+                        island.Owner = p;
                         context.Players.Add( p );
                         context.Profils.Add( p.Profil );
                         context.User_Players.Add( new User_Player( p, user ) );

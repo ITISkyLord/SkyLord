@@ -44,6 +44,7 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
 
         }
         public DbSet<Profil> Profils { get; set; }
+        public DbSet<Island> Islands { get; set; }
         public DbSet<Player> Players { get; set; }
         public DbSet<World> Worlds { get; set; }
         public DbSet<User_Player> User_Players { get; set; }
