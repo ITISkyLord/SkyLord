@@ -8,9 +8,10 @@ using ITI.SkyLord.Models.Entity_Framework.Contexts;
 namespace ITI.SkyLord.Migrations
 {
     [DbContext(typeof(SetupContext))]
-    partial class SetupContextModelSnapshot : ModelSnapshot
+    [Migration("20151206203116_Setup2")]
+    partial class Setup2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.0-rc1-16348")
@@ -217,7 +218,8 @@ namespace ITI.SkyLord.Migrations
 
             modelBuilder.Entity("ITI.SkyLord.Player", b =>
                 {
-                    b.Property<long>("PlayerId");
+                    b.Property<long>("PlayerId")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<long?>("GuildGuildId");
 
@@ -354,16 +356,6 @@ namespace ITI.SkyLord.Migrations
                     b.HasKey("UnitStatisticsId");
                 });
 
-            modelBuilder.Entity("ITI.SkyLord.User_Player", b =>
-                {
-                    b.Property<long>("User_PlayerId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("UserId");
-
-                    b.HasKey("User_PlayerId");
-                });
-
             modelBuilder.Entity("ITI.SkyLord.World", b =>
                 {
                     b.Property<long>("WorldId")
@@ -372,157 +364,12 @@ namespace ITI.SkyLord.Migrations
                     b.HasKey("WorldId");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityRole", b =>
-                {
-                    b.Property<string>("Id");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken();
-
-                    b.Property<string>("Name")
-                        .HasAnnotation("MaxLength", 256);
-
-                    b.Property<string>("NormalizedName")
-                        .HasAnnotation("MaxLength", 256);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedName")
-                        .HasAnnotation("Relational:Name", "RoleNameIndex");
-
-                    b.HasAnnotation("Relational:TableName", "AspNetRoles");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityRoleClaim<string>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("ClaimType");
-
-                    b.Property<string>("ClaimValue");
-
-                    b.Property<string>("RoleId")
-                        .IsRequired();
-
-                    b.HasKey("Id");
-
-                    b.HasAnnotation("Relational:TableName", "AspNetRoleClaims");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityUser", b =>
-                {
-                    b.Property<string>("Id");
-
-                    b.Property<int>("AccessFailedCount");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken();
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired();
-
-                    b.Property<string>("Email")
-                        .HasAnnotation("MaxLength", 256);
-
-                    b.Property<bool>("EmailConfirmed");
-
-                    b.Property<bool>("LockoutEnabled");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasAnnotation("MaxLength", 256);
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasAnnotation("MaxLength", 256);
-
-                    b.Property<string>("PasswordHash");
-
-                    b.Property<string>("PhoneNumber");
-
-                    b.Property<bool>("PhoneNumberConfirmed");
-
-                    b.Property<string>("SecurityStamp");
-
-                    b.Property<bool>("TwoFactorEnabled");
-
-                    b.Property<string>("UserName")
-                        .HasAnnotation("MaxLength", 256);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasAnnotation("Relational:Name", "EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .HasAnnotation("Relational:Name", "UserNameIndex");
-
-                    b.HasAnnotation("Relational:DiscriminatorProperty", "Discriminator");
-
-                    b.HasAnnotation("Relational:DiscriminatorValue", "IdentityUser");
-
-                    b.HasAnnotation("Relational:TableName", "AspNetUsers");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityUserClaim<string>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("ClaimType");
-
-                    b.Property<string>("ClaimValue");
-
-                    b.Property<string>("UserId")
-                        .IsRequired();
-
-                    b.HasKey("Id");
-
-                    b.HasAnnotation("Relational:TableName", "AspNetUserClaims");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityUserLogin<string>", b =>
-                {
-                    b.Property<string>("LoginProvider");
-
-                    b.Property<string>("ProviderKey");
-
-                    b.Property<string>("ProviderDisplayName");
-
-                    b.Property<string>("UserId")
-                        .IsRequired();
-
-                    b.HasKey("LoginProvider", "ProviderKey");
-
-                    b.HasAnnotation("Relational:TableName", "AspNetUserLogins");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityUserRole<string>", b =>
-                {
-                    b.Property<string>("UserId");
-
-                    b.Property<string>("RoleId");
-
-                    b.HasKey("UserId", "RoleId");
-
-                    b.HasAnnotation("Relational:TableName", "AspNetUserRoles");
-                });
-
             modelBuilder.Entity("ITI.SkyLord.MageLevel", b =>
                 {
                     b.HasBaseType("ITI.SkyLord.Level");
 
 
                     b.HasAnnotation("Relational:DiscriminatorValue", "MageLevel");
-                });
-
-            modelBuilder.Entity("ITI.SkyLord.Models.Entity_Framework.ApplicationUser", b =>
-                {
-                    b.HasBaseType("Microsoft.AspNet.Identity.EntityFramework.IdentityUser");
-
-
-                    b.HasAnnotation("Relational:DiscriminatorValue", "ApplicationUser");
                 });
 
             modelBuilder.Entity("ITI.SkyLord.Apprentice", b =>
@@ -636,10 +483,6 @@ namespace ITI.SkyLord.Migrations
                         .WithMany()
                         .HasForeignKey("GuildGuildId");
 
-                    b.HasOne("ITI.SkyLord.User_Player")
-                        .WithOne()
-                        .HasForeignKey("ITI.SkyLord.Player", "PlayerId");
-
                     b.HasOne("ITI.SkyLord.Profil")
                         .WithMany()
                         .HasForeignKey("ProfilProfilId");
@@ -687,45 +530,6 @@ namespace ITI.SkyLord.Migrations
                     b.HasOne("ITI.SkyLord.UnitStatistics")
                         .WithMany()
                         .HasForeignKey("UnitStatisticsUnitStatisticsId");
-                });
-
-            modelBuilder.Entity("ITI.SkyLord.User_Player", b =>
-                {
-                    b.HasOne("ITI.SkyLord.Models.Entity_Framework.ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityRoleClaim<string>", b =>
-                {
-                    b.HasOne("Microsoft.AspNet.Identity.EntityFramework.IdentityRole")
-                        .WithMany()
-                        .HasForeignKey("RoleId");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityUserClaim<string>", b =>
-                {
-                    b.HasOne("Microsoft.AspNet.Identity.EntityFramework.IdentityUser")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityUserLogin<string>", b =>
-                {
-                    b.HasOne("Microsoft.AspNet.Identity.EntityFramework.IdentityUser")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityUserRole<string>", b =>
-                {
-                    b.HasOne("Microsoft.AspNet.Identity.EntityFramework.IdentityRole")
-                        .WithMany()
-                        .HasForeignKey("RoleId");
-
-                    b.HasOne("Microsoft.AspNet.Identity.EntityFramework.IdentityUser")
-                        .WithMany()
-                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("ITI.SkyLord.MageLevel", b =>

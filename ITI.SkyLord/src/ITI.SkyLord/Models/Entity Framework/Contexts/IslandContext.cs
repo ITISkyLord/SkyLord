@@ -27,10 +27,8 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
         public DbSet<Island> Islands { get; set; }
         public DbSet<Ressource> Ressources { get; set; }
         public DbSet<Coordinate> Coordinates { get; set; }
-        public DbSet<Army> Armies { get; set; }
         public DbSet<Building> Building { get; set; }
         public DbSet<Technology> Technologies { get; set; }
         public DbSet<Unit> Units { get; set; }
-        public DbSet<Regiment> Regiments { get; set; }
     }
 }
