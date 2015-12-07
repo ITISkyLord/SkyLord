@@ -48,15 +48,15 @@ namespace ITI.SkyLord.Tests.EfTests
         [Test]
         public void DisplayPlayers()
         {
-            Player p1 = new Player { World = _world, Name = "Thanur", Mail = "toto@intechinfo.fr", Password = "toto" };
-            Player p2 = new Player { World = _world, Name = "MachinTruc", Mail = "machin@intechinfo.fr", Password = "toto" };
+            //Player p1 = new Player { World = _world, Name = "Thanur", Mail = "toto@intechinfo.fr", Password = "toto" };
+            //Player p2 = new Player { World = _world, Name = "MachinTruc", Mail = "machin@intechinfo.fr", Password = "toto" };
 
             try
             {
                 using ( PlayerContext context = new PlayerContext() )
                 {
-                    context.AddPlayer( p1 );
-                    context.AddPlayer( p2 );
+                    //context.AddPlayer( p1 );
+                    //context.AddPlayer( p2 );
 
                     foreach ( Player player in context.Players.Include( p => p.Profil ) )
                     {
@@ -66,11 +66,12 @@ namespace ITI.SkyLord.Tests.EfTests
             }
             finally
             {
-                using ( PlayerContext context = new PlayerContext() )
-                {
-                    context.RemovePlayer(p1.PlayerId);
-                    context.RemovePlayer(p2.PlayerId);
-                }
+                //using ( PlayerContext context = new PlayerContext() )
+                //{
+                //    context.RemovePlayer(p1.PlayerId);
+                //    context.RemovePlayer(p2.PlayerId);
+                //}
+                Console.WriteLine("C'est bon ! ");
             }
         }
 
