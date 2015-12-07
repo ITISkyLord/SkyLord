@@ -74,35 +74,62 @@ namespace ITI.SkyLord.Tests.EfTests
             }
         }
 
-    //    [Test]
-    //    public void CreateAPlayerCreateAlsoAIsland()
-    //    {
+        [Test]
+        public void cascade_delete()
+        {
+            Player p = new Player { World = _world, Name = "Thanur", Mail = "toto@intechinfo.fr", Password = "toto" };
 
-    //        Player p1 = new Player { World = _world, Name = "Kevin", Mail = "tdr@cdk.fr", Password = "levelIII" };
-    //        Coordinate c = new Coordinate { X = 0, Y = 1 };        
+            try
+            {
+                using (PlayerContext context = new PlayerContext())
+                {
+                    context.AddPlayer(p);
+                }
+            }
+            finally
+            {
+                using (PlayerContext context = new PlayerContext())
+                {
+                    Profil profil = context.FindPlayer(p.PlayerId).Profil;
 
-    //        using (PlayerContext context =  new PlayerContext())
-    //        {
-    //            if (context.Players.Where((p) => p.Name == p1.Name).FirstOrDefault() != null)
-    //            {
-    //                Player x = context.Players.Include(p => p.Profil).Include(z => z.World).First(o => o.Name == "Marvin");
+                    context.RemovePlayer(p.PlayerId);
+                    context.SaveChanges();
 
-    //                Console.WriteLine("Name : {0}, Password : {1}, Description {2}, Monde : {3}", x.Name, x.Password, x.Profil.Description, x.World.WorldId);
-    //            }
-    //            else
-    //            {
-    //                context.AddPlayer(p1);
-    //                context.SaveChanges();
-    //            }
-    //        }
+                    Assert.IsNull(context.FindPlayer(p.PlayerId));
+                    Assert.IsFalse(context.Profils.Any(pr => pr.ProfilId == profil.ProfilId));
+                }
+            }
 
-    //        using (IslandContext context = new IslandContext())
-    //        {
-    //            context.Coordinates.Add(c);
-    //            Island i1 = new Island { Name = "Parc des princes", IsCapital = true, Loyalty = 0, Owner = p1, Coordinates = c };
-    //            context.Islands.Add(i1);
-    //            context.SaveChanges();
-    //        }      
-    //}
-}
+        }
+        //[Test]
+        //public void CreateAPlayerCreateAlsoAIsland()
+        //{
+
+        //    Player p1 = new Player { World = _world, Name = "Kevin", Mail = "tdr@cdk.fr", Password = "levelIII" };
+        //    Coordinate c = new Coordinate { X = 0, Y = 1 };        
+
+        //    using (PlayerContext context =  new PlayerContext())
+        //    {
+        //        if (context.Players.Where((p) => p.Name == p1.Name).FirstOrDefault() != null)
+        //        {
+        //            Player x = context.Players.Include(p => p.Profil).Include(z => z.World).First(o => o.Name == "Marvin");
+
+        //            Console.WriteLine("Name : {0}, Password : {1}, Description {2}, Monde : {3}", x.Name, x.Password, x.Profil.Description, x.World.WorldId);
+        //        }
+        //        else
+        //        {
+        //            context.AddPlayer(p1);
+        //            context.SaveChanges();
+        //        }
+        //    }
+
+        //    using (IslandContext context = new IslandContext())
+        //    {
+        //        context.Coordinates.Add(c);
+        //        Island i1 = new Island { Name = "Parc des princes", IsCapital = true, Loyalty = 0, Owner = p1, Coordinates = c };
+        //        context.Islands.Add(i1);
+        //        context.SaveChanges();
+        //    }      
+        //}
+    }
         }

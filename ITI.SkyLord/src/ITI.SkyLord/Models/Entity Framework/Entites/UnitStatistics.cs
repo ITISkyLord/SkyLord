@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 
@@ -22,6 +23,7 @@ namespace ITI.SkyLord
         public int Capacity { get; set; }
 
         public int Consumption { get; set; }
+
         #endregion
     }
 }
