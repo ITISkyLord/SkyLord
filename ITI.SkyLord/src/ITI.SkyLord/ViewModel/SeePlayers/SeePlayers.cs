@@ -8,6 +8,6 @@ namespace ITI.SkyLord.ViewModel.SeePlayers
     public class SeePlayers
     {
         public List<Player> Players { get; set; }
-         public Player ActivePlayer { get; set; }
+        public Player ActivePlayer { get; set; }
     }
 }

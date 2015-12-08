@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.Data.Entity.Metadata;
 
 namespace ITI.SkyLord.Models.Entity_Framework.Contexts
 {
@@ -17,13 +18,10 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
 
-            // Configure PlayerId as PK for Profile
-            //builder.Entity<EProfil>()
-            //    .HasKey(e => e.ProfilId);
-
-            //// Configure PlayerId as FK for Profile
-            //builder.Entity<EProfil>()
-            //    .HasAlternateKey(p => p.Owner);
+            //builder.Entity<Player>()
+            //    .HasOne( p => p.Profil )
+            //    .WithOne( pr => pr.Player )
+            //    .OnDelete( DeleteBehavior.Cascade );
         }
         public IConfigurationRoot Configuration { get; set; }
 

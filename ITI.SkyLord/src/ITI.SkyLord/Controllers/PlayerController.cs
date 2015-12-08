@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Data.Entity;
+using Microsoft.Extensions.Primitives;
 
 namespace ITI.SkyLord.Controllers
 {
@@ -18,19 +19,26 @@ namespace ITI.SkyLord.Controllers
         {
             return View();
         }
+
         public IActionResult SeePlayers()
         {
+            Player playerActif;
+            if ( Request.Cookies[ "PlayerId" ].Count != 0 )
+            {
+                playerActif = PlayerContext.Players.Where( p => p.PlayerId == long.Parse(Request.Cookies[ "PlayerId" ]) ).SingleOrDefault();
 
-            Player playerActif = PlayerContext.Players.Where(p => p.Name == "Marvin").SingleOrDefault();
+                List<Player> players = PlayerContext.Players.ToList();
+                players.Remove( playerActif );
 
-            List<Player> players = PlayerContext.Players.ToList();
-            players.Remove(playerActif);
+                SeePlayers sp = new SeePlayers();
 
-            SeePlayers sp = new SeePlayers();
+                sp.Players = players;
+                sp.ActivePlayer = playerActif;
+                return View( sp );
+            }
+            else
+                return RedirectToAction( "Index", "Connection" );
 
-            sp.Players = players;
-            sp.ActivePlayer = playerActif;
-            return View(sp);
         }
 
         public IActionResult SeeInformationOfAnPlayer(int id)
