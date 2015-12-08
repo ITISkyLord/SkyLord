@@ -20,16 +20,16 @@ namespace ITI.SkyLord
 {
     public class Startup
     {
-        public Startup(IHostingEnvironment env, IApplicationEnvironment appEnv)
+        public Startup( IHostingEnvironment env, IApplicationEnvironment appEnv )
         {
             // Setup configuration sources.
-            
+
             var builder = new ConfigurationBuilder()
                 .SetBasePath(appEnv.ApplicationBasePath)
                 .AddJsonFile("appsettings.json")
                 .AddJsonFile($"config.{env.EnvironmentName}.json", optional: true);
 
-            if (env.IsDevelopment())
+            if( env.IsDevelopment() )
             {
                 // This reads the configuration keys from the secret store.
                 // For more details on using the user secret store see http://go.microsoft.com/fwlink/?LinkID=532709
@@ -42,13 +42,13 @@ namespace ITI.SkyLord
         public IConfigurationRoot Configuration { get; set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices( IServiceCollection services )
         {
             // Add Entity Framework services to the services container.
             services.AddEntityFramework()
                 .AddSqlServer()
-                .AddDbContext<SetupContext>(options =>
-                    options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
+                .AddDbContext<SetupContext>( options =>
+                     options.UseSqlServer( Configuration["Data:DefaultConnection:ConnectionString"] ) );
 
             // Add Identity services to the services container.
             services.AddIdentity<ApplicationUser, IdentityRole>( options =>
@@ -78,7 +78,7 @@ namespace ITI.SkyLord
         }
 
         // Configure is called after ConfigureServices is called.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure( IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory )
         {
             loggerFactory.MinimumLevel = LogLevel.Information;
             loggerFactory.AddDebug();
@@ -86,7 +86,7 @@ namespace ITI.SkyLord
             // Configure the HTTP request pipeline.
 
             // Add the following to the request pipeline only in development environment.
-            if (env.IsDevelopment())
+            if( env.IsDevelopment() )
             {
                 app.UseBrowserLink();
                 app.UseDeveloperExceptionPage();
@@ -96,12 +96,12 @@ namespace ITI.SkyLord
             {
                 // Add Error handling middleware which catches all application specific errors and
                 // sends the request to the following path or controller action.
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler( "/Home/Error" );
             }
 
 
             // If you want sessions to expire 30 minutes after the last activity, you would do so like this:
-          //  app.UseInMemorySession( configure: s => s.IdleTimeout = TimeSpan.FromMinutes( 30 ) );
+            //  app.UseInMemorySession( configure: s => s.IdleTimeout = TimeSpan.FromMinutes( 30 ) );
 
 
             // Add static files to the request pipeline.
@@ -114,25 +114,23 @@ namespace ITI.SkyLord
             // For more information see http://go.microsoft.com/fwlink/?LinkID=532715
 
             // Add MVC to the request pipeline.
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-            });
+            app.UseMvc( routes =>
+             {
+                 routes.MapRoute(
+                     name: "default",
+                     template: "{controller=Home}/{action=Index}/{id?}" );
+             } );
 
             /*
             #region Seeding
             World defaultWorld = null;
-            Player defaultPlayer = null;
-            Island defaultIsland = null;
             Unit guard = null;
             Unit necromancer = null;
 
-            // Add defaultWorld
-            using ( WorldContext context = new WorldContext() )
+            if ( env.IsDevelopment() )
             {
-                if ( env.IsDevelopment() )
+                // Add defaultWorld
+                using ( WorldContext context = new WorldContext() )
                 {
                     defaultWorld = context.Worlds.FirstOrDefault();
                     if ( defaultWorld == null )
@@ -142,100 +140,76 @@ namespace ITI.SkyLord
                         context.SaveChanges();
                     }
                 }
-            }
 
-            // Add defaultPlayer
-            using ( PlayerContext context = new PlayerContext() )
-            {
-                if ( env.IsDevelopment() )
+                // Add Islands
+                using ( IslandContext context = new IslandContext() )
                 {
-                    defaultPlayer = context.Players.FirstOrDefault();
-                    if ( defaultPlayer == null )
+                    if( context.Islands.Count() < 99 )
                     {
-                        defaultPlayer = new Player
+                        for ( int i = 0; i < 100; i++ )
                         {
-                            World = defaultWorld,
-                            Name = "TestPlayer",
-                            Mail = "TestPlayer@test.fr",
-                            Password = ProtectPassword( "password" )
-                        };
-                        context.AddPlayer( defaultPlayer );
-                        context.SaveChanges();
+                            Ressource ressource = new Ressource { Wood = 1000, Metal = 1000, Cristal = 1000, Magic = 1000 };
+                            Coordinate coord = new Coordinate();
+                            coord.X = i;
+                            coord.Y = i;
+                            context.Ressources.Add(ressource);
+                            context.Coordinates.Add(coord);
+                            context.SaveChanges();
+
+                            Island island = new Island();
+                            island.Loyalty = 100;
+                            island.Coordinates = coord;
+                            island.AllRessources = ressource;
+                                                  
+                            context.Islands.Add( island );
+                            context.SaveChanges();
+                        }
                     }
                 }
-            }
 
-            // Add defaultIsland
-            using ( IslandContext context = new IslandContext() )
-            {
-                if ( env.IsDevelopment() )
+                //Add defaultUnits
+                using ( ArmyContext context = new ArmyContext() )
                 {
-                    defaultIsland = context.Islands.FirstOrDefault();
-                    if ( defaultIsland == null )
+                    guard = context.Units.Where( u => u.UnitName == UnitName.guard ).SingleOrDefault();
+                    necromancer = context.Units.Where( u => u.UnitName == UnitName.necromancer ).SingleOrDefault();
+                    if ( guard == null )
                     {
-                        Ressource islandDefaultRessource = new Ressource { Wood = 1000, Metal = 1000, Cristal = 1000, Magic = 1000 };
-                        context.Ressources.Add( islandDefaultRessource );
-                        Coordinate islandDefaultCoordinate = new Coordinate { X = 1, Y = 1 };
-                        context.Coordinates.Add( islandDefaultCoordinate );
+                        Ressource guardCost = new Ressource { Wood = 200, Metal = 100 };
+                        context.Ressources.Add( guardCost );
+                        UnitStatistics guardStatistics = new UnitStatistics { Attack = 70, PhysicResist = 70, MagicResist = 40, Capacity = 100, Speed = 20, Consumption = 10 };
+                        context.UnitStatistics.Add( guardStatistics );
                         context.SaveChanges();
 
-                        defaultIsland = new Island
+                        guard = new Unit
                         {
-                            Name = "defaultIsland",
-                            Owner = defaultPlayer,
-                            Coordinates = islandDefaultCoordinate,
-                            AllRessources = islandDefaultRessource,
-                            IsCapital = true,
-                            Loyalty = 100
+                            UnitType = UnitType.soldier,
+                            UnitName = UnitName.guard,
+                            UnitDamageType = UnitDamageType.physical,
+                            UnitCost = guardCost,
+                            UnitStatistics = guardStatistics,
                         };
-                        context.Add( defaultIsland );
+                        context.Units.Add( guard );
                         context.SaveChanges();
                     }
-                }
-            }
-
-            //Add defaultUnits
-            using ( ArmyContext context = new ArmyContext() )
-            {
-                guard = context.Units.Where( u => u.UnitName == UnitName.guard ).SingleOrDefault();
-                necromancer = context.Units.Where( u => u.UnitName == UnitName.necromancer ).SingleOrDefault();
-                if( guard == null )
-                {
-                    Ressource guardCost = new Ressource { Wood = 200, Metal = 100 };
-                    context.Ressources.Add( guardCost );
-                    UnitStatistics guardStatistics = new UnitStatistics { Attack = 70, PhysicResist = 70, MagicResist = 40, Capacity = 100, Speed = 20, Consumption = 10 };
-                    context.UnitStatistics.Add( guardStatistics );
-                    context.SaveChanges();
-
-                    guard = new Unit
+                    if ( necromancer == null )
                     {
-                        UnitType = UnitType.soldier,
-                        UnitName = UnitName.guard,
-                        UnitDamageType = UnitDamageType.physical,
-                        UnitCost = guardCost,
-                        UnitStatistics = guardStatistics,
-                    };
-                    context.Units.Add( guard );
-                    context.SaveChanges();
-                }
-                if ( necromancer == null )
-                {
-                    Ressource necromancerCost = new Ressource { Wood = 100, Metal = 100, Cristal = 200, Magic = 50 };
-                    context.Ressources.Add( necromancerCost );
-                    UnitStatistics necromancerStatistics = new UnitStatistics { Attack = 70, PhysicResist = 40, MagicResist = 70, Capacity = 50, Speed = 30, Consumption = 15 };
-                    context.UnitStatistics.Add( necromancerStatistics );
-                    context.SaveChanges();
+                        Ressource necromancerCost = new Ressource { Wood = 100, Metal = 100, Cristal = 200, Magic = 50 };
+                        context.Ressources.Add( necromancerCost );
+                        UnitStatistics necromancerStatistics = new UnitStatistics { Attack = 70, PhysicResist = 40, MagicResist = 70, Capacity = 50, Speed = 30, Consumption = 15 };
+                        context.UnitStatistics.Add( necromancerStatistics );
+                        context.SaveChanges();
 
-                    necromancer = new Unit
-                    {
-                        UnitType = UnitType.magic,
-                        UnitName = UnitName.necromancer,
-                        UnitDamageType = UnitDamageType.magical,
-                        UnitCost = necromancerCost,
-                        UnitStatistics = necromancerStatistics,
-                    };
-                    context.Units.Add( necromancer );
-                    context.SaveChanges();
+                        necromancer = new Unit
+                        {
+                            UnitType = UnitType.magic,
+                            UnitName = UnitName.necromancer,
+                            UnitDamageType = UnitDamageType.magical,
+                            UnitCost = necromancerCost,
+                            UnitStatistics = necromancerStatistics,
+                        };
+                        context.Units.Add( necromancer );
+                        context.SaveChanges();
+                    }
                 }
             }
             #endregion
@@ -243,23 +217,23 @@ namespace ITI.SkyLord
         }
 
         private string ProtectPassword( string clearpassword )
-        {
-            // generate a 128-bit salt using a secure PRNG
-            byte[ ] salt = new byte[ 128 / 8 ];
-            //using ( var rng = RandomNumberGenerator.Create() )
-            //{
-            //    rng.GetBytes( salt );
-            //}
+{
+    // generate a 128-bit salt using a secure PRNG
+    byte[ ] salt = new byte[ 128 / 8 ];
+    //using ( var rng = RandomNumberGenerator.Create() )
+    //{
+    //    rng.GetBytes( salt );
+    //}
 
-            // TODO : garded le salt dans la table Player
+    // TODO : garded le salt dans la table Player
 
-            // derive a 256-bit subkey (use HMACSHA1 with 10,000 iterations)
-            return Convert.ToBase64String( KeyDerivation.Pbkdf2(
-                password: clearpassword,
-                salt: salt,
-                prf: KeyDerivationPrf.HMACSHA1,
-                iterationCount: 10000,
-                numBytesRequested: 256 / 8 ) );
-        }
+    // derive a 256-bit subkey (use HMACSHA1 with 10,000 iterations)
+    return Convert.ToBase64String( KeyDerivation.Pbkdf2(
+        password: clearpassword,
+        salt: salt,
+        prf: KeyDerivationPrf.HMACSHA1,
+        iterationCount: 10000,
+        numBytesRequested: 256 / 8 ) );
+}
     }
 }

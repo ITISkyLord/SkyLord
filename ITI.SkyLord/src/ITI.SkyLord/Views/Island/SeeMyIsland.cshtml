@@ -19,13 +19,14 @@
         <tr>
             <td>@i.Name</td>
             <td>Ses coordonnées sont : [@i.Coordinates.X;@i.Coordinates.Y]</td>
+            <td><a asp-action="SeeRessources" asp-route-id="@i.IslandId" asp-controller="Ressource">Voir vos ressources</a></td>
         </tr>
 
     }
 </table>
 
 <br />
-<td><a asp-action="AddIsland" asp-controller="Island">Ajouter une nouvelle île</a></td>
+<td><a asp-action="AddIsland"  asp-controller="Island">Ajouter une nouvelle île</a></td>
 
 
 

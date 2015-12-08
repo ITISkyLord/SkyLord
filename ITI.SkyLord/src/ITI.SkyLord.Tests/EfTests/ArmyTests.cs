@@ -1,4 +1,5 @@
-﻿using ITI.SkyLord.Models.Entity_Framework.Contexts;
+﻿using ITI.SkyLord.Models.Entity_Framework;
+using ITI.SkyLord.Models.Entity_Framework.Contexts;
 using Microsoft.Data.Entity;
 using NUnit.Framework;
 using System;
@@ -12,6 +13,8 @@ namespace ITI.SkyLord.Tests.EfTests
     public class ArmyTests
     {
         World _world;
+        User_Player _user_player;
+
         public ArmyTests()
         {
             using ( PlayerContext context = new PlayerContext() )
@@ -20,41 +23,109 @@ namespace ITI.SkyLord.Tests.EfTests
             }
         }
 
-        [Test]
-        public void regiment_cascade_delete()
+        void AddPlayerAndUser( Player p )
         {
-            using ( var context = new ArmyContext())
+            ApplicationUser appUser = new ApplicationUser();
+            User_Player userPlayer = new User_Player( p, appUser );
+
+            using ( var context = new PlayerContext() )
             {
-                // TODO Créer ses propres objets à réutiliser pour les tests
+                context.Users.Add( appUser );
+                context.Players.Add( p );
+                context.User_Players.Add( userPlayer );
+                context.SaveChanges();
+            }
+        }
 
-                Island island = context.Islands.FirstOrDefault();
-                Regiment regiment1 = new Regiment { Unit = context.Units.FirstOrDefault(u => u.UnitName == UnitName.guard), Number = 50 };
-                Regiment regiment2 = new Regiment { Unit = context.Units.FirstOrDefault(u => u.UnitName == UnitName.necromancer), Number = 25 };
-                Army army = new Army
-                {
-                    Island = island,
-                    ArmyState = ArmyState.defense,
-                    Regiments = new List<Regiment>()
-                };
-
-                army.Regiments.Add(regiment1);
-                army.Regiments.Add(regiment2);
-
-                context.Add( army );
+        void RemovePlayerAndUser( Player p )
+        {
+            using ( var context = new PlayerContext() )
+            {
+                context.Remove( p );
+                context.User_Players.Remove( p.UserPlayer );
                 context.SaveChanges();
 
-                context.Remove( army );
+                context.Users.Remove( p.UserPlayer.User );
                 context.SaveChanges();
-
-                Army armyFromDB = context.Armies.FirstOrDefault( a => a.ArmyId == army.ArmyId );
-                Assert.IsNull( armyFromDB );
+                Console.WriteLine( "C'est bon ! " );
             }
         }
 
         [Test]
+        public void regiment_cascade_delete()
+        {
+            Island defaultIsland = null;
+            Ressource islandDefaultRessource = null;
+            Coordinate islandDefaultCoordinate = null;
+
+            Unit guard = null;
+            Ressource guardCost = null;
+            UnitStatistics guardStatistics = null;
+
+            Unit necromancer = null;
+            Ressource necromancerCost = null;
+            UnitStatistics necromancerStatistics = null;
+
+            try
+            {
+                using ( var context = new IslandContext() )
+                {
+                    // TODO Créer ses propres objets à réutiliser pour les tests
+
+                    islandDefaultRessource = new Ressource { Wood = 1000, Metal = 1000, Cristal = 1000, Magic = 1000 };
+                    context.Ressources.Add( islandDefaultRessource );
+                    islandDefaultCoordinate = new Coordinate { X = 1, Y = 1 };
+                    context.Coordinates.Add( islandDefaultCoordinate );
+                    context.SaveChanges();
+
+                    defaultIsland = new Island
+                    {
+                        Name = "defaultIsland",
+                        Coordinates = islandDefaultCoordinate,
+                        AllRessources = islandDefaultRessource,
+                        IsCapital = true,
+                        Loyalty = 100
+                    };
+                    context.Add( defaultIsland );
+                    context.SaveChanges();
+                }
+
+                using ( var context = new ArmyContext() )
+                {
+                    Regiment regiment1 = new Regiment { Unit = context.Units.FirstOrDefault( u => u.UnitName == UnitName.guard ), Number = 50 };
+                    Regiment regiment2 = new Regiment { Unit = context.Units.FirstOrDefault( u => u.UnitName == UnitName.necromancer ), Number = 25 };
+                    Army army = new Army
+                    {
+                        Island = defaultIsland,
+                        ArmyState = ArmyState.defense,
+                        Regiments = new List<Regiment>()
+                    };
+
+                    army.Regiments.Add( regiment1 );
+                    army.Regiments.Add( regiment2 );
+
+                    context.Add( army );
+                    context.SaveChanges();
+
+                    context.Remove( army );
+                    context.SaveChanges();
+
+                    Army armyFromDB = context.Armies.FirstOrDefault( a => a.ArmyId == army.ArmyId );
+                    Assert.IsNull( armyFromDB );
+                }
+            }
+            finally
+            {
+                using ( var context = new IslandContext() )
+                {
+                }
+            }
+         }
+
+        [Test]
         public void unit_cascade_delete()
         {
-            using (ArmyContext context = new ArmyContext())
+            using ( ArmyContext context = new ArmyContext() )
             {
                 Ressource guardCost = new Ressource { Wood = 200, Metal = 100 };
                 context.Ressources.Add( guardCost );
@@ -119,21 +190,21 @@ namespace ITI.SkyLord.Tests.EfTests
 
             Unit necromancer = null;
             Ressource necromancerCost = null;
-            UnitStatistics necromancerStatistics = null; 
+            UnitStatistics necromancerStatistics = null;
             #endregion
 
             try
             {
                 #region Seed
                 // Add a player to DB
-                using (PlayerContext context = new PlayerContext())
+                using ( PlayerContext context = new PlayerContext() )
                 {
                     defaultPlayer = new Player { World = _world, Name = "Thanur", Mail = "toto@intechinfo.fr", Password = "toto" };
-                    context.AddPlayer( defaultPlayer );
+                    AddPlayerAndUser( defaultPlayer );
                 }
 
                 // Add an Island to the player in DB
-                using (IslandContext context = new IslandContext())
+                using ( IslandContext context = new IslandContext() )
                 {
                     islandDefaultRessource = new Ressource { Wood = 1000, Metal = 1000, Cristal = 1000, Magic = 1000 };
                     context.Ressources.Add( islandDefaultRessource );
@@ -155,7 +226,7 @@ namespace ITI.SkyLord.Tests.EfTests
                 }
 
                 // Add guard and necromancer units to DB
-                using (ArmyContext context = new ArmyContext())
+                using ( ArmyContext context = new ArmyContext() )
                 {
                     guardCost = new Ressource { Wood = 200, Metal = 100 };
                     context.Ressources.Add( guardCost );
@@ -200,9 +271,9 @@ namespace ITI.SkyLord.Tests.EfTests
             finally
             {
                 #region Delete
-                using (var context = new ArmyContext())
+                using ( var context = new ArmyContext() )
                 {
-                    Army armyCreated = context.Armies.Include( a => a.Regiments).Include( a => a.Island )
+                    Army armyCreated = context.Armies.Include( a => a.Regiments ).Include( a => a.Island )
                         .SingleOrDefault( a => a.Island.IslandId == defaultIsland.IslandId && a.ArmyState == ArmyState.defense );
                     context.Remove( armyCreated );
                     context.SaveChanges();
@@ -211,7 +282,7 @@ namespace ITI.SkyLord.Tests.EfTests
                     context.Remove( necromancer );
                     context.SaveChanges();
                 }
-                using (var context = new ArmyContext())
+                using ( var context = new IslandContext() )
                 {
                     context.Remove( defaultIsland );
                     context.SaveChanges();
@@ -220,9 +291,9 @@ namespace ITI.SkyLord.Tests.EfTests
                     context.Remove( islandDefaultCoordinate );
                     context.SaveChanges();
                 }
-                using (var context = new PlayerContext())
+                using ( var context = new PlayerContext() )
                 {
-                    context.RemovePlayer( defaultPlayer.PlayerId );
+                    RemovePlayerAndUser( defaultPlayer );
                 }
                 #endregion
             }
@@ -253,14 +324,14 @@ namespace ITI.SkyLord.Tests.EfTests
             {
                 #region Seed
                 // Add a player to DB
-                using (PlayerContext context = new PlayerContext())
+                using ( PlayerContext context = new PlayerContext() )
                 {
                     defaultPlayer = new Player { World = _world, Name = "Thanur", Mail = "toto@intechinfo.fr", Password = "toto" };
-                    context.AddPlayer( defaultPlayer );
+                    AddPlayerAndUser( defaultPlayer );
                 }
 
                 // Add an Island to the player in DB
-                using (IslandContext context = new IslandContext())
+                using ( IslandContext context = new IslandContext() )
                 {
                     islandDefaultRessource = new Ressource { Wood = 1000, Metal = 1000, Cristal = 1000, Magic = 1000 };
                     context.Ressources.Add( islandDefaultRessource );
@@ -282,7 +353,7 @@ namespace ITI.SkyLord.Tests.EfTests
                 }
 
                 // Add an army, a guard and necromancer units to DB
-                using (ArmyContext context = new ArmyContext())
+                using ( ArmyContext context = new ArmyContext() )
                 {
 
                     defaultArmy = new Army
@@ -332,14 +403,14 @@ namespace ITI.SkyLord.Tests.EfTests
                     context.AddUnit( guard, 10, defaultIsland );
                     context.AddUnit( necromancer, 15, defaultIsland );
 
-                    Assert.That( context.Regiments.Include( r => r.Unit ).FirstOrDefault( r => r.ArmyId == defaultArmy.ArmyId && r.Unit.UnitName == UnitName.guard ).Unit.UnitId ==  guard.UnitId );
+                    Assert.That( context.Regiments.Include( r => r.Unit ).FirstOrDefault( r => r.ArmyId == defaultArmy.ArmyId && r.Unit.UnitName == UnitName.guard ).Unit.UnitId == guard.UnitId );
                     Assert.That( context.Regiments.Include( r => r.Unit ).FirstOrDefault( r => r.ArmyId == defaultArmy.ArmyId && r.Unit.UnitName == UnitName.necromancer ).Unit.UnitId == necromancer.UnitId );
                 }
             }
             finally
             {
                 #region Delete
-                using (var context = new ArmyContext())
+                using ( var context = new ArmyContext() )
                 {
                     defaultArmy = context.Armies.Include( a => a.Regiments ).Include( a => a.Island )
                         .SingleOrDefault( a => a.Island.IslandId == defaultIsland.IslandId && a.ArmyState == ArmyState.defense );
@@ -350,7 +421,7 @@ namespace ITI.SkyLord.Tests.EfTests
                     context.Remove( necromancer );
                     context.SaveChanges();
                 }
-                using (var context = new ArmyContext())
+                using ( var context = new ArmyContext() )
                 {
                     context.Remove( defaultIsland );
                     context.SaveChanges();
@@ -359,9 +430,9 @@ namespace ITI.SkyLord.Tests.EfTests
                     context.Remove( islandDefaultCoordinate );
                     context.SaveChanges();
                 }
-                using (var context = new PlayerContext())
+                using ( var context = new PlayerContext() )
                 {
-                    context.RemovePlayer( defaultPlayer.PlayerId );
+                    RemovePlayerAndUser( defaultPlayer );
                 }
                 #endregion
             }
@@ -394,14 +465,14 @@ namespace ITI.SkyLord.Tests.EfTests
             {
                 #region Seed
                 // Add a player to DB
-                using (PlayerContext context = new PlayerContext())
+                using ( PlayerContext context = new PlayerContext() )
                 {
                     defaultPlayer = new Player { World = _world, Name = "Thanur", Mail = "toto@intechinfo.fr", Password = "toto" };
-                    context.AddPlayer( defaultPlayer );
+                    AddPlayerAndUser( defaultPlayer );
                 }
 
                 // Add an Island to the player in DB
-                using (IslandContext context = new IslandContext())
+                using ( IslandContext context = new IslandContext() )
                 {
                     islandDefaultRessource = new Ressource { Wood = 1000, Metal = 1000, Cristal = 1000, Magic = 1000 };
                     context.Ressources.Add( islandDefaultRessource );
@@ -423,7 +494,7 @@ namespace ITI.SkyLord.Tests.EfTests
                 }
 
                 // Add an army, a guard and necromancer units to DB
-                using (ArmyContext context = new ArmyContext())
+                using ( ArmyContext context = new ArmyContext() )
                 {
                     guardCost = new Ressource { Wood = 200, Metal = 100 };
                     context.Ressources.Add( guardCost );
@@ -489,7 +560,7 @@ namespace ITI.SkyLord.Tests.EfTests
             finally
             {
                 #region Delete
-                using (var context = new ArmyContext())
+                using ( var context = new ArmyContext() )
                 {
                     defaultArmy = context.Armies.Include( a => a.Regiments ).Include( a => a.Island )
                         .SingleOrDefault( a => a.Island.IslandId == defaultIsland.IslandId && a.ArmyState == ArmyState.defense );
@@ -500,7 +571,7 @@ namespace ITI.SkyLord.Tests.EfTests
                     context.Remove( necromancer );
                     context.SaveChanges();
                 }
-                using (var context = new ArmyContext())
+                using ( var context = new ArmyContext() )
                 {
                     context.Remove( defaultIsland );
                     context.SaveChanges();
@@ -509,9 +580,9 @@ namespace ITI.SkyLord.Tests.EfTests
                     context.Remove( islandDefaultCoordinate );
                     context.SaveChanges();
                 }
-                using (var context = new PlayerContext())
+                using ( var context = new PlayerContext() )
                 {
-                    context.RemovePlayer( defaultPlayer.PlayerId );
+                    RemovePlayerAndUser( defaultPlayer );
                 }
                 #endregion
             }
