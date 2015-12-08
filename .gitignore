@@ -194,6 +194,7 @@ FakesAssemblies/
 
 # Visual Studio 6 workspace options file
 *.opt
-*.cs.orig
-*.lock.json
-*.orig
+
+#custom 
+**/*.lock.json
+**/*.orig
