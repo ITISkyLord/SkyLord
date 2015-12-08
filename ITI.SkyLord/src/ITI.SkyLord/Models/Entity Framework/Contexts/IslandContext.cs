@@ -1,4 +1,5 @@
-﻿using Microsoft.Data.Entity;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.Data.Entity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.PlatformAbstractions;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ITI.SkyLord.Models.Entity_Framework.Contexts
 {
-    public class IslandContext : DbContext
+    public class IslandContext : IdentityDbContext
     {
         public IConfigurationRoot Configuration { get; set; }
 

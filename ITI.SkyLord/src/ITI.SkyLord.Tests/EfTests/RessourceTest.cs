@@ -15,15 +15,32 @@ namespace ITI.SkyLord.Tests.EfTests
         [Test]
         public void SeeRessources()
         {
-           using (IslandContext context = new IslandContext())
+            Ressource testRessource = null;
+            try
             {
-                foreach(Ressource r in context.Ressources)
+                using ( IslandContext context = new IslandContext() )
                 {
-                    Console.WriteLine("Cristal : {0}, Magic : {1},Metal : {2}, Wood : {3}", r.Cristal,r.Magic,r.Metal,r.Wood);
-                }
+                    testRessource = new Ressource { Cristal = 10, Wood = 10, Magic = 10, Metal = 10 };
+                    context.Add( testRessource );
+                    context.SaveChanges();
 
-                //Assert.That(context.Ressources.Count() != 0);
+                    foreach ( Ressource r in context.Ressources )
+                    {
+                        Console.WriteLine( "Cristal : {0}, Magic : {1},Metal : {2}, Wood : {3}", r.Cristal, r.Magic, r.Metal, r.Wood );
+                    }
+
+                    Assert.That( context.Ressources.Count() != 0 );
+                }
             }
+            finally
+            {
+                using ( IslandContext context = new IslandContext() )
+                {
+                    context.Remove( testRessource );
+                    context.SaveChanges();
+                }
+            }
+           
            
         }
     }
