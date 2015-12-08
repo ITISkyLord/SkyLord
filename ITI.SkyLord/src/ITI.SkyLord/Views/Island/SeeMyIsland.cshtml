@@ -8,21 +8,19 @@
     Layout = "_Layout";
 }
 
+@{ Island iss = Model.Island;}
+
 <h1>Liste d'îles</h1>
 
 <table>
     <tr>
         <th>Ile(s) :</th>
     </tr>
-    @foreach (Island i in Model.Islands)
-    {
         <tr>
-            <td>@i.Name</td>
-            <td>Ses coordonnées sont : [@i.Coordinates.X;@i.Coordinates.Y]</td>
-            <td><a asp-action="SeeRessources" asp-route-id="@i.IslandId" asp-controller="Ressource">Voir vos ressources</a></td>
+            <td>@iss.Name</td>
+            <td>Ses coordonnées sont : [@iss.Coordinates.X;@iss.Coordinates.Y]</td>
+            <td><a asp-action="SeeRessources" asp-route-id="@iss.IslandId" asp-controller="Ressource">Voir vos ressources</a></td>
         </tr>
-
-    }
 </table>
 
 <br />

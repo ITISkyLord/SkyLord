@@ -16,4 +16,5 @@
         <button type="submit" class="btn btn-link navbar-btn navbar-link">Déconnexion</button>
 
     </form>
+    <a asp-controller="Island" asp-route-id="@User.GetUserId()" asp-action="SeeMyIsland">Voir îles</a><br />
 }

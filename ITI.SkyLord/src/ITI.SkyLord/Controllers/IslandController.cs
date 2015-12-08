@@ -22,11 +22,13 @@ namespace ITI.SkyLord.Controllers
             return View();
         }
 
-        public IActionResult SeeMyIsland()
+        public IActionResult SeeMyIsland(string id)
         {
-            Player owner = PlayerContext.Players.Where(p => p.Name == "Kevin").SingleOrDefault();
-            List<Island> islands = IslandContext.Islands.ToList();
-            Island myIsland = islands.Where(i => i.Name == "Parc des princes").SingleOrDefault();
+            Player owner = PlayerContext.Players.Where(p => p.Mail == id).SingleOrDefault();
+            List<Island> islands = IslandContext.Islands.Include( p => p.Owner).ToList();
+            Island myIsland = islands.First();
+            myIsland.Owner = owner;
+            //Island myIsland = islands.Where(i => i.Owner.PlayerId == owner.PlayerId).SingleOrDefault();
             List<Coordinate> coordinates = IslandContext.Coordinates.ToList();
             Coordinate coord = coordinates.Where(o => o.CoordinateId == myIsland.Coordinates.CoordinateId).SingleOrDefault();
 
@@ -35,7 +37,8 @@ namespace ITI.SkyLord.Controllers
             int X = coord.X;
             int Y = coord.Y;
 
-            island.Islands = islands;
+            island.ListIslands = islands;
+            island.Island = myIsland;
             island.Owner = owner;
             island.X = X;
             island.Y = Y;
