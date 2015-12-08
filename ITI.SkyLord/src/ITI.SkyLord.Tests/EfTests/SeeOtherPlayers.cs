@@ -25,7 +25,6 @@ namespace ITI.SkyLord.Tests
         //public void See_information_of_a_player()
         //{
         //    Player p1 = new Player { World = _world, Name = "Marvin", Mail = "marvin@cdk.fr", Password = "tought" };
-
         //    using (PlayerContext pc = new PlayerContext())
         //    {
         //        try

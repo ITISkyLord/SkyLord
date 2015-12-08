@@ -47,6 +47,7 @@ namespace ITI.SkyLord.Tests.EfTests
 
                 context.Users.Remove( p.UserPlayer.User );
                 context.SaveChanges();
+                Console.WriteLine("C'est bon ! ");
             }
         }
 

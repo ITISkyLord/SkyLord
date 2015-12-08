@@ -42,7 +42,7 @@ namespace ITI.SkyLord.Controllers
 
             return View(island);
         }
-
+        [Obsolete]
         public IActionResult AddIsland()
         {
             Player playerActive = PlayerContext.Players.Where(p => p.Name == "Kevin").SingleOrDefault();
