@@ -131,6 +131,7 @@ namespace ITI.SkyLord.Models.Entity_Framework.Controllers
                         p.Profil.Description = "";
                         Island island = context.Islands.Include(i => i.Coordinates).Where(i => i.Owner == null ).OrderBy(i => IslandManager.DistanceFromCenter(i)).First();
                         p.Islands = new List<Island>();
+                        island.IsCapital = true;
                         p.Islands.Add( island );
                         island.Owner = p;
                         context.Players.Add( p );
