@@ -51,36 +51,76 @@ namespace ITI.SkyLord.Tests.EfTests
             }
         }
 
-        //[Test]
-        //public void regiment_cascade_delete()
-        //{
-        //    using ( var context = new ArmyContext() )
-        //    {
-        //        // TODO Créer ses propres objets à réutiliser pour les tests
+        [Test]
+        public void regiment_cascade_delete()
+        {
+            Island defaultIsland = null;
+            Ressource islandDefaultRessource = null;
+            Coordinate islandDefaultCoordinate = null;
 
-        //        Island island = context.Islands.FirstOrDefault();
-        //        Regiment regiment1 = new Regiment { Unit = context.Units.FirstOrDefault( u => u.UnitName == UnitName.guard ), Number = 50 };
-        //        Regiment regiment2 = new Regiment { Unit = context.Units.FirstOrDefault( u => u.UnitName == UnitName.necromancer ), Number = 25 };
-        //        Army army = new Army
-        //        {
-        //            Island = island,
-        //            ArmyState = ArmyState.defense,
-        //            Regiments = new List<Regiment>()
-        //        };
+            Unit guard = null;
+            Ressource guardCost = null;
+            UnitStatistics guardStatistics = null;
 
-        //        army.Regiments.Add( regiment1 );
-        //        army.Regiments.Add( regiment2 );
+            Unit necromancer = null;
+            Ressource necromancerCost = null;
+            UnitStatistics necromancerStatistics = null;
 
-        //        context.Add( army );
-        //        context.SaveChanges();
+            try
+            {
+                using ( var context = new IslandContext() )
+                {
+                    // TODO Créer ses propres objets à réutiliser pour les tests
 
-        //        context.Remove( army );
-        //        context.SaveChanges();
+                    islandDefaultRessource = new Ressource { Wood = 1000, Metal = 1000, Cristal = 1000, Magic = 1000 };
+                    context.Ressources.Add( islandDefaultRessource );
+                    islandDefaultCoordinate = new Coordinate { X = 1, Y = 1 };
+                    context.Coordinates.Add( islandDefaultCoordinate );
+                    context.SaveChanges();
 
-        //        Army armyFromDB = context.Armies.FirstOrDefault( a => a.ArmyId == army.ArmyId );
-        //        Assert.IsNull( armyFromDB );
-        //    }
-        //}
+                    defaultIsland = new Island
+                    {
+                        Name = "defaultIsland",
+                        Coordinates = islandDefaultCoordinate,
+                        AllRessources = islandDefaultRessource,
+                        IsCapital = true,
+                        Loyalty = 100
+                    };
+                    context.Add( defaultIsland );
+                    context.SaveChanges();
+                }
+
+                using ( var context = new ArmyContext() )
+                {
+                    Regiment regiment1 = new Regiment { Unit = context.Units.FirstOrDefault( u => u.UnitName == UnitName.guard ), Number = 50 };
+                    Regiment regiment2 = new Regiment { Unit = context.Units.FirstOrDefault( u => u.UnitName == UnitName.necromancer ), Number = 25 };
+                    Army army = new Army
+                    {
+                        Island = defaultIsland,
+                        ArmyState = ArmyState.defense,
+                        Regiments = new List<Regiment>()
+                    };
+
+                    army.Regiments.Add( regiment1 );
+                    army.Regiments.Add( regiment2 );
+
+                    context.Add( army );
+                    context.SaveChanges();
+
+                    context.Remove( army );
+                    context.SaveChanges();
+
+                    Army armyFromDB = context.Armies.FirstOrDefault( a => a.ArmyId == army.ArmyId );
+                    Assert.IsNull( armyFromDB );
+                }
+            }
+            finally
+            {
+                using ( var context = new IslandContext() )
+                {
+                }
+            }
+         }
 
         [Test]
         public void unit_cascade_delete()
@@ -242,7 +282,7 @@ namespace ITI.SkyLord.Tests.EfTests
                     context.Remove( necromancer );
                     context.SaveChanges();
                 }
-                using ( var context = new ArmyContext() )
+                using ( var context = new IslandContext() )
                 {
                     context.Remove( defaultIsland );
                     context.SaveChanges();
