@@ -123,100 +123,92 @@ namespace ITI.SkyLord
 
             #region Seeding
             World defaultWorld = null;
-            Player defaultPlayer = null;
             Unit guard = null;
             Unit necromancer = null;
 
-            // Add defaultWorld
-            using( WorldContext context = new WorldContext() )
+            if ( env.IsDevelopment() )
             {
-                if( env.IsDevelopment() )
+                // Add defaultWorld
+                using ( WorldContext context = new WorldContext() )
                 {
                     defaultWorld = context.Worlds.FirstOrDefault();
-                    if( defaultWorld == null )
+                    if ( defaultWorld == null )
                     {
                         defaultWorld = new World();
                         context.Add( defaultWorld );
                         context.SaveChanges();
                     }
-                    // Add Islands
-                    for( int i = 0; i < 100; i++ )
-                    {
-                        Island island = new Island();
-                        island.AllRessources = new Ressource { Wood = 1000, Metal = 1000, Cristal = 1000, Magic = 1000 };
-                        island.Loyalty = 100;
-                        Coordinate coord = new Coordinate();
-                        coord.X = i;
-                        coord.Y = i;
-                        context.Coordinates.Add( coord );
-                        context.SaveChanges();
-                    }
                 }
-            }
 
-            // Add defaultPlayer
-            using( PlayerContext context = new PlayerContext() )
-            {
-                if( env.IsDevelopment() )
+                // Add Islands
+                using ( IslandContext context = new IslandContext() )
                 {
-                    defaultPlayer = context.Players.FirstOrDefault();
-                    if( defaultPlayer == null )
+                    if( context.Islands.Count() < 99 )
                     {
-                        defaultPlayer = new Player
+                        for ( int i = 0; i < 100; i++ )
                         {
-                            World = defaultWorld,
-                            Name = "TestPlayer",
-                            Mail = "TestPlayer@test.fr",
-                            Password = ProtectPassword( "password" )
-                        };
-                        context.AddPlayer( defaultPlayer );
-                        context.SaveChanges();
+                            Ressource ressource = new Ressource { Wood = 1000, Metal = 1000, Cristal = 1000, Magic = 1000 };
+                            Coordinate coord = new Coordinate();
+                            coord.X = i;
+                            coord.Y = i;
+                            context.Ressources.Add(ressource);
+                            context.Coordinates.Add(coord);
+                            context.SaveChanges();
+
+                            Island island = new Island();
+                            island.Loyalty = 100;
+                            island.Coordinates = coord;
+                            island.AllRessources = ressource;
+                                                  
+                            context.Islands.Add( island );
+                            context.SaveChanges();
+                        }
                     }
                 }
-            }
 
-            //Add defaultUnits
-            using( ArmyContext context = new ArmyContext() )
-            {
-                guard = context.Units.Where( u => u.UnitName == UnitName.guard ).SingleOrDefault();
-                necromancer = context.Units.Where( u => u.UnitName == UnitName.necromancer ).SingleOrDefault();
-                if( guard == null )
+                //Add defaultUnits
+                using ( ArmyContext context = new ArmyContext() )
                 {
-                    Ressource guardCost = new Ressource { Wood = 200, Metal = 100 };
-                    context.Ressources.Add( guardCost );
-                    UnitStatistics guardStatistics = new UnitStatistics { Attack = 70, PhysicResist = 70, MagicResist = 40, Capacity = 100, Speed = 20, Consumption = 10 };
-                    context.UnitStatistics.Add( guardStatistics );
-                    context.SaveChanges();
-
-                    guard = new Unit
+                    guard = context.Units.Where( u => u.UnitName == UnitName.guard ).SingleOrDefault();
+                    necromancer = context.Units.Where( u => u.UnitName == UnitName.necromancer ).SingleOrDefault();
+                    if ( guard == null )
                     {
-                        UnitType = UnitType.soldier,
-                        UnitName = UnitName.guard,
-                        UnitDamageType = UnitDamageType.physical,
-                        UnitCost = guardCost,
-                        UnitStatistics = guardStatistics,
-                    };
-                    context.Units.Add( guard );
-                    context.SaveChanges();
-                }
-                if( necromancer == null )
-                {
-                    Ressource necromancerCost = new Ressource { Wood = 100, Metal = 100, Cristal = 200, Magic = 50 };
-                    context.Ressources.Add( necromancerCost );
-                    UnitStatistics necromancerStatistics = new UnitStatistics { Attack = 70, PhysicResist = 40, MagicResist = 70, Capacity = 50, Speed = 30, Consumption = 15 };
-                    context.UnitStatistics.Add( necromancerStatistics );
-                    context.SaveChanges();
+                        Ressource guardCost = new Ressource { Wood = 200, Metal = 100 };
+                        context.Ressources.Add( guardCost );
+                        UnitStatistics guardStatistics = new UnitStatistics { Attack = 70, PhysicResist = 70, MagicResist = 40, Capacity = 100, Speed = 20, Consumption = 10 };
+                        context.UnitStatistics.Add( guardStatistics );
+                        context.SaveChanges();
 
-                    necromancer = new Unit
+                        guard = new Unit
+                        {
+                            UnitType = UnitType.soldier,
+                            UnitName = UnitName.guard,
+                            UnitDamageType = UnitDamageType.physical,
+                            UnitCost = guardCost,
+                            UnitStatistics = guardStatistics,
+                        };
+                        context.Units.Add( guard );
+                        context.SaveChanges();
+                    }
+                    if ( necromancer == null )
                     {
-                        UnitType = UnitType.magic,
-                        UnitName = UnitName.necromancer,
-                        UnitDamageType = UnitDamageType.magical,
-                        UnitCost = necromancerCost,
-                        UnitStatistics = necromancerStatistics,
-                    };
-                    context.Units.Add( necromancer );
-                    context.SaveChanges();
+                        Ressource necromancerCost = new Ressource { Wood = 100, Metal = 100, Cristal = 200, Magic = 50 };
+                        context.Ressources.Add( necromancerCost );
+                        UnitStatistics necromancerStatistics = new UnitStatistics { Attack = 70, PhysicResist = 40, MagicResist = 70, Capacity = 50, Speed = 30, Consumption = 15 };
+                        context.UnitStatistics.Add( necromancerStatistics );
+                        context.SaveChanges();
+
+                        necromancer = new Unit
+                        {
+                            UnitType = UnitType.magic,
+                            UnitName = UnitName.necromancer,
+                            UnitDamageType = UnitDamageType.magical,
+                            UnitCost = necromancerCost,
+                            UnitStatistics = necromancerStatistics,
+                        };
+                        context.Units.Add( necromancer );
+                        context.SaveChanges();
+                    }
                 }
             }
             #endregion
