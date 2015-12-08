@@ -46,6 +46,7 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
         public DbSet<Player> Players { get; set; }
         public DbSet<World> Worlds { get; set; }
         public DbSet<User_Player> User_Players { get; set; }
+
         public void AddPlayer( Player p )
         {
             p.Profil = new Profil { Description = "Aucune description." };

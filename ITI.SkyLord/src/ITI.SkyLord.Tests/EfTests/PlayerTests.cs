@@ -1,4 +1,6 @@
-﻿using ITI.SkyLord.Models.Entity_Framework.Contexts;
+﻿using ITI.SkyLord.Models.Entity_Framework;
+using ITI.SkyLord.Models.Entity_Framework.Contexts;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Data.Entity;
 using NUnit.Framework;
 using System;
@@ -12,6 +14,7 @@ namespace ITI.SkyLord.Tests.EfTests
     public class PlayerTests
     {
         World _world;
+        User_Player _user_player;
         public PlayerTests()
         {
             using ( PlayerContext context = new PlayerContext() )
@@ -20,88 +23,138 @@ namespace ITI.SkyLord.Tests.EfTests
             }
         }
 
-        [Test]
-        public void Create_a_new_player_and_save_it()
+        void AddPlayerAndUser( Player p )
         {
-            Player p = new Player { World = _world, Name = "Thanur", Mail = "toto@intechinfo.fr", Password = "toto" };
-            Player playerFromDatabase;
+            ApplicationUser appUser = new ApplicationUser();
+            User_Player userPlayer = new User_Player( p, appUser );
 
-            try
+            using ( var context = new PlayerContext() )
             {
-                using ( PlayerContext context = new PlayerContext() )
-                {
-                    context.AddPlayer( p );
-                    playerFromDatabase = context.FindPlayer( p.Mail );
-                }
-                Assert.That( playerFromDatabase.Name == p.Name && playerFromDatabase.Mail == p.Mail );
-            }
-            finally
-            {
-                using ( PlayerContext context = new PlayerContext() )
-                {
-                    playerFromDatabase = context.FindPlayer(p.Mail);
-                    context.RemovePlayer(p.PlayerId);
-                }
+                context.Users.Add( appUser );
+                context.Players.Add( p );
+                context.User_Players.Add( userPlayer );
+                context.SaveChanges();
             }
         }
 
-        [Test]
-        public void DisplayPlayers()
+        void RemovePlayerAndUser( Player p )
         {
-            //Player p1 = new Player { World = _world, Name = "Thanur", Mail = "toto@intechinfo.fr", Password = "toto" };
-            //Player p2 = new Player { World = _world, Name = "MachinTruc", Mail = "machin@intechinfo.fr", Password = "toto" };
-
-            try
+            using ( var context = new PlayerContext() )
             {
-                using ( PlayerContext context = new PlayerContext() )
-                {
-                    //context.AddPlayer( p1 );
-                    //context.AddPlayer( p2 );
+                context.Remove( p );
+                context.User_Players.Remove( p.UserPlayer );
+                context.SaveChanges();
 
-                    foreach ( Player player in context.Players.Include( p => p.Profil ) )
-                    {
-                        Console.WriteLine( "Name: {0}, Mail : {1}", player.Name, player.Mail );
-                    }
-                }
-            }
-            finally
-            {
-                //using ( PlayerContext context = new PlayerContext() )
-                //{
-                //    context.RemovePlayer(p1.PlayerId);
-                //    context.RemovePlayer(p2.PlayerId);
-                //}
+                context.Users.Remove( p.UserPlayer.User );
+                context.SaveChanges();
                 Console.WriteLine("C'est bon ! ");
             }
         }
 
         [Test]
-        public void cascade_delete()
+        public void AddPlayerAndUser_then_RemovePlayerAndUser()
         {
-            Player p = new Player { World = _world, Name = "Thanur", Mail = "toto@intechinfo.fr", Password = "toto" };
+            Player player = new Player { World = _world, Name = "Thanur", Mail = "toto@intechinfo.fr", Password = "toto" };
+            AddPlayerAndUser( player );
 
-            try
+            using ( var context = new PlayerContext() )
             {
-                using (PlayerContext context = new PlayerContext())
-                {
-                    context.AddPlayer(p);
-                }
+                Assert.IsNotNull( context.Players.SingleOrDefault( p => p.PlayerId == player.PlayerId ) );
+                RemovePlayerAndUser( player );
+                Assert.IsNull( context.Players.SingleOrDefault( p => p.PlayerId == player.PlayerId ) );
             }
-            finally
-            {
-                using (PlayerContext context = new PlayerContext())
-                {
-                    Profil profil = context.FindPlayer(p.PlayerId).Profil;
-
-                    context.RemovePlayer(p.PlayerId);
-                    context.SaveChanges();
-
-                    Assert.IsNull(context.FindPlayer(p.PlayerId));
-                    Assert.IsFalse(context.Profils.Any(pr => pr.ProfilId == profil.ProfilId));
-                }
-            }
-
         }
+
+        //[Test]
+        //public void Create_a_new_player_and_save_it()
+        //{
+        //    Player p = new Player { World = _world, Name = "Thanur", Mail = "toto@intechinfo.fr", Password = "toto" };
+        //    ApplicationUser appUser = new ApplicationUser();
+        //    _user_player = new User_Player(p, appUser);
+
+        //    Player playerFromDatabase;
+
+        //    try
+        //    {
+        //        using ( PlayerContext context = new PlayerContext() )
+        //        {
+        //            context.AddPlayer( p );
+        //            context.User_Players.Add( _user_player );
+        //            context.SaveChanges();
+
+        //            playerFromDatabase = context.FindPlayer( p.Mail );
+        //        }
+        //        Assert.That( playerFromDatabase.Name == p.Name && playerFromDatabase.Mail == p.Mail );
+        //    }
+        //    finally
+        //    {
+        //        using ( PlayerContext context = new PlayerContext() )
+        //        {
+        //            playerFromDatabase = context.FindPlayer(p.Mail);
+        //            context.RemovePlayer(p.PlayerId);
+        //            context.Remove( _user_player );
+        //            context.Remove( appUser );
+        //        }
+        //    }
+        //}
+
+        //[Test]
+        //public void DisplayPlayers()
+        //{
+        //    Player p1 = new Player { World = _world, Name = "Thanur", Mail = "toto@intechinfo.fr", Password = "toto" };
+        //    Player p2 = new Player { World = _world, Name = "MachinTruc", Mail = "machin@intechinfo.fr", Password = "toto" };
+
+        //    try
+        //    {
+        //        using ( PlayerContext context = new PlayerContext() )
+        //        {
+        //            context.AddPlayer( p1 );
+        //            context.AddPlayer( p2 );
+
+        //            foreach ( Player player in context.Players.Include( p => p.Profil ) )
+        //            {
+        //                Console.WriteLine( "Name: {0}, Mail : {1}", player.Name, player.Mail );
+        //            }
+        //        }
+        //    }
+        //    finally
+        //    {
+        //        using ( PlayerContext context = new PlayerContext() )
+        //        {
+        //            context.RemovePlayer(p1.PlayerId);
+        //            context.RemovePlayer(p2.PlayerId);
+        //        }
+        //    }
+        //}
+
+        //[Test]
+        //public void cascade_delete()
+        //{
+        //    Player p = new Player { World = _world, Name = "Thanur", Mail = "toto@intechinfo.fr", Password = "toto" };
+
+        //    try
+        //    {
+        //        using (PlayerContext context = new PlayerContext())
+        //        {
+        //            context.AddPlayer(p);
+        //        }
+        //    }
+        //    finally
+        //    {
+        //        using (PlayerContext context = new PlayerContext())
+        //        {
+        //            Profil profil = context.FindPlayer(p.PlayerId).Profil;
+
+        //            context.RemovePlayer(p.PlayerId);
+        //            context.SaveChanges();
+
+        //            Assert.IsNull(context.FindPlayer(p.PlayerId));
+        //            Assert.IsFalse(context.Profils.Any(pr => pr.ProfilId == profil.ProfilId));
+        //        }
+        //    }
+
+        //}
+
         //[Test]
         //public void CreateAPlayerCreateAlsoAIsland()
         //{
