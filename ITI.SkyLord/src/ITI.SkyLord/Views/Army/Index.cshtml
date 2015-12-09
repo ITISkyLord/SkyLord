@@ -19,3 +19,17 @@
         }
     </ul>
 }
+<form asp-controller="Army" asp-action="AddUnit" method="post" role="form">
+    <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
+<table>
+    <tr>
+        <td asp-for="@Model.NumberGuard">Garde</td>
+        <td><input asp-for="NumberGuard" placeholder="0"/></td>
+    </tr>
+    <tr>
+        <td asp-for="@Model.NumberNecromancer">Nécromancien</td>
+        <td><input asp-for="NumberNecromancer" /></td>
+    </tr>
+</table>
+    <button>Entrainer les unités</button>
+</form>
