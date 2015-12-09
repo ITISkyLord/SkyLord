@@ -1,0 +1,36 @@
+﻿
+@addTagHelper "*, Microsoft.AspNet.Mvc.TagHelpers"
+
+@model ITI.SkyLord.ViewModel.SeeRessources.SeeRessources
+@using ITI.SkyLord
+
+@{
+    ViewData["Title"] = "View Ressources";
+    Layout = "_Layout";
+}
+
+<h1>Ressources</h1>
+
+<table>
+    <tr>
+        <th>Cristal </th>
+        <th>Magic </th>
+        <th>Wood </th>
+        <th>Metal</th>
+    </tr>
+    <tr>
+        @foreach (Ressource i in Model.AllRessources)
+        {
+        <tr>
+            <td>@i.Cristal</td>
+            <td>@i.Magic</td>
+            <td>@i.Wood</td>
+            <td>@i.Metal</td>
+        </tr>
+        }
+
+    </table>
+
+    <br />
+    <td><a asp-action="SeeMyIsland" asp-controller="Island">Retour</a></td>
+

@@ -5,6 +5,7 @@ using Microsoft.Data.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace ITI.SkyLord.Controllers
@@ -35,6 +36,19 @@ namespace ITI.SkyLord.Controllers
             Island islandChoosen = IslandContext.Islands.Include(p => p.Owner).Include(r => r.AllRessources).Where(i => i.IslandId.Equals(id)).SingleOrDefault();
             Ressource ressources = islandChoosen.AllRessources;
             sr.Ressources = ressources;
+
+            return View(sr);
+        }
+
+        public IActionResult SeeAllRessources()
+        {
+            SeeRessources sr = new SeeRessources();
+            Player player = PlayerContext.GetPlayer(User.GetUserId());
+
+
+            List<Ressource> ressources = IslandContext.Islands.Include(r => r.AllRessources).Where(i => i.Owner.PlayerId == player.PlayerId).Select(i => i.AllRessources).ToList();
+
+            sr.AllRessources = ressources;
 
             return View(sr);
         }
