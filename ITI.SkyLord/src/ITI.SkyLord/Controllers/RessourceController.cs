@@ -16,9 +16,16 @@ namespace ITI.SkyLord.Controllers
 
         [FromServices]
         public PlayerContext PlayerContext { get; set; }
-        public IActionResult Index()
+
+        public IActionResult Index(int id)
         {
-            return View();
+            SeeRessources sr = new SeeRessources();
+
+            Island islandChossen = IslandContext.Islands.Include(p => p.Owner).Where(i => i.IslandId.Equals(id)).SingleOrDefault();
+            List<Ressource> ressources = IslandContext.Ressources.ToList();
+            sr.Ressources = ressources;
+
+            return View(sr);
         }
 
         public IActionResult SeeRessources(int id)

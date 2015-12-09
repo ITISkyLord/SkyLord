@@ -19,7 +19,7 @@
         <tr>
             <td>@iss.Name</td>
             <td>Ses coordonnées sont : [@iss.Coordinates.X;@iss.Coordinates.Y]</td>
-            <td><a asp-action="SeeRessources" asp-route-id="@iss.IslandId" asp-controller="Ressource">Voir vos ressources</a></td>
+            <td><a asp-controller="Ressource" asp-action="Index">Voir vos ressources</a></td>
         </tr>
 </table>
 

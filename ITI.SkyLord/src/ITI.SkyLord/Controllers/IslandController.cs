@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ITI.SkyLord.ViewModel.SeeIslands;
 using ITI.SkyLord.Models.Entity_Framework.Contexts;
 using Microsoft.Data.Entity;
+using System.Security.Claims;
 
 namespace ITI.SkyLord.Controllers
 {
@@ -26,11 +27,10 @@ namespace ITI.SkyLord.Controllers
         /// </summary>
         /// <param name="id">Mail of player</param>
         /// <returns></returns>
-        public IActionResult SeeMyIsland(string id)
+        public IActionResult SeeMyIsland()
         {
-            Player owner = PlayerContext.Players.Where(p => p.Mail == id).SingleOrDefault();
+            Player owner = PlayerContext.GetPlayer(User.GetUserId());
             List<Island> islands = IslandContext.Islands.Include(p => p.Owner).Include(pr => pr.Owner.Profil).Include(c => c.Coordinates).ToList();
-
             Island myIsland = islands.Where(i => i.Owner.PlayerId == owner.PlayerId).First();
 
             Coordinate coord = IslandContext.Coordinates.Where(o => o.CoordinateId == myIsland.Coordinates.CoordinateId).SingleOrDefault();

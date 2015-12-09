@@ -1,4 +1,4 @@
-﻿
+﻿@using System.Security.Claims
 
 <!DOCTYPE html>
 <html>
@@ -37,8 +37,9 @@
                         <a asp-controller="Home" asp-action="Index">Carte du monde</a>
 
                         <p>Mes îles</p>
+                             
                         <ul>
-                            <li><a asp-controller="Home" asp-action="Index" asp-route-IslandeId="X">$1</a></li>
+                            <li><a asp-controller="Island" asp-action="SeeMyIsland">Île p</a></li>
                             <li><a asp-controller="Home" asp-action="Index" asp-route-IslandeId="X">$2</a></li>
                             <li><a asp-controller="Home" asp-action="Index" asp-route-IslandeId="X">$3</a></li>
                             <li><a asp-controller="Home" asp-action="Index" asp-route-IslandeId="X">$4</a></li>
