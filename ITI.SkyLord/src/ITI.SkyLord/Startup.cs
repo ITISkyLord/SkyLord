@@ -121,6 +121,7 @@ namespace ITI.SkyLord
                      template: "{controller=Home}/{action=Index}/{id?}" );
              } );
 
+            /*
             #region Seeding
             World defaultWorld = null;
             Unit guard = null;
@@ -147,14 +148,19 @@ namespace ITI.SkyLord
                     {
                         for ( int i = 0; i < 100; i++ )
                         {
-                            Island island = new Island();
-                            island.AllRessources = new Ressource { Wood = 1000, Metal = 1000, Cristal = 1000, Magic = 1000 };
-                            island.Loyalty = 100;
+                            Ressource ressource = new Ressource { Wood = 1000, Metal = 1000, Cristal = 1000, Magic = 1000 };
                             Coordinate coord = new Coordinate();
                             coord.X = i;
                             coord.Y = i;
-                            context.Ressources.Add( island.AllRessources );
-                            context.Coordinates.Add( coord );
+                            context.Ressources.Add(ressource);
+                            context.Coordinates.Add(coord);
+                            context.SaveChanges();
+
+                            Island island = new Island();
+                            island.Loyalty = 100;
+                            island.Coordinates = coord;
+                            island.AllRessources = ressource;
+                                                  
                             context.Islands.Add( island );
                             context.SaveChanges();
                         }
@@ -207,6 +213,7 @@ namespace ITI.SkyLord
                 }
             }
             #endregion
+            */
         }
 
         private string ProtectPassword( string clearpassword )

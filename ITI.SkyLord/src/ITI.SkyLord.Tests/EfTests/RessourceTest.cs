@@ -11,32 +11,35 @@ namespace ITI.SkyLord.Tests.EfTests
     [TestFixture]
     public class RessourceTest
     {
-
         [Test]
         public void SeeRessources()
         {
             Ressource testRessource = null;
             try
-            {
-                using ( IslandContext context = new IslandContext() )
+            {               
+                using (IslandContext context = new IslandContext())
                 {
-                    testRessource = new Ressource { Cristal = 10, Wood = 10, Magic = 10, Metal = 10 };
-                    context.Add( testRessource );
+                    testRessource = new Ressource { Magic = 10, Cristal = 10, Metal = 10, Wood = 10 };
+                    context.Add(testRessource);
                     context.SaveChanges();
 
-                    Assert.That( context.Ressources.Count() != 0 );
+                    Console.WriteLine("ok");
                 }
             }
             finally
             {
-                using ( IslandContext context = new IslandContext() )
+                using (IslandContext context = new IslandContext())
                 {
-                    context.Remove( testRessource );
+                    context.Remove(testRessource);
                     context.SaveChanges();
                 }
-            }
-           
-           
+            }          
+        }
+
+        [Test]
+        public void AddRessources()
+        {
+
         }
     }
 }
