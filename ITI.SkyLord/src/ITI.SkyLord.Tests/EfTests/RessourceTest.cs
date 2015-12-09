@@ -23,11 +23,6 @@ namespace ITI.SkyLord.Tests.EfTests
                     context.Add(testRessource);
                     context.SaveChanges();
 
-                    foreach (Ressource r in context.Ressources)
-                    {
-                        Console.WriteLine("Cristal : {0}, Magic : {1},Metal : {2}, Wood : {3}", r.Cristal, r.Magic, r.Metal, r.Wood);
-                    }
-
                     Console.WriteLine("ok");
                 }
             }
