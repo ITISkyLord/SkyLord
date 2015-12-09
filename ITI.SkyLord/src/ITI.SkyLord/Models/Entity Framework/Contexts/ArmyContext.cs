@@ -54,12 +54,13 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
         /// <param name="island">The current island</param>
         public void AddUnit( Unit unit, int number, Island island )
         {
-            Island islandFound = Islands.Include( i => i.Armies).ThenInclude(a => a.Regiments).SingleOrDefault( i => i.IslandId == island.IslandId );
+            Island islandFound = Islands.Include( i => i.Armies)
+                .SingleOrDefault( i => i.IslandId == island.IslandId );
             if ( islandFound == null ) throw new ArgumentException( "The island does not exist in the Database" );
 
             Army armyFound = islandFound.Armies.Where( a => a.ArmyState == ArmyState.defense ).SingleOrDefault();
 
-            if( armyFound == null )
+            if ( armyFound == null )
             {
                 Army newArmy = new Army
                 {
@@ -77,7 +78,7 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
                 armyFound.Regiments = new List<Regiment>();
             }
 
-            Regiment regimentFound = armyFound.Regiments.FirstOrDefault( r => r.ArmyId == armyFound.ArmyId && r.Unit.UnitId == unit.UnitId );
+            Regiment regimentFound = Regiments.FirstOrDefault( r => r.ArmyId == armyFound.ArmyId && r.Unit.UnitId == unit.UnitId );
             if( regimentFound == null )
             {
                 Regiment newRegiment = new Regiment
