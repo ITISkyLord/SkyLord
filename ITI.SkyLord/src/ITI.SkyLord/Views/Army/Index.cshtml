@@ -1,5 +1,5 @@
 ﻿@addTagHelper "*, Microsoft.AspNet.Mvc.TagHelpers"
-@model ITI.SkyLord.ViewModel.Armies.SeeArmyViewModel
+@model ITI.SkyLord.ViewModel.Armies.ArmyViewModel
 @using ITI.SkyLord
 
 @{
@@ -22,14 +22,21 @@
 <form asp-controller="Army" asp-action="AddUnit" method="post" role="form">
     <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
 <table>
-    <tr>
+    @foreach ( Unit u in Model.AvailableUnits )
+    {
+        <tr>
+            <td>@u.Name</td>
+            <td><input asp-for="UnitsToAdd[u.UnitName.ToString()]" value="0"/></td>
+        </tr>
+    }
+    @*<tr>
         <td asp-for="@Model.NumberGuard">Garde</td>
         <td><input asp-for="NumberGuard" placeholder="0"/></td>
     </tr>
     <tr>
         <td asp-for="@Model.NumberNecromancer">Nécromancien</td>
         <td><input asp-for="NumberNecromancer" /></td>
-    </tr>
+    </tr>*@
 </table>
     <button>Entrainer les unités</button>
 </form>
