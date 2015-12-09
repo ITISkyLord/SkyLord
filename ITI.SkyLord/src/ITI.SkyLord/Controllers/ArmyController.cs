@@ -47,19 +47,31 @@ namespace ITI.SkyLord.Controllers
             return View( avm );
         }
 
-        public IActionResult ArmyAddUnit()
+        public IActionResult AddUnit(SeeArmyViewModel model)
         {
-            if ( Request.Cookies[ "PlayerId" ].Count != 0 )
+            long activePlayerId = PlayerContext.GetPlayer( User.GetUserId() ).PlayerId;
+            if(model.NumberGuard > 0)
             {
-                Player playerActif = PlayerContext.Players.Where( p => p.PlayerId == long.Parse( Request.Cookies[ "PlayerId" ] ) ).SingleOrDefault();
-                Army currentArmy = IslandContext.Islands.FirstOrDefault().Armies.Where( a => a.ArmyState == ArmyState.defense ).FirstOrDefault();
+                ArmyContext.AddUnit( ArmyContext.Units.Where( u => u.UnitName == UnitName.guard ).SingleOrDefault(), model.NumberGuard, getCapital() );
 
-                SeeArmyViewModel avm = new SeeArmyViewModel { CurrentArmy = currentArmy };
-                return View( avm );
             }
-            else
-                return RedirectToAction( "Index", "Connection" );
-        }
+            if( model.NumberNecromancer > 0 )
+            {
+                ArmyContext.AddUnit( ArmyContext.Units.Where( u => u.UnitName == UnitName.necromancer ).SingleOrDefault(), model.NumberNecromancer, getCapital() );
 
+            }
+            long capitalId = IslandContext.Islands.SingleOrDefault( i => i.IsCapital && i.Owner.PlayerId == activePlayerId ).IslandId;
+            List<Army> capitalArmies = ArmyContext.Armies.Include( a => a.Regiments).ThenInclude( r => r.Unit ).Where( a => a.Island.IslandId == capitalId ).ToList();
+
+
+            return View( "Index" , new SeeArmyViewModel { CurrentIslandArmies = capitalArmies } );
+        }
+        private Island getCapital()
+        {
+            long activePlayerId = PlayerContext.GetPlayer( User.GetUserId() ).PlayerId;
+            return IslandContext.Islands.SingleOrDefault( i => i.IsCapital && i.Owner.PlayerId == activePlayerId );
+        }
     }
+
+
 }
