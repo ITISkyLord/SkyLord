@@ -1,0 +1,21 @@
+﻿@addTagHelper "*, Microsoft.AspNet.Mvc.TagHelpers"
+@model ITI.SkyLord.ViewModel.Armies.SeeArmyViewModel
+@using ITI.SkyLord
+
+@{
+    ViewData[ "Title" ] = "Armées";
+    Layout = "_Layout";
+}
+
+<h1>Armées</h1>
+
+@foreach ( Army a in Model.CurrentIslandArmies )
+{
+    <ul>
+        <li> ArmyId : @a.ArmyId</li>
+        @foreach ( Regiment r in a.Regiments )
+        {
+            <li> Unité : @r.Unit.Name  Nombre : @r.Number</li>
+        }
+    </ul>
+}

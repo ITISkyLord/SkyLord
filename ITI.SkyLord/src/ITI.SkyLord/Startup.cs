@@ -68,6 +68,7 @@ namespace ITI.SkyLord
 
             services.AddScoped<PlayerContext>();
             services.AddScoped<IslandContext>();
+            services.AddScoped<ArmyContext>();
             // Uncomment the following line to add Web API services which makes it easier to port Web API 2 controllers.
             // You will also need to add the Microsoft.AspNet.Mvc.WebApiCompatShim package to the 'dependencies' section of project.json.
             // services.AddWebApiConventions();
@@ -121,7 +122,6 @@ namespace ITI.SkyLord
                      template: "{controller=Home}/{action=Index}/{id?}" );
              } );
 
-            /*
             #region Seeding
             World defaultWorld = null;
             Unit guard = null;
@@ -182,11 +182,12 @@ namespace ITI.SkyLord
 
                         guard = new Unit
                         {
+                            Name = "Garde",
                             UnitType = UnitType.soldier,
                             UnitName = UnitName.guard,
                             UnitDamageType = UnitDamageType.physical,
                             UnitCost = guardCost,
-                            UnitStatistics = guardStatistics,
+                            UnitStatistics = guardStatistics
                         };
                         context.Units.Add( guard );
                         context.SaveChanges();
@@ -201,6 +202,7 @@ namespace ITI.SkyLord
 
                         necromancer = new Unit
                         {
+                            Name = "Nécromancien",
                             UnitType = UnitType.magic,
                             UnitName = UnitName.necromancer,
                             UnitDamageType = UnitDamageType.magical,
@@ -213,27 +215,26 @@ namespace ITI.SkyLord
                 }
             }
             #endregion
-            */
         }
 
         private string ProtectPassword( string clearpassword )
-{
-    // generate a 128-bit salt using a secure PRNG
-    byte[ ] salt = new byte[ 128 / 8 ];
-    //using ( var rng = RandomNumberGenerator.Create() )
-    //{
-    //    rng.GetBytes( salt );
-    //}
+        {
+            // generate a 128-bit salt using a secure PRNG
+            byte[ ] salt = new byte[ 128 / 8 ];
+            //using ( var rng = RandomNumberGenerator.Create() )
+            //{
+            //    rng.GetBytes( salt );
+            //}
 
-    // TODO : garded le salt dans la table Player
+            // TODO : garded le salt dans la table Player
 
-    // derive a 256-bit subkey (use HMACSHA1 with 10,000 iterations)
-    return Convert.ToBase64String( KeyDerivation.Pbkdf2(
-        password: clearpassword,
-        salt: salt,
-        prf: KeyDerivationPrf.HMACSHA1,
-        iterationCount: 10000,
-        numBytesRequested: 256 / 8 ) );
-}
+            // derive a 256-bit subkey (use HMACSHA1 with 10,000 iterations)
+            return Convert.ToBase64String( KeyDerivation.Pbkdf2(
+                password: clearpassword,
+                salt: salt,
+                prf: KeyDerivationPrf.HMACSHA1,
+                iterationCount: 10000,
+                numBytesRequested: 256 / 8 ) );
+        }
     }
 }

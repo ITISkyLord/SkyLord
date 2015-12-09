@@ -13,6 +13,7 @@ namespace ITI.SkyLord.ViewModel
         /// Need Ressources
         /// </summary>
         public Island CurrentIsland { get; }
+        public List<Island> AllIslands { get; }
 
         public List<Army> AttackerArmy{ get; }
 

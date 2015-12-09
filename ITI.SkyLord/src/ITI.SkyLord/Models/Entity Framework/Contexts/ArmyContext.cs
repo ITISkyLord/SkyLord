@@ -114,7 +114,7 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
             {
                 Regiments.Remove( regimentFound );
                 SaveChanges();
-                if( Regiments.Count() == 0 )
+                if( Regiments.Where( r => r.ArmyId == armyFound.ArmyId).Count() == 0 )
                 {
                     Armies.Remove( armyFound );
                     SaveChanges();

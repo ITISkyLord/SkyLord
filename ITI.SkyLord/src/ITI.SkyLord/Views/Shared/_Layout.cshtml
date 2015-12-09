@@ -1,5 +1,4 @@
-﻿@model ITI.SkyLord.ViewModel.LayoutVM
-
+﻿
 <!DOCTYPE html>
 <html>
     <head>
@@ -38,12 +37,12 @@
 
                         <p>Mes îles</p>
                         <ul>
-                            <li><a asp-controller="Home" asp-action="Index" asp-route-IslandeId="X">$1</a></li>
-                            <li><a asp-controller="Home" asp-action="Index" asp-route-IslandeId="X">$2</a></li>
-                            <li><a asp-controller="Home" asp-action="Index" asp-route-IslandeId="X">$3</a></li>
-                            <li><a asp-controller="Home" asp-action="Index" asp-route-IslandeId="X">$4</a></li>
-                            <li><a asp-controller="Home" asp-action="Index" asp-route-IslandeId="X">$5</a></li>
-                            <li><a asp-controller="Home" asp-action="Index" asp-route-IslandeId="X">$6</a></li>
+                            <li><a asp-controller="Home" asp-action="Index" asp-route-IslandId="X">$1</a></li>
+                            <li><a asp-controller="Home" asp-action="Index" asp-route-IslandId="X">$2</a></li>
+                            <li><a asp-controller="Home" asp-action="Index" asp-route-IslandId="X">$3</a></li>
+                            <li><a asp-controller="Home" asp-action="Index" asp-route-IslandId="X">$4</a></li>
+                            <li><a asp-controller="Home" asp-action="Index" asp-route-IslandId="X">$5</a></li>
+                            <li><a asp-controller="Home" asp-action="Index" asp-route-IslandId="X">$6</a></li>
                         </ul>
                 </div>
                 <!-- END SIDEBAR -->
@@ -113,7 +112,7 @@
                     <!-- Mouvement de troupe-->
                     <div class="row text-center troupe">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-                            @if (Model.AttackerArmy.Count != 0)
+                            @*@if (Model.AttackerArmy.Count != 0)
                             {
                                 <p>Mouvement de troupe</p>
                                 @foreach (Army t in Model.AttackerArmy)
@@ -121,7 +120,7 @@
 
 
                                 }
-                            }
+                            }*@
                         </div>
                     </div>
                     <!-- END ROW MOUVEMENT TROUPE-->
