@@ -21,14 +21,20 @@ namespace ITI.SkyLord.Controllers
         {
             return View();
         }
-
+        /// <summary>
+        /// See the island(s) of the current player
+        /// </summary>
+        /// <param name="id">Mail of player</param>
+        /// <returns></returns>
         public IActionResult SeeMyIsland(string id)
         {
-            Player owner = PlayerContext.Players.Where(p => p.Mail == id).SingleOrDefault();
-            List<Island> islands = IslandContext.Islands.Include( p => p.Owner).ToList();
-            Island myIsland = islands.First();
-            myIsland.Owner = owner;
-            //Island myIsland = islands.Where(i => i.Owner.PlayerId == owner.PlayerId).SingleOrDefault();
+             Player owner = PlayerContext.Players.Where(p => p.Mail == id).SingleOrDefault();
+            List<Island> islands = IslandContext.Islands.Include(p => p.Owner).ToList();
+
+            //Island myIsland = islands.First();
+            //myIsland.Owner = owner;
+
+            Island myIsland = islands.Where(i => i.Owner.PlayerId == owner.PlayerId).SingleOrDefault();
             List<Coordinate> coordinates = IslandContext.Coordinates.ToList();
             Coordinate coord = coordinates.Where(o => o.CoordinateId == myIsland.Coordinates.CoordinateId).SingleOrDefault();
 
