@@ -44,18 +44,14 @@ namespace ITI.SkyLord.Controllers
         {
             SeeRessources sr = new SeeRessources();
             Player player = PlayerContext.GetPlayer(User.GetUserId());
-
-
             List<Ressource> ressources = IslandContext.Islands.Include(r => r.AllRessources).Where(i => i.Owner.PlayerId == player.PlayerId).Select(i => i.AllRessources).ToList();
 
             sr.AllRessources = ressources;
-
             return View(sr);
         }
 
         public IActionResult AddRessources()
         {
-
             return View();
         }
     }
