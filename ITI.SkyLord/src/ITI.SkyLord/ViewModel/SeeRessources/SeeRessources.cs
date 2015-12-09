@@ -7,7 +7,9 @@ namespace ITI.SkyLord.ViewModel.SeeRessources
 {
     public class SeeRessources
     {
-        public List<Ressource> Ressources { get; set; }
+        public Ressource Ressources { get; set; }
+        public List<Ressource> AllRessources { get; set; }
+
         public Island Island { get; set; }
         public int Cristal { get; set; }
         public int Wood { get; set; }

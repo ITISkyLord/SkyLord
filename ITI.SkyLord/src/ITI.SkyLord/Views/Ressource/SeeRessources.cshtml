@@ -11,6 +11,8 @@
 
 <h1>Ressources</h1>
 
+@{ Ressource r = Model.Ressources;}
+
 <table>
     <tr>
         <th>Cristal </th>
@@ -18,16 +20,13 @@
         <th>Wood </th>
         <th>Metal</th>
     </tr>
-    @foreach (Ressource i in Model.Ressources)
-    {
         <tr>
-            <td>@i.Cristal</td>
-            <td>@i.Magic</td>
-            <td>@i.Wood</td>
-            <td>@i.Metal</td>
+            <td>@r.Cristal</td>
+            <td>@r.Wood</td>
+            <td>@r.Magic</td>
+            <td>@r.Metal</td>
         </tr>
 
-    }
 </table>
 
 <br />
