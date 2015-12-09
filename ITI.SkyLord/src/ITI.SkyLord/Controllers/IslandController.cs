@@ -28,26 +28,23 @@ namespace ITI.SkyLord.Controllers
         /// <returns></returns>
         public IActionResult SeeMyIsland(string id)
         {
-             Player owner = PlayerContext.Players.Where(p => p.Mail == id).SingleOrDefault();
-            List<Island> islands = IslandContext.Islands.Include(p => p.Owner).ToList();
+            Player owner = PlayerContext.Players.Where(p => p.Mail == id).SingleOrDefault();
+            List<Island> islands = IslandContext.Islands.Include(p => p.Owner).Include(pr => pr.Owner.Profil).Include(c => c.Coordinates).ToList();
 
-            //Island myIsland = islands.First();
-            //myIsland.Owner = owner;
+            Island myIsland = islands.Where(i => i.Owner.PlayerId == owner.PlayerId).First();
 
-            Island myIsland = islands.Where(i => i.Owner.PlayerId == owner.PlayerId).SingleOrDefault();
-            List<Coordinate> coordinates = IslandContext.Coordinates.ToList();
-            Coordinate coord = coordinates.Where(o => o.CoordinateId == myIsland.Coordinates.CoordinateId).SingleOrDefault();
+            Coordinate coord = IslandContext.Coordinates.Where(o => o.CoordinateId == myIsland.Coordinates.CoordinateId).SingleOrDefault();
 
             SeeIslands island = new SeeIslands();
 
-            int X = coord.X;
-            int Y = coord.Y;
+            int x = coord.X;
+            int y = coord.Y;
 
             island.ListIslands = islands;
             island.Island = myIsland;
             island.Owner = owner;
-            island.X = X;
-            island.Y = Y;
+            island.X = x;
+            island.Y = y;
 
             return View(island);
         }
