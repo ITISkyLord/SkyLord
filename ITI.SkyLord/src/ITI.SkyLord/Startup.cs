@@ -121,6 +121,7 @@ namespace ITI.SkyLord
                      template: "{controller=Home}/{action=Index}/{id?}" );
              } );
 
+            /*
             #region Seeding
             World defaultWorld = null;
             Unit guard = null;
@@ -212,6 +213,7 @@ namespace ITI.SkyLord
                 }
             }
             #endregion
+            */
         }
 
         private string ProtectPassword( string clearpassword )
