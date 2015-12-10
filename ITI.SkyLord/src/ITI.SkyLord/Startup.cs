@@ -68,6 +68,7 @@ namespace ITI.SkyLord
 
             services.AddScoped<PlayerContext>();
             services.AddScoped<IslandContext>();
+            services.AddScoped<ArmyContext>();
             // Uncomment the following line to add Web API services which makes it easier to port Web API 2 controllers.
             // You will also need to add the Microsoft.AspNet.Mvc.WebApiCompatShim package to the 'dependencies' section of project.json.
             // services.AddWebApiConventions();
@@ -121,11 +122,15 @@ namespace ITI.SkyLord
                      template: "{controller=Home}/{action=Index}/{id?}" );
              } );
 
-            /*
             #region Seeding
             World defaultWorld = null;
+
+            Unit cyclop = null;
+            Unit gobelin = null;
             Unit guard = null;
             Unit necromancer = null;
+            Unit troll = null;
+            Unit warrior = null;
 
             if ( env.IsDevelopment() )
             {
@@ -170,8 +175,54 @@ namespace ITI.SkyLord
                 //Add defaultUnits
                 using ( ArmyContext context = new ArmyContext() )
                 {
+
+                    cyclop = context.Units.Where( u => u.UnitName == UnitName.cyclop ).SingleOrDefault();
+                    gobelin = context.Units.Where( u => u.UnitName == UnitName.gobelin ).SingleOrDefault();
                     guard = context.Units.Where( u => u.UnitName == UnitName.guard ).SingleOrDefault();
                     necromancer = context.Units.Where( u => u.UnitName == UnitName.necromancer ).SingleOrDefault();
+                    troll = context.Units.Where( u => u.UnitName == UnitName.troll ).SingleOrDefault();
+                    warrior = context.Units.Where( u => u.UnitName == UnitName.warrior ).SingleOrDefault();
+
+                    if ( cyclop == null )
+                    {
+                        Ressource cyclopCost = new Ressource { Wood = 400, Metal = 200, Cristal = 100, Magic = 100 };
+                        context.Ressources.Add( cyclopCost );
+                        UnitStatistics cyclopStatistics = new UnitStatistics { Attack = 150, PhysicResist = 80, MagicResist = 50, Capacity = 200, Speed = 15, Consumption = 20 };
+                        context.UnitStatistics.Add( cyclopStatistics );
+                        context.SaveChanges();
+
+                        cyclop = new Unit
+                        {
+                            Name = "Cyclope",
+                            UnitType = UnitType.monster,
+                            UnitName = UnitName.cyclop,
+                            UnitDamageType = UnitDamageType.magical,
+                            UnitCost = cyclopCost,
+                            UnitStatistics = cyclopStatistics
+                        };
+                        context.Units.Add( cyclop );
+                        context.SaveChanges();
+                    }
+                    if ( gobelin == null )
+                    {
+                        Ressource gobelinCost = new Ressource { Wood = 100, Metal = 100, Magic = 20 };
+                        context.Ressources.Add( gobelinCost );
+                        UnitStatistics gobelinStatistics = new UnitStatistics { Attack = 40, PhysicResist = 30, MagicResist = 30, Capacity = 50, Speed = 30, Consumption = 5 };
+                        context.UnitStatistics.Add( gobelinStatistics );
+                        context.SaveChanges();
+
+                        gobelin = new Unit
+                        {
+                            Name = "Gobelin",
+                            UnitType = UnitType.monster,
+                            UnitName = UnitName.gobelin,
+                            UnitDamageType = UnitDamageType.physical,
+                            UnitCost = gobelinCost,
+                            UnitStatistics = gobelinStatistics
+                        };
+                        context.Units.Add( gobelin );
+                        context.SaveChanges();
+                    }
                     if ( guard == null )
                     {
                         Ressource guardCost = new Ressource { Wood = 200, Metal = 100 };
@@ -182,11 +233,12 @@ namespace ITI.SkyLord
 
                         guard = new Unit
                         {
+                            Name = "Garde",
                             UnitType = UnitType.soldier,
                             UnitName = UnitName.guard,
                             UnitDamageType = UnitDamageType.physical,
                             UnitCost = guardCost,
-                            UnitStatistics = guardStatistics,
+                            UnitStatistics = guardStatistics
                         };
                         context.Units.Add( guard );
                         context.SaveChanges();
@@ -201,6 +253,7 @@ namespace ITI.SkyLord
 
                         necromancer = new Unit
                         {
+                            Name = "Nécromancien",
                             UnitType = UnitType.magic,
                             UnitName = UnitName.necromancer,
                             UnitDamageType = UnitDamageType.magical,
@@ -210,30 +263,69 @@ namespace ITI.SkyLord
                         context.Units.Add( necromancer );
                         context.SaveChanges();
                     }
+                    if ( troll == null )
+                    {
+                        Ressource trollCost = new Ressource { Wood = 300, Metal = 200, Cristal = 150, Magic = 50 };
+                        context.Ressources.Add( trollCost );
+                        UnitStatistics trollStatistics = new UnitStatistics { Attack = 180, PhysicResist = 60, MagicResist = 100, Capacity = 200, Speed = 15, Consumption = 20 };
+                        context.UnitStatistics.Add( trollStatistics );
+                        context.SaveChanges();
+
+                        troll = new Unit
+                        {
+                            Name = "Troll",
+                            UnitType = UnitType.monster,
+                            UnitName = UnitName.troll,
+                            UnitDamageType = UnitDamageType.physical,
+                            UnitCost = trollCost,
+                            UnitStatistics = trollStatistics,
+                        };
+                        context.Units.Add( troll );
+                        context.SaveChanges();
+                    }
+                    if ( warrior == null )
+                    {
+                        Ressource warriorCost = new Ressource { Wood = 200, Metal = 100, Cristal = 50 };
+                        context.Ressources.Add( warriorCost );
+                        UnitStatistics warriorStatistics = new UnitStatistics { Attack = 80, PhysicResist = 40, MagicResist = 40, Capacity = 125, Speed = 20, Consumption = 15 };
+                        context.UnitStatistics.Add( warriorStatistics );
+                        context.SaveChanges();
+
+                        warrior = new Unit
+                        {
+                            Name = "Guerrier",
+                            UnitType = UnitType.soldier,
+                            UnitName = UnitName.warrior,
+                            UnitDamageType = UnitDamageType.physical,
+                            UnitCost = warriorCost,
+                            UnitStatistics = warriorStatistics,
+                        };
+                        context.Units.Add( warrior );
+                        context.SaveChanges();
+                    }
                 }
             }
             #endregion
-            */
         }
 
         private string ProtectPassword( string clearpassword )
-{
-    // generate a 128-bit salt using a secure PRNG
-    byte[ ] salt = new byte[ 128 / 8 ];
-    //using ( var rng = RandomNumberGenerator.Create() )
-    //{
-    //    rng.GetBytes( salt );
-    //}
+        {
+            // generate a 128-bit salt using a secure PRNG
+            byte[ ] salt = new byte[ 128 / 8 ];
+            //using ( var rng = RandomNumberGenerator.Create() )
+            //{
+            //    rng.GetBytes( salt );
+            //}
 
-    // TODO : garded le salt dans la table Player
+            // TODO : garded le salt dans la table Player
 
-    // derive a 256-bit subkey (use HMACSHA1 with 10,000 iterations)
-    return Convert.ToBase64String( KeyDerivation.Pbkdf2(
-        password: clearpassword,
-        salt: salt,
-        prf: KeyDerivationPrf.HMACSHA1,
-        iterationCount: 10000,
-        numBytesRequested: 256 / 8 ) );
-}
+            // derive a 256-bit subkey (use HMACSHA1 with 10,000 iterations)
+            return Convert.ToBase64String( KeyDerivation.Pbkdf2(
+                password: clearpassword,
+                salt: salt,
+                prf: KeyDerivationPrf.HMACSHA1,
+                iterationCount: 10000,
+                numBytesRequested: 256 / 8 ) );
+        }
     }
 }

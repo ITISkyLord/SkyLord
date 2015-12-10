@@ -12,6 +12,8 @@ namespace ITI.SkyLord
         #region Properties
         public int UnitId { get; set; }
 
+        public string Name { get; set;}
+
         public UnitName UnitName { get; set; }
 
         public UnitDamageType UnitDamageType { get; set; }

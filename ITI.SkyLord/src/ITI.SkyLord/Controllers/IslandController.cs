@@ -48,6 +48,7 @@ namespace ITI.SkyLord.Controllers
 
             return View(island);
         }
+
         [Obsolete]
         public IActionResult AddIsland()
         {

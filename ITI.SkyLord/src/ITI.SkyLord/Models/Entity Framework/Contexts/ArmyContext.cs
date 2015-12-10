@@ -33,10 +33,9 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
             base.OnModelCreating(builder);
 
             builder.Entity<Army>()
-                .HasMany(a => a.Regiments)
-                .WithOne(r => r.Army)
-                .HasForeignKey( r => r.ArmyId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .HasMany( a => a.Regiments )
+                .WithOne( r => r.Army )
+                .HasForeignKey( r => r.ArmyId );
         }
 
         public DbSet<Player> Players { get; set; }
@@ -55,12 +54,13 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
         /// <param name="island">The current island</param>
         public void AddUnit( Unit unit, int number, Island island )
         {
-            Island islandFound = Islands.Include( i => i.Armies).SingleOrDefault( i => i.IslandId == island.IslandId );
+            Island islandFound = Islands.Include( i => i.Armies)
+                .SingleOrDefault( i => i.IslandId == island.IslandId );
             if ( islandFound == null ) throw new ArgumentException( "The island does not exist in the Database" );
 
             Army armyFound = islandFound.Armies.Where( a => a.ArmyState == ArmyState.defense ).SingleOrDefault();
 
-            if( armyFound == null )
+            if ( armyFound == null )
             {
                 Army newArmy = new Army
                 {
@@ -78,7 +78,7 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
                 armyFound.Regiments = new List<Regiment>();
             }
 
-            Regiment regimentFound = armyFound.Regiments.FirstOrDefault( r => r.Unit.UnitId == unit.UnitId );
+            Regiment regimentFound = Regiments.FirstOrDefault( r => r.ArmyId == armyFound.ArmyId && r.Unit.UnitId == unit.UnitId );
             if( regimentFound == null )
             {
                 Regiment newRegiment = new Regiment
@@ -98,6 +98,30 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
             }
         }
 
+        public void RemoveUnit(Unit unit, int number, Island island, Army army )
+        {
+            // Checks if the island exists
+            Island islandFound = Islands.Include( i => i.Armies).Single( i => i.IslandId == island.IslandId );
+            // Checks if the army belongs to the island, if not exception
+            Army armyFound = islandFound.Armies.Single( a => a.ArmyId == army.ArmyId );
+            // Checks if there is a single regiment that belongs to the army, if not exception
+            Regiment regimentFound = Regiments.Single( r => r.ArmyId == armyFound.ArmyId && r.Unit.UnitId == unit.UnitId );
+
+            regimentFound.Number -= number;
+            SaveChanges();
+
+            if ( regimentFound.Number < 0 ) throw new ArgumentException( "A regiment cannot have a negative Number roperty." );
+            if( regimentFound.Number == 0 )
+            {
+                Regiments.Remove( regimentFound );
+                SaveChanges();
+                if( Regiments.Where( r => r.ArmyId == armyFound.ArmyId).Count() == 0 )
+                {
+                    Armies.Remove( armyFound );
+                    SaveChanges();
+                }
+            }
+        }
         public EntityEntry Remove( Unit unit )
         {
             base.Remove( unit );
@@ -106,16 +130,20 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
             return base.Remove( unit.UnitStatistics );
         }
 
-        //public EntityEntry Remove( Army army )
-        //{
-        //    if(army.Regiments == null)
-        //        return base.Remove( army );
-        //    else
-        //    {
-        //        base.Remove( army );
-        //        SaveChanges();
-        //        return base.Remove( army.Regiments );
-        //    }
-        //}
+        public EntityEntry Remove( Army army )
+        {
+            if ( army.Regiments == null )
+                return base.Remove( army );
+            else
+            {
+                foreach(Regiment r in army.Regiments )
+                {
+                    base.Remove( r );
+                }
+                SaveChanges();
+
+                return base.Remove( army );
+            }
+        }
     }
 }

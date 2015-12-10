@@ -321,6 +321,8 @@ namespace ITI.SkyLord.Migrations
                     b.Property<int>("UnitId")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("Name");
+
                     b.Property<long?>("UnitCostRessourceId");
 
                     b.Property<int>("UnitDamageType");
