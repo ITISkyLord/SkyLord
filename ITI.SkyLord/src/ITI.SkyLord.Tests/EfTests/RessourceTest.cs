@@ -1,5 +1,6 @@
 ﻿using ITI.SkyLord.Models.Entity_Framework.Contexts;
 using Microsoft.AspNet.Mvc;
+using Microsoft.Data.Entity;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -44,7 +45,14 @@ namespace ITI.SkyLord.Tests.EfTests
         [Test]
         public void AddRessources()
         {
-
+            using (PlayerContext context = new PlayerContext())
+            {
+                Player playerActive = context.Players.Where(p => p.Name == "LoicD").SingleOrDefault();
+                using (IslandContext islandContext = new IslandContext())
+                {
+                    Ressource ressource = islandContext.Islands.Include(r => r.AllRessources).Where(i => i.Owner.PlayerId == playerActive.PlayerId).Select(res => res.AllRessources).SingleOrDefault();
+                }     
+            }               
         }
     }
 }
