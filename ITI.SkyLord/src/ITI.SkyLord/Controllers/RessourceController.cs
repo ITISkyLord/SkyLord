@@ -50,7 +50,7 @@ namespace ITI.SkyLord.Controllers
             return View(sr);
         }
 
-        public void AddRessources(int id)
+        public ViewResult AddRessources(int id)
         {
             //SeeRessources sr = new SeeRessources();
 
@@ -62,6 +62,7 @@ namespace ITI.SkyLord.Controllers
                 ressource.ChangeCristal(quantRessource);
                 islandContext.SaveChanges();               
             }
+            return View("SeeAllRessources");
         }
     }
 }
