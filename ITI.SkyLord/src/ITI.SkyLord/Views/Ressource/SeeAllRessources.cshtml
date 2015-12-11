@@ -11,8 +11,6 @@
 
 <h1>Ressources</h1>
 
-@{ Ressource r = Model.Ressources;}
-
 <table>
     <tr>
         <th>Cristal </th>
@@ -20,15 +18,19 @@
         <th>Wood </th>
         <th>Metal</th>
     </tr>
+    <tr>
+        @foreach (Ressource i in Model.AllRessources)
+        {
         <tr>
-            <td>@r.Cristal</td>
-            <td>@r.Wood</td>
-            <td>@r.Magic</td>
-            <td>@r.Metal</td>
+            <td>@i.Cristal</td>
+            <td>@i.Magic</td>
+            <td>@i.Wood</td>
+            <td>@i.Metal</td>
         </tr>
+        }
 
-</table>
+    </table>
 
-<br />
-<td><a asp-action="SeeMyIsland" asp-controller="Island">Retour</a></td>
+    <br />
+    <td><a asp-action="SeeMyIsland" asp-controller="Island">Retour</a></td>
 

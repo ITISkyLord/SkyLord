@@ -112,7 +112,32 @@ namespace ITI.SkyLord
             if ( Magic + magicQuantity < 0 ) throw new ArgumentException( "Magic cannot be negative." );
 
             Magic += magicQuantity;
-        } 
+        }
+
+        public void WithdrawMagic(int magicQuantity)
+        {
+            if (Magic - magicQuantity < 0) throw new ArgumentException("Magic cannot be negative.");
+
+            Magic -= magicQuantity;
+        }
+        public void WithdrawWood(int woodQuantity)
+        {
+            if (Wood - woodQuantity < 0) throw new ArgumentException("Wood cannot be negative.");
+
+            Wood -= woodQuantity;
+        }
+        public void WithdrawCristal(int cristalQuantity)
+        {
+            if (Cristal - cristalQuantity < 0) throw new ArgumentException("Cristal cannot be negative.");
+
+            Cristal -= cristalQuantity;
+        }
+        public void WithdrawMetal(int metalQuantity)
+        {
+            if (Metal - metalQuantity < 0) throw new ArgumentException("Metal cannot be negative.");
+
+            Metal -= metalQuantity;
+        }
         #endregion
 
         public override bool Equals( object obj )

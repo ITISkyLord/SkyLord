@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ITI.SkyLord.ViewModel.SeeIslands;
 using ITI.SkyLord.Models.Entity_Framework.Contexts;
 using Microsoft.Data.Entity;
+using System.Security.Claims;
 
 namespace ITI.SkyLord.Controllers
 {
@@ -21,24 +22,29 @@ namespace ITI.SkyLord.Controllers
         {
             return View();
         }
-
+        /// <summary>
+        /// See the island(s) of the current player
+        /// </summary>
+        /// <param name="id">Mail of player</param>
+        /// <returns></returns>
         public IActionResult SeeMyIsland()
         {
-            Player owner = PlayerContext.Players.Where(p => p.Name == "Kevin").SingleOrDefault();
-            List<Island> islands = IslandContext.Islands.ToList();
-            Island myIsland = islands.Where(i => i.Name == "Parc des princes").SingleOrDefault();
-            List<Coordinate> coordinates = IslandContext.Coordinates.ToList();
-            Coordinate coord = coordinates.Where(o => o.CoordinateId == myIsland.Coordinates.CoordinateId).SingleOrDefault();
+            Player owner = PlayerContext.GetPlayer(User.GetUserId());
+            List<Island> islands = IslandContext.Islands.Include(p => p.Owner).Include(pr => pr.Owner.Profil).Include(c => c.Coordinates).ToList();
+            Island myIsland = islands.Where(i => i.Owner.PlayerId == owner.PlayerId).First();
+
+            Coordinate coord = IslandContext.Coordinates.Where(o => o.CoordinateId == myIsland.Coordinates.CoordinateId).SingleOrDefault();
 
             SeeIslands island = new SeeIslands();
 
-            int X = coord.X;
-            int Y = coord.Y;
+            int x = coord.X;
+            int y = coord.Y;
 
-            island.Islands = islands;
+            island.ListIslands = islands;
+            island.Island = myIsland;
             island.Owner = owner;
-            island.X = X;
-            island.Y = Y;
+            island.X = x;
+            island.Y = y;
 
             return View(island);
         }
