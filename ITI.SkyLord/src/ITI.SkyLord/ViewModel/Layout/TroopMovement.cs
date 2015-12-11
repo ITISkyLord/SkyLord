@@ -1,9 +1,7 @@
-﻿
-
-using System;
+﻿using System;
 using System.Collections;
 
-namespace ITI.SkyLord.ViewModel
+namespace ITI.SkyLord.ViewModel.Layout
 {
     public class TroopMovement : IEnumerable
     {

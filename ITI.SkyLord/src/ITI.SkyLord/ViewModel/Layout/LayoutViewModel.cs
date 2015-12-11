@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ITI.SkyLord.ViewModel
+namespace ITI.SkyLord.ViewModel.Layout
 {
-    public class LayoutVM
+    public class LayoutViewModel
     {
         public Player CurrentPlayer { get; }
 

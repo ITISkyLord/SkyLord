@@ -30,6 +30,11 @@
         <div class="container-fluid body-content">
             <div class="row">
                 <!-- BEGIN SIDEBAR-->
+                @if( User.Identity.IsAuthenticated )
+                {
+
+
+                }
                 <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 sidebar">
                         <img src="~/images/SkyLord.png" class="img-responsive"/>
                         <a asp-controller="Home" asp-action="Index">Vue d'ensemble</a>
@@ -90,7 +95,7 @@
                         </div>
 
                         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-                            <a asp-controller="Home" asp-action="Index">Mon profil</a>
+                            <a asp-controller="Profil" asp-action="Index">Mon profil</a>
                         </div>
                     </div>
                     <!-- END ROW MENU-->
