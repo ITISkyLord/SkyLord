@@ -1,5 +1,7 @@
 ﻿using ITI.SkyLord.Models.Entity_Framework;
 using ITI.SkyLord.Models.Entity_Framework.Contexts;
+using ITI.SkyLord.Models.Managers;
+using Microsoft.AspNet.Mvc;
 using Microsoft.Data.Entity;
 using NUnit.Framework;
 using System;
@@ -13,6 +15,9 @@ namespace ITI.SkyLord.Tests.EfTests
     public class ArmyTests
     {
         World _world;
+
+        [FromServices]
+        public ArmyContext ArmyContext { get; set; }
 
         public ArmyTests()
         {
@@ -257,7 +262,7 @@ namespace ITI.SkyLord.Tests.EfTests
                     #endregion
 
                     // Assert that and army and regiment are properly created
-                    context.AddUnit( guard, 10, defaultIsland );
+                    new ArmyManager(context).AddUnit( guard, 10, defaultIsland );
                     Assert.That( context.Armies.Any( a => a.Island.IslandId == defaultIsland.IslandId ) );
                 }
             }
@@ -393,8 +398,9 @@ namespace ITI.SkyLord.Tests.EfTests
                     #endregion
 
                     // Assert that and army and regiment are properly created
-                    context.AddUnit( guard, 10, defaultIsland );
-                    context.AddUnit( necromancer, 15, defaultIsland );
+                    ArmyManager arm = new ArmyManager( context );
+                    arm.AddUnit( guard, 10, defaultIsland );
+                    arm.AddUnit( necromancer, 15, defaultIsland );
 
                     Assert.That( context.Regiments.Include( r => r.Unit ).FirstOrDefault( r => r.ArmyId == defaultArmy.ArmyId && r.Unit.UnitName == UnitName.guard ).Unit.UnitId == guard.UnitId );
                     Assert.That( context.Regiments.Include( r => r.Unit ).FirstOrDefault( r => r.ArmyId == defaultArmy.ArmyId && r.Unit.UnitName == UnitName.necromancer ).Unit.UnitId == necromancer.UnitId );
@@ -541,10 +547,9 @@ namespace ITI.SkyLord.Tests.EfTests
                     #endregion
 
                     // Assert that and army and regiment are properly created
-                    context.AddUnit( guard, 10, defaultIsland );
-                    context.AddUnit( necromancer, 15, defaultIsland );
-
-                    int i = context.Regiments.Include( r => r.Unit ).Count( r => r.ArmyId == defaultArmy.ArmyId && r.Unit.UnitName == UnitName.guard );
+                    ArmyManager am = new ArmyManager( context );
+                    am.AddUnit( guard, 10, defaultIsland );
+                    am.AddUnit( necromancer, 15, defaultIsland );
 
                     Assert.That( context.Regiments.Include( r => r.Unit ).FirstOrDefault( r => r.ArmyId == defaultArmy.ArmyId && r.Unit.UnitName == UnitName.guard ).Number == 60 );
                     Assert.That( context.Regiments.Include( r => r.Unit ).FirstOrDefault( r => r.ArmyId == defaultArmy.ArmyId && r.Unit.UnitName == UnitName.necromancer ).Number == 40 );
@@ -635,11 +640,10 @@ namespace ITI.SkyLord.Tests.EfTests
                     context.Add( defaultIsland );
                     context.SaveChanges();
                 }
+                // Add guard and necromancer units to DB
 
-                using ( ArmyContext context = new ArmyContext() )
+                using( var context = new ArmyContext() )
                 {
-                    // Add guard and necromancer units to DB
-
                     guardCost = new Ressource { Wood = 200, Metal = 100 };
                     context.Ressources.Add( guardCost );
                     guardStatistics = new UnitStatistics { Attack = 70, PhysicResist = 70, MagicResist = 40, Capacity = 100, Speed = 20, Consumption = 10 };
@@ -693,15 +697,12 @@ namespace ITI.SkyLord.Tests.EfTests
                     #endregion
 
                     // Assert that the Number property is properly updated
-                    context.RemoveUnit( guard, 10, defaultIsland, defaultArmy );
+                    ArmyManager am = new ArmyManager( context );
+                    am.RemoveUnit( guard, 10, defaultIsland, defaultArmy );
 
-                    int numberOfGuards = context.Armies.Include( a => a.Regiments )
-                        .First( a => a.ArmyId == defaultArmy.ArmyId ).Regiments
-                        .Single( r => r.Unit.UnitId == guard.UnitId ).Number;
+                    int numberOfGuards = am.FindRegiment( defaultArmy, UnitName.guard ).Number;
 
-                    int numberOfNecromancers = context.Armies.Include( a => a.Regiments )
-                        .First( a => a.ArmyId == defaultArmy.ArmyId ).Regiments
-                        .Single( r => r.Unit.UnitId == necromancer.UnitId ).Number;
+                    int numberOfNecromancers = am.FindRegiment( defaultArmy, UnitName.necromancer).Number;
 
                     Assert.That( numberOfGuards == 40 );
                     Assert.That( numberOfNecromancers == 25 );
@@ -848,15 +849,13 @@ namespace ITI.SkyLord.Tests.EfTests
                     #endregion
 
                     // Assert that the regiment is properly deleted
-                    context.RemoveUnit( guard, 50, defaultIsland, defaultArmy );
+                    ArmyManager am = new ArmyManager( context );
 
-                    Regiment guardRegiment = context.Armies.Include( a => a.Regiments )
-                        .First( a => a.ArmyId == defaultArmy.ArmyId ).Regiments
-                        .SingleOrDefault( r => r.Unit.UnitId == guard.UnitId );
+                    am.RemoveUnit( guard, 50, defaultIsland, defaultArmy );
 
-                    int numberOfNecromancers = context.Armies.Include( a => a.Regiments )
-                        .First( a => a.ArmyId == defaultArmy.ArmyId ).Regiments
-                        .Single( r => r.Unit.UnitId == necromancer.UnitId ).Number;
+                    Regiment guardRegiment = am.FindRegiment( defaultArmy, UnitName.guard );
+
+                    int numberOfNecromancers = am.FindRegiment( defaultArmy, UnitName.necromancer ).Number;
 
                     Assert.IsNull( guardRegiment );
                     Assert.That( numberOfNecromancers == 25 );
@@ -1003,16 +1002,16 @@ namespace ITI.SkyLord.Tests.EfTests
                     #endregion
 
                     // Assert that the army and regiment are properly deleted
-                    context.RemoveUnit( guard, 50, defaultIsland, defaultArmy );
-                    context.RemoveUnit( necromancer, 25, defaultIsland, defaultArmy );
+                    ArmyManager am = new ArmyManager( context );
+
+                    am.RemoveUnit( guard, 50, defaultIsland, defaultArmy );
+                    am.RemoveUnit( necromancer, 25, defaultIsland, defaultArmy );
 
                     Army armyFound = context.Armies.SingleOrDefault( a => a.ArmyId == defaultArmy.ArmyId );
 
-                    Regiment guardRegiment = defaultArmy.Regiments
-                        .SingleOrDefault( r => r.ArmyId == defaultArmy.ArmyId && r.Unit.UnitId == guard.UnitId );
+                    Regiment guardRegiment = am.FindRegiment( defaultArmy, UnitName.guard );
 
-                    Regiment necromancerRegiment = defaultArmy.Regiments
-                        .SingleOrDefault( r => r.ArmyId == defaultArmy.ArmyId && r.Unit.UnitId == necromancer.UnitId );
+                    Regiment necromancerRegiment = am.FindRegiment( defaultArmy, UnitName.necromancer );
 
                     Assert.IsNull( guardRegiment );
                     Assert.IsNull( necromancerRegiment );
