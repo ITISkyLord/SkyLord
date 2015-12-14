@@ -1,7 +1,7 @@
 ﻿
 @addTagHelper "*, Microsoft.AspNet.Mvc.TagHelpers"
 
-@model ITI.SkyLord.ViewModel.SeePlayers.SeePlayers
+@model ITI.SkyLord.ViewModel.SeePlayers.SeePlayersViewModel
 @using ITI.SkyLord
 
 @{
@@ -18,15 +18,18 @@
         <th>Description</th>
         <th>Mot de passe</th>
     </tr>
-    @foreach (Player p in Model.Players)
-    {
         <tr>
-            <td>@p.Name</td>
-            <td>@p.Mail</td>
-            <td>@p.Profil.Description</td>
-            <td>@p.Password</td>         
+            <td>@Model.ActivePlayer.Name</td>
+            <td>@Model.ActivePlayer.Mail</td>
+            <td>@Model.ActivePlayer.Profil.Description</td>
+            <td>@Model.ActivePlayer.Password</td>
+            @foreach (var island in Model.ActivePlayer.Islands)
+            {
+                <td> X : @island.Coordinates.X  Y : @island.Coordinates.Y</td>
+
+
+            }
         </tr>
-    }
 </table>
 
 <br /><td><a asp-action="SeePlayers" asp-controller="Player">Retour vers la liste des joueurs</a></td>
