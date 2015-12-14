@@ -77,8 +77,8 @@ namespace ITI.SkyLord.Controllers
         {
             Island island = ArmyContext.Islands.Include(i=> i.Owner).Include( i => i.AllRessources).Include(i => i.Armies).ThenInclude( a => a.Regiments).Where(i => i.IslandId == model.Target).FirstOrDefault();
             ArmyManager am = new ArmyManager( ArmyContext );
-            Island isl = ArmyContext.Islands.Where( i => i.IslandId == model.CurrentDefenseArmy.Island.IslandId ).SingleOrDefault();
-            Army attackingArmy = am.CreateArmy( model.UnitsToSend, ArmyContext.Islands.Where( i => i.IslandId == model.CurrentDefenseArmy.Island.IslandId ).SingleOrDefault() );
+            Island attackingIsland = GetCapital();
+            Army attackingArmy = am.CreateArmy( model.UnitsToSend, attackingIsland );
             Army defendingArmy = island.Armies.Where(a => a.ArmyState == ArmyState.defense).SingleOrDefault();
             if( defendingArmy == null )
                 defendingArmy = new Army { Island = island, Regiments = new List<Regiment>(), ArmyState = ArmyState.defense };
@@ -89,7 +89,7 @@ namespace ITI.SkyLord.Controllers
         private Island GetCapital()
         {
             long activePlayerId = PlayerContext.GetPlayer( User.GetUserId() ).PlayerId;
-            return IslandContext.Islands.SingleOrDefault( i => i.IsCapital && i.Owner.PlayerId == activePlayerId );
+            return IslandContext.Islands.Include( i => i.AllRessources).SingleOrDefault( i => i.IsCapital && i.Owner.PlayerId == activePlayerId );
         }
         private Island GetIsland( long islandId )
         {
