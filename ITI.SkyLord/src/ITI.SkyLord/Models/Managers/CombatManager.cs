@@ -135,7 +135,8 @@ namespace ITI.SkyLord
             Console.WriteLine( "result est : " + result );
 
             _armyManager.SubstractFromArmy( _winningArmy, ( result / 100 ) );
-            _armyManager.RemoveArmy( _loosingArmy );
+            if( _loosingArmy.Regiments.Count > 0 )
+                _armyManager.RemoveArmy( _loosingArmy );
 
             //100·(pp/pg)^X 
             //      X = 1,5 - 0,08·log10( N / 1000 ) où N correspond

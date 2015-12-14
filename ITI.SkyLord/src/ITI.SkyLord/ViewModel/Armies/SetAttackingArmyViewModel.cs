@@ -7,6 +7,7 @@ namespace ITI.SkyLord.ViewModel.Armies
 {
     public class SetAttackingArmyViewModel
     {
+        public Island AttackingIsland { get; set; }
         public Army CurrentDefenseArmy { get; set; }
      //   public List<Unit> AvailableUnits { get; set; }
         public Dictionary<string, int> UnitsToSend { get; set; }
