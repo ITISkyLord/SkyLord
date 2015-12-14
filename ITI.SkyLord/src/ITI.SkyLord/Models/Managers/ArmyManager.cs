@@ -10,15 +10,20 @@ namespace ITI.SkyLord.Models.Managers
     public class ArmyManager
     {
         ArmyContext CurrentContext { get; set; }
+
+        public ArmyManager()
+        {
+        }
+
         public ArmyManager( ArmyContext context )
         {
             CurrentContext = context;
         }
 
-        //public CombatResult ResolveCombat( Army attackingArmy, Army defendingArmy )
-        //{
-        //    return new CombatManager().Resolve( attackingArmy, defendingArmy );
-        //}
+        public CombatResult ResolveCombat( Army attackingArmy, Army defendingArmy )
+        {
+            return new CombatManager().Resolve( attackingArmy, defendingArmy );
+        }
 
         /// <summary>
         /// Adds a unit to the current island's army. Creates or updates the army and regiment accordingly.
@@ -145,6 +150,39 @@ namespace ITI.SkyLord.Models.Managers
                 Console.WriteLine( "loss = " + number );
                 this.SubstractFromRegiment( army, r.Unit, number);
             }
+        }
+
+        internal void RemoveArmy( Army army )
+        {
+            if ( army.Regiments == null )
+                CurrentContext.Remove( army );
+            else
+            {
+                foreach ( Regiment r in army.Regiments )
+                {
+                    CurrentContext.Remove( r );
+                }
+                CurrentContext. SaveChanges();
+
+                CurrentContext.Remove( army );
+                CurrentContext.SaveChanges();
+            }
+        }
+
+        /// <summary>
+        /// Count the number of unit in a army.
+        /// </summary>
+        /// <returns></returns>
+        internal double ArmyCount( Army army)
+        {
+            double number = 0;
+
+            foreach ( Regiment r in army.Regiments )
+            {
+                number += r.Number;
+            }
+
+            return number;
         }
     }
 }

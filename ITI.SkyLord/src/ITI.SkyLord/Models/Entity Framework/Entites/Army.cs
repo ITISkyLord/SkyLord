@@ -22,21 +22,6 @@ namespace ITI.SkyLord
         #endregion
 
         #region Methods
-        //internal Regiment FindRegiment( Regiment regiment )
-        //{
-        //    return Regiments.Where( r => r.Unit == regiment.Unit ).FirstOrDefault();
-        //}
-
-        ///// <summary>
-        ///// Find a regiment corresponding to a Unit in an army.
-        ///// </summary>
-        ///// <param name="unit">The unit to look for in the army.</param>
-        ///// <returns>The regiment found. If the regiment is not found it returns null.</returns>
-        //internal Regiment FindRegiment( Unit unit )
-        //{
-        //    return Regiments.Where( u => u.Unit.Name == unit.Name ).FirstOrDefault();
-        //}
-
         //internal void AddRegiment( Regiment regiment )
         //{
         //    if ( Regiments.Any( r => r.Unit == regiment.Unit ) )
@@ -115,43 +100,6 @@ namespace ITI.SkyLord
         //}
 
         ///// <summary>
-        ///// Substracts a number of units from a regiment in a army, if the final number is under 0, it removes the regiment.
-        ///// </summary>
-        ///// <param name="unit">The unit type to remove.</param>
-        ///// <param name="numberToRemove">The number of units to substract.</param>
-        //internal void SubstractFromRegiment( Unit unit, int numberToRemove )
-        //{
-        //    Regiment r = FindRegiment( unit );
-
-        //    if ( r == null ) throw new ArgumentException( "The unit you are trying to handle is not present in the army." );
-
-        //    int initialUnitNumber = r.Number;
-        //    int finalUnitNumber = initialUnitNumber - numberToRemove;
-        //    Regiments.Remove( r );
-
-        //    if ( finalUnitNumber > 0 )
-        //        Regiments.Add( new Regiment( unit, finalUnitNumber ) );
-        //}
-
-        ///// <summary>
-        ///// 
-        ///// </summary>
-        ///// <param name="ratio"></param>
-        //internal void SubstractFromArmy( double ratio )
-        //{
-        //    Army tmpArmy = this.Copy();
-
-        //    foreach ( Regiment r in tmpArmy.Regiments )
-        //    {
-        //        int number = (int)( r.Number * ratio );
-        //        Console.WriteLine( "number in the unit : " + r.Name + " = " + r.Number );
-        //        Console.WriteLine( "loss = " + number );
-        //        SubstractFromRegiment( r.Unit, number );
-
-        //    }
-        //}
-
-        ///// <summary>
         ///// Adds a number of units to a regiment in the army.
         ///// </summary>
         ///// <param name="unit">The type of unit to add</param>
@@ -166,21 +114,6 @@ namespace ITI.SkyLord
         //    int finalUnitNumber = initialUnitNumber + numberToAdd;
         //    Regiments.Remove( r );
         //    Regiments.Add( new Regiment( unit, finalUnitNumber ) );
-        //}
-
-        ///// <summary>
-        ///// Return a new army copied.
-        ///// </summary>
-        ///// <returns></returns>
-        //internal Army Copy()
-        //{
-        //    Army army = new Army( this.ArmyState, this.Island );
-        //    foreach ( Regiment r in this.Regiments )
-        //    {
-        //        army.AddRegiment( r );
-        //    }
-
-        //    return army;
         //}
 
         ///// <summary>
@@ -228,21 +161,6 @@ namespace ITI.SkyLord
         //    {
         //        Regiments.Add( new Regiment( r.Unit, r.Number ) );
         //    }
-        //}
-
-        ///// <summary>
-        ///// Count the number of unit in a army.
-        ///// </summary>
-        ///// <returns></returns>
-        //internal double Count()
-        //{
-        //    double number = 0;
-
-        //    foreach ( Regiment r in this.Regiments )
-        //    {
-        //        number += r.Number;
-        //    }
-        //    return number;
         //}
         #endregion
     }
