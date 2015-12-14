@@ -47,7 +47,7 @@ namespace ITI.SkyLord.Controllers
         public IActionResult SeeInformationOfAnPlayer(int id)
         {
             Player playerChoosen = PlayerContext.Players
-                .Include(a => a.Islands.Select(z => z.Coordinates))
+                .Include(a => a.Islands)
                 .Include(p => p.Profil)
                 .Where(p => p.PlayerId == id)
                 .SingleOrDefault();
