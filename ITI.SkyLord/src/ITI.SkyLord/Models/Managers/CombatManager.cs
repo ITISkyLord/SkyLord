@@ -1,6 +1,7 @@
 ﻿//
 using ITI.SkyLord;
-
+using ITI.SkyLord.Models.Entity_Framework.Contexts;
+using ITI.SkyLord.Models.Managers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,35 +21,126 @@ namespace ITI.SkyLord
         /// <param name="attackingArmy"></param>
         /// <param name="defendingArmy"></param>
         /// <returns></returns>
-        //public CombatResult Resolve( Army attackingArmy, Army defendingArmy )
-        //{
-        //    if ( attackingArmy == null ) throw new ArgumentNullException( "attackingArmy is null" );
-        //    if ( defendingArmy == null ) throw new ArgumentNullException( "defendingArmy is null" );
-        //    double physicResist = 1.0;
-        //    double magicResist = 1.0;
-        //    double ratioPhysicAttack;
-        //    double ratioMagicAttack;
-        //    double attackTotal;
-        //    double attackPointsPhysic = 0;
-        //    double attackPointsMagic = 0;
+        public CombatResult Resolve( Army attackingArmy, Army defendingArmy )
+        {
+            if ( attackingArmy == null ) throw new ArgumentNullException( "attackingArmy is null" );
+            if ( defendingArmy == null ) throw new ArgumentNullException( "defendingArmy is null" );
+            double physicResist = 1.0;
+            double magicResist = 1.0;
+            double ratioPhysicAttack;
+            double ratioMagicAttack;
+            double attackTotal;
+            double attackPointsPhysic = 0;
+            double attackPointsMagic = 0;
 
-        //    foreach ( Regiment r in attackingArmy.Regiments )
-        //    {
-        //        if ( r.Unit.UnitDamageType == UnitDamageType.physical )
-        //            attackPointsPhysic += ( r.Number * r.Unit.UnitStatistics.Attack );
-        //        else
-        //            attackPointsMagic += ( r.Number * r.Unit.UnitStatistics.Attack );
-        //    }
-        //    attackTotal = attackPointsPhysic + attackPointsMagic;
-        //    ratioPhysicAttack = attackPointsPhysic / attackTotal;
-        //    ratioMagicAttack = attackPointsMagic / attackTotal;
+            foreach ( Regiment r in attackingArmy.Regiments )
+            {
+                if ( r.Unit.UnitDamageType == UnitDamageType.physical )
+                    attackPointsPhysic += ( r.Number * r.Unit.UnitStatistics.Attack );
+                else
+                    attackPointsMagic += ( r.Number * r.Unit.UnitStatistics.Attack );
+            }
+            attackTotal = attackPointsPhysic + attackPointsMagic;
+            ratioPhysicAttack = attackPointsPhysic / attackTotal;
+            ratioMagicAttack = attackPointsMagic / attackTotal;
 
-        //    physicResist = GetPhysicResist( defendingArmy );
-        //    magicResist = GetMagicResist( defendingArmy );
-        //    Fight( attackingArmy, defendingArmy, attackPointsPhysic, physicResist, attackPointsMagic, magicResist, ratioPhysicAttack, ratioMagicAttack );
+            physicResist = GetPhysicResist( defendingArmy );
+            magicResist = GetMagicResist( defendingArmy );
+            Fight( attackingArmy, defendingArmy, attackPointsPhysic, physicResist, attackPointsMagic, magicResist, ratioPhysicAttack, ratioMagicAttack );
 
-        //    return new CombatResult( _winningArmy, _loosingArmy );
-        //}
+            return new CombatResult( _winningArmy, _loosingArmy );
+        }
+
+        /// <summary>
+        /// Return the physic resist of an army.
+        /// </summary>
+        /// <param name="army"></param>
+        /// <returns></returns>
+        private double GetPhysicResist( Army army )
+        {
+            double physicResist = 0;
+            foreach ( Regiment r in army.Regiments )
+            {
+                physicResist += r.Number * r.Unit.UnitStatistics.PhysicResist;
+            }
+
+            return physicResist;
+        }
+        /// <summary>
+        /// Return the magic resist of an army.
+        /// </summary>
+        /// <param name="army"></param>
+        /// <returns></returns>
+        private double GetMagicResist( Army army )
+        {
+            double magicResist = 0;
+            foreach ( Regiment r in army.Regiments )
+            {
+                magicResist += ( r.Number * r.Unit.UnitStatistics.MagicResist );
+            }
+
+            return magicResist;
+        }
+
+        /// <summary>
+        /// General fight. Modify winning army and loosing army. LossingArmy is cleared. Winning army get losses.
+        /// </summary>
+        /// <param name="attackingArmy"></param>
+        /// <param name="defendingArmy"></param>
+        /// <param name="attackPointsPhysic"></param>
+        /// <param name="physicResist"></param>
+        /// <param name="attackPointsMagic"></param>
+        /// <param name="magicResist"></param>
+        /// <param name="ratioPhysicAttack"></param>
+        /// <param name="ratioMagicAttack"></param>
+        private void Fight( Army attackingArmy, Army defendingArmy, double attackPointsPhysic, double physicResist, double attackPointsMagic, double magicResist, double ratioPhysicAttack, double ratioMagicAttack )
+        {
+            if ( attackingArmy == null ) throw new ArgumentNullException( "attackingArmy is null" );
+            if ( defendingArmy == null ) throw new ArgumentNullException( "defendingArmy is null" );
+            if ( attackPointsPhysic < 0 ) throw new ArgumentException( "attackPointsPhysic under 0 is anormal." );
+            if ( physicResist < 0 ) throw new ArgumentException( "physicResist under 0 is anormal." );
+            if ( magicResist < 0 ) throw new ArgumentException( "magicResist under 0 is anormal." );
+            if ( ratioPhysicAttack < 0 ) throw new ArgumentException( "ratioPhysicAttack under 0 is anormal." );
+            if ( ratioMagicAttack < 0 ) throw new ArgumentException( "ratioMagicAttack under 0 is anormal." );
+
+            double totalAttack = attackPointsMagic + attackPointsPhysic;
+            double totalDefense = physicResist * ( ratioPhysicAttack + 0.05 ) + magicResist * ( ratioMagicAttack + 0.05 );
+            double totalWinner;
+            double totalLooser;
+
+
+            if ( totalAttack > totalDefense )
+            {
+                _winningArmy = attackingArmy;
+                _loosingArmy = defendingArmy;
+                totalWinner = totalAttack;
+                totalLooser = totalDefense;
+            }
+            else
+            {
+                _winningArmy = defendingArmy;
+                _loosingArmy = attackingArmy;
+                totalWinner = totalDefense;
+                totalLooser = totalAttack;
+            }
+            using ( var context = new ArmyContext() )
+            {
+                ArmyManager am = new ArmyManager( context );
+                double numberInWinnerArmy = am.ArmyCount( _winningArmy );
+                double numberInLooserArmy = am.ArmyCount( _loosingArmy );
+                double result = 100 * Math.Pow( ( totalLooser / totalWinner ), ( 1.5 - 0.08 * Math.Log10( ( numberInWinnerArmy + numberInLooserArmy ) / 1000 ) ) );
+                Console.WriteLine( "result est : " + result );
+
+                am.SubstractFromArmy( _winningArmy, ( result / 100 ) );
+                //ClearRegiments
+                am.RemoveArmy( _loosingArmy );
+            }
+
+            //100·(pp/pg)^X 
+            //      X = 1,5 - 0,08·log10( N / 1000 ) où N correspond
+            //au nombre de troupes( au nombres de troupes et non a la consomation de
+            //céréales!)
+        }
 
         /// <summary>
         /// Simple attack in case of round combat, Obsolete at the moment.
@@ -269,92 +361,6 @@ namespace ITI.SkyLord
         //    }
         //}
 
-        /// <summary>
-        /// Return the physic resist of an army.
-        /// </summary>
-        /// <param name="army"></param>
-        /// <returns></returns>
-        private double GetPhysicResist( Army army )
-        {
-            double physicResist = 0;
-            foreach ( Regiment r in army.Regiments )
-            {
-                physicResist += r.Number * r.Unit.UnitStatistics.PhysicResist;
-            }
-
-            return physicResist;
-        }
-        /// <summary>
-        /// Return the magic resist of an army.
-        /// </summary>
-        /// <param name="army"></param>
-        /// <returns></returns>
-        private double GetMagicResist( Army army )
-        {
-            double magicResist = 0;
-            foreach ( Regiment r in army.Regiments )
-            {
-                magicResist += ( r.Number * r.Unit.UnitStatistics.MagicResist );
-            }
-
-            return magicResist;
-        }
-
-        /// <summary>
-        /// General fight. Modify winning army and loosing army. LossingArmy is cleared. Winning army get losses.
-        /// </summary>
-        /// <param name="attackingArmy"></param>
-        /// <param name="defendingArmy"></param>
-        /// <param name="attackPointsPhysic"></param>
-        /// <param name="physicResist"></param>
-        /// <param name="attackPointsMagic"></param>
-        /// <param name="magicResist"></param>
-        /// <param name="ratioPhysicAttack"></param>
-        /// <param name="ratioMagicAttack"></param>
-        //private void Fight( Army attackingArmy, Army defendingArmy, double attackPointsPhysic, double physicResist, double attackPointsMagic, double magicResist, double ratioPhysicAttack, double ratioMagicAttack )
-        //{
-        //    if ( attackingArmy == null ) throw new ArgumentNullException( "attackingArmy is null" );
-        //    if ( defendingArmy == null ) throw new ArgumentNullException( "defendingArmy is null" );
-        //    if ( attackPointsPhysic < 0 ) throw new ArgumentException( "attackPointsPhysic under 0 is anormal." );
-        //    if ( physicResist < 0 ) throw new ArgumentException( "physicResist under 0 is anormal." );
-        //    if ( magicResist < 0 ) throw new ArgumentException( "magicResist under 0 is anormal." );
-        //    if ( ratioPhysicAttack < 0 ) throw new ArgumentException( "ratioPhysicAttack under 0 is anormal." );
-        //    if ( ratioMagicAttack < 0 ) throw new ArgumentException( "ratioMagicAttack under 0 is anormal." );
-
-        //    double totalAttack = attackPointsMagic + attackPointsPhysic;
-        //    double totalDefense = physicResist * ( ratioPhysicAttack + 0.05 ) + magicResist * ( ratioMagicAttack + 0.05 );
-        //    double totalWinner;
-        //    double totalLooser;
-
-
-        //    if ( totalAttack > totalDefense )
-        //    {
-        //        _winningArmy = attackingArmy;
-        //        _loosingArmy = defendingArmy;
-        //        totalWinner = totalAttack;
-        //        totalLooser = totalDefense;
-        //    }
-        //    else
-        //    {
-        //        _winningArmy = defendingArmy;
-        //        _loosingArmy = attackingArmy;
-        //        totalWinner = totalDefense;
-        //        totalLooser = totalAttack;
-        //    }
-        //    double numberInWinnerArmy = _winningArmy.Count();
-        //    double numberInLooserArmy = _loosingArmy.Count();
-        //    double result = 100 * Math.Pow( ( totalLooser / totalWinner ), ( 1.5 - 0.08 * Math.Log10( ( numberInWinnerArmy + numberInLooserArmy ) / 1000 ) ) );
-        //    Console.WriteLine( "result est : " + result );
-
-        //    _winningArmy.SubstractFromArmy( result / 100 );
-        //    _loosingArmy.ClearRegiments();
-
-        //    //100·(pp/pg)^X 
-        //    //      X = 1,5 - 0,08·log10( N / 1000 ) où N correspond
-        //    //au nombre de troupes( au nombres de troupes et non a la consomation de
-        //    //céréales!)
-
-        //}
 
     }
 }
