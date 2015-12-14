@@ -9,13 +9,5 @@ namespace ITI.SkyLord.ViewModel.Armies
         public List<Army> CurrentIslandArmies { get; set; }
         public List<Unit> AvailableUnits { get; set; }
         public Dictionary<string, int> UnitsToAdd { get; set; }
-        [Display( Name = "Garde" )]
-        public int NumberGuard { get; set; }
-
-        [Display( Name = "Nécromancien" )]
-        public int NumberNecromancer { get; set; }
-
-
-
     }
 }
