@@ -72,10 +72,15 @@ namespace ITI.SkyLord.Controllers
         }
         public IActionResult Fight( SetAttackingArmyViewModel model)
         {
+            Island island = ArmyContext.Islands.Include(i=> i.Owner).Include(i => i.Armies).Where(i => i.IslandId == model.Target).FirstOrDefault();
             ArmyManager am = new ArmyManager( ArmyContext );
             Army attackingArmy = am.CreateArmy( model.UnitsToSend);
-            Army defendingArmy = model.Target.Armies.Where(a => a.ArmyState == ArmyState.defense).SingleOrDefault();
-            am.ResolveCombat();
+            Army defendingArmy = island.Armies.Where(a => a.ArmyState == ArmyState.defense).SingleOrDefault();
+            if( defendingArmy == null )
+                defendingArmy = new Army { Island = island, Regiments = new List<Regiment>(), ArmyState = ArmyState.defense };
+
+            CombatResult cr = am.ResolveCombat(attackingArmy, defendingArmy);
+            return View();
         }
         private Island GetCapital()
         {

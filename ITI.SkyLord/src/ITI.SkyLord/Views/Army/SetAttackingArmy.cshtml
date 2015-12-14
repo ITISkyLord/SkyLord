@@ -29,10 +29,10 @@
         </tr>
     }
 </table>
-    <select asp-for="@Model.Target">
+    <select asp-for="@Model.Target" >
         @foreach( Island i in Model.EnnemyIslands )
         {
-            <option>
+            <option value="@i.IslandId">
                 @i.Name , @i.Owner.Name , [@i.Coordinates.X, @i.Coordinates.Y] 
             </option>
         }

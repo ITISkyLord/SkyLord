@@ -12,6 +12,6 @@ namespace ITI.SkyLord.ViewModel.Armies
         public Dictionary<string, int> UnitsToSend { get; set; }
         public List<Island> EnnemyIslands { get; set; }
 
-        public Island Target { get; set; }
+        public long Target { get; set; }
     }
 }
