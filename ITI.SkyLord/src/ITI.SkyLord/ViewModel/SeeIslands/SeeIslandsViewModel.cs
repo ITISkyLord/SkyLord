@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ITI.SkyLord.ViewModel.SeeIslands
 {
-    public class SeeIslands
+    public class SeeIslandsViewModel
     {
         public List<Island> ListIslands { get; set; }
         public Island Island { get; set; }

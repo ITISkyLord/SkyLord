@@ -25,7 +25,7 @@ namespace ITI.SkyLord.Controllers
 
         public IActionResult SeeRessources(int id)
         {
-            SeeRessources sr = new SeeRessources();
+            SeeRessourcesViewModel sr = new SeeRessourcesViewModel();
 
             Island islandChoosen = IslandContext.Islands.Include(p => p.Owner).Include(r => r.AllRessources).Where(i => i.IslandId.Equals(id)).SingleOrDefault();
             Ressource ressources = islandChoosen.AllRessources;
@@ -36,7 +36,7 @@ namespace ITI.SkyLord.Controllers
 
         public IActionResult SeeAllRessources()
         {
-            SeeRessources sr = new SeeRessources();
+            SeeRessourcesViewModel sr = new SeeRessourcesViewModel();
             Player player = PlayerContext.GetPlayer(User.GetUserId());
             List<Ressource> ressources = IslandContext.Islands.Include(r => r.AllRessources).Where(i => i.Owner.PlayerId == player.PlayerId).Select(i => i.AllRessources).ToList();
 
@@ -56,7 +56,7 @@ namespace ITI.SkyLord.Controllers
                 ressource.ChangeCristal(quantRessource);
                 islandContext.SaveChanges();
 
-                SeeRessources sr = new SeeRessources();
+                SeeRessourcesViewModel sr = new SeeRessourcesViewModel();
                 sr.Ressources = ressource;
                 return View("Index", sr);
             }        

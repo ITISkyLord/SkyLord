@@ -57,5 +57,12 @@ namespace ITI.SkyLord.Controllers
             sp.ActivePlayer = playerChoosen;
             return View(sp);
         }
+
+        public IActionResult Players(string name)
+        {
+            Player player = PlayerContext.GetPlayer(User.GetUserId());
+            var result = PlayerContext.Players.Where(p => p.PlayerId != player.PlayerId).Select(p => p.Name).ToArray();
+            return Json(result.Where(x => x.StartsWith(name,StringComparison.CurrentCultureIgnoreCase)).ToArray());
+        }
     }
 }

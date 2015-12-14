@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ITI.SkyLord.ViewModel.SeeRessources
 {
-    public class SeeRessources
+    public class SeeRessourcesViewModel
     {
         public Ressource Ressources { get; set; }
         public List<Ressource> AllRessources { get; set; }
