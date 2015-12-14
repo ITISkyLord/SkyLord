@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Data.Entity;
 using Microsoft.Extensions.Primitives;
+using System.Security.Claims;
 
 namespace ITI.SkyLord.Controllers
 {
@@ -19,36 +20,41 @@ namespace ITI.SkyLord.Controllers
         {
             return View();
         }
-
+        /// <summary>
+        /// See all players in the game SkyLord
+        /// </summary>
+        /// <returns></returns>
         public IActionResult SeePlayers()
         {
-            Player playerActif;
-            if ( Request.Cookies[ "PlayerId" ].Count != 0 )
+            Player player = PlayerContext.GetPlayer(User.GetUserId());
+            if (player != null)
             {
-                playerActif = PlayerContext.Players.Where( p => p.PlayerId == long.Parse(Request.Cookies[ "PlayerId" ]) ).SingleOrDefault();
+                List<Player> othersPlayer = PlayerContext.Players
+                    .Include(p => p.Profil)
+                    .Include(i => i.Islands)
+                    .Where(pl => pl.PlayerId != player.PlayerId).ToList();
 
-                List<Player> players = PlayerContext.Players.ToList();
-                players.Remove( playerActif );
-
-                SeePlayers sp = new SeePlayers();
-
-                sp.Players = players;
-                sp.ActivePlayer = playerActif;
-                return View( sp );
+                SeePlayersViewModel sp = new SeePlayersViewModel();
+                sp.Players = othersPlayer;
+                sp.ActivePlayer = player;
+                return View(sp);
             }
             else
-                return RedirectToAction( "Index", "Connection" );
-
+            {
+                return RedirectToAction("Index");
+            }
         }
-
         public IActionResult SeeInformationOfAnPlayer(int id)
         {
-            Player choosen = PlayerContext.Players.Include(z => z.Profil).Where(p => p.PlayerId == id).SingleOrDefault();
-            List<Player> player = new List<Player>();
-            player.Add(choosen);
-            SeePlayers sp = new SeePlayers();
-            sp.Players = player;
+            Player playerChoosen = PlayerContext.Players
+                .Include(a => a.Islands)
+                .Include(p => p.Profil)
+                .Where(p => p.PlayerId == id)
+                .SingleOrDefault();
 
+            SeePlayersViewModel sp = new SeePlayersViewModel();
+
+            sp.ActivePlayer = playerChoosen;
             return View(sp);
         }
     }
