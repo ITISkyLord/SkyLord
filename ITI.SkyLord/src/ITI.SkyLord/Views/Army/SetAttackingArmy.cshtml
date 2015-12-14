@@ -1,0 +1,42 @@
+﻿@addTagHelper "*, Microsoft.AspNet.Mvc.TagHelpers"
+@model ITI.SkyLord.ViewModel.Armies.SetAttackingArmyViewModel
+@using ITI.SkyLord
+
+@{
+    ViewData[ "Title" ] = "Armées";
+    Layout = "_Layout";
+}
+
+<h1>Armées</h1>
+
+
+    <ul>
+        <li> ArmyId : @Model.CurrentDefenseArmy.ArmyId</li>
+        @foreach ( Regiment r in Model.CurrentDefenseArmy.Regiments )
+        {
+            <li> Unité : @r.Unit.Name  Nombre : @r.Number</li>
+        }
+    </ul>
+
+<form asp-controller="Army" asp-action="Fight" method="post" role="form">
+    <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
+<table>
+    @foreach ( Regiment r in Model.CurrentDefenseArmy.Regiments )
+    {
+        <tr>
+            <td>@r.Unit.Name</td>
+            <td><input asp-for="UnitsToSend[r.Unit.UnitName.ToString()]" value="0"/></td>
+        </tr>
+    }
+</table>
+    <select asp-for="@Model.Target">
+        @foreach( Island i in Model.EnnemyIslands )
+        {
+            <option>
+                @i.Name , @i.Owner.Name , [@i.Coordinates.X, @i.Coordinates.Y] 
+            </option>
+        }
+    </select>
+    <button>Envoyer les unités</button>
+</form>
+
