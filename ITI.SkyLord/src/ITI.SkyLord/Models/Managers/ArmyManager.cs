@@ -100,6 +100,31 @@ namespace ITI.SkyLord.Models.Managers
             return armyFound;
         }
 
+        internal Army CreateArmy( Dictionary<string, int> unitsToSend )
+        {
+            Army army = new Army();
+
+            List<Regiment> regiments = new List<Regiment>();
+            foreach( KeyValuePair<string, int> kvp in unitsToSend )
+            {
+                UnitName uN = (UnitName)Enum.Parse( typeof( UnitName ), kvp.Key, true );
+                Unit unit = CurrentContext.Units.Where( u => u.UnitName == uN).FirstOrDefault();
+                regiments.Add( new Regiment { Unit = unit, Number = kvp.Value } );
+                
+            }
+
+            foreach( Regiment r in regiments ) 
+            {
+                CurrentContext.Add( r );
+            }
+            CurrentContext.SaveChanges();
+            army.Regiments = regiments;
+            army.ArmyState = ArmyState.movement;
+            CurrentContext.Armies.Add( army );
+            CurrentContext.SaveChanges();
+            return army;
+        }
+
         /// <summary>
         /// Finds a specific regiment
         /// </summary>
