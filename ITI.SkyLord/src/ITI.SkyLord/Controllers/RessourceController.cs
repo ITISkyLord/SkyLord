@@ -50,9 +50,18 @@ namespace ITI.SkyLord.Controllers
             return View(sr);
         }
 
-        public IActionResult AddRessources()
+        public void AddRessources(int id)
         {
-            return View();
+            //SeeRessources sr = new SeeRessources();
+
+            Player owner = PlayerContext.GetPlayer(User.GetUserId());
+            using (IslandContext islandContext = new IslandContext())
+            {
+                int quantRessource = 10;
+                Ressource ressource = islandContext.Islands.Include(r => r.AllRessources).Where(i => i.Owner.PlayerId == owner.PlayerId).Select(res => res.AllRessources).SingleOrDefault();
+                ressource.ChangeCristal(quantRessource);
+                islandContext.SaveChanges();               
+            }
         }
     }
 }
