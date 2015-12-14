@@ -20,13 +20,7 @@ namespace ITI.SkyLord.Controllers
 
         public IActionResult Index(/*int id*/)
         {
-            //SeeRessources sr = new SeeRessources();
-
-            //Island islandChossen = IslandContext.Islands.Include(p => p.Owner).Where(i => i.IslandId.Equals(id)).SingleOrDefault();
-            //List<Ressource> ressources = IslandContext.Ressources.ToList();
-            //sr.Ressources = ressources;
-
-            return View(/*sr*/);
+            return View();
         }
 
         public IActionResult SeeRessources(int id)
@@ -50,7 +44,7 @@ namespace ITI.SkyLord.Controllers
             return View(sr);
         }
 
-        public ViewResult AddRessources(int id)
+        public IActionResult AddRessources(int id)
         {
             //SeeRessources sr = new SeeRessources();
 
@@ -60,9 +54,12 @@ namespace ITI.SkyLord.Controllers
                 int quantRessource = 10;
                 Ressource ressource = islandContext.Islands.Include(r => r.AllRessources).Where(i => i.Owner.PlayerId == owner.PlayerId).Select(res => res.AllRessources).SingleOrDefault();
                 ressource.ChangeCristal(quantRessource);
-                islandContext.SaveChanges();               
-            }
-            return View("SeeAllRessources");
+                islandContext.SaveChanges();
+
+                SeeRessources sr = new SeeRessources();
+                sr.Ressources = ressource;
+                return View("Index", sr);
+            }        
         }
     }
 }
