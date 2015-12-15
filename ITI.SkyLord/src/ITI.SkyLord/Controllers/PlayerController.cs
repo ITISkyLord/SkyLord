@@ -44,6 +44,7 @@ namespace ITI.SkyLord.Controllers
                 return RedirectToAction("Index");
             }
         }
+
         public IActionResult SeeInformationOfAnPlayer(int id)
         {
             Player playerChoosen = PlayerContext.Players
@@ -57,6 +58,18 @@ namespace ITI.SkyLord.Controllers
             sp.ActivePlayer = playerChoosen;
             return View(sp);
         }
+
+        public IActionResult SeeInformationOfAnPlayerstring(string nom)
+        {
+            // Chercher le player par nom
+            int id = 6;
+
+
+            RedirectToAction("SeeInformationOfAnPlayer", id);
+            return View();
+        }
+
+
 
         public IActionResult Players(string name)
         {

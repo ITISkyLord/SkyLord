@@ -54,6 +54,9 @@ namespace ITI.SkyLord.Controllers
                 int quantRessource = 10;
                 Ressource ressource = islandContext.Islands.Include(r => r.AllRessources).Where(i => i.Owner.PlayerId == owner.PlayerId).Select(res => res.AllRessources).SingleOrDefault();
                 ressource.ChangeCristal(quantRessource);
+                ressource.ChangeMagic(quantRessource);
+                ressource.ChangeMetal(quantRessource);
+                ressource.ChangeWood(quantRessource);
                 islandContext.SaveChanges();
 
                 SeeRessourcesViewModel sr = new SeeRessourcesViewModel();
