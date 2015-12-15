@@ -86,6 +86,15 @@
                         }
                     </div>
 
+                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                        @if (User.IsSignedIn())
+                        {
+                            <form asp-controller="Player" asp-action="SeePlayers" method="post" id="seePlayerForm">
+                                <button type="submit" class="btn btn-link navbar-btn navbar-link">Joueurs</button>
+                            </form>
+                        }
+                    </div>
+
 
                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                         <form asp-controller="Player" asp-action="SeeInformationOfAnPlayerstring" method="post" role="form">
