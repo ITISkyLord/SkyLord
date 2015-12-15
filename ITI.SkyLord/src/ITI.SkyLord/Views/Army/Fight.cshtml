@@ -1,0 +1,15 @@
+﻿@addTagHelper "*, Microsoft.AspNet.Mvc.TagHelpers"
+@model ITI.SkyLord.ViewModel.Armies.CombatReportViewModel
+@using ITI.SkyLord
+
+@{
+    ViewData[ "Title" ] = "Armées";
+    Layout = "_Layout";
+}
+@{
+    <p> Ressrouces pillées : @Model.CombatResult.PillagedRessources </p>
+
+    <p> Gagant : @Model.CombatResult.WinningArmy.Island.Owner.Name </p>
+    <p> Perdant : @Model.CombatResult.LoosingArmy.Island.Owner.Name </p>
+    
+}

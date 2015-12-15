@@ -84,12 +84,12 @@ namespace ITI.SkyLord.Controllers
                 defendingArmy = new Army { Island = island, Regiments = new List<Regiment>(), ArmyState = ArmyState.defense };
 
             CombatResult cr = am.ResolveCombat( attackingArmy, defendingArmy );
-            return View();
+            return View( "Fight", new CombatReportViewModel { CombatResult = cr } );
         }
         private Island GetCapital()
         {
             long activePlayerId = PlayerContext.GetPlayer( User.GetUserId() ).PlayerId;
-            return IslandContext.Islands.Include( i => i.AllRessources).SingleOrDefault( i => i.IsCapital && i.Owner.PlayerId == activePlayerId );
+            return IslandContext.Islands.Include( i => i.AllRessources).Include( i => i.Owner).SingleOrDefault( i => i.IsCapital && i.Owner.PlayerId == activePlayerId );
         }
         private Island GetIsland( long islandId )
         {
