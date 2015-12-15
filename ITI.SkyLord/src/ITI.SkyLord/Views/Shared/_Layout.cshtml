@@ -62,7 +62,7 @@
                         </form>
                     </div>
                         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-                            <a asp-controller="Army" asp-action="Index">Mes armées</a>
+                            <a asp-controller="Army" asp-action="Index">Armées</a>
                         </div>
 
                     <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
@@ -89,9 +89,9 @@
 
                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                         <form>
-                            <input type="text" placeholder="Recherche ..." style="width:70%"><input style="width:20%;" type="submit" value="Go" /><br />
-                            <label>Joueur</label><input type="radio" />
-                            <label>Guilde</label><input type="radio" />
+                            <input type="text" placeholder="Recherche ..." style="width:70%" id="searchPlayer"><input style="width:20%;" type="submit" value="Go" /><br />
+                            @*<label>Joueur</label><input type="radio" />
+                            <label>Guilde</label><input type="radio" />*@
                         </form>
                     </div>
 
@@ -160,11 +160,15 @@
 
     <environment names="Development">
         <!-- Quand on est en développement -->
+        @*<script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.8.0.js"></script>*@
         <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.22/jquery-ui.js"></script>
+   
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
         <script src="~/lib/hammer.js/hammer.js"></script>
         <script src="~/lib/bootstrap-touch-carousel/dist/js/bootstrap-touch-carousel.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
+        <script src="~/js/searchPlayer.js"></script>
     </environment>
 
     <environment names="Staging,Production">

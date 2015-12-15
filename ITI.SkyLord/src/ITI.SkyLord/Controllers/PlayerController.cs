@@ -57,5 +57,19 @@ namespace ITI.SkyLord.Controllers
             sp.ActivePlayer = playerChoosen;
             return View(sp);
         }
+
+        public IActionResult Players(string name)
+        {
+          
+           Player player = PlayerContext.GetPlayer(User.GetUserId());
+            var result = PlayerContext.Players.Where(p => p.PlayerId != player.PlayerId).Select(p => p.Name).ToArray();
+            return Json(result.Where(x => x.StartsWith(name, StringComparison.CurrentCultureIgnoreCase)).ToArray());
+
+            //        var result = new[] { @"ActionScript", "AppleScript", "Asp", "BASIC", "C", "C++",
+            //"Clojure", "COBOL", "ColdFusion", "Erlang","Fortran", "Groovy","Haskell",
+            //"Java", "JavaScript", "Lisp", "Perl", "PHP", "Python","Ruby", "Scala", "Scheme" };
+            //        return Json(result.Where(x =>
+            //            x.StartsWith(term, StringComparison.CurrentCultureIgnoreCase)).ToArray());
+        }
     }
 }

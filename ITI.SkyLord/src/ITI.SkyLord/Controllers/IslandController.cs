@@ -35,7 +35,7 @@ namespace ITI.SkyLord.Controllers
 
             Coordinate coord = IslandContext.Coordinates.Where(o => o.CoordinateId == myIsland.Coordinates.CoordinateId).SingleOrDefault();
 
-            SeeIslands island = new SeeIslands();
+            SeeIslandsViewModel island = new SeeIslandsViewModel();
 
             int x = coord.X;
             int y = coord.Y;
