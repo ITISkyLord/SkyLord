@@ -15,7 +15,7 @@ using ITI.SkyLord.Controllers;
 using System;
 using Microsoft.AspNet.Cryptography.KeyDerivation;
 using Microsoft.Data.Entity.ChangeTracking;
-using ITI.SkyLord.Models.Managers;
+using ITI.SkyLord.Services;
 
 namespace ITI.SkyLord
 {

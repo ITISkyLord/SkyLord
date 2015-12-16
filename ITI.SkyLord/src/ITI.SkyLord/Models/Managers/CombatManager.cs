@@ -1,7 +1,7 @@
 ﻿//
 using ITI.SkyLord;
 using ITI.SkyLord.Models.Entity_Framework.Contexts;
-using ITI.SkyLord.Models.Managers;
+using ITI.SkyLord.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;

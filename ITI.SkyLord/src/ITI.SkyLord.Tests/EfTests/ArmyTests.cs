@@ -1,6 +1,6 @@
 ﻿using ITI.SkyLord.Models.Entity_Framework;
 using ITI.SkyLord.Models.Entity_Framework.Contexts;
-using ITI.SkyLord.Models.Managers;
+using ITI.SkyLord.Services;
 using Microsoft.AspNet.Mvc;
 using Microsoft.Data.Entity;
 using NUnit.Framework;
