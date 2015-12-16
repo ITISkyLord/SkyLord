@@ -5,11 +5,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ITI.SkyLord.Models.Managers
+namespace ITI.SkyLord.Services
 {
     public class ArmyManager
     {
-        ArmyContext CurrentContext { get; set; }
+        public ArmyContext CurrentContext { get; set; }
 
         public ArmyManager()
         {

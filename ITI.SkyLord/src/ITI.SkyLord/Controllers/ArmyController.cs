@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using ITI.SkyLord.Models.Managers;
+using ITI.SkyLord.Services;
 
 namespace ITI.SkyLord.Controllers
 {
