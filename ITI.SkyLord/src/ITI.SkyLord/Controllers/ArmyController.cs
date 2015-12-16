@@ -63,7 +63,7 @@ namespace ITI.SkyLord.Controllers
                                     .ThenInclude( r => r.Unit )
                                     .ThenInclude(r => r.UnitStatistics)
                                     .Where( a => a.Island.IslandId == currentIsland.IslandId && a.ArmyState == ArmyState.defense )
-                                    .SingleOrDefault()
+                                    .FirstOrDefault() //REMETTRE SINGLE ! ON NE PEUT PAS AVOIR PLUSIEURS ARMÉES DE DÉFENSE
                 
             };
 
@@ -91,11 +91,11 @@ namespace ITI.SkyLord.Controllers
         private Island GetCapital()
         {
             long activePlayerId = PlayerContext.GetPlayer( User.GetUserId() ).PlayerId;
-            return IslandContext.Islands.Include( i => i.AllRessources).Include( i => i.Owner).SingleOrDefault( i => i.IsCapital && i.Owner.PlayerId == activePlayerId );
+            return ArmyContext.Islands.Include( i => i.AllRessources).Include( i => i.Owner).Include(i => i.Coordinates).SingleOrDefault( i => i.IsCapital && i.Owner.PlayerId == activePlayerId );
         }
         private Island GetIsland( long islandId )
         {
-            return IslandContext.Islands.SingleOrDefault( i => i.IslandId == islandId );
+            return ArmyContext.Islands.SingleOrDefault( i => i.IslandId == islandId );
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace ITI.SkyLord.Controllers
         private ArmyViewModel CreateArmyViewModel()
         {
             long activePlayerId = PlayerContext.GetPlayer( User.GetUserId() ).PlayerId;
-            long capitalId = IslandContext.Islands.SingleOrDefault( i => i.IsCapital && i.Owner.PlayerId == activePlayerId ).IslandId;
+            long capitalId = ArmyContext.Islands.SingleOrDefault( i => i.IsCapital && i.Owner.PlayerId == activePlayerId ).IslandId;
 
             return new ArmyViewModel
             {
@@ -122,7 +122,7 @@ namespace ITI.SkyLord.Controllers
         private ArmyViewModel CreateArmyViewModel( long islandId )
         {
             long activePlayerId = PlayerContext.GetPlayer( User.GetUserId() ).PlayerId;
-            long capitalId = IslandContext.Islands.SingleOrDefault( i => i.IsCapital && i.Owner.PlayerId == activePlayerId ).IslandId;
+            long capitalId = ArmyContext.Islands.SingleOrDefault( i => i.IsCapital && i.Owner.PlayerId == activePlayerId ).IslandId;
 
             List<Army> currentIslandArmies = null;
             if( islandId == 0 )
