@@ -7,9 +7,14 @@
     Layout = "_Layout";
 }
 @{
-    <p> Ressrouces pillées : @Model.CombatResult.PillagedRessources </p>
+    <p> Ressources pillées :
+        Bois : @Model.CombatResult.PillagedRessources.Wood
+        Métal : @Model.CombatResult.PillagedRessources.Metal
+        Cristal : @Model.CombatResult.PillagedRessources.Cristal
+        Magie : @Model.CombatResult.PillagedRessources.Magic 
+    </p>
 
-    <p> Gagant : @Model.CombatResult.WinningArmy.Island.Owner.Name </p>
+    <p> Gagnant : @Model.CombatResult.WinningArmy.Island.Owner.Name </p>
     <p> Perdant : @Model.CombatResult.LoosingArmy.Island.Owner.Name </p>
     
 }

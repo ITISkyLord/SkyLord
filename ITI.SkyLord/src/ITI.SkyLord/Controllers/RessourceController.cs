@@ -61,7 +61,7 @@ namespace ITI.SkyLord.Controllers
 
                 SeeRessourcesViewModel sr = new SeeRessourcesViewModel();
                 sr.Ressources = ressource;
-                return View("Index", sr);
+                return RedirectToAction( "SeeAllRessources" );
             }        
         }
     }
