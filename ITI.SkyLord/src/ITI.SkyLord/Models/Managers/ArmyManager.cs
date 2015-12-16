@@ -105,7 +105,14 @@ namespace ITI.SkyLord.Models.Managers
             Army army = new Army();
 
             List<Regiment> regiments = new List<Regiment>();
-            foreach( KeyValuePair<string, int> kvp in unitsToSend )
+
+            army.ArmyState = ArmyState.movement;
+            army.Island = currentIsland;
+            CurrentContext.Armies.Add( army );
+            army.Regiments = regiments;
+            CurrentContext.SaveChanges();
+
+            foreach ( KeyValuePair<string, int> kvp in unitsToSend )
             {
                 if( kvp.Value > 0 )
                 {
@@ -114,17 +121,17 @@ namespace ITI.SkyLord.Models.Managers
                     regiments.Add( new Regiment { Unit = unit, Number = kvp.Value } );
                 }
             }
-
             foreach( Regiment r in regiments ) 
             {
                 CurrentContext.Add( r );
             }
-            CurrentContext.SaveChanges();
+
             army.Regiments = regiments;
-            army.ArmyState = ArmyState.movement;
-            army.Island = currentIsland;
-            CurrentContext.Armies.Add( army );
             CurrentContext.SaveChanges();
+
+            Army defenseArmy = CurrentContext.Armies.Include( a => a.Island).Include( a => a.Regiments).SingleOrDefault( a => a.ArmyState == ArmyState.defense );
+            SubstractFromArmy( defenseArmy, army );
+
             return army;
         }
 
@@ -145,6 +152,29 @@ namespace ITI.SkyLord.Models.Managers
                 Regiments = new List<Regiment>(originalArmy.Regiments),
                 ArmyState = originalArmy.ArmyState
             };
+        }
+
+        public Army JoinArmies ( Army army1, Army army2 )
+        {
+            Army joinedArmy = army1;
+            foreach( Regiment reg in army2.Regiments )
+            {
+                Regiment regimentFound = army1.Regiments.Where( r => r.Unit.UnitName == reg.Unit.UnitName ).SingleOrDefault();
+                if ( regimentFound == null )
+                {
+                    army1.Regiments.Add( reg );
+                }
+                else
+                {
+                    regimentFound.Number += reg.Number;
+                }
+            }
+
+            CurrentContext.Armies.Remove( army2 );
+            // Tu ne dois pas supprimer les régiments avant ?
+            CurrentContext.SaveChanges();
+
+            return army2;
         }
 
         /// <summary>
@@ -177,6 +207,16 @@ namespace ITI.SkyLord.Models.Managers
                 Console.WriteLine( "number in the unit : " + r.Name + " = " + r.Number );
                 Console.WriteLine( "loss = " + number );
                 this.SubstractFromRegiment( army, r.Unit, number);
+            }
+        }
+
+        internal void SubstractFromArmy( Army armyToRemoveFrom, Army armyToBeRemoved )
+        {
+            Army tmpArmy = this.CopyArmy( armyToBeRemoved );
+
+            foreach ( Regiment r in armyToBeRemoved.Regiments )
+            {
+                this.RemoveUnit( r.Unit, r.Number, armyToRemoveFrom.Island, armyToRemoveFrom );
             }
         }
 

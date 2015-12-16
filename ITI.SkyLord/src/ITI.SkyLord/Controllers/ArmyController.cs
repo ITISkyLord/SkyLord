@@ -84,6 +84,8 @@ namespace ITI.SkyLord.Controllers
                 defendingArmy = new Army { Island = island, Regiments = new List<Regiment>(), ArmyState = ArmyState.defense };
 
             CombatResult cr = am.ResolveCombat( attackingArmy, defendingArmy );
+            am.JoinArmies( attackingIsland.Armies.SingleOrDefault( a => a.ArmyState == ArmyState.defense ), attackingArmy );
+
             return View( "Fight", new CombatReportViewModel { CombatResult = cr } );
         }
         private Island GetCapital()
