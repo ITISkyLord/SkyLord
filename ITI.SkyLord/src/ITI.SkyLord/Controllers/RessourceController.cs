@@ -1,4 +1,5 @@
 ﻿using ITI.SkyLord.Models.Entity_Framework.Contexts;
+using ITI.SkyLord.Services;
 using ITI.SkyLord.ViewModel.SeeRessources;
 using Microsoft.AspNet.Mvc;
 using Microsoft.Data.Entity;
@@ -43,26 +44,22 @@ namespace ITI.SkyLord.Controllers
             sr.AllRessources = ressources;
             return View(sr);
         }
-
-        public IActionResult AddRessources(int id)
+        /// <summary>
+        /// Add ressources in island
+        /// </summary>
+        /// <param name="name"> The name of ressource</param>
+        /// <param name="quantity">Quantity which added</param>
+        /// <returns></returns>
+        public IActionResult AddRessources( string name, string quantity)
         {
-            //SeeRessources sr = new SeeRessources();
-
+            int x = 0;
+            int.TryParse(quantity,out x);
+            IslandServices island = new IslandServices(IslandContext, PlayerContext);
             Player owner = PlayerContext.GetPlayer(User.GetUserId());
-            using (IslandContext islandContext = new IslandContext())
-            {
-                int quantRessource = 10;
-                Ressource ressource = islandContext.Islands.Include(r => r.AllRessources).Where(i => i.Owner.PlayerId == owner.PlayerId).Select(res => res.AllRessources).SingleOrDefault();
-                ressource.ChangeCristal(quantRessource);
-                ressource.ChangeMagic(quantRessource);
-                ressource.ChangeMetal(quantRessource);
-                ressource.ChangeWood(quantRessource);
-                islandContext.SaveChanges();
+            SeeRessourcesViewModel sr = new SeeRessourcesViewModel();
 
-                SeeRessourcesViewModel sr = new SeeRessourcesViewModel();
-                sr.Ressources = ressource;
-                return RedirectToAction( "SeeAllRessources" );
-            }        
+            island.AddRessources(name, owner.PlayerId, x);
+            return RedirectToAction("SeeAllRessources");
         }
     }
 }

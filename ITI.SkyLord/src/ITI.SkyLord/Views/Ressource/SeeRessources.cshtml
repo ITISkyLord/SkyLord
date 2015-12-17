@@ -13,23 +13,43 @@
 
 @{ Ressource r = Model.Ressources;}
 
-<table>
-    <tr>
-        <th>Cristal </th>
-        <th>Magic </th>
-        <th>Wood </th>
-        <th>Metal</th>
-    </tr>
+<form asp-controller="Ressource" asp-route-name="Cristal" asp-action="AddRessources" method="post" role="form">
+    <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
+    <table>
         <tr>
-            <td>@r.Cristal</td> 
-            <td>@r.Wood</td>
-            <td>@r.Magic</td>
-            <td>@r.Metal</td>
-            <td><a asp-action="AddRessources" asp-route-id="@r.Cristal" asp-controller="Ressource">Ajouter ressource</a></td>
+            <td asp-for="Cristal"> Cristal : @r.Cristal</td>
+            <td><input name="quantity" value="" /></td>
+            <td><button>Ajouter</button></td>
         </tr>
-
-</table>
-
-<br />
-<td><a asp-action="SeeMyIsland" asp-controller="Island">Retour</a></td>
-
+    </table>
+</form>
+<form asp-controller="Ressource" asp-route-name="Wood" asp-action="AddRessources" method="post" role="form">
+    <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
+    <table>
+        <tr>
+            <td> Bois : @r.Wood</td>
+            <td><input name="quantity" value="" /></td>
+            <td><button>Ajouter</button></td>
+        </tr>
+    </table>
+</form>
+<form asp-controller="Ressource" asp-route-name="Magic" asp-action="AddRessources" method="post" role="form">
+    <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
+    <table>
+        <tr>
+            <td>Magie : @r.Magic</td>
+            <td><input name="quantity" value="" /></td>
+            <td><button>Ajouter</button></td>
+        </tr>
+    </table>
+</form>
+<form asp-controller="Ressource" asp-route-name="Metal" asp-action="AddRessources" method="post" role="form">
+    <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
+    <table>
+        <tr>
+            <td>Metal @r.Metal</td>
+            <td><input name="quantity" value="" /></td>
+            <td><button>Ajouter</button></td>
+        </tr>
+    </table>
+</form>
