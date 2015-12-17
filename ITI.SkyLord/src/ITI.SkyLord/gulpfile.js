@@ -6,6 +6,8 @@ var gulp = require("gulp"),
     concat = require("gulp-concat"),
     cssmin = require("gulp-cssmin"),
     uglify = require("gulp-uglify"),
+    ts = require('gulp-typescript'),
+    del = require('del'),
     project = require("./project.json");
 
 var paths = {
@@ -30,7 +32,7 @@ gulp.task("clean:css", function (cb) {
 gulp.task("clean", ["clean:js", "clean:css"]);
 
 gulp.task('less', function () {
-    gulp.src('wwwroot/css/SkyLord.less')
+    gulp.src('wwwroot/less/*.less')
         .pipe(less()) // Compile LESS
         .pipe(gulp.dest('wwwroot/css'));
 });
@@ -53,6 +55,16 @@ gulp.task("min:css", function () {
 
 gulp.task("min", ["min:js", "min:css"]);
 
+gulp.task('typescript', function () {
+    return gulp.src(['wwwroot/ts/*.ts'])
+      .pipe(ts())
+      .pipe(gulp.dest('wwwroot/js'));
+});
+gulp.task('cleanJsInTsFolder', function () {
+    return del(['wwwroot/ts/*.js']);
+});
+
 gulp.task('watch', function () {
-    gulp.watch('wwwroot/css/SkyLord.less', ['less']);
+    gulp.watch('wwwroot/less/*.less', ['less']);
+    gulp.watch('wwwroot/ts/*.ts', ['typescript', 'cleanJsInTsFolder']);
 });
