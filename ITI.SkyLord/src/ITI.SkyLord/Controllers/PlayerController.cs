@@ -59,14 +59,9 @@ namespace ITI.SkyLord.Controllers
             return View(sp);
         }
 
-        //public IActionResult SeeInformationOfAnPlayerstring(string nom)
+        //public IActionResult SeeInformationOfAnPlayerstring(string namePlayer)
         //{
-        //    // Chercher le player par nom
-        //    int id = 6;
-
-
-        //    RedirectToAction("SeeInformationOfAnPlayer", id);
-        //    return View();
+        //    return RedirectToAction("SeeInformationOfAnPlayer");
         //}
 
 

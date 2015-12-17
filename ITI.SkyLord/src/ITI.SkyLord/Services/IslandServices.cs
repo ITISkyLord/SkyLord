@@ -34,16 +34,16 @@ namespace ITI.SkyLord.Services
             switch (typeRessource)
             {
                 case ("Cristal"):
-                    ressource.ChangeCristal(quantity);
+                    ressource.AddCristal(quantity);
                     break;
                 case ("Magic"):
-                    ressource.ChangeMagic(quantity);
+                    ressource.AddMagic(quantity);
                     break;
                 case ("Metal"):
-                    ressource.ChangeMetal(quantity);
+                    ressource.AddMetal(quantity);
                     break;
                 case ("Wood"):
-                    ressource.ChangeWood(quantity);
+                    ressource.AddWood(quantity);
                     break;
                 default:
                     break;
