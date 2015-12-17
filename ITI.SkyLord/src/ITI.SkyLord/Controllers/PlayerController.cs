@@ -59,15 +59,15 @@ namespace ITI.SkyLord.Controllers
             return View(sp);
         }
 
-        public IActionResult SeeInformationOfAnPlayerstring(string nom)
-        {
-            // Chercher le player par nom
-            int id = 6;
+        //public IActionResult SeeInformationOfAnPlayerstring(string nom)
+        //{
+        //    // Chercher le player par nom
+        //    int id = 6;
 
 
-            RedirectToAction("SeeInformationOfAnPlayer", id);
-            return View();
-        }
+        //    RedirectToAction("SeeInformationOfAnPlayer", id);
+        //    return View();
+        //}
 
 
 
@@ -77,12 +77,6 @@ namespace ITI.SkyLord.Controllers
            Player player = PlayerContext.GetPlayer(User.GetUserId());
             var result = PlayerContext.Players.Where(p => p.PlayerId != player.PlayerId).Select(p => p.Name).ToArray();
             return Json(result.Where(x => x.StartsWith(name, StringComparison.CurrentCultureIgnoreCase)).ToArray());
-
-            //        var result = new[] { @"ActionScript", "AppleScript", "Asp", "BASIC", "C", "C++",
-            //"Clojure", "COBOL", "ColdFusion", "Erlang","Fortran", "Groovy","Haskell",
-            //"Java", "JavaScript", "Lisp", "Perl", "PHP", "Python","Ruby", "Scala", "Scheme" };
-            //        return Json(result.Where(x =>
-            //            x.StartsWith(term, StringComparison.CurrentCultureIgnoreCase)).ToArray());
         }
     }
 }
