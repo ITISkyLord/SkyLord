@@ -63,8 +63,7 @@ namespace ITI.SkyLord.Controllers
                                     .ThenInclude( r => r.Unit )
                                     .ThenInclude(r => r.UnitStatistics)
                                     .Where( a => a.Island.IslandId == currentIsland.IslandId && a.ArmyState == ArmyState.defense )
-                                    .FirstOrDefault() //REMETTRE SINGLE ! ON NE PEUT PAS AVOIR PLUSIEURS ARMÉES DE DÉFENSE
-                
+                                    .SingleOrDefault()
             };
 
             long activePlayerId = PlayerContext.GetPlayer( User.GetUserId() ).PlayerId;
@@ -75,7 +74,7 @@ namespace ITI.SkyLord.Controllers
         }
         public IActionResult Fight( SetAttackingArmyViewModel model )
         {
-            Island island = ArmyContext.Islands.Include(i=> i.Owner).Include( i => i.AllRessources).Include(i => i.Armies).ThenInclude( a => a.Regiments).Where(i => i.IslandId == model.Target).FirstOrDefault();
+            Island island = ArmyContext.Islands.Include( i=> i.Owner ).Include( i => i.AllRessources ).Include( i => i.Armies ).ThenInclude( a => a.Regiments ).Where( i => i.IslandId == model.Target ).FirstOrDefault();
             ArmyManager am = new ArmyManager( ArmyContext );
             Island attackingIsland = GetCapital();
             Army attackingArmy = am.CreateArmy( model.UnitsToSend, attackingIsland );
@@ -83,19 +82,49 @@ namespace ITI.SkyLord.Controllers
             if( defendingArmy == null )
                 defendingArmy = new Army { Island = island, Regiments = new List<Regiment>(), ArmyState = ArmyState.defense };
 
-            CombatResult cr = am.ResolveCombat( attackingArmy, defendingArmy );
-            am.JoinArmies( attackingIsland.Armies.SingleOrDefault( a => a.ArmyState == ArmyState.defense ), attackingArmy );
+            CombatResult combatResult = am.ResolveCombat( attackingArmy, defendingArmy );
+            CombatReportViewModel combatReport = new CombatReportViewModel { CombatResult = combatResult };
 
-            return View( "Fight", new CombatReportViewModel { CombatResult = cr } );
+            // am.JoinArmies( attackingIsland.Armies.SingleOrDefault( a => a.ArmyState == ArmyState.defense ), attackingArmy );
+
+            return View( "Fight", combatReport );
+        }
+
+        public IActionResult RejoinArmies( long id )
+        {
+            ArmyManager am = new ArmyManager( ArmyContext );
+            Army attackingArmy = ArmyContext.Armies
+                .Include( a => a.Regiments ).ThenInclude( r => r.Unit )
+                .Include( a => a.Island ).ThenInclude( i => i.Armies )
+                .ThenInclude( a => a.Regiments).ThenInclude( r => r.Unit)
+                .FirstOrDefault( a => a.ArmyId == id );
+
+            am.JoinArmies( attackingArmy.Island.Armies.SingleOrDefault( a => a.ArmyState == ArmyState.defense ), attackingArmy );
+
+            return RedirectToAction( "Index" );
         }
         private Island GetCapital()
         {
             long activePlayerId = PlayerContext.GetPlayer( User.GetUserId() ).PlayerId;
-            return ArmyContext.Islands.Include( i => i.AllRessources).Include( i => i.Owner).Include(i => i.Coordinates).SingleOrDefault( i => i.IsCapital && i.Owner.PlayerId == activePlayerId );
+            return ArmyContext.Islands
+                .Include( i => i.Armies )
+                .ThenInclude( a => a.Regiments )
+                .ThenInclude( r => r.Unit )
+                .Include( i => i.AllRessources)
+                .Include( i => i.Owner)
+                .Include(i => i.Coordinates)
+                .SingleOrDefault( i => i.IsCapital && i.Owner.PlayerId == activePlayerId );
         }
         private Island GetIsland( long islandId )
         {
-            return ArmyContext.Islands.SingleOrDefault( i => i.IslandId == islandId );
+            return ArmyContext.Islands
+                .Include( i => i.Armies)
+                .ThenInclude( a => a.Regiments)
+                .ThenInclude( r => r.Unit)
+                .Include( i => i.AllRessources )
+                .Include( i => i.Owner )
+                .Include( i => i.Coordinates )
+                .SingleOrDefault( i => i.IslandId == islandId );
         }
 
         /// <summary>

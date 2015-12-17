@@ -108,7 +108,6 @@ namespace ITI.SkyLord.Services
 
             army.ArmyState = ArmyState.movement;
             army.Island = currentIsland;
-           // army.Island.AllRessources = new Ressource();
             army.Island.AllRessources = currentIsland.AllRessources; 
             CurrentContext.Armies.Add( army );
             army.Regiments = regiments;
@@ -131,10 +130,18 @@ namespace ITI.SkyLord.Services
             army.Regiments = regiments;
             CurrentContext.SaveChanges();
 
-            Army defenseArmy = CurrentContext.Armies.Include( a => a.Island).ThenInclude(a => a.AllRessources).Include( a => a.Regiments).SingleOrDefault( a => a.ArmyState == ArmyState.defense );
+            Army defenseArmy = GetCurrentDefenseArmy( currentIsland.IslandId );
+
             SubstractFromArmy( defenseArmy, army );
             army.Island.AllRessources = currentIsland.AllRessources;
             return army;
+        }
+
+        public Army GetCurrentDefenseArmy( long IslandId )
+        {
+            return CurrentContext.Armies.Include( a => a.Island ).ThenInclude( a => a.AllRessources )
+                .Include( a => a.Regiments ).ThenInclude( r => r.Unit)
+                .SingleOrDefault( a => a.ArmyState == ArmyState.defense && a.Island.IslandId == IslandId );
         }
 
         /// <summary>
@@ -160,7 +167,11 @@ namespace ITI.SkyLord.Services
         {
             Army joinedArmy = armyOnIsland;
             if( armyOnIsland == null || armyOnIsland.Regiments == null)
+            {
                 armyOnMovement.ArmyState = ArmyState.defense;
+                CurrentContext.SaveChanges();
+                return armyOnMovement;
+            }
             else
             {
                 foreach( Regiment reg in armyOnMovement.Regiments )
@@ -177,13 +188,9 @@ namespace ITI.SkyLord.Services
                 }
 
                 CurrentContext.Armies.Remove( armyOnMovement );
+                CurrentContext.SaveChanges();
+                return armyOnIsland;
             }
-
-            // QUID des ressources pillées ajoutées à l'île que l'on rejoint ?
-            
-            CurrentContext.SaveChanges();
-
-            return armyOnMovement;
         }
 
         /// <summary>
@@ -200,10 +207,13 @@ namespace ITI.SkyLord.Services
 
             int initialUnitNumber = r.Number;
             int finalUnitNumber = initialUnitNumber - numberToTemove;
-            army.Regiments.Remove( r );
 
             if ( finalUnitNumber > 0 )
-                army.Regiments.Add( new Regiment { Army = army, Number = finalUnitNumber, Unit = unit } );
+                r.Number = finalUnitNumber;
+            else if ( finalUnitNumber == 0 )
+                army.Regiments.Remove( r );
+            else
+                throw new ArgumentException( " A regiment cannot have a negative value." );
         }
 
         internal void SubstractFromArmy( Army army, double ratio )

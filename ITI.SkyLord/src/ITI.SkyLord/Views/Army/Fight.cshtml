@@ -14,7 +14,17 @@
         @Model.CombatResult.PillagedRessources.Magic <br />
     </p>
 
-    <p> Gagant : @Model.CombatResult.WinningArmy.Island.Owner.Name </p>
+    <p> 
+        Gagant : @Model.CombatResult.WinningArmy.Island.Owner.Name <br />
+        Reste : 
+        <ul>
+            @foreach( Regiment r in Model.CombatResult.WinningArmy.Regiments )
+            {
+               <li>  @r.Unit.Name : @r.Number </li>
+            }
+        </ul>
+    </p>
     <p> Perdant : @Model.CombatResult.LoosingArmy.Island.Owner.Name </p>
     
+    <h1> <a asp-action="RejoinArmies" asp-controller="Army" asp-route-id="@Model.CombatResult.WinningArmy.ArmyId"> Rejoindre les armées</a> </h1>
 }
