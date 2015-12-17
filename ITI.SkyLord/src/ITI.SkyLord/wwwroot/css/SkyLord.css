@@ -1,29 +1,21 @@
-﻿
-.sidebar{
-    background-color:#ff6a00;
+.sidebar {
+  background-color: #ff6a00;
 }
-
-.menu{
-
-    background-color:#ffd800
+.menu {
+  background-color: #ffd800;
 }
-
-.troupe{
-
-    background-color:#b6ff00;
+.troupe {
+  background-color: #b6ff00;
 }
-
-.content{
-
-    background-color:#00ff21;
+body {
+  background-color: pink;
 }
-
+.content {
+  background-color: #00ff21;
+}
 .footer {
-
-    background-color:#00ff90;
+  background-color: #00ff90;
 }
-
-.ressource{
-    background-color:#ffd800;
+.ressource {
+  background-color: #ffd800;
 }
-

@@ -1,7 +1,8 @@
-﻿/// <binding Clean='clean' />
+﻿/// <binding Clean='clean' ProjectOpened='watch' />
 
 var gulp = require("gulp"),
     rimraf = require("rimraf"),
+    less = require('gulp-less'),
     concat = require("gulp-concat"),
     cssmin = require("gulp-cssmin"),
     uglify = require("gulp-uglify"),
@@ -28,6 +29,12 @@ gulp.task("clean:css", function (cb) {
 
 gulp.task("clean", ["clean:js", "clean:css"]);
 
+gulp.task('less', function () {
+    gulp.src('wwwroot/css/SkyLord.less')
+        .pipe(less()) // Compile LESS
+        .pipe(gulp.dest('wwwroot/css'));
+});
+
 gulp.task("min:js", function () {
     gulp.src([paths.js, "!" + paths.minJs], { base: "." })
         .pipe(concat(paths.concatJsDest))
@@ -42,4 +49,10 @@ gulp.task("min:css", function () {
         .pipe(gulp.dest("."));
 });
 
+
+
 gulp.task("min", ["min:js", "min:css"]);
+
+gulp.task('watch', function () {
+    gulp.watch('wwwroot/css/SkyLord.less', ['less']);
+});
