@@ -1,0 +1,32 @@
+﻿
+@addTagHelper "*, Microsoft.AspNet.Mvc.TagHelpers"
+
+@model ITI.SkyLord.ViewModel.SeePlayers.SeePlayersViewModel
+@using ITI.SkyLord
+
+@{
+    ViewData["Title"] = "Information sur le joueur";
+    Layout = "_Layout";
+}
+
+<h1>Joueurs</h1>
+
+<table>
+    <tr>
+        <th>Nom</th>
+        <th>Email</th>
+        <th>Description</th>
+        <th>Coordonnées île </th>
+    </tr>
+    <tr>
+        <td>@Model.ActivePlayer.Name</td>
+        <td>@Model.ActivePlayer.Mail</td>
+        <td>@Model.ActivePlayer.Profil.Description</td>
+        @foreach (var island in Model.ActivePlayer.Islands)
+            {
+            <td> X : @island.Coordinates.X  Y : @island.Coordinates.Y</td>
+
+
+        }
+    </tr>
+</table>
