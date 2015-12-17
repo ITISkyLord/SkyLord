@@ -10,14 +10,14 @@ namespace ITI.SkyLord.Services
     public class ArmyManager
     {
         public ArmyContext CurrentContext { get; set; }
-
         public ArmyManager()
         {
         }
 
-        public ArmyManager( ArmyContext context )
+        public ArmyManager( ArmyContext context)
         {
             CurrentContext = context;
+            
         }
 
         public CombatResult ResolveCombat( Army attackingArmy, Army defendingArmy )
@@ -108,6 +108,8 @@ namespace ITI.SkyLord.Services
 
             army.ArmyState = ArmyState.movement;
             army.Island = currentIsland;
+           // army.Island.AllRessources = new Ressource();
+            army.Island.AllRessources = currentIsland.AllRessources; 
             CurrentContext.Armies.Add( army );
             army.Regiments = regiments;
             CurrentContext.SaveChanges();
@@ -129,9 +131,9 @@ namespace ITI.SkyLord.Services
             army.Regiments = regiments;
             CurrentContext.SaveChanges();
 
-            Army defenseArmy = CurrentContext.Armies.Include( a => a.Island).Include( a => a.Regiments).SingleOrDefault( a => a.ArmyState == ArmyState.defense );
+            Army defenseArmy = CurrentContext.Armies.Include( a => a.Island).ThenInclude(a => a.AllRessources).Include( a => a.Regiments).SingleOrDefault( a => a.ArmyState == ArmyState.defense );
             SubstractFromArmy( defenseArmy, army );
-
+            army.Island.AllRessources = currentIsland.AllRessources;
             return army;
         }
 
@@ -154,27 +156,34 @@ namespace ITI.SkyLord.Services
             };
         }
 
-        public Army JoinArmies ( Army army1, Army army2 )
+        public Army JoinArmies ( Army armyOnIsland, Army armyOnMovement )
         {
-            Army joinedArmy = army1;
-            foreach( Regiment reg in army2.Regiments )
+            Army joinedArmy = armyOnIsland;
+            if( armyOnIsland == null || armyOnIsland.Regiments == null)
+                armyOnMovement.ArmyState = ArmyState.defense;
+            else
             {
-                Regiment regimentFound = army1.Regiments.Where( r => r.Unit.UnitName == reg.Unit.UnitName ).SingleOrDefault();
-                if ( regimentFound == null )
+                foreach( Regiment reg in armyOnMovement.Regiments )
                 {
-                    army1.Regiments.Add( reg );
+                    Regiment regimentFound = armyOnIsland.Regiments.Where( r => r.Unit.UnitName == reg.Unit.UnitName ).SingleOrDefault();
+                    if( regimentFound == null )
+                    {
+                        armyOnIsland.Regiments.Add( reg );
+                    }
+                    else
+                    {
+                        regimentFound.Number += reg.Number;
+                    }
                 }
-                else
-                {
-                    regimentFound.Number += reg.Number;
-                }
+
+                CurrentContext.Armies.Remove( armyOnMovement );
             }
 
-            CurrentContext.Armies.Remove( army2 );
-            // Tu ne dois pas supprimer les régiments avant ?
+            // QUID des ressources pillées ajoutées à l'île que l'on rejoint ?
+            
             CurrentContext.SaveChanges();
 
-            return army2;
+            return armyOnMovement;
         }
 
         /// <summary>
