@@ -8,7 +8,7 @@
     Layout = "_Layout";
 }
 
-@{ Island iss = Model.Island;}
+@{ Island currentIsland = Model.Island;}
 
 <h1>Liste d'îles</h1>
 
@@ -17,9 +17,9 @@
         <th>Ile(s) :</th>
     </tr>
         <tr>
-            <td>@iss.Name</td>
-            <td>Ses coordonnées sont : [@iss.Coordinates.X;@iss.Coordinates.Y]</td>
-            <td><a asp-controller="Ressource" asp-route-id="@iss.IslandId" asp-action="SeeRessources">Voir vos ressources</a></td>
+            <td>@currentIsland.Name</td>
+            <td>Ses coordonnées sont : [@currentIsland.Coordinates.X;@currentIsland.Coordinates.Y]</td>
+            <td><a asp-controller="Ressource" asp-route-islandId="@Model.CurrentIslandId" asp-action="SeeRessources">Voir vos ressources</a></td>
         </tr>
 </table>
 

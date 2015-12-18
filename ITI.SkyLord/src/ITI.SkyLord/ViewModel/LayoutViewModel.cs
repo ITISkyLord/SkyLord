@@ -12,11 +12,14 @@ namespace ITI.SkyLord.ViewModel
         /// <summary>
         /// Need Ressources
         /// </summary>
+        /// 
+        public long IslandId { get; set; }
+
         public Island CurrentIsland { get; set; }
 
         public List<Island> AllIslands { get; set; }
 
-        public List<Army> AttackerArmy{ get; set; }
+        public List<Army> AttackerArmies{ get; set; }
 
 
 

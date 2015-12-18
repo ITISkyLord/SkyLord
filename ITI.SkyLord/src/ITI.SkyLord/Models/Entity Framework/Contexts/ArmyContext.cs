@@ -10,11 +10,19 @@ using System.Linq;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.Data.Entity.ChangeTracking;
+using ITI.SkyLord.ViewModel;
 
 namespace ITI.SkyLord.Models.Entity_Framework.Contexts
 {
-    public class ArmyContext : IdentityDbContext
+    public class ArmyContext : IdentityDbContext, IStandardContext
     {
+        public void FillStandardVM( StandardViewModel vm, long playerId, long islandId = 0 )
+        {
+            vm.Layout.CurrentPlayer = Players.Single( p => p.PlayerId == playerId );
+            vm.Layout.AllIslands = Islands.Where( i => i.Owner.PlayerId == playerId ).ToList();
+            vm.Layout.CurrentIsland = Islands.Single( i => i.IslandId == islandId );
+        }
+
         public IConfigurationRoot Configuration { get; set; }
 
         protected override void OnConfiguring( DbContextOptionsBuilder optionsBuilder )

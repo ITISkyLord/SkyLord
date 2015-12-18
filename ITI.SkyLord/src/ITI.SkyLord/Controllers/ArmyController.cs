@@ -61,7 +61,7 @@ namespace ITI.SkyLord.Controllers
             return View( CreateSetAttackingArmyViewModel( model ) );
         }
 
-        public IActionResult Fight( SetAttackingArmyViewModel model, long islandId = 0 )
+        public IActionResult Fight( SetAttackingArmyViewModel model, [FromQuery]long islandId = 0 )
         {
             if ( model.UnitsToSend.Count( kvp => kvp.Value == 0 || kvp.Value < 0 ) != model.UnitsToSend.Count() )
             {

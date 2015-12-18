@@ -7,6 +7,7 @@ using ITI.SkyLord.ViewModel.SeeIslands;
 using ITI.SkyLord.Models.Entity_Framework.Contexts;
 using Microsoft.Data.Entity;
 using System.Security.Claims;
+using ITI.SkyLord.ViewModel;
 
 namespace ITI.SkyLord.Controllers
 {
@@ -27,42 +28,50 @@ namespace ITI.SkyLord.Controllers
         /// </summary>
         /// <param name="id">Mail of player</param>
         /// <returns></returns>
-        public IActionResult SeeMyIsland()
+        public IActionResult SeeMyIsland( long islandId = 0 )
         {
-            Player owner = PlayerContext.GetPlayer(User.GetUserId());
-            List<Island> islands = IslandContext.Islands.Include(p => p.Owner).Include(pr => pr.Owner.Profil).Include(c => c.Coordinates).ToList();
-            Island myIsland = islands.Where(i => i.Owner.PlayerId == owner.PlayerId).First();
+            Island currentIsland = GetIsland( islandId );
+            SeeIslandsViewModel islandViewModel = new SeeIslandsViewModel();
 
-            Coordinate coord = IslandContext.Coordinates.Where(o => o.CoordinateId == myIsland.Coordinates.CoordinateId).SingleOrDefault();
+            islandViewModel.Island = currentIsland;
+            islandViewModel.Owner = currentIsland.Owner;
+            islandViewModel.X = currentIsland.Coordinates.X;
+            islandViewModel.Y = currentIsland.Coordinates.Y;
 
-            SeeIslandsViewModel island = new SeeIslandsViewModel();
+            islandViewModel.CurrentIslandId = currentIsland.IslandId;
 
-            int x = coord.X;
-            int y = coord.Y;
+            StandardViewModel svm = new StandardViewModel();
+            IslandContext.FillStandardVM( svm, PlayerContext.GetPlayer( User.GetUserId() ).PlayerId, currentIsland.IslandId );
 
-            island.ListIslands = islands;
-            island.Island = myIsland;
-            island.Owner = owner;
-            island.X = x;
-            island.Y = y;
-
-            return View(island);
+            return View( islandViewModel );
         }
 
-        [Obsolete]
-        public IActionResult AddIsland()
+        private Island GetIsland( long islandId )
         {
-            Player playerActive = PlayerContext.Players.Where(p => p.Name == "Kevin").SingleOrDefault();
-            Island lastIsland = IslandContext.Islands.Where(i => i.Owner.PlayerId == playerActive.PlayerId).LastOrDefault();
-            List<Coordinate> coordinate = IslandContext.Coordinates.ToList();
-            Coordinate lastCoord = coordinate.Where(o => o.CoordinateId == lastIsland.Coordinates.CoordinateId).SingleOrDefault();
-            Coordinate coordinateOfNewIsland = new Coordinate { X = lastCoord.X + 1, Y = lastCoord.Y + 1 };
-
-            IslandContext.Coordinates.Add(coordinateOfNewIsland);
-            Island newIsland = new Island { Name = "Default", IsCapital = false, Loyalty = 0, Owner = playerActive, Coordinates = coordinateOfNewIsland };
-            IslandContext.Islands.Add(newIsland);
-            IslandContext.SaveChanges();
-            return View();
+            if ( islandId == 0 )
+            {
+                long activePlayerId = PlayerContext.GetPlayer( User.GetUserId() ).PlayerId;
+                return IslandContext.Islands
+                    .Include( i => i.Armies )
+                    .ThenInclude( a => a.Regiments )
+                    .ThenInclude( r => r.Unit )
+                    .Include( i => i.AllRessources )
+                    .Include( i => i.Owner )
+                    .Include( i => i.Coordinates )
+                    .SingleOrDefault( i => i.IsCapital && i.Owner.PlayerId == activePlayerId );
+            }
+            else
+            {
+                long activePlayerId = PlayerContext.GetPlayer( User.GetUserId() ).PlayerId;
+                return IslandContext.Islands
+                    .Include( i => i.Armies )
+                    .ThenInclude( a => a.Regiments )
+                    .ThenInclude( r => r.Unit )
+                    .Include( i => i.AllRessources )
+                    .Include( i => i.Owner )
+                    .Include( i => i.Coordinates )
+                    .SingleOrDefault( i => i.IslandId == islandId && i.Owner.PlayerId == activePlayerId );
+            }
         }
     }
 }

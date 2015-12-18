@@ -10,7 +10,7 @@ namespace ITI.SkyLord.ViewModel
 {
     public class StandardViewModel<T> : StandardViewModel
     {
-        public StandardViewModel(IStandardContext context, int playerId, int currendIslandId) : base (context, playerId, currendIslandId) { }
+        public StandardViewModel() : base () { }
 
         T SpecificViewModel { get; set; }
 

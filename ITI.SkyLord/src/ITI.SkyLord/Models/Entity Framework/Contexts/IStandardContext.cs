@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Identity.EntityFramework;
+﻿using ITI.SkyLord.ViewModel;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Data.Entity;
 using Microsoft.Data.Entity.Infrastructure;
 using System;
@@ -15,5 +16,6 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
 
         DbSet<Island> Islands { get; set; }
 
+        void FillStandardVM( StandardViewModel vm, long playerId, long islandId );
     }
 }
