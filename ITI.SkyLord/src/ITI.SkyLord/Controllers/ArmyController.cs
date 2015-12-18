@@ -28,66 +28,71 @@ namespace ITI.SkyLord.Controllers
         public IActionResult AddUnit( ArmyViewModel model, long islandId = 0 )
         {
             ArmyManager am = new ArmyManager( ArmyContext );
-            foreach( KeyValuePair<string, int> kvp in model.UnitsToAdd )
+            if( model.UnitsToAdd.Count( kvp => kvp.Value == 0 || kvp.Value < 0 ) != model.UnitsToAdd.Count() )
             {
-                if( kvp.Value > 0 )
+                foreach ( KeyValuePair<string, int> kvp in model.UnitsToAdd )
                 {
-                    UnitName uN = (UnitName)Enum.Parse( typeof( UnitName ), kvp.Key, true );
-                    am.AddUnit
-                        (
-                            ArmyContext.Units.Where( u => u.UnitName == uN ).Single(),
-                            kvp.Value,
-                            GetIsland( islandId )
-                        );
+                    if ( kvp.Value > 0 )
+                    {
+                        UnitName uN = (UnitName)Enum.Parse( typeof( UnitName ), kvp.Key, true );
+                        am.AddUnit
+                            (
+                                ArmyContext.Units.Where( u => u.UnitName == uN ).Single(),
+                                kvp.Value,
+                                GetIsland( islandId )
+                            );
+                    }
                 }
+                ArmyContext.SaveChanges();
             }
-            ArmyContext.SaveChanges();
-            return View( "Index", CreateArmyViewModel() );
+            else
+            {
+                if( model.UnitsToAdd.Any( kvp => kvp.Value < 0) )
+                    ModelState.AddModelError( "UnitsToAdd", "Les unités ne peuvent pas être négatives." );
+                else
+                    ModelState.AddModelError( "UnitsToAdd", "Aucune unité sélectionnée." );
+            }
+
+            return View( "Index", CreateArmyViewModel( islandId ) );
         }
 
-        public IActionResult SetAttackingArmy( long islandId = 0 )
+        public IActionResult SetAttackingArmy( SetAttackingArmyViewModel model, long islandId = 0 )
         {
-            Island currentIsland = GetIsland( islandId );
-            SetAttackingArmyViewModel model =  new SetAttackingArmyViewModel
-            {
-                CurrentDefenseArmy = ArmyContext.Armies
-                                    .Include( a => a.Island )
-                                    .Include( a => a.Regiments )
-                                    .ThenInclude( r => r.Unit )
-                                    .ThenInclude(r => r.UnitStatistics)
-                                    .Where( a => a.Island.IslandId == currentIsland.IslandId && a.ArmyState == ArmyState.defense )
-                                    .SingleOrDefault()
-            };
-
-            long activePlayerId = PlayerContext.GetPlayer( User.GetUserId() ).PlayerId;
-
-            model.EnnemyIslands = ArmyContext.Islands.Include(i => i.Owner).Include( i => i.Coordinates ).Where( i=> i.Owner.PlayerId != activePlayerId && i.Owner != null ).ToList();
-
-            return View( model );
+            return View( CreateSetAttackingArmyViewModel( model ) );
         }
 
         public IActionResult Fight( SetAttackingArmyViewModel model, long islandId = 0 )
         {
-            Island island = ArmyContext.Islands.Include( i=> i.Owner )
+            if ( model.UnitsToSend.Count( kvp => kvp.Value == 0 || kvp.Value < 0 ) != model.UnitsToSend.Count() )
+            {
+                Island island = ArmyContext.Islands.Include( i => i.Owner )
                 .Include( i => i.AllRessources )
                 .Include( i => i.Armies ).ThenInclude( a => a.Regiments )
-                .ThenInclude( r => r.Unit).ThenInclude( r => r.UnitStatistics)
+                .ThenInclude( r => r.Unit ).ThenInclude( r => r.UnitStatistics )
                 .Where( i => i.IslandId == model.Target ).FirstOrDefault();
-            ArmyManager am = new ArmyManager( ArmyContext );
-            Island attackingIsland = GetIsland( islandId );
-            Army attackingArmy = am.CreateArmy( model.UnitsToSend, attackingIsland );
-            Army defendingArmy = island.Armies.Where(a => a.ArmyState == ArmyState.defense).SingleOrDefault();
-            if( defendingArmy == null )
-                defendingArmy = new Army { Island = island, Regiments = new List<Regiment>(), ArmyState = ArmyState.defense };
+                ArmyManager am = new ArmyManager( ArmyContext );
+                Island attackingIsland = GetIsland( islandId );
+                Army attackingArmy = am.CreateArmy( model.UnitsToSend, attackingIsland );
+                Army defendingArmy = island.Armies.Where( a => a.ArmyState == ArmyState.defense ).SingleOrDefault();
+                if ( defendingArmy == null )
+                    defendingArmy = new Army { Island = island, Regiments = new List<Regiment>(), ArmyState = ArmyState.defense };
 
-            CombatResult combatResult = am.ResolveCombat( attackingArmy, defendingArmy );
-            ArmyContext.SaveChanges();
+                CombatResult combatResult = am.ResolveCombat( attackingArmy, defendingArmy );
+                ArmyContext.SaveChanges();
 
-            CombatReportViewModel combatReport = new CombatReportViewModel { CombatResult = combatResult };
+                CombatReportViewModel combatReport = new CombatReportViewModel { CombatResult = combatResult };
+                return View( "Fight", combatReport );
+            }
+            else
+            {
+                if ( model.UnitsToSend.Any( kvp => kvp.Value < 0 ) )
+                    ModelState.AddModelError( "UnitsToSend", "Les unités ne peuvent pas être négatives." );
+                else
+                    ModelState.AddModelError( "UnitsToSend", "Aucune unité sélectionnée." );
 
-            // am.JoinArmies( attackingIsland.Armies.SingleOrDefault( a => a.ArmyState == ArmyState.defense ), attackingArmy );
+                return View( "SetAttackingArmy", CreateSetAttackingArmyViewModel( model ) );
+            }
 
-            return View( "Fight", combatReport );
         }
 
         public IActionResult RejoinArmies( long id, long islandId = 0 )
@@ -132,20 +137,20 @@ namespace ITI.SkyLord.Controllers
 
         }
 
-        /// <summary>
-        /// Creates an ArmyViewModel containing all available units and the armies contained on the active player's capital island
-        /// </summary>
-        /// <returns>An ArmyViewModel containing all available units and the armies contained on the active player's capital island </returns>
-        private ArmyViewModel CreateArmyViewModel()
+        private SetAttackingArmyViewModel CreateSetAttackingArmyViewModel( SetAttackingArmyViewModel model, long islandId = 0 )
         {
-            long activePlayerId = PlayerContext.GetPlayer( User.GetUserId() ).PlayerId;
-            long capitalId = ArmyContext.Islands.SingleOrDefault( i => i.IsCapital && i.Owner.PlayerId == activePlayerId ).IslandId;
+            Island currentIsland = GetIsland( islandId );
+            model.CurrentDefenseArmy = ArmyContext.Armies
+                                    .Include( a => a.Island )
+                                    .Include( a => a.Regiments )
+                                    .ThenInclude( r => r.Unit )
+                                    .ThenInclude( r => r.UnitStatistics )
+                                    .Where( a => a.Island.IslandId == currentIsland.IslandId && a.ArmyState == ArmyState.defense )
+                                    .SingleOrDefault();
 
-            return new ArmyViewModel
-            {
-                AvailableUnits = ArmyContext.Units.Include( u => u.UnitCost ).Include( u => u.UnitStatistics ).ToList(),
-                CurrentIslandArmies = ArmyContext.Armies.Include( a => a.Regiments ).ThenInclude( r => r.Unit ).Where( a => a.Island.IslandId == capitalId ).ToList()
-            };
+            long activePlayerId = PlayerContext.GetPlayer( User.GetUserId() ).PlayerId;
+            model.EnnemyIslands = ArmyContext.Islands.Include( i => i.Owner ).Include( i => i.Coordinates ).Where( i => i.Owner.PlayerId != activePlayerId && i.Owner != null ).ToList();
+            return model;
         }
 
         /// <summary>

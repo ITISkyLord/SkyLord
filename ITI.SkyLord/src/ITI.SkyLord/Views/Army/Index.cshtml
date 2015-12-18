@@ -26,10 +26,9 @@
     {
         <tr>
             <td>@u.Name</td>
-            <td><input asp-for="UnitsToAdd[u.UnitName.ToString()]" value="0"/></td>
+            <td><input type="number" min="0" step="1" asp-for="UnitsToAdd[u.UnitName.ToString()]" value="0"/></td>
         </tr>
     }
-
 </table>
     <button>Entrainer les unités</button>
 </form>

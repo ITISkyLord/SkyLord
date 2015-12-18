@@ -27,11 +27,12 @@
     {
         <tr>
             <td>@r.Unit.Name</td>
-            <td><input asp-for="UnitsToSend[r.Unit.UnitName.ToString()]" value="0"/></td>
+            <td><input type="number" min="0" step="1" asp-for="UnitsToSend[r.Unit.UnitName.ToString()]" value="0"/></td>
         </tr>
     }
 </table>
     <select asp-for="@Model.Target" >
+        <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
         @foreach( Island i in Model.EnnemyIslands )
         {
             <option value="@i.IslandId">
