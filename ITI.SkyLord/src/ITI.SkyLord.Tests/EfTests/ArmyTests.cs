@@ -1,6 +1,6 @@
 ﻿using ITI.SkyLord.Models.Entity_Framework;
 using ITI.SkyLord.Models.Entity_Framework.Contexts;
-using ITI.SkyLord.Models.Managers;
+using ITI.SkyLord.Services;
 using Microsoft.AspNet.Mvc;
 using Microsoft.Data.Entity;
 using NUnit.Framework;
@@ -398,7 +398,7 @@ namespace ITI.SkyLord.Tests.EfTests
                     #endregion
 
                     // Assert that and army and regiment are properly created
-                    ArmyManager arm = new ArmyManager( context );
+                    ArmyManager arm = new ArmyManager( context);
                     arm.AddUnit( guard, 10, defaultIsland );
                     arm.AddUnit( necromancer, 15, defaultIsland );
 
@@ -547,7 +547,7 @@ namespace ITI.SkyLord.Tests.EfTests
                     #endregion
 
                     // Assert that and army and regiment are properly created
-                    ArmyManager am = new ArmyManager( context );
+                    ArmyManager am = new ArmyManager( context);
                     am.AddUnit( guard, 10, defaultIsland );
                     am.AddUnit( necromancer, 15, defaultIsland );
 
@@ -1002,7 +1002,7 @@ namespace ITI.SkyLord.Tests.EfTests
                     #endregion
 
                     // Assert that the army and regiment are properly deleted
-                    ArmyManager am = new ArmyManager( context );
+                    ArmyManager am = new ArmyManager( context);
 
                     am.RemoveUnit( guard, 50, defaultIsland, defaultArmy );
                     am.RemoveUnit( necromancer, 25, defaultIsland, defaultArmy );

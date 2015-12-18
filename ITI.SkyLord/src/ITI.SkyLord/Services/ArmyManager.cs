@@ -5,24 +5,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ITI.SkyLord.Models.Managers
+namespace ITI.SkyLord.Services
 {
     public class ArmyManager
     {
-        ArmyContext CurrentContext { get; set; }
-
+        public ArmyContext CurrentContext { get; set; }
         public ArmyManager()
         {
         }
 
-        public ArmyManager( ArmyContext context )
+        public ArmyManager( ArmyContext context)
         {
             CurrentContext = context;
+            
         }
 
         public CombatResult ResolveCombat( Army attackingArmy, Army defendingArmy )
         {
             return new CombatManager(this).Resolve( attackingArmy, defendingArmy );
+        }
+
+        public Army GetArmy( long id )
+        {
+            return CurrentContext.Armies
+                            .Include( a => a.Regiments ).ThenInclude( r => r.Unit )
+                            .Include( a => a.Island ).ThenInclude( i => i.Armies )
+                            .ThenInclude( a => a.Regiments ).ThenInclude( r => r.Unit )
+                            .FirstOrDefault( a => a.ArmyId == id );
         }
 
         /// <summary>
@@ -47,7 +56,7 @@ namespace ITI.SkyLord.Models.Managers
                     Island = islandFound
                 };
                 CurrentContext.Armies.Add( newArmy );
-                CurrentContext.SaveChanges();
+                // CurrentContext.SaveChanges();
 
                 armyFound = newArmy;
             }
@@ -63,12 +72,12 @@ namespace ITI.SkyLord.Models.Managers
                 };
                 CurrentContext.Regiments.Add( newRegiment );
 
-                CurrentContext.SaveChanges();
+                // CurrentContext.SaveChanges();
             }
             else
             {
                 regimentFound.Number += number;
-                CurrentContext.SaveChanges();
+                // CurrentContext.SaveChanges();
             }
 
             return armyFound;
@@ -84,17 +93,17 @@ namespace ITI.SkyLord.Models.Managers
             Regiment regimentFound = CurrentContext.Regiments.Single( r => r.ArmyId == armyFound.ArmyId && r.Unit.UnitId == unit.UnitId );
 
             regimentFound.Number -= number;
-            CurrentContext.SaveChanges();
+            // CurrentContext.SaveChanges();
 
             if ( regimentFound.Number < 0 ) throw new ArgumentException( "A regiment cannot have a negative Number roperty." );
             if ( regimentFound.Number == 0 )
             {
                 CurrentContext.Regiments.Remove( regimentFound );
-                CurrentContext.SaveChanges();
+                // CurrentContext.SaveChanges();
                 if ( CurrentContext.Regiments.Where( r => r.ArmyId == armyFound.ArmyId ).Count() == 0 )
                 {
                     CurrentContext.Armies.Remove( armyFound );
-                    CurrentContext.SaveChanges();
+                    // CurrentContext.SaveChanges();
                 }
             }
             return armyFound;
@@ -105,7 +114,13 @@ namespace ITI.SkyLord.Models.Managers
             Army army = new Army();
 
             List<Regiment> regiments = new List<Regiment>();
-            foreach( KeyValuePair<string, int> kvp in unitsToSend )
+
+            army.ArmyState = ArmyState.movement;
+            army.Island = currentIsland;
+            army.Island.AllRessources = currentIsland.AllRessources; 
+            CurrentContext.Armies.Add( army );
+
+            foreach ( KeyValuePair<string, int> kvp in unitsToSend )
             {
                 if( kvp.Value > 0 )
                 {
@@ -114,18 +129,25 @@ namespace ITI.SkyLord.Models.Managers
                     regiments.Add( new Regiment { Unit = unit, Number = kvp.Value } );
                 }
             }
-
             foreach( Regiment r in regiments ) 
             {
                 CurrentContext.Add( r );
             }
-            CurrentContext.SaveChanges();
+
             army.Regiments = regiments;
-            army.ArmyState = ArmyState.movement;
-            army.Island = currentIsland;
-            CurrentContext.Armies.Add( army );
-            CurrentContext.SaveChanges();
+
+            Army defenseArmy = GetCurrentDefenseArmy( currentIsland.IslandId );
+
+            SubstractFromArmy( defenseArmy, army );
+            army.Island.AllRessources = currentIsland.AllRessources;
             return army;
+        }
+
+        public Army GetCurrentDefenseArmy( long IslandId )
+        {
+            return CurrentContext.Armies.Include( a => a.Island ).ThenInclude( a => a.AllRessources )
+                .Include( a => a.Regiments ).ThenInclude( r => r.Unit)
+                .SingleOrDefault( a => a.ArmyState == ArmyState.defense && a.Island.IslandId == IslandId );
         }
 
         /// <summary>
@@ -135,7 +157,7 @@ namespace ITI.SkyLord.Models.Managers
         /// <returns>The regiment found or null if it did not find any</returns>
         public Regiment FindRegiment( Army army, UnitName unitName )
         {
-            return CurrentContext.Regiments.Where( r => r.ArmyId == army.ArmyId && r.Unit.UnitName == unitName ).FirstOrDefault();
+            return army.Regiments.Where( r => r.Unit.UnitName == unitName ).FirstOrDefault();
         }
 
         internal Army CopyArmy( Army originalArmy )
@@ -145,6 +167,36 @@ namespace ITI.SkyLord.Models.Managers
                 Regiments = new List<Regiment>(originalArmy.Regiments),
                 ArmyState = originalArmy.ArmyState
             };
+        }
+
+        public Army JoinArmies ( Army armyOnIsland, Army armyOnMovement )
+        {
+            Army joinedArmy = armyOnIsland;
+            if( armyOnIsland == null || armyOnIsland.Regiments == null)
+            {
+                armyOnMovement.ArmyState = ArmyState.defense;
+                // CurrentContext.SaveChanges();
+                return armyOnMovement;
+            }
+            else
+            {
+                foreach( Regiment reg in armyOnMovement.Regiments )
+                {
+                    Regiment regimentFound = armyOnIsland.Regiments.Where( r => r.Unit.UnitName == reg.Unit.UnitName ).SingleOrDefault();
+                    if( regimentFound == null )
+                    {
+                        armyOnIsland.Regiments.Add( reg );
+                    }
+                    else
+                    {
+                        regimentFound.Number += reg.Number;
+                    }
+                }
+
+                CurrentContext.Armies.Remove( armyOnMovement );
+                // CurrentContext.SaveChanges();
+                return armyOnIsland;
+            }
         }
 
         /// <summary>
@@ -161,10 +213,13 @@ namespace ITI.SkyLord.Models.Managers
 
             int initialUnitNumber = r.Number;
             int finalUnitNumber = initialUnitNumber - numberToTemove;
-            army.Regiments.Remove( r );
 
             if ( finalUnitNumber > 0 )
-                army.Regiments.Add( new Regiment { Army = army, Number = finalUnitNumber, Unit = unit } );
+                r.Number = finalUnitNumber;
+            else if ( finalUnitNumber == 0 )
+                army.Regiments.Remove( r );
+            else
+                throw new ArgumentException( " A regiment cannot have a negative value." );
         }
 
         internal void SubstractFromArmy( Army army, double ratio )
@@ -180,6 +235,16 @@ namespace ITI.SkyLord.Models.Managers
             }
         }
 
+        internal void SubstractFromArmy( Army armyToRemoveFrom, Army armyToBeRemoved )
+        {
+            Army tmpArmy = this.CopyArmy( armyToBeRemoved );
+
+            foreach ( Regiment r in armyToBeRemoved.Regiments )
+            {
+                this.RemoveUnit( r.Unit, r.Number, armyToRemoveFrom.Island, armyToRemoveFrom );
+            }
+        }
+
         internal void RemoveArmy( Army army )
         {
             if ( army.Regiments == null )
@@ -190,10 +255,9 @@ namespace ITI.SkyLord.Models.Managers
                 {
                     CurrentContext.Remove( r );
                 }
-                CurrentContext. SaveChanges();
-
+                // CurrentContext.SaveChanges();
                 CurrentContext.Remove( army );
-                CurrentContext.SaveChanges();
+                // CurrentContext.SaveChanges();
             }
         }
 

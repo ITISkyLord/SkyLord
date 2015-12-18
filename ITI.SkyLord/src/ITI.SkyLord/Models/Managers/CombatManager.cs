@@ -1,7 +1,7 @@
 ﻿//
 using ITI.SkyLord;
 using ITI.SkyLord.Models.Entity_Framework.Contexts;
-using ITI.SkyLord.Models.Managers;
+using ITI.SkyLord.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,12 +14,14 @@ namespace ITI.SkyLord
     {
         private Army _winningArmy;
         private Army _loosingArmy;
-        private ArmyManager _armyManager;
+        
+        public ArmyManager ArmyManager { get; set; }
 
         public CombatManager( ArmyManager armyManager )
         {
-            _armyManager = armyManager;
+            ArmyManager = armyManager;
         }
+
         /// <summary>
         /// Resolve the fight beetween 2 armies.
         /// </summary>
@@ -53,7 +55,7 @@ namespace ITI.SkyLord
             magicResist = GetMagicResist( defendingArmy );
             Fight( attackingArmy, defendingArmy, attackPointsPhysic, physicResist, attackPointsMagic, magicResist, ratioPhysicAttack, ratioMagicAttack );
 
-            return new CombatResult( _winningArmy, _loosingArmy );
+            return new CombatResult( _winningArmy, _loosingArmy, this);
         }
 
         /// <summary>
@@ -129,14 +131,14 @@ namespace ITI.SkyLord
                 totalLooser = totalAttack;
             }
 
-            double numberInWinnerArmy = _armyManager.ArmyCount( _winningArmy );
-            double numberInLooserArmy = _armyManager.ArmyCount( _loosingArmy );
+            double numberInWinnerArmy = ArmyManager.ArmyCount( _winningArmy );
+            double numberInLooserArmy = ArmyManager.ArmyCount( _loosingArmy );
             double result = 100 * Math.Pow( ( totalLooser / totalWinner ), ( 1.5 - 0.08 * Math.Log10( ( numberInWinnerArmy + numberInLooserArmy ) / 1000 ) ) );
             Console.WriteLine( "result est : " + result );
 
-            _armyManager.SubstractFromArmy( _winningArmy, ( result / 100 ) );
+            ArmyManager.SubstractFromArmy( _winningArmy, ( result / 100 ) );
             if( _loosingArmy.Regiments.Count > 0 )
-                _armyManager.RemoveArmy( _loosingArmy );
+                ArmyManager.RemoveArmy( _loosingArmy );
 
             //100·(pp/pg)^X 
             //      X = 1,5 - 0,08·log10( N / 1000 ) où N correspond
