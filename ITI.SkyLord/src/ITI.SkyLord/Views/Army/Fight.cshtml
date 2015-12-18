@@ -7,12 +7,17 @@
     Layout = "_Layout";
 }
 @{
-    <p> Ressrouces pillées : <br />
-        @Model.CombatResult.PillagedRessources.Wood <br />
-        @Model.CombatResult.PillagedRessources.Metal <br />
-        @Model.CombatResult.PillagedRessources.Cristal <br />
-        @Model.CombatResult.PillagedRessources.Magic <br />
-    </p>
+    @if ( Model.CombatResult.PillagedRessources != null )
+    {
+        <p>
+            Ressrouces pillées : <br />
+            @Model.CombatResult.PillagedRessources.Wood <br />
+            @Model.CombatResult.PillagedRessources.Metal <br />
+            @Model.CombatResult.PillagedRessources.Cristal <br />
+            @Model.CombatResult.PillagedRessources.Magic <br />
+        </p>
+    }
+
 
     <p> 
         Gagant : @Model.CombatResult.WinningArmy.Island.Owner.Name <br />

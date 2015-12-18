@@ -25,6 +25,15 @@ namespace ITI.SkyLord.Services
             return new CombatManager(this).Resolve( attackingArmy, defendingArmy );
         }
 
+        public Army GetArmy( long id )
+        {
+            return CurrentContext.Armies
+                            .Include( a => a.Regiments ).ThenInclude( r => r.Unit )
+                            .Include( a => a.Island ).ThenInclude( i => i.Armies )
+                            .ThenInclude( a => a.Regiments ).ThenInclude( r => r.Unit )
+                            .FirstOrDefault( a => a.ArmyId == id );
+        }
+
         /// <summary>
         /// Adds a unit to the current island's army. Creates or updates the army and regiment accordingly.
         /// </summary>
@@ -47,7 +56,7 @@ namespace ITI.SkyLord.Services
                     Island = islandFound
                 };
                 CurrentContext.Armies.Add( newArmy );
-                CurrentContext.SaveChanges();
+                // CurrentContext.SaveChanges();
 
                 armyFound = newArmy;
             }
@@ -63,12 +72,12 @@ namespace ITI.SkyLord.Services
                 };
                 CurrentContext.Regiments.Add( newRegiment );
 
-                CurrentContext.SaveChanges();
+                // CurrentContext.SaveChanges();
             }
             else
             {
                 regimentFound.Number += number;
-                CurrentContext.SaveChanges();
+                // CurrentContext.SaveChanges();
             }
 
             return armyFound;
@@ -84,17 +93,17 @@ namespace ITI.SkyLord.Services
             Regiment regimentFound = CurrentContext.Regiments.Single( r => r.ArmyId == armyFound.ArmyId && r.Unit.UnitId == unit.UnitId );
 
             regimentFound.Number -= number;
-            CurrentContext.SaveChanges();
+            // CurrentContext.SaveChanges();
 
             if ( regimentFound.Number < 0 ) throw new ArgumentException( "A regiment cannot have a negative Number roperty." );
             if ( regimentFound.Number == 0 )
             {
                 CurrentContext.Regiments.Remove( regimentFound );
-                CurrentContext.SaveChanges();
+                // CurrentContext.SaveChanges();
                 if ( CurrentContext.Regiments.Where( r => r.ArmyId == armyFound.ArmyId ).Count() == 0 )
                 {
                     CurrentContext.Armies.Remove( armyFound );
-                    CurrentContext.SaveChanges();
+                    // CurrentContext.SaveChanges();
                 }
             }
             return armyFound;
@@ -110,8 +119,6 @@ namespace ITI.SkyLord.Services
             army.Island = currentIsland;
             army.Island.AllRessources = currentIsland.AllRessources; 
             CurrentContext.Armies.Add( army );
-            army.Regiments = regiments;
-            CurrentContext.SaveChanges();
 
             foreach ( KeyValuePair<string, int> kvp in unitsToSend )
             {
@@ -128,7 +135,6 @@ namespace ITI.SkyLord.Services
             }
 
             army.Regiments = regiments;
-            CurrentContext.SaveChanges();
 
             Army defenseArmy = GetCurrentDefenseArmy( currentIsland.IslandId );
 
@@ -151,7 +157,7 @@ namespace ITI.SkyLord.Services
         /// <returns>The regiment found or null if it did not find any</returns>
         public Regiment FindRegiment( Army army, UnitName unitName )
         {
-            return CurrentContext.Regiments.Where( r => r.ArmyId == army.ArmyId && r.Unit.UnitName == unitName ).FirstOrDefault();
+            return army.Regiments.Where( r => r.Unit.UnitName == unitName ).FirstOrDefault();
         }
 
         internal Army CopyArmy( Army originalArmy )
@@ -169,7 +175,7 @@ namespace ITI.SkyLord.Services
             if( armyOnIsland == null || armyOnIsland.Regiments == null)
             {
                 armyOnMovement.ArmyState = ArmyState.defense;
-                CurrentContext.SaveChanges();
+                // CurrentContext.SaveChanges();
                 return armyOnMovement;
             }
             else
@@ -188,7 +194,7 @@ namespace ITI.SkyLord.Services
                 }
 
                 CurrentContext.Armies.Remove( armyOnMovement );
-                CurrentContext.SaveChanges();
+                // CurrentContext.SaveChanges();
                 return armyOnIsland;
             }
         }
@@ -249,10 +255,9 @@ namespace ITI.SkyLord.Services
                 {
                     CurrentContext.Remove( r );
                 }
-                CurrentContext. SaveChanges();
-
+                // CurrentContext.SaveChanges();
                 CurrentContext.Remove( army );
-                CurrentContext.SaveChanges();
+                // CurrentContext.SaveChanges();
             }
         }
 
