@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace ITI.SkyLord.ViewModel.SeeIslands
 {
-    public class SeeIslandsViewModel
+    public class SeeIslandsViewModel : StandardViewModel
     {
-        public List<Island> ListIslands { get; set; }
+        public long CurrentIslandId { get; set; }
         public Island Island { get; set; }
         public Player Owner { get; set; }
         public List<Coordinate> Coordinates { get; set; }

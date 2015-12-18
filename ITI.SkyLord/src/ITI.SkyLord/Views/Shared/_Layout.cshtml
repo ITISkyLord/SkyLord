@@ -1,4 +1,5 @@
 ﻿@using System.Security.Claims
+@model ITI.SkyLord.ViewModel.StandardViewModel
 
 <!DOCTYPE html>
 <html>
@@ -9,11 +10,8 @@
 
     <environment names="Development">
         <!-- Quand on est en développement -->
-        <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/2.5.3/less.min.js"></script>
-
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/lib/bootstrap-touch-carousel/dist/css/bootstrap-touch-carousel.css" />
-        <link rel="stylesheet" href="~/css/site.css" />
         <link rel="stylesheet" type="text/css" href="~/css/SkyLord.css" />
     </environment>
     <environment names="Staging,Production">
@@ -24,7 +22,6 @@
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap-touch-carousel/0.8.0/css/bootstrap-touch-carousel.css"
               asp-fallback-href="~/lib/bootstrap-touch-carousel/css/bootstrap-touch-carousel.css"
               asp-fallback-test-class="carousel-caption" asp-fallback-test-property="display" asp-fallback-test-value="none" />
-        <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     </environment>
 </head>
 <body>
@@ -40,11 +37,11 @@
 
                 <ul>
                     <li><a asp-controller="Island" asp-action="SeeMyIsland">Capitale</a></li>
-                    <li><a asp-controller="Home" asp-action="Index" asp-route-IslandeId="X">île 2</a></li>
-                    <li><a asp-controller="Home" asp-action="Index" asp-route-IslandeId="X">île 3</a></li>
-                    <li><a asp-controller="Home" asp-action="Index" asp-route-IslandeId="X">île 4</a></li>
-                    <li><a asp-controller="Home" asp-action="Index" asp-route-IslandeId="X">île 5</a></li>
-                    <li><a asp-controller="Home" asp-action="Index" asp-route-IslandeId="X">île6 </a></li>
+                    <li><a asp-controller="Home" asp-action="Index" asp-route-IslandId="X">île 2</a></li>
+                    <li><a asp-controller="Home" asp-action="Index" asp-route-IslandId="X">île 3</a></li>
+                    <li><a asp-controller="Home" asp-action="Index" asp-route-IslandId="X">île 4</a></li>
+                    <li><a asp-controller="Home" asp-action="Index" asp-route-IslandId="X">île 5</a></li>
+                    <li><a asp-controller="Home" asp-action="Index" asp-route-IslandId="X">île6 </a></li>
                 </ul>
             </div>
             <!-- END SIDEBAR -->
@@ -195,7 +192,6 @@
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
         <script src="~/lib/hammer.js/hammer.js"></script>
         <script src="~/lib/bootstrap-touch-carousel/dist/js/bootstrap-touch-carousel.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
         <script src="~/js/searchPlayer.js"></script>
     </environment>
 
@@ -217,7 +213,6 @@
                 asp-fallback-src="~/lib/bootstrap-touch-carousel/dist/js/bootstrap-touch-carousel.js"
                 asp-fallback-test="window.Hammer && window.Hammer.Instance">
         </script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
 
     @RenderSection("scripts", required: false)

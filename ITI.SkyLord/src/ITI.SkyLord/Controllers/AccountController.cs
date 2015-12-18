@@ -483,7 +483,7 @@ namespace ITI.SkyLord.Models.Entity_Framework.Controllers
             }
             else
             {
-                return RedirectToAction(nameof(HomeController.Index), "Home");
+                return RedirectToAction( "SeeMyIsland", "Island" );
             }
         }
 

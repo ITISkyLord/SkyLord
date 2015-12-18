@@ -1,10 +1,13 @@
-﻿/// <binding Clean='clean' />
+﻿/// <binding Clean='clean' ProjectOpened='watch' />
 
 var gulp = require("gulp"),
     rimraf = require("rimraf"),
+    less = require('gulp-less'),
     concat = require("gulp-concat"),
     cssmin = require("gulp-cssmin"),
     uglify = require("gulp-uglify"),
+    ts = require('gulp-typescript'),
+    del = require('del'),
     project = require("./project.json");
 
 var paths = {
@@ -28,6 +31,12 @@ gulp.task("clean:css", function (cb) {
 
 gulp.task("clean", ["clean:js", "clean:css"]);
 
+gulp.task('less', function () {
+    gulp.src('wwwroot/less/*.less')
+        .pipe(less()) // Compile LESS
+        .pipe(gulp.dest('wwwroot/css'));
+});
+
 gulp.task("min:js", function () {
     gulp.src([paths.js, "!" + paths.minJs], { base: "." })
         .pipe(concat(paths.concatJsDest))
@@ -42,4 +51,20 @@ gulp.task("min:css", function () {
         .pipe(gulp.dest("."));
 });
 
+
+
 gulp.task("min", ["min:js", "min:css"]);
+
+gulp.task('typescript', function () {
+    return gulp.src(['wwwroot/ts/*.ts'])
+      .pipe(ts())
+      .pipe(gulp.dest('wwwroot/js'));
+});
+gulp.task('cleanJsInTsFolder', function () {
+    return del(['wwwroot/ts/*.js']);
+});
+
+gulp.task('watch', function () {
+    gulp.watch('wwwroot/less/*.less', ['less']);
+    gulp.watch('wwwroot/ts/*.ts', ['typescript', 'cleanJsInTsFolder']);
+});

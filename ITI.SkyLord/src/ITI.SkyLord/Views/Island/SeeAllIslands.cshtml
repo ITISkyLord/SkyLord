@@ -1,0 +1,13 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    @model IList<Island>
+}
+
+<ul>
+    @foreach (var island in Model)
+    {
+        <li><a asp-controller="Island" asp-action="SeeMyIsland" asp-route-IslandId="@island.IslandId">@island.Name</a></li>
+    }
+</ul>

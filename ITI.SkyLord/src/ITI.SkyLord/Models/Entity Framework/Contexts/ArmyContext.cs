@@ -10,11 +10,19 @@ using System.Linq;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.Data.Entity.ChangeTracking;
+using ITI.SkyLord.ViewModel;
 
 namespace ITI.SkyLord.Models.Entity_Framework.Contexts
 {
-    public class ArmyContext : IdentityDbContext
+    public class ArmyContext : IdentityDbContext, IStandardContext
     {
+        public void FillStandardVM( StandardViewModel vm, long playerId, long islandId = 0 )
+        {
+            vm.Layout.CurrentPlayer = Players.Single( p => p.PlayerId == playerId );
+            vm.Layout.AllIslands = Islands.Where( i => i.Owner.PlayerId == playerId ).ToList();
+            vm.Layout.CurrentIsland = Islands.Single( i => i.IslandId == islandId );
+        }
+
         public IConfigurationRoot Configuration { get; set; }
 
         protected override void OnConfiguring( DbContextOptionsBuilder optionsBuilder )
@@ -46,82 +54,6 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
         public DbSet<Regiment> Regiments { get; set; }
         public DbSet<UnitStatistics> UnitStatistics { get; set; }
 
-        /// <summary>
-        /// Adds a unit to the current island's army. Creates or updates the army and regiment accordingly.
-        /// </summary>
-        /// <param name="unit">The type of unit to add</param>
-        /// <param name="number">The number of units to add</param>
-        /// <param name="island">The current island</param>
-        public void AddUnit( Unit unit, int number, Island island )
-        {
-            Island islandFound = Islands.Include( i => i.Armies)
-                .SingleOrDefault( i => i.IslandId == island.IslandId );
-            if ( islandFound == null ) throw new ArgumentException( "The island does not exist in the Database" );
-
-            Army armyFound = islandFound.Armies.Where( a => a.ArmyState == ArmyState.defense ).SingleOrDefault();
-
-            if ( armyFound == null )
-            {
-                Army newArmy = new Army
-                {
-                    ArmyState = ArmyState.defense,
-                    Island = islandFound
-                };
-                Armies.Add( newArmy );
-                SaveChanges();
-
-                armyFound = newArmy;
-            }
-
-            if (armyFound.Regiments == null)
-            {
-                armyFound.Regiments = new List<Regiment>();
-            }
-
-            Regiment regimentFound = Regiments.FirstOrDefault( r => r.ArmyId == armyFound.ArmyId && r.Unit.UnitId == unit.UnitId );
-            if( regimentFound == null )
-            {
-                Regiment newRegiment = new Regiment
-                {
-                    Unit = Units.SingleOrDefault( u => u.UnitId == unit.UnitId ),
-                    Number = number,
-                    ArmyId = armyFound.ArmyId
-                };
-                Regiments.Add( newRegiment );
-
-                SaveChanges();
-            }
-            else
-            {
-                regimentFound.Number += number;
-                SaveChanges();
-            }
-        }
-
-        public void RemoveUnit(Unit unit, int number, Island island, Army army )
-        {
-            // Checks if the island exists
-            Island islandFound = Islands.Include( i => i.Armies).Single( i => i.IslandId == island.IslandId );
-            // Checks if the army belongs to the island, if not exception
-            Army armyFound = islandFound.Armies.Single( a => a.ArmyId == army.ArmyId );
-            // Checks if there is a single regiment that belongs to the army, if not exception
-            Regiment regimentFound = Regiments.Single( r => r.ArmyId == armyFound.ArmyId && r.Unit.UnitId == unit.UnitId );
-
-            regimentFound.Number -= number;
-            SaveChanges();
-
-            if ( regimentFound.Number < 0 ) throw new ArgumentException( "A regiment cannot have a negative Number roperty." );
-            if( regimentFound.Number == 0 )
-            {
-                Regiments.Remove( regimentFound );
-                SaveChanges();
-                if( Regiments.Where( r => r.ArmyId == armyFound.ArmyId).Count() == 0 )
-                {
-                    Armies.Remove( armyFound );
-                    SaveChanges();
-                }
-            }
-        }
         public EntityEntry Remove( Unit unit )
         {
             base.Remove( unit );
@@ -130,20 +62,20 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
             return base.Remove( unit.UnitStatistics );
         }
 
-        public EntityEntry Remove( Army army )
-        {
-            if ( army.Regiments == null )
-                return base.Remove( army );
-            else
-            {
-                foreach(Regiment r in army.Regiments )
-                {
-                    base.Remove( r );
-                }
-                SaveChanges();
+        //public EntityEntry Remove( Army army )
+        //{
+        //    if ( army.Regiments == null )
+        //        return base.Remove( army );
+        //    else
+        //    {
+        //        foreach(Regiment r in army.Regiments )
+        //        {
+        //            base.Remove( r );
+        //        }
+        //        SaveChanges();
 
-                return base.Remove( army );
-            }
-        }
+        //        return base.Remove( army );
+        //    }
+        //}
     }
 }
