@@ -1,30 +1,154 @@
-﻿
-.sidebar{
+﻿@import "bootstrap/bootstrap.less";
 
-    background-color:#ff6a00;
+.SkylordContainer {
+    .container-fluid;
+
+    .SkyLordMainRow {
+        .make-row();
+
+        .Sidebar{
+            background-color:#ff6a00;
+            .make-lg-column(1);
+            .make-md-column(1);
+            .make-sm-column(1);
+            .make-xs-column(1);
+        }
+    
+        .MainContent
+        {
+            .make-row();
+            .make-lg-column(11);
+            .make-md-column(11);
+            .make-sm-column(11);
+            .make-xs-column(11);
+
+            .Menu{
+                background-color:#ffd800;
+                .make-row();
+                .make-lg-column(12);
+                .make-md-column(12);
+                .make-sm-column(12);
+                .make-xs-column(12);
+
+                .PointCounter {
+                    .make-lg-column(1);
+                    .make-md-column(1);
+                    .make-sm-column(1);
+                    .make-xs-column(1);
+                }
+
+                .Friends {
+                    .make-lg-column(1);
+                    .make-md-column(1);
+                    .make-sm-column(1);
+                    .make-xs-column(1);
+                }
+
+                .Armies {
+                    .make-lg-column(1);
+                    .make-md-column(1);
+                    .make-sm-column(1);
+                    .make-xs-column(1);
+                }
+
+                .Ranking {
+                    .make-lg-column(1);
+                    .make-md-column(1);
+                    .make-sm-column(1);
+                    .make-xs-column(1);
+                }
+
+                .Forum {
+                    .make-lg-column(1);
+                    .make-md-column(1);
+                    .make-sm-column(1);
+                    .make-xs-column(1);
+                }
+
+                .Logout {
+                    .make-lg-column(1);
+                    .make-md-column(1);
+                    .make-sm-column(1);
+                    .make-xs-column(1);
+                }
+
+                .Players {
+                    .make-lg-column(1);
+                    .make-md-column(1);
+                    .make-sm-column(1);
+                    .make-xs-column(1);
+                }
+
+                .Search {
+                    .make-lg-column(2);
+                    .make-md-column(2);
+                    .make-sm-column(2);
+                    .make-xs-column(2);
+                }
+
+                .Guild {
+                    .make-lg-column(1);
+                    .make-md-column(1);
+                    .make-sm-column(1);
+                    .make-xs-column(1);
+                }
+
+                .Messages {
+                    .make-lg-column(1);
+                    .make-md-column(1);
+                    .make-sm-column(1);
+                    .make-xs-column(1);
+                }
+
+                .Profile {
+                    .make-lg-column(1);
+                    .make-md-column(1);
+                    .make-sm-column(1);
+                    .make-xs-column(1);
+                }
+
+            }
+    
+            .Ressources {
+                .make-row();
+
+                .Wood, .Metal, .Cristal, .Magic {
+                    .make-lg-column(3);
+                    .make-md-column(3);
+                    .make-sm-column(3);
+                    .make-xs-column(3);
+                }
+            }
+
+            .TroopMovement {
+                .make-row();
+                .text-center;
+
+                .TroopLine {
+                    .make-lg-column(12);
+                    .make-md-column(12);
+                    .make-sm-column(12);
+                    .make-xs-column(12);
+                }
+            }
+
+            .ViewContent {
+                .make-row();
+            }
+        
+            .Footer {
+                .make-row();
+
+                .FooterElement {
+                    .make-lg-column(2);
+                    .make-md-column(2);
+                    .make-sm-column(2);
+                    .make-xs-column(2);
+                }
+            }
+    
+        }
+
+    }
 
 }
-
-.menu{
-
-    background-color:#ffd800
-}
-
-.troupe{
-
-    background-color:#b6ff00;
-}
-.content{
-
-    background-color:#00ff21;
-}
-
-.footer {
-
-    background-color:#00ff90;
-}
-
-.ressource{
-    background-color:#ffd800;
-}
-

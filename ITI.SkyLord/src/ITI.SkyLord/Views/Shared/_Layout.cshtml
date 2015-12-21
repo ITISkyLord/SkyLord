@@ -25,10 +25,11 @@
     </environment>
 </head>
 <body>
-    <div class="container-fluid body-content">
-        <div class="row">
-            <!-- BEGIN SIDEBAR-->
-            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 sidebar">
+    <div class="SkyLordContainer">
+
+        <div class="SkyLordMainRow">
+
+            <div class="Sidebar">
                 <img src="~/images/SkyLord.png" class="img-responsive" />
                 <a asp-controller="Home" asp-action="Index">Vue d'ensemble</a>
                 <a asp-controller="Home" asp-action="Index">Carte du monde</a>
@@ -44,142 +45,149 @@
                     <li><a asp-controller="Home" asp-action="Index" asp-route-IslandId="X">île6 </a></li>
                 </ul>
             </div>
-            <!-- END SIDEBAR -->
+            <!-- /.Sidebar -->
 
-            <div class="col-lg-11 col-md-11 col-sm-11 col-xs-11">
-                <!-- Menu-->
-                <div class="row menu">
-                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+            <div class="MainContent">
+
+                <div class="Menu">
+                    <div class="PointCounter">
                         <p>Points : 0</p>
                     </div>
 
-                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                    <div class="Friends">
                         @if(User.IsSignedIn())
-                        {
-                        <form asp-controller="Home" asp-action="Index" method="post" id="FriendsForm">
-                            <button type="submit" class="btn btn-link navbar-btn navbar-link">Amis</button>
-                        </form>
-                        }
-
+                    {
+                            <form asp-controller="Home" asp-action="Index" method="post" id="FriendsForm">
+                                <button type="submit" class="btn btn-link navbar-btn navbar-link">Amis</button>
+                            </form>
+                    }
                     </div>
-                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+
+                    <div class="Armies">
                         @if (User.IsSignedIn())
-                        {
+                    {
                             <a asp-controller="Army" asp-action="Index">Armées</a>
-                        }
+                    }
                     </div>
 
-                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                    <div class="Ranking">
                         <form asp-controller="Home" asp-action="Index" method="post" id="RankingForm">
                             <button type="submit" class="btn btn-link navbar-btn navbar-link">Classement</button>
                         </form>
                     </div>
 
-                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                    <div class="Forum">
                         <form asp-controller="Home" asp-action="Index" method="post" id="ForumForm">
                             <button type="submit" class="btn btn-link navbar-btn navbar-link">Forum</button>
                         </form>
                     </div>
 
-                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                    <div class="Logout">
                         @if (User.IsSignedIn())
-                        {
+                    {
                             <form asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm">
                                 <button type="submit" class="btn btn-link navbar-btn navbar-link">Déconnexion</button>
                             </form>
-                        }
+                    }
                     </div>
 
-                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                    <div class="Players">
                         @if (User.IsSignedIn())
-                        {
+                    {
                             <form asp-controller="Player" asp-action="SeePlayers" method="post" id="seePlayerForm">
                                 <button type="submit" class="btn btn-link navbar-btn navbar-link">Joueurs</button>
                             </form>
-                        }
+                    }
                     </div>
 
 
-                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                    <div class="Search">
                         <form asp-controller="Player" asp-action="SeeInformationOfAnPlayerString" method="post" role="form">
                             <input type="text" placeholder="Recherche ..." name="namePlayer" style="width:70%" id="searchPlayer"><input style="width:20%;" type="submit" value="Go" /><br />
                             @*<label>Joueur</label><input type="radio" />
-                                <label>Guilde</label><input type="radio" />*@
+                            <label>Guilde</label><input type="radio" />*@
                         </form>
                     </div>
 
-                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                    <div class="Guild">
                         @if (User.IsSignedIn())
-                        {
+                    {
                             <a asp-controller="Home" asp-action="Index">Guilde</a>
-                        }
+                    }
 
                     </div>
 
-                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                    <div class="Messages">
                         @if(User.IsSignedIn())
-                        {
-                        <a asp-controller="Home" asp-action="Index">Messages</a>
-                        }
+                    {
+                            <a asp-controller="Home" asp-action="Index">Messages</a>
+                    }
 
                     </div>
 
-                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                    <div class="Profile">
                         @if(User.IsSignedIn())
-                        {
-                        <a asp-controller="Profil" asp-action="Index">Profil</a>
-                        }
+                    {
+                            <a asp-controller="Profil" asp-action="Index">Profil</a>
+                    }
 
                     </div>
                 </div>
-                <!-- END ROW MENU-->
-                <!-- Ressource View-->
-                <div class="row ressource">
-                    <div class="col-lg-3 col-xs-3 col-md-3 col-sm-3">
+                <!-- /.Menu -->
+
+                <div class="Ressources">
+                    <div class="Wood">
                         <p>Bois : @*Model.Ressources.Wood*@</p>
                     </div>
-                    <div class="col-lg-3 col-xs-3 col-md-3 col-sm-3">
+
+                    <div class="Metal">
                         <p>Metal : @*Model.CurrentIsland.AllRessources.Iron*@</p>
                     </div>
-                    <div class="col-lg-3 col-xs-3 col-md-3 col-sm-3">
+
+                    <div class="Cristal">
                         <p>Cristal : @*Model.CurrentIsland.AllRessources.Cristal*@</p>
                     </div>
-                    <div class="col-lg-3 col-xs-3 col-md-3 col-sm-3">
+
+                    <div class="Magic">
                         <p>Magie : @*Model.CurrentIsland.AllRessources.Magic*@</p>
                     </div>
+
                 </div>
-                <!-- END ROW RESSOURCES -->
-                <!-- Mouvement de troupe-->
-                <div class="row text-center troupe">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-                        @*@if (Model.AttackerArmy.Count != 0)
+                <!-- /.Ressources-->
+
+                <div class="TroopMovement">
+                    @*@if (Model.AttackerArmy.Count != 0)
+                    {
+                         <div class="TroopLine">
+
+                            <p>Mouvement de troupe</p>
+                            @foreach (Army t in Model.AttackerArmy)
                             {
-                                <p>Mouvement de troupe</p>
-                                @foreach (Army t in Model.AttackerArmy)
-                                {
 
 
-                                }
-                            }*@
-                    </div>
+                            }
+                         </div>
+                    }*@
                 </div>
-                <!-- END ROW MOUVEMENT TROUPE-->
-                <!-- Corps de la page en fonction de la bonne page à afficher -->
-                <div class="row content">
+                <!-- /.TroopMovement -->
+
+                <div class="ViewContent">
                     @RenderBody()
                 </div>
-                <!-- END ROW BODY-->
-                <!-- Footer-->
-                <div class="row footer">
-                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"><a asp-controller="Home" asp-action="Index">Mentions légales</a></div>
-                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"><a asp-controller="Home" asp-action="Index">Support</a></div>
-                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"><a asp-controller="Home" asp-action="Index">Version du site</a></div>
-                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"><a href="https://www.facebook.com/skylordgame">Notre page Facebook</a></div>
-                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"><a href="https://translate.google.fr/translate?sl=en&tl=fr&js=y&prev=_t&hl=fr&ie=UTF-8&u=http%3A%2F%2Fwww.youporn.com&edit-text=&act=url">Notre page YouPorn</a></div>
-                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"><a href="http://intechinfo.fr">IN'TECH</a></div>
+                <!-- /.ViewContent -->
+
+                <div class="Footer">
+                    <div class="FooterElement"><a asp-controller="Home" asp-action="Index">Mentions légales</a></div>
+                    <div class="FooterElement"><a asp-controller="Home" asp-action="Index">Support</a></div>
+                    <div class="FooterElement"><a asp-controller="Home" asp-action="Index">Version du site</a></div>
+                    <div class="FooterElement"><a href="https://www.facebook.com/skylordgame">Notre page Facebook</a></div>
+                    <div class="FooterElement"><a href="https://translate.google.fr/translate?sl=en&tl=fr&js=y&prev=_t&hl=fr&ie=UTF-8&u=http%3A%2F%2Fwww.youporn.com&edit-text=&act=url">Notre page YouPorn</a></div>
+                    <div class="FooterElement"><a href="http://intechinfo.fr">IN'TECH</a></div>
                 </div>
-                <!-- END ROW FOOTER-->
+                <!-- /.Footer-->
+
             </div>
+
         </div>
     </div>
 
