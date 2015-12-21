@@ -15,48 +15,48 @@ namespace ITI.SkyLord.Controllers
 {
     public class ProfilController : Controller
     {
+        [FromServices]
+        public PlayerContext PlayerContext { get; set; }
+
         // GET: /<controller>/
-        public IActionResult Index()
+        public IActionResult Index( long islandId = 0 )
         {
             //Récupérer la description dans la BDD
-            using( PlayerContext context = new PlayerContext() )
-            {
-                
-                // Bidouille: Include( p => p.Profil ) dans PlayerContext fails...
-                Player p = context.GetPlayer(User.GetUserId());
-                p = context.Players.Include(z => z.Profil).Where( x => x.PlayerId == p.PlayerId ).First();
-                ViewData["name"] = p.Name;
 
-                ProfilViewModel profilViewModel = new ProfilViewModel();
-                if( !String.IsNullOrEmpty( p.Profil.Description ) ) profilViewModel.Description = p.Profil.Description;
-                else profilViewModel.Description = "Aucune description";
-                return View(profilViewModel);
+            Player p = PlayerContext.GetPlayer(User.GetUserId());
+            p = PlayerContext.Players.Include(z => z.Profil).Where( x => x.PlayerId == p.PlayerId ).First();
+            ViewData["name"] = p.Name;
 
+            ProfilViewModel profilViewModel = new ProfilViewModel();
+            if( !String.IsNullOrEmpty( p.Profil.Description ) )
+                profilViewModel.Description = p.Profil.Description;
+            else
+                profilViewModel.Description = "Aucune description";
 
-            }
+            PlayerContext.FillStandardVM( profilViewModel, PlayerContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
+            return View( profilViewModel );
         }
+
         [HttpPost]
-        public IActionResult changeDescription( ProfilViewModel model )
+        public IActionResult changeDescription( ProfilViewModel model, long islandId = 0 )
         {
-
             // Ajouter la description dans la BDD
-            using( PlayerContext context = new PlayerContext() )
-            {
-                Player p = context.GetPlayer(User.GetUserId());
-                p = context.Players.Include( z => z.Profil ).Where( x => x.PlayerId == p.PlayerId ).First();
-                Profil oldProfil = p.Profil;
-                oldProfil.Description = model.Description;
-                context.SaveChanges();
 
-                ViewData["name"] = p.Name;
-                ProfilViewModel profilViewModel = new ProfilViewModel();
-                if( !String.IsNullOrEmpty( p.Profil.Description ) ) profilViewModel.Description = p.Profil.Description;
-                else profilViewModel.Description = "Aucune description";
-                return View("Index", profilViewModel );
+            Player p = PlayerContext.GetPlayer( User.GetUserId() );
+            p = PlayerContext.Players.Include( z => z.Profil ).Where( x => x.PlayerId == p.PlayerId ).First();
+            Profil oldProfil = p.Profil;
+            oldProfil.Description = model.Description;
+            PlayerContext.SaveChanges();
 
+            ViewData["name"] = p.Name;
+            ProfilViewModel profilViewModel = new ProfilViewModel();
+            if( !String.IsNullOrEmpty( p.Profil.Description ) )
+                profilViewModel.Description = p.Profil.Description;
+            else
+                profilViewModel.Description = "Aucune description";
 
-            }
-     //       return RedirectToAction( nameof( HomeController.Index ), "Home" );
+            PlayerContext.FillStandardVM( profilViewModel, PlayerContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
+            return View("Index", profilViewModel );
         }
     }
 }

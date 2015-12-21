@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ITI.SkyLord.ViewModel.SeePlayers
 {
-    public class SeePlayersViewModel
+    public class SeePlayersViewModel : StandardViewModel
     {
         /// <summary>
         /// Require Island(Require Coordoniate)

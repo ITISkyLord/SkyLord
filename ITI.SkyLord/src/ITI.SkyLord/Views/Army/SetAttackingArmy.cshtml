@@ -20,18 +20,18 @@
         }
     </ul>
 
-<form asp-controller="Army" asp-action="Fight" method="post" role="form">
+<form asp-controller="Army" asp-action="Fight" asp-route-islandId="@Model.Layout.IslandId" method="post" role="form">
     <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
 <table>
     @foreach ( Regiment r in Model.CurrentDefenseArmy.Regiments )
     {
         <tr>
             <td>@r.Unit.Name</td>
-            <td><input type="number" min="0" step="1" asp-for="UnitsToSend[r.Unit.UnitName.ToString()]" value="0"/></td>
+            <td><input type="number" min="0" max="@r.Number" step="1" asp-for="UnitsToSend[r.Unit.UnitName.ToString()]" value="0"/></td>
         </tr>
     }
 </table>
-    <select asp-for="@Model.Target" >
+    <select asp-for="@Model.Target">
         <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
         @foreach( Island i in Model.EnnemyIslands )
         {
@@ -40,6 +40,6 @@
             </option>
         }
     </select>
-    <button>Envoyer les unités</button>
+    <input type="submit" value="Envoyer les unités" />
 </form>
 

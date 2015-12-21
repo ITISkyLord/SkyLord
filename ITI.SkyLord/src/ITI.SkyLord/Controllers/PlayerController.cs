@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.Data.Entity;
 using Microsoft.Extensions.Primitives;
 using System.Security.Claims;
+using ITI.SkyLord.ViewModel;
 
 namespace ITI.SkyLord.Controllers
 {
@@ -16,18 +17,22 @@ namespace ITI.SkyLord.Controllers
         [FromServices]
         public PlayerContext PlayerContext { get; set; }
 
-        public IActionResult Index()
+        public IActionResult Index( long islandId = 0 )
         {
+            StandardViewModel svm = new StandardViewModel();
+            PlayerContext.FillStandardVM( svm, PlayerContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
+
             return View();
         }
+
         /// <summary>
         /// See all players in the game SkyLord
         /// </summary>
         /// <returns></returns>
-        public IActionResult SeePlayers()
+        public IActionResult SeePlayers( long islandId = 0 )
         {
-            Player player = PlayerContext.GetPlayer(User.GetUserId());
-            if (player != null)
+            Player player = PlayerContext.GetPlayer( User.GetUserId() );
+            if ( player != null )
             {
                 List<Player> othersPlayer = PlayerContext.Players
                     .Include(p => p.Profil)
@@ -37,6 +42,9 @@ namespace ITI.SkyLord.Controllers
                 SeePlayersViewModel sp = new SeePlayersViewModel();
                 sp.Players = othersPlayer;
                 sp.ActivePlayer = player;
+
+                PlayerContext.FillStandardVM( sp, PlayerContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
+
                 return View(sp);
             }
             else
@@ -45,7 +53,7 @@ namespace ITI.SkyLord.Controllers
             }
         }
 
-        public IActionResult SeeInformationOfAnPlayer(int id)
+        public IActionResult SeeInformationOfAnPlayer( int id, long islandId = 0 )
         {
             Player playerChoosen = PlayerContext.Players
                 .Include(a => a.Islands).ThenInclude(i => i.Coordinates)
@@ -54,12 +62,14 @@ namespace ITI.SkyLord.Controllers
                 .SingleOrDefault();
 
             SeePlayersViewModel sp = new SeePlayersViewModel();
-
             sp.ActivePlayer = playerChoosen;
+
+            PlayerContext.FillStandardVM( sp, PlayerContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
+
             return View(sp);
         }
 
-        public IActionResult SeeInformationOfAnPlayerString(string namePlayer)
+        public IActionResult SeeInformationOfAnPlayerString( string namePlayer, long islandId = 0 )
         {
             Player playerChoosen = PlayerContext.Players
                 .Include(a => a.Islands).ThenInclude(i => i.Coordinates)
@@ -68,16 +78,17 @@ namespace ITI.SkyLord.Controllers
                 .SingleOrDefault();
 
             SeePlayersViewModel sp = new SeePlayersViewModel();
-
             sp.ActivePlayer = playerChoosen;
+
+            PlayerContext.FillStandardVM( sp, PlayerContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
+
             return View(sp);
         }
 
 
 
-        public IActionResult Players(string name)
+        public IActionResult Players( string name )
         {
-          
            Player player = PlayerContext.GetPlayer(User.GetUserId());
             var result = PlayerContext.Players.Where(p => p.PlayerId != player.PlayerId).Select(p => p.Name).ToArray();
             return Json(result.Where(x => x.StartsWith(name, StringComparison.CurrentCultureIgnoreCase)).ToArray());
