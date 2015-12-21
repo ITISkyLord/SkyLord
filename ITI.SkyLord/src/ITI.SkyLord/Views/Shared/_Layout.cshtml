@@ -30,8 +30,8 @@
             <!-- BEGIN SIDEBAR-->
             <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 sidebar">
                 <img src="~/images/SkyLord.png" class="img-responsive" />
-                <a asp-controller="Home" asp-action="Index">Vue d'ensemble</a>
-                <a asp-controller="Home" asp-action="Index">Carte du monde</a>
+                <a asp-controller="Home" asp-action="Index" asp-route-islandId="@Model.Layout.IslandId">Vue d'ensemble</a>
+                <a asp-controller="Home" asp-action="Index" asp-route-islandId="@Model.Layout.IslandId">Carte du monde</a>
 
                 <p>Mes îles</p>
 
@@ -41,7 +41,7 @@
                     {
                         @if ( !island.IsCapital )
                         {
-                            <li><a asp-controller="Island" asp-action="SeeMyIsland" asp-route-islandId="@island.IslandId">Capitale</a></li>
+                            <li><a asp-controller="Island" asp-action="SeeMyIsland" asp-route-islandId="@island.IslandId">@island.Name</a></li>
                         }
                     }
 
@@ -68,7 +68,7 @@
                     <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
                         @if (User.IsSignedIn())
                         {
-                            <a asp-controller="Army" asp-action="Index">Armées</a>
+                            <a asp-controller="Army" asp-action="Index" asp-route-islandId="@Model.Layout.IslandId">Armées</a>
                         }
                     </div>
 
@@ -96,7 +96,7 @@
                     <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
                         @if (User.IsSignedIn())
                         {
-                            <form asp-controller="Player" asp-action="SeePlayers" method="post" id="seePlayerForm">
+                            <form asp-controller="Player" asp-action="SeePlayers" asp-route-islandId="@Model.Layout.IslandId" method="post" id="seePlayerForm">
                                 <button type="submit" class="btn btn-link navbar-btn navbar-link">Joueurs</button>
                             </form>
                         }
@@ -104,7 +104,7 @@
 
 
                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                        <form asp-controller="Player" asp-action="SeeInformationOfAnPlayerString" method="post" role="form">
+                        <form asp-controller="Player" asp-action="SeeInformationOfAnPlayerString" asp-route-islandId="@Model.Layout.IslandId" method="post" role="form">
                             <input type="text" placeholder="Recherche ..." name="namePlayer" style="width:70%" id="searchPlayer"><input style="width:20%;" type="submit" value="Go" /><br />
                             @*<label>Joueur</label><input type="radio" />
                                 <label>Guilde</label><input type="radio" />*@
@@ -130,7 +130,7 @@
                     <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
                         @if(User.IsSignedIn())
                         {
-                        <a asp-controller="Profil" asp-action="Index">Profil</a>
+                        <a asp-controller="Profil" asp-action="Index" asp-route-islandId="@Model.Layout.IslandId">Profil</a>
                         }
 
                     </div>

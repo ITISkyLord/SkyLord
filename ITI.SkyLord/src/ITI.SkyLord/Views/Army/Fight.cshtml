@@ -31,5 +31,5 @@
     </p>
     <p> Perdant : @Model.CombatResult.LoosingArmy.Island.Owner.Name </p>
     
-    <h1> <a asp-action="RejoinArmies" asp-controller="Army" asp-route-id="@Model.CombatResult.WinningArmy.ArmyId"> Rejoindre les armées</a> </h1>
+    <h1> <a asp-action="RejoinArmies" asp-controller="Army" asp-route-id="@Model.CombatResult.WinningArmy.ArmyId" asp-route-islandId="@Model.Layout.IslandId"> Rejoindre les armées</a> </h1>
 }
