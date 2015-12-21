@@ -37,11 +37,14 @@
 
                 <ul>
                     <li><a asp-controller="Island" asp-action="SeeMyIsland">Capitale</a></li>
-                    <li><a asp-controller="Home" asp-action="Index" asp-route-IslandId="X">île 2</a></li>
-                    <li><a asp-controller="Home" asp-action="Index" asp-route-IslandId="X">île 3</a></li>
-                    <li><a asp-controller="Home" asp-action="Index" asp-route-IslandId="X">île 4</a></li>
-                    <li><a asp-controller="Home" asp-action="Index" asp-route-IslandId="X">île 5</a></li>
-                    <li><a asp-controller="Home" asp-action="Index" asp-route-IslandId="X">île6 </a></li>
+                    @foreach ( Island island in Model.Layout.AllIslands )
+                    {
+                        @if ( !island.IsCapital )
+                        {
+                            <li><a asp-controller="Island" asp-action="SeeMyIsland" asp-route-islandId="@island.IslandId">Capitale</a></li>
+                        }
+                    }
+
                 </ul>
             </div>
             <!-- END SIDEBAR -->
@@ -136,16 +139,16 @@
                 <!-- Ressource View-->
                 <div class="row ressource">
                     <div class="col-lg-3 col-xs-3 col-md-3 col-sm-3">
-                        <p>Bois : @*Model.Ressources.Wood*@</p>
+                        <p>Bois : @Model.Layout.CurrentIsland.AllRessources.Wood </p>
                     </div>
                     <div class="col-lg-3 col-xs-3 col-md-3 col-sm-3">
-                        <p>Metal : @*Model.CurrentIsland.AllRessources.Iron*@</p>
+                        <p>Metal : @Model.Layout.CurrentIsland.AllRessources.Metal </p>
                     </div>
                     <div class="col-lg-3 col-xs-3 col-md-3 col-sm-3">
-                        <p>Cristal : @*Model.CurrentIsland.AllRessources.Cristal*@</p>
+                        <p>Cristal : @Model.Layout.CurrentIsland.AllRessources.Cristal </p>
                     </div>
                     <div class="col-lg-3 col-xs-3 col-md-3 col-sm-3">
-                        <p>Magie : @*Model.CurrentIsland.AllRessources.Magic*@</p>
+                        <p>Magie : @Model.Layout.CurrentIsland.AllRessources.Magic </p>
                     </div>
                 </div>
                 <!-- END ROW RESSOURCES -->

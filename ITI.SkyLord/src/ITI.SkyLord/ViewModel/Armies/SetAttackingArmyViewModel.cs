@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ITI.SkyLord.ViewModel.Armies
 {
-    public class SetAttackingArmyViewModel
+    public class SetAttackingArmyViewModel : StandardViewModel
     {
         public Island AttackingIsland { get; set; }
         public Army CurrentDefenseArmy { get; set; }

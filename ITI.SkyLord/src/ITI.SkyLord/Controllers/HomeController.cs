@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Mvc;
+using System.Security.Claims;
 
 namespace ITI.SkyLord.Controllers
 {
@@ -6,6 +7,10 @@ namespace ITI.SkyLord.Controllers
     {
         public IActionResult Index()
         {
+            if( User.IsSignedIn() )
+            {
+                return RedirectToAction( "SeeMyIsland", "Island" );
+            }
             return View();
         }
 

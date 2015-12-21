@@ -40,9 +40,7 @@ namespace ITI.SkyLord.Controllers
 
             islandViewModel.CurrentIslandId = currentIsland.IslandId;
 
-            StandardViewModel svm = new StandardViewModel();
-            IslandContext.FillStandardVM( svm, PlayerContext.GetPlayer( User.GetUserId() ).PlayerId, currentIsland.IslandId );
-
+            IslandContext.FillStandardVM( islandViewModel, PlayerContext.GetPlayer( User.GetUserId() ).PlayerId, currentIsland.IslandId );
             return View( islandViewModel );
         }
 

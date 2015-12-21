@@ -9,7 +9,7 @@ using Microsoft.Data.Entity.Metadata;
 
 namespace ITI.SkyLord.Models.Entity_Framework.Contexts
 {
-    public class PlayerContext : IdentityDbContext
+    public class PlayerContext : CustomContext
     {
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -42,8 +42,8 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
 
         }
         public DbSet<Profil> Profils { get; set; }
-        public DbSet<Island> Islands { get; set; }
-        public DbSet<Player> Players { get; set; }
+        public override DbSet<Island> Islands { get; set; }
+        public override DbSet<Player> Players { get; set; }
         public DbSet<World> Worlds { get; set; }
         public DbSet<User_Player> User_Players { get; set; }
 
