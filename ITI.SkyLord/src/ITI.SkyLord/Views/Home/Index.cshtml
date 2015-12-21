@@ -1,12 +1,9 @@
 ﻿@using System.Security.Claims
 @{
     ViewData["Title"] = "Skylord";
-    Layout = "_Layout";
+    Layout = "";
 }
 <p>Bienvenue sur Skylord</p>
 
-@if (!User.IsSignedIn())
-{
     <a asp-controller="Account" asp-action="Register">Inscription</a><br />
     <a asp-controller="Account" asp-action="LogIn">Connexion</a><br />
-}

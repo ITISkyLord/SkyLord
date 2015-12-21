@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ITI.SkyLord.ViewModel.Armies
 {
-    public class ArmyViewModel
+    public class ArmyViewModel : StandardViewModel
     {
         public long IslandId { get; set; }
         public Army CurrentArmy { get; set; }

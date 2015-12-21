@@ -14,15 +14,8 @@ using ITI.SkyLord.ViewModel;
 
 namespace ITI.SkyLord.Models.Entity_Framework.Contexts
 {
-    public class ArmyContext : IdentityDbContext, IStandardContext
+    public class ArmyContext : CustomContext
     {
-        public void FillStandardVM( StandardViewModel vm, long playerId, long islandId = 0 )
-        {
-            vm.Layout.CurrentPlayer = Players.Single( p => p.PlayerId == playerId );
-            vm.Layout.AllIslands = Islands.Where( i => i.Owner.PlayerId == playerId ).ToList();
-            vm.Layout.CurrentIsland = Islands.Single( i => i.IslandId == islandId );
-        }
-
         public IConfigurationRoot Configuration { get; set; }
 
         protected override void OnConfiguring( DbContextOptionsBuilder optionsBuilder )
@@ -46,9 +39,9 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
                 .HasForeignKey( r => r.ArmyId );
         }
 
-        public DbSet<Player> Players { get; set; }
+        public override DbSet<Player> Players { get; set; }
+        public override DbSet<Island> Islands { get; set; }
         public DbSet<Army> Armies { get; set; }
-        public DbSet<Island> Islands { get; set; }
         public DbSet<Ressource> Ressources { get; set; }
         public DbSet<Unit> Units { get; set; }
         public DbSet<Regiment> Regiments { get; set; }

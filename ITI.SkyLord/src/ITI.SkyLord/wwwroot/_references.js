@@ -9,4 +9,3 @@
 /// <reference path="lib/jquery/dist/jquery.js" />
 /// <reference path="lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js" />
 /// <reference path="svg/Tour.js" />
-/// <reference path="ts/testsnap.js" />
