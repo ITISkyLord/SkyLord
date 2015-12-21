@@ -1,0 +1,11 @@
+﻿.test (@background-color: yellow) {
+    border: solid black 3px;
+    border-radius: 20px;
+    background-color: @background-color;
+}
+.Col(@nb:1) {
+    .make-lg-column(@nb);
+    .make-md-column(@nb);
+    .make-sm-column(@nb);
+    .make-xs-column(@nb);
+}

@@ -6460,20 +6460,12 @@ button.close {
 .modal-header:after,
 .modal-footer:before,
 .modal-footer:after,
-.SkyLordContainer:before,
-.SkyLordContainer:after,
-.SkyLordContainer .SkyLordMainRow:before,
-.SkyLordContainer .SkyLordMainRow:after,
-.SkyLordContainer .SkyLordMainRow .PageContent .MenuRow:before,
-.SkyLordContainer .SkyLordMainRow .PageContent .MenuRow:after,
-.SkyLordContainer .SkyLordMainRow .PageContent .RessourcesRow:before,
-.SkyLordContainer .SkyLordMainRow .PageContent .RessourcesRow:after,
-.SkyLordContainer .SkyLordMainRow .PageContent .TroopMovementRow:before,
-.SkyLordContainer .SkyLordMainRow .PageContent .TroopMovementRow:after,
-.SkyLordContainer .SkyLordMainRow .PageContent .ViewContentRow:before,
-.SkyLordContainer .SkyLordMainRow .PageContent .ViewContentRow:after,
-.SkyLordContainer .SkyLordMainRow .PageContent .FooterRow:before,
-.SkyLordContainer .SkyLordMainRow .PageContent .FooterRow:after {
+.Container:before,
+.Container:after,
+.Container .SRow:before,
+.Container .SRow:after,
+.Container .SRow .Content .MenuRow:before,
+.Container .SRow .Content .MenuRow:after {
   content: " ";
   display: table;
 }
@@ -6493,13 +6485,9 @@ button.close {
 .panel-body:after,
 .modal-header:after,
 .modal-footer:after,
-.SkyLordContainer:after,
-.SkyLordContainer .SkyLordMainRow:after,
-.SkyLordContainer .SkyLordMainRow .PageContent .MenuRow:after,
-.SkyLordContainer .SkyLordMainRow .PageContent .RessourcesRow:after,
-.SkyLordContainer .SkyLordMainRow .PageContent .TroopMovementRow:after,
-.SkyLordContainer .SkyLordMainRow .PageContent .ViewContentRow:after,
-.SkyLordContainer .SkyLordMainRow .PageContent .FooterRow:after {
+.Container:after,
+.Container .SRow:after,
+.Container .SRow .Content .MenuRow:after {
   clear: both;
 }
 .center-block {
@@ -6745,162 +6733,126 @@ button.close {
     display: none !important;
   }
 }
-.SkyLordContainer {
+.test {
+  border: solid black 3px;
+  border-radius: 20px;
+}
+.Container {
   margin-right: auto;
   margin-left: auto;
   padding-left: 15px;
   padding-right: 15px;
+  background-color: yellow;
   border: solid black 3px;
   border-radius: 20px;
-  background-color: yellow;
 }
-.SkyLordContainer > .navbar-header,
-.SkyLordContainer > .navbar-collapse {
+.Container > .navbar-header,
+.Container > .navbar-collapse {
   margin-right: -15px;
   margin-left: -15px;
 }
 @media (min-width: 768px) {
-  .SkyLordContainer > .navbar-header,
-  .SkyLordContainer > .navbar-collapse {
+  .Container > .navbar-header,
+  .Container > .navbar-collapse {
     margin-right: 0;
     margin-left: 0;
   }
 }
-.SkyLordContainer .SkyLordMainRow {
+.Container .SRow {
   margin-left: -15px;
   margin-right: -15px;
 }
-.SkyLordContainer .SkyLordMainRow .SkylordSideBar {
+.Container .SRow .SideBar {
+  border: solid black 3px;
+  border-radius: 20px;
   position: relative;
   float: left;
   width: 8.33333333%;
   min-height: 1px;
   padding-left: 15px;
   padding-right: 15px;
-  border: solid black 3px;
-  border-radius: 20px;
-  background-color: pink;
+  background-color: blue;
 }
 @media (min-width: 1200px) {
-  .SkyLordContainer .SkyLordMainRow .SkylordSideBar {
+  .Container .SRow .SideBar {
     float: left;
     width: 8.33333333%;
   }
 }
 @media (min-width: 992px) {
-  .SkyLordContainer .SkyLordMainRow .SkylordSideBar {
+  .Container .SRow .SideBar {
     float: left;
     width: 8.33333333%;
   }
 }
 @media (min-width: 768px) {
-  .SkyLordContainer .SkyLordMainRow .SkylordSideBar {
+  .Container .SRow .SideBar {
     float: left;
     width: 8.33333333%;
   }
 }
-.SkyLordContainer .SkyLordMainRow .PageContent {
+.Container .SRow .Content {
+  border: solid black 3px;
+  border-radius: 20px;
   position: relative;
   float: left;
   width: 91.66666667%;
   min-height: 1px;
   padding-left: 15px;
   padding-right: 15px;
-  border: solid black 3px;
-  border-radius: 20px;
   background-color: green;
 }
 @media (min-width: 1200px) {
-  .SkyLordContainer .SkyLordMainRow .PageContent {
+  .Container .SRow .Content {
     float: left;
     width: 91.66666667%;
   }
 }
 @media (min-width: 992px) {
-  .SkyLordContainer .SkyLordMainRow .PageContent {
+  .Container .SRow .Content {
     float: left;
     width: 91.66666667%;
   }
 }
 @media (min-width: 768px) {
-  .SkyLordContainer .SkyLordMainRow .PageContent {
+  .Container .SRow .Content {
     float: left;
     width: 91.66666667%;
   }
 }
-.SkyLordContainer .SkyLordMainRow .PageContent .MenuRow {
+.Container .SRow .Content .MenuRow {
   margin-left: -15px;
   margin-right: -15px;
+}
+.Container .SRow .Content .MenuRow .MenuElement {
   border: solid black 3px;
   border-radius: 20px;
-  background-color: red;
-}
-.SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .PointCounter,
-.SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Friends,
-.SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Armies,
-.SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Ranking,
-.SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Forum,
-.SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Logout,
-.SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Players,
-.SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Guild,
-.SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Messages,
-.SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Profile {
   position: relative;
   float: left;
   width: 8.33333333%;
   min-height: 1px;
   padding-left: 15px;
   padding-right: 15px;
-  border: solid black 3px;
-  border-radius: 20px;
-  background-color: blue;
 }
 @media (min-width: 1200px) {
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .PointCounter,
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Friends,
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Armies,
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Ranking,
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Forum,
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Logout,
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Players,
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Guild,
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Messages,
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Profile {
+  .Container .SRow .Content .MenuRow .MenuElement {
     float: left;
     width: 8.33333333%;
   }
 }
 @media (min-width: 992px) {
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .PointCounter,
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Friends,
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Armies,
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Ranking,
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Forum,
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Logout,
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Players,
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Guild,
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Messages,
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Profile {
+  .Container .SRow .Content .MenuRow .MenuElement {
     float: left;
     width: 8.33333333%;
   }
 }
 @media (min-width: 768px) {
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .PointCounter,
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Friends,
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Armies,
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Ranking,
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Forum,
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Logout,
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Players,
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Guild,
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Messages,
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Profile {
+  .Container .SRow .Content .MenuRow .MenuElement {
     float: left;
     width: 8.33333333%;
   }
 }
-.SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Search {
+.Container .SRow .Content .MenuRow .MenuElementSearch {
   position: relative;
   float: left;
   width: 16.66666667%;
@@ -6909,128 +6861,19 @@ button.close {
   padding-right: 15px;
 }
 @media (min-width: 1200px) {
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Search {
+  .Container .SRow .Content .MenuRow .MenuElementSearch {
     float: left;
     width: 16.66666667%;
   }
 }
 @media (min-width: 992px) {
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Search {
+  .Container .SRow .Content .MenuRow .MenuElementSearch {
     float: left;
     width: 16.66666667%;
   }
 }
 @media (min-width: 768px) {
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Search {
-    float: left;
-    width: 16.66666667%;
-  }
-}
-.SkyLordContainer .SkyLordMainRow .PageContent .RessourcesRow {
-  margin-left: -15px;
-  margin-right: -15px;
-  border: solid black 3px;
-  border-radius: 20px;
-  background-color: red;
-}
-.SkyLordContainer .SkyLordMainRow .PageContent .RessourcesRow .RessourceElement {
-  position: relative;
-  float: left;
-  width: 25%;
-  min-height: 1px;
-  padding-left: 15px;
-  padding-right: 15px;
-}
-@media (min-width: 1200px) {
-  .SkyLordContainer .SkyLordMainRow .PageContent .RessourcesRow .RessourceElement {
-    float: left;
-    width: 25%;
-  }
-}
-@media (min-width: 992px) {
-  .SkyLordContainer .SkyLordMainRow .PageContent .RessourcesRow .RessourceElement {
-    float: left;
-    width: 25%;
-  }
-}
-@media (min-width: 768px) {
-  .SkyLordContainer .SkyLordMainRow .PageContent .RessourcesRow .RessourceElement {
-    float: left;
-    width: 25%;
-  }
-}
-.SkyLordContainer .SkyLordMainRow .PageContent .TroopMovementRow {
-  margin-left: -15px;
-  margin-right: -15px;
-  border: solid black 3px;
-  border-radius: 20px;
-  background-color: red;
-}
-.SkyLordContainer .SkyLordMainRow .PageContent .TroopMovementRow .TroopLine {
-  position: relative;
-  float: left;
-  width: 100%;
-  min-height: 1px;
-  padding-left: 15px;
-  padding-right: 15px;
-}
-@media (min-width: 1200px) {
-  .SkyLordContainer .SkyLordMainRow .PageContent .TroopMovementRow .TroopLine {
-    float: left;
-    width: 100%;
-  }
-}
-@media (min-width: 992px) {
-  .SkyLordContainer .SkyLordMainRow .PageContent .TroopMovementRow .TroopLine {
-    float: left;
-    width: 100%;
-  }
-}
-@media (min-width: 768px) {
-  .SkyLordContainer .SkyLordMainRow .PageContent .TroopMovementRow .TroopLine {
-    float: left;
-    width: 100%;
-  }
-}
-.SkyLordContainer .SkyLordMainRow .PageContent .ViewContentRow {
-  margin-left: -15px;
-  margin-right: -15px;
-  border: solid black 3px;
-  border-radius: 20px;
-  background-color: red;
-}
-.SkyLordContainer .SkyLordMainRow .PageContent .FooterRow {
-  margin-left: -15px;
-  margin-right: -15px;
-  border: solid black 3px;
-  border-radius: 20px;
-  background-color: red;
-}
-.SkyLordContainer .SkyLordMainRow .PageContent .FooterRow .FooterElement {
-  position: relative;
-  float: left;
-  width: 16.66666667%;
-  min-height: 1px;
-  padding-left: 15px;
-  padding-right: 15px;
-  border: solid black 3px;
-  border-radius: 20px;
-  background-color: purple;
-}
-@media (min-width: 1200px) {
-  .SkyLordContainer .SkyLordMainRow .PageContent .FooterRow .FooterElement {
-    float: left;
-    width: 16.66666667%;
-  }
-}
-@media (min-width: 992px) {
-  .SkyLordContainer .SkyLordMainRow .PageContent .FooterRow .FooterElement {
-    float: left;
-    width: 16.66666667%;
-  }
-}
-@media (min-width: 768px) {
-  .SkyLordContainer .SkyLordMainRow .PageContent .FooterRow .FooterElement {
+  .Container .SRow .Content .MenuRow .MenuElementSearch {
     float: left;
     width: 16.66666667%;
   }

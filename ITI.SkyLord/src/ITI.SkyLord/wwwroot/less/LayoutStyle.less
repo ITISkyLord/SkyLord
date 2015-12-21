@@ -1,0 +1,77 @@
+﻿@import "bootstrap/bootstrap.less";
+@import "SkyLordMixin.less";
+
+
+.SkyLordContainer {
+    .container-fluid;
+    background-color: yellow;
+    .test;
+    .SkyLordMainRow {
+        .row;
+
+        .SkylordSideBar {
+            .Col(1);
+            .test(pink);
+        }
+
+        .PageContent {
+            .Col(11);
+            .test(green);
+
+            .MenuRow {
+                .row;
+                .test(red);
+
+                .PointCounter, 
+                .Friends, 
+                .Armies, 
+                .Ranking, 
+                .Forum, 
+                .Logout, 
+                .Players, 
+                .Guild, 
+                .Messages, 
+                .Profile {
+                    .Col(1);
+                    .test(blue);
+                }
+                .Search {
+                    .Col(2);
+                }
+                
+            }
+
+            .RessourcesRow {
+                .row;
+                .test(red);
+                .RessourceElement {
+                    .Col(3);
+                }
+            }
+
+            .TroopMovementRow {
+                .row;
+                .test(red);
+                .TroopLine {
+                    .Col(12);
+                }
+            }
+
+            .ViewContentRow {
+                .row;
+                .test(red);
+            }
+
+            .FooterRow {
+                .row;
+                .test(red);
+
+                .FooterElement {
+                    .Col(2);
+                    .test(purple);
+                }
+
+            }
+        }
+    }
+}
