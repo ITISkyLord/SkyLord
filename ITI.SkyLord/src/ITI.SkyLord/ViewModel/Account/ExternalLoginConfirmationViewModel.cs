@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ITI.SkyLord.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;

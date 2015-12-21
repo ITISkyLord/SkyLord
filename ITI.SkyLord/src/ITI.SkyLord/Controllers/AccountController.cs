@@ -15,6 +15,7 @@ using ITI.SkyLord.ViewModels.Account;
 using ITI.SkyLord.Services;
 using ITI.SkyLord.Controllers;
 using ITI.SkyLord.Models.ObjectModel;
+using ITI.SkyLord.ViewModel;
 
 namespace ITI.SkyLord.Models.Entity_Framework.Controllers
 {
@@ -39,6 +40,9 @@ namespace ITI.SkyLord.Models.Entity_Framework.Controllers
             _smsSender = smsSender;
             _logger = loggerFactory.CreateLogger<AccountController>();
         }
+
+        [FromServices]
+        public PlayerContext PlayerContext { get; set; }
 
         //
         // GET: /Account/Login
@@ -65,6 +69,9 @@ namespace ITI.SkyLord.Models.Entity_Framework.Controllers
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
+                    //StandardViewModel svm = new StandardViewModel();
+                    //PlayerContext.FillStandardVM( svm, PlayerContext.GetPlayer( User.GetUserId() ).PlayerId, 0 );
+
                     _logger.LogInformation(1, "User logged in.");
                     return RedirectToLocal(returnUrl);
                 }
@@ -138,8 +145,6 @@ namespace ITI.SkyLord.Models.Entity_Framework.Controllers
                         context.Profils.Add( p.Profil );
                         context.User_Players.Add( new User_Player( p, user ) );
                         context.SaveChanges();
-
-
                     }
                     return RedirectToAction( nameof( HomeController.Index ), "Home" );
                 }

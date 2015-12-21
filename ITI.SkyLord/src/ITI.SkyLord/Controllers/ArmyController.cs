@@ -8,6 +8,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using ITI.SkyLord.Services;
+using ITI.SkyLord.ViewModel;
 
 namespace ITI.SkyLord.Controllers
 {
@@ -80,6 +81,9 @@ namespace ITI.SkyLord.Controllers
                 CombatResult combatResult = am.ResolveCombat( attackingArmy, defendingArmy );
                 ArmyContext.SaveChanges();
 
+                StandardViewModel svm = new StandardViewModel();
+                ArmyContext.FillStandardVM( svm, PlayerContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
+
                 CombatReportViewModel combatReport = new CombatReportViewModel { CombatResult = combatResult };
                 return View( "Fight", combatReport );
             }
@@ -105,6 +109,9 @@ namespace ITI.SkyLord.Controllers
                 am.JoinArmies( attackingArmy.Island.Armies.SingleOrDefault( a => a.ArmyState == ArmyState.defense ), attackingArmy );
                 ArmyContext.SaveChanges();
             }
+
+            StandardViewModel svm = new StandardViewModel();
+            ArmyContext.FillStandardVM( svm, PlayerContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
 
             return RedirectToAction( "Index", new { islandId = islandId } );
         }
@@ -150,6 +157,10 @@ namespace ITI.SkyLord.Controllers
 
             long activePlayerId = PlayerContext.GetPlayer( User.GetUserId() ).PlayerId;
             model.EnnemyIslands = ArmyContext.Islands.Include( i => i.Owner ).Include( i => i.Coordinates ).Where( i => i.Owner.PlayerId != activePlayerId && i.Owner != null ).ToList();
+
+            StandardViewModel svm = new StandardViewModel();
+            ArmyContext.FillStandardVM( svm, activePlayerId, islandId );
+
             return model;
         }
 
@@ -160,15 +171,8 @@ namespace ITI.SkyLord.Controllers
         /// <returns>An ArmyViewModel containing all available units and the armies contained on the island</returns>
         private ArmyViewModel CreateArmyViewModel( long islandId )
         {
-            //long activePlayerId = PlayerContext.GetPlayer( User.GetUserId() ).PlayerId;
-            //long capitalId = ArmyContext.Islands.SingleOrDefault( i => i.IsCapital && i.Owner.PlayerId == activePlayerId ).IslandId;
-
-            //List<Army> currentIslandArmies = null;
-            //if( islandId == 0 )
-            //    currentIslandArmies = ArmyContext.Armies.Include( a => a.Regiments ).ThenInclude( r => r.Unit ).Where( a => a.Island.IslandId == capitalId ).ToList();
-            //else
-            //    currentIslandArmies = ArmyContext.Armies.Include( a => a.Regiments ).ThenInclude( r => r.Unit ).Where( a => a.Island.IslandId == islandId ).ToList();
-
+            StandardViewModel svm = new StandardViewModel();
+            ArmyContext.FillStandardVM( svm, PlayerContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
             return new ArmyViewModel
             {
                 AvailableUnits = ArmyContext.Units.Include( u => u.UnitCost ).Include( u => u.UnitStatistics ).ToList(),
