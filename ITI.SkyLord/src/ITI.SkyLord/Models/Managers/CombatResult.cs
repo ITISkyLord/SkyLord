@@ -101,23 +101,23 @@ namespace ITI.SkyLord
                 eachCapacityPillaged = _capacityOfPillaged / _flag;
                 if( eachCapacityPillaged < _loosingArmy.Island.AllRessources.Wood )
                 {
-                    _loosingArmy.Island.AllRessources.ChangeWood( -eachCapacityPillaged );
-                    _winningArmy.Island.AllRessources.ChangeWood( eachCapacityPillaged );
+                    _loosingArmy.Island.AllRessources.AddWood( -eachCapacityPillaged );
+                    _winningArmy.Island.AllRessources.AddWood( eachCapacityPillaged );
                 }
                 if( eachCapacityPillaged < _loosingArmy.Island.AllRessources.Metal )
                 {
-                    _loosingArmy.Island.AllRessources.ChangeMetal( -eachCapacityPillaged );
-                    _winningArmy.Island.AllRessources.ChangeMetal( eachCapacityPillaged );
+                    _loosingArmy.Island.AllRessources.AddMetal( -eachCapacityPillaged );
+                    _winningArmy.Island.AllRessources.AddMetal( eachCapacityPillaged );
                 }
                 if( eachCapacityPillaged < _loosingArmy.Island.AllRessources.Cristal )
                 {
-                    _loosingArmy.Island.AllRessources.ChangeCristal( -eachCapacityPillaged );
-                    _winningArmy.Island.AllRessources.ChangeCristal( eachCapacityPillaged );
+                    _loosingArmy.Island.AllRessources.AddCristal( -eachCapacityPillaged );
+                    _winningArmy.Island.AllRessources.AddCristal( eachCapacityPillaged );
                 }
                 if( eachCapacityPillaged < _loosingArmy.Island.AllRessources.Magic )
                 {
-                    _loosingArmy.Island.AllRessources.ChangeMagic( -eachCapacityPillaged );
-                    _winningArmy.Island.AllRessources.ChangeMagic( eachCapacityPillaged );
+                    _loosingArmy.Island.AllRessources.AddMagic( -eachCapacityPillaged );
+                    _winningArmy.Island.AllRessources.AddMagic( eachCapacityPillaged );
                 }
             }
 
@@ -145,8 +145,8 @@ namespace ITI.SkyLord
             if( ressources.Wood > _loosingArmy.Island.AllRessources.Wood && _loosingArmy.Island.AllRessources.Wood > 1 )
             {
                 rest = FindRest( "wood", ressources );
-                _winningArmy.Island.AllRessources.ChangeWood( _loosingArmy.Island.AllRessources.Wood );
-                _loosingArmy.Island.AllRessources.ChangeWood( -(_loosingArmy.Island.AllRessources.Wood) );
+                _winningArmy.Island.AllRessources.AddWood( _loosingArmy.Island.AllRessources.Wood );
+                _loosingArmy.Island.AllRessources.AddWood( -( _loosingArmy.Island.AllRessources.Wood ) );
                 _capacityOfPillaged += rest;
                 ressources = recursivite();
                 _flag -= 1;
@@ -154,8 +154,8 @@ namespace ITI.SkyLord
             if( ressources.Metal > _loosingArmy.Island.AllRessources.Metal && _loosingArmy.Island.AllRessources.Metal > 1 )
             {
                 rest = FindRest( "metal", ressources );
-                _winningArmy.Island.AllRessources.ChangeMetal( _loosingArmy.Island.AllRessources.Metal );
-                _loosingArmy.Island.AllRessources.ChangeMetal( -(_loosingArmy.Island.AllRessources.Metal) );
+                _winningArmy.Island.AllRessources.AddMetal( _loosingArmy.Island.AllRessources.Metal );
+                _loosingArmy.Island.AllRessources.AddMetal( -( _loosingArmy.Island.AllRessources.Metal ) );
                 _capacityOfPillaged += rest;
                 ressources = recursivite();
                 _flag -= 1;
@@ -164,8 +164,8 @@ namespace ITI.SkyLord
             if( ressources.Cristal > _loosingArmy.Island.AllRessources.Cristal && _loosingArmy.Island.AllRessources.Cristal > 1 )
             {
                 rest = FindRest( "cristal", ressources );
-                _winningArmy.Island.AllRessources.ChangeCristal( _loosingArmy.Island.AllRessources.Cristal );
-                _loosingArmy.Island.AllRessources.ChangeCristal( -(_loosingArmy.Island.AllRessources.Cristal) );
+                _winningArmy.Island.AllRessources.AddCristal( _loosingArmy.Island.AllRessources.Cristal );
+                _loosingArmy.Island.AllRessources.AddCristal( -( _loosingArmy.Island.AllRessources.Cristal ) );
                 _capacityOfPillaged += rest;
                 ressources = recursivite();
                 _flag -= 1;
@@ -173,8 +173,8 @@ namespace ITI.SkyLord
             if( ressources.Magic > _loosingArmy.Island.AllRessources.Magic && _loosingArmy.Island.AllRessources.Magic > 1 )
             {
                 rest = FindRest( "magic", ressources );
-                _winningArmy.Island.AllRessources.ChangeMagic( _loosingArmy.Island.AllRessources.Magic );
-                _loosingArmy.Island.AllRessources.ChangeMagic( -(_loosingArmy.Island.AllRessources.Magic) );
+                _winningArmy.Island.AllRessources.AddMagic( _loosingArmy.Island.AllRessources.Magic );
+                _loosingArmy.Island.AllRessources.AddMagic( -( _loosingArmy.Island.AllRessources.Magic ) );
                 _capacityOfPillaged += rest;
                 ressources = recursivite();
                 _flag -= 1;

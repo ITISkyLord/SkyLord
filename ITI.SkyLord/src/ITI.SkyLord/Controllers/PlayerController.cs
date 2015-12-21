@@ -59,15 +59,19 @@ namespace ITI.SkyLord.Controllers
             return View(sp);
         }
 
-        //public IActionResult SeeInformationOfAnPlayerstring(string nom)
-        //{
-        //    // Chercher le player par nom
-        //    int id = 6;
+        public IActionResult SeeInformationOfAnPlayerString(string namePlayer)
+        {
+            Player playerChoosen = PlayerContext.Players
+                .Include(a => a.Islands).ThenInclude(i => i.Coordinates)
+                .Include(p => p.Profil)
+                .Where(p => p.Name == namePlayer)
+                .SingleOrDefault();
 
+            SeePlayersViewModel sp = new SeePlayersViewModel();
 
-        //    RedirectToAction("SeeInformationOfAnPlayer", id);
-        //    return View();
-        //}
+            sp.ActivePlayer = playerChoosen;
+            return View(sp);
+        }
 
 
 

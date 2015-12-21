@@ -47,10 +47,10 @@ namespace ITI.SkyLord.Tests.EfTests
                     int quantRessource = 10;
                     Ressource ressource = islandContext.Islands.Include(r => r.AllRessources).Where(i => i.Owner.PlayerId == playerActive.PlayerId).Select(res => res.AllRessources).SingleOrDefault();
 
-                    ressource.ChangeCristal(quantRessource);
-                    ressource.ChangeMagic(quantRessource);
-                    ressource.ChangeMetal(quantRessource);
-                    ressource.ChangeWood(quantRessource);
+                    ressource.AddCristal(quantRessource);
+                    ressource.AddMagic(quantRessource);
+                    ressource.AddMetal(quantRessource);
+                    ressource.AddWood(quantRessource);
                     islandContext.SaveChanges();
 
                     Console.WriteLine("Les ressources de cristal ajoutés : " + ressource.Cristal.ToString());
@@ -83,7 +83,7 @@ namespace ITI.SkyLord.Tests.EfTests
                     int quantRessource = 10;
                     Ressource ressource = islandContext.Islands.Include(r => r.AllRessources).Where(i => i.Owner.PlayerId == playerActive.PlayerId).Select(res => res.AllRessources).SingleOrDefault();
 
-                    ressource.ChangeCristal(quantRessource);
+                    ressource.AddCristal(quantRessource);
                     islandContext.SaveChanges();
                     Console.WriteLine("Les ressources de cristal ajoutés : " + ressource.Cristal.ToString());
 
@@ -105,7 +105,7 @@ namespace ITI.SkyLord.Tests.EfTests
                     int quantRessource = 10;
                     Ressource ressource = islandContext.Islands.Include(r => r.AllRessources).Where(i => i.Owner.PlayerId == playerActive.PlayerId).Select(res => res.AllRessources).SingleOrDefault();
 
-                    ressource.ChangeMagic(quantRessource);
+                    ressource.AddMagic(quantRessource);
                     islandContext.SaveChanges();
                     Console.WriteLine("Les ressources de magie ajoutés : " + ressource.Magic.ToString());
 
@@ -126,7 +126,7 @@ namespace ITI.SkyLord.Tests.EfTests
                     int quantRessource = 10;
                     Ressource ressource = islandContext.Islands.Include(r => r.AllRessources).Where(i => i.Owner.PlayerId == playerActive.PlayerId).Select(res => res.AllRessources).SingleOrDefault();
 
-                    ressource.ChangeWood(quantRessource);
+                    ressource.AddWood(quantRessource);
                     islandContext.SaveChanges();
                     Console.WriteLine("Les ressources de bois ajoutés : " + ressource.Wood.ToString());
 
@@ -147,7 +147,7 @@ namespace ITI.SkyLord.Tests.EfTests
                     int quantRessource = 10;
                     Ressource ressource = islandContext.Islands.Include(r => r.AllRessources).Where(i => i.Owner.PlayerId == playerActive.PlayerId).Select(res => res.AllRessources).SingleOrDefault();
 
-                    ressource.ChangeMetal(quantRessource);
+                    ressource.AddMetal(quantRessource);
                     islandContext.SaveChanges();
                     Console.WriteLine("Les ressources de metal ajoutés : " + ressource.Metal.ToString());
 

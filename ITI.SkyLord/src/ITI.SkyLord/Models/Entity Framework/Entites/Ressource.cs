@@ -32,6 +32,7 @@ namespace ITI.SkyLord
         /// <param name="metalQuantity">The metal quantity to add or remove.</param>
         /// <param name="cristalQuantity">The cristal quantity to add or remove.</param>
         /// <param name="magicQuantity">The magic quantity to add or remove.</param>
+        [Obsolete]
         public void ChangeRessources( int woodQuantity, int metalQuantity, int cristalQuantity, int magicQuantity )
         {
             // Remplacer par un bool, demander à Spi !
@@ -49,6 +50,7 @@ namespace ITI.SkyLord
         /// Only for add ressources.
         /// </summary>
         /// <param name="ressource"></param>
+        [Obsolete]
         public void ChangeRessources( Ressource ressource, bool b = true )
         {
             if ( b )
@@ -77,7 +79,7 @@ namespace ITI.SkyLord
         /// Adds or removes wood from ressource.
         /// </summary>
         /// <param name="woodQuantity">The wood quantity to add or remove.</param>
-        public void ChangeWood( int woodQuantity )
+        public void AddWood( int woodQuantity )
         {
             if ( Wood + woodQuantity < 0 ) throw new ArgumentException( "Wood cannot be negative." );
 
@@ -87,7 +89,7 @@ namespace ITI.SkyLord
         /// Adds or removes metal form ressource.
         /// </summary>
         /// <param name="metalQuantity">The metal quantity to add or remove.</param>
-        public void ChangeMetal( int metalQuantity )
+        public void AddMetal( int metalQuantity )
         {
             if ( Metal + metalQuantity < 0 ) throw new ArgumentException( "Metal cannot be negative." );
 
@@ -97,7 +99,7 @@ namespace ITI.SkyLord
         /// Adds or removes cristal form ressource.
         /// </summary>
         /// <param name="metalQuantity">The cristal quantity to add or remove.</param>
-        public void ChangeCristal( int cristalQuantity )
+        public void AddCristal( int cristalQuantity )
         {
             if ( Cristal + cristalQuantity < 0 ) throw new ArgumentException( "Cristal cannot be negative." );
 
@@ -107,7 +109,7 @@ namespace ITI.SkyLord
         /// Adds or removes magic form ressource.
         /// </summary>
         /// <param name="metalQuantity">The magic quantity to add or remove.</param>
-        public void ChangeMagic( int magicQuantity )
+        public void AddMagic( int magicQuantity )
         {
             if ( Magic + magicQuantity < 0 ) throw new ArgumentException( "Magic cannot be negative." );
 
