@@ -31,15 +31,10 @@ namespace ITI.SkyLord.Controllers
         public IActionResult SeeMyIsland( long islandId = 0 )
         {
             Island currentIsland = GetIsland( islandId );
-            SeeIslandsViewModel islandViewModel = new SeeIslandsViewModel();
-
-            islandViewModel.Island = currentIsland;
-            islandViewModel.Owner = currentIsland.Owner;
-            islandViewModel.X = currentIsland.Coordinates.X;
-            islandViewModel.Y = currentIsland.Coordinates.Y;
-
-            islandViewModel.CurrentIslandId = currentIsland.IslandId;
-
+            SeeIslandsViewModel islandViewModel = new SeeIslandsViewModel
+            {
+                CurrentIsland = currentIsland
+            };
             IslandContext.FillStandardVM( islandViewModel, PlayerContext.GetPlayer( User.GetUserId() ).PlayerId, currentIsland.IslandId );
             return View( islandViewModel );
         }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ITI.SkyLord.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ITI.SkyLord.ViewModels.Profil
 {
-    public class ProfilViewModel
+    public class ProfilViewModel : StandardViewModel
     {
         [Required]
         [StringLength( 1500, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 0 )]

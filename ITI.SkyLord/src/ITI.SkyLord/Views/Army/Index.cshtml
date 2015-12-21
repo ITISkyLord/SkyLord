@@ -19,7 +19,7 @@
         }
     </ul>
 }
-<form asp-controller="Army" asp-action="AddUnit" method="post" role="form">
+<form asp-controller="Army" asp-action="AddUnit" asp-route-islandId="@Model.Layout.IslandId" method="post" role="form">
     <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
 <table>
     @foreach ( Unit u in Model.AvailableUnits )
@@ -32,6 +32,6 @@
 </table>
     <button>Entrainer les unités</button>
 </form>
-<h1> <a asp-controller="Army" asp-action="SetAttackingArmy">FIGHT !</a> </h1>
+<h1> <a asp-controller="Army" asp-action="SetAttackingArmy" asp-route-islandId="@Model.Layout.IslandId" >FIGHT !</a> </h1>
 
 
