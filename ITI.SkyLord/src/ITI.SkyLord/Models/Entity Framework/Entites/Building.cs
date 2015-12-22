@@ -6,7 +6,7 @@ using System.Text;
 
 namespace ITI.SkyLord
 {
-    public abstract class Building
+    public class Building
     {
         [Key]
         public int BuildingId { get; set; }
