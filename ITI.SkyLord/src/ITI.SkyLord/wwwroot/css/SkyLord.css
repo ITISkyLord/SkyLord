@@ -7160,38 +7160,54 @@ body {
 .HomeContainer .Block {
   position: relative;
   float: left;
-  width: 25%;
+  width: 33.33333333%;
   min-height: 1px;
   padding-left: 15px;
   padding-right: 15px;
+  margin-left: 8.33333333%;
   text-align: center;
 }
 @media (min-width: 1200px) {
   .HomeContainer .Block {
     float: left;
-    width: 25%;
+    width: 33.33333333%;
   }
 }
 @media (min-width: 992px) {
   .HomeContainer .Block {
     float: left;
-    width: 25%;
+    width: 33.33333333%;
   }
 }
 @media (min-width: 768px) {
   .HomeContainer .Block {
     float: left;
-    width: 25%;
+    width: 33.33333333%;
+  }
+}
+@media (min-width: 1200px) {
+  .HomeContainer .Block {
+    margin-left: 8.33333333%;
+  }
+}
+@media (min-width: 992px) {
+  .HomeContainer .Block {
+    margin-left: 8.33333333%;
+  }
+}
+@media (min-width: 768px) {
+  .HomeContainer .Block {
+    margin-left: 8.33333333%;
   }
 }
 .HomeContainer .RegisterBlock {
-  margin-left: 16.66666667%;
   position: relative;
   float: left;
-  width: 25%;
+  width: 33.33333333%;
   min-height: 1px;
   padding-left: 15px;
   padding-right: 15px;
+  margin-left: 8.33333333%;
   text-align: center;
   border: solid black 3px;
   border-radius: 20px;
@@ -7199,80 +7215,80 @@ body {
 }
 @media (min-width: 1200px) {
   .HomeContainer .RegisterBlock {
-    margin-left: 16.66666667%;
+    float: left;
+    width: 33.33333333%;
   }
 }
 @media (min-width: 992px) {
   .HomeContainer .RegisterBlock {
-    margin-left: 16.66666667%;
+    float: left;
+    width: 33.33333333%;
   }
 }
 @media (min-width: 768px) {
   .HomeContainer .RegisterBlock {
-    margin-left: 16.66666667%;
+    float: left;
+    width: 33.33333333%;
   }
 }
 @media (min-width: 1200px) {
   .HomeContainer .RegisterBlock {
-    float: left;
-    width: 25%;
+    margin-left: 8.33333333%;
   }
 }
 @media (min-width: 992px) {
   .HomeContainer .RegisterBlock {
-    float: left;
-    width: 25%;
+    margin-left: 8.33333333%;
   }
 }
 @media (min-width: 768px) {
   .HomeContainer .RegisterBlock {
-    float: left;
-    width: 25%;
+    margin-left: 8.33333333%;
   }
 }
 .HomeContainer .ConnectionBlock {
-  margin-left: 16.66666667%;
   position: relative;
   float: left;
-  width: 25%;
+  width: 33.33333333%;
   min-height: 1px;
   padding-left: 15px;
   padding-right: 15px;
+  margin-left: 8.33333333%;
   text-align: center;
   border: solid black 3px;
   border-radius: 20px;
-  background-color: yellow;
-}
-@media (min-width: 1200px) {
-  .HomeContainer .ConnectionBlock {
-    margin-left: 16.66666667%;
-  }
-}
-@media (min-width: 992px) {
-  .HomeContainer .ConnectionBlock {
-    margin-left: 16.66666667%;
-  }
-}
-@media (min-width: 768px) {
-  .HomeContainer .ConnectionBlock {
-    margin-left: 16.66666667%;
-  }
+  background-color: #bada55;
 }
 @media (min-width: 1200px) {
   .HomeContainer .ConnectionBlock {
     float: left;
-    width: 25%;
+    width: 33.33333333%;
   }
 }
 @media (min-width: 992px) {
   .HomeContainer .ConnectionBlock {
     float: left;
-    width: 25%;
+    width: 33.33333333%;
   }
 }
 @media (min-width: 768px) {
   .HomeContainer .ConnectionBlock {
     float: left;
-    width: 25%;
+    width: 33.33333333%;
+  }
+}
+@media (min-width: 1200px) {
+  .HomeContainer .ConnectionBlock {
+    margin-left: 8.33333333%;
+  }
+}
+@media (min-width: 992px) {
+  .HomeContainer .ConnectionBlock {
+    margin-left: 8.33333333%;
+  }
+}
+@media (min-width: 768px) {
+  .HomeContainer .ConnectionBlock {
+    margin-left: 8.33333333%;
   }
 }
