@@ -13,11 +13,11 @@ namespace ITI.SkyLord.Tests.EfTests
     {
 
         [Test]
-        //[TestCase("Jesuisunmessagedetest", "Coucou", true )]
-        [TestCase("", "Coucou", false )]
-        [TestCase("Jesuisunmessagedetest", "", false )]
-        [TestCase(" ", "Coucou", false )]
-        [TestCase("Jesuisunmessagedetest", " ", false )]
+        [TestCase("Jesuisunmessagedetest", "Coucou", true)]
+        [TestCase("", "Coucou", false)]
+        [TestCase("Jesuisunmessagedetest", "", false)]
+        [TestCase(" ", "Coucou", false)]
+        [TestCase("Jesuisunmessagedetest", " ", false)]
         [TestCase("  ", "Coucou", false)]
         [TestCase("Jesuisunmessagedetest", "  ", false)]
         public void SendMessage(string coreMessage, string messageObject, bool returnSendMessageExpected)
@@ -31,17 +31,22 @@ namespace ITI.SkyLord.Tests.EfTests
                 Player receiver = mc.Players.First(a => a.Name == "Spi");
 
                 var result = mm.SendMessage(sender, receiver, coreMessage, messageObject);
-    
+
                 Assert.That(result == returnSendMessageExpected);
-                Assert.That(mc.Messages.Where(m => m.CoreMessage == coreMessage && m.MessageObject == messageObject).First() != null);
-                
+                if (returnSendMessageExpected == true) Assert.That(mc.Messages.Where(m => m.CoreMessage == coreMessage && m.MessageObject == messageObject).First() != null);
+
             }
             finally
             {
-                var t = mc.Messages.Where(m => m.CoreMessage == coreMessage).FirstOrDefault();
-                if (t != null) mc.Messages.Remove(t);
-                mc.SaveChanges();
-                mc.Dispose();
+                if (returnSendMessageExpected == true)
+                {
+                    var t = mc.Messages.Where(m => m.CoreMessage == coreMessage).FirstOrDefault();
+                    if (t != null) mc.Messages.Remove(t);
+                    mc.SaveChanges();
+                    mc.Dispose();
+                }
+
+                else mc.Dispose();
             }
         }
 

@@ -19,16 +19,17 @@ namespace ITI.SkyLord.Models.Managers
         {
             bool success = false;
 
-            if(String.IsNullOrWhiteSpace(CoreMessage) || String.IsNullOrWhiteSpace(ObjectMessage) || String.IsNullOrEmpty(CoreMessage) || String.IsNullOrEmpty(ObjectMessage))
+            if (String.IsNullOrWhiteSpace(CoreMessage) || String.IsNullOrWhiteSpace(ObjectMessage) || String.IsNullOrEmpty(CoreMessage) || String.IsNullOrEmpty(ObjectMessage))
             {
                 Console.WriteLine("Vos données sont incorrectes.");
-                return success;
             }
-            Message message = new Message { Receiver = receiver, Sender = sender, CoreMessage = CoreMessage, MessageObject = ObjectMessage };
-            messageContext.Add(message);
-            messageContext.SaveChanges();
-            success = true;
-
+            else
+            {
+                Message message = new Message { Receiver = receiver, Sender = sender, CoreMessage = CoreMessage, MessageObject = ObjectMessage };
+                messageContext.Add(message);
+                messageContext.SaveChanges();
+                success = true;
+            }
             return success;
         }
 
