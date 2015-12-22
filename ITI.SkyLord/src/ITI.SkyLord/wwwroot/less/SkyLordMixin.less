@@ -1,4 +1,6 @@
-﻿.test (@background-color: yellow) {
+﻿@import "bootstrap/bootstrap.less";
+
+.test (@background-color: yellow) {
     border: solid black 3px;
     border-radius: 20px;
     background-color: @background-color;
@@ -8,4 +10,10 @@
     .make-md-column(@nb);
     .make-sm-column(@nb);
     .make-xs-column(@nb);
+}
+.Offset(@nb:1) {
+    .make-lg-column-offset(@nb);
+    .make-md-column-offset(@nb);
+    .make-sm-column-offset(@nb);
+    .make-xs-column-offset(@nb);
 }

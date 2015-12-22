@@ -6745,6 +6745,10 @@ button.close {
     display: none !important;
   }
 }
+html,
+body {
+  height: 100%;
+}
 .SkyLordContainer {
   margin-right: auto;
   margin-left: auto;
@@ -6753,6 +6757,7 @@ button.close {
   border: solid black 3px;
   border-radius: 20px;
   background-color: yellow;
+  height: 100%;
 }
 .SkyLordContainer > .navbar-header,
 .SkyLordContainer > .navbar-collapse {
@@ -6769,6 +6774,7 @@ button.close {
 .SkyLordContainer .SkyLordMainRow {
   margin-left: -15px;
   margin-right: -15px;
+  height: 100% !important;
 }
 .SkyLordContainer .SkyLordMainRow .SkylordSideBar {
   position: relative;

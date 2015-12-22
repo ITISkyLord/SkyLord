@@ -1,13 +1,19 @@
 ﻿@import "bootstrap/bootstrap.less";
 @import "SkyLordMixin.less";
 
+html, body {
+    height: 100%;   
+}
 
 .SkyLordContainer {
     .container-fluid;
     background-color: yellow;
     .test;
+    height: 100%;
+
     .SkyLordMainRow {
         .row;
+        height: 100% !important;
 
         .SkylordSideBar {
             .Col(1);
@@ -38,7 +44,6 @@
                 .Search {
                     .Col(2);
                 }
-                
             }
 
             .RessourcesRow {
