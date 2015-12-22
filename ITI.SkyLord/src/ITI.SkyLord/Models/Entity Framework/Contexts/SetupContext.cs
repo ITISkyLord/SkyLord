@@ -49,8 +49,9 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
         public DbSet<Unit> Units { get; set; }
         public DbSet<UnitStatistics> UnitStatistics { get; set; }
         public DbSet<World> Worlds { get; set; }
-
         public DbSet<User_Player> UserPlayers { get; set; }
+        public DbSet<BuildingDefinition> BuildingDefinitions { get; set; }
+        public DbSet<Requirement> Requirements { get; set; }
         public UnitDamageType UnitDamageTypes { get;set;}
         public UnitName UnitName { get; set; }
         public UnitType UnitType { get; set; }
