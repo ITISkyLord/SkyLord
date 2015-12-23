@@ -49,10 +49,52 @@ namespace ITI.SkyLord.Tests.EfTests
                 else mc.Dispose();
             }
         }
+        [Test]
+        public void DeleteMessage()
+        {
+            MessageContext mc = new MessageContext();
+            MessageManager mm = new MessageManager(mc);
 
+            Player sender = mc.Players.First(p => p.Name == "LoicD");
+            Player receiver = mc.Players.First(a => a.Name == "Spi");
 
+            Message message = new Message { Receiver = receiver, Sender = sender, CoreMessage = "Test", MessageObject = "Test" };
+            mc.Add(message);
+            mc.SaveChanges();
 
+            Assert.That(mm.DeleteMessage(message) == true);
+        }
+
+        [Test]
+        public void ReadAllUnreadMessage()
+        {
+            MessageContext mc = new MessageContext();
+            MessageManager mm = new MessageManager(mc);
+
+                // Create the Message
+                Player sender = mc.Players.First(p => p.Name == "Spi");
+                Player receiver = mc.Players.First(a => a.Name == "LoicD");
+
+                Message message = new Message { Receiver = receiver, Sender = sender, CoreMessage = "Test", MessageObject = "Test" };
+                Message message2 = new Message { Receiver = receiver, Sender = sender, CoreMessage = "Hello it's me", MessageObject = "Nouvelle" };
+                mc.Add(message);
+                mc.Add(message2);
+                mc.SaveChanges();
+
+                // Search the message unread of currentPlayer
+                Player currentPLayer = mc.Players.First(a => a.Name == "LoicD");
+
+               var unreadMessage =  mm.GetAllUnreadMessage(currentPLayer);
+
+            foreach (Message msg in unreadMessage)
+            {
+                Console.WriteLine("Objet : {0}, Message : {1}, Envoyeur : {2}, Receveur : {3} ", msg.MessageObject, msg.CoreMessage, msg.Sender.Name, msg.Receiver.Name);
+            }
+
+            Assert.That(unreadMessage.Count() != 0);
+
+                mm.DeleteMessage(message);
+                mm.DeleteMessage(message2);
+        }
     }
-
-
 }

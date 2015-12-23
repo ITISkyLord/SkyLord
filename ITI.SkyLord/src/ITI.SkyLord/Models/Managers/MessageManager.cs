@@ -44,7 +44,13 @@ namespace ITI.SkyLord.Models.Managers
 
         public bool DeleteMessage(Message message)
         {
-            throw new NotImplementedException();
+            bool success = false;
+
+            messageContext.Remove(message);
+            messageContext.SaveChanges();
+            success = true;
+
+            return success;
         }
 
         public bool DeleteMessage(long messageId)
@@ -54,8 +60,8 @@ namespace ITI.SkyLord.Models.Managers
 
         public IList<Message> GetAllUnreadMessage(Player player)
         {
-            throw new NotImplementedException();
-
+            List<Message> listMessagesUnread = messageContext.Messages.Where(m => m.Receiver.PlayerId == player.PlayerId).Where(m => m.Read == false).ToList();
+            return listMessagesUnread;
         }
     }
 }
