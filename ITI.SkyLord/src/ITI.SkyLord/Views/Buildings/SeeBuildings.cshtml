@@ -1,0 +1,15 @@
+﻿@{
+    ViewData["Title"] = "View Buildings";
+    Layout = "_Layout";
+}
+
+@{
+    @model Buildings
+    }
+
+<ul>
+    @foreach (var building in Model.Buildings)
+    {
+    <li>@building</li>
+    }
+</ul>
