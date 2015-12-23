@@ -5,15 +5,24 @@
     border-radius: 20px;
     background-color: @background-color;
 }
+
 .Col(@nb:1) {
     .make-lg-column(@nb);
     .make-md-column(@nb);
     .make-sm-column(@nb);
     .make-xs-column(@nb);
 }
-.Offset(@nb:1) {
-    .make-lg-column-offset(@nb);
-    .make-md-column-offset(@nb);
-    .make-sm-column-offset(@nb);
-    .make-xs-column-offset(@nb);
+
+.MakeResponsive(@lgcol: 12, @mdcol: 12, @smcol: 12, @xscol: 12) {
+    .make-lg-column(@lgcol);
+    .make-md-column(@mdcol);
+    .make-sm-column(@smcol);
+    .make-xs-column(@xscol);
+}
+
+.MakeOffset(@lgcol: 12, @mdcol: 12, @smcol: 12, @xscol: 12) {
+    .make-lg-column-offset(@lgcol);
+    .make-md-column-offset(@mdcol);
+    .make-sm-column-offset(@smcol);
+    .make-xs-column-offset(@xscol);
 }
