@@ -30,7 +30,7 @@ namespace ITI.SkyLord.Tests.EfTests
                 Player sender = mc.Players.First(p => p.Name == "LoicD");
                 Player receiver = mc.Players.First(a => a.Name == "Spi");
 
-                var result = mm.SendMessage(sender, receiver, coreMessage, messageObject);
+                var result = mm.SendMessage(sender, receiver, coreMessage, messageObject, returnSendMessageExpected);
 
                 Assert.That(result == returnSendMessageExpected);
                 if (returnSendMessageExpected == true) Assert.That(mc.Messages.Where(m => m.CoreMessage == coreMessage && m.MessageObject == messageObject).First() != null);
@@ -49,6 +49,7 @@ namespace ITI.SkyLord.Tests.EfTests
                 else mc.Dispose();
             }
         }
+
         [Test]
         public void DeleteMessage()
         {
@@ -66,49 +67,56 @@ namespace ITI.SkyLord.Tests.EfTests
         }
 
         [Test]
-        public void ReadAllUnreadMessage()
+        public void GetAllUnreadMessage()
         {
             MessageContext mc = new MessageContext();
             MessageManager mm = new MessageManager(mc);
 
+            string messageObject = "Nouvelle";
+            string coreMessage = "OH";
+            string coreMessage2 = "HA";
+
             // Create the Message
-            Player sender = mc.Players.First(p => p.Name == "Spi");
+            Player otherPlayer = mc.Players.First(p => p.Name == "Spi");
             Player currentPLayer = mc.Players.First(a => a.Name == "LoicD");
 
-            Message message = new Message { Receiver = currentPLayer, Sender = sender, CoreMessage = "Test", MessageObject = "Test" };
-            Message message2 = new Message { Receiver = currentPLayer, Sender = sender, CoreMessage = "Hello it's me", MessageObject = "Nouvelle" };
-            mc.Add(message);
-            mc.Add(message2);
-            mc.SaveChanges();
+            mm.SendMessage(otherPlayer, currentPLayer, coreMessage, messageObject, false);
+            mm.SendMessage(otherPlayer, currentPLayer, coreMessage2, messageObject, false);
 
-            var unreadMessage = mm.GetAllUnreadMessage(currentPLayer);
+            Message message = mc.Messages.FirstOrDefault(m => m.CoreMessage == coreMessage);
+            Message message2 = mc.Messages.FirstOrDefault(m => m.CoreMessage == coreMessage2);
+            var allMessages = mm.GetAllUnreadMessage(currentPLayer);
 
-            foreach (Message msg in unreadMessage)
+            foreach (Message msg in allMessages)
             {
                 Console.WriteLine("Objet : {0}, Message : {1}, Envoyeur : {2}, Receveur : {3} ", msg.MessageObject, msg.CoreMessage, msg.Sender.Name, msg.Receiver.Name);
             }
 
-            Assert.That(unreadMessage.Count() != 0);
+            Assert.That(allMessages.Count() != 0);
 
             mm.DeleteMessage(message);
             mm.DeleteMessage(message2);
         }
 
         [Test]
-        public void ReadAllMessageRead()
+        public void GetAllMessageRead()
         {
             MessageContext mc = new MessageContext();
             MessageManager mm = new MessageManager(mc);
 
+            string messageObject = "Nouvelle";
+            string coreMessage = "Yo";
+            string coreMessage2 = "WOO";
+
             // Create the Message
-            Player sender = mc.Players.First(p => p.Name == "Spi");
+            Player otherPlayer = mc.Players.First(p => p.Name == "Spi");
             Player currentPLayer = mc.Players.First(a => a.Name == "LoicD");
 
-            Message message = new Message { Receiver = currentPLayer, Sender = sender, CoreMessage = "Test", MessageObject = "Test", Read = true };
-            Message message2 = new Message { Receiver = currentPLayer, Sender = sender, CoreMessage = "Hello it's me", MessageObject = "Nouvelle", Read = true };
-            mc.Add(message);
-            mc.Add(message2);
-            mc.SaveChanges();
+            mm.SendMessage(otherPlayer, currentPLayer, coreMessage, messageObject, true);
+            mm.SendMessage(otherPlayer, currentPLayer, coreMessage2, messageObject, true);
+
+            Message message = mc.Messages.FirstOrDefault(m => m.CoreMessage == coreMessage);
+            Message message2 = mc.Messages.FirstOrDefault(m => m.CoreMessage == coreMessage2);
 
             var messageRead = mm.GetAllMessageRead(currentPLayer);
 
@@ -124,20 +132,23 @@ namespace ITI.SkyLord.Tests.EfTests
         }
 
         [Test]
-        public void ReadAllMessage()
+        public void GetAllMessage()
         {
             MessageContext mc = new MessageContext();
             MessageManager mm = new MessageManager(mc);
+            string messageObject = "Nouvelle";
+            string coreMessage = "Zozo";
+            string coreMessage2 = "tata";
 
             // Create the Message
-            Player sender = mc.Players.First(p => p.Name == "Spi");
+            Player otherPlayer = mc.Players.First(p => p.Name == "Spi");
             Player currentPLayer = mc.Players.First(a => a.Name == "LoicD");
 
-            Message message = new Message { Receiver = currentPLayer, Sender = sender, CoreMessage = "Test", MessageObject = "Test", Read = true };
-            Message message2 = new Message { Receiver = currentPLayer, Sender = sender, CoreMessage = "Hello it's me", MessageObject = "Nouvelle", Read = true };
-            mc.Add(message);
-            mc.Add(message2);
-            mc.SaveChanges();
+            mm.SendMessage(otherPlayer, currentPLayer, coreMessage, messageObject, true);
+            mm.SendMessage(otherPlayer, currentPLayer, coreMessage2, messageObject, false);
+
+            Message message = mc.Messages.FirstOrDefault(m => m.CoreMessage == coreMessage);
+            Message message2 = mc.Messages.FirstOrDefault(m => m.CoreMessage == coreMessage2);
 
             var allMessage = mm.GetAllMessage(currentPLayer);
 
@@ -151,5 +162,105 @@ namespace ITI.SkyLord.Tests.EfTests
             mm.DeleteMessage(message);
             mm.DeleteMessage(message2);
         }
+
+        [Test]
+        public void GetAllMessageSent()
+        {
+            MessageContext mc = new MessageContext();
+            MessageManager mm = new MessageManager(mc);
+            string messageObject = "Empire";
+            string coreMessage = "Boom boom boom boom";
+            string coreMessage2 = "Money for nothing";
+
+            // Create the Message
+            Player otherPlayer = mc.Players.First(p => p.Name == "Spi");
+            Player currentPLayer = mc.Players.First(a => a.Name == "LoicD");
+
+            mm.SendMessage(currentPLayer, otherPlayer, coreMessage, messageObject, true);
+            mm.SendMessage(currentPLayer, otherPlayer, coreMessage2, messageObject, true);
+
+            Message message = mc.Messages.FirstOrDefault(m => m.CoreMessage == coreMessage);
+            Message message2 = mc.Messages.FirstOrDefault(m => m.CoreMessage == coreMessage2);
+
+            var allMessageSent = mm.GetAllMessageSent(currentPLayer);
+
+            foreach (Message msg in allMessageSent)
+            {
+                Console.WriteLine("Objet : {0}, Message : {1}, Envoyeur : {2}, Receveur : {3} ", msg.MessageObject, msg.CoreMessage, msg.Sender.Name, msg.Receiver.Name);
+            }
+
+            Assert.That(allMessageSent.Count() != 0);
+
+            mm.DeleteMessage(message);
+            mm.DeleteMessage(message2);
+        }
+
+        [Test]
+        public void AnswerMessage()
+        {
+            MessageContext mc = new MessageContext();
+            MessageManager mm = new MessageManager(mc);
+            string answercoreMessage = "Band bang bang bang";
+            string coreMessage = "Boom boom boom boom";
+            string messageObject = "Empire";
+
+            // Create the Message
+            Player otherPlayer = mc.Players.First(p => p.Name == "Spi");
+            Player currentPLayer = mc.Players.First(a => a.Name == "LoicD");
+
+            mm.SendMessage(otherPlayer, currentPLayer, coreMessage, messageObject, true);
+            Message message = mc.Messages.FirstOrDefault(m => m.MessageObject == messageObject);
+
+            Assert.That(mm.AnswerMessage(message, answercoreMessage, currentPLayer) == true);
+
+            Message answer = mc.Messages.First(m => m.CoreMessage == answercoreMessage);
+            mm.DeleteMessage(message);
+            mm.DeleteMessage(answer);
+        }
+
+        [Test]
+        public void ReadAMessage()
+        {
+
+            MessageContext mc = new MessageContext();
+            MessageManager mm = new MessageManager(mc);
+
+            string coreMessage = "Boom boom boom boom";
+            string messageObject = "Empire";
+
+            // Create the Message
+            Player otherPlayer = mc.Players.First(p => p.Name == "Spi");
+            Player currentPLayer = mc.Players.First(a => a.Name == "LoicD");
+
+            mm.SendMessage(otherPlayer, currentPLayer, coreMessage, messageObject, true);
+            Message message = mc.Messages.FirstOrDefault(m => m.MessageObject == messageObject);
+
+            Message msg = mm.ReadAMessage(message.MessageId);
+
+            Assert.NotNull(msg);
+
+            mm.DeleteMessage(msg);
+        }
+
+        [Test]
+        public void DeleteWithIntParameter()
+        {
+
+            MessageContext mc = new MessageContext();
+            MessageManager mm = new MessageManager(mc);
+
+            string coreMessage = "Boom boom boom boom";
+            string messageObject = "Empire";
+
+            // Create the Message
+            Player otherPlayer = mc.Players.First(p => p.Name == "Spi");
+            Player currentPLayer = mc.Players.First(a => a.Name == "LoicD");
+
+            mm.SendMessage(otherPlayer, currentPLayer, coreMessage, messageObject, true);
+            Message message = mc.Messages.FirstOrDefault(m => m.MessageObject == messageObject);
+
+            Assert.That(mm.DeleteMessage(message.MessageId) == true);
+        }
+
     }
 }

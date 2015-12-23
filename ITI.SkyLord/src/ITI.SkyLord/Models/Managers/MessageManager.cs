@@ -11,11 +11,13 @@ namespace ITI.SkyLord.Models.Managers
     public class MessageManager
     {
         private MessageContext messageContext { get; }
+
         public MessageManager(MessageContext mc)
         {
             messageContext = mc;
         }
-        public bool SendMessage(Player sender, Player receiver, string CoreMessage, string ObjectMessage)
+
+        public bool SendMessage(Player sender, Player receiver, string CoreMessage, string ObjectMessage, bool read)
         {
             bool success = false;
 
@@ -25,7 +27,7 @@ namespace ITI.SkyLord.Models.Managers
             }
             else
             {
-                Message message = new Message { Receiver = receiver, Sender = sender, CoreMessage = CoreMessage, MessageObject = ObjectMessage };
+                Message message = new Message { Receiver = receiver, Sender = sender, CoreMessage = CoreMessage, MessageObject = ObjectMessage, Read = read };
                 messageContext.Add(message);
                 messageContext.SaveChanges();
                 success = true;
@@ -39,14 +41,22 @@ namespace ITI.SkyLord.Models.Managers
             return listMessages;
         }
 
-        public IList<Message> GetAllMessageSend(Player player)
+        public IList<Message> GetAllMessageSent(Player player)
         {
             List<Message> listMessagesSend = messageContext.Messages.Where(m => m.Sender.PlayerId == player.PlayerId).ToList();
             return listMessagesSend;
         }
-        public bool AnswerMessage(Message message, string CoreMessage)
+
+        public bool AnswerMessage(Message message, string coreMessage, Player sender)
         {
-            throw new NotImplementedException();
+            bool succes = false;
+
+            if (message != null && message.Receiver == sender)
+            {
+                SendMessage(message.Receiver, message.Sender, coreMessage, message.MessageObject, false);
+                succes = true;
+            }
+            return succes;
         }
 
         public bool DeleteMessage(Message message)
@@ -62,26 +72,31 @@ namespace ITI.SkyLord.Models.Managers
 
         public bool DeleteMessage(long messageId)
         {
-            bool success = false;
-
             Message message = messageContext.Messages.FirstOrDefault(m => m.MessageId == messageId);
-            messageContext.Remove(message);
-            messageContext.SaveChanges();
-            success = true;
-
-            return success;
+            return DeleteMessage(message);
         }
 
         public IList<Message> GetAllUnreadMessage(Player player)
         {
-            List<Message> listMessagesUnread = messageContext.Messages.Where(m => m.Receiver.PlayerId == player.PlayerId).Where(m => m.Read == false).ToList();
-            return listMessagesUnread;
+            return GetAllMessagesWhereReadIs(false, player);
         }
 
         public IList<Message> GetAllMessageRead(Player player)
         {
-            List<Message> listMessagesRead = messageContext.Messages.Where(m => m.Receiver.PlayerId == player.PlayerId).Where(m => m.Read == true).ToList();
+            return GetAllMessagesWhereReadIs(true, player);
+        }
+
+        private IList<Message> GetAllMessagesWhereReadIs(bool value, Player player)
+        {
+            List<Message> listMessagesRead = messageContext.Messages.Where(m => m.Receiver.PlayerId == player.PlayerId).Where(m => m.Read == value).ToList();
             return listMessagesRead;
         }
+
+        public Message ReadAMessage(long messageId)
+        {
+            Message message = messageContext.Messages.FirstOrDefault(m => m.MessageId == messageId);
+            return message;
+        }
+
     }
 }
