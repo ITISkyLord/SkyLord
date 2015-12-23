@@ -31,6 +31,7 @@ namespace ITI.SkyLord.Tests.EfTests
                 Player receiver = mc.Players.First(a => a.Name == "Spi");
 
                 var result = mm.SendMessage(sender, receiver, coreMessage, messageObject, returnSendMessageExpected);
+                mc.SaveChanges();
 
                 Assert.That(result == returnSendMessageExpected);
                 if (returnSendMessageExpected == true) Assert.That(mc.Messages.Where(m => m.CoreMessage == coreMessage && m.MessageObject == messageObject).First() != null);
@@ -55,15 +56,18 @@ namespace ITI.SkyLord.Tests.EfTests
         {
             MessageContext mc = new MessageContext();
             MessageManager mm = new MessageManager(mc);
+            string coreMessage = "Test";
+            string messageObject = "Test";
 
             Player sender = mc.Players.First(p => p.Name == "LoicD");
             Player receiver = mc.Players.First(a => a.Name == "Spi");
 
-            Message message = new Message { Receiver = receiver, Sender = sender, CoreMessage = "Test", MessageObject = "Test" };
-            mc.Add(message);
+            mm.SendMessage(sender, receiver, coreMessage, messageObject, false);
             mc.SaveChanges();
+            Message message = mc.Messages.FirstOrDefault(m => m.MessageObject == messageObject);
 
             Assert.That(mm.DeleteMessage(message) == true);
+            mc.SaveChanges();
         }
 
         [Test]
@@ -82,6 +86,7 @@ namespace ITI.SkyLord.Tests.EfTests
 
             mm.SendMessage(otherPlayer, currentPLayer, coreMessage, messageObject, false);
             mm.SendMessage(otherPlayer, currentPLayer, coreMessage2, messageObject, false);
+            mc.SaveChanges();
 
             Message message = mc.Messages.FirstOrDefault(m => m.CoreMessage == coreMessage);
             Message message2 = mc.Messages.FirstOrDefault(m => m.CoreMessage == coreMessage2);
@@ -96,6 +101,7 @@ namespace ITI.SkyLord.Tests.EfTests
 
             mm.DeleteMessage(message);
             mm.DeleteMessage(message2);
+            mc.SaveChanges();
         }
 
         [Test]
@@ -114,6 +120,7 @@ namespace ITI.SkyLord.Tests.EfTests
 
             mm.SendMessage(otherPlayer, currentPLayer, coreMessage, messageObject, true);
             mm.SendMessage(otherPlayer, currentPLayer, coreMessage2, messageObject, true);
+            mc.SaveChanges();
 
             Message message = mc.Messages.FirstOrDefault(m => m.CoreMessage == coreMessage);
             Message message2 = mc.Messages.FirstOrDefault(m => m.CoreMessage == coreMessage2);
@@ -129,6 +136,7 @@ namespace ITI.SkyLord.Tests.EfTests
 
             mm.DeleteMessage(message);
             mm.DeleteMessage(message2);
+            mc.SaveChanges();
         }
 
         [Test]
@@ -146,6 +154,7 @@ namespace ITI.SkyLord.Tests.EfTests
 
             mm.SendMessage(otherPlayer, currentPLayer, coreMessage, messageObject, true);
             mm.SendMessage(otherPlayer, currentPLayer, coreMessage2, messageObject, false);
+            mc.SaveChanges();
 
             Message message = mc.Messages.FirstOrDefault(m => m.CoreMessage == coreMessage);
             Message message2 = mc.Messages.FirstOrDefault(m => m.CoreMessage == coreMessage2);
@@ -161,6 +170,7 @@ namespace ITI.SkyLord.Tests.EfTests
 
             mm.DeleteMessage(message);
             mm.DeleteMessage(message2);
+            mc.SaveChanges();
         }
 
         [Test]
@@ -168,8 +178,8 @@ namespace ITI.SkyLord.Tests.EfTests
         {
             MessageContext mc = new MessageContext();
             MessageManager mm = new MessageManager(mc);
-            string messageObject = "Empire";
-            string coreMessage = "Boom boom boom boom";
+            string messageObject = "One piece";
+            string coreMessage = "Boom";
             string coreMessage2 = "Money for nothing";
 
             // Create the Message
@@ -178,6 +188,7 @@ namespace ITI.SkyLord.Tests.EfTests
 
             mm.SendMessage(currentPLayer, otherPlayer, coreMessage, messageObject, true);
             mm.SendMessage(currentPLayer, otherPlayer, coreMessage2, messageObject, true);
+            mc.SaveChanges();
 
             Message message = mc.Messages.FirstOrDefault(m => m.CoreMessage == coreMessage);
             Message message2 = mc.Messages.FirstOrDefault(m => m.CoreMessage == coreMessage2);
@@ -193,6 +204,7 @@ namespace ITI.SkyLord.Tests.EfTests
 
             mm.DeleteMessage(message);
             mm.DeleteMessage(message2);
+            mc.SaveChanges();
         }
 
         [Test]
@@ -201,21 +213,26 @@ namespace ITI.SkyLord.Tests.EfTests
             MessageContext mc = new MessageContext();
             MessageManager mm = new MessageManager(mc);
             string answercoreMessage = "Band bang bang bang";
-            string coreMessage = "Boom boom boom boom";
-            string messageObject = "Empire";
+            string coreMessage = "Lucious";
+            string messageObject = "Cookie";
 
             // Create the Message
             Player otherPlayer = mc.Players.First(p => p.Name == "Spi");
             Player currentPLayer = mc.Players.First(a => a.Name == "LoicD");
 
             mm.SendMessage(otherPlayer, currentPLayer, coreMessage, messageObject, true);
+            mc.SaveChanges();
             Message message = mc.Messages.FirstOrDefault(m => m.MessageObject == messageObject);
 
             Assert.That(mm.AnswerMessage(message, answercoreMessage, currentPLayer) == true);
+            mc.SaveChanges();
 
             Message answer = mc.Messages.First(m => m.CoreMessage == answercoreMessage);
+            Assert.That(answer.Receiver.PlayerId == message.Sender.PlayerId && answer.Sender.PlayerId == message.Receiver.PlayerId);
+
             mm.DeleteMessage(message);
             mm.DeleteMessage(answer);
+            mc.SaveChanges();
         }
 
         [Test]
@@ -225,7 +242,7 @@ namespace ITI.SkyLord.Tests.EfTests
             MessageContext mc = new MessageContext();
             MessageManager mm = new MessageManager(mc);
 
-            string coreMessage = "Boom boom boom boom";
+            string coreMessage = "goku";
             string messageObject = "Empire";
 
             // Create the Message
@@ -233,6 +250,7 @@ namespace ITI.SkyLord.Tests.EfTests
             Player currentPLayer = mc.Players.First(a => a.Name == "LoicD");
 
             mm.SendMessage(otherPlayer, currentPLayer, coreMessage, messageObject, true);
+            mc.SaveChanges();
             Message message = mc.Messages.FirstOrDefault(m => m.MessageObject == messageObject);
 
             Message msg = mm.ReadAMessage(message.MessageId);
@@ -240,6 +258,7 @@ namespace ITI.SkyLord.Tests.EfTests
             Assert.NotNull(msg);
 
             mm.DeleteMessage(msg);
+            mc.SaveChanges();
         }
 
         [Test]
@@ -249,17 +268,19 @@ namespace ITI.SkyLord.Tests.EfTests
             MessageContext mc = new MessageContext();
             MessageManager mm = new MessageManager(mc);
 
-            string coreMessage = "Boom boom boom boom";
-            string messageObject = "Empire";
+            string coreMessage = "saitama";
+            string messageObject = "yeah";
 
             // Create the Message
             Player otherPlayer = mc.Players.First(p => p.Name == "Spi");
             Player currentPLayer = mc.Players.First(a => a.Name == "LoicD");
 
             mm.SendMessage(otherPlayer, currentPLayer, coreMessage, messageObject, true);
+            mc.SaveChanges();
             Message message = mc.Messages.FirstOrDefault(m => m.MessageObject == messageObject);
 
             Assert.That(mm.DeleteMessage(message.MessageId) == true);
+            mc.SaveChanges();
         }
 
     }

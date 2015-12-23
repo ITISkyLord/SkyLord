@@ -29,7 +29,6 @@ namespace ITI.SkyLord.Models.Managers
             {
                 Message message = new Message { Receiver = receiver, Sender = sender, CoreMessage = CoreMessage, MessageObject = ObjectMessage, Read = read };
                 messageContext.Add(message);
-                messageContext.SaveChanges();
                 success = true;
             }
             return success;
@@ -64,7 +63,6 @@ namespace ITI.SkyLord.Models.Managers
             bool success = false;
 
             messageContext.Remove(message);
-            messageContext.SaveChanges();
             success = true;
 
             return success;
