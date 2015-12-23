@@ -71,20 +71,17 @@ namespace ITI.SkyLord.Tests.EfTests
             MessageContext mc = new MessageContext();
             MessageManager mm = new MessageManager(mc);
 
-                // Create the Message
-                Player sender = mc.Players.First(p => p.Name == "Spi");
-                Player receiver = mc.Players.First(a => a.Name == "LoicD");
+            // Create the Message
+            Player sender = mc.Players.First(p => p.Name == "Spi");
+            Player currentPLayer = mc.Players.First(a => a.Name == "LoicD");
 
-                Message message = new Message { Receiver = receiver, Sender = sender, CoreMessage = "Test", MessageObject = "Test" };
-                Message message2 = new Message { Receiver = receiver, Sender = sender, CoreMessage = "Hello it's me", MessageObject = "Nouvelle" };
-                mc.Add(message);
-                mc.Add(message2);
-                mc.SaveChanges();
+            Message message = new Message { Receiver = currentPLayer, Sender = sender, CoreMessage = "Test", MessageObject = "Test" };
+            Message message2 = new Message { Receiver = currentPLayer, Sender = sender, CoreMessage = "Hello it's me", MessageObject = "Nouvelle" };
+            mc.Add(message);
+            mc.Add(message2);
+            mc.SaveChanges();
 
-                // Search the message unread of currentPlayer
-                Player currentPLayer = mc.Players.First(a => a.Name == "LoicD");
-
-               var unreadMessage =  mm.GetAllUnreadMessage(currentPLayer);
+            var unreadMessage = mm.GetAllUnreadMessage(currentPLayer);
 
             foreach (Message msg in unreadMessage)
             {
@@ -93,8 +90,66 @@ namespace ITI.SkyLord.Tests.EfTests
 
             Assert.That(unreadMessage.Count() != 0);
 
-                mm.DeleteMessage(message);
-                mm.DeleteMessage(message2);
+            mm.DeleteMessage(message);
+            mm.DeleteMessage(message2);
+        }
+
+        [Test]
+        public void ReadAllMessageRead()
+        {
+            MessageContext mc = new MessageContext();
+            MessageManager mm = new MessageManager(mc);
+
+            // Create the Message
+            Player sender = mc.Players.First(p => p.Name == "Spi");
+            Player currentPLayer = mc.Players.First(a => a.Name == "LoicD");
+
+            Message message = new Message { Receiver = currentPLayer, Sender = sender, CoreMessage = "Test", MessageObject = "Test", Read = true };
+            Message message2 = new Message { Receiver = currentPLayer, Sender = sender, CoreMessage = "Hello it's me", MessageObject = "Nouvelle", Read = true };
+            mc.Add(message);
+            mc.Add(message2);
+            mc.SaveChanges();
+
+            var messageRead = mm.GetAllMessageRead(currentPLayer);
+
+            foreach (Message msg in messageRead)
+            {
+                Console.WriteLine("Objet : {0}, Message : {1}, Envoyeur : {2}, Receveur : {3} ", msg.MessageObject, msg.CoreMessage, msg.Sender.Name, msg.Receiver.Name);
+            }
+
+            Assert.That(messageRead.Count() != 0);
+
+            mm.DeleteMessage(message);
+            mm.DeleteMessage(message2);
+        }
+
+        [Test]
+        public void ReadAllMessage()
+        {
+            MessageContext mc = new MessageContext();
+            MessageManager mm = new MessageManager(mc);
+
+            // Create the Message
+            Player sender = mc.Players.First(p => p.Name == "Spi");
+            Player currentPLayer = mc.Players.First(a => a.Name == "LoicD");
+
+            Message message = new Message { Receiver = currentPLayer, Sender = sender, CoreMessage = "Test", MessageObject = "Test", Read = true };
+            Message message2 = new Message { Receiver = currentPLayer, Sender = sender, CoreMessage = "Hello it's me", MessageObject = "Nouvelle", Read = true };
+            mc.Add(message);
+            mc.Add(message2);
+            mc.SaveChanges();
+
+            var allMessage = mm.GetAllMessage(currentPLayer);
+
+            foreach (Message msg in allMessage)
+            {
+                Console.WriteLine("Objet : {0}, Message : {1}, Envoyeur : {2}, Receveur : {3} ", msg.MessageObject, msg.CoreMessage, msg.Sender.Name, msg.Receiver.Name);
+            }
+
+            Assert.That(allMessage.Count() != 0);
+
+            mm.DeleteMessage(message);
+            mm.DeleteMessage(message2);
         }
     }
 }
