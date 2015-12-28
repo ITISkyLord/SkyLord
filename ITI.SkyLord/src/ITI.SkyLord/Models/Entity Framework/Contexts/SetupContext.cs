@@ -50,14 +50,13 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
         public DbSet<UnitStatistics> UnitStatistics { get; set; }
         public DbSet<World> Worlds { get; set; }
         public DbSet<User_Player> UserPlayers { get; set; }
-        public DbSet<BuildingDefinition> BuildingDefinitions { get; set; }
         public DbSet<Requirement> Requirements { get; set; }
         public UnitDamageType UnitDamageTypes { get;set;}
         public UnitName UnitName { get; set; }
         public UnitType UnitType { get; set; }
-        //public DbSet<BuildingLevel> BuildingLevels { get; set; }
+        public BuildingName BuildingName { get; set; }
+        public TechnologyName TechnologyName { get; set; }
         //public DbSet<MageLevel> MageLevels { get; set; }
-        //public DbSet<TechnologyLevel> TechnologiesLevel { get; set; }
 
     }
 }

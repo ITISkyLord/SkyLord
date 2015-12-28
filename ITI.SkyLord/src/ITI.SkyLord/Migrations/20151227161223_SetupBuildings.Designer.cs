@@ -8,7 +8,7 @@ using ITI.SkyLord.Models.Entity_Framework.Contexts;
 namespace ITI.SkyLord.Migrations
 {
     [DbContext(typeof(SetupContext))]
-    [Migration("20151222132259_SetupBuildings")]
+    [Migration("20151227161223_SetupBuildings")]
     partial class SetupBuildings
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -22,25 +22,9 @@ namespace ITI.SkyLord.Migrations
                     b.Property<long>("ApprenticeId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<long?>("LevelLevelId");
-
                     b.Property<long?>("MageMageId");
 
                     b.HasKey("ApprenticeId");
-                });
-
-            modelBuilder.Entity("ITI.SkyLord.ApprenticeLevel", b =>
-                {
-                    b.Property<long>("LevelId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<long?>("CostRessourceId");
-
-                    b.Property<int>("Number");
-
-                    b.Property<long?>("RequirementRequirementId");
-
-                    b.HasKey("LevelId");
                 });
 
             modelBuilder.Entity("ITI.SkyLord.Army", b =>
@@ -69,14 +53,18 @@ namespace ITI.SkyLord.Migrations
                     b.HasKey("BuildingId");
                 });
 
-            modelBuilder.Entity("ITI.SkyLord.BuildingDefinition", b =>
+            modelBuilder.Entity("ITI.SkyLord.BuildingLevel", b =>
                 {
-                    b.Property<long>("BuildingDefinitionId")
+                    b.Property<long>("LevelId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Name");
+                    b.Property<int>("BuildingName");
 
-                    b.HasKey("BuildingDefinitionId");
+                    b.Property<long?>("CostRessourceId");
+
+                    b.Property<int>("Number");
+
+                    b.HasKey("LevelId");
                 });
 
             modelBuilder.Entity("ITI.SkyLord.CombatReport", b =>
@@ -265,7 +253,20 @@ namespace ITI.SkyLord.Migrations
 
             modelBuilder.Entity("ITI.SkyLord.Requirement", b =>
                 {
-                    b.Property<long>("RequirementId");
+                    b.Property<long>("RequirementId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<long?>("BuildingLevelLevelId");
+
+                    b.Property<int>("BuildingName");
+
+                    b.Property<long?>("LevelLevelId");
+
+                    b.Property<int>("Number");
+
+                    b.Property<long?>("TechnologyLevelLevelId");
+
+                    b.Property<int>("TechnologyName");
 
                     b.HasKey("RequirementId");
                 });
@@ -310,6 +311,20 @@ namespace ITI.SkyLord.Migrations
                     b.Property<long?>("PlayerPlayerId");
 
                     b.HasKey("TechnologyId");
+                });
+
+            modelBuilder.Entity("ITI.SkyLord.TechnologyLevel", b =>
+                {
+                    b.Property<long>("LevelId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<long?>("CostRessourceId");
+
+                    b.Property<int>("Number");
+
+                    b.Property<int>("TechnologyName");
+
+                    b.HasKey("LevelId");
                 });
 
             modelBuilder.Entity("ITI.SkyLord.Unit", b =>
@@ -507,29 +522,12 @@ namespace ITI.SkyLord.Migrations
                     b.HasAnnotation("Relational:TableName", "AspNetUserRoles");
                 });
 
-            modelBuilder.Entity("ITI.SkyLord.BuildingLevel", b =>
-                {
-                    b.HasBaseType("ITI.SkyLord.Level");
-
-                    b.Property<long?>("BuildingDefinitionBuildingDefinitionId");
-
-                    b.HasAnnotation("Relational:DiscriminatorValue", "BuildingLevel");
-                });
-
             modelBuilder.Entity("ITI.SkyLord.MageLevel", b =>
                 {
                     b.HasBaseType("ITI.SkyLord.Level");
 
 
                     b.HasAnnotation("Relational:DiscriminatorValue", "MageLevel");
-                });
-
-            modelBuilder.Entity("ITI.SkyLord.TechnologyLevel", b =>
-                {
-                    b.HasBaseType("ITI.SkyLord.Level");
-
-
-                    b.HasAnnotation("Relational:DiscriminatorValue", "TechnologyLevel");
                 });
 
             modelBuilder.Entity("ITI.SkyLord.Models.Entity_Framework.ApplicationUser", b =>
@@ -542,24 +540,9 @@ namespace ITI.SkyLord.Migrations
 
             modelBuilder.Entity("ITI.SkyLord.Apprentice", b =>
                 {
-                    b.HasOne("ITI.SkyLord.ApprenticeLevel")
-                        .WithMany()
-                        .HasForeignKey("LevelLevelId");
-
                     b.HasOne("ITI.SkyLord.Mage")
                         .WithMany()
                         .HasForeignKey("MageMageId");
-                });
-
-            modelBuilder.Entity("ITI.SkyLord.ApprenticeLevel", b =>
-                {
-                    b.HasOne("ITI.SkyLord.Ressource")
-                        .WithMany()
-                        .HasForeignKey("CostRessourceId");
-
-                    b.HasOne("ITI.SkyLord.Requirement")
-                        .WithMany()
-                        .HasForeignKey("RequirementRequirementId");
                 });
 
             modelBuilder.Entity("ITI.SkyLord.Army", b =>
@@ -578,6 +561,13 @@ namespace ITI.SkyLord.Migrations
                     b.HasOne("ITI.SkyLord.BuildingLevel")
                         .WithMany()
                         .HasForeignKey("LevelLevelId");
+                });
+
+            modelBuilder.Entity("ITI.SkyLord.BuildingLevel", b =>
+                {
+                    b.HasOne("ITI.SkyLord.Ressource")
+                        .WithMany()
+                        .HasForeignKey("CostRessourceId");
                 });
 
             modelBuilder.Entity("ITI.SkyLord.CombatReport", b =>
@@ -674,9 +664,17 @@ namespace ITI.SkyLord.Migrations
 
             modelBuilder.Entity("ITI.SkyLord.Requirement", b =>
                 {
+                    b.HasOne("ITI.SkyLord.BuildingLevel")
+                        .WithMany()
+                        .HasForeignKey("BuildingLevelLevelId");
+
                     b.HasOne("ITI.SkyLord.Level")
-                        .WithOne()
-                        .HasForeignKey("ITI.SkyLord.Requirement", "RequirementId");
+                        .WithMany()
+                        .HasForeignKey("LevelLevelId");
+
+                    b.HasOne("ITI.SkyLord.TechnologyLevel")
+                        .WithMany()
+                        .HasForeignKey("TechnologyLevelLevelId");
                 });
 
             modelBuilder.Entity("ITI.SkyLord.Technology", b =>
@@ -688,6 +686,13 @@ namespace ITI.SkyLord.Migrations
                     b.HasOne("ITI.SkyLord.Player")
                         .WithMany()
                         .HasForeignKey("PlayerPlayerId");
+                });
+
+            modelBuilder.Entity("ITI.SkyLord.TechnologyLevel", b =>
+                {
+                    b.HasOne("ITI.SkyLord.Ressource")
+                        .WithMany()
+                        .HasForeignKey("CostRessourceId");
                 });
 
             modelBuilder.Entity("ITI.SkyLord.Unit", b =>
@@ -740,18 +745,7 @@ namespace ITI.SkyLord.Migrations
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("ITI.SkyLord.BuildingLevel", b =>
-                {
-                    b.HasOne("ITI.SkyLord.BuildingDefinition")
-                        .WithMany()
-                        .HasForeignKey("BuildingDefinitionBuildingDefinitionId");
-                });
-
             modelBuilder.Entity("ITI.SkyLord.MageLevel", b =>
-                {
-                });
-
-            modelBuilder.Entity("ITI.SkyLord.TechnologyLevel", b =>
                 {
                 });
         }
