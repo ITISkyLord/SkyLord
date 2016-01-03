@@ -10,20 +10,20 @@ namespace ITI.SkyLord.Services
     public class BuildingManager
     {
         public BuildingContext CurrentContext { get; set; }
-        public Island CurrentIsland { get; set; }
+        public long CurrentIslandId { get; set; }
 
         /// <summary>
         /// Creates a new LevelManager instance
         /// </summary>
         /// <param name="currentContext">An opened BuildingContext</param>
         /// <param name="currentIsland">The island examined</param>
-        public BuildingManager( BuildingContext currentContext, Island currentIsland )
+        public BuildingManager( BuildingContext currentContext, long currentIslandId )
         {
             CurrentContext = currentContext;
-            CurrentIsland = currentIsland;
+            CurrentIslandId = currentIslandId;
         }
 
-        public bool isNextLevelAvailable( Level currentLevel )
+        public bool IsNextLevelAvailable( Level currentLevel )
         {
             return IsRequirementMet( FindNextLevel( currentLevel ) );
         }
@@ -50,22 +50,31 @@ namespace ITI.SkyLord.Services
 
         public bool IsRequirementMet( Level currentLevel )
         {
-            bool met = false;
             if( currentLevel is BuildingLevel )
             {
                 BuildingLevel buildingLevel = (BuildingLevel)currentLevel;
+                List<Building> buildingsOnIsland = GetBuildingsOnCurrentIsland();
 
-                List<Building> buildingsOnIsland = CurrentContext.Islands
-                    .Include( i => i.Buildings).ThenInclude( b => b.Level).ThenInclude( bl => bl.Requirements )
-                    .Where( i => i.IslandId == CurrentIsland.IslandId ).SingleOrDefault().Buildings.ToList();
-                met = buildingsOnIsland.Any( b => buildingLevel.Requirements
-                .Any( bl => bl.BuildingName == b.Level.BuildingName && bl.Number == b.Level.Number ) );
+                foreach ( Requirement r in currentLevel.Requirements )
+                {
+                    if( !buildingsOnIsland.Any( b => b.BuildingName == r.BuildingName && b.Level.Number == r.Number ) )
+                    {
+                        return false;
+                    }
+                }
             }
             else if ( currentLevel is TechnologyLevel )
             {
                 throw new NotImplementedException();
             }
-            return met;
+            return true;
+        }
+
+        public List<Building> GetBuildingsOnCurrentIsland()
+        {
+            return CurrentContext.Islands
+                    .Include( i => i.Buildings ).ThenInclude( b => b.Level )
+                    .Where( i => i.IslandId == CurrentIslandId ).SingleOrDefault().Buildings.ToList();
         }
     }
 }

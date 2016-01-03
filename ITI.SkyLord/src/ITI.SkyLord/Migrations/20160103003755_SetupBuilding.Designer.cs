@@ -8,8 +8,8 @@ using ITI.SkyLord.Models.Entity_Framework.Contexts;
 namespace ITI.SkyLord.Migrations
 {
     [DbContext(typeof(SetupContext))]
-    [Migration("20151227161223_SetupBuildings")]
-    partial class SetupBuildings
+    [Migration("20160103003755_SetupBuilding")]
+    partial class SetupBuilding
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -43,6 +43,8 @@ namespace ITI.SkyLord.Migrations
                 {
                     b.Property<int>("BuildingId")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<int>("BuildingName");
 
                     b.Property<long?>("IslandIslandId");
 

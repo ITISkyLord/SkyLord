@@ -5,7 +5,7 @@ using Microsoft.Data.Entity.Metadata;
 
 namespace ITI.SkyLord.Migrations
 {
-    public partial class SetupBuildings : Migration
+    public partial class SetupBuilding : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -62,6 +62,11 @@ namespace ITI.SkyLord.Migrations
             migrationBuilder.AddColumn<int>(
                 name: "BuildingName",
                 table: "BuildingLevel",
+                nullable: false,
+                defaultValue: BuildingName.none);
+            migrationBuilder.AddColumn<int>(
+                name: "BuildingName",
+                table: "Building",
                 nullable: false,
                 defaultValue: BuildingName.none);
             migrationBuilder.AddForeignKey(
@@ -126,6 +131,7 @@ namespace ITI.SkyLord.Migrations
             migrationBuilder.DropForeignKey(name: "FK_IdentityUserRole<string>_IdentityUser_UserId", table: "AspNetUserRoles");
             migrationBuilder.DropColumn(name: "TechnologyName", table: "TechnologyLevel");
             migrationBuilder.DropColumn(name: "BuildingName", table: "BuildingLevel");
+            migrationBuilder.DropColumn(name: "BuildingName", table: "Building");
             migrationBuilder.DropTable("Requirement");
             migrationBuilder.CreateTable(
                 name: "ApprenticeLevel",
