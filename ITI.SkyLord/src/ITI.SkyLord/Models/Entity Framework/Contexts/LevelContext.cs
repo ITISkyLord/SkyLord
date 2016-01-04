@@ -14,7 +14,7 @@ using ITI.SkyLord.ViewModel;
 
 namespace ITI.SkyLord.Models.Entity_Framework.Contexts
 {
-    public class BuildingContext : CustomContext
+    public class LevelContext : CustomContext
     {
         public IConfigurationRoot Configuration { get; set; }
 
@@ -33,6 +33,7 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
         public override DbSet<Island> Islands { get; set; }
         public DbSet<Ressource> Ressources { get; set; }
         public DbSet<Building> Buildings { get; set; }
+        public DbSet<Technology> Technologies { get; set; }
         public DbSet<Level> Levels { get; set; }
         public DbSet<BuildingLevel> BuildingLevels { get; set; }
         public DbSet<TechnologyLevel> TechnologyLevels { get; set; }

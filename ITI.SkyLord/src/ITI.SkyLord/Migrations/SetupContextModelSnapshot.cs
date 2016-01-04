@@ -43,6 +43,8 @@ namespace ITI.SkyLord.Migrations
                     b.Property<int>("BuildingId")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int>("BuildingName");
+
                     b.Property<long?>("IslandIslandId");
 
                     b.Property<long?>("LevelLevelId");
@@ -308,6 +310,8 @@ namespace ITI.SkyLord.Migrations
                     b.Property<string>("Name");
 
                     b.Property<long?>("PlayerPlayerId");
+
+                    b.Property<int>("TechnologyName");
 
                     b.HasKey("TechnologyId");
                 });
