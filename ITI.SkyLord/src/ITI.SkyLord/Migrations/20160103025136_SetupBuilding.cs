@@ -60,6 +60,11 @@ namespace ITI.SkyLord.Migrations
                 nullable: false,
                 defaultValue: TechnologyName.none);
             migrationBuilder.AddColumn<int>(
+                name: "TechnologyName",
+                table: "Technology",
+                nullable: false,
+                defaultValue: TechnologyName.none);
+            migrationBuilder.AddColumn<int>(
                 name: "BuildingName",
                 table: "BuildingLevel",
                 nullable: false,
@@ -130,6 +135,7 @@ namespace ITI.SkyLord.Migrations
             migrationBuilder.DropForeignKey(name: "FK_IdentityUserRole<string>_IdentityRole_RoleId", table: "AspNetUserRoles");
             migrationBuilder.DropForeignKey(name: "FK_IdentityUserRole<string>_IdentityUser_UserId", table: "AspNetUserRoles");
             migrationBuilder.DropColumn(name: "TechnologyName", table: "TechnologyLevel");
+            migrationBuilder.DropColumn(name: "TechnologyName", table: "Technology");
             migrationBuilder.DropColumn(name: "BuildingName", table: "BuildingLevel");
             migrationBuilder.DropColumn(name: "BuildingName", table: "Building");
             migrationBuilder.DropTable("Requirement");

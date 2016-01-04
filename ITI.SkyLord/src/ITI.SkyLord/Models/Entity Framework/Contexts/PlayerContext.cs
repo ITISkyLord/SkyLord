@@ -32,32 +32,11 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
         public override DbSet<Island> Islands { get; set; }
         public override DbSet<Player> Players { get; set; }
         public DbSet<World> Worlds { get; set; }
-        public DbSet<User_Player> User_Players { get; set; }
-
-        public void AddPlayer( Player p )
-        {
-            p.Profil = new Profil { Description = "Aucune description." };
-            Add( p );
-            Add( p.Profil );
-            SaveChanges();
-        }
+        public override DbSet<User_Player> User_Players { get; set; }
 
         public World GetWorld()
         {
              return this.Worlds.FirstOrDefault();
-        }
-
-        public bool RemovePlayer ( long playerId )
-        {
-            Player playerFound = FindPlayer( playerId );
-            if ( playerFound == null ) return false;
-
-            Profils.Remove( playerFound.Profil );
-            Players.Remove( playerFound );
-            SaveChanges();
-
-            if ( FindPlayer( playerId ) == null ) return true;
-            else return false;
         }
 
         public Player FindPlayer( long playerId )
@@ -68,21 +47,6 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
         public Player FindPlayer( string playerMail )
         {
             return Players.FirstOrDefault( p => p.Mail == playerMail );
-        }
-
-        /// <summary>
-        /// Check if a player with the same name, mail and password can be found in the database
-        /// </summary>
-        /// <param name="player">The player to check</param>
-        /// <returns>True if the player is found, false if it is not</returns>
-        public bool IsPlayerValid( string mail, string password )
-        {
-            bool valid = false;
-
-            valid = this.Players.Any( p => p.Mail == mail
-            && p.Password == password );
-
-            return valid;
         }
 
     }

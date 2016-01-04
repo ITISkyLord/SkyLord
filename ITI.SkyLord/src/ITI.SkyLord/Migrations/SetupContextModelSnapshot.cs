@@ -311,6 +311,8 @@ namespace ITI.SkyLord.Migrations
 
                     b.Property<long?>("PlayerPlayerId");
 
+                    b.Property<int>("TechnologyName");
+
                     b.HasKey("TechnologyId");
                 });
 

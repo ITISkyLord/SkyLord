@@ -8,7 +8,7 @@ using ITI.SkyLord.Models.Entity_Framework.Contexts;
 namespace ITI.SkyLord.Migrations
 {
     [DbContext(typeof(SetupContext))]
-    [Migration("20160103003755_SetupBuilding")]
+    [Migration("20160103025136_SetupBuilding")]
     partial class SetupBuilding
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -311,6 +311,8 @@ namespace ITI.SkyLord.Migrations
                     b.Property<string>("Name");
 
                     b.Property<long?>("PlayerPlayerId");
+
+                    b.Property<int>("TechnologyName");
 
                     b.HasKey("TechnologyId");
                 });

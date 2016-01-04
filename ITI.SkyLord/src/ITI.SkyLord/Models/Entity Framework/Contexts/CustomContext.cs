@@ -14,6 +14,7 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
         public virtual DbSet<Island> Islands { get; set; }
 
         public virtual DbSet<Player> Players { get; set; }
+        public virtual DbSet<User_Player> User_Players { get; set; }
 
 
         public void FillStandardVM( StandardViewModel svm, long playerId, long islandId )
