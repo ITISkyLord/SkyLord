@@ -1,8 +1,11 @@
 ﻿using ITI.SkyLord.Models.Entity_Framework.Contexts;
+using ITI.SkyLord.Models.Managers;
+using ITI.SkyLord.ViewModel;
 using Microsoft.AspNet.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace ITI.SkyLord.Controllers
@@ -10,8 +13,9 @@ namespace ITI.SkyLord.Controllers
     public class MessageController : Controller
     {
         [FromServices]
-        MessageContext messageContext { get; set; }
-
+        public MessageContext messageContext { get; set; }
+        [FromServices]
+        public PlayerContext playerContext { get; set; }
 
         [HttpGet]
         public IActionResult Index()
@@ -27,9 +31,16 @@ namespace ITI.SkyLord.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAllMessages()
+        public IActionResult GetAllMessages(long islandId = 0)
         {
-            return View();
+            MessageManager messageManager = new MessageManager(messageContext);
+            Player currentPlayer = playerContext.GetPlayer(User.GetUserId());
+            MessageViewModel mvm = new MessageViewModel();
+
+            mvm.AllMessages = (List<Message>)messageManager.GetAllMessage(currentPlayer);
+
+            messageContext.FillStandardVM(mvm, playerContext.GetPlayer(User.GetUserId()).PlayerId, islandId);
+            return View(mvm);
         }
 
         [HttpPost]

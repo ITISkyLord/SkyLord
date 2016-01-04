@@ -96,7 +96,7 @@
                     </div>
 
                     <div class="Messages">
-                        <a asp-controller="Home" asp-action="Index">Messages</a>
+                        <a asp-controller="Message" asp-action="GetAllMessages" asp-route-islandId="@Model.Layout.IslandId">Messages</a>
                     </div>
 
                     <div class="Profile">
