@@ -51,6 +51,7 @@ namespace ITI.SkyLord.Controllers
         /// <param name="name"> The name of ressource</param>
         /// <param name="quantity">Quantity which added</param>
         /// <returns></returns>
+        [Obsolete]
         public IActionResult AddRessources( string name, string quantity)
         {
             int x = 0;
