@@ -5,77 +5,75 @@ using Microsoft.Data.Entity.Metadata;
 
 namespace ITI.SkyLord.Migrations
 {
-    public partial class SetupBuildings : Migration
+    public partial class SetupBuilding : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(name: "FK_Building_BuildingLevel_LevelLevelId", table: "Building");
+            migrationBuilder.DropForeignKey(name: "FK_Apprentice_ApprenticeLevel_LevelLevelId", table: "Apprentice");
             migrationBuilder.DropForeignKey(name: "FK_Player_User_Player_PlayerId", table: "Player");
-            migrationBuilder.DropForeignKey(name: "FK_Technology_TechnologyLevel_LevelLevelId", table: "Technology");
+            migrationBuilder.DropForeignKey(name: "FK_Regiment_Army_ArmyArmyId", table: "Regiment");
             migrationBuilder.DropForeignKey(name: "FK_IdentityRoleClaim<string>_IdentityRole_RoleId", table: "AspNetRoleClaims");
             migrationBuilder.DropForeignKey(name: "FK_IdentityUserClaim<string>_IdentityUser_UserId", table: "AspNetUserClaims");
             migrationBuilder.DropForeignKey(name: "FK_IdentityUserLogin<string>_IdentityUser_UserId", table: "AspNetUserLogins");
             migrationBuilder.DropForeignKey(name: "FK_IdentityUserRole<string>_IdentityRole_RoleId", table: "AspNetUserRoles");
             migrationBuilder.DropForeignKey(name: "FK_IdentityUserRole<string>_IdentityUser_UserId", table: "AspNetUserRoles");
-            migrationBuilder.DropTable("BuildingLevel");
-            migrationBuilder.DropTable("TechnologyLevel");
-            migrationBuilder.CreateTable(
-                name: "BuildingDefinition",
-                columns: table => new
-                {
-                    BuildingDefinitionId = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BuildingDefinition", x => x.BuildingDefinitionId);
-                });
+            migrationBuilder.DropColumn(name: "LevelLevelId", table: "Apprentice");
+            migrationBuilder.DropTable("ApprenticeLevel");
             migrationBuilder.CreateTable(
                 name: "Requirement",
                 columns: table => new
                 {
                     RequirementId = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    BuildingLevelLevelId = table.Column<long>(nullable: true),
+                    BuildingName = table.Column<int>(nullable: false),
+                    LevelLevelId = table.Column<long>(nullable: true),
+                    Number = table.Column<int>(nullable: false),
+                    TechnologyLevelLevelId = table.Column<long>(nullable: true),
+                    TechnologyName = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Requirement", x => x.RequirementId);
                     table.ForeignKey(
-                        name: "FK_Requirement_Level_RequirementId",
-                        column: x => x.RequirementId,
+                        name: "FK_Requirement_BuildingLevel_BuildingLevelLevelId",
+                        column: x => x.BuildingLevelLevelId,
+                        principalTable: "BuildingLevel",
+                        principalColumn: "LevelId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Requirement_Level_LevelLevelId",
+                        column: x => x.LevelLevelId,
                         principalTable: "Level",
                         principalColumn: "LevelId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Requirement_TechnologyLevel_TechnologyLevelLevelId",
+                        column: x => x.TechnologyLevelLevelId,
+                        principalTable: "TechnologyLevel",
+                        principalColumn: "LevelId",
+                        onDelete: ReferentialAction.Restrict);
                 });
-            migrationBuilder.AddColumn<long>(
-                name: "BuildingDefinitionBuildingDefinitionId",
-                table: "Level",
-                nullable: true);
-            migrationBuilder.AddColumn<long>(
-                name: "RequirementRequirementId",
-                table: "ApprenticeLevel",
-                nullable: true);
-            migrationBuilder.AddForeignKey(
-                name: "FK_ApprenticeLevel_Requirement_RequirementRequirementId",
-                table: "ApprenticeLevel",
-                column: "RequirementRequirementId",
-                principalTable: "Requirement",
-                principalColumn: "RequirementId",
-                onDelete: ReferentialAction.Restrict);
-            migrationBuilder.AddForeignKey(
-                name: "FK_Building_BuildingLevel_LevelLevelId",
+            migrationBuilder.AddColumn<int>(
+                name: "TechnologyName",
+                table: "TechnologyLevel",
+                nullable: false,
+                defaultValue: TechnologyName.none);
+            migrationBuilder.AddColumn<int>(
+                name: "TechnologyName",
+                table: "Technology",
+                nullable: false,
+                defaultValue: TechnologyName.none);
+            migrationBuilder.AddColumn<int>(
+                name: "BuildingName",
+                table: "BuildingLevel",
+                nullable: false,
+                defaultValue: BuildingName.none);
+            migrationBuilder.AddColumn<int>(
+                name: "BuildingName",
                 table: "Building",
-                column: "LevelLevelId",
-                principalTable: "Level",
-                principalColumn: "LevelId",
-                onDelete: ReferentialAction.Restrict);
-            migrationBuilder.AddForeignKey(
-                name: "FK_BuildingLevel_BuildingDefinition_BuildingDefinitionBuildingDefinitionId",
-                table: "Level",
-                column: "BuildingDefinitionBuildingDefinitionId",
-                principalTable: "BuildingDefinition",
-                principalColumn: "BuildingDefinitionId",
-                onDelete: ReferentialAction.Restrict);
+                nullable: false,
+                defaultValue: BuildingName.none);
             migrationBuilder.AddForeignKey(
                 name: "FK_Player_User_Player_PlayerId",
                 table: "Player",
@@ -84,11 +82,11 @@ namespace ITI.SkyLord.Migrations
                 principalColumn: "User_PlayerId",
                 onDelete: ReferentialAction.Cascade);
             migrationBuilder.AddForeignKey(
-                name: "FK_Technology_TechnologyLevel_LevelLevelId",
-                table: "Technology",
-                column: "LevelLevelId",
-                principalTable: "Level",
-                principalColumn: "LevelId",
+                name: "FK_Regiment_Army_ArmyId",
+                table: "Regiment",
+                column: "ArmyArmyId",
+                principalTable: "Army",
+                principalColumn: "ArmyId",
                 onDelete: ReferentialAction.Restrict);
             migrationBuilder.AddForeignKey(
                 name: "FK_IdentityRoleClaim<string>_IdentityRole_RoleId",
@@ -129,22 +127,20 @@ namespace ITI.SkyLord.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(name: "FK_ApprenticeLevel_Requirement_RequirementRequirementId", table: "ApprenticeLevel");
-            migrationBuilder.DropForeignKey(name: "FK_Building_BuildingLevel_LevelLevelId", table: "Building");
-            migrationBuilder.DropForeignKey(name: "FK_BuildingLevel_BuildingDefinition_BuildingDefinitionBuildingDefinitionId", table: "Level");
             migrationBuilder.DropForeignKey(name: "FK_Player_User_Player_PlayerId", table: "Player");
-            migrationBuilder.DropForeignKey(name: "FK_Technology_TechnologyLevel_LevelLevelId", table: "Technology");
+            migrationBuilder.DropForeignKey(name: "FK_Regiment_Army_ArmyId", table: "Regiment");
             migrationBuilder.DropForeignKey(name: "FK_IdentityRoleClaim<string>_IdentityRole_RoleId", table: "AspNetRoleClaims");
             migrationBuilder.DropForeignKey(name: "FK_IdentityUserClaim<string>_IdentityUser_UserId", table: "AspNetUserClaims");
             migrationBuilder.DropForeignKey(name: "FK_IdentityUserLogin<string>_IdentityUser_UserId", table: "AspNetUserLogins");
             migrationBuilder.DropForeignKey(name: "FK_IdentityUserRole<string>_IdentityRole_RoleId", table: "AspNetUserRoles");
             migrationBuilder.DropForeignKey(name: "FK_IdentityUserRole<string>_IdentityUser_UserId", table: "AspNetUserRoles");
-            migrationBuilder.DropColumn(name: "BuildingDefinitionBuildingDefinitionId", table: "Level");
-            migrationBuilder.DropColumn(name: "RequirementRequirementId", table: "ApprenticeLevel");
-            migrationBuilder.DropTable("BuildingDefinition");
+            migrationBuilder.DropColumn(name: "TechnologyName", table: "TechnologyLevel");
+            migrationBuilder.DropColumn(name: "TechnologyName", table: "Technology");
+            migrationBuilder.DropColumn(name: "BuildingName", table: "BuildingLevel");
+            migrationBuilder.DropColumn(name: "BuildingName", table: "Building");
             migrationBuilder.DropTable("Requirement");
             migrationBuilder.CreateTable(
-                name: "BuildingLevel",
+                name: "ApprenticeLevel",
                 columns: table => new
                 {
                     LevelId = table.Column<long>(nullable: false)
@@ -154,38 +150,23 @@ namespace ITI.SkyLord.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BuildingLevel", x => x.LevelId);
+                    table.PrimaryKey("PK_ApprenticeLevel", x => x.LevelId);
                     table.ForeignKey(
-                        name: "FK_BuildingLevel_Ressource_CostRessourceId",
+                        name: "FK_ApprenticeLevel_Ressource_CostRessourceId",
                         column: x => x.CostRessourceId,
                         principalTable: "Ressource",
                         principalColumn: "RessourceId",
                         onDelete: ReferentialAction.Restrict);
                 });
-            migrationBuilder.CreateTable(
-                name: "TechnologyLevel",
-                columns: table => new
-                {
-                    LevelId = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CostRessourceId = table.Column<long>(nullable: true),
-                    Number = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TechnologyLevel", x => x.LevelId);
-                    table.ForeignKey(
-                        name: "FK_TechnologyLevel_Ressource_CostRessourceId",
-                        column: x => x.CostRessourceId,
-                        principalTable: "Ressource",
-                        principalColumn: "RessourceId",
-                        onDelete: ReferentialAction.Restrict);
-                });
+            migrationBuilder.AddColumn<long>(
+                name: "LevelLevelId",
+                table: "Apprentice",
+                nullable: true);
             migrationBuilder.AddForeignKey(
-                name: "FK_Building_BuildingLevel_LevelLevelId",
-                table: "Building",
+                name: "FK_Apprentice_ApprenticeLevel_LevelLevelId",
+                table: "Apprentice",
                 column: "LevelLevelId",
-                principalTable: "BuildingLevel",
+                principalTable: "ApprenticeLevel",
                 principalColumn: "LevelId",
                 onDelete: ReferentialAction.Restrict);
             migrationBuilder.AddForeignKey(
@@ -196,11 +177,11 @@ namespace ITI.SkyLord.Migrations
                 principalColumn: "User_PlayerId",
                 onDelete: ReferentialAction.Restrict);
             migrationBuilder.AddForeignKey(
-                name: "FK_Technology_TechnologyLevel_LevelLevelId",
-                table: "Technology",
-                column: "LevelLevelId",
-                principalTable: "TechnologyLevel",
-                principalColumn: "LevelId",
+                name: "FK_Regiment_Army_ArmyArmyId",
+                table: "Regiment",
+                column: "ArmyArmyId",
+                principalTable: "Army",
+                principalColumn: "ArmyId",
                 onDelete: ReferentialAction.Restrict);
             migrationBuilder.AddForeignKey(
                 name: "FK_IdentityRoleClaim<string>_IdentityRole_RoleId",

@@ -14,7 +14,7 @@ using ITI.SkyLord.ViewModel;
 
 namespace ITI.SkyLord.Models.Entity_Framework.Contexts
 {
-    public class BuildingContext : CustomContext
+    public class LevelContext : CustomContext
     {
         public IConfigurationRoot Configuration { get; set; }
 
@@ -29,45 +29,15 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
             optionsBuilder.UseSqlServer( Configuration[ "Data:DefaultConnection:ConnectionString" ] );
         }
 
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
-            base.OnModelCreating(builder);
-
-            builder.Entity<Army>()
-                .HasMany( a => a.Regiments )
-                .WithOne( r => r.Army )
-                .HasForeignKey( r => r.ArmyId );
-        }
-
         public override DbSet<Player> Players { get; set; }
         public override DbSet<Island> Islands { get; set; }
         public DbSet<Ressource> Ressources { get; set; }
         public DbSet<Building> Buildings { get; set; }
+        public DbSet<Technology> Technologies { get; set; }
+        public DbSet<Level> Levels { get; set; }
         public DbSet<BuildingLevel> BuildingLevels { get; set; }
-        public DbSet<BuildingDefinition> BuildingDefinitions { get; set; }
+        public DbSet<TechnologyLevel> TechnologyLevels { get; set; }
+        public DbSet<Requirement> Requirements { get; set; }
 
-        public EntityEntry Remove( Unit unit )
-        {
-            base.Remove( unit );
-            SaveChanges();
-            base.Remove( unit.UnitCost );
-            return base.Remove( unit.UnitStatistics );
-        }
-
-        //public EntityEntry Remove( Army army )
-        //{
-        //    if ( army.Regiments == null )
-        //        return base.Remove( army );
-        //    else
-        //    {
-        //        foreach(Regiment r in army.Regiments )
-        //        {
-        //            base.Remove( r );
-        //        }
-        //        SaveChanges();
-
-        //        return base.Remove( army );
-        //    }
-        //}
     }
 }

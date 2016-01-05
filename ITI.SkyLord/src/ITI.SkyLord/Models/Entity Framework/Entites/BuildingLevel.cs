@@ -7,6 +7,6 @@ namespace ITI.SkyLord
 {
     public class BuildingLevel : Level
     {
-        public BuildingDefinition BuildingDefinition { get; set; }
+        public BuildingName BuildingName { get; set; }
     }
 }

@@ -11,27 +11,10 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
 {
     public abstract class CustomContext : IdentityDbContext, IStandardContext
     {
-        //public IConfigurationRoot Configuration { get; set; }
-
-        //protected override void OnConfiguring( DbContextOptionsBuilder optionsBuilder )
-        //{
-        //    var builder = new ConfigurationBuilder()
-        //        .AddJsonFile( "appsettings.json" );
-
-        //    Configuration = builder.Build();
-        //    var appEnv = CallContextServiceLocator.Locator.ServiceProvider
-        //                    .GetRequiredService<IApplicationEnvironment>();
-        //    optionsBuilder.UseSqlServer( Configuration[ "Data:DefaultConnection:ConnectionString" ] );
-        //}
-
-        //protected override void OnModelCreating( ModelBuilder builder )
-        //{
-        //    base.OnModelCreating( builder );
-        //}
-
         public virtual DbSet<Island> Islands { get; set; }
 
         public virtual DbSet<Player> Players { get; set; }
+        public virtual DbSet<User_Player> User_Players { get; set; }
 
 
         public void FillStandardVM( StandardViewModel svm, long playerId, long islandId )
@@ -42,6 +25,11 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
             svm.Layout.CurrentIsland = GetIsland( islandId, playerId );
             svm.Layout.CurrentPlayer = Players.Single( p => p.PlayerId == playerId );
             svm.Layout.IslandId = islandId;
+        }
+
+        public Player GetPlayer( string userId )
+        {
+            return Players.Where( pl => pl.UserPlayer.User.Id == userId ).First();
         }
 
         private Island GetIsland( long islandId, long playerId )
@@ -70,7 +58,6 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
                     .Include( i => i.Coordinates )
                     .SingleOrDefault( i => i.IslandId == islandId && i.Owner.PlayerId == activePlayerId );
             }
-
         }
     }
 }
