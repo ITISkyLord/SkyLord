@@ -56,9 +56,6 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
         public DbSet<UpgradeEvent> UpgradeEvents { get; set; }
         public DbSet<TechnologyEvent> TechnologyEvents { get; set; }
 
-
-
-
         public DbSet<User_Player> UserPlayers { get; set; }
         public UnitDamageType UnitDamageTypes { get;set;}
         public UnitName UnitName { get; set; }

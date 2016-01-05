@@ -1,0 +1,12 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.Data.Entity;
+
+namespace ITI.SkyLord.Models.Entity_Framework.Contexts
+{
+    public interface IUnitEventContext
+    {
+    }
+}
