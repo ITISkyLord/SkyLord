@@ -13,7 +13,7 @@ namespace ITI.SkyLord.Controllers
     public class BuildingController : Controller
     {
         [FromServices]
-        BuildingContext BuildingContext { get; set; }
+        LevelContext LevelContext { get; set; }
         [FromServices]
         PlayerContext PlayerContext { get; set; }
 
@@ -40,7 +40,7 @@ namespace ITI.SkyLord.Controllers
             if( islandId == 0 )
             {
                 long activePlayerId = PlayerContext.GetPlayer( User.GetUserId() ).PlayerId;
-                return BuildingContext.Islands
+                return LevelContext.Islands
                     .Include( i => i.Armies )
                     .ThenInclude( a => a.Regiments )
                     .ThenInclude( r => r.Unit )
@@ -51,7 +51,7 @@ namespace ITI.SkyLord.Controllers
             }
             else
             {
-                return BuildingContext.Islands
+                return LevelContext.Islands
                     .Include( i => i.Armies )
                     .ThenInclude( a => a.Regiments )
                     .ThenInclude( r => r.Unit )

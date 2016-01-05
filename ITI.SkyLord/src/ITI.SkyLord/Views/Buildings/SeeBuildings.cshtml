@@ -1,11 +1,10 @@
-﻿@{
+﻿@addTagHelper "*, Microsoft.AspNet.Mvc.TagHelpers"
+@model BuildingViewModel
+
+@{
     ViewData["Title"] = "View Buildings";
     Layout = "_Layout";
 }
-
-@{
-    @model Buildings
-    }
 
 <ul>
     @foreach (var building in Model.Buildings)

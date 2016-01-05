@@ -15,7 +15,7 @@ namespace ITI.SkyLord.Services
         /// <summary>
         /// Creates a new LevelManager instance
         /// </summary>
-        /// <param name="currentContext">An opened BuildingContext</param>
+        /// <param name="currentContext">An opened LevelContext</param>
         /// <param name="currentIsland">The island examined</param>
         public LeveManager( LevelContext currentContext, long currentIslandId )
         {
