@@ -1,6 +1,4 @@
-﻿
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using ITI.SkyLord.Models.Entity_Framework.Contexts;
@@ -13,9 +11,11 @@ namespace ITI.SkyLord.Controllers
     public class BuildingController : Controller
     {
         [FromServices]
-        LevelContext LevelContext { get; set; }
+        public LevelContext LevelContext { get; set; }
         [FromServices]
-        PlayerContext PlayerContext { get; set; }
+        public IslandContext IslandContext { get; set; }
+        [FromServices]
+        public PlayerContext PlayerContext { get; set; }
 
         public IActionResult Index()
         {
@@ -29,38 +29,19 @@ namespace ITI.SkyLord.Controllers
         public IActionResult SeeBuildings( long islandId = 0 )
         {
             BuildingViewModel buildingViewModel = new BuildingViewModel();
-            Island currentIsland = GetIsland(islandId);
-            List<Building> buildings = currentIsland.Buildings.ToList();
+            long playerId = PlayerContext.GetPlayer( User.GetUserId() ).PlayerId;
+
+            Island currentIsland = IslandContext.GetIsland(islandId, playerId);
+
+            List<Building> buildings = new List<Building>();
+
+            buildings = currentIsland.Buildings.ToList();
 
             buildingViewModel.Buildings = buildings;
-            return View( buildingViewModel );
-        }
-        private Island GetIsland( long islandId )
-        {
-            if( islandId == 0 )
-            {
-                long activePlayerId = PlayerContext.GetPlayer( User.GetUserId() ).PlayerId;
-                return LevelContext.Islands
-                    .Include( i => i.Armies )
-                    .ThenInclude( a => a.Regiments )
-                    .ThenInclude( r => r.Unit )
-                    .Include( i => i.AllRessources )
-                    .Include( i => i.Owner )
-                    .Include( i => i.Coordinates )
-                    .SingleOrDefault( i => i.IsCapital && i.Owner.PlayerId == activePlayerId );
-            }
-            else
-            {
-                return LevelContext.Islands
-                    .Include( i => i.Armies )
-                    .ThenInclude( a => a.Regiments )
-                    .ThenInclude( r => r.Unit )
-                    .Include( i => i.AllRessources )
-                    .Include( i => i.Owner )
-                    .Include( i => i.Coordinates )
-                    .SingleOrDefault( i => i.IslandId == islandId );
-            }
 
+            IslandContext.FillStandardVM( buildingViewModel, playerId, islandId );
+
+            return View( buildingViewModel );
         }
 
     }

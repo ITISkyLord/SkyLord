@@ -1,13 +1,9 @@
-﻿using Microsoft.AspNet.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using ITI.SkyLord.ViewModel.SeeIslands;
-using ITI.SkyLord.Models.Entity_Framework.Contexts;
-using Microsoft.Data.Entity;
+﻿using System.Linq;
 using System.Security.Claims;
-using ITI.SkyLord.ViewModel;
+using ITI.SkyLord.Models.Entity_Framework.Contexts;
+using ITI.SkyLord.ViewModel.SeeIslands;
+using Microsoft.AspNet.Mvc;
+using Microsoft.Data.Entity;
 
 namespace ITI.SkyLord.Controllers
 {

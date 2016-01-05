@@ -2,7 +2,7 @@
 
 namespace ITI.SkyLord.ViewModel
 {
-    public class BuildingViewModel
+    public class BuildingViewModel : StandardViewModel
     {
         public List<Building> Buildings { get; set; }
     }
