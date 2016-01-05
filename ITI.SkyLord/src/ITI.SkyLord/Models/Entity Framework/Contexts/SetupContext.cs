@@ -7,7 +7,7 @@ using ITI.SkyLord.Models.Entity_Framework.Entites.Events;
 
 namespace ITI.SkyLord.Models.Entity_Framework.Contexts
 {
-    public class SetupContext : IdentityDbContext
+    public class SetupContext : IdentityDbContext, IEventContext
     {
         protected override void OnModelCreating( ModelBuilder builder )
         {
