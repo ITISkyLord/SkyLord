@@ -19,27 +19,28 @@ namespace ITI.SkyLord.Controllers
 
         [FromServices]
         public PlayerContext PlayerContext { get; set; }
-
+        
         public IActionResult Index(/*int id*/)
         {
             return View();
         }
 
-        public IActionResult SeeRessources(int id)
+        public IActionResult SeeRessources(int islandId)
         {
             SeeRessourcesViewModel sr = new SeeRessourcesViewModel();
-
-            Island islandChoosen = IslandContext.Islands.Include(p => p.Owner).Include(r => r.AllRessources).Where(i => i.IslandId.Equals(id)).SingleOrDefault();
+            PlayerContext.FillStandardVM( sr, PlayerContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
+            Island islandChoosen = IslandContext.Islands.Include(p => p.Owner).Include(r => r.AllRessources).Where(i => i.IslandId.Equals(islandId)).SingleOrDefault();
             Ressource ressources = islandChoosen.AllRessources;
             sr.Ressources = ressources;
 
             return View(sr);
         }
 
-        public IActionResult SeeAllRessources()
+        public IActionResult SeeAllRessources(int islandId)
         {
             SeeRessourcesViewModel sr = new SeeRessourcesViewModel();
             Player player = PlayerContext.GetPlayer(User.GetUserId());
+            PlayerContext.FillStandardVM( sr, PlayerContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
             List<Ressource> ressources = IslandContext.Islands.Include(r => r.AllRessources).Where(i => i.Owner.PlayerId == player.PlayerId).Select(i => i.AllRessources).ToList();
 
             sr.AllRessources = ressources;
@@ -52,7 +53,7 @@ namespace ITI.SkyLord.Controllers
         /// <param name="quantity">Quantity which added</param>
         /// <returns></returns>
         [Obsolete]
-        public IActionResult AddRessources( string name, string quantity)
+        public IActionResult AddRessources( string name, string quantity, int islandId)
         {
             int x = 0;
             int.TryParse(quantity,out x);
@@ -61,7 +62,7 @@ namespace ITI.SkyLord.Controllers
             SeeRessourcesViewModel sr = new SeeRessourcesViewModel();
 
             island.AddRessources(name, owner.PlayerId, x);
-            return RedirectToAction("SeeAllRessources");
+            return RedirectToAction("SeeAllRessources", islandId );
         }
     }
 }
