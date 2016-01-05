@@ -1,0 +1,17 @@
+﻿@addTagHelper "*, Microsoft.AspNet.Mvc.TagHelpers"
+
+@model ITI.SkyLord.ViewModel.MessageViewModel
+@using ITI.SkyLord
+
+@{
+    ViewData["Title"] = "Message(s)";
+    Layout = "_Layout";
+}
+
+<h1>Boite de réception</h1>
+
+@foreach (Message m in Model.AllMessages)
+{
+    @m.Sender.Name   @m.CoreMessage
+    <hr />
+}
