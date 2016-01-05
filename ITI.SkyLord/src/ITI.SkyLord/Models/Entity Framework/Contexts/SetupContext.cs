@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNet.Identity.EntityFramework;
+using ITI.SkyLord.Models.Entity_Framework.Entites.Events;
 
 namespace ITI.SkyLord.Models.Entity_Framework.Contexts
 {
@@ -49,11 +50,21 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
         public DbSet<Unit> Units { get; set; }
         public DbSet<UnitStatistics> UnitStatistics { get; set; }
         public DbSet<World> Worlds { get; set; }
+        public DbSet<Event> Events { get; set; }
+        public DbSet<UnitEvent> UnitEvents { get; set; }
+        public DbSet<ArmyEvent> ArmyEvents { get; set; }
+        public DbSet<UpgradeEvent> UpgradeEvents { get; set; }
+        public DbSet<TechnologyEvent> TechnologyEvents { get; set; }
+
+
+
 
         public DbSet<User_Player> UserPlayers { get; set; }
         public UnitDamageType UnitDamageTypes { get;set;}
         public UnitName UnitName { get; set; }
         public UnitType UnitType { get; set; }
+        public ArmyMovement ArmyMovements { get; set; }
+        public EventType EventTypes { get; set; }
         //public DbSet<BuildingLevel> BuildingLevels { get; set; }
         //public DbSet<MageLevel> MageLevels { get; set; }
         //public DbSet<TechnologyLevel> TechnologiesLevel { get; set; }
