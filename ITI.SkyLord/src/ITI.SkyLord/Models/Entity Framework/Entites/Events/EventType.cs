@@ -7,7 +7,7 @@ namespace ITI.SkyLord.Models.Entity_Framework.Entites.Events
 {
     public enum EventType
     {
-        Unity,
+        Unit,
         Army,
         Building,
         Upgrade,

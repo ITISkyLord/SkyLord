@@ -7,6 +7,7 @@ namespace ITI.SkyLord.Models.Entity_Framework.Entites.Events
 {
     public class UnitEvent : Event
     {
+        
         public Unit unit { get; set; }
     }
 }
