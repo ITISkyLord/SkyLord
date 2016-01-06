@@ -73,7 +73,7 @@ namespace ITI.SkyLord
             services.AddScoped<ArmyContext>();
             services.AddScoped<ArmyManager>();
             services.AddScoped<LevelContext>();
-            services.AddScoped < MessageContext>();
+            services.AddScoped<MessageContext>();
             // Uncomment the following line to add Web API services which makes it easier to port Web API 2 controllers.
             // You will also need to add the Microsoft.AspNet.Mvc.WebApiCompatShim package to the 'dependencies' section of project.json.
             // services.AddWebApiConventions();
@@ -137,13 +137,13 @@ namespace ITI.SkyLord
             Unit troll = null;
             Unit warrior = null;
 
-            if ( env.IsDevelopment() )
+            if( env.IsDevelopment() )
             {
                 // Add defaultWorld
-                using ( WorldContext context = new WorldContext() )
+                using( WorldContext context = new WorldContext() )
                 {
                     defaultWorld = context.Worlds.FirstOrDefault();
-                    if ( defaultWorld == null )
+                    if( defaultWorld == null )
                     {
                         defaultWorld = new World();
                         context.Add( defaultWorld );
@@ -152,25 +152,25 @@ namespace ITI.SkyLord
                 }
 
                 // Add Islands
-                using ( IslandContext context = new IslandContext() )
+                using( IslandContext context = new IslandContext() )
                 {
                     if( context.Islands.Count() < 99 )
                     {
-                        for ( int i = 0; i < 100; i++ )
+                        for( int i = 0; i < 100; i++ )
                         {
                             Ressource ressource = new Ressource { Wood = 1000, Metal = 1000, Cristal = 1000, Magic = 1000 };
                             Coordinate coord = new Coordinate();
                             coord.X = i;
                             coord.Y = i;
-                            context.Ressources.Add(ressource);
-                            context.Coordinates.Add(coord);
+                            context.Ressources.Add( ressource );
+                            context.Coordinates.Add( coord );
                             context.SaveChanges();
 
                             Island island = new Island();
                             island.Loyalty = 100;
                             island.Coordinates = coord;
                             island.AllRessources = ressource;
-                                                  
+
                             context.Islands.Add( island );
                             context.SaveChanges();
                         }
@@ -178,7 +178,7 @@ namespace ITI.SkyLord
                 }
 
                 //Add defaultUnits
-                using ( ArmyContext context = new ArmyContext() )
+                using( ArmyContext context = new ArmyContext() )
                 {
 
                     cyclop = context.Units.Where( u => u.UnitName == UnitName.cyclop ).SingleOrDefault();
@@ -188,7 +188,7 @@ namespace ITI.SkyLord
                     troll = context.Units.Where( u => u.UnitName == UnitName.troll ).SingleOrDefault();
                     warrior = context.Units.Where( u => u.UnitName == UnitName.warrior ).SingleOrDefault();
 
-                    if ( cyclop == null )
+                    if( cyclop == null )
                     {
                         Ressource cyclopCost = new Ressource { Wood = 400, Metal = 200, Cristal = 100, Magic = 100 };
                         context.Ressources.Add( cyclopCost );
@@ -208,7 +208,7 @@ namespace ITI.SkyLord
                         context.Units.Add( cyclop );
                         //context.SaveChanges();
                     }
-                    if ( gobelin == null )
+                    if( gobelin == null )
                     {
                         Ressource gobelinCost = new Ressource { Wood = 100, Metal = 100, Magic = 20 };
                         context.Ressources.Add( gobelinCost );
@@ -228,7 +228,7 @@ namespace ITI.SkyLord
                         context.Units.Add( gobelin );
                         //context.SaveChanges();
                     }
-                    if ( guard == null )
+                    if( guard == null )
                     {
                         Ressource guardCost = new Ressource { Wood = 200, Metal = 100 };
                         context.Ressources.Add( guardCost );
@@ -248,7 +248,7 @@ namespace ITI.SkyLord
                         context.Units.Add( guard );
                         //context.SaveChanges();
                     }
-                    if ( necromancer == null )
+                    if( necromancer == null )
                     {
                         Ressource necromancerCost = new Ressource { Wood = 100, Metal = 100, Cristal = 200, Magic = 50 };
                         context.Ressources.Add( necromancerCost );
@@ -268,7 +268,7 @@ namespace ITI.SkyLord
                         context.Units.Add( necromancer );
                         //context.SaveChanges();
                     }
-                    if ( troll == null )
+                    if( troll == null )
                     {
                         Ressource trollCost = new Ressource { Wood = 300, Metal = 200, Cristal = 150, Magic = 50 };
                         context.Ressources.Add( trollCost );
@@ -288,7 +288,7 @@ namespace ITI.SkyLord
                         context.Units.Add( troll );
                         //context.SaveChanges();
                     }
-                    if ( warrior == null )
+                    if( warrior == null )
                     {
                         Ressource warriorCost = new Ressource { Wood = 200, Metal = 100, Cristal = 50 };
                         context.Ressources.Add( warriorCost );
@@ -382,7 +382,7 @@ namespace ITI.SkyLord
             //    #endregion
 
         }
-        }
+
         private Ressource Multiplyressource( Ressource initialRessource, int factor )
         {
             return new Ressource
@@ -393,6 +393,6 @@ namespace ITI.SkyLord
                 Magic = initialRessource.Magic * factor
             };
         }
-
     }
 }
+
