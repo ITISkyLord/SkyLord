@@ -8,7 +8,7 @@ namespace ITI.SkyLord.Models.Entity_Framework.Entites.Events
 {
     public class UpgradeEvent : Event
     {
-        public Building building { get; set; }
+        public Building buildingToUpgrade { get; set; }
 
         public override void Accept(EventManager em) => em.Resolve(this);
 

@@ -8,9 +8,10 @@ using ITI.SkyLord.Models.Entity_Framework.Contexts;
 namespace ITI.SkyLord.Migrations
 {
     [DbContext(typeof(SetupContext))]
-    partial class SetupContextModelSnapshot : ModelSnapshot
+    [Migration("20160106094749_ModifEvent_EventType")]
+    partial class ModifEvent_EventType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.0-rc1-16348")
@@ -563,7 +564,7 @@ namespace ITI.SkyLord.Migrations
                 {
                     b.HasBaseType("ITI.SkyLord.Models.Entity_Framework.Entites.Events.Event");
 
-                    b.Property<int?>("BuildingToBuildBuildingId");
+                    b.Property<int?>("buildingBuildingId");
 
                     b.HasAnnotation("Relational:DiscriminatorValue", "BuildingEvent");
                 });
@@ -590,7 +591,7 @@ namespace ITI.SkyLord.Migrations
                 {
                     b.HasBaseType("ITI.SkyLord.Models.Entity_Framework.Entites.Events.Event");
 
-                    b.Property<int?>("buildingToUpgradeBuildingId");
+                    b.Property<int?>("buildingBuildingId");
 
                     b.HasAnnotation("Relational:DiscriminatorValue", "UpgradeEvent");
                 });
@@ -832,7 +833,7 @@ namespace ITI.SkyLord.Migrations
                 {
                     b.HasOne("ITI.SkyLord.Building")
                         .WithMany()
-                        .HasForeignKey("BuildingToBuildBuildingId");
+                        .HasForeignKey("buildingBuildingId");
                 });
 
             modelBuilder.Entity("ITI.SkyLord.Models.Entity_Framework.Entites.Events.TechnologyEvent", b =>
@@ -853,7 +854,7 @@ namespace ITI.SkyLord.Migrations
                 {
                     b.HasOne("ITI.SkyLord.Building")
                         .WithMany()
-                        .HasForeignKey("buildingToUpgradeBuildingId");
+                        .HasForeignKey("buildingBuildingId");
                 });
         }
     }

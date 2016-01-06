@@ -45,7 +45,7 @@ namespace ITI.SkyLord.Controllers
         public IActionResult YoloTest()
         {
 
-            EventManager t = new EventManager();
+            EventManager t = new EventManager(SetupContext);
 
             var a = t.Get(EventType.Technology, SetupContext, 1);
 
@@ -55,7 +55,7 @@ namespace ITI.SkyLord.Controllers
 
         public IActionResult YoloResolve()
         {
-            EventManager t = new EventManager();
+            EventManager t = new EventManager(SetupContext);
             t.ResolveAll(1, SetupContext);
 
             return View();

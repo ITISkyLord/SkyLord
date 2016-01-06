@@ -8,7 +8,6 @@ namespace ITI.SkyLord.Models.Entity_Framework.Entites.Events
 {
     public abstract class Event
     {
-
         public long EventId { get; set; }
         public string EventType { get; set; }
         public DateTime begginningDate { get; set; }
@@ -17,6 +16,5 @@ namespace ITI.SkyLord.Models.Entity_Framework.Entites.Events
         public Island island { get; set; }
 
         abstract public void Accept(EventManager visitor);
-
     }
 }

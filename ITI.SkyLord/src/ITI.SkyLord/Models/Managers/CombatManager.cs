@@ -14,12 +14,12 @@ namespace ITI.SkyLord
     {
         private Army _winningArmy;
         private Army _loosingArmy;
-        
-        public ArmyManager ArmyManager { get; set; }
+
+        private readonly ArmyManager _armyManager;
 
         public CombatManager( ArmyManager armyManager )
         {
-            ArmyManager = armyManager;
+            _armyManager = armyManager;
         }
 
         /// <summary>
@@ -131,14 +131,14 @@ namespace ITI.SkyLord
                 totalLooser = totalAttack;
             }
 
-            double numberInWinnerArmy = ArmyManager.ArmyCount( _winningArmy );
-            double numberInLooserArmy = ArmyManager.ArmyCount( _loosingArmy );
+            double numberInWinnerArmy = _armyManager.ArmyCount( _winningArmy );
+            double numberInLooserArmy = _armyManager.ArmyCount( _loosingArmy );
             double result = 100 * Math.Pow( ( totalLooser / totalWinner ), ( 1.5 - 0.08 * Math.Log10( ( numberInWinnerArmy + numberInLooserArmy ) / 1000 ) ) );
             Console.WriteLine( "result est : " + result );
 
-            ArmyManager.SubstractFromArmy( _winningArmy, ( result / 100 ) );
+            _armyManager.SubstractFromArmy( _winningArmy, ( result / 100 ) );
             if( _loosingArmy.Regiments.Count > 0 )
-                ArmyManager.RemoveArmy( _loosingArmy );
+                _armyManager.RemoveArmy( _loosingArmy );
 
             //100·(pp/pg)^X 
             //      X = 1,5 - 0,08·log10( N / 1000 ) où N correspond

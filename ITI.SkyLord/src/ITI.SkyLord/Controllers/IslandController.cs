@@ -23,6 +23,7 @@ namespace ITI.SkyLord.Controllers
         {
             return View();
         }
+
         /// <summary>
         /// See the island(s) of the current player
         /// </summary>

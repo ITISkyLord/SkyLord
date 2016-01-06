@@ -10,9 +10,12 @@ namespace ITI.SkyLord.Services
     public class ArmyManager
     {
         public ArmyContext CurrentContext { get; set; }
+
+        /*
         public ArmyManager()
         {
         }
+        */
 
         public ArmyManager( ArmyContext context)
         {
