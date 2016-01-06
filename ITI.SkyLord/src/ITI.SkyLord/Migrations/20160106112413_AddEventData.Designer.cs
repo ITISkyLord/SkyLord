@@ -8,8 +8,8 @@ using ITI.SkyLord.Models.Entity_Framework.Contexts;
 namespace ITI.SkyLord.Migrations
 {
     [DbContext(typeof(SetupContext))]
-    [Migration("20160105110955_AddEventModels")]
-    partial class AddEventModels
+    [Migration("20160106112413_AddEventData")]
+    partial class AddEventData
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -223,7 +223,7 @@ namespace ITI.SkyLord.Migrations
                     b.Property<long>("EventId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Discriminator")
+                    b.Property<string>("EventType")
                         .IsRequired();
 
                     b.Property<DateTime>("begginningDate");
@@ -232,13 +232,11 @@ namespace ITI.SkyLord.Migrations
 
                     b.Property<DateTime>("endingDate");
 
-                    b.Property<int>("eventType");
-
                     b.Property<long?>("islandIslandId");
 
                     b.HasKey("EventId");
 
-                    b.HasAnnotation("Relational:DiscriminatorProperty", "Discriminator");
+                    b.HasAnnotation("Relational:DiscriminatorProperty", "EventType");
 
                     b.HasAnnotation("Relational:DiscriminatorValue", "Event");
                 });
@@ -380,6 +378,8 @@ namespace ITI.SkyLord.Migrations
                     b.Property<int>("PhysicResist");
 
                     b.Property<int>("Speed");
+
+                    b.Property<int>("TimeToBuild");
 
                     b.HasKey("UnitStatisticsId");
                 });
@@ -560,6 +560,15 @@ namespace ITI.SkyLord.Migrations
                     b.HasAnnotation("Relational:DiscriminatorValue", "ArmyEvent");
                 });
 
+            modelBuilder.Entity("ITI.SkyLord.Models.Entity_Framework.Entites.Events.BuildingEvent", b =>
+                {
+                    b.HasBaseType("ITI.SkyLord.Models.Entity_Framework.Entites.Events.Event");
+
+                    b.Property<int?>("BuildingToBuildBuildingId");
+
+                    b.HasAnnotation("Relational:DiscriminatorValue", "BuildingEvent");
+                });
+
             modelBuilder.Entity("ITI.SkyLord.Models.Entity_Framework.Entites.Events.TechnologyEvent", b =>
                 {
                     b.HasBaseType("ITI.SkyLord.Models.Entity_Framework.Entites.Events.Event");
@@ -582,7 +591,7 @@ namespace ITI.SkyLord.Migrations
                 {
                     b.HasBaseType("ITI.SkyLord.Models.Entity_Framework.Entites.Events.Event");
 
-                    b.Property<int?>("buildingBuildingId");
+                    b.Property<int?>("buildingToUpgradeBuildingId");
 
                     b.HasAnnotation("Relational:DiscriminatorValue", "UpgradeEvent");
                 });
@@ -820,6 +829,13 @@ namespace ITI.SkyLord.Migrations
                         .HasForeignKey("destinationIslandId");
                 });
 
+            modelBuilder.Entity("ITI.SkyLord.Models.Entity_Framework.Entites.Events.BuildingEvent", b =>
+                {
+                    b.HasOne("ITI.SkyLord.Building")
+                        .WithMany()
+                        .HasForeignKey("BuildingToBuildBuildingId");
+                });
+
             modelBuilder.Entity("ITI.SkyLord.Models.Entity_Framework.Entites.Events.TechnologyEvent", b =>
                 {
                     b.HasOne("ITI.SkyLord.Technology")
@@ -838,7 +854,7 @@ namespace ITI.SkyLord.Migrations
                 {
                     b.HasOne("ITI.SkyLord.Building")
                         .WithMany()
-                        .HasForeignKey("buildingBuildingId");
+                        .HasForeignKey("buildingToUpgradeBuildingId");
                 });
         }
     }
