@@ -32,7 +32,7 @@ namespace ITI.SkyLord.Controllers
             te.begginningDate = DateTime.Now;
             te.endingDate = DateTime.Now.AddHours(2);
             te.done = false;
-            te.eventType = EventType.Technology;
+            te.EventType = EventDiscrimator.TechnologyEvent;
 
             te.island = SetupContext.Islands.Where(i=>i.IslandId==1).FirstOrDefault();
 

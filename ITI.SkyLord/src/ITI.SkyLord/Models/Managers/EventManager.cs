@@ -13,14 +13,14 @@ namespace ITI.SkyLord.Models.Managers
     {
         public void AddUnitEvent(IUnitEventContext ctx, Unit unit, Island island )
         {
-            ctx.UnitEvents.Add( new UnitEvent() { eventType = EventType.Unit, unit = unit, begginningDate = DateTime.Now, endingDate = DateTime.Now.AddSeconds( unit.UnitStatistics.TimeToBuild ), island = island, done = false } );
+            ctx.UnitEvents.Add( new UnitEvent() { EventType = EventDiscrimator.UnitEvent, unit = unit, begginningDate = DateTime.Now, endingDate = DateTime.Now.AddSeconds( unit.UnitStatistics.TimeToBuild ), island = island, done = false } );
             ctx.SaveChanges();
         }
 
         public void AddArmyEvent(IArmyEventContext ctx, Army army, Island island, ArmyMovement am, int timeToDistance, Island destination )
         {
             int secondsToGo = TimeToGoHereFromHere( island, destination, army);
-            ctx.ArmyEvents.Add( new ArmyEvent() { eventType = EventType.Army, army = army, armyMovement = am, begginningDate = DateTime.Now, endingDate = DateTime.Now.AddSeconds( secondsToGo ), destination = destination, done = false, island = island } );
+            ctx.ArmyEvents.Add( new ArmyEvent() { EventType = EventDiscrimator.ArmyEvent, army = army, armyMovement = am, begginningDate = DateTime.Now, endingDate = DateTime.Now.AddSeconds( secondsToGo ), destination = destination, done = false, island = island } );
             ctx.SaveChanges();
         }
 
@@ -35,26 +35,27 @@ namespace ITI.SkyLord.Models.Managers
         
         public void AddBuildingEvent( IBuildingEventContext ctx, Building building, Island island )
         {
-            ctx.BuildingEvents.Add( new BuildingEvent() { eventType = EventType.Building, building = building, begginningDate = DateTime.Now, endingDate = DateTime.Now.AddSeconds(/*TIME TO BUILD BUILDING */ 100 ), done = false, island = island } );
+            ctx.BuildingEvents.Add( new BuildingEvent() { EventType = EventDiscrimator.BuildingEvent, building = building, begginningDate = DateTime.Now, endingDate = DateTime.Now.AddSeconds(/*TIME TO BUILD BUILDING */ 100 ), done = false, island = island } );
             ctx.SaveChanges();
         }
 
         public void AddUpgradeEvent( IBuildingEventContext ctx, Building building, Island island )
         {
-            ctx.UpgradeEvents.Add( new UpgradeEvent() { eventType = EventType.Upgrade, building = building, begginningDate = DateTime.Now, endingDate = DateTime.Now.AddSeconds(/*TIME TO BUILD BUILDING */ 100 ), done = false, island = island } );
+            ctx.UpgradeEvents.Add( new UpgradeEvent() { EventType = EventDiscrimator.UpgradeEvent, building = building, begginningDate = DateTime.Now, endingDate = DateTime.Now.AddSeconds(/*TIME TO BUILD BUILDING */ 100 ), done = false, island = island } );
             ctx.SaveChanges();
         }
         public void AddTechnologyEvent(ITechnologyEventContext ctx, Technology technology, Island island )
         {
-            ctx.TechnologyEvents.Add( new TechnologyEvent() { eventType = EventType.Technology, technology = technology, begginningDate = DateTime.Now, endingDate = DateTime.Now.AddSeconds( 100 /* PAREIL QUE AU DESSUS */), done = false, island = island } );
+            ctx.TechnologyEvents.Add( new TechnologyEvent() { EventType = EventDiscrimator.TechnologyEvent, technology = technology, begginningDate = DateTime.Now, endingDate = DateTime.Now.AddSeconds( 100 /* PAREIL QUE AU DESSUS */), done = false, island = island } );
             ctx.SaveChanges();
         }
          
+
+
         public List<Event> Get(EventType et, IEventContext ctx, int IslandId)
         {
             return ctx.Events.Include(e => e.island).Where(e => e.island.IslandId == IslandId).ToList();
         }
-
 
         public void ResolveAll(int islandId, IEventContext ctx)
         {
@@ -95,26 +96,5 @@ namespace ITI.SkyLord.Models.Managers
         }
         #endregion
 
-            double distance = IslandManager.DistanceBeetweenTwoIslands( island, destination );
-            numberOfSeconds = (int)distance * slowerUnit.UnitStatistics.Speed; // Voir si on modifie le ratio
-            return numberOfSeconds;
-        }
-
-        public void AddBuildingEvent( IBuildingEventContext ctx, Building building, Island island )
-        {
-            ctx.BuildingEvents.Add( new BuildingEvent() { eventType = EventType.Building, building = building, begginningDate = DateTime.Now, endingDate = DateTime.Now.AddSeconds(/*TIME TO BUILD BUILDING */ 100 ), done = false, island = island } );
-            ctx.SaveChanges();
-        }
-
-        public void AddUpgradeEvent( IBuildingEventContext ctx, Building building, Island island )
-        {
-            ctx.UpgradeEvents.Add( new UpgradeEvent() { eventType = EventType.Upgrade, building = building, begginningDate = DateTime.Now, endingDate = DateTime.Now.AddSeconds(/*TIME TO BUILD BUILDING */ 100 ), done = false, island = island } );
-            ctx.SaveChanges();
-        }
-        public void AddTechnologyEvent(ITechnologyEventContext ctx, Technology technology, Island island )
-        {
-            ctx.TechnologyEvents.Add( new TechnologyEvent() { eventType = EventType.Technology, technology = technology, begginningDate = DateTime.Now, endingDate = DateTime.Now.AddSeconds( 100 /* PAREIL QUE AU DESSUS */), done = false, island = island } );
-            ctx.SaveChanges();
-        }
     }
 }

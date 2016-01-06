@@ -8,9 +8,9 @@ namespace ITI.SkyLord.Models.Entity_Framework.Entites.Events
     public static class EventDiscrimator
     {
         public const string TechnologyEvent = "TechnologyEvent";
-        public const string BuildingEvent = "TechnologyEvent";
-        public const string UnitEvent = "TechnologyEvent";
-        public const string UpgradeEvent = "TechnologyEvent";
-        public const string ArmyEvent = "TechnologyEvent";
+        public const string BuildingEvent = "BuildingEvent";
+        public const string UnitEvent = "UnitEvent";
+        public const string UpgradeEvent = "UpgradeEvent";
+        public const string ArmyEvent = "ArmyEvent";
     }
 }

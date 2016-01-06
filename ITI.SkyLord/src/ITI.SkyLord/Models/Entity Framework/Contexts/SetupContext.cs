@@ -23,9 +23,8 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
                     .HasValue<BuildingEvent>(EventDiscrimator.BuildingEvent)
                     .HasValue<UpgradeEvent>(EventDiscrimator.UpgradeEvent)
                     .HasValue<TechnologyEvent>(EventDiscrimator.TechnologyEvent);
-                    
-
         }
+
         public IConfigurationRoot Configuration { get; set; }
 
         protected override void OnConfiguring( DbContextOptionsBuilder optionsBuilder )
