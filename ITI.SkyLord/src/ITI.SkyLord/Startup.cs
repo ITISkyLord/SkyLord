@@ -194,7 +194,6 @@ namespace ITI.SkyLord
                         context.Ressources.Add( cyclopCost );
                         UnitStatistics cyclopStatistics = new UnitStatistics { Attack = 150, PhysicResist = 80, MagicResist = 50, Capacity = 200, Speed = 15, Consumption = 20 };
                         context.UnitStatistics.Add( cyclopStatistics );
-                        context.SaveChanges();
 
                         cyclop = new Unit
                         {
@@ -203,10 +202,11 @@ namespace ITI.SkyLord
                             UnitName = UnitName.cyclop,
                             UnitDamageType = UnitDamageType.magical,
                             UnitCost = cyclopCost,
-                            UnitStatistics = cyclopStatistics
+                            UnitStatistics = cyclopStatistics,
+                            Duration = 120
                         };
                         context.Units.Add( cyclop );
-                        context.SaveChanges();
+                        //context.SaveChanges();
                     }
                     if ( gobelin == null )
                     {
@@ -214,7 +214,6 @@ namespace ITI.SkyLord
                         context.Ressources.Add( gobelinCost );
                         UnitStatistics gobelinStatistics = new UnitStatistics { Attack = 40, PhysicResist = 30, MagicResist = 30, Capacity = 50, Speed = 30, Consumption = 5 };
                         context.UnitStatistics.Add( gobelinStatistics );
-                        context.SaveChanges();
 
                         gobelin = new Unit
                         {
@@ -223,10 +222,11 @@ namespace ITI.SkyLord
                             UnitName = UnitName.gobelin,
                             UnitDamageType = UnitDamageType.physical,
                             UnitCost = gobelinCost,
-                            UnitStatistics = gobelinStatistics
+                            UnitStatistics = gobelinStatistics,
+                            Duration = 60
                         };
                         context.Units.Add( gobelin );
-                        context.SaveChanges();
+                        //context.SaveChanges();
                     }
                     if ( guard == null )
                     {
@@ -234,7 +234,6 @@ namespace ITI.SkyLord
                         context.Ressources.Add( guardCost );
                         UnitStatistics guardStatistics = new UnitStatistics { Attack = 70, PhysicResist = 70, MagicResist = 40, Capacity = 100, Speed = 20, Consumption = 10 };
                         context.UnitStatistics.Add( guardStatistics );
-                        context.SaveChanges();
 
                         guard = new Unit
                         {
@@ -243,10 +242,11 @@ namespace ITI.SkyLord
                             UnitName = UnitName.guard,
                             UnitDamageType = UnitDamageType.physical,
                             UnitCost = guardCost,
-                            UnitStatistics = guardStatistics
+                            UnitStatistics = guardStatistics,
+                            Duration = 90
                         };
                         context.Units.Add( guard );
-                        context.SaveChanges();
+                        //context.SaveChanges();
                     }
                     if ( necromancer == null )
                     {
@@ -254,7 +254,6 @@ namespace ITI.SkyLord
                         context.Ressources.Add( necromancerCost );
                         UnitStatistics necromancerStatistics = new UnitStatistics { Attack = 70, PhysicResist = 40, MagicResist = 70, Capacity = 50, Speed = 30, Consumption = 15 };
                         context.UnitStatistics.Add( necromancerStatistics );
-                        context.SaveChanges();
 
                         necromancer = new Unit
                         {
@@ -264,9 +263,10 @@ namespace ITI.SkyLord
                             UnitDamageType = UnitDamageType.magical,
                             UnitCost = necromancerCost,
                             UnitStatistics = necromancerStatistics,
+                            Duration = 90
                         };
                         context.Units.Add( necromancer );
-                        context.SaveChanges();
+                        //context.SaveChanges();
                     }
                     if ( troll == null )
                     {
@@ -274,7 +274,6 @@ namespace ITI.SkyLord
                         context.Ressources.Add( trollCost );
                         UnitStatistics trollStatistics = new UnitStatistics { Attack = 180, PhysicResist = 60, MagicResist = 100, Capacity = 200, Speed = 15, Consumption = 20 };
                         context.UnitStatistics.Add( trollStatistics );
-                        context.SaveChanges();
 
                         troll = new Unit
                         {
@@ -284,9 +283,10 @@ namespace ITI.SkyLord
                             UnitDamageType = UnitDamageType.physical,
                             UnitCost = trollCost,
                             UnitStatistics = trollStatistics,
+                            Duration = 150
                         };
                         context.Units.Add( troll );
-                        context.SaveChanges();
+                        //context.SaveChanges();
                     }
                     if ( warrior == null )
                     {
@@ -294,7 +294,6 @@ namespace ITI.SkyLord
                         context.Ressources.Add( warriorCost );
                         UnitStatistics warriorStatistics = new UnitStatistics { Attack = 80, PhysicResist = 40, MagicResist = 40, Capacity = 125, Speed = 20, Consumption = 15 };
                         context.UnitStatistics.Add( warriorStatistics );
-                        context.SaveChanges();
 
                         warrior = new Unit
                         {
@@ -304,6 +303,7 @@ namespace ITI.SkyLord
                             UnitDamageType = UnitDamageType.physical,
                             UnitCost = warriorCost,
                             UnitStatistics = warriorStatistics,
+                            Duration = 70
                         };
                         context.Units.Add( warrior );
                         context.SaveChanges();
@@ -381,26 +381,7 @@ namespace ITI.SkyLord
             //}
             //    #endregion
 
-            }
-
-        private string ProtectPassword( string clearpassword )
-        {
-            // generate a 128-bit salt using a secure PRNG
-            byte[ ] salt = new byte[ 128 / 8 ];
-            //using ( var rng = RandomNumberGenerator.Create() )
-            //{
-            //    rng.GetBytes( salt );
-            //}
-
-            // TODO : garded le salt dans la table Player
-
-            // derive a 256-bit subkey (use HMACSHA1 with 10,000 iterations)
-            return Convert.ToBase64String( KeyDerivation.Pbkdf2(
-                password: clearpassword,
-                salt: salt,
-                prf: KeyDerivationPrf.HMACSHA1,
-                iterationCount: 10000,
-                numBytesRequested: 256 / 8 ) );
+        }
         }
         private Ressource Multiplyressource( Ressource initialRessource, int factor )
         {
