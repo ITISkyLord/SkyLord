@@ -10,7 +10,7 @@ namespace ITI.SkyLord.Models.Entity_Framework.Entites.Events
     {
 
         public long EventId { get; set; }
-        public EventType eventType { get; set; }
+        public string EventType { get; set; }
         public DateTime begginningDate { get; set; }
         public DateTime endingDate { get; set; }
         public bool done { get; set; }

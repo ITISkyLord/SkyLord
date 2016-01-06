@@ -15,6 +15,16 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
             // Customize the ASP.NET Identity model and override the defaults if needed.
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
+
+            builder.Entity<Event>()
+                .HasDiscriminator<string>("EventType")
+                    .HasValue<ArmyEvent>(EventDiscrimator.ArmyEvent)
+                    .HasValue<UnitEvent>(EventDiscrimator.UnitEvent)
+                    .HasValue<BuildingEvent>(EventDiscrimator.BuildingEvent)
+                    .HasValue<UpgradeEvent>(EventDiscrimator.UpgradeEvent)
+                    .HasValue<TechnologyEvent>(EventDiscrimator.TechnologyEvent);
+                    
+
         }
         public IConfigurationRoot Configuration { get; set; }
 
