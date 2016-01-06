@@ -32,9 +32,9 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
             return Players.Where( pl => pl.UserPlayer.User.Id == userId ).First();
         }
 
-        private Island GetIsland( long islandId, long playerId )
+        public Island GetIsland( long islandId, long playerId )
         {
-            if ( islandId == 0 )
+            if( islandId == 0 )
             {
                 long activePlayerId = playerId;
                 return Islands
@@ -44,6 +44,9 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
                     .Include( i => i.AllRessources )
                     .Include( i => i.Owner )
                     .Include( i => i.Coordinates )
+                    .Include( i => i.Buildings )
+                 //   .ThenInclude( b => b.Level )
+                  //  .ThenInclude( r => r.Requirements )
                     .SingleOrDefault( i => i.IsCapital && i.Owner.PlayerId == activePlayerId );
             }
             else
@@ -56,6 +59,9 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
                     .Include( i => i.AllRessources )
                     .Include( i => i.Owner )
                     .Include( i => i.Coordinates )
+                    .Include( i => i.Buildings )
+                   // .ThenInclude( b => b.Level )
+                  //  .ThenInclude( r => r.Requirements )
                     .SingleOrDefault( i => i.IslandId == islandId && i.Owner.PlayerId == activePlayerId );
             }
         }

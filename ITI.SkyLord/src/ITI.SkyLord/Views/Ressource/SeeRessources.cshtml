@@ -13,7 +13,7 @@
 
 @{ Ressource r = Model.Ressources;}
 
-<form asp-controller="Ressource" asp-route-name="Cristal" asp-action="AddRessources" method="post" role="form">
+<form asp-controller="Ressource" asp-route-name="Cristal" asp-route-islandId="@Model.Layout.IslandId" asp-action="AddRessources" method="post" role="form">
     <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
     <table>
         <tr>
@@ -23,7 +23,7 @@
         </tr>
     </table>
 </form>
-<form asp-controller="Ressource" asp-route-name="Wood" asp-action="AddRessources" method="post" role="form">
+<form asp-controller="Ressource" asp-route-name="Wood" asp-route-islandId="@Model.Layout.IslandId" asp-action="AddRessources" method="post" role="form">
     <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
     <table>
         <tr>
@@ -33,7 +33,7 @@
         </tr>
     </table>
 </form>
-<form asp-controller="Ressource" asp-route-name="Magic" asp-action="AddRessources" method="post" role="form">
+<form asp-controller="Ressource" asp-route-name="Magic" asp-route-islandId="@Model.Layout.IslandId" asp-action="AddRessources" method="post" role="form">
     <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
     <table>
         <tr>
@@ -43,7 +43,7 @@
         </tr>
     </table>
 </form>
-<form asp-controller="Ressource" asp-route-name="Metal" asp-action="AddRessources" method="post" role="form">
+<form asp-controller="Ressource" asp-route-name="Metal" asp-route-islandId="@Model.Layout.IslandId" asp-action="AddRessources" method="post" role="form">
     <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
     <table>
         <tr>

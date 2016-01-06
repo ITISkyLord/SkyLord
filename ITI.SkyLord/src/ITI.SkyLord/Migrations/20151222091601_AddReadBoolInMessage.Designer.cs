@@ -8,9 +8,10 @@ using ITI.SkyLord.Models.Entity_Framework.Contexts;
 namespace ITI.SkyLord.Migrations
 {
     [DbContext(typeof(SetupContext))]
-    partial class SetupContextModelSnapshot : ModelSnapshot
+    [Migration("20151222091601_AddReadBoolInMessage")]
+    partial class AddReadBoolInMessage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.0-rc1-16348")
@@ -21,9 +22,23 @@ namespace ITI.SkyLord.Migrations
                     b.Property<long>("ApprenticeId")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<long?>("LevelLevelId");
+
                     b.Property<long?>("MageMageId");
 
                     b.HasKey("ApprenticeId");
+                });
+
+            modelBuilder.Entity("ITI.SkyLord.ApprenticeLevel", b =>
+                {
+                    b.Property<long>("LevelId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<long?>("CostRessourceId");
+
+                    b.Property<int>("Number");
+
+                    b.HasKey("LevelId");
                 });
 
             modelBuilder.Entity("ITI.SkyLord.Army", b =>
@@ -43,8 +58,6 @@ namespace ITI.SkyLord.Migrations
                     b.Property<int>("BuildingId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("BuildingName");
-
                     b.Property<long?>("IslandIslandId");
 
                     b.Property<long?>("LevelLevelId");
@@ -58,8 +71,6 @@ namespace ITI.SkyLord.Migrations
                 {
                     b.Property<long>("LevelId")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<int>("BuildingName");
 
                     b.Property<long?>("CostRessourceId");
 
@@ -254,26 +265,6 @@ namespace ITI.SkyLord.Migrations
                     b.HasKey("RegimentId");
                 });
 
-            modelBuilder.Entity("ITI.SkyLord.Requirement", b =>
-                {
-                    b.Property<long>("RequirementId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<long?>("BuildingLevelLevelId");
-
-                    b.Property<int>("BuildingName");
-
-                    b.Property<long?>("LevelLevelId");
-
-                    b.Property<int>("Number");
-
-                    b.Property<long?>("TechnologyLevelLevelId");
-
-                    b.Property<int>("TechnologyName");
-
-                    b.HasKey("RequirementId");
-                });
-
             modelBuilder.Entity("ITI.SkyLord.Ressource", b =>
                 {
                     b.Property<long>("RessourceId")
@@ -313,8 +304,6 @@ namespace ITI.SkyLord.Migrations
 
                     b.Property<long?>("PlayerPlayerId");
 
-                    b.Property<int>("TechnologyName");
-
                     b.HasKey("TechnologyId");
                 });
 
@@ -326,8 +315,6 @@ namespace ITI.SkyLord.Migrations
                     b.Property<long?>("CostRessourceId");
 
                     b.Property<int>("Number");
-
-                    b.Property<int>("TechnologyName");
 
                     b.HasKey("LevelId");
                 });
@@ -545,9 +532,20 @@ namespace ITI.SkyLord.Migrations
 
             modelBuilder.Entity("ITI.SkyLord.Apprentice", b =>
                 {
+                    b.HasOne("ITI.SkyLord.ApprenticeLevel")
+                        .WithMany()
+                        .HasForeignKey("LevelLevelId");
+
                     b.HasOne("ITI.SkyLord.Mage")
                         .WithMany()
                         .HasForeignKey("MageMageId");
+                });
+
+            modelBuilder.Entity("ITI.SkyLord.ApprenticeLevel", b =>
+                {
+                    b.HasOne("ITI.SkyLord.Ressource")
+                        .WithMany()
+                        .HasForeignKey("CostRessourceId");
                 });
 
             modelBuilder.Entity("ITI.SkyLord.Army", b =>
@@ -665,21 +663,6 @@ namespace ITI.SkyLord.Migrations
                     b.HasOne("ITI.SkyLord.Unit")
                         .WithMany()
                         .HasForeignKey("UnitUnitId");
-                });
-
-            modelBuilder.Entity("ITI.SkyLord.Requirement", b =>
-                {
-                    b.HasOne("ITI.SkyLord.BuildingLevel")
-                        .WithMany()
-                        .HasForeignKey("BuildingLevelLevelId");
-
-                    b.HasOne("ITI.SkyLord.Level")
-                        .WithMany()
-                        .HasForeignKey("LevelLevelId");
-
-                    b.HasOne("ITI.SkyLord.TechnologyLevel")
-                        .WithMany()
-                        .HasForeignKey("TechnologyLevelLevelId");
                 });
 
             modelBuilder.Entity("ITI.SkyLord.Technology", b =>
