@@ -15,20 +15,22 @@ namespace ITI.SkyLord.Models.Managers
             
         }
 
-        public List<Event> Get(EventType et, SetupContext ctx, int IslandId)
+        public List<Event> Get(EventType et, IEventContext ctx, int IslandId)
         {
             return ctx.Events.Include(e => e.island).Where(e => e.island.IslandId == IslandId).ToList();
         }
 
 
-        public void ResolveAll(int islandId, SetupContext ctx)
+        public void ResolveAll(int islandId, IEventContext ctx)
         {
-            var t = ctx.Events.Where(e => true).ToList();
+            List<Event> t = ctx.Events.Where( e => e.done==false && e.endingDate > DateTime.Now).OrderBy(e=>e.endingDate).ToList();
 
             foreach(var a in t)
             {
                 a.Accept(this);
+                a.done = true;
             }
+
         }
 
         #region Resolve

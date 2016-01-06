@@ -53,6 +53,14 @@ namespace ITI.SkyLord.Controllers
             return View();
         }
 
+        public IActionResult YoloResolve()
+        {
+            EventManager t = new EventManager();
+            t.ResolveAll(1, SetupContext);
+
+            return View();
+        }
+
 
     }
 }

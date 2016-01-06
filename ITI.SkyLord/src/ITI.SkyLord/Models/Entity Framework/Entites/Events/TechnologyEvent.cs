@@ -10,7 +10,7 @@ namespace ITI.SkyLord.Models.Entity_Framework.Entites.Events
     {
         public Technology technology { get; set; }
 
-        public virtual void Accept(EventManager em) => em.Resolve(this);
+        public override void Accept(EventManager em) => em.Resolve(this);
 
     }
 }

@@ -11,7 +11,7 @@ namespace ITI.SkyLord.Models.Entity_Framework.Entites.Events
         public Building building { get; set; }
 
 
-        public virtual void Accept(EventManager em) => em.Resolve(this);
+        public override void Accept(EventManager em) => em.Resolve(this);
 
     }
 }
