@@ -19,6 +19,7 @@ namespace ITI.SkyLord
         public Island Island { get; set; }
 
         public IList<Regiment> Regiments { get; set; }
+
         #endregion
 
         #region Methods

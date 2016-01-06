@@ -975,6 +975,7 @@ namespace ITI.SkyLord.Tests.EfTests
                     #endregion
 
                     // Assert that LevelUp returns true and that the technologyLevel has been incremented
+
                     LeveManager bm = new LeveManager( context, defaultIsland.IslandId );
                     Assert.That( !bm.LevelUp( armor ) );
                     context.SaveChanges();
