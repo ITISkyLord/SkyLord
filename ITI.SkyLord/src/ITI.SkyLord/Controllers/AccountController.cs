@@ -155,15 +155,15 @@ namespace ITI.SkyLord.Models.Entity_Framework.Controllers
                         context.SaveChanges();
                     }
 
-                    //Building mageTower = new Building
-                    //{
-                    //    BuildingName = BuildingName.tower,
-                    //    Name = "Tour de mage"
-                    //};
-                    //LevelContext.Add( mageTower );
+                    Building mageTower = new Building
+                    {
+                        BuildingName = BuildingName.tower,
+                        Name = "Tour de mage"
+                    };
+                    LevelContext.Add( mageTower );
 
-                    //island.Buildings = new List<Building> { mageTower };
-                    //LevelContext.SaveChanges();
+                    island.Buildings = new List<Building> { mageTower };
+                    LevelContext.SaveChanges();
 
                     return RedirectToAction( nameof( HomeController.Index ), "Home" );
                 }

@@ -7,10 +7,24 @@
 }
 
 <ul>
-    @foreach (var building in Model.Buildings)
+    @foreach( var building in Model.Buildings )
     {
-    <li>@building
-    <ul>Test</ul>
+        <li>
+            Coucou @building.Name
+        </li>
+    }
+</ul>
+<ul>
+    @foreach( var building in Model.AvailableBuildings )
+    {
+        <li>
+            @building.Name
+        <form asp-route-islandId="@Model.Layout.CurrentIsland.IslandId" asp-controller="Building" asp-action="AddBuilding">
+            
+            <input type="number" value="2" asp-for="@Model.BuildingToBuild"/>
+            <button>Construire</button>
+        </form>
     </li>
+
     }
 </ul>

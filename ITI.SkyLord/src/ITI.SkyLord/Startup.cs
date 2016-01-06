@@ -16,6 +16,7 @@ using System;
 using Microsoft.AspNet.Cryptography.KeyDerivation;
 using Microsoft.Data.Entity.ChangeTracking;
 using ITI.SkyLord.Services;
+using System.Collections.Generic;
 
 namespace ITI.SkyLord
 {
@@ -310,7 +311,77 @@ namespace ITI.SkyLord
                 }
             }
             #endregion
-        }
+
+            //#region Temp seed level
+            //using( LevelContext context = new LevelContext () )
+            //{
+            //    Ressource barrackLevel1Cost = null;
+            //    Ressource barrackLevel2Cost = null;
+            //    Ressource barrackLevel3Cost = null;
+
+            //    Requirement barrackLevel2Requirement = null;
+            //    Requirement barrackLevel3Requirement = null;
+            //    Requirement barrackLevel3Requirement2 = null;
+
+            //    Level barrackLevel1 = null;
+            //    Level barrackLevel2 = null;
+            //    Level barrackLevel3 = null;
+            //    Level towerLevel2 = null;
+
+
+
+            //    // Set up requirements
+            //    barrackLevel2Requirement = new Requirement { BuildingName = BuildingName.barrack, Number = 1 };
+            //    barrackLevel3Requirement = new Requirement { BuildingName = BuildingName.barrack, Number = 2 };
+            //    barrackLevel3Requirement2 = new Requirement { BuildingName = BuildingName.tower, Number = 2 };
+            //    context.Add( barrackLevel2Requirement );
+            //    context.Add( barrackLevel3Requirement );
+            //    context.Add( barrackLevel3Requirement2 );
+
+            //    // Set up LevelCosts
+            //    barrackLevel1Cost = new Ressource { Wood = 100, Metal = 50 };
+            //    barrackLevel2Cost = Multiplyressource( barrackLevel1Cost, 2 );
+            //    barrackLevel3Cost = Multiplyressource( barrackLevel2Cost, 2 );
+            //    context.Add( barrackLevel1Cost );
+            //    context.Add( barrackLevel2Cost );
+            //    context.Add( barrackLevel3Cost );
+
+            //    // Set up Levels
+            //    barrackLevel1 = new BuildingLevel
+            //    {
+            //        Number = 1,
+            //        BuildingName = BuildingName.barrack,
+            //        Cost = barrackLevel1Cost
+            //    };
+            //    barrackLevel2 = new BuildingLevel
+            //    {
+            //        Number = 2,
+            //        BuildingName = BuildingName.barrack,
+            //        Cost = barrackLevel2Cost,
+            //        Requirements = new List<Requirement> { barrackLevel2Requirement }
+            //    };
+            //    barrackLevel3 = new BuildingLevel
+            //    {
+            //        Number = 3,
+            //        BuildingName = BuildingName.barrack,
+            //        Cost = barrackLevel3Cost,
+            //        Requirements = new List<Requirement> { barrackLevel3Requirement, barrackLevel3Requirement2 }
+            //    };
+            //    towerLevel2 = new BuildingLevel
+            //    {
+            //        Number = 2,
+            //        BuildingName = BuildingName.tower
+            //    };
+            //    context.Add( barrackLevel1 );
+            //    context.Add( barrackLevel2 );
+            //    context.Add( barrackLevel3 );
+            //    context.Add( towerLevel2 );
+
+            //    context.SaveChanges();
+            //}
+            //    #endregion
+
+            }
 
         private string ProtectPassword( string clearpassword )
         {
@@ -331,5 +402,16 @@ namespace ITI.SkyLord
                 iterationCount: 10000,
                 numBytesRequested: 256 / 8 ) );
         }
+        private Ressource Multiplyressource( Ressource initialRessource, int factor )
+        {
+            return new Ressource
+            {
+                Wood = initialRessource.Wood * factor,
+                Metal = initialRessource.Metal * factor,
+                Cristal = initialRessource.Cristal * factor,
+                Magic = initialRessource.Magic * factor
+            };
+        }
+
     }
 }
