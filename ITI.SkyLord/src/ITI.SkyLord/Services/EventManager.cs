@@ -10,11 +10,11 @@ namespace ITI.SkyLord
 {
     public class EventManager
     {
-        private SetupContext _generalContext;
+        private SetupContext ctx;
 
         public EventManager(SetupContext ctx)
         {
-            _generalContext = ctx;
+            this.ctx = ctx;
         }
 
         public void AddUnitEvent(IUnitEventContext ctx, Unit unit, Island island )
@@ -62,17 +62,25 @@ namespace ITI.SkyLord
             return ctx.Events.Include(e => e.island).Where(e => e.island.IslandId == IslandId).ToList();
         }
 
-        public void ResolveAll(int islandId, IEventContext ctx)
+        public void ResolveAllForIsland(long islandId)
         {
             // Selectionne les éléments pas encore fait et qui doivent être résolu, dans l'ordre de finission-
             List<Event> t = ctx.Events.Where( e => e.done==false && e.endingDate > DateTime.Now).OrderBy(e=>e.endingDate).ToList();
-
             foreach(var a in t)
             {
                 a.Accept(this);
                 a.done = true;
             }
+        }
 
+        public void ResolveAllForPlayer(long playerId)
+        {
+            var islands = ctx.Islands.Include(i => i.Owner).Where(i => i.Owner.PlayerId == playerId).ToList();
+            foreach (var island in islands)
+            {
+                ResolveAllForIsland(island.IslandId);
+            }
+            return;
         }
 
         #region Resolve
