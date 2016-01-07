@@ -10,7 +10,6 @@ namespace ITI.SkyLord
 {
     public class EventManager
     {
-
         private SetupContext _generalContext;
 
         public EventManager(SetupContext ctx)
