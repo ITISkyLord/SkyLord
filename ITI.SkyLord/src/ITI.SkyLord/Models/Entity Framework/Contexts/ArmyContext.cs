@@ -39,13 +39,15 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
                 .HasForeignKey( r => r.ArmyId );
         }
 
-        public override DbSet<Player> Players { get; set; }
-        public override DbSet<Island> Islands { get; set; }
+        //public override DbSet<Player> Players { get; set; }
+        //public override DbSet<Island> Islands { get; set; }
         public DbSet<Army> Armies { get; set; }
         public DbSet<Ressource> Ressources { get; set; }
         public DbSet<Unit> Units { get; set; }
         public DbSet<Regiment> Regiments { get; set; }
         public DbSet<UnitStatistics> UnitStatistics { get; set; }
+
+
 
         public EntityEntry Remove( Unit unit )
         {
