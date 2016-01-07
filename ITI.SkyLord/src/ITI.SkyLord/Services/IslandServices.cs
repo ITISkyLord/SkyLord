@@ -8,7 +8,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 
 
-namespace ITI.SkyLord.Services
+namespace ITI.SkyLord
 {
     public class IslandServices
     {

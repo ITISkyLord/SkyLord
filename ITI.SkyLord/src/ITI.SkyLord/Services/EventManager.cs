@@ -5,10 +5,8 @@ using System.Threading.Tasks;
 using ITI.SkyLord.Models.Entity_Framework.Entites.Events;
 using ITI.SkyLord.Models.Entity_Framework.Contexts;
 using Microsoft.Data.Entity;
-using ITI.SkyLord.Models.ObjectModel;
-using ITI.SkyLord.Services;
 
-namespace ITI.SkyLord.Models.Managers
+namespace ITI.SkyLord
 {
     public class EventManager
     {

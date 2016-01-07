@@ -2,7 +2,6 @@
 using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Data.Entity;
-using ITI.SkyLord.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.Extensions.Logging;
@@ -15,7 +14,6 @@ using ITI.SkyLord.Controllers;
 using System;
 using Microsoft.AspNet.Cryptography.KeyDerivation;
 using Microsoft.Data.Entity.ChangeTracking;
-using ITI.SkyLord.Services;
 
 namespace ITI.SkyLord
 {

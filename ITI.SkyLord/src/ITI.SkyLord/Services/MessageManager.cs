@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Security.Claims;
 
-namespace ITI.SkyLord.Models.Managers
+namespace ITI.SkyLord
 {
     public class MessageManager
     {
