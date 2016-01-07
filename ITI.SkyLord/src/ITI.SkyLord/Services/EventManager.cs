@@ -10,24 +10,24 @@ namespace ITI.SkyLord
 {
     public class EventManager
     {
-        private SetupContext ctx;
+        SetupContext _ctx;
+        EventPackManager _allManager;
 
-        public EventManager(SetupContext ctx)
+        public EventManager(SetupContext ctx, EventPackManager allManager)
         {
-            this.ctx = ctx;
+            _ctx = ctx;
+            _allManager = allManager;
         }
 
         public void AddUnitEvent(IUnitEventContext ctx, Unit unit, Island island )
         {
             ctx.UnitEvents.Add( new UnitEvent() { EventType = EventDiscrimator.UnitEvent, unit = unit, begginningDate = DateTime.Now, endingDate = DateTime.Now.AddSeconds( unit.UnitStatistics.TimeToBuild ), island = island, done = false } );
-            ctx.SaveChanges();
         }
 
         public void AddArmyEvent(IArmyEventContext ctx, Army army, Island island, ArmyMovement am, int timeToDistance, Island destination )
         {
             int secondsToGo = TimeToGoHereFromHere( island, destination, army);
             ctx.ArmyEvents.Add( new ArmyEvent() { EventType = EventDiscrimator.ArmyEvent, army = army, armyMovement = am, begginningDate = DateTime.Now, endingDate = DateTime.Now.AddSeconds( secondsToGo ), destination = destination, done = false, island = island } );
-            ctx.SaveChanges();
         }
 
         private int TimeToGoHereFromHere( Island island, Island destination, Army army )
@@ -42,19 +42,16 @@ namespace ITI.SkyLord
         public void AddBuildingEvent( IBuildingEventContext ctx, Building building, Island island )
         {
             ctx.BuildingEvents.Add( new BuildingEvent() { EventType = EventDiscrimator.BuildingEvent, BuildingToBuild = building, begginningDate = DateTime.Now, endingDate = DateTime.Now.AddSeconds(/*TIME TO BUILD BUILDING */ 100 ), done = false, island = island } );
-            ctx.SaveChanges();
         }
 
         public void AddUpgradeEvent( IBuildingEventContext ctx, Building building, Island island )
         {
             ctx.UpgradeEvents.Add( new UpgradeEvent() { EventType = EventDiscrimator.UpgradeEvent, buildingToUpgrade = building, begginningDate = DateTime.Now, endingDate = DateTime.Now.AddSeconds(/*TIME TO BUILD BUILDING */ 100 ), done = false, island = island } );
-            ctx.SaveChanges();
         }
 
         public void AddTechnologyEvent(ITechnologyEventContext ctx, Technology technology, Island island )
         {
             ctx.TechnologyEvents.Add( new TechnologyEvent() { EventType = EventDiscrimator.TechnologyEvent, technology = technology, begginningDate = DateTime.Now, endingDate = DateTime.Now.AddSeconds( 100 /* PAREIL QUE AU DESSUS */), done = false, island = island } );
-            ctx.SaveChanges();
         }
          
         public List<Event> Get(EventType et, IEventContext ctx, int IslandId)
@@ -65,7 +62,7 @@ namespace ITI.SkyLord
         public void ResolveAllForIsland(long islandId)
         {
             // Selectionne les éléments pas encore fait et qui doivent être résolu, dans l'ordre de finission-
-            List<Event> t = ctx.Events.Where( e => e.done==false && e.endingDate > DateTime.Now).OrderBy(e=>e.endingDate).ToList();
+            List<Event> t = _ctx.Events.Where( e => e.done==false && e.endingDate > DateTime.Now).OrderBy(e=>e.endingDate).ToList();
             foreach(var a in t)
             {
                 a.Accept(this);
@@ -75,7 +72,7 @@ namespace ITI.SkyLord
 
         public void ResolveAllForPlayer(long playerId)
         {
-            var islands = ctx.Islands.Include(i => i.Owner).Where(i => i.Owner.PlayerId == playerId).ToList();
+            var islands = _ctx.Islands.Include(i => i.Owner).Where(i => i.Owner.PlayerId == playerId).ToList();
             foreach (var island in islands)
             {
                 ResolveAllForIsland(island.IslandId);
@@ -86,31 +83,26 @@ namespace ITI.SkyLord
         #region Resolve
         public void Resolve(UnitEvent ue)
         {
-            //ArmyManager armyManager = new ArmyManager(_setupContext);
             throw new NotImplementedException();
         }
 
         public void Resolve(TechnologyEvent te)
         {
-            //TechnologyManager technologyManager = new TechnologyManager(_setupContext);
             throw new NotImplementedException();
         }
 
         public void Resolve(BuildingEvent be)
         {
-            //BuildingManager buildingManager = new BuildingManager(_setupContext);
             throw new NotImplementedException();
         }
 
         public void Resolve(UpgradeEvent ue)
         {
-            //BuildingManager buildingManager = new BuildingManager(_setupContext);
             throw new NotImplementedException();
         }
 
         public void Resolve(ArmyEvent ae)
         {
-            //ArmyManager armyManager = new ArmyManager(_setupContext);
             throw new NotImplementedException();
         }
         #endregion
