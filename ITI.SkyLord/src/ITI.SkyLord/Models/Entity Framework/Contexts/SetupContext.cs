@@ -84,29 +84,24 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
         public EventType EventTypes { get; set; }
         #endregion Enumerations
 
-
         #region Helper
 
         public Player GetPlayer(string userId)
         {
             return Players.Where(pl => pl.UserPlayer.User.Id == userId).First();
         }
-
         public World GetWorld()
         {
             return this.Worlds.FirstOrDefault();
         }
-
         public Player FindPlayer(long playerId)
         {
             return Players.Include( p => p.Profil).FirstOrDefault( p => p.PlayerId == playerId );
         }
-
         public Player FindPlayer(string playerMail)
         {
             return Players.FirstOrDefault( p => p.Mail == playerMail );
         }
-
         public void FillStandardVM(StandardViewModel svm, long playerId, long islandId)
         {
             svm.Layout = new LayoutViewModel();
@@ -116,7 +111,6 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
             svm.Layout.CurrentPlayer = Players.Single(p => p.PlayerId == playerId);
             svm.Layout.IslandId = islandId;
         }
-
         public Island GetIsland(long islandId, long playerId)
         {
             if (islandId == 0)
@@ -144,9 +138,16 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
                     .SingleOrDefault(i => i.IslandId == islandId && i.Owner.PlayerId == activePlayerId);
             }
         }
+        void IDbContext.OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            OnConfiguring(optionsBuilder);
+        }
+        void IDbContext.OnModelCreating(ModelBuilder modelBuilder)
+        {
+            OnModelCreating(modelBuilder);
+        }
 
         #endregion Helper
-
 
         //public DbSet<BuildingLevel> BuildingLevels { get; set; }
         //public DbSet<MageLevel> MageLevels { get; set; }

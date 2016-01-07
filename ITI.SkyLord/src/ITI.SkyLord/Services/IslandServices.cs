@@ -1,4 +1,5 @@
 ﻿using ITI.SkyLord.Models.Entity_Framework.Contexts;
+using ITI.SkyLord.Models.Entity_Framework.Contexts.Interface;
 using Microsoft.AspNet.Mvc;
 using Microsoft.Data.Entity;
 using System;
@@ -12,13 +13,11 @@ namespace ITI.SkyLord
 {
     public class IslandServices
     {
-        public IslandContext currentContext { get; set; }
-        public PlayerContext playerContext { get; set; }
+        public IIslandContext currentContext { get; set; }
 
-        public IslandServices(IslandContext context, PlayerContext context2)
+        public IslandServices(IIslandContext context)
         {
             currentContext = context;
-            playerContext = context2;
         }
 
         /// <summary>

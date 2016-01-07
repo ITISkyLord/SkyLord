@@ -64,12 +64,15 @@ namespace ITI.SkyLord
             // Add MVC services to the services container.
             services.AddMvc();
 
-
+            // TODO : Doit être supprimer
             services.AddScoped<PlayerContext>();
             services.AddScoped<IslandContext>();
             services.AddScoped<ArmyContext>();
             services.AddScoped<ArmyManager>();
             services.AddScoped<MessageContext>();
+            // Fin Doit être supprimer
+
+
             services.AddScoped<SetupContext>();
             // Uncomment the following line to add Web API services which makes it easier to port Web API 2 controllers.
             // You will also need to add the Microsoft.AspNet.Mvc.WebApiCompatShim package to the 'dependencies' section of project.json.

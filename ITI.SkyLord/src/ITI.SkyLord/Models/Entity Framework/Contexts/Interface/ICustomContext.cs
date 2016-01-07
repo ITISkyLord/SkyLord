@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ITI.SkyLord.Models.Entity_Framework.Contexts.Interface
 {
-    public interface ICustomContext : IGenericContext
+    public interface ICustomContext : IGenericContext, IDbContext
     {
        DbSet<Island> Islands { get; set; }
 

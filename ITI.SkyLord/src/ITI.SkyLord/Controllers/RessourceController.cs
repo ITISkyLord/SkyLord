@@ -14,11 +14,8 @@ namespace ITI.SkyLord.Controllers
     public class RessourceController : Controller
     {
         [FromServices]
-        public IslandContext IslandContext { get; set; }
+        public SetupContext SetupContext { get; set; }
 
-        [FromServices]
-        public PlayerContext PlayerContext { get; set; }
-        
         public IActionResult Index(/*int id*/)
         {
             return View();
@@ -27,8 +24,8 @@ namespace ITI.SkyLord.Controllers
         public IActionResult SeeRessources(int islandId)
         {
             SeeRessourcesViewModel sr = new SeeRessourcesViewModel();
-            PlayerContext.FillStandardVM( sr, PlayerContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
-            Island islandChoosen = IslandContext.Islands.Include(p => p.Owner).Include(r => r.AllRessources).Where(i => i.IslandId.Equals(islandId)).SingleOrDefault();
+            SetupContext.FillStandardVM( sr, SetupContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
+            Island islandChoosen = SetupContext.Islands.Include(p => p.Owner).Include(r => r.AllRessources).Where(i => i.IslandId.Equals(islandId)).SingleOrDefault();
             Ressource ressources = islandChoosen.AllRessources;
             sr.Ressources = ressources;
 
@@ -38,9 +35,9 @@ namespace ITI.SkyLord.Controllers
         public IActionResult SeeAllRessources(int islandId)
         {
             SeeRessourcesViewModel sr = new SeeRessourcesViewModel();
-            Player player = PlayerContext.GetPlayer(User.GetUserId());
-            PlayerContext.FillStandardVM( sr, PlayerContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
-            List<Ressource> ressources = IslandContext.Islands.Include(r => r.AllRessources).Where(i => i.Owner.PlayerId == player.PlayerId).Select(i => i.AllRessources).ToList();
+            Player player = SetupContext.GetPlayer(User.GetUserId());
+            SetupContext.FillStandardVM( sr, SetupContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
+            List<Ressource> ressources = SetupContext.Islands.Include(r => r.AllRessources).Where(i => i.Owner.PlayerId == player.PlayerId).Select(i => i.AllRessources).ToList();
 
             sr.AllRessources = ressources;
             return View(sr);
@@ -56,8 +53,8 @@ namespace ITI.SkyLord.Controllers
         {
             int x = 0;
             int.TryParse(quantity,out x);
-            IslandServices island = new IslandServices(IslandContext, PlayerContext);
-            Player owner = PlayerContext.GetPlayer(User.GetUserId());
+            IslandServices island = new IslandServices(SetupContext);
+            Player owner = SetupContext.GetPlayer(User.GetUserId());
             SeeRessourcesViewModel sr = new SeeRessourcesViewModel();
 
             island.AddRessources(name, owner.PlayerId, x);

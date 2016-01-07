@@ -21,7 +21,7 @@ namespace ITI.SkyLord.Tests.EfTests
         [TestCase("Jesuisunmessagedetest", "  ", false)]
         public void SendMessage(string coreMessage, string messageObject, bool returnSendMessageExpected)
         {
-            MessageContext mc = new MessageContext();
+            SetupContext mc = new SetupContext();
             MessageManager mm = new MessageManager(mc);
 
             try
@@ -53,7 +53,7 @@ namespace ITI.SkyLord.Tests.EfTests
         [Test]
         public void DeleteMessage()
         {
-            MessageContext mc = new MessageContext();
+            SetupContext mc = new SetupContext();
             MessageManager mm = new MessageManager(mc);
             string coreMessage = "Test";
             string messageObject = "Test";
@@ -72,7 +72,7 @@ namespace ITI.SkyLord.Tests.EfTests
         [Test]
         public void GetAllUnreadMessage()
         {
-            MessageContext mc = new MessageContext();
+            SetupContext mc = new SetupContext();
             MessageManager mm = new MessageManager(mc);
 
             string messageObject = "Nouvelle";
@@ -106,7 +106,7 @@ namespace ITI.SkyLord.Tests.EfTests
         [Test]
         public void GetAllMessageRead()
         {
-            MessageContext mc = new MessageContext();
+            SetupContext mc = new SetupContext();
             MessageManager mm = new MessageManager(mc);
 
             string messageObject = "Nouvelle";
@@ -141,7 +141,7 @@ namespace ITI.SkyLord.Tests.EfTests
         [Test]
         public void GetAllMessage()
         {
-            MessageContext mc = new MessageContext();
+            SetupContext mc = new SetupContext();
             MessageManager mm = new MessageManager(mc);
             string messageObject = "Nouvelle";
             string coreMessage = "Zozo";
@@ -175,7 +175,7 @@ namespace ITI.SkyLord.Tests.EfTests
         [Test]
         public void GetAllMessageSent()
         {
-            MessageContext mc = new MessageContext();
+            SetupContext mc = new SetupContext();
             MessageManager mm = new MessageManager(mc);
             string messageObject = "One piece";
             string coreMessage = "Boom";
@@ -209,7 +209,7 @@ namespace ITI.SkyLord.Tests.EfTests
         [Test]
         public void AnswerMessage()
         {
-            MessageContext mc = new MessageContext();
+            SetupContext mc = new SetupContext();
             MessageManager mm = new MessageManager(mc);
             string answercoreMessage = "Band bang bang bang";
             string coreMessage = "Lucious";
@@ -238,7 +238,7 @@ namespace ITI.SkyLord.Tests.EfTests
         public void ReadAMessage()
         {
 
-            MessageContext mc = new MessageContext();
+            SetupContext mc = new SetupContext();
             MessageManager mm = new MessageManager(mc);
 
             string coreMessage = "goku";
@@ -264,7 +264,7 @@ namespace ITI.SkyLord.Tests.EfTests
         public void DeleteWithIntParameter()
         {
 
-            MessageContext mc = new MessageContext();
+            SetupContext mc = new SetupContext();
             MessageManager mm = new MessageManager(mc);
 
             string coreMessage = "saitama";
