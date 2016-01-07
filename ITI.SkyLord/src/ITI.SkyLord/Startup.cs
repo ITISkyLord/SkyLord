@@ -312,8 +312,8 @@ namespace ITI.SkyLord
             }
             #endregion
 
-            //#region Temp seed level
-            //using( LevelContext context = new LevelContext () )
+            #region Temp seed level
+            //using ( LevelContext context = new LevelContext() )
             //{
             //    Ressource barrackLevel1Cost = null;
             //    Ressource barrackLevel2Cost = null;
@@ -379,7 +379,7 @@ namespace ITI.SkyLord
 
             //    context.SaveChanges();
             //}
-            //    #endregion
+            #endregion
 
         }
 

@@ -998,6 +998,13 @@ namespace ITI.SkyLord.Tests.EfTests
             }
         }
 
+        //[Test]
+        //public void SeedLevels_for_Barracks_works()
+        //{
+        //    LevelSeed levelSeed = new LevelSeed();
+        //    levelSeed.SeedBarrackLevels();
+        //}
+
         private Ressource Multiplyressource( Ressource initialRessource, int factor )
         {
             return new Ressource
