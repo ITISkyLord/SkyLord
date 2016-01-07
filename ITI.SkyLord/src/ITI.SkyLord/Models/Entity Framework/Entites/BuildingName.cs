@@ -9,6 +9,16 @@ namespace ITI.SkyLord
     {
         none,
         tower,
-        barrack
+        barrack,
+        laboratory,
+        library,
+        invocation,
+        academy,
+        cache,
+        woodField,
+        metalField,
+        cristalField,
+        magicField,
+        shield
     }
 }
