@@ -9,7 +9,6 @@ namespace ITI.SkyLord
 {
     public class Unit
     {
-        #region Properties
         public int UnitId { get; set; }
 
         public string Name { get; set;}
@@ -23,18 +22,7 @@ namespace ITI.SkyLord
         public UnitStatistics UnitStatistics { get; set; }
 
         public Ressource UnitCost { get; set; }
-        #endregion
-
-        //public override bool Equals( object obj )
-        //{
-        //    Unit other = obj as Unit;
-        //    return other != null && other.Name == this.Name;
-        //}
-
-        //public override int GetHashCode()
-        //{
-        //    if ( Name == null ) return 0;
-        //    return Name.GetHashCode();
-        //}
+        
+        public int Duration { get; set; }
     }
 }

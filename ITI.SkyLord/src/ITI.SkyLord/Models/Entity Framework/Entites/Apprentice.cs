@@ -11,6 +11,6 @@ namespace ITI.SkyLord
         [Key]
         public long ApprenticeId { get; set; }
 
-        public ApprenticeLevel Level { get; set; }
+        // public ApprenticeLevel Level { get; set; }
     }
 }
