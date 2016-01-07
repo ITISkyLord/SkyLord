@@ -8,9 +8,10 @@ using ITI.SkyLord.Models.Entity_Framework.Contexts;
 namespace ITI.SkyLord.Migrations
 {
     [DbContext(typeof(SetupContext))]
-    partial class SetupContextModelSnapshot : ModelSnapshot
+    [Migration("20160103025136_SetupBuilding")]
+    partial class SetupBuilding
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.0-rc1-16348")
@@ -62,8 +63,6 @@ namespace ITI.SkyLord.Migrations
                     b.Property<int>("BuildingName");
 
                     b.Property<long?>("CostRessourceId");
-
-                    b.Property<int>("Duration");
 
                     b.Property<int>("Number");
 
@@ -168,8 +167,6 @@ namespace ITI.SkyLord.Migrations
                     b.Property<string>("Discriminator")
                         .IsRequired();
 
-                    b.Property<int>("Duration");
-
                     b.Property<int>("Number");
 
                     b.HasKey("LevelId");
@@ -201,8 +198,6 @@ namespace ITI.SkyLord.Migrations
                     b.Property<string>("CoreMessage");
 
                     b.Property<string>("MessageObject");
-
-                    b.Property<bool>("Read");
 
                     b.Property<long?>("ReceiverPlayerId");
 
@@ -329,8 +324,6 @@ namespace ITI.SkyLord.Migrations
 
                     b.Property<long?>("CostRessourceId");
 
-                    b.Property<int>("Duration");
-
                     b.Property<int>("Number");
 
                     b.Property<int>("TechnologyName");
@@ -342,8 +335,6 @@ namespace ITI.SkyLord.Migrations
                 {
                     b.Property<int>("UnitId")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<int>("Duration");
 
                     b.Property<string>("Name");
 

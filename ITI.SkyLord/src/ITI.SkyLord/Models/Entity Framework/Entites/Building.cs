@@ -6,12 +6,13 @@ using System.Text;
 
 namespace ITI.SkyLord
 {
-    public abstract class Building
+    public class Building
     {
         [Key]
         public int BuildingId { get; set; }
 
         public string Name { get; set; }
+        public BuildingName BuildingName { get; set; }
 
         public BuildingLevel Level { get; set; }
     }

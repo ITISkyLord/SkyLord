@@ -14,7 +14,7 @@ namespace ITI.SkyLord
         public long TechnologyId { get; set; }
 
         public string Name { get; set; }
-
+        public TechnologyName TechnologyName { get; set; }
         public TechnologyLevel Level { get; set; }
         #endregion
 

@@ -23,6 +23,12 @@ namespace ITI.SkyLord.Models.Entity_Framework.Controllers
     [Authorize]
     public class AccountController : Controller
     {
+        [FromServices]
+        public PlayerContext PlayerContext { get; set; }
+
+        [FromServices]
+        public LevelContext LevelContext { get; set; }
+
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
@@ -42,9 +48,6 @@ namespace ITI.SkyLord.Models.Entity_Framework.Controllers
             _smsSender = smsSender;
             _logger = loggerFactory.CreateLogger<AccountController>();
         }
-
-        [FromServices]
-        public PlayerContext PlayerContext { get; set; }
 
         //
         // POST: /Account/Login
@@ -108,6 +111,9 @@ namespace ITI.SkyLord.Models.Entity_Framework.Controllers
                     //    "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation(3, "User created a new account with password.");
+
+                    Island island = null;
+
                     using (PlayerContext context = new PlayerContext())
                     {
                         //    Player p = new Player( context.GetWorld(), model.Pseudo, model.Email, model.Password );
@@ -118,7 +124,7 @@ namespace ITI.SkyLord.Models.Entity_Framework.Controllers
                         p.Password = model.registerViewModel.Password;
                         p.Profil = new Profil();
                         p.Profil.Description = "";
-                        Island island = context.Islands.Include(i => i.Coordinates).Where(i => i.Owner == null).OrderBy(i => IslandManager.DistanceFromCenter(i)).First();
+                        island = context.Islands.Include(i => i.Coordinates).Where(i => i.Owner == null ).OrderBy(i => IslandManager.DistanceFromCenter(i)).First();
                         p.Islands = new List<Island>();
                         island.IsCapital = true;
                         island.Name = "Île de " + p.Name;
@@ -127,9 +133,20 @@ namespace ITI.SkyLord.Models.Entity_Framework.Controllers
                         context.Players.Add(p);
                         context.Profils.Add(p.Profil);
                         context.User_Players.Add(new User_Player(p, user));
+
                         context.SaveChanges();
                     }
-                    return RedirectToAction(nameof(IslandController.SeeMyIsland), "Island");
+
+                    Building mageTower = new Building
+                    {
+                        BuildingName = BuildingName.tower,
+                        Name = "Tour de mage"
+                    };
+                    LevelContext.Add( mageTower );
+
+                    island.Buildings = new List<Building> { mageTower };
+                    LevelContext.SaveChanges();
+
                 }
 
                 AddErrors(result);

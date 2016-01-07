@@ -11,27 +11,10 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
 {
     public abstract class CustomContext : IdentityDbContext, IStandardContext
     {
-        //public IConfigurationRoot Configuration { get; set; }
-
-        //protected override void OnConfiguring( DbContextOptionsBuilder optionsBuilder )
-        //{
-        //    var builder = new ConfigurationBuilder()
-        //        .AddJsonFile( "appsettings.json" );
-
-        //    Configuration = builder.Build();
-        //    var appEnv = CallContextServiceLocator.Locator.ServiceProvider
-        //                    .GetRequiredService<IApplicationEnvironment>();
-        //    optionsBuilder.UseSqlServer( Configuration[ "Data:DefaultConnection:ConnectionString" ] );
-        //}
-
-        //protected override void OnModelCreating( ModelBuilder builder )
-        //{
-        //    base.OnModelCreating( builder );
-        //}
-
         public virtual DbSet<Island> Islands { get; set; }
 
         public virtual DbSet<Player> Players { get; set; }
+        public virtual DbSet<User_Player> User_Players { get; set; }
 
 
         public void FillStandardVM( StandardViewModel svm, long playerId, long islandId )
@@ -44,9 +27,14 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
             svm.Layout.IslandId = islandId;
         }
 
-        private Island GetIsland( long islandId, long playerId )
+        public Player GetPlayer( string userId )
         {
-            if ( islandId == 0 )
+            return Players.Where( pl => pl.UserPlayer.User.Id == userId ).First();
+        }
+
+        public Island GetIsland( long islandId, long playerId )
+        {
+            if( islandId == 0 )
             {
                 long activePlayerId = playerId;
                 return Islands
@@ -56,6 +44,9 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
                     .Include( i => i.AllRessources )
                     .Include( i => i.Owner )
                     .Include( i => i.Coordinates )
+                    .Include( i => i.Buildings )
+                 //   .ThenInclude( b => b.Level )
+                  //  .ThenInclude( r => r.Requirements )
                     .SingleOrDefault( i => i.IsCapital && i.Owner.PlayerId == activePlayerId );
             }
             else
@@ -68,9 +59,11 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
                     .Include( i => i.AllRessources )
                     .Include( i => i.Owner )
                     .Include( i => i.Coordinates )
+                    .Include( i => i.Buildings )
+                   // .ThenInclude( b => b.Level )
+                  //  .ThenInclude( r => r.Requirements )
                     .SingleOrDefault( i => i.IslandId == islandId && i.Owner.PlayerId == activePlayerId );
             }
-
         }
     }
 }
