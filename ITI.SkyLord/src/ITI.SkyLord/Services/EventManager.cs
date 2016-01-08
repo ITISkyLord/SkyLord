@@ -10,12 +10,12 @@ namespace ITI.SkyLord
 {
     public class EventManager
     {
-        SetupContext _ctx;
+        SetupContext _context;
         EventPackManager _allManager;
 
         public EventManager(SetupContext ctx, EventPackManager allManager)
         {
-            _ctx = ctx;
+            _context = ctx;
             _allManager = allManager;
         }
 
@@ -65,22 +65,22 @@ namespace ITI.SkyLord
             DateTime lastEndingDate = DateTime.Now;
             if( eventType == EventDiscrimator.UnitEvent )
             {
-                lastEndingDate = _ctx.UnitEvents.Where( u => u.island.Equals( island ) && u.done == false).OrderByDescending( d=> d.endingDate ).Select(d => d.endingDate).FirstOrDefault();
+                lastEndingDate = _context.UnitEvents.Where( u => u.island.Equals( island ) && u.done == false).OrderByDescending( d=> d.endingDate ).Select(d => d.endingDate).FirstOrDefault();
             } else if( eventType == EventDiscrimator.ArmyEvent )
             {
-                lastEndingDate = _ctx.ArmyEvents.Where( u => u.island.Equals( island ) && u.done == false ).OrderByDescending( d => d.endingDate ).Select( d => d.endingDate ).FirstOrDefault();
+                lastEndingDate = _context.ArmyEvents.Where( u => u.island.Equals( island ) && u.done == false ).OrderByDescending( d => d.endingDate ).Select( d => d.endingDate ).FirstOrDefault();
             }
             else if( eventType == EventDiscrimator.BuildingEvent )
             {
-                lastEndingDate = _ctx.BuildingEvents.Where( u => u.island.Equals( island ) && u.done == false ).OrderByDescending( d => d.endingDate ).Select( d => d.endingDate ).FirstOrDefault();
+                lastEndingDate = _context.BuildingEvents.Where( u => u.island.Equals( island ) && u.done == false ).OrderByDescending( d => d.endingDate ).Select( d => d.endingDate ).FirstOrDefault();
             }
             else if( eventType == EventDiscrimator.UpgradeEvent )
             {
-                lastEndingDate = _ctx.UpgradeEvents.Where( u => u.island.Equals( island ) && u.done == false ).OrderByDescending( d => d.endingDate ).Select( d => d.endingDate ).FirstOrDefault();
+                lastEndingDate = _context.UpgradeEvents.Where( u => u.island.Equals( island ) && u.done == false ).OrderByDescending( d => d.endingDate ).Select( d => d.endingDate ).FirstOrDefault();
             }
             else if( eventType == EventDiscrimator.TechnologyEvent )
             {
-                lastEndingDate = _ctx.TechnologyEvents.Where( u => u.island.Equals( island ) && u.done == false ).OrderByDescending( d => d.endingDate ).Select( d => d.endingDate ).FirstOrDefault();
+                lastEndingDate = _context.TechnologyEvents.Where( u => u.island.Equals( island ) && u.done == false ).OrderByDescending( d => d.endingDate ).Select( d => d.endingDate ).FirstOrDefault();
             } else
             {
                 throw new ArgumentException( "Le Event Discrimator n'est pas valide." );
@@ -99,27 +99,21 @@ namespace ITI.SkyLord
         /// <param name="islandId"></param>
         private void ResolveAllForIsland(long islandId)
         {
-            List<Event> allEvent = _ctx.Events.Where( e =>
-                    e.done==false && e.endingDate > DateTime.Now &&
-                        (e.island.IslandId==islandId || IsTargetOfArmyMovement(e, islandId)))
-                    .OrderBy(e=>e.endingDate).ToList();
+            // All events of the player
+            List<Event> allEvent = _context.Events.Where( e => e.done==false && e.endingDate < DateTime.Now && e.island.IslandId==islandId).ToList();
+            
+            // All army movements where player is the target
+            List<ArmyEvent> eventsWhereTarget = _context.ArmyEvents.Include(e => e.done == false && e.endingDate > DateTime.Now && e.destination.IslandId == islandId).Where(e => e.destination.IslandId == islandId).ToList();
 
+            // Merge the two lists order them by date of attack
+            allEvent = allEvent.Intersect( eventsWhereTarget ).OrderBy( e => e.endingDate ).ToList();
+
+            // So, we execute all events ( with a super visitor pattern OTFD )
             foreach(Event @event in allEvent)
             {
                 @event.Accept(this);
                 @event.done = true;
             }
-        }
-        
-        private bool IsTargetOfArmyMovement(Event @event, long islandId)
-        {
-            if(@event is ArmyEvent )
-            {
-                ArmyEvent armyEvent = (ArmyEvent) @event;
-                return (@event.EventType == EventDiscrimator.ArmyEvent && (armyEvent.destination.IslandId == islandId));
-            }
-
-            return false;
         }
 
         /// <summary>
@@ -128,7 +122,7 @@ namespace ITI.SkyLord
         /// <param name="playerId"></param>
         public void ResolveAllForPlayer(long playerId)
         {
-            var islands = _ctx.Islands.Include(i => i.Owner).Where(i => i.Owner.PlayerId == playerId).ToList();
+            var islands = _context.Islands.Include(i => i.Owner).Where(i => i.Owner.PlayerId == playerId).ToList();
             foreach (var island in islands)
             {
                 ResolveAllForIsland(island.IslandId);
@@ -149,6 +143,7 @@ namespace ITI.SkyLord
 
         internal void Resolve(BuildingEvent be)
         {
+            // Cette methode sera à changer vu qu'il faut que l'on construise sur un emplacement précis de l'island
             _allManager.BuildingManager.AddBuildingToIsland( be.BuildingToBuild.BuildingName, be.island.IslandId );
         }
 

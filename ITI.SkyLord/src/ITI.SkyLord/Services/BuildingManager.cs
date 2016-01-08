@@ -28,6 +28,7 @@ namespace ITI.SkyLord
         /// </summary>
         /// <param name="buildingName"></param>
         /// <returns>True : building was added. False : building not allowed.</returns>
+        /// TODO : Ajouter l'indice de l'emplacement de constuction
         public bool AddBuildingToIsland( BuildingName buildingName, long currentIslandId )
         {
             Building buildingToAdd;
