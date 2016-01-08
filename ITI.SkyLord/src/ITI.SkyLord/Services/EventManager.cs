@@ -60,12 +60,30 @@ namespace ITI.SkyLord
             return ctx.Events.Include(e => e.island).Where(e => e.island.IslandId == IslandId).ToList();
         }
 
-        private DateTime FindLastEndingDateInQueue( string unitEvent, Island island )
+        private DateTime FindLastEndingDateInQueue( string eventType, Island island )
         {
             DateTime lastEndingDate = DateTime.Now;
-            if( unitEvent == EventDiscrimator.UnitEvent )
+            if( eventType == EventDiscrimator.UnitEvent )
             {
                 lastEndingDate = _ctx.UnitEvents.Where( u => u.island.Equals( island ) && u.done == false).OrderByDescending( d=> d.endingDate ).Select(d => d.endingDate).FirstOrDefault();
+            } else if( eventType == EventDiscrimator.ArmyEvent )
+            {
+                lastEndingDate = _ctx.ArmyEvents.Where( u => u.island.Equals( island ) && u.done == false ).OrderByDescending( d => d.endingDate ).Select( d => d.endingDate ).FirstOrDefault();
+            }
+            else if( eventType == EventDiscrimator.BuildingEvent )
+            {
+                lastEndingDate = _ctx.BuildingEvents.Where( u => u.island.Equals( island ) && u.done == false ).OrderByDescending( d => d.endingDate ).Select( d => d.endingDate ).FirstOrDefault();
+            }
+            else if( eventType == EventDiscrimator.UpgradeEvent )
+            {
+                lastEndingDate = _ctx.UpgradeEvents.Where( u => u.island.Equals( island ) && u.done == false ).OrderByDescending( d => d.endingDate ).Select( d => d.endingDate ).FirstOrDefault();
+            }
+            else if( eventType == EventDiscrimator.TechnologyEvent )
+            {
+                lastEndingDate = _ctx.TechnologyEvents.Where( u => u.island.Equals( island ) && u.done == false ).OrderByDescending( d => d.endingDate ).Select( d => d.endingDate ).FirstOrDefault();
+            } else
+            {
+                throw new ArgumentException( "Le Event Discrimator n'est pas valide." );
             }
 
             if( lastEndingDate == null ) return DateTime.Now;
