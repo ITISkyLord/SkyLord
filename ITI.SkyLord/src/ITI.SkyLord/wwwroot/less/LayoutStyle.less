@@ -2,13 +2,47 @@
 @import "SkyLordMixin.less";
 
 html, body {
-    height: 100%;   
+    height: 100%;
+}
+
+.navbar {
+    margin-bottom: 0;
+    background-color: rgba(255,255,255,.94);
+    z-index: 9999;
+    border: 0;
+    font-size: 15px !important;
+    line-height: 1.42857143 !important;
+    letter-spacing: 4px;
+    border-radius: 0;
+    /*li a, 
+    .navbar-brand
+    {
+        color : #fff !important;
+    }*/
+}
+
+.navbar li a, .navbar .navbar-brand {
+    color: #3C0732 !important;
+}
+
+.navbar-nav li a:hover, .navbar-nav li.active a {
+    color:#3C0732 !important;
+    background-color: #fff !important;
+}
+
+
+.navbar-nav li a:hover, .navbar-nav li.active a {
+    background-color: #fff !important;
+}
+
+.navbar-default .navbar-toggle {
+    border-color: transparent;
+    color: #fff !important;
 }
 
 .SkyLordContainer {
     .container-fluid;
-    background-color: yellow;
-    .test;
+    .Section();
     height: 100%;
 
     .SkyLordMainRow {
@@ -17,30 +51,31 @@ html, body {
 
         .SkylordSideBar {
             .Col(1);
-            .test(pink);
+            .Section(pink);
         }
 
         .PageContent {
             .Col(11);
-            .test(green);
+            .Section();
 
             .MenuRow {
                 .row;
-                .test(red);
+                .Section(red);
 
-                .PointCounter, 
-                .Friends, 
-                .Armies, 
-                .Ranking, 
-                .Forum, 
-                .Logout, 
-                .Players, 
-                .Guild, 
-                .Messages, 
+                .PointCounter,
+                .Friends,
+                .Armies,
+                .Ranking,
+                .Forum,
+                .Logout,
+                .Players,
+                .Guild,
+                .Messages,
                 .Profile {
                     .Col(1);
-                    .test(blue);
+                    .Section(blue);
                 }
+
                 .Search {
                     .Col(2);
                 }
@@ -48,7 +83,8 @@ html, body {
 
             .RessourcesRow {
                 .row;
-                .test(red);
+                .Section(red);
+
                 .RessourceElement {
                     .Col(3);
                 }
@@ -56,7 +92,8 @@ html, body {
 
             .TroopMovementRow {
                 .row;
-                .test(red);
+                .Section(red);
+
                 .TroopLine {
                     .Col(12);
                 }
@@ -64,19 +101,28 @@ html, body {
 
             .ViewContentRow {
                 .row;
-                .test(red);
+                .Section(red);
             }
 
             .FooterRow {
                 .row;
-                .test(red);
+                .Section(red);
 
                 .FooterElement {
                     .Col(2);
-                    .test(purple);
+                    .Section(blue);
                 }
-
             }
         }
+    }
+}
+
+footer {
+    font-size: 15px;
+    margin-bottom: 1px;
+    background-color: whitesmoke;
+
+    li, a {
+        color:#3C0732;
     }
 }

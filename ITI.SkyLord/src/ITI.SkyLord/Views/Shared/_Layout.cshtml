@@ -30,9 +30,9 @@
 
                 <ul>
                     <li><a asp-controller="Island" asp-action="SeeMyIsland">Capitale</a></li>
-                    @foreach ( Island island in Model.Layout.AllIslands )
+                    @foreach (Island island in Model.Layout.AllIslands)
                     {
-                        @if ( !island.IsCapital )
+                        @if (!island.IsCapital)
                         {
                             <li><a asp-controller="Island" asp-action="SeeMyIsland" asp-route-islandId="@island.IslandId">@island.Name</a></li>
                         }
@@ -41,48 +41,41 @@
                 </ul>
             </div>
             <!-- /.Sidebar -->
-
+            <nav class="navbar navbar-default navbar-fixed-top">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#">Logo</a>
+                    </div>
+                    <div class="collapse navbar-collapse" id="myNavbar">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a asp-controller="Home" asp-action="Index" asp-route-islandId="@Model.Layout.IslandId">Amis</a></li>
+                            <li><a asp-controller="Army" asp-action="Index" asp-route-islandId="@Model.Layout.IslandId">Armées</a></li>
+                            <li><a asp-controller="Player" asp-action="SeePlayers" asp-route-islandId="@Model.Layout.IslandId">Joueurs</a></li>
+                            <li><a asp-controller="Message" asp-action="GetAllMessages" asp-route-islandId="@Model.Layout.IslandId">Messages</a></li>
+                            <li><a asp-controller="Home" asp-action="Index">Guilde</a></li>
+                            <li><a asp-controller="Home" asp-action="Index">Forum</a></li>
+                            <li><a asp-controller="Home" asp-action="Index">Classement</a></li>
+                            <li><a asp-controller="Profil" asp-action="Index" asp-route-islandId="@Model.Layout.IslandId">Profil</a></li>
+                            <li>
+                                <form asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm">
+                                    <button type="submit" class="btn btn-link navbar-btn navbar-link">Déconnexion</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
 
             <div class="PageContent">
                 <div class="MenuRow">
                     <div class="PointCounter">
                         <p>Points : 0</p>
                     </div>
-
-                    <div class="Friends">
-                        <form asp-controller="Home" asp-action="Index" method="post" id="FriendsForm">
-                            <button type="submit" class="btn btn-link navbar-btn navbar-link">Amis</button>
-                        </form>
-                    </div>
-
-                    <div class="Armies">
-                            <a asp-controller="Army" asp-action="Index" asp-route-islandId="@Model.Layout.IslandId">Armées</a>
-                    </div>
-
-                    <div class="Ranking">
-                        <form asp-controller="Home" asp-action="Index" method="post" id="RankingForm">
-                            <button type="submit" class="btn btn-link navbar-btn navbar-link">Classement</button>
-                        </form>
-                    </div>
-
-                    <div class="Forum">
-                        <form asp-controller="Home" asp-action="Index" method="post" id="ForumForm">
-                            <button type="submit" class="btn btn-link navbar-btn navbar-link">Forum</button>
-                        </form>
-                    </div>
-
-                    <div class="Logout">
-                        <form asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm">
-                            <button type="submit" class="btn btn-link navbar-btn navbar-link">Déconnexion</button>
-                        </form>
-                    </div>
-
-                    <div class="Players">
-                            <form asp-controller="Player" asp-action="SeePlayers" asp-route-islandId="@Model.Layout.IslandId" method="post" id="seePlayerForm">
-                            <button type="submit" class="btn btn-link navbar-btn navbar-link">Joueurs</button>
-                        </form>
-                    </div>
-
                     <div class="Search">
                         <form asp-controller="Player" asp-action="SeeInformationOfAnPlayerString" asp-route-islandId="@Model.Layout.IslandId" method="post" role="form">
                             <input type="text" placeholder="Recherche ..." name="namePlayer" style="width:70%" id="searchPlayer"><input style="width:20%;" type="submit" value="Go" /><br />
@@ -90,75 +83,64 @@
                                 <label>Guilde</label><input type="radio" />*@
                         </form>
                     </div>
+                    <!-- /.Menu -->
 
-                    <div class="Guild">
-                        <a asp-controller="Home" asp-action="Index">Guilde</a>
-                    </div>
+                    <div class="RessourcesRow">
+                        <div class="RessourceElement">
+                            <p>Bois : @Model.Layout.CurrentIsland.AllRessources.Wood </p>
+                        </div>
 
-                    <div class="Messages">
-                        <a asp-controller="Message" asp-action="GetAllMessages" asp-route-islandId="@Model.Layout.IslandId">Messages</a>
-                    </div>
+                        <div class="RessourceElement">
+                            <p>Metal : @Model.Layout.CurrentIsland.AllRessources.Metal </p>
+                        </div>
 
-                    <div class="Profile">
-                        <a asp-controller="Profil" asp-action="Index" asp-route-islandId="@Model.Layout.IslandId">Profil</a>
+                        <div class="RessourceElement">
+                            <p>Cristal : @Model.Layout.CurrentIsland.AllRessources.Cristal </p>
+                        </div>
+
+                        <div class="RessourceElement">
+                            <p>Magie : @Model.Layout.CurrentIsland.AllRessources.Magic </p>
+                        </div>
+
                     </div>
+                    <!-- /.Ressources-->
+
+                    <div class="TroopMovementRow">
+                        @*@if (Model.AttackerArmy.Count != 0)
+                            {
+                                 <div class="TroopLine">
+
+                                    <p>Mouvement de troupe</p>
+                                    @foreach (Army t in Model.AttackerArmy)
+                                    {
+
+
+                                    }
+                                 </div>
+                            }*@
+                    </div>
+                    <!-- /.TroopMovement -->
+
+                    <div class="ViewContentRow">
+                        @RenderBody()
+                    </div>
+                    <!-- /.ViewContent -->
                 </div>
-                <!-- /.Menu -->
-
-                <div class="RessourcesRow">
-                    <div class="RessourceElement">
-                        <p>Bois : @Model.Layout.CurrentIsland.AllRessources.Wood </p>
-                    </div>
-
-                    <div class="RessourceElement">
-                        <p>Metal : @Model.Layout.CurrentIsland.AllRessources.Metal </p>
-                    </div>
-
-                    <div class="RessourceElement">
-                        <p>Cristal : @Model.Layout.CurrentIsland.AllRessources.Cristal </p>
-                    </div>
-
-                    <div class="RessourceElement">
-                        <p>Magie : @Model.Layout.CurrentIsland.AllRessources.Magic </p>
-                    </div>
-
-                </div>
-                <!-- /.Ressources-->
-
-                <div class="TroopMovementRow">
-                    @*@if (Model.AttackerArmy.Count != 0)
-                        {
-                             <div class="TroopLine">
-
-                                <p>Mouvement de troupe</p>
-                                @foreach (Army t in Model.AttackerArmy)
-                                {
-
-
-                                }
-                             </div>
-                        }*@
-                </div>
-                <!-- /.TroopMovement -->
-
-                <div class="ViewContentRow">
-                    @RenderBody()
-                </div>
-                <!-- /.ViewContent -->
-
-                <div class="FooterRow">
-                    <div class="FooterElement"><a asp-controller="Home" asp-action="Index">Mentions légales</a></div>
-                    <div class="FooterElement"><a asp-controller="Home" asp-action="Index">Support</a></div>
-                    <div class="FooterElement"><a asp-controller="Home" asp-action="Index">Version du site</a></div>
-                    <div class="FooterElement"><a href="https://www.facebook.com/skylordgame">Notre page Facebook</a></div>
-                    <div class="FooterElement"><a href="https://translate.google.fr/translate?sl=en&tl=fr&js=y&prev=_t&hl=fr&ie=UTF-8&u=http%3A%2F%2Fwww.youporn.com&edit-text=&act=url">Notre page YouPorn</a></div>
-                    <div class="FooterElement"><a href="http://intechinfo.fr">IN'TECH</a></div>
-                </div>
-                <!-- /.Footer-->
             </div>
-
+            <!-- /.Footer-->
         </div>
     </div>
+
+    <footer class="container-fluid text-center">
+        <ul class="nav nav-pills nav-justified">
+            <li><a asp-controller="Home" asp-action="Index">Mentions légales</a></li>
+            <li><a asp-controller="Home" asp-action="Index">Support</a></li>
+            <li><a asp-controller="Home" asp-action="Index">Version du site</a></li>
+            <li><a asp-controller="Home" asp-action="Index">Mentions légales</a></li>
+            <li><a href="https://www.facebook.com/skylordgame">Notre page Facebook</a></li>
+            <li><a href="http://intechinfo.fr">IN'TECH</a></li>
+        </ul>
+    </footer>
 
     <environment names="Development">
         <!-- Quand on est en développement -->

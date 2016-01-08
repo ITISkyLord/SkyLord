@@ -156,8 +156,6 @@ namespace ITI.SkyLord.Models.Entity_Framework.Controllers
             return RedirectToAction("Index", "Home", model);
         }
 
-        //
-        // POST: /Account/LogOff
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> LogOff()
