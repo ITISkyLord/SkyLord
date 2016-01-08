@@ -6779,23 +6779,19 @@ body {
   left: 0px;
 }
 .navbar li a,
-.navbar .navbar-brand,
-.badge {
+.navbar .navbar-brand {
   color: #3C0732 !important;
 }
 .navbar-nav li a:hover,
-.navbar-nav li.active a,
-.badge {
+.navbar-nav li.active a {
   color: #3C0732 !important;
   background-color: #fff !important;
 }
 .navbar-nav li a:hover,
-.navbar-nav li.active a,
-.badge {
+.navbar-nav li.active a {
   background-color: #fff !important;
 }
-.navbar-default .navbar-toggle,
-.badge {
+.navbar-default .navbar-toggle {
   border-color: transparent;
   color: #fff !important;
 }
