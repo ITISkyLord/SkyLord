@@ -13,51 +13,57 @@ namespace ITI.SkyLord
         SetupContext _ctx;
         EventPackManager _allManager;
 
-        public EventManager(SetupContext ctx, EventPackManager allManager)
+        public EventManager( SetupContext ctx, EventPackManager allManager )
         {
             _ctx = ctx;
             _allManager = allManager;
         }
 
-        public void AddUnitEvent(IUnitEventContext ctx, Unit unit, Island island )
+        public void AddUnitEvent( IUnitEventContext ctx, Unit unit, Island island )
         {
             DateTime begginningDate = FindLastEndingDateInQueue( EventDiscrimator.UnitEvent, island );
             ctx.UnitEvents.Add( new UnitEvent() { EventType = EventDiscrimator.UnitEvent, unit = unit, begginningDate = begginningDate, endingDate = begginningDate.AddSeconds( unit.UnitStatistics.TimeToBuild ), island = island, done = false } );
         }
 
-        public void AddArmyEvent(IArmyEventContext ctx, Army army, Island island, ArmyMovement am, int timeToDistance, Island destination )
+        public void AddArmyEvent( IArmyEventContext ctx, Army army, Island island, ArmyMovement am, int timeToDistance, Island destination )
         {
+            // NE PAS OUBLIER D'AJOUTER L'ÉVÈNEMENT DE RETOUR
             int secondsToGo = TimeToGoHereFromHere( island, destination, army);
-            ctx.ArmyEvents.Add( new ArmyEvent() { EventType = EventDiscrimator.ArmyEvent, army = army, armyMovement = am, begginningDate = DateTime.Now, endingDate = DateTime.Now.AddSeconds( secondsToGo ), destination = destination, done = false, island = island } );
+            DateTime begginningDate = FindLastEndingDateInQueue( EventDiscrimator.ArmyEvent, island );
+
+            ctx.ArmyEvents.Add( new ArmyEvent() { EventType = EventDiscrimator.ArmyEvent, army = army, armyMovement = am, begginningDate = begginningDate, endingDate = DateTime.Now.AddSeconds( secondsToGo ), destination = destination, done = false, island = island } );
         }
 
         private int TimeToGoHereFromHere( Island island, Island destination, Army army )
         {
             int numberOfSeconds;
-            Unit slowerUnit = army.Regiments.Select(r=> r.Unit).OrderBy(u => u.UnitStatistics.Speed).FirstOrDefault();
+            Unit slowerUnit = army.Regiments.Select( r => r.Unit ).OrderBy( u => u.UnitStatistics.Speed ).FirstOrDefault();
             double distance = IslandManager.DistanceBeetweenTwoIslands( island, destination );
             numberOfSeconds = (int)distance * slowerUnit.UnitStatistics.Speed; // Voir si on modifie le ratio
             return numberOfSeconds;
         }
-        
+
         public void AddBuildingEvent( IBuildingEventContext ctx, Building building, Island island )
         {
-            ctx.BuildingEvents.Add( new BuildingEvent() { EventType = EventDiscrimator.BuildingEvent, BuildingToBuild = building, begginningDate = DateTime.Now, endingDate = DateTime.Now.AddSeconds(/*TIME TO BUILD BUILDING */ 100 ), done = false, island = island } );
+            DateTime begginningDate = FindLastEndingDateInQueue( EventDiscrimator.BuildingEvent, island );
+            ctx.BuildingEvents.Add( new BuildingEvent() { EventType = EventDiscrimator.BuildingEvent, BuildingToBuild = building, begginningDate = begginningDate, endingDate = DateTime.Now.AddSeconds(/*TIME TO BUILD BUILDING */ 100 ), done = false, island = island } );
         }
 
         public void AddUpgradeEvent( IBuildingEventContext ctx, Building building, Island island )
         {
-            ctx.UpgradeEvents.Add( new UpgradeEvent() { EventType = EventDiscrimator.UpgradeEvent, buildingToUpgrade = building, begginningDate = DateTime.Now, endingDate = DateTime.Now.AddSeconds(/*TIME TO BUILD BUILDING */ 100 ), done = false, island = island } );
+            DateTime begginningDate = FindLastEndingDateInQueue( EventDiscrimator.UpgradeEvent, island );
+            ctx.UpgradeEvents.Add( new UpgradeEvent() { EventType = EventDiscrimator.UpgradeEvent, buildingToUpgrade = building, begginningDate = begginningDate, endingDate = DateTime.Now.AddSeconds(/*TIME TO BUILD BUILDING */ 100 ), done = false, island = island } );
         }
 
-        public void AddTechnologyEvent(ITechnologyEventContext ctx, Technology technology, Island island )
+        public void AddTechnologyEvent( ITechnologyEventContext ctx, Technology technology, Island island )
         {
-            ctx.TechnologyEvents.Add( new TechnologyEvent() { EventType = EventDiscrimator.TechnologyEvent, technology = technology, begginningDate = DateTime.Now, endingDate = DateTime.Now.AddSeconds( 100 /* PAREIL QUE AU DESSUS */), done = false, island = island } );
+            DateTime begginningDate = FindLastEndingDateInQueue( EventDiscrimator.TechnologyEvent, island );
+            ctx.TechnologyEvents.Add( new TechnologyEvent() { EventType = EventDiscrimator.TechnologyEvent, technology = technology, begginningDate = begginningDate, endingDate = DateTime.Now.AddSeconds( 100 /* PAREIL QUE AU DESSUS */), done = false, island = island } );
         }
-         
-        public List<Event> Get(EventType et, IEventContext ctx, int IslandId)
+
+        public List<Event> Get( EventType et, IEventContext ctx, int islandId )
         {
-            return ctx.Events.Include(e => e.island).Where(e => e.island.IslandId == IslandId).ToList();
+            return ctx.Events.Include( e => e.island ).Where( e => e.island.IslandId == islandId ).ToList();
         }
 
         private DateTime FindLastEndingDateInQueue( string eventType, Island island )
@@ -65,8 +71,9 @@ namespace ITI.SkyLord
             DateTime lastEndingDate = DateTime.Now;
             if( eventType == EventDiscrimator.UnitEvent )
             {
-                lastEndingDate = _ctx.UnitEvents.Where( u => u.island.Equals( island ) && u.done == false).OrderByDescending( d=> d.endingDate ).Select(d => d.endingDate).FirstOrDefault();
-            } else if( eventType == EventDiscrimator.ArmyEvent )
+                lastEndingDate = _ctx.UnitEvents.Where( u => u.island.Equals( island ) && u.done == false ).OrderByDescending( d => d.endingDate ).Select( d => d.endingDate ).FirstOrDefault();
+            }
+            else if( eventType == EventDiscrimator.ArmyEvent )
             {
                 lastEndingDate = _ctx.ArmyEvents.Where( u => u.island.Equals( island ) && u.done == false ).OrderByDescending( d => d.endingDate ).Select( d => d.endingDate ).FirstOrDefault();
             }
@@ -81,7 +88,8 @@ namespace ITI.SkyLord
             else if( eventType == EventDiscrimator.TechnologyEvent )
             {
                 lastEndingDate = _ctx.TechnologyEvents.Where( u => u.island.Equals( island ) && u.done == false ).OrderByDescending( d => d.endingDate ).Select( d => d.endingDate ).FirstOrDefault();
-            } else
+            }
+            else
             {
                 throw new ArgumentException( "Le Event Discrimator n'est pas valide." );
             }
@@ -93,52 +101,48 @@ namespace ITI.SkyLord
 
         #region Resolve
 
-        public void ResolveAllForIsland(long islandId)
+        public void ResolveAllForIsland( long islandId )
         {
             // Selectionne les éléments pas encore fait et qui doivent être résolu, dans l'ordre de finission-
-            List<Event> t = _ctx.Events.Where( e => e.done==false && e.endingDate > DateTime.Now).OrderBy(e=>e.endingDate).ToList();
-            foreach(var a in t)
+            List<Event> listEvent = _ctx.Events.Where( e => e.done == false && e.endingDate > DateTime.Now ).OrderBy( e => e.endingDate ).ToList();
+            foreach( Event even in listEvent )
             {
-                a.Accept(this);
-                a.done = true;
+                even.Accept( this );
+                even.done = true;
             }
         }
-        public void ResolveAllForPlayer(long playerId)
+        public void ResolveAllForPlayer( long playerId )
         {
-            var islands = _ctx.Islands.Include(i => i.Owner).Where(i => i.Owner.PlayerId == playerId).ToList();
-            foreach (var island in islands)
+            List<Island> islands = _ctx.Islands.Include (i => i.Owner ).Where( i => i.Owner.PlayerId == playerId ).ToList();
+            foreach( Island island in islands )
             {
-                ResolveAllForIsland(island.IslandId);
+                ResolveAllForIsland( island.IslandId );
             }
-            return;
         }
 
-        
-        public void Resolve(UnitEvent ue)
+        public void Resolve( UnitEvent ue )
+        {
+            throw new NotImplementedException();
+        }
+        public void Resolve( ArmyEvent ae )
+        {
+            throw new NotImplementedException();
+        }
+        public void Resolve( TechnologyEvent te )
         {
             throw new NotImplementedException();
         }
 
-        public void Resolve(TechnologyEvent te)
+        public void Resolve( BuildingEvent be )
         {
             throw new NotImplementedException();
         }
 
-        public void Resolve(BuildingEvent be)
+        public void Resolve( UpgradeEvent ue )
         {
             throw new NotImplementedException();
         }
 
-        public void Resolve(UpgradeEvent ue)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Resolve(ArmyEvent ae)
-        {
-            throw new NotImplementedException();
-        }
         #endregion
-
     }
 }
