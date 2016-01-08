@@ -11,10 +11,8 @@ using ITI.SkyLord.ViewModel;
 
 namespace ITI.SkyLord.Controllers
 {
-    public class ArmyController : Controller
+    public class ArmyController : GenericController
     {
-        [FromServices]
-        public SetupContext SetupContext { get; set; }
 
         public IActionResult Index( long IslandId = 0 )
         {
@@ -26,17 +24,20 @@ namespace ITI.SkyLord.Controllers
             ArmyManager am = new ArmyManager( SetupContext );
             if( model.UnitsToAdd.Count( kvp => kvp.Value == 0 ) != model.UnitsToAdd.Count() && !model.UnitsToAdd.Any( kvp => kvp.Value < 0 ) )
             {
-                foreach ( KeyValuePair<string, int> kvp in model.UnitsToAdd )
+                EventManager em = new EventManager( SetupContext, new EventPackManager( SetupContext ));
+
+                foreach( KeyValuePair<string, int> kvp in model.UnitsToAdd )
                 {
-                    if ( kvp.Value > 0 )
+                    if( kvp.Value > 0 )
                     {
                         UnitName uN = (UnitName)Enum.Parse( typeof( UnitName ), kvp.Key, true );
-                        am.AddUnit
-                            (
-                                SetupContext.Units.Where( u => u.UnitName == uN ).Single(),
-                                kvp.Value,
-                                GetIsland( islandId )
-                            );
+                        em.AddUnitEvent( SetupContext, SetupContext.Units.Where( u => u.UnitName == uN ).Single(), kvp.Value, GetIsland( islandId ) );
+                        //am.AddUnit
+                        //    (
+                        //        SetupContext.Units.Where( u => u.UnitName == uN ).Single(),
+                        //        kvp.Value,
+                        //        GetIsland( islandId )
+                        //    );
                     }
                 }
                 SetupContext.SaveChanges();

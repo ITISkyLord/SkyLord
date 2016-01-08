@@ -28,7 +28,8 @@ namespace ITI.SkyLord.Tests.EfTests
                 UnitCost = new Ressource() { Cristal = 100, Magic = 100, Metal = 100, Wood = 100 },
                 UnitType = UnitType.soldier
             };
-            em.AddUnitEvent( ctx, u, island );
+
+            em.AddUnitEvent( ctx, u, 5, island );
             ctx.SaveChanges();
             Assert.That( ctx.UnitEvents != null );
         }

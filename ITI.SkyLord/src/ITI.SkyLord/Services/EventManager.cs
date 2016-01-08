@@ -12,17 +12,37 @@ namespace ITI.SkyLord
     {
         SetupContext _ctx;
         EventPackManager _allManager;
+        List<UnitEvent> _unitEvents;
 
         public EventManager( SetupContext ctx, EventPackManager allManager )
         {
             _ctx = ctx;
             _allManager = allManager;
+            _unitEvents = new List<UnitEvent>();
         }
 
-        public void AddUnitEvent( IUnitEventContext ctx, Unit unit, Island island )
+        public void AddUnitEvent( IUnitEventContext ctx, Unit unit, int number, Island island )
         {
-            DateTime begginningDate = FindLastEndingDateInQueue( EventDiscrimator.UnitEvent, island );
-            ctx.UnitEvents.Add( new UnitEvent() { EventType = EventDiscrimator.UnitEvent, unit = unit, begginningDate = begginningDate, endingDate = begginningDate.AddSeconds( unit.UnitStatistics.TimeToBuild ), island = island, done = false } );
+            
+            for( int j = 0; j < number; j++ )
+            {
+                DateTime begginningDate = FindLastEndingDateInQueue( EventDiscrimator.UnitEvent, island );
+                _unitEvents.Add( new UnitEvent()
+                {
+                    EventType = EventDiscrimator.UnitEvent,
+                    Unit = unit,
+                    begginningDate = begginningDate,
+                    endingDate = begginningDate.AddSeconds( unit.Duration ),
+                    island = island,
+                    done = false
+                } );
+
+            }
+            foreach( UnitEvent ue in _unitEvents )
+            {
+                ctx.UnitEvents.Add( ue );
+            }
+
         }
 
         public void AddArmyEvent( IArmyEventContext ctx, Army army, Island island, ArmyMovement am, int timeToDistance, Island destination )
@@ -71,7 +91,9 @@ namespace ITI.SkyLord
             DateTime lastEndingDate = DateTime.Now;
             if( eventType == EventDiscrimator.UnitEvent )
             {
-                lastEndingDate = _ctx.UnitEvents.Where( u => u.island.Equals( island ) && u.done == false ).OrderByDescending( d => d.endingDate ).Select( d => d.endingDate ).FirstOrDefault();
+                lastEndingDate = _unitEvents.Where( u => u.island.Equals( island ) && u.done == false )
+                                                .OrderByDescending( d => d.endingDate ).Select( d => d.endingDate )
+                                                .FirstOrDefault();
             }
             else if( eventType == EventDiscrimator.ArmyEvent )
             {
@@ -94,7 +116,7 @@ namespace ITI.SkyLord
                 throw new ArgumentException( "Le Event Discrimator n'est pas valide." );
             }
 
-            if( lastEndingDate == null ) return DateTime.Now;
+            if( lastEndingDate == null ||lastEndingDate == new DateTime(01,01,01)) return DateTime.Now;
             else return lastEndingDate;
         }
 
@@ -103,13 +125,21 @@ namespace ITI.SkyLord
 
         public void ResolveAllForIsland( long islandId )
         {
-            // Selectionne les éléments pas encore fait et qui doivent être résolu, dans l'ordre de finission-
-            List<Event> listEvent = _ctx.Events.Where( e => e.done == false && e.endingDate > DateTime.Now ).OrderBy( e => e.endingDate ).ToList();
-            foreach( Event even in listEvent )
+            // Sélectionne les éléments pas encore fait et qui doivent être résolus, dans l'ordre de finission-
+            //List<Event> listEvent = _ctx.Events.Where( e => e.done == false && e.endingDate > DateTime.Now ).OrderBy( e => e.endingDate ).ToList();
+
+            List<UnitEvent> listUnitEvent = _ctx.UnitEvents.Include(u => u.Unit).ThenInclude( u => u.UnitStatistics).Where( e => e.done == false && e.endingDate < DateTime.Now ).OrderBy( e => e.endingDate ).ToList();
+            foreach( UnitEvent unitEvent in listUnitEvent )
             {
-                even.Accept( this );
-                even.done = true;
+                unitEvent.Accept( this );
+                unitEvent.done = true;
             }
+            //foreach( Event even in listEvent )
+            //{
+
+            //    even.Accept( this );
+            //    even.done = true;
+            //}
         }
         public void ResolveAllForPlayer( long playerId )
         {
@@ -122,8 +152,24 @@ namespace ITI.SkyLord
 
         public void Resolve( UnitEvent ue )
         {
-            throw new NotImplementedException();
+            // Ajouter une unité dans l'armée, voir avec Army Controller
+            // Gérer les listes d'unités à ajouter, à l'instar de UnitsToAdd dans la model relié à ArmyController.
+            // Gérer le temps d'attente entre les unités et vérifier que ça ne pose pas de problème d'ajouter une unité à une armée qui est partie en attaque.
+            ArmyManager am = new ArmyManager( _ctx );
+            am.AddUnit( ue.Unit, 1, ue.island );
+            _ctx.SaveChanges();
+            // TODO : Si plusieurs lignes sont finies en même temps, on peut les cumuler avec ArmyManager.AddUnit
+
+            //UnitName uN = (UnitName)Enum.Parse( typeof( UnitName ), kvp.Key, true );
+            //am.AddUnit
+            //    (
+            //        _ctx.Units.Where( u => u.UnitName == uN ).Single(),
+            //        kvp.Value,
+            //        ue.island
+            //    );
         }
+
+
         public void Resolve( ArmyEvent ae )
         {
             throw new NotImplementedException();
