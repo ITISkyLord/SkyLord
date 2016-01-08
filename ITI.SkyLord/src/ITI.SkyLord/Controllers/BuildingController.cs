@@ -47,19 +47,19 @@ namespace ITI.SkyLord.Controllers
             return View( buildingViewModel );
         }
 
-        public IActionResult AddBuilding(BuildingViewModel model, long islandId = 0)
+        public IActionResult AddBuilding( BuildingViewModel model, long islandId = 0)
         {
             BuildingViewModel buildingViewModel = new BuildingViewModel();
             long playerId = PlayerContext.GetPlayer( User.GetUserId() ).PlayerId;
 
             BuildingManager buildingManager = new BuildingManager(LevelContext, islandId, playerId);
-            buildingManager.AddBuildingToIsland( model.BuildingToBuild );
 
-            LevelContext.SaveChanges();
+            if( buildingManager.AddBuildingToIsland( model.BuildingToBuild ) )
+            {
+                LevelContext.SaveChanges();
+            }
+            return RedirectToAction( "SeeBuildings", new { islandId = islandId } );
 
-            IslandContext.FillStandardVM( buildingViewModel, playerId, islandId );
-
-            return View( buildingViewModel );
         }
     }
 }
