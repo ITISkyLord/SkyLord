@@ -10,13 +10,13 @@ namespace ITI.SkyLord
 {
     public class EventManager
     {
-        SetupContext _ctx;
+        SetupContext _context;
         EventPackManager _allManager;
         List<UnitEvent> _unitEvents;
 
         public EventManager( SetupContext ctx, EventPackManager allManager )
         {
-            _ctx = ctx;
+            _context = ctx;
             _allManager = allManager;
             _unitEvents = new List<UnitEvent>();
         }
@@ -106,19 +106,19 @@ namespace ITI.SkyLord
             }
             else if( eventType == EventDiscrimator.ArmyEvent )
             {
-                lastEndingDate = _ctx.ArmyEvents.Where( u => u.island.Equals( island ) && u.done == false ).OrderByDescending( d => d.endingDate ).Select( d => d.endingDate ).FirstOrDefault();
+                lastEndingDate = _context.ArmyEvents.Where( u => u.island.Equals( island ) && u.done == false ).OrderByDescending( d => d.endingDate ).Select( d => d.endingDate ).FirstOrDefault();
             }
             else if( eventType == EventDiscrimator.BuildingEvent )
             {
-                lastEndingDate = _ctx.BuildingEvents.Where( u => u.island.Equals( island ) && u.done == false ).OrderByDescending( d => d.endingDate ).Select( d => d.endingDate ).FirstOrDefault();
+                lastEndingDate = _context.BuildingEvents.Where( u => u.island.Equals( island ) && u.done == false ).OrderByDescending( d => d.endingDate ).Select( d => d.endingDate ).FirstOrDefault();
             }
             else if( eventType == EventDiscrimator.UpgradeEvent )
             {
-                lastEndingDate = _ctx.UpgradeEvents.Where( u => u.island.Equals( island ) && u.done == false ).OrderByDescending( d => d.endingDate ).Select( d => d.endingDate ).FirstOrDefault();
+                lastEndingDate = _context.UpgradeEvents.Where( u => u.island.Equals( island ) && u.done == false ).OrderByDescending( d => d.endingDate ).Select( d => d.endingDate ).FirstOrDefault();
             }
             else if( eventType == EventDiscrimator.TechnologyEvent )
             {
-                lastEndingDate = _ctx.TechnologyEvents.Where( u => u.island.Equals( island ) && u.done == false ).OrderByDescending( d => d.endingDate ).Select( d => d.endingDate ).FirstOrDefault();
+                lastEndingDate = _context.TechnologyEvents.Where( u => u.island.Equals( island ) && u.done == false ).OrderByDescending( d => d.endingDate ).Select( d => d.endingDate ).FirstOrDefault();
             }
             else
             {
@@ -132,16 +132,33 @@ namespace ITI.SkyLord
 
         #region Resolve
 
-        public void ResolveAllForIsland( long islandId )
+        /// <summary>
+        /// Selectionne les éléments pas encore fait et qui doivent être résolu, dans l'ordre de finission
+        /// </summary>
+        /// <param name="islandId"></param>
+        private void ResolveAllForIsland(long islandId)
         {
+            // All events of the player
+            List<Event> allEvent = _context.Events.Where( e => e.done==false && e.endingDate < DateTime.Now && e.island.IslandId==islandId).ToList();
+            
+            // All army movements where player is the target
+            List<ArmyEvent> eventsWhereTarget = _context.ArmyEvents.Include(e => e.done == false && e.endingDate > DateTime.Now && e.destination.IslandId == islandId).Where(e => e.destination.IslandId == islandId).ToList();
             // Sélectionne les éléments pas encore fait et qui doivent être résolus, dans l'ordre de finission-
             //List<Event> listEvent = _ctx.Events.Where( e => e.done == false && e.endingDate > DateTime.Now ).OrderBy( e => e.endingDate ).ToList();
 
             List<UnitEvent> listUnitEvent = _ctx.UnitEvents.Include(u => u.Unit).ThenInclude( u => u.UnitStatistics).Where( e => e.done == false && e.endingDate < DateTime.Now ).OrderBy( e => e.endingDate ).ToList();
             foreach( UnitEvent unitEvent in listUnitEvent )
+
+            // Merge the two lists order them by date of attack
+            allEvent = allEvent.Intersect( eventsWhereTarget ).OrderBy( e => e.endingDate ).ToList();
+
+            // So, we execute all events ( with a super visitor pattern OTFD )
+            foreach(Event @event in allEvent)
             {
                 unitEvent.Accept( this );
                 unitEvent.done = true;
+                @event.Accept(this);
+                @event.done = true;
             }
             //foreach( Event even in listEvent )
             //{
@@ -150,6 +167,11 @@ namespace ITI.SkyLord
             //    even.done = true;
             //}
         }
+
+        /// <summary>
+        /// Resolve all event on all island of the current player
+        /// </summary>
+        /// <param name="playerId"></param>
         public void ResolveAllForPlayer( long playerId )
         {
             List<Island> islands = _ctx.Islands.Include (i => i.Owner ).Where( i => i.Owner.PlayerId == playerId ).ToList();
@@ -157,6 +179,7 @@ namespace ITI.SkyLord
             {
                 ResolveAllForIsland( island.IslandId );
             }
+
         }
 
         public void Resolve( UnitEvent ue )
@@ -178,7 +201,7 @@ namespace ITI.SkyLord
             //    );
         }
 
-
+        internal void Resolve(TechnologyEvent te)
         public void Resolve( ArmyEvent ae )
         {
             throw new NotImplementedException();
@@ -188,15 +211,21 @@ namespace ITI.SkyLord
             throw new NotImplementedException();
         }
 
-        public void Resolve( BuildingEvent be )
+        internal void Resolve(BuildingEvent be)
         {
-            throw new NotImplementedException();
+            // Cette methode sera à changer vu qu'il faut que l'on construise sur un emplacement précis de l'island
+            _allManager.BuildingManager.AddBuildingToIsland( be.BuildingToBuild.BuildingName, be.island.IslandId );
         }
 
-        public void Resolve( UpgradeEvent ue )
+        internal void Resolve(UpgradeEvent ue)
         {
-            throw new NotImplementedException();
+            _allManager.BuildingManager.LevelUpBuilding( ue.buildingToUpgrade, ue.island.IslandId );
         }
+
+        internal void Resolve(ArmyEvent ae)
+
+
+
 
         #endregion
     }

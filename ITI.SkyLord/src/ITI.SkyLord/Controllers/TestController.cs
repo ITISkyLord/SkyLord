@@ -53,8 +53,7 @@ namespace ITI.SkyLord.Controllers
         public IActionResult YoloResolve()
         {
             EventManager t = new EventManager( SetupContext , new EventPackManager( SetupContext) );
-            t.ResolveAllForIsland( 1 );
-
+            t.ResolveAllForPlayer( 2 );
             return View();
         }
 

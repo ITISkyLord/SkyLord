@@ -3,45 +3,50 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ITI.SkyLord.Models.Entity_Framework.Contexts;
+using ITI.SkyLord.Models.Entity_Framework.Contexts.Interface;
 using Microsoft.Data.Entity;
 
-namespace ITI.SkyLord.Services
+namespace ITI.SkyLord
 {
     public class BuildingManager
     {
-        LevelContext _currentContext;
-        long _currentIslandId;
-        long _playerId;
+        ILevelContext _currentContext;
 
-        public BuildingManager( LevelContext currentContext, long currentIslandId, long playerId )
+        public ILevelContext CurrentContext { get; }
+        public LevelManager LevelManager { get; set; }
+
+
+
+        public BuildingManager( ILevelContext currentContext, LevelManager levelManager )
         {
-            _currentContext = currentContext;
-            _currentIslandId = currentIslandId;
-            _playerId = playerId;
+            CurrentContext = currentContext;
+            LevelManager = levelManager;
         }
 
         /// <summary>
-        /// 
+        /// Adds a level 1 building to an Island, checks if the building can be built
         /// </summary>
         /// <param name="buildingName"></param>
         /// <returns>True : building was added. False : building not allowed.</returns>
-        public bool AddBuildingToIsland( BuildingName buildingName )
+        /// TODO : Ajouter l'indice de l'emplacement de constuction
+        public bool AddBuildingToIsland( BuildingName buildingName, long currentIslandId )
         {
             Building buildingToAdd;
             buildingToAdd = new Building
             {
                 Name = BuildingNameToName( buildingName ),
                 BuildingName = buildingName,
-                Level = _currentContext.BuildingLevels.Where( bl => bl.BuildingName == buildingName && bl.Number == 1 ).Single()
+                Level = CurrentContext.BuildingLevels.Where( bl => bl.BuildingName == buildingName && bl.Number == 1 ).Single()
             };
 
             // If the building already exists AND is supposed to be unique on the island, don't add it and return false
-            if ( GetBuildingsOnCurrentIsland().Any( b => buildingToAdd.BuildingName == b.BuildingName ) && IsBuildingUnique( buildingName ) )
+            if ( GetBuildingsOnCurrentIsland( currentIslandId ).Any( b => buildingToAdd.BuildingName == b.BuildingName ) && IsBuildingUnique( buildingName ) )
             {
                 return false;
             }
+            long playerId = CurrentContext.Islands.Include( i => i.Owner).SingleOrDefault( i => i.IslandId == currentIslandId ).Owner.PlayerId;
 
-            Island currentIsland = _currentContext.GetIsland( _currentIslandId, _playerId);
+            Island currentIsland = CurrentContext.GetIsland( currentIslandId, playerId );
             if( currentIsland.Buildings == null )
             {
                 currentIsland.Buildings = new List<Building>();
@@ -49,6 +54,27 @@ namespace ITI.SkyLord.Services
             currentIsland.Buildings.Add( buildingToAdd );
 
             return true;
+        }
+
+        public bool LevelUpBuilding( BuildingName buildingNameToLevelUp, long currentIslandId )
+        {
+            Building buildingToLevelUp = GetBuildingsOnCurrentIsland( currentIslandId ).Single( b => b.BuildingName == buildingNameToLevelUp );
+
+            if ( LevelManager.IsNextLevelAvailable( buildingToLevelUp.Level, currentIslandId ) )
+            {
+                return LevelManager.LevelUp( buildingToLevelUp );
+            }
+            return false;
+        }
+
+        public bool LevelUpBuilding( Building buildingToLevelUp, long currentIslandId )
+        {
+            // TODO Dépenser la THUNE MA COUILLE !!
+            if ( LevelManager.IsNextLevelAvailable( buildingToLevelUp.Level, currentIslandId ) )
+            {
+                return LevelManager.LevelUp( buildingToLevelUp );
+            }
+            return false;
         }
 
         public List<Building> GetAvailableBuildings()
@@ -63,6 +89,7 @@ namespace ITI.SkyLord.Services
             }
             return availableBuildings;
         }
+
         private string BuildingNameToName( BuildingName buildingName )
         {
             string name;
@@ -130,11 +157,14 @@ namespace ITI.SkyLord.Services
             return isUnique;
         }
 
-        private List<Building> GetBuildingsOnCurrentIsland()
+        private List<Building> GetBuildingsOnCurrentIsland( long currentIslandId )
         {
-            return _currentContext.Islands
+            return CurrentContext.Islands
                     .Include( i => i.Buildings )
-                    .Where( i => i.IslandId == _currentIslandId ).SingleOrDefault().Buildings.ToList();
+                    .ThenInclude( b => b.Level )
+                    .ThenInclude( r => r.Requirements )
+                    .Where( i => i.IslandId == currentIslandId ).SingleOrDefault().Buildings.ToList();
         }
+
     }
 }

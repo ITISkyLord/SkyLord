@@ -75,6 +75,12 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
         public DbSet<Requirement> Requirements { get; set; }
         public DbSet<Building> Building { get; set; }
         public DbSet<User_Player> User_Players { get; set; }
+        public DbSet<BuildingLevel> BuildingLevels { get; set; }
+        public DbSet<TechnologyLevel> TechnologyLevels { get; set; }
+
+
+
+
         #endregion DbSet
 
         #region Enumerations
