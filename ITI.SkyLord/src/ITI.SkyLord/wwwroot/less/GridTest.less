@@ -1,57 +1,44 @@
 ﻿@import "bootstrap/bootstrap.less";
 
-.test {
-    border : solid black 3px;
-    border-radius: 20px;
+.jumbotron {
+    background-color: coral; /* Orange */
+    color: #ffffff;
+    padding: 100px 25px;
 }
 
-.Container {
-    .container-fluid;
-    background-color: yellow;
-    .test;
+.bg-grey {
+    background-color: #f6f6f6;
+}
 
-    .SRow {
-        .row;
-        .SideBar {
-            .test;
-            .make-lg-column(1);
-            .make-md-column(1);
-            .make-sm-column(1);
-            .make-xs-column(1);
-            background-color:blue;
-        }
+.container-fluid {
+    padding: 60px 50px;
 
-        .Content {
-            .test;
-            .make-lg-column(11);
-            .make-md-column(11);
-            .make-sm-column(11);
-            .make-xs-column(11);
-            background-color: green;
-
-            .MenuRow {
-                .row;
-                .MenuElement {
-                    .test;
-                    .make-lg-column(1);
-                    .make-md-column(1);
-                    .make-sm-column(1);
-                    .make-xs-column(1);
-                }
-                .MenuElementSearch {
-                    .make-lg-column(2);
-                    .make-md-column(2);
-                    .make-sm-column(2);
-                    .make-xs-column(2);
-                }
-            }
-        }
-
+    .logo-small {
+        color: #f4511e;
+        font-size: 50px;
     }
 
-    
+    .logo {
+        color: #f4511e;
+        font-size: 200px;
+    }
 
+    @media screen and (max-width: 768px) {
+        .col-sm-4 {
+            text-align: center;
+            margin: 25px 0;
+        }
+    }
 
+    .thumbnail {
+        padding: 0 0 15px 0;
+        border: none;
+        border-radius: 0;
+    }
+
+    .thumbnail img {
+        width: 100%;
+        height: 100%;
+        margin-bottom: 10px;
+    }
 }
-           
-

@@ -7050,6 +7050,14 @@ body {
     width: 16.66666667%;
   }
 }
+.jumbotron {
+  background-color: coral;
+  color: whitesmoke;
+  padding: 100px 25px;
+}
+.bg-grey {
+  background-color: lightskyblue;
+}
 .SkyLordNavBar {
   position: relative;
   float: left;
