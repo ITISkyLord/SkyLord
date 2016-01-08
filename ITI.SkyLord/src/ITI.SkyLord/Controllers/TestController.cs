@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
 using ITI.SkyLord.Models.Entity_Framework.Contexts;
 using ITI.SkyLord.Models.Entity_Framework.Entites.Events;
-using ITI.SkyLord.Models.Managers;
 
 namespace ITI.SkyLord.Controllers
 {

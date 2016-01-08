@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ITI.SkyLord.Services
+namespace ITI.SkyLord
 {
     public interface IEmailSender
     {

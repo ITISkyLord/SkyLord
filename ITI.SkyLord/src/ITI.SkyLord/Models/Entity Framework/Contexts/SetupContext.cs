@@ -4,11 +4,16 @@ using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNet.Identity.EntityFramework;
 using ITI.SkyLord.Models.Entity_Framework.Entites.Events;
+using ITI.SkyLord.Models.Entity_Framework.Contexts.Interface;
+using ITI.SkyLord.ViewModel;
+using System;
+using System.Linq;
 
 namespace ITI.SkyLord.Models.Entity_Framework.Contexts
 {
-    public class SetupContext : IdentityDbContext, IEventContext
+    public class SetupContext : IdentityDbContext, ISuperInterfaceContext
     {
+
         protected override void OnModelCreating( ModelBuilder builder )
         {
             base.OnModelCreating( builder );
@@ -38,6 +43,7 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
             optionsBuilder.UseSqlServer( Configuration[ "Data:DefaultConnection:ConnectionString" ] );
         }
 
+        #region DbSet
         public DbSet<Profil> Profils { get; set; }
         public DbSet<Player> Players { get; set; }
         public DbSet<Guild> Guilds { get; set; }
@@ -64,13 +70,85 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
         public DbSet<ArmyEvent> ArmyEvents { get; set; }
         public DbSet<UpgradeEvent> UpgradeEvents { get; set; }
         public DbSet<TechnologyEvent> TechnologyEvents { get; set; }
-
         public DbSet<User_Player> UserPlayers { get; set; }
+        public DbSet<BuildingEvent> BuildingEvents { get; set; }
+        public DbSet<Building> Building { get; set; }
+        public DbSet<User_Player> User_Players { get; set; }
+        #endregion DbSet
+
+        #region Enumerations
         public UnitDamageType UnitDamageTypes { get;set;}
         public UnitName UnitName { get; set; }
         public UnitType UnitType { get; set; }
         public ArmyMovement ArmyMovements { get; set; }
         public EventType EventTypes { get; set; }
+        #endregion Enumerations
+
+        #region Helper
+
+        public Player GetPlayer(string userId)
+        {
+            return Players.Where(pl => pl.UserPlayer.User.Id == userId).First();
+        }
+        public World GetWorld()
+        {
+            return this.Worlds.FirstOrDefault();
+        }
+        public Player FindPlayer(long playerId)
+        {
+            return Players.Include( p => p.Profil).FirstOrDefault( p => p.PlayerId == playerId );
+        }
+        public Player FindPlayer(string playerMail)
+        {
+            return Players.FirstOrDefault( p => p.Mail == playerMail );
+        }
+        public void FillStandardVM(StandardViewModel svm, long playerId, long islandId)
+        {
+            svm.Layout = new LayoutViewModel();
+
+            svm.Layout.AllIslands = Islands.Include(i => i.Owner).Where(i => i.Owner.PlayerId == playerId).ToList();
+            svm.Layout.CurrentIsland = GetIsland(islandId, playerId);
+            svm.Layout.CurrentPlayer = Players.Single(p => p.PlayerId == playerId);
+            svm.Layout.IslandId = islandId;
+        }
+        public Island GetIsland(long islandId, long playerId)
+        {
+            if (islandId == 0)
+            {
+                long activePlayerId = playerId;
+                return Islands
+                    .Include(i => i.Armies)
+                    .ThenInclude(a => a.Regiments)
+                    .ThenInclude(r => r.Unit)
+                    .Include(i => i.AllRessources)
+                    .Include(i => i.Owner)
+                    .Include(i => i.Coordinates)
+                    .SingleOrDefault(i => i.IsCapital && i.Owner.PlayerId == activePlayerId);
+            }
+            else
+            {
+                long activePlayerId = playerId;
+                return Islands
+                    .Include(i => i.Armies)
+                    .ThenInclude(a => a.Regiments)
+                    .ThenInclude(r => r.Unit)
+                    .Include(i => i.AllRessources)
+                    .Include(i => i.Owner)
+                    .Include(i => i.Coordinates)
+                    .SingleOrDefault(i => i.IslandId == islandId && i.Owner.PlayerId == activePlayerId);
+            }
+        }
+        void IDbContext.OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            OnConfiguring(optionsBuilder);
+        }
+        void IDbContext.OnModelCreating(ModelBuilder modelBuilder)
+        {
+            OnModelCreating(modelBuilder);
+        }
+
+        #endregion Helper
+
         //public DbSet<BuildingLevel> BuildingLevels { get; set; }
         //public DbSet<MageLevel> MageLevels { get; set; }
         //public DbSet<TechnologyLevel> TechnologiesLevel { get; set; }
