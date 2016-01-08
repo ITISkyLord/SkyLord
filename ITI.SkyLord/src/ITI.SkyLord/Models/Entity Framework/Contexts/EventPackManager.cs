@@ -15,7 +15,8 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
         public EventPackManager(SetupContext ctx)
         {
             ArmyManager = new ArmyManager(ctx);
-            BuildingManager = new BuildingManager(ctx);
+            var LevelManager = new LevelManager(ctx);
+            BuildingManager = new BuildingManager(ctx,LevelManager);
 
             //LevelManager = new LevelManager(ctx);
             //TechnologyManager = new TechnologyManager(ctx);

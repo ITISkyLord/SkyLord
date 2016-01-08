@@ -32,7 +32,7 @@ namespace ITI.SkyLord.Controllers
             buildings = currentIsland.Buildings.ToList();
             buildingViewModel.Buildings = buildings;
 
-            BuildingManager buildingManager = new BuildingManager( LevelContext, new LevelManager( LevelContext ) );
+            BuildingManager buildingManager = new BuildingManager( SetupContext, new LevelManager( SetupContext ) );
             buildingViewModel.AvailableBuildings = buildingManager.GetAvailableBuildings();
 
 
@@ -46,8 +46,7 @@ namespace ITI.SkyLord.Controllers
             BuildingViewModel buildingViewModel = new BuildingViewModel();
             long playerId = SetupContext.GetPlayer( User.GetUserId() ).PlayerId;
 
-            // TODO Changer en SetupContext
-            BuildingManager buildingManager = new BuildingManager( LevelContext, new LevelManager( LevelContext ) );
+            BuildingManager buildingManager = new BuildingManager( SetupContext, new LevelManager( SetupContext ) );
 
             if( buildingManager.AddBuildingToIsland( model.BuildingToBuild, islandId ) )
             {
@@ -60,14 +59,13 @@ namespace ITI.SkyLord.Controllers
         public IActionResult LevelUpBuilding( BuildingViewModel model, long islandId = 0 )
         {
             BuildingViewModel buildingViewModel = new BuildingViewModel();
-            long playerId = PlayerContext.GetPlayer( User.GetUserId() ).PlayerId;
+            long playerId = SetupContext.GetPlayer( User.GetUserId() ).PlayerId;
 
-            // TODO Changer en SetupContext
-            BuildingManager buildingManager = new BuildingManager( LevelContext, new LevelManager( LevelContext ) );
+            BuildingManager buildingManager = new BuildingManager( SetupContext, new LevelManager( SetupContext ) );
 
             if ( buildingManager.LevelUpBuilding( model.BuildingToLevelUp, islandId ) )
             {
-                LevelContext.SaveChanges();
+                SetupContext.SaveChanges();
             }
             return RedirectToAction( "SeeBuildings", new { islandId = islandId } );
         }

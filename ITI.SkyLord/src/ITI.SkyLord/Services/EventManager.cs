@@ -93,16 +93,39 @@ namespace ITI.SkyLord
 
         #region Resolve
 
-        public void ResolveAllForIsland(long islandId)
+        /// <summary>
+        /// Selectionne les éléments pas encore fait et qui doivent être résolu, dans l'ordre de finission
+        /// </summary>
+        /// <param name="islandId"></param>
+        private void ResolveAllForIsland(long islandId)
         {
-            // Selectionne les éléments pas encore fait et qui doivent être résolu, dans l'ordre de finission-
-            List<Event> t = _ctx.Events.Where( e => e.done==false && e.endingDate > DateTime.Now).OrderBy(e=>e.endingDate).ToList();
-            foreach(var a in t)
+            List<Event> allEvent = _ctx.Events.Where( e =>
+                    e.done==false && e.endingDate > DateTime.Now &&
+                        (e.island.IslandId==islandId || IsTargetOfArmyMovement(e, islandId)))
+                    .OrderBy(e=>e.endingDate).ToList();
+
+            foreach(Event @event in allEvent)
             {
-                a.Accept(this);
-                a.done = true;
+                @event.Accept(this);
+                @event.done = true;
             }
         }
+        
+        private bool IsTargetOfArmyMovement(Event @event, long islandId)
+        {
+            if(@event is ArmyEvent )
+            {
+                ArmyEvent armyEvent = (ArmyEvent) @event;
+                return (@event.EventType == EventDiscrimator.ArmyEvent && (armyEvent.destination.IslandId == islandId));
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Resolve all event on all island of the current player
+        /// </summary>
+        /// <param name="playerId"></param>
         public void ResolveAllForPlayer(long playerId)
         {
             var islands = _ctx.Islands.Include(i => i.Owner).Where(i => i.Owner.PlayerId == playerId).ToList();
@@ -110,35 +133,36 @@ namespace ITI.SkyLord
             {
                 ResolveAllForIsland(island.IslandId);
             }
+
             return;
         }
 
-        
-        public void Resolve(UnitEvent ue)
+        internal void Resolve(UnitEvent ue)
         {
             throw new NotImplementedException();
         }
 
-        public void Resolve(TechnologyEvent te)
+        internal void Resolve(TechnologyEvent te)
         {
             throw new NotImplementedException();
         }
 
-        public void Resolve(BuildingEvent be)
+        internal void Resolve(BuildingEvent be)
         {
-
-
-
-            throw new NotImplementedException();
+            _allManager.BuildingManager.AddBuildingToIsland( be.BuildingToBuild.BuildingName, be.island.IslandId );
         }
 
-        public void Resolve(UpgradeEvent ue)
+        internal void Resolve(UpgradeEvent ue)
         {
-            throw new NotImplementedException();
+            _allManager.BuildingManager.LevelUpBuilding( ue.buildingToUpgrade, ue.island.IslandId );
         }
 
-        public void Resolve(ArmyEvent ae)
+        internal void Resolve(ArmyEvent ae)
         {
+
+
+
+
             throw new NotImplementedException();
         }
         #endregion
