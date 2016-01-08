@@ -18,7 +18,8 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts.Interface
         IStandardContext, 
         ITechnologyEventContext, 
         IUnitEventContext, 
-        IWorldContext
+        IWorldContext,
+        ILevelContext
     {
     }
 }

@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ITI.SkyLord.Models.Entity_Framework.Contexts;
+using ITI.SkyLord.Models.Entity_Framework.Contexts.Interface;
 using Microsoft.Data.Entity;
 
-namespace ITI.SkyLord.Services
+namespace ITI.SkyLord
 {
     public class BuildingManager
     {
-        LevelContext _currentContext;
+        ILevelContext _currentContext;
         long _currentIslandId;
         long _playerId;
 
-        public BuildingManager( LevelContext currentContext, long currentIslandId, long playerId )
+        public BuildingManager( ILevelContext currentContext, long currentIslandId, long playerId )
         {
             _currentContext = currentContext;
             _currentIslandId = currentIslandId;
@@ -136,5 +137,6 @@ namespace ITI.SkyLord.Services
                     .Include( i => i.Buildings )
                     .Where( i => i.IslandId == _currentIslandId ).SingleOrDefault().Buildings.ToList();
         }
+
     }
 }

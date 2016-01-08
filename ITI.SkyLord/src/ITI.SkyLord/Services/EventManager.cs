@@ -126,6 +126,9 @@ namespace ITI.SkyLord
 
         public void Resolve(BuildingEvent be)
         {
+
+
+
             throw new NotImplementedException();
         }
 
