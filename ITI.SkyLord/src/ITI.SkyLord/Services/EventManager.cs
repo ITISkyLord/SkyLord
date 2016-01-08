@@ -93,7 +93,7 @@ namespace ITI.SkyLord
             {
                 if( _unitEvents.Count == 0 )
                 {
-                    lastEndingDate = _ctx.UnitEvents.Where( u => u.island.Equals( island ) && u.done == false )
+                    lastEndingDate = _context.UnitEvents.Where( u => u.island.Equals( island ) && u.done == false )
                                 .OrderByDescending( d => d.endingDate ).Select( d => d.endingDate )
                                 .FirstOrDefault();
                 }
@@ -144,9 +144,9 @@ namespace ITI.SkyLord
             // All army movements where player is the target
             List<ArmyEvent> eventsWhereTarget = _context.ArmyEvents.Include(e => e.done == false && e.endingDate > DateTime.Now && e.destination.IslandId == islandId).Where(e => e.destination.IslandId == islandId).ToList();
             // Sélectionne les éléments pas encore fait et qui doivent être résolus, dans l'ordre de finission-
-            //List<Event> listEvent = _ctx.Events.Where( e => e.done == false && e.endingDate > DateTime.Now ).OrderBy( e => e.endingDate ).ToList();
+            //List<Event> listEvent = _context.Events.Where( e => e.done == false && e.endingDate > DateTime.Now ).OrderBy( e => e.endingDate ).ToList();
 
-            List<UnitEvent> listUnitEvent = _ctx.UnitEvents.Include(u => u.Unit).ThenInclude( u => u.UnitStatistics).Where( e => e.done == false && e.endingDate < DateTime.Now ).OrderBy( e => e.endingDate ).ToList();
+            List<UnitEvent> listUnitEvent = _context.UnitEvents.Include(u => u.Unit).ThenInclude( u => u.UnitStatistics).Where( e => e.done == false && e.endingDate < DateTime.Now ).OrderBy( e => e.endingDate ).ToList();
             foreach( UnitEvent unitEvent in listUnitEvent )
 
             // Merge the two lists order them by date of attack
@@ -155,8 +155,8 @@ namespace ITI.SkyLord
             // So, we execute all events ( with a super visitor pattern OTFD )
             foreach(Event @event in allEvent)
             {
-                unitEvent.Accept( this );
-                unitEvent.done = true;
+                //unitEvent.Accept( this );
+                //unitEvent.done = true;
                 @event.Accept(this);
                 @event.done = true;
             }
@@ -174,7 +174,7 @@ namespace ITI.SkyLord
         /// <param name="playerId"></param>
         public void ResolveAllForPlayer( long playerId )
         {
-            List<Island> islands = _ctx.Islands.Include (i => i.Owner ).Where( i => i.Owner.PlayerId == playerId ).ToList();
+            List<Island> islands = _context.Islands.Include (i => i.Owner ).Where( i => i.Owner.PlayerId == playerId ).ToList();
             foreach( Island island in islands )
             {
                 ResolveAllForIsland( island.IslandId );
@@ -187,21 +187,20 @@ namespace ITI.SkyLord
             // Ajouter une unité dans l'armée, voir avec Army Controller
             // Gérer les listes d'unités à ajouter, à l'instar de UnitsToAdd dans la model relié à ArmyController.
             // Gérer le temps d'attente entre les unités et vérifier que ça ne pose pas de problème d'ajouter une unité à une armée qui est partie en attaque.
-            ArmyManager am = new ArmyManager( _ctx );
+            ArmyManager am = new ArmyManager( _context );
             am.AddUnit( ue.Unit, 1, ue.island );
-            _ctx.SaveChanges();
+            _context.SaveChanges();
             // TODO : Si plusieurs lignes sont finies en même temps, on peut les cumuler avec ArmyManager.AddUnit
 
             //UnitName uN = (UnitName)Enum.Parse( typeof( UnitName ), kvp.Key, true );
             //am.AddUnit
             //    (
-            //        _ctx.Units.Where( u => u.UnitName == uN ).Single(),
+            //        _context.Units.Where( u => u.UnitName == uN ).Single(),
             //        kvp.Value,
             //        ue.island
             //    );
         }
-
-        internal void Resolve(TechnologyEvent te)
+        
         public void Resolve( ArmyEvent ae )
         {
             throw new NotImplementedException();
@@ -221,12 +220,8 @@ namespace ITI.SkyLord
         {
             _allManager.BuildingManager.LevelUpBuilding( ue.buildingToUpgrade, ue.island.IslandId );
         }
-
-        internal void Resolve(ArmyEvent ae)
-
-
-
-
+        
+       
         #endregion
     }
 }
