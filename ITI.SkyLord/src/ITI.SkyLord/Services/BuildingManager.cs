@@ -14,6 +14,8 @@ namespace ITI.SkyLord.Services
         long _playerId;
 
         public BuildingManager( LevelContext currentContext, long currentIslandId, long playerId )
+        long _lastCurrentIsland;
+        List<Building> _buildingsOnIlsand;
         {
             _currentContext = currentContext;
             _currentIslandId = currentIslandId;
@@ -25,7 +27,7 @@ namespace ITI.SkyLord.Services
         /// </summary>
         /// <param name="buildingName"></param>
         /// <returns>True : building was added. False : building not allowed.</returns>
-        public bool AddBuildingToIsland( BuildingName buildingName )
+        public bool AddBuildingToIsland( BuildingName buildingName, long currentIslandId, int position )
         {
             Building buildingToAdd;
             buildingToAdd = new Building
@@ -35,14 +37,15 @@ namespace ITI.SkyLord.Services
                 Level = _currentContext.BuildingLevels.Where( bl => bl.BuildingName == buildingName && bl.Number == 1 ).Single()
             };
 
-            // If the building already exists AND is supposed to be unique on the island, don't add it and return false
-            if ( GetBuildingsOnCurrentIsland().Any( b => buildingToAdd.BuildingName == b.BuildingName ) && IsBuildingUnique( buildingName ) )
+            // If the building already exists AND is supposed to be unique on the island, or if the position is not free, don't add it and return false
+            if ( GetBuildingsOnCurrentIsland( currentIslandId ).Any( b => buildingToAdd.BuildingName == b.BuildingName ) && IsBuildingUnique( buildingName )
+                || !IsPositionAvailable( position, currentIslandId ) )
             {
                 return false;
             }
 
-            Island currentIsland = _currentContext.GetIsland( _currentIslandId, _playerId);
-            if( currentIsland.Buildings == null )
+            long playerId = CurrentContext.Islands.Include( i => i.Owner ).SingleOrDefault( i => i.IslandId == currentIslandId ).Owner.PlayerId;
+            if ( currentIsland.Buildings == null )
             {
                 currentIsland.Buildings = new List<Building>();
             }
@@ -51,12 +54,22 @@ namespace ITI.SkyLord.Services
             return true;
         }
 
+        //private Building GetBuildingAtPosition( int position, long currentIslandId )
+        //{
+        //    GetBuildingsOnCurrentIsland( currentIslandId )
+        //}
+
+        public bool IsPositionAvailable( int position, long currentIslandId )
+        {
+            return !GetBuildingsOnCurrentIsland( currentIslandId ).Any( b => b.Position == position );
+        }
+
         public List<Building> GetAvailableBuildings()
         {
             List<Building> availableBuildings = new List<Building>();
-            foreach( BuildingName buildingName in Enum.GetValues( typeof( BuildingName ) ) )
+            foreach ( BuildingName buildingName in Enum.GetValues( typeof( BuildingName ) ) )
             {
-                if( buildingName != BuildingName.none )
+                if ( buildingName != BuildingName.none )
                 {
                     availableBuildings.Add( new Building { BuildingName = buildingName, Name = BuildingNameToName( buildingName ) } );
                 }
@@ -66,7 +79,7 @@ namespace ITI.SkyLord.Services
         private string BuildingNameToName( BuildingName buildingName )
         {
             string name;
-            switch( buildingName )
+            switch ( buildingName )
             {
                 case BuildingName.academy:
                     name = "Académie";
@@ -104,7 +117,7 @@ namespace ITI.SkyLord.Services
                 case BuildingName.woodField:
                     name = "Camp de bucherons";
                     break;
-                default :
+                default:
                     name = "Error";
                     break;
             }
@@ -116,10 +129,10 @@ namespace ITI.SkyLord.Services
             bool isUnique;
             switch ( buildingName )
             {
-                case BuildingName.cristalField :
-                case BuildingName.magicField :
-                case BuildingName.metalField :
-                case BuildingName.woodField :
+                case BuildingName.cristalField:
+                case BuildingName.magicField:
+                case BuildingName.metalField:
+                case BuildingName.woodField:
                     isUnique = false;
                     break;
 
@@ -132,9 +145,15 @@ namespace ITI.SkyLord.Services
 
         private List<Building> GetBuildingsOnCurrentIsland()
         {
-            return _currentContext.Islands
+            if ( _lastCurrentIsland != currentIslandId )
+            {
+                _buildingsOnIlsand = CurrentContext.Islands
                     .Include( i => i.Buildings )
                     .Where( i => i.IslandId == _currentIslandId ).SingleOrDefault().Buildings.ToList();
+                _lastCurrentIsland = currentIslandId;
+            }
+            return _buildingsOnIlsand;
+            
         }
     }
 }

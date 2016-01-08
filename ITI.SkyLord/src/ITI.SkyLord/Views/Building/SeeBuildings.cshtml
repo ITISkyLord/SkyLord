@@ -7,10 +7,29 @@
 }
 
 <ul>
-    @foreach( var building in Model.Buildings )
+    @*@foreach( Building building in Model.Buildings.OrderBy( b => b.Position) )
     {
         <li>
             Coucou @building.Name
+        </li>
+    }*@
+    @for ( int i = 1; i <= Model.Layout.CurrentIsland.PossiblePositions; i++ )
+    {
+        Building building = Model.Layout.CurrentIsland.Buildings.Where( b => b.Position == i ).SingleOrDefault();
+        <li>
+            @if ( building == null )
+            {
+                Write( "Emplacement vide !" );
+            }
+            else
+            {
+                <form asp-route-islandId="@Model.Layout.CurrentIsland.IslandId" asp-controller="Building" asp-action="AddBuilding">
+
+                    <input type="number" value=@{ Write( (int)building.BuildingName ); } asp-for="@Model.BuildingToBuild" style="display : none" />
+                    <input type="number" value=@{ Write( (int)building.BuildingName ); } asp-for="@Model.BuildingToBuild" style="display : none" />
+                    <button>Construire</button>
+                </form>
+            }
         </li>
     }
 </ul>

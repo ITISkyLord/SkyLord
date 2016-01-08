@@ -170,6 +170,7 @@ namespace ITI.SkyLord
                             island.Loyalty = 100;
                             island.Coordinates = coord;
                             island.AllRessources = ressource;
+                            island.PossiblePositions = 15;
 
                             context.Islands.Add( island );
                             context.SaveChanges();
@@ -206,7 +207,6 @@ namespace ITI.SkyLord
                             Duration = 120
                         };
                         context.Units.Add( cyclop );
-                        //context.SaveChanges();
                     }
                     if( gobelin == null )
                     {
@@ -226,7 +226,6 @@ namespace ITI.SkyLord
                             Duration = 60
                         };
                         context.Units.Add( gobelin );
-                        //context.SaveChanges();
                     }
                     if( guard == null )
                     {
@@ -246,7 +245,6 @@ namespace ITI.SkyLord
                             Duration = 90
                         };
                         context.Units.Add( guard );
-                        //context.SaveChanges();
                     }
                     if( necromancer == null )
                     {
@@ -266,7 +264,6 @@ namespace ITI.SkyLord
                             Duration = 90
                         };
                         context.Units.Add( necromancer );
-                        //context.SaveChanges();
                     }
                     if( troll == null )
                     {
@@ -286,7 +283,6 @@ namespace ITI.SkyLord
                             Duration = 150
                         };
                         context.Units.Add( troll );
-                        //context.SaveChanges();
                     }
                     if( warrior == null )
                     {
