@@ -60,7 +60,7 @@ namespace ITI.SkyLord.Controllers
             buildings = currentIsland.Buildings.ToList();
             buildingViewModel.Buildings = buildings;
 
-            BuildingManager buildingManager = new BuildingManager(LevelContext, islandId, playerId);
+            BuildingManager buildingManager = new BuildingManager( LevelContext, new LevelManager( LevelContext) );
             buildingViewModel.AvailableBuildings = buildingManager.GetAvailableBuildings();
 
 
@@ -74,7 +74,7 @@ namespace ITI.SkyLord.Controllers
             BuildingViewModel buildingViewModel = new BuildingViewModel();
             long playerId = LevelContext.GetPlayer( User.GetUserId() ).PlayerId;
 
-            BuildingManager buildingManager = new BuildingManager(LevelContext, islandId, playerId);
+            BuildingManager buildingManager = new BuildingManager( LevelContext, new LevelManager( LevelContext ) );
 
             if ( buildingManager.AddBuildingToIsland( model.BuildingToBuild, islandId, position ) )
             {

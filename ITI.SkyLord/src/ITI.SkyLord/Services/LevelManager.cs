@@ -7,20 +7,18 @@ using System.Threading.Tasks;
 
 namespace ITI.SkyLord.Services
 {
-    public class LeveManager
+    public class LevelManager
     {
         public LevelContext CurrentContext { get; set; }
-        public long CurrentIslandId { get; set; }
 
         /// <summary>
         /// Creates a new LevelManager instance
         /// </summary>
         /// <param name="currentContext">An opened LevelContext</param>
         /// <param name="currentIsland">The island examined</param>
-        public LeveManager( LevelContext currentContext, long currentIslandId )
+        public LevelManager( LevelContext currentContext )
         {
             CurrentContext = currentContext;
-            CurrentIslandId = currentIslandId;
         }
 
         /// <summary>
@@ -57,9 +55,10 @@ namespace ITI.SkyLord.Services
                 return false;
         }
 
-        public bool IsNextLevelAvailable( Level currentLevel )
+        public bool IsNextLevelAvailable( Level currentLevel, long currentIslandId )
         {
-            return AreAllRequirementsMet( FindNextLevel( currentLevel ) );
+            // TODO return false if FindNextLevel == null
+            return AreAllRequirementsMet( FindNextLevel( currentLevel ), currentIslandId );
         }
 
         public Level FindNextLevel( Level currentLevel )
@@ -82,14 +81,14 @@ namespace ITI.SkyLord.Services
             return levelFound;
         }
 
-        public bool AreAllRequirementsMet( Level level )
+        public bool AreAllRequirementsMet( Level level, long currentIslandId )
         {
             //If there is no requirement, return true
             if ( level.Requirements == null || level.Requirements.Count() == 0 )
                 return true;
 
-            List<Building> buildingsOnIsland = GetBuildingsOnCurrentIsland();
-            IList<Technology> playersTechnologies = CurrentContext.Islands.SingleOrDefault( i => i.IslandId == CurrentIslandId ).Owner.Technologies;
+            List<Building> buildingsOnIsland = GetBuildingsOnCurrentIsland( currentIslandId );
+            IList<Technology> playersTechnologies = CurrentContext.Islands.SingleOrDefault( i => i.IslandId == currentIslandId ).Owner.Technologies;
 
             // If requirements contains at least a technology but the player doesn't have any yet, return false
             if ( playersTechnologies == null && level.Requirements.Any( r => r.TechnologyName != TechnologyName.none ) )
@@ -128,11 +127,11 @@ namespace ITI.SkyLord.Services
             return met;
         }
 
-        public List<Building> GetBuildingsOnCurrentIsland()
+        public List<Building> GetBuildingsOnCurrentIsland( long currentIslandId)
         {
             return CurrentContext.Islands
                     .Include( i => i.Buildings ).ThenInclude( b => b.Level )
-                    .Where( i => i.IslandId == CurrentIslandId ).SingleOrDefault().Buildings.ToList();
+                    .Where( i => i.IslandId == currentIslandId ).SingleOrDefault().Buildings.ToList();
         }
     }
 }

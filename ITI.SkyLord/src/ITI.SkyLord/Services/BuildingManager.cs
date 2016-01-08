@@ -10,16 +10,16 @@ namespace ITI.SkyLord.Services
     public class BuildingManager
     {
         LevelContext _currentContext;
-        long _currentIslandId;
-        long _playerId;
-
-        public BuildingManager( LevelContext currentContext, long currentIslandId, long playerId )
         long _lastCurrentIsland;
         List<Building> _buildingsOnIlsand;
-        {
+
+        public LevelContext CurrentContext { get; }
+        public LevelManager LevelManager { get; set; }
+
+        public BuildingManager( LevelContext currentContext, LevelManager levelManager )
+        { 
             _currentContext = currentContext;
-            _currentIslandId = currentIslandId;
-            _playerId = playerId;
+            LevelManager = levelManager;
         }
 
         /// <summary>
@@ -45,6 +45,7 @@ namespace ITI.SkyLord.Services
             }
 
             long playerId = CurrentContext.Islands.Include( i => i.Owner ).SingleOrDefault( i => i.IslandId == currentIslandId ).Owner.PlayerId;
+            Island currentIsland = CurrentContext.GetIsland( currentIslandId, playerId );
             if ( currentIsland.Buildings == null )
             {
                 currentIsland.Buildings = new List<Building>();
@@ -54,15 +55,37 @@ namespace ITI.SkyLord.Services
             return true;
         }
 
-        //private Building GetBuildingAtPosition( int position, long currentIslandId )
-        //{
-        //    GetBuildingsOnCurrentIsland( currentIslandId )
-        //}
+        public bool LevelUpBuilding( BuildingName buildingNameToLevelUp, long currentIslandId )
+        {
+            Building buildingToLevelUp = GetBuildingsOnCurrentIsland( currentIslandId ).Single( b => b.BuildingName == buildingNameToLevelUp );
+
+            if ( LevelManager.IsNextLevelAvailable( buildingToLevelUp.Level, currentIslandId ) )
+            {
+                return LevelManager.LevelUp( buildingToLevelUp );
+            }
+            return false;
+        }
 
         public bool IsPositionAvailable( int position, long currentIslandId )
         {
             return !GetBuildingsOnCurrentIsland( currentIslandId ).Any( b => b.Position == position );
         }
+
+        public bool LevelUpBuilding( Building buildingToLevelUp, long currentIslandId )
+        {
+            // TODO Dépenser la THUNE MA COUILLE !!
+            if ( LevelManager.IsNextLevelAvailable( buildingToLevelUp.Level, currentIslandId ) )
+            {
+                return LevelManager.LevelUp( buildingToLevelUp );
+            }
+            return false;
+        }
+
+
+        //private Building GetBuildingAtPosition( int position, long currentIslandId )
+        //{
+        //    GetBuildingsOnCurrentIsland( currentIslandId )
+        //}
 
         public List<Building> GetAvailableBuildings()
         {
@@ -143,17 +166,18 @@ namespace ITI.SkyLord.Services
             return isUnique;
         }
 
-        private List<Building> GetBuildingsOnCurrentIsland()
+        private List<Building> GetBuildingsOnCurrentIsland( long currentIslandId )
         {
             if ( _lastCurrentIsland != currentIslandId )
             {
                 _buildingsOnIlsand = CurrentContext.Islands
                     .Include( i => i.Buildings )
-                    .Where( i => i.IslandId == _currentIslandId ).SingleOrDefault().Buildings.ToList();
+                    .ThenInclude( b => b.Level )
+                    .ThenInclude( r => r.Requirements )
+                    .Where( i => i.IslandId == currentIslandId ).SingleOrDefault().Buildings.ToList();
                 _lastCurrentIsland = currentIslandId;
             }
             return _buildingsOnIlsand;
-            
         }
     }
 }
