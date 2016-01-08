@@ -6773,24 +6773,29 @@ body {
     }*/
 }
 .navbar .img-responsive {
-  height: 100px;
-  width: 30px;
-  float: left;
+  height: 80px;
+  position: absolute;
+  top: 0px;
+  left: 0px;
 }
 .navbar li a,
-.navbar .navbar-brand {
+.navbar .navbar-brand,
+.badge {
   color: #3C0732 !important;
 }
 .navbar-nav li a:hover,
-.navbar-nav li.active a {
+.navbar-nav li.active a,
+.badge {
   color: #3C0732 !important;
   background-color: #fff !important;
 }
 .navbar-nav li a:hover,
-.navbar-nav li.active a {
+.navbar-nav li.active a,
+.badge {
   background-color: #fff !important;
 }
-.navbar-default .navbar-toggle {
+.navbar-default .navbar-toggle,
+.badge {
   border-color: transparent;
   color: #fff !important;
 }
