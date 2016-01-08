@@ -66,9 +66,11 @@ namespace ITI.SkyLord.Controllers
                                     .Where( a => a.Island.IslandId == islandId && a.ArmyState == ArmyState.defense )
                                     .SingleOrDefault();
 
+
             if ( model.UnitsToSend.Count( kvp => kvp.Value == 0 ) != model.UnitsToSend.Count() && !model.UnitsToSend.Any( kvp => kvp.Value < 0 )
                 && !model.UnitsToSend.Any( kvp => kvp.Value > 
                 defendingArmyFromAttacker.Regiments.Single( r => r.Unit.UnitName == (UnitName)Enum.Parse( typeof( UnitName ), kvp.Key, true ) ).Number )
+                && model.Target != 0
                 )
             {
                 Island island = SetupContext.Islands.Include( i => i.Owner )
@@ -95,8 +97,12 @@ namespace ITI.SkyLord.Controllers
             {
                 if ( model.UnitsToSend.Any( kvp => kvp.Value < 0 ) )
                     ModelState.AddModelError( "UnitsToSend", "Les unités ne peuvent pas être négatives." );
-                else if ( model.UnitsToSend.Any( kvp => kvp.Value == 0) )
+                else if ( model.UnitsToSend.Count( kvp => kvp.Value == 0) == model.UnitsToSend.Count() )
                     ModelState.AddModelError( "UnitsToSend", "Aucune unité sélectionnée." );
+                else if ( model.Target == 0 )
+                {
+                    ModelState.AddModelError( "UnitsToSend", "Aucune cible sélectionnée." );
+                }
                 else
                     ModelState.AddModelError( "UnitsToSend", "Vous ne pouvez pas envoyer plus d'unités que vous n'en possédez." );
 

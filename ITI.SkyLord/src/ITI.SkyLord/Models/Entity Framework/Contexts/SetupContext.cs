@@ -72,6 +72,7 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
         public DbSet<TechnologyEvent> TechnologyEvents { get; set; }
         public DbSet<User_Player> UserPlayers { get; set; }
         public DbSet<BuildingEvent> BuildingEvents { get; set; }
+        public DbSet<Requirement> Requirements { get; set; }
         public DbSet<Building> Building { get; set; }
         public DbSet<User_Player> User_Players { get; set; }
         #endregion DbSet
@@ -82,6 +83,8 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
         public UnitType UnitType { get; set; }
         public ArmyMovement ArmyMovements { get; set; }
         public EventType EventTypes { get; set; }
+        public BuildingName BuildingName { get; set; }
+        public TechnologyName TechnologyName { get; set; }
         #endregion Enumerations
 
         #region Helper
@@ -149,9 +152,7 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
 
         #endregion Helper
 
-        //public DbSet<BuildingLevel> BuildingLevels { get; set; }
         //public DbSet<MageLevel> MageLevels { get; set; }
-        //public DbSet<TechnologyLevel> TechnologiesLevel { get; set; }
 
     }
 }

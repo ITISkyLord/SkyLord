@@ -1,0 +1,30 @@
+﻿@addTagHelper "*, Microsoft.AspNet.Mvc.TagHelpers"
+@model BuildingViewModel
+
+@{
+    ViewData["Title"] = "View Buildings";
+    Layout = "_Layout";
+}
+
+<ul>
+    @foreach( var building in Model.Buildings )
+    {
+        <li>
+            Coucou @building.Name
+        </li>
+    }
+</ul>
+<ul>
+    @foreach ( var building in Model.AvailableBuildings )
+    {
+        <li>
+            @building.Name
+        <form asp-route-islandId="@Model.Layout.CurrentIsland.IslandId" asp-controller="Building" asp-action="AddBuilding">
+            
+            <input type="number" value=@{ Write( (int)building.BuildingName ); } asp-for="@Model.BuildingToBuild" style="display : none"/>
+            <button>Construire</button>
+        </form>
+    </li>
+
+    }
+</ul>

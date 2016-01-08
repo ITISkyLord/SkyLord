@@ -14,6 +14,7 @@ using ITI.SkyLord.Controllers;
 using System;
 using Microsoft.AspNet.Cryptography.KeyDerivation;
 using Microsoft.Data.Entity.ChangeTracking;
+using System.Collections.Generic;
 
 namespace ITI.SkyLord
 {
@@ -69,6 +70,7 @@ namespace ITI.SkyLord
             services.AddScoped<IslandContext>();
             services.AddScoped<ArmyContext>();
             services.AddScoped<ArmyManager>();
+            services.AddScoped<LevelContext>();
             services.AddScoped<MessageContext>();
             // Fin Doit être supprimer
 
@@ -137,13 +139,13 @@ namespace ITI.SkyLord
             Unit troll = null;
             Unit warrior = null;
 
-            if ( env.IsDevelopment() )
+            if( env.IsDevelopment() )
             {
                 // Add defaultWorld
-                using ( WorldContext context = new WorldContext() )
+                using( WorldContext context = new WorldContext() )
                 {
                     defaultWorld = context.Worlds.FirstOrDefault();
-                    if ( defaultWorld == null )
+                    if( defaultWorld == null )
                     {
                         defaultWorld = new World();
                         context.Add( defaultWorld );
@@ -152,25 +154,25 @@ namespace ITI.SkyLord
                 }
 
                 // Add Islands
-                using ( IslandContext context = new IslandContext() )
+                using( IslandContext context = new IslandContext() )
                 {
                     if( context.Islands.Count() < 99 )
                     {
-                        for ( int i = 0; i < 100; i++ )
+                        for( int i = 0; i < 100; i++ )
                         {
                             Ressource ressource = new Ressource { Wood = 1000, Metal = 1000, Cristal = 1000, Magic = 1000 };
                             Coordinate coord = new Coordinate();
                             coord.X = i;
                             coord.Y = i;
-                            context.Ressources.Add(ressource);
-                            context.Coordinates.Add(coord);
+                            context.Ressources.Add( ressource );
+                            context.Coordinates.Add( coord );
                             context.SaveChanges();
 
                             Island island = new Island();
                             island.Loyalty = 100;
                             island.Coordinates = coord;
                             island.AllRessources = ressource;
-                                                  
+
                             context.Islands.Add( island );
                             context.SaveChanges();
                         }
@@ -178,7 +180,7 @@ namespace ITI.SkyLord
                 }
 
                 //Add defaultUnits
-                using ( ArmyContext context = new ArmyContext() )
+                using( ArmyContext context = new ArmyContext() )
                 {
 
                     cyclop = context.Units.Where( u => u.UnitName == UnitName.cyclop ).SingleOrDefault();
@@ -188,13 +190,12 @@ namespace ITI.SkyLord
                     troll = context.Units.Where( u => u.UnitName == UnitName.troll ).SingleOrDefault();
                     warrior = context.Units.Where( u => u.UnitName == UnitName.warrior ).SingleOrDefault();
 
-                    if ( cyclop == null )
+                    if( cyclop == null )
                     {
                         Ressource cyclopCost = new Ressource { Wood = 400, Metal = 200, Cristal = 100, Magic = 100 };
                         context.Ressources.Add( cyclopCost );
                         UnitStatistics cyclopStatistics = new UnitStatistics { Attack = 150, PhysicResist = 80, MagicResist = 50, Capacity = 200, Speed = 15, Consumption = 20 };
                         context.UnitStatistics.Add( cyclopStatistics );
-                        context.SaveChanges();
 
                         cyclop = new Unit
                         {
@@ -203,18 +204,18 @@ namespace ITI.SkyLord
                             UnitName = UnitName.cyclop,
                             UnitDamageType = UnitDamageType.magical,
                             UnitCost = cyclopCost,
-                            UnitStatistics = cyclopStatistics
+                            UnitStatistics = cyclopStatistics,
+                            Duration = 120
                         };
                         context.Units.Add( cyclop );
-                        context.SaveChanges();
+                        //context.SaveChanges();
                     }
-                    if ( gobelin == null )
+                    if( gobelin == null )
                     {
                         Ressource gobelinCost = new Ressource { Wood = 100, Metal = 100, Magic = 20 };
                         context.Ressources.Add( gobelinCost );
                         UnitStatistics gobelinStatistics = new UnitStatistics { Attack = 40, PhysicResist = 30, MagicResist = 30, Capacity = 50, Speed = 30, Consumption = 5 };
                         context.UnitStatistics.Add( gobelinStatistics );
-                        context.SaveChanges();
 
                         gobelin = new Unit
                         {
@@ -223,18 +224,18 @@ namespace ITI.SkyLord
                             UnitName = UnitName.gobelin,
                             UnitDamageType = UnitDamageType.physical,
                             UnitCost = gobelinCost,
-                            UnitStatistics = gobelinStatistics
+                            UnitStatistics = gobelinStatistics,
+                            Duration = 60
                         };
                         context.Units.Add( gobelin );
-                        context.SaveChanges();
+                        //context.SaveChanges();
                     }
-                    if ( guard == null )
+                    if( guard == null )
                     {
                         Ressource guardCost = new Ressource { Wood = 200, Metal = 100 };
                         context.Ressources.Add( guardCost );
                         UnitStatistics guardStatistics = new UnitStatistics { Attack = 70, PhysicResist = 70, MagicResist = 40, Capacity = 100, Speed = 20, Consumption = 10 };
                         context.UnitStatistics.Add( guardStatistics );
-                        context.SaveChanges();
 
                         guard = new Unit
                         {
@@ -243,18 +244,18 @@ namespace ITI.SkyLord
                             UnitName = UnitName.guard,
                             UnitDamageType = UnitDamageType.physical,
                             UnitCost = guardCost,
-                            UnitStatistics = guardStatistics
+                            UnitStatistics = guardStatistics,
+                            Duration = 90
                         };
                         context.Units.Add( guard );
-                        context.SaveChanges();
+                        //context.SaveChanges();
                     }
-                    if ( necromancer == null )
+                    if( necromancer == null )
                     {
                         Ressource necromancerCost = new Ressource { Wood = 100, Metal = 100, Cristal = 200, Magic = 50 };
                         context.Ressources.Add( necromancerCost );
                         UnitStatistics necromancerStatistics = new UnitStatistics { Attack = 70, PhysicResist = 40, MagicResist = 70, Capacity = 50, Speed = 30, Consumption = 15 };
                         context.UnitStatistics.Add( necromancerStatistics );
-                        context.SaveChanges();
 
                         necromancer = new Unit
                         {
@@ -264,17 +265,17 @@ namespace ITI.SkyLord
                             UnitDamageType = UnitDamageType.magical,
                             UnitCost = necromancerCost,
                             UnitStatistics = necromancerStatistics,
+                            Duration = 90
                         };
                         context.Units.Add( necromancer );
-                        context.SaveChanges();
+                        //context.SaveChanges();
                     }
-                    if ( troll == null )
+                    if( troll == null )
                     {
                         Ressource trollCost = new Ressource { Wood = 300, Metal = 200, Cristal = 150, Magic = 50 };
                         context.Ressources.Add( trollCost );
                         UnitStatistics trollStatistics = new UnitStatistics { Attack = 180, PhysicResist = 60, MagicResist = 100, Capacity = 200, Speed = 15, Consumption = 20 };
                         context.UnitStatistics.Add( trollStatistics );
-                        context.SaveChanges();
 
                         troll = new Unit
                         {
@@ -284,17 +285,17 @@ namespace ITI.SkyLord
                             UnitDamageType = UnitDamageType.physical,
                             UnitCost = trollCost,
                             UnitStatistics = trollStatistics,
+                            Duration = 150
                         };
                         context.Units.Add( troll );
-                        context.SaveChanges();
+                        //context.SaveChanges();
                     }
-                    if ( warrior == null )
+                    if( warrior == null )
                     {
                         Ressource warriorCost = new Ressource { Wood = 200, Metal = 100, Cristal = 50 };
                         context.Ressources.Add( warriorCost );
                         UnitStatistics warriorStatistics = new UnitStatistics { Attack = 80, PhysicResist = 40, MagicResist = 40, Capacity = 125, Speed = 20, Consumption = 15 };
                         context.UnitStatistics.Add( warriorStatistics );
-                        context.SaveChanges();
 
                         warrior = new Unit
                         {
@@ -304,6 +305,7 @@ namespace ITI.SkyLord
                             UnitDamageType = UnitDamageType.physical,
                             UnitCost = warriorCost,
                             UnitStatistics = warriorStatistics,
+                            Duration = 70
                         };
                         context.Units.Add( warrior );
                         context.SaveChanges();
@@ -311,26 +313,88 @@ namespace ITI.SkyLord
                 }
             }
             #endregion
+
+            #region Temp seed level
+            //using ( LevelContext context = new LevelContext() )
+            //{
+            //    Ressource barrackLevel1Cost = null;
+            //    Ressource barrackLevel2Cost = null;
+            //    Ressource barrackLevel3Cost = null;
+
+            //    Requirement barrackLevel2Requirement = null;
+            //    Requirement barrackLevel3Requirement = null;
+            //    Requirement barrackLevel3Requirement2 = null;
+
+            //    Level barrackLevel1 = null;
+            //    Level barrackLevel2 = null;
+            //    Level barrackLevel3 = null;
+            //    Level towerLevel2 = null;
+
+
+
+            //    // Set up requirements
+            //    barrackLevel2Requirement = new Requirement { BuildingName = BuildingName.barrack, Number = 1 };
+            //    barrackLevel3Requirement = new Requirement { BuildingName = BuildingName.barrack, Number = 2 };
+            //    barrackLevel3Requirement2 = new Requirement { BuildingName = BuildingName.tower, Number = 2 };
+            //    context.Add( barrackLevel2Requirement );
+            //    context.Add( barrackLevel3Requirement );
+            //    context.Add( barrackLevel3Requirement2 );
+
+            //    // Set up LevelCosts
+            //    barrackLevel1Cost = new Ressource { Wood = 100, Metal = 50 };
+            //    barrackLevel2Cost = Multiplyressource( barrackLevel1Cost, 2 );
+            //    barrackLevel3Cost = Multiplyressource( barrackLevel2Cost, 2 );
+            //    context.Add( barrackLevel1Cost );
+            //    context.Add( barrackLevel2Cost );
+            //    context.Add( barrackLevel3Cost );
+
+            //    // Set up Levels
+            //    barrackLevel1 = new BuildingLevel
+            //    {
+            //        Number = 1,
+            //        BuildingName = BuildingName.barrack,
+            //        Cost = barrackLevel1Cost
+            //    };
+            //    barrackLevel2 = new BuildingLevel
+            //    {
+            //        Number = 2,
+            //        BuildingName = BuildingName.barrack,
+            //        Cost = barrackLevel2Cost,
+            //        Requirements = new List<Requirement> { barrackLevel2Requirement }
+            //    };
+            //    barrackLevel3 = new BuildingLevel
+            //    {
+            //        Number = 3,
+            //        BuildingName = BuildingName.barrack,
+            //        Cost = barrackLevel3Cost,
+            //        Requirements = new List<Requirement> { barrackLevel3Requirement, barrackLevel3Requirement2 }
+            //    };
+            //    towerLevel2 = new BuildingLevel
+            //    {
+            //        Number = 2,
+            //        BuildingName = BuildingName.tower
+            //    };
+            //    context.Add( barrackLevel1 );
+            //    context.Add( barrackLevel2 );
+            //    context.Add( barrackLevel3 );
+            //    context.Add( towerLevel2 );
+
+            //    context.SaveChanges();
+            //}
+            #endregion
+
         }
 
-        private string ProtectPassword( string clearpassword )
+        private Ressource Multiplyressource( Ressource initialRessource, int factor )
         {
-            // generate a 128-bit salt using a secure PRNG
-            byte[ ] salt = new byte[ 128 / 8 ];
-            //using ( var rng = RandomNumberGenerator.Create() )
-            //{
-            //    rng.GetBytes( salt );
-            //}
-
-            // TODO : garded le salt dans la table Player
-
-            // derive a 256-bit subkey (use HMACSHA1 with 10,000 iterations)
-            return Convert.ToBase64String( KeyDerivation.Pbkdf2(
-                password: clearpassword,
-                salt: salt,
-                prf: KeyDerivationPrf.HMACSHA1,
-                iterationCount: 10000,
-                numBytesRequested: 256 / 8 ) );
+            return new Ressource
+            {
+                Wood = initialRessource.Wood * factor,
+                Metal = initialRessource.Metal * factor,
+                Cristal = initialRessource.Cristal * factor,
+                Magic = initialRessource.Magic * factor
+            };
         }
     }
 }
+
