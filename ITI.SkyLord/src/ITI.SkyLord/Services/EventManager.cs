@@ -23,7 +23,7 @@ namespace ITI.SkyLord
 
         public void AddUnitEvent( IUnitEventContext ctx, Unit unit, int number, Island island )
         {
-            
+
             for( int j = 0; j < number; j++ )
             {
                 DateTime begginningDate = FindLastEndingDateInQueue( EventDiscrimator.UnitEvent, island );
@@ -91,9 +91,18 @@ namespace ITI.SkyLord
             DateTime lastEndingDate = DateTime.Now;
             if( eventType == EventDiscrimator.UnitEvent )
             {
-                lastEndingDate = _unitEvents.Where( u => u.island.Equals( island ) && u.done == false )
+                if( _unitEvents.Count == 0 )
+                {
+                    lastEndingDate = _ctx.UnitEvents.Where( u => u.island.Equals( island ) && u.done == false )
+                                .OrderByDescending( d => d.endingDate ).Select( d => d.endingDate )
+                                .FirstOrDefault();
+                }
+                else
+                {
+                    lastEndingDate = _unitEvents.Where( u => u.island.Equals( island ) && u.done == false )
                                                 .OrderByDescending( d => d.endingDate ).Select( d => d.endingDate )
                                                 .FirstOrDefault();
+                }
             }
             else if( eventType == EventDiscrimator.ArmyEvent )
             {
@@ -116,7 +125,7 @@ namespace ITI.SkyLord
                 throw new ArgumentException( "Le Event Discrimator n'est pas valide." );
             }
 
-            if( lastEndingDate == null ||lastEndingDate == new DateTime(01,01,01)) return DateTime.Now;
+            if( lastEndingDate == null || lastEndingDate == new DateTime( 01, 01, 01 ) ) return DateTime.Now;
             else return lastEndingDate;
         }
 
