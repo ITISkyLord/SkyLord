@@ -21,7 +21,8 @@ namespace ITI.SkyLord
 
         public void AddUnitEvent(IUnitEventContext ctx, Unit unit, Island island )
         {
-            ctx.UnitEvents.Add( new UnitEvent() { EventType = EventDiscrimator.UnitEvent, unit = unit, begginningDate = DateTime.Now, endingDate = DateTime.Now.AddSeconds( unit.UnitStatistics.TimeToBuild ), island = island, done = false } );
+            DateTime begginningDate = FindLastEndingDateInQueue( EventDiscrimator.UnitEvent, island );
+            ctx.UnitEvents.Add( new UnitEvent() { EventType = EventDiscrimator.UnitEvent, unit = unit, begginningDate = begginningDate, endingDate = begginningDate.AddSeconds( unit.UnitStatistics.TimeToBuild ), island = island, done = false } );
         }
 
         public void AddArmyEvent(IArmyEventContext ctx, Army army, Island island, ArmyMovement am, int timeToDistance, Island destination )
@@ -59,6 +60,21 @@ namespace ITI.SkyLord
             return ctx.Events.Include(e => e.island).Where(e => e.island.IslandId == IslandId).ToList();
         }
 
+        private DateTime FindLastEndingDateInQueue( string unitEvent, Island island )
+        {
+            DateTime lastEndingDate = DateTime.Now;
+            if( unitEvent == EventDiscrimator.UnitEvent )
+            {
+                lastEndingDate = _ctx.UnitEvents.Where( u => u.island.Equals( island ) && u.done == false).OrderByDescending( d=> d.endingDate ).Select(d => d.endingDate).FirstOrDefault();
+            }
+
+            if( lastEndingDate == null ) return DateTime.Now;
+            else return lastEndingDate;
+        }
+
+
+        #region Resolve
+
         public void ResolveAllForIsland(long islandId)
         {
             // Selectionne les éléments pas encore fait et qui doivent être résolu, dans l'ordre de finission-
@@ -69,7 +85,6 @@ namespace ITI.SkyLord
                 a.done = true;
             }
         }
-
         public void ResolveAllForPlayer(long playerId)
         {
             var islands = _ctx.Islands.Include(i => i.Owner).Where(i => i.Owner.PlayerId == playerId).ToList();
@@ -80,7 +95,7 @@ namespace ITI.SkyLord
             return;
         }
 
-        #region Resolve
+        
         public void Resolve(UnitEvent ue)
         {
             throw new NotImplementedException();

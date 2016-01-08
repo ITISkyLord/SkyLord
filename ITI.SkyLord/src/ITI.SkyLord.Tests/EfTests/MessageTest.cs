@@ -1,5 +1,4 @@
 ﻿using ITI.SkyLord.Models.Entity_Framework.Contexts;
-using ITI.SkyLord.Models.Managers;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
