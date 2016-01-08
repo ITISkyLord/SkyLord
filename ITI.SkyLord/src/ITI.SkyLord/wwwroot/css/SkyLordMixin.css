@@ -6724,3 +6724,11 @@ button.close {
     display: none !important;
   }
 }
+/*.Section (@background-image: url("../images/SkyLord.png")) {
+    border: solid black 3px;
+    border-radius: 20px;
+    background-color: #fff;
+    background-image: @background-image;
+    height: auto;
+    width:auto;
+}*/

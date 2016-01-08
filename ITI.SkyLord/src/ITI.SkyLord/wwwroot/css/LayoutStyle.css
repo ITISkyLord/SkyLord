@@ -6745,6 +6745,14 @@ button.close {
     display: none !important;
   }
 }
+/*.Section (@background-image: url("../images/SkyLord.png")) {
+    border: solid black 3px;
+    border-radius: 20px;
+    background-color: #fff;
+    background-image: @background-image;
+    height: auto;
+    width:auto;
+}*/
 html,
 body {
   height: 100%;
@@ -6788,9 +6796,9 @@ body {
   padding-right: 15px;
   border: solid black 3px;
   border-radius: 20px;
-  background-color: #fff;
-  background-image: url("../images/SkyLord.png");
-  height: 200px;
+  background-color: "white";
+  height: auto;
+  width: auto;
   height: 100%;
 }
 .SkyLordContainer > .navbar-header,
@@ -6812,16 +6820,20 @@ body {
 }
 .SkyLordContainer .SkyLordMainRow .SkylordSideBar {
   position: relative;
-  float: left;
   width: 8.33333333%;
   min-height: 1px;
   padding-left: 15px;
   padding-right: 15px;
   border: solid black 3px;
   border-radius: 20px;
-  background-color: #fff;
-  background-image: pink;
-  height: 200px;
+  background-color: pink;
+  height: auto;
+  width: auto;
+  line-height: 30px;
+  height: 625px;
+  width: 600px;
+  float: left;
+  padding: 0px;
 }
 @media (min-width: 1200px) {
   .SkyLordContainer .SkyLordMainRow .SkylordSideBar {
@@ -6850,9 +6862,9 @@ body {
   padding-right: 15px;
   border: solid black 3px;
   border-radius: 20px;
-  background-color: #fff;
-  background-image: url("../images/SkyLord.png");
-  height: 200px;
+  background-color: "white";
+  height: auto;
+  width: auto;
 }
 @media (min-width: 1200px) {
   .SkyLordContainer .SkyLordMainRow .PageContent {
@@ -6877,9 +6889,9 @@ body {
   margin-right: -15px;
   border: solid black 3px;
   border-radius: 20px;
-  background-color: #fff;
-  background-image: red;
-  height: 200px;
+  background-color: red;
+  height: auto;
+  width: auto;
 }
 .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .PointCounter,
 .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Friends,
@@ -6899,9 +6911,9 @@ body {
   padding-right: 15px;
   border: solid black 3px;
   border-radius: 20px;
-  background-color: #fff;
-  background-image: blue;
-  height: 200px;
+  background-color: blue;
+  height: auto;
+  width: auto;
 }
 @media (min-width: 1200px) {
   .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .PointCounter,
@@ -6979,9 +6991,9 @@ body {
   margin-right: -15px;
   border: solid black 3px;
   border-radius: 20px;
-  background-color: #fff;
-  background-image: red;
-  height: 200px;
+  background-color: red;
+  height: auto;
+  width: auto;
 }
 .SkyLordContainer .SkyLordMainRow .PageContent .RessourcesRow .RessourceElement {
   position: relative;
@@ -7014,9 +7026,9 @@ body {
   margin-right: -15px;
   border: solid black 3px;
   border-radius: 20px;
-  background-color: #fff;
-  background-image: red;
-  height: 200px;
+  background-color: red;
+  height: auto;
+  width: auto;
 }
 .SkyLordContainer .SkyLordMainRow .PageContent .TroopMovementRow .TroopLine {
   position: relative;
@@ -7049,18 +7061,18 @@ body {
   margin-right: -15px;
   border: solid black 3px;
   border-radius: 20px;
-  background-color: #fff;
-  background-image: red;
-  height: 200px;
+  background-color: red;
+  height: auto;
+  width: auto;
 }
 .SkyLordContainer .SkyLordMainRow .PageContent .FooterRow {
   margin-left: -15px;
   margin-right: -15px;
   border: solid black 3px;
   border-radius: 20px;
-  background-color: #fff;
-  background-image: red;
-  height: 200px;
+  background-color: red;
+  height: auto;
+  width: auto;
 }
 .SkyLordContainer .SkyLordMainRow .PageContent .FooterRow .FooterElement {
   position: relative;
@@ -7071,9 +7083,9 @@ body {
   padding-right: 15px;
   border: solid black 3px;
   border-radius: 20px;
-  background-color: #fff;
-  background-image: blue;
-  height: 200px;
+  background-color: blue;
+  height: auto;
+  width: auto;
 }
 @media (min-width: 1200px) {
   .SkyLordContainer .SkyLordMainRow .PageContent .FooterRow .FooterElement {

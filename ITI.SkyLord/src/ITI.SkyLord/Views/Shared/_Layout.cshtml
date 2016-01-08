@@ -17,6 +17,36 @@
     </environment>
 </head>
 <body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Logo</a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a asp-controller="Home" asp-action="Index" asp-route-islandId="@Model.Layout.IslandId">Amis</a></li>
+                    <li><a asp-controller="Army" asp-action="Index" asp-route-islandId="@Model.Layout.IslandId">Armées</a></li>
+                    <li><a asp-controller="Player" asp-action="SeePlayers" asp-route-islandId="@Model.Layout.IslandId">Joueurs</a></li>
+                    <li><a asp-controller="Message" asp-action="GetAllMessages" asp-route-islandId="@Model.Layout.IslandId">Messages</a></li>
+                    <li><a asp-controller="Home" asp-action="Index">Guilde</a></li>
+                    <li><a asp-controller="Home" asp-action="Index">Forum</a></li>
+                    <li><a asp-controller="Home" asp-action="Index">Classement</a></li>
+                    <li><a asp-controller="Profil" asp-action="Index" asp-route-islandId="@Model.Layout.IslandId">Profil</a></li>
+                    <li>
+                        <form asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm">
+                            <button type="submit" class="btn btn-link navbar-btn navbar-link">Déconnexion</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
     <div class="SkyLordContainer">
 
         <div class="SkyLordMainRow">
@@ -41,47 +71,11 @@
                 </ul>
             </div>
             <!-- /.Sidebar -->
-            <nav class="navbar navbar-default navbar-fixed-top">
-                <div class="container">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <a class="navbar-brand" href="#">Logo</a>
-                    </div>
-                    <div class="collapse navbar-collapse" id="myNavbar">
-                        <ul class="nav navbar-nav navbar-right">
-                            <li><a asp-controller="Home" asp-action="Index" asp-route-islandId="@Model.Layout.IslandId">Amis</a></li>
-                            <li><a asp-controller="Army" asp-action="Index" asp-route-islandId="@Model.Layout.IslandId">Armées</a></li>
-                            <li><a asp-controller="Player" asp-action="SeePlayers" asp-route-islandId="@Model.Layout.IslandId">Joueurs</a></li>
-                            <li><a asp-controller="Message" asp-action="GetAllMessages" asp-route-islandId="@Model.Layout.IslandId">Messages</a></li>
-                            <li><a asp-controller="Home" asp-action="Index">Guilde</a></li>
-                            <li><a asp-controller="Home" asp-action="Index">Forum</a></li>
-                            <li><a asp-controller="Home" asp-action="Index">Classement</a></li>
-                            <li><a asp-controller="Profil" asp-action="Index" asp-route-islandId="@Model.Layout.IslandId">Profil</a></li>
-                            <li>
-                                <form asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm">
-                                    <button type="submit" class="btn btn-link navbar-btn navbar-link">Déconnexion</button>
-                                </form>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
 
             <div class="PageContent">
                 <div class="MenuRow">
                     <div class="PointCounter">
                         <p>Points : 0</p>
-                    </div>
-                    <div class="Search">
-                        <form asp-controller="Player" asp-action="SeeInformationOfAnPlayerString" asp-route-islandId="@Model.Layout.IslandId" method="post" role="form">
-                            <input type="text" placeholder="Recherche ..." name="namePlayer" style="width:70%" id="searchPlayer"><input style="width:20%;" type="submit" value="Go" /><br />
-                            @*<label>Joueur</label><input type="radio" />
-                                <label>Guilde</label><input type="radio" />*@
-                        </form>
                     </div>
                     <!-- /.Menu -->
 
