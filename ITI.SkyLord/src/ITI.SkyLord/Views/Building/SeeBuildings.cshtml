@@ -10,7 +10,12 @@
     @foreach( var building in Model.Buildings )
     {
         <li>
-            Coucou @building.Name
+            Coucou @building.Name -- @building.Level.Number 
+            <form asp-route-islandId="@Model.Layout.CurrentIsland.IslandId" asp-controller="Building" asp-action="LevelUpBuilding">
+
+                <input type="number" value=@{ Write( (int)building.BuildingName ); } asp-for="@Model.BuildingToLevelUp" style="display : none" />
+                <button>LevelUp !!</button>
+            </form>
         </li>
     }
 </ul>

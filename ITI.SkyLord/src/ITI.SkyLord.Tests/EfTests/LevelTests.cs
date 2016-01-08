@@ -998,6 +998,8 @@ namespace ITI.SkyLord.Tests.EfTests
         //    }
         //}
 
+
+        #region SeedLevels
         //[Test]
         //public void SeedLevels_for_Barrack_works()
         //{
@@ -1040,12 +1042,13 @@ namespace ITI.SkyLord.Tests.EfTests
         //    levelSeed.SeedMetalLevels();
         //}
 
-        [Test]
-        public void SeedLevels_for_Invocation_works()
-        {
-            LevelSeed levelSeed = new LevelSeed();
-            levelSeed.SeedInvocationLevels();
-        }
+        //[Test]
+        //public void SeedLevels_for_Invocation_works()
+        //{
+        //    LevelSeed levelSeed = new LevelSeed();
+        //    levelSeed.SeedInvocationLevels();
+        //}
+        #endregion
 
         private Ressource Multiplyressource( Ressource initialRessource, int factor )
         {
