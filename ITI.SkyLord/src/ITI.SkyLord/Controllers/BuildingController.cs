@@ -11,6 +11,7 @@ namespace ITI.SkyLord.Controllers
 {
     public class BuildingController : GenericController
     {
+
         public IActionResult Index()
         {
             return View();
@@ -31,7 +32,7 @@ namespace ITI.SkyLord.Controllers
             buildings = currentIsland.Buildings.ToList();
             buildingViewModel.Buildings = buildings;
 
-            BuildingManager buildingManager = new BuildingManager(SetupContext, islandId, playerId);
+            BuildingManager buildingManager = new BuildingManager( LevelContext, new LevelManager( LevelContext ) );
             buildingViewModel.AvailableBuildings = buildingManager.GetAvailableBuildings();
 
 
@@ -45,14 +46,30 @@ namespace ITI.SkyLord.Controllers
             BuildingViewModel buildingViewModel = new BuildingViewModel();
             long playerId = SetupContext.GetPlayer( User.GetUserId() ).PlayerId;
 
-            BuildingManager buildingManager = new BuildingManager(SetupContext, islandId, playerId);
+            // TODO Changer en SetupContext
+            BuildingManager buildingManager = new BuildingManager( LevelContext, new LevelManager( LevelContext ) );
 
-            if( buildingManager.AddBuildingToIsland( model.BuildingToBuild ) )
+            if( buildingManager.AddBuildingToIsland( model.BuildingToBuild, islandId ) )
             {
                 SetupContext.SaveChanges();
             }
             return RedirectToAction( "SeeBuildings", new { islandId = islandId } );
 
+        }
+
+        public IActionResult LevelUpBuilding( BuildingViewModel model, long islandId = 0 )
+        {
+            BuildingViewModel buildingViewModel = new BuildingViewModel();
+            long playerId = PlayerContext.GetPlayer( User.GetUserId() ).PlayerId;
+
+            // TODO Changer en SetupContext
+            BuildingManager buildingManager = new BuildingManager( LevelContext, new LevelManager( LevelContext ) );
+
+            if ( buildingManager.LevelUpBuilding( model.BuildingToLevelUp, islandId ) )
+            {
+                LevelContext.SaveChanges();
+            }
+            return RedirectToAction( "SeeBuildings", new { islandId = islandId } );
         }
     }
 }
