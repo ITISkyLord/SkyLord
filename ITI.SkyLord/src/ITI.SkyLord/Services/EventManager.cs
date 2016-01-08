@@ -143,12 +143,15 @@ namespace ITI.SkyLord
 
         internal void Resolve(BuildingEvent be)
         {
+            be = _context.BuildingEvents.Where( e => e.EventId == be.EventId ).Single();
+
             // Cette methode sera à changer vu qu'il faut que l'on construise sur un emplacement précis de l'island
             _allManager.BuildingManager.AddBuildingToIsland( be.BuildingToBuild.BuildingName, be.island.IslandId );
         }
 
         internal void Resolve(UpgradeEvent ue)
         {
+            ue = _context.UpgradeEvents.Where( e => e.EventId == ue.EventId ).Single();
             _allManager.BuildingManager.LevelUpBuilding( ue.buildingToUpgrade, ue.island.IslandId );
         }
 
