@@ -2,34 +2,55 @@
 @model BuildingViewModel
 
 @{
-    ViewData["Title"] = "View Buildings";
+    ViewData[ "Title" ] = "View Buildings";
     Layout = "_Layout";
 }
 
+<script type="text/javascript">
+    $(function () {
+        $("#CategoryID").change(function () {
+            $('#Construcion').submit();
+        });
+    });
+
+</script>
+
 <ul>
     @*@foreach( Building building in Model.Buildings.OrderBy( b => b.Position) )
-    {
-        <li>
-            Coucou @building.Name
-        </li>
-    }*@
+        {
+            <li>
+                Coucou @building.Name
+            </li>
+        }*@
     @for ( int i = 1; i <= Model.Layout.CurrentIsland.PossiblePositions; i++ )
     {
         Building building = Model.Layout.CurrentIsland.Buildings.Where( b => b.Position == i ).SingleOrDefault();
         <li>
             @if ( building == null )
             {
-                Write( "Emplacement vide !" );
+                <form id="Construcion" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId" asp-controller="Building" asp-action="AddBuilding">
+                    <input type="number" value="@i" asp-for="@Model.Position" style="display : none" />
+
+                    @Html.DropDownListFor( m => m.TargetBuilding, Model.AvailableConstructionBuildings, "-- Consutruire --", new { onchange = "this.form.submit()" } )
+                </form>
             }
             else
             {
-                <form asp-route-islandId="@Model.Layout.CurrentIsland.IslandId" asp-controller="Building" asp-action="AddBuilding">
-
-                    <input type="number" value=@{ Write( (int)building.BuildingName ); } asp-for="@Model.BuildingToBuild" style="display : none" />
-                    <input type="number" value=@{ Write( (int)building.BuildingName ); } asp-for="@Model.BuildingToBuild" style="display : none" />
-                    <button>Construire</button>
+                @building.Name { Write( " : ( Niveau " ); } @building.Level.Number { Write( " ) " ); }
+                {
+                    string nextLevelCost = " Cout du prochain niveau : Bois "
+                        + building.Level.Cost.Wood * 2
+                        + " Métal : " + building.Level.Cost.Metal * 2
+                        + " Cristal : " + building.Level.Cost.Cristal * 2
+                        + " Magie : " + building.Level.Cost.Magic * 2;
+                    Write( nextLevelCost );
+                }
+                <form asp-route-islandId="@Model.Layout.CurrentIsland.IslandId" asp-controller="Building" asp-action="LevelUpBuilding">
+                    <input type="number" value=@{ Write( (int)building.BuildingName ); } asp-for="@Model.TargetBuilding" style="display : none" />
+                    <input type="number" value="@i" asp-for="@Model.Position" style="display : none" />
+                    <button type="submit" class="btn btn-link navbar-btn navbar-link">Level Up </button>
                 </form>
-            }
+    }
         </li>
     }
 </ul>
@@ -38,12 +59,12 @@
     {
         <li>
             @building.Name
-        <form asp-route-islandId="@Model.Layout.CurrentIsland.IslandId" asp-controller="Building" asp-action="AddBuilding">
-            
-            <input type="number" value=@{ Write( (int)building.BuildingName ); } asp-for="@Model.BuildingToBuild" style="display : none"/>
-            <button>Construire</button>
-        </form>
-    </li>
+            <form asp-route-islandId="@Model.Layout.CurrentIsland.IslandId" asp-controller="Building" asp-action="AddBuilding">
+
+                <input type="number" value=@{ Write( (int)building.BuildingName ); } asp-for="@Model.TargetBuilding" style="display : none" />
+                <button>Construire</button>
+            </form>
+        </li>
 
     }
 </ul>

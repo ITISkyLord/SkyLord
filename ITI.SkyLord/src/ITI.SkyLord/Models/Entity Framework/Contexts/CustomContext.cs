@@ -45,8 +45,8 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
                     .Include( i => i.Owner )
                     .Include( i => i.Coordinates )
                     .Include( i => i.Buildings )
-                 //   .ThenInclude( b => b.Level )
-                  //  .ThenInclude( r => r.Requirements )
+                    .ThenInclude( b => b.Level )
+                    //  .ThenInclude( r => r.Requirements )
                     .SingleOrDefault( i => i.IsCapital && i.Owner.PlayerId == playerId );
             }
             else
@@ -59,8 +59,8 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
                     .Include( i => i.Owner )
                     .Include( i => i.Coordinates )
                     .Include( i => i.Buildings )
-                   // .ThenInclude( b => b.Level )
-                  //  .ThenInclude( r => r.Requirements )
+                    .ThenInclude( b => b.Level )
+                    //  .ThenInclude( r => r.Requirements )
                     .SingleOrDefault( i => i.IslandId == islandId && i.Owner.PlayerId == playerId );
             }
         }

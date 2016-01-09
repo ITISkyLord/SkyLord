@@ -8,6 +8,7 @@ using ITI.SkyLord.ViewModel;
 using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.Filters;
 using Microsoft.AspNet.Http;
+using Microsoft.AspNet.Mvc.Rendering;
 
 namespace ITI.SkyLord.Controllers
 {
@@ -45,6 +46,21 @@ namespace ITI.SkyLord.Controllers
         {
             return View();
         }
+
+        ///// <summary>
+        ///// See buildings from the current island.
+        ///// </summary>
+        ///// <param name="id">Current Island Id</param>
+        ///// <returns>Buildings view</returns>
+        //public IActionResult SeeBuildings( long islandId )
+        //{
+        //    BuildingViewModel buildingViewModel = CreateBuildingViewModel( islandId );
+
+
+        //    IslandContext.FillStandardVM( buildingViewModel, buildingViewModel.Layout.CurrentPlayer.PlayerId, islandId );
+        //    return View( buildingViewModel );
+        //}
+
         /// <summary>
         /// See buildings from the current island.
         /// </summary>
@@ -52,35 +68,70 @@ namespace ITI.SkyLord.Controllers
         /// <returns>Buildings view</returns>
         public IActionResult SeeBuildings( long islandId )
         {
-            BuildingViewModel buildingViewModel = new BuildingViewModel();
-            long playerId = PlayerContext.GetPlayer( User.GetUserId() ).PlayerId;
-            Island currentIsland = IslandContext.GetIsland( islandId, playerId );
+            long playerId = LevelContext.GetPlayer( User.GetUserId() ).PlayerId;
 
-            List<Building> buildings = new List<Building>();
-            buildings = currentIsland.Buildings.ToList();
-            buildingViewModel.Buildings = buildings;
-
-            BuildingManager buildingManager = new BuildingManager( LevelContext, new LevelManager( LevelContext) );
-            buildingViewModel.AvailableBuildings = buildingManager.GetAvailableBuildings();
-
-
-
-            IslandContext.FillStandardVM( buildingViewModel, playerId, islandId );
+            BuildingViewModel buildingViewModel = CreateBuildingViewModel( islandId, playerId );
             return View( buildingViewModel );
-        }
 
-        public IActionResult AddBuilding( BuildingViewModel model, int position, long islandId = 0 )
+        }
+        public IActionResult AddBuilding( BuildingViewModel model, long islandId = 0 )
         {
             BuildingViewModel buildingViewModel = new BuildingViewModel();
             long playerId = LevelContext.GetPlayer( User.GetUserId() ).PlayerId;
 
-            BuildingManager buildingManager = new BuildingManager( LevelContext, new LevelManager( LevelContext ) );
+            BuildingManager buildingManager = new BuildingManager( LevelContext, new LevelManager( LevelContext ), new RessourceManager( LevelContext ) );
 
-            if ( buildingManager.AddBuildingToIsland( model.BuildingToBuild, islandId, position ) )
+            if ( buildingManager.AddBuildingToIsland( model.TargetBuilding, islandId, model.Position ) )
             {
                 LevelContext.SaveChanges();
             }
             return RedirectToAction( "SeeBuildings", new { islandId = islandId } );
+        }
+
+        public IActionResult LevelUpBuilding( BuildingViewModel model, long islandId = 0 )
+        {
+            long playerId = PlayerContext.GetPlayer( User.GetUserId() ).PlayerId;
+            BuildingViewModel buildingViewModel = new BuildingViewModel();
+
+            // TODO Changer en SetupContext
+
+            BuildingManager buildingManager = new BuildingManager( LevelContext, new LevelManager( LevelContext ), new RessourceManager( LevelContext ) );
+
+            if( !buildingManager.IsEnoughForNextLevel( model.TargetBuilding, islandId, playerId, model.Position ) )
+            {
+                return RedirectToAction( "SeeBuildings", new { islandId = islandId } );
+            }
+
+            if ( buildingManager.LevelUpBuilding( model.TargetBuilding, islandId, playerId, model.Position ) )
+            {
+                LevelContext.SaveChanges();
+            }
+            return RedirectToAction( "SeeBuildings", new { islandId = islandId } );
+        }
+
+        private BuildingViewModel CreateBuildingViewModel( BuildingViewModel model, long islandId, long playerId )
+        {
+            LevelContext.FillStandardVM( model, LevelContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
+
+            model.Layout.CurrentPlayer = LevelContext.GetPlayer( User.GetUserId() );
+            Island currentIsland = IslandContext.GetIsland( islandId, model.Layout.CurrentPlayer.PlayerId );
+
+            BuildingManager buildingManager = new BuildingManager( LevelContext, new LevelManager( LevelContext ), new RessourceManager( LevelContext ) );
+
+            model.Buildings = buildingManager.GetBuildingsOnCurrentIsland( islandId, playerId );
+
+            model.AvailableBuildings = buildingManager.GetAvailableBuildings();
+            model.AvailableConstructionBuildings = new SelectList( model.AvailableBuildings.Select( b => b.BuildingName ) );
+
+            return model;
+        }
+
+        private BuildingViewModel CreateBuildingViewModel( long islandId, long playerId )
+        {
+            BuildingViewModel model = new BuildingViewModel();
+            LevelContext.FillStandardVM( model, LevelContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
+
+            return CreateBuildingViewModel( model, islandId, playerId ) ;
         }
     }
 }

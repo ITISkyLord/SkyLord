@@ -57,8 +57,15 @@ namespace ITI.SkyLord.Services
 
         public bool IsNextLevelAvailable( Level currentLevel, long currentIslandId )
         {
-            // TODO return false if FindNextLevel == null
-            return AreAllRequirementsMet( FindNextLevel( currentLevel ), currentIslandId );
+            Level nextLevel = FindNextLevel( currentLevel );
+            long activePlayerId = CurrentContext.Islands.SingleOrDefault( i => i.IslandId == currentIslandId ).Owner.PlayerId;
+
+            Island currentIsland = CurrentContext.GetIsland( currentIslandId, activePlayerId );
+            if ( nextLevel != null )
+            {
+                return AreAllRequirementsMet( FindNextLevel( currentLevel ), currentIslandId );
+            }
+            return false;
         }
 
         public Level FindNextLevel( Level currentLevel )
@@ -127,7 +134,7 @@ namespace ITI.SkyLord.Services
             return met;
         }
 
-        public List<Building> GetBuildingsOnCurrentIsland( long currentIslandId)
+        public List<Building> GetBuildingsOnCurrentIsland( long currentIslandId )
         {
             return CurrentContext.Islands
                     .Include( i => i.Buildings ).ThenInclude( b => b.Level )
