@@ -26,6 +26,7 @@
     {
         Building building = Model.Layout.CurrentIsland.Buildings.Where( b => b.Position == i ).SingleOrDefault();
         <li>
+            <h4>Emplacement @i :</h4>
             @if ( building == null )
             {
                 <form id="Construcion" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId" asp-controller="Building" asp-action="AddBuilding">
@@ -36,13 +37,13 @@
             }
             else
             {
-                @building.Name { Write( " : ( Niveau " ); } @building.Level.Number { Write( " ) " ); }
+                @building.Name { Write( " ( Niveau " ); } @building.Level.Number { Write( " ) " ); }
                 {
                     string nextLevelCost = " Cout du prochain niveau : Bois "
-                        + building.Level.Cost.Wood * 2
-                        + " Métal : " + building.Level.Cost.Metal * 2
-                        + " Cristal : " + building.Level.Cost.Cristal * 2
-                        + " Magie : " + building.Level.Cost.Magic * 2;
+                        + Model.NextLevelCosts[i].Wood
+                        + " Métal : " + Model.NextLevelCosts[ i ].Metal
+                        + " Cristal : " + Model.NextLevelCosts[ i ].Cristal
+                        + " Magie : " + Model.NextLevelCosts[ i ].Magic;
                     Write( nextLevelCost );
                 }
                 <form asp-route-islandId="@Model.Layout.CurrentIsland.IslandId" asp-controller="Building" asp-action="LevelUpBuilding">

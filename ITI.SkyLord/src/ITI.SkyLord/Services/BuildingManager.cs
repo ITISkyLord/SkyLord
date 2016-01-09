@@ -45,15 +45,19 @@ namespace ITI.SkyLord.Services
                 currentIsland.Buildings = new List<Building>();
             }
 
+            // Create and add building on the island
             Building buildingToAdd;
             buildingToAdd = new Building
             {
                 Name = BuildingNameToName( buildingName ),
                 BuildingName = buildingName,
-                Level = CurrentContext.BuildingLevels.Where( bl => bl.BuildingName == buildingName && bl.Number == 1 ).Single(),
+                Level = CurrentContext.BuildingLevels.Include( bl => bl.Cost).First( bl => bl.BuildingName == buildingName && bl.Number == 1 ),
                 Position = position
             };
             currentIsland.Buildings.Add( buildingToAdd );
+
+            // Substract the ressource
+            RessourceManager.RemoveRessource( CurrentContext.GetIsland( currentIslandId, playerId ).AllRessources, buildingToAdd.Level.Cost );
 
             return true;
         }
@@ -105,6 +109,13 @@ namespace ITI.SkyLord.Services
                 return RessourceManager.IsEnough( CurrentContext.GetIsland( islandId, playerId ).AllRessources, nextLevel.Cost );
             }
             return false;
+        }
+
+        public bool IsEnoughForFirstLevel( BuildingName buildingName, long islandId, long playerId )
+        {
+            BuildingLevel buildingToLevelUp = CurrentContext.BuildingLevels.Include( bl => bl.Cost).First( bl => bl.BuildingName == buildingName && bl.Number == 1 );
+
+            return RessourceManager.IsEnough( CurrentContext.GetIsland( islandId, playerId ).AllRessources, buildingToLevelUp.Cost );
         }
 
         private string BuildingNameToName( BuildingName buildingName )
