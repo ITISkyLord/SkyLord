@@ -7159,7 +7159,7 @@ footer a {
   color: #3C0732;
 }
 .jumbotron {
-  background-color: blue;
+  background-color: coral;
   color: whitesmoke;
   padding: 100px 25px;
 }
@@ -7345,7 +7345,7 @@ footer a {
   text-align: center;
   border: solid black 3px;
   border-radius: 20px;
-  background-color: blue;
+  background-color: coral;
   height: auto;
   width: auto;
 }
@@ -7429,4 +7429,15 @@ footer a {
   .HomeContainer .ConnectionBlock {
     margin-left: 8.33333333%;
   }
+}
+.modal-header,
+.close {
+  background-color: #5cb85c;
+  color: white !important;
+  text-align: center;
+  font-size: 30px;
+}
+.modal-header .modal-footer,
+.close .modal-footer {
+  background-color: #f9f9f9;
 }
