@@ -31,7 +31,7 @@
             <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 sidebar">
                 <img src="~/images/SkyLord.png" class="img-responsive" />
                 <a asp-controller="Home" asp-action="Index" asp-route-islandId="@Model.Layout.IslandId">Vue d'ensemble</a>
-                <a asp-controller="Home" asp-action="Index" asp-route-islandId="@Model.Layout.IslandId">Carte du monde</a>
+                <a asp-controller="World" asp-action="Index" asp-route-islandId="@Model.Layout.IslandId">Carte du monde</a>
 
                 <p>Mes îles</p>
 
@@ -190,6 +190,7 @@
         <!-- Quand on est en développement -->
         @*<script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.8.0.js"></script>*@
         <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/jquery-ui/jquery-ui.js"></script>
         <script src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.22/jquery-ui.js"></script>
 
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
@@ -204,6 +205,7 @@
                 asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
                 asp-fallback-test="window.jQuery">
         </script>
+        <script src="~/lib/jquery-ui/jquery-ui.js"></script>
         <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.0.0/bootstrap.min.js"
                 asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
                 asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal">

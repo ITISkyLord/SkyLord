@@ -1,0 +1,71 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "";
+}
+
+
+<style>
+    #draggable {
+        background-color: rgba(0,0,0,0);
+        position: relative;
+        top: -100px;
+    }
+
+    .map {
+        width: 500px;
+        height: 500px;
+        border: black solid 2px;
+        background-color: blue;
+        overflow: hidden;
+    }
+
+    td {
+        border: green solid 1px;
+        width: 64px;
+        height: 64px;
+        background-color: green;
+        max-width: 64px;
+        max-height: 64px;
+        overflow: hidden;
+    }
+
+    #MyIsland {
+        background-color: pink;
+    }
+</style>
+
+<div class="map">
+    <div id="draggable">
+        <table>
+            <?php
+			$i = 0;
+			$j = 0;
+
+			for($i=0; $i<100; $i++)
+			{
+            ?>
+            <tr>
+                <?php
+				for($j=0; $j<100; $j++)
+				{
+					if($i == 10 && $j == 10)
+						$island='id=MyIsland';
+					else
+						$island='';
+
+					echo "<td x='".$j."' y='".$i."' ".$island.">xxxxxxxxxxxxxxxxxxxx</td>";
+
+				}
+
+                ?>
+            </tr>
+            <?php
+			}
+            ?>
+        </table>
+    </div>
+
+    <script src="~/js/worldmap.js"></script>
+
