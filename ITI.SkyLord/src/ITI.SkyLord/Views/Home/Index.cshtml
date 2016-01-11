@@ -39,7 +39,7 @@
                     <li><a href="#rules">Les règles</a></li>
                     <li><a href="#team">L'équipe</a></li>
                     <li><a href="#contact">Contact</a></li>
-                    <li><a href="#googleMap">Où somme nous</a></li>
+                    <li><a href="#googleMap">Où sommes-nous</a></li>
                 </ul>
             </div>
         </div>
@@ -147,7 +147,7 @@
 
     <div class="container">
         <!-- Trigger the modal with a button -->
-        <button type="button" class="btn btn-default btn-lg" id="BtnRegister">Inscription</button>
+        <br /><br /><br /><center><button type="button" class="btn btn-default btn-lg" id="BtnRegister">Inscription</button></center>
 
         <!-- Modal -->
         <div class="modal fade" id="ModalRegister" role="dialog">
@@ -199,7 +199,7 @@
 
     <div class="container">
         <!-- Trigger the modal with a button -->
-        <button type="button" class="btn btn-default btn-lg" id="BtnLogin">Connexion</button>
+        <center><button type="button" class="btn btn-default btn-lg" id="BtnLogin">Connexion</button></center>
 
         <!-- Modal -->
         <div class="modal fade" id="ModalLogin" role="dialog">
@@ -284,7 +284,7 @@
 
     <div id="team" class="container text-center">
         <h3>L'équipe</h3>
-        <p><em>We love music!</em></p>
+        <p><em>Présentation de la team !</em></p>
         <p>We have created a fictional band website. Lorem ipsum..</p>
         <br>
         <div class="row">
@@ -384,12 +384,12 @@
         </div>
     </div>
 
-    <!-- Set height and width with CSS -->
-    <div id="googleMap" class="container" style="height:400px;width:100%;"></div>
+        <!-- Set height and width with CSS -->
+        <div id="googleMap" class="container" style="height:400px;width:100%;"></div>
 
-    <!-- Add Google Maps -->
-    <script src="http://maps.googleapis.com/maps/api/js"></script>
-    <script>
+        <!-- Add Google Maps -->
+        <script src="http://maps.googleapis.com/maps/api/js"></script>
+        <script>
         var myCenter = new google.maps.LatLng(48.8167, 2.3833);
 
         function initialize() {
@@ -411,7 +411,8 @@
         }
 
         google.maps.event.addDomListener(window, 'load', initialize);
-    </script>
+        </script>
+    
     <footer class="container-fluid text-center">
         <ul class="nav nav-pills nav-justified">
             <li><a asp-controller="Home" asp-action="Index">Mentions légales</a></li>
@@ -422,6 +423,5 @@
             <li><a href="http://intechinfo.fr">IN'TECH</a></li>
         </ul>
     </footer>
-
 </body>
 </html>

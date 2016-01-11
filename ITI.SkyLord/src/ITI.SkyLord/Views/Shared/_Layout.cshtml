@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    
+
     <title>Skylord</title>
 
     <environment names="Development">
@@ -51,7 +51,12 @@
     </nav>
 
     <div class="jumbotron text-center">
-        <h3>Ressources</h3>
+        <h4>Points</h4>
+        <form class="form-inline">
+            <input type="text" id="points" class="form-control" size="5" placeholder="0" readonly />
+        </form>
+        <br /><h4>Ressources</h4>
+
         <form class="form-inline">
             Bois : <input type="text" class="form-control" size="5" placeholder=@Model.Layout.CurrentIsland.AllRessources.Wood readonly>
             Magie : <input type="text" class="form-control" size="5" placeholder=@Model.Layout.CurrentIsland.AllRessources.Magic readonly>
@@ -60,109 +65,16 @@
         </form>
 
         <form asp-controller="Player" asp-action="SeeInformationOfAnPlayerString" asp-route-islandId="@Model.Layout.IslandId" method="post" role="form">
-            <br /><input type="text" placeholder="Recherche ..." name="namePlayer" id="searchPlayer" size="50" style="color:black" />
+            <br /><input type="text" placeholder="Recherche ..." name="namePlayer" id="searchPlayer" size="40" style="color:black" />
             <button class="btn btn-danger">Go</button>
         </form>
     </div>
 
-    <div class="PointCounter">
-        <p>Points : 0</p>
-    </div>
     <!-- /.Menu -->
 
     <div class="ViewContentRow">
         @RenderBody()
     </div>
-
-    <!-- /.ViewContent -->
-    <center><h2>Nos partenaires</h2></center>
-    <div id="myCarousel" class="carousel slide text-center" data-ride="carousel">
-        <!-- Indicators -->
-        <ol class="carousel-indicators">
-            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-            <li data-target="#myCarousel" data-slide-to="1"></li>
-            <li data-target="#myCarousel" data-slide-to="2"></li>
-        </ol>
-
-        <!-- Wrapper for slides -->
-        <div class="carousel-inner" role="listbox">
-            <div class="item active">
-                <h4>"This company is the best. I am so happy with the result!"<br><span style="font-style:normal;">Michael Roe, Vice President, Comment Box</span></h4>
-            </div>
-            <div class="item">
-                <h4>"One word... WOW!!"<br><span style="font-style:normal;">John Doe, Salesman, Rep Inc</span></h4>
-            </div>
-            <div class="item">
-                <h4>"Could I... BE any more happy with this company?"<br><span style="font-style:normal;">Chandler Bing, Actor, FriendsAlot</span></h4>
-            </div>
-        </div>
-
-        <!-- Left and right controls -->
-        <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
-    </div>
-
-    <div class="container-fluid bg-grey">
-        <h2 class="text-center">CONTACT</h2>
-        <div class="row">
-            <div class="col-sm-5">
-                <p><span class="glyphicon glyphicon-map-marker"></span> Ivry sur seine, France</p>
-                <p><span class="glyphicon glyphicon-phone"></span> +00 00000000</p>
-                <p><span class="glyphicon glyphicon-envelope"></span> SkyLordTeam@intechinfo.fr</p>
-            </div>
-            <div class="col-sm-7">
-                <div class="row">
-                    <div class="col-sm-6 form-group">
-                        <input class="form-control" id="name" name="name" placeholder="Nom" type="text" required>
-                    </div>
-                    <div class="col-sm-6 form-group">
-                        <input class="form-control" id="email" name="email" placeholder="Email" type="email" required>
-                    </div>
-                </div>
-                <textarea class="form-control" id="comments" name="comments" placeholder="Commentaire" rows="5"></textarea><br>
-                <div class="row">
-                    <div class="col-sm-12 form-group">
-                        <button class="btn btn-default pull-right" type="submit">Envoyer</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Set height and width with CSS -->
-    <div id="googleMap" style="height:400px;width:100%;"></div>
-
-    <!-- Add Google Maps -->
-    <script src="http://maps.googleapis.com/maps/api/js"></script>
-    <script>
-        var myCenter = new google.maps.LatLng(48.8167, 2.3833);
-
-        function initialize() {
-            var mapProp = {
-                center: myCenter,
-                zoom: 12,
-                scrollwheel: false,
-                draggable: false,
-                mapTypeId: google.maps.MapTypeId.ROADMAP
-            };
-
-            var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
-
-            var marker = new google.maps.Marker({
-                position: myCenter,
-            });
-
-            marker.setMap(map);
-        }
-
-        google.maps.event.addDomListener(window, 'load', initialize);
-    </script>
 
     <footer class="container-fluid text-center">
         <ul class="nav nav-pills nav-justified">

@@ -147,6 +147,7 @@ namespace ITI.SkyLord.Models.Entity_Framework.Controllers
                     island.Buildings = new List<Building> { mageTower };
                     LevelContext.SaveChanges();
 
+                    return RedirectToAction("SeeMyIsland", "Island");
                 }
 
                 AddErrors(result);
