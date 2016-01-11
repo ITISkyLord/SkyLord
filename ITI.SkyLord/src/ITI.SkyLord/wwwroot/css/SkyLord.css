@@ -6464,16 +6464,6 @@ button.close {
 .SkyLordContainer:after,
 .SkyLordContainer .SkyLordMainRow:before,
 .SkyLordContainer .SkyLordMainRow:after,
-.SkyLordContainer .SkyLordMainRow .PageContent .MenuRow:before,
-.SkyLordContainer .SkyLordMainRow .PageContent .MenuRow:after,
-.SkyLordContainer .SkyLordMainRow .PageContent .RessourcesRow:before,
-.SkyLordContainer .SkyLordMainRow .PageContent .RessourcesRow:after,
-.SkyLordContainer .SkyLordMainRow .PageContent .TroopMovementRow:before,
-.SkyLordContainer .SkyLordMainRow .PageContent .TroopMovementRow:after,
-.SkyLordContainer .SkyLordMainRow .PageContent .ViewContentRow:before,
-.SkyLordContainer .SkyLordMainRow .PageContent .ViewContentRow:after,
-.SkyLordContainer .SkyLordMainRow .PageContent .FooterRow:before,
-.SkyLordContainer .SkyLordMainRow .PageContent .FooterRow:after,
 .SkyLordNavBar ul:before,
 .SkyLordNavBar ul:after,
 .SkyLordNavBar ul:before,
@@ -6501,11 +6491,6 @@ button.close {
 .modal-footer:after,
 .SkyLordContainer:after,
 .SkyLordContainer .SkyLordMainRow:after,
-.SkyLordContainer .SkyLordMainRow .PageContent .MenuRow:after,
-.SkyLordContainer .SkyLordMainRow .PageContent .RessourcesRow:after,
-.SkyLordContainer .SkyLordMainRow .PageContent .TroopMovementRow:after,
-.SkyLordContainer .SkyLordMainRow .PageContent .ViewContentRow:after,
-.SkyLordContainer .SkyLordMainRow .PageContent .FooterRow:after,
 .SkyLordNavBar ul:after,
 .SkyLordNavBar ul:after,
 .HomeContainer:after {
@@ -6776,36 +6761,32 @@ body {
   letter-spacing: 4px;
   border-radius: 0;
 }
+.navbar .navbar li a,
+.navbar .navbar .navbar-brand {
+  color: #3C0732 !important;
+}
+.navbar .navbar-nav li a:hover,
+.navbar .navbar-nav li.active a {
+  color: #3C0732 !important;
+  background-color: #fff !important;
+}
+.navbar .navbar-nav li a:hover,
+.navbar .navbar-nav li.active a {
+  background-color: #fff !important;
+}
+.navbar .navbar-default .navbar-toggle {
+  border-color: transparent;
+  color: #fff !important;
+}
 .navbar .img-responsive {
-  height: 80px;
+  height: 90px;
   position: absolute;
   top: 0px;
   left: 0px;
 }
-.navbar li a,
-.navbar .navbar-brand {
-  color: #3C0732 !important;
-}
-.navbar-nav li a:hover,
-.navbar-nav li.active a {
-  color: #3C0732 !important;
-  background-color: #fff !important;
-}
-.navbar-nav li a:hover,
-.navbar-nav li.active a {
-  background-color: #fff !important;
-}
-.navbar-default .navbar-toggle {
-  border-color: transparent;
-  color: #fff !important;
-}
-#nav {
-  line-height: 25px;
-  background-color: blue;
-  height: 650px;
-  width: 100px;
-  float: left;
-  padding: 5px;
+.jumbotron {
+  height: 300px;
+  margin: 0;
 }
 .SkyLordContainer {
   margin-right: auto;
@@ -6813,11 +6794,11 @@ body {
   padding-left: 15px;
   padding-right: 15px;
   border: solid black 3px;
-  border-radius: 20px;
+  border-radius: 1px;
   background-color: "white";
   height: auto;
   width: auto;
-  height: 100%;
+  height: 130%;
 }
 .SkyLordContainer > .navbar-header,
 .SkyLordContainer > .navbar-collapse {
@@ -6843,12 +6824,12 @@ body {
   padding-left: 15px;
   padding-right: 15px;
   border: solid black 3px;
-  border-radius: 20px;
+  border-radius: 1px;
   background-color: pink;
   height: auto;
   width: auto;
   line-height: 30px;
-  height: 625px;
+  height: 925px;
   width: 600px;
   float: left;
   padding: 0px;
@@ -6879,10 +6860,65 @@ body {
   padding-left: 15px;
   padding-right: 15px;
   border: solid black 3px;
-  border-radius: 20px;
+  border-radius: 1px;
   background-color: "white";
   height: auto;
   width: auto;
+  /*.MenuRow {
+                .row;
+                .Section(red);
+
+                .PointCounter,
+                .Friends,
+                .Armies,
+                .Ranking,
+                .Forum,
+                .Logout,
+                .Players,
+                .Guild,
+                .Messages,
+                .Profile {
+                    .Col(1);
+                    .Section(grey);
+                }
+
+                .Search {
+                    .Col(2);
+                }
+            }
+
+            .RessourcesRow {
+                .row;
+                .Section(red);
+
+                .RessourceElement {
+                    .Col(3);
+                }
+            }
+
+            .TroopMovementRow {
+                .row;
+                .Section(red);
+
+                .TroopLine {
+                    .Col(12);
+                }
+            }
+
+            .ViewContentRow {
+                .row;
+                .Section(red);
+            }
+
+            .FooterRow {
+                .row;
+                .Section(red);
+
+                .FooterElement {
+                    .Col(2);
+                    .Section(green);
+                }
+            }*/
 }
 @media (min-width: 1200px) {
   .SkyLordContainer .SkyLordMainRow .PageContent {
@@ -6900,227 +6936,6 @@ body {
   .SkyLordContainer .SkyLordMainRow .PageContent {
     float: left;
     width: 91.66666667%;
-  }
-}
-.SkyLordContainer .SkyLordMainRow .PageContent .MenuRow {
-  margin-left: -15px;
-  margin-right: -15px;
-  border: solid black 3px;
-  border-radius: 20px;
-  background-color: red;
-  height: auto;
-  width: auto;
-}
-.SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .PointCounter,
-.SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Friends,
-.SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Armies,
-.SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Ranking,
-.SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Forum,
-.SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Logout,
-.SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Players,
-.SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Guild,
-.SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Messages,
-.SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Profile {
-  position: relative;
-  float: left;
-  width: 8.33333333%;
-  min-height: 1px;
-  padding-left: 15px;
-  padding-right: 15px;
-  border: solid black 3px;
-  border-radius: 20px;
-  background-color: grey;
-  height: auto;
-  width: auto;
-}
-@media (min-width: 1200px) {
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .PointCounter,
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Friends,
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Armies,
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Ranking,
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Forum,
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Logout,
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Players,
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Guild,
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Messages,
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Profile {
-    float: left;
-    width: 8.33333333%;
-  }
-}
-@media (min-width: 992px) {
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .PointCounter,
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Friends,
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Armies,
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Ranking,
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Forum,
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Logout,
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Players,
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Guild,
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Messages,
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Profile {
-    float: left;
-    width: 8.33333333%;
-  }
-}
-@media (min-width: 768px) {
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .PointCounter,
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Friends,
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Armies,
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Ranking,
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Forum,
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Logout,
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Players,
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Guild,
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Messages,
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Profile {
-    float: left;
-    width: 8.33333333%;
-  }
-}
-.SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Search {
-  position: relative;
-  float: left;
-  width: 16.66666667%;
-  min-height: 1px;
-  padding-left: 15px;
-  padding-right: 15px;
-}
-@media (min-width: 1200px) {
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Search {
-    float: left;
-    width: 16.66666667%;
-  }
-}
-@media (min-width: 992px) {
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Search {
-    float: left;
-    width: 16.66666667%;
-  }
-}
-@media (min-width: 768px) {
-  .SkyLordContainer .SkyLordMainRow .PageContent .MenuRow .Search {
-    float: left;
-    width: 16.66666667%;
-  }
-}
-.SkyLordContainer .SkyLordMainRow .PageContent .RessourcesRow {
-  margin-left: -15px;
-  margin-right: -15px;
-  border: solid black 3px;
-  border-radius: 20px;
-  background-color: red;
-  height: auto;
-  width: auto;
-}
-.SkyLordContainer .SkyLordMainRow .PageContent .RessourcesRow .RessourceElement {
-  position: relative;
-  float: left;
-  width: 25%;
-  min-height: 1px;
-  padding-left: 15px;
-  padding-right: 15px;
-}
-@media (min-width: 1200px) {
-  .SkyLordContainer .SkyLordMainRow .PageContent .RessourcesRow .RessourceElement {
-    float: left;
-    width: 25%;
-  }
-}
-@media (min-width: 992px) {
-  .SkyLordContainer .SkyLordMainRow .PageContent .RessourcesRow .RessourceElement {
-    float: left;
-    width: 25%;
-  }
-}
-@media (min-width: 768px) {
-  .SkyLordContainer .SkyLordMainRow .PageContent .RessourcesRow .RessourceElement {
-    float: left;
-    width: 25%;
-  }
-}
-.SkyLordContainer .SkyLordMainRow .PageContent .TroopMovementRow {
-  margin-left: -15px;
-  margin-right: -15px;
-  border: solid black 3px;
-  border-radius: 20px;
-  background-color: red;
-  height: auto;
-  width: auto;
-}
-.SkyLordContainer .SkyLordMainRow .PageContent .TroopMovementRow .TroopLine {
-  position: relative;
-  float: left;
-  width: 100%;
-  min-height: 1px;
-  padding-left: 15px;
-  padding-right: 15px;
-}
-@media (min-width: 1200px) {
-  .SkyLordContainer .SkyLordMainRow .PageContent .TroopMovementRow .TroopLine {
-    float: left;
-    width: 100%;
-  }
-}
-@media (min-width: 992px) {
-  .SkyLordContainer .SkyLordMainRow .PageContent .TroopMovementRow .TroopLine {
-    float: left;
-    width: 100%;
-  }
-}
-@media (min-width: 768px) {
-  .SkyLordContainer .SkyLordMainRow .PageContent .TroopMovementRow .TroopLine {
-    float: left;
-    width: 100%;
-  }
-}
-.SkyLordContainer .SkyLordMainRow .PageContent .ViewContentRow {
-  margin-left: -15px;
-  margin-right: -15px;
-  border: solid black 3px;
-  border-radius: 20px;
-  background-color: red;
-  height: auto;
-  width: auto;
-}
-.SkyLordContainer .SkyLordMainRow .PageContent .FooterRow {
-  margin-left: -15px;
-  margin-right: -15px;
-  border: solid black 3px;
-  border-radius: 20px;
-  background-color: red;
-  height: auto;
-  width: auto;
-}
-.SkyLordContainer .SkyLordMainRow .PageContent .FooterRow .FooterElement {
-  position: relative;
-  float: left;
-  width: 16.66666667%;
-  min-height: 1px;
-  padding-left: 15px;
-  padding-right: 15px;
-  border: solid black 3px;
-  border-radius: 20px;
-  background-color: green;
-  height: auto;
-  width: auto;
-}
-@media (min-width: 1200px) {
-  .SkyLordContainer .SkyLordMainRow .PageContent .FooterRow .FooterElement {
-    float: left;
-    width: 16.66666667%;
-  }
-}
-@media (min-width: 992px) {
-  .SkyLordContainer .SkyLordMainRow .PageContent .FooterRow .FooterElement {
-    float: left;
-    width: 16.66666667%;
-  }
-}
-@media (min-width: 768px) {
-  .SkyLordContainer .SkyLordMainRow .PageContent .FooterRow .FooterElement {
-    float: left;
-    width: 16.66666667%;
   }
 }
 .carousel-control.right,
@@ -7152,9 +6967,6 @@ footer {
 footer li,
 footer a {
   color: #3C0732;
-}
-.points {
-  float: left;
 }
 .jumbotron {
   background-color: coral;
@@ -7253,8 +7065,25 @@ footer a {
     border-radius: 4px;
   }
 }
+.SkyLordNavBar ul .navbar li a,
+.SkyLordNavBar ul .navbar .navbar-brand {
+  color: #3C0732 !important;
+}
+.SkyLordNavBar ul .navbar-nav li a:hover,
+.SkyLordNavBar ul .navbar-nav li.active a {
+  color: #3C0732 !important;
+  background-color: #fff !important;
+}
+.SkyLordNavBar ul .navbar-nav li a:hover,
+.SkyLordNavBar ul .navbar-nav li.active a {
+  background-color: #fff !important;
+}
+.SkyLordNavBar ul .navbar-default .navbar-toggle {
+  border-color: transparent;
+  color: #fff !important;
+}
 .SkyLordNavBar ul .img-responsive {
-  height: 80px;
+  height: 90px;
   position: absolute;
   top: 0px;
   left: 0px;
@@ -7337,7 +7166,7 @@ footer a {
   margin-left: 8.33333333%;
   text-align: center;
   border: solid black 3px;
-  border-radius: 20px;
+  border-radius: 1px;
   background-color: coral;
   height: auto;
   width: auto;
@@ -7385,7 +7214,7 @@ footer a {
   margin-left: 8.33333333%;
   text-align: center;
   border: solid black 3px;
-  border-radius: 20px;
+  border-radius: 1px;
   background-color: #bada55;
   height: auto;
   width: auto;
