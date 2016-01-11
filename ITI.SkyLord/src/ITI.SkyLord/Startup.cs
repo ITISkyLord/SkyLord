@@ -225,7 +225,7 @@ namespace ITI.SkyLord
                             UnitDamageType = UnitDamageType.physical,
                             UnitCost = gobelinCost,
                             UnitStatistics = gobelinStatistics,
-                            Duration = 60
+                            Duration = 10
                         };
                         context.Units.Add( gobelin );
                         //context.SaveChanges();
