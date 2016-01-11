@@ -139,15 +139,16 @@ namespace ITI.SkyLord
         private void ResolveAllForIsland(long islandId)
         {
             // All events of the player
-            List<Event> allEvent = _context.Events.Where( e => e.done==false && e.endingDate < DateTime.Now && e.island.IslandId==islandId).ToList();
+            List<Event> allEvent = _context.Events.Where( e => e.done == false && e.endingDate < DateTime.Now && e.island.IslandId == islandId).ToList();
             
             // All army movements where player is the target
-            List<ArmyEvent> eventsWhereTarget = _context.ArmyEvents.Include(e => e.done == false && e.endingDate > DateTime.Now && e.destination.IslandId == islandId).Where(e => e.destination.IslandId == islandId).ToList();
+
+            // TRISTAN : COMMENT FAIT-ON POUR 2 THENINCLUDE
+            List<ArmyEvent> eventsWhereTarget = _context.ArmyEvents.Include( a => a.army ).ThenInclude( b => b.Regiments).Where( e => e.destination.IslandId == islandId && e.endingDate < DateTime.Now &&  e.done == false).ToList();
             // Sélectionne les éléments pas encore fait et qui doivent être résolus, dans l'ordre de finission-
             //List<Event> listEvent = _context.Events.Where( e => e.done == false && e.endingDate > DateTime.Now ).OrderBy( e => e.endingDate ).ToList();
 
-            List<UnitEvent> listUnitEvent = _context.UnitEvents.Include(u => u.Unit).ThenInclude( u => u.UnitStatistics).Where( e => e.done == false && e.endingDate < DateTime.Now ).OrderBy( e => e.endingDate ).ToList();
-            foreach( UnitEvent unitEvent in listUnitEvent )
+         //   List<UnitEvent> listUnitEvent = _context.UnitEvents.Include(u => u.Unit).ThenInclude( u => u.UnitStatistics).Where( e => e.done == false && e.endingDate < DateTime.Now ).OrderBy( e => e.endingDate ).ToList();
 
             // Merge the two lists order them by date of attack
             allEvent = allEvent.Intersect( eventsWhereTarget ).OrderBy( e => e.endingDate ).ToList();
@@ -189,8 +190,8 @@ namespace ITI.SkyLord
             // Gérer le temps d'attente entre les unités et vérifier que ça ne pose pas de problème d'ajouter une unité à une armée qui est partie en attaque.
 
             // Recherche du vrai element, on peut inclure les elements du coup :D
-            ue = _context.UnitEvents.Where( e => e.EventId == ue.EventId ).Single();
-
+            ue = _context.UnitEvents.Include( u => u.Unit ).ThenInclude( u => u.UnitStatistics ).Where( e => e.EventId == ue.EventId ).Single();
+            // INCLUDE
             ArmyManager am = _allManager.ArmyManager;   // Kévin : Non Erwan on n'instancie pas de manager, on se le fait injecter.
             am.AddUnit( ue.Unit, 1, ue.island );
             _context.SaveChanges();
