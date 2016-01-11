@@ -8,9 +8,10 @@ using ITI.SkyLord.Models.Entity_Framework.Contexts;
 namespace ITI.SkyLord.Migrations
 {
     [DbContext(typeof(SetupContext))]
-    partial class SetupContextModelSnapshot : ModelSnapshot
+    [Migration("20160111134939_AddFieldLevel")]
+    partial class AddFieldLevel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.0-rc1-16348")
@@ -52,8 +53,6 @@ namespace ITI.SkyLord.Migrations
                     b.Property<int>("Modifier");
 
                     b.Property<long?>("TechnologyLevelLevelId");
-
-                    b.Property<int?>("UnitUnitId");
 
                     b.HasKey("BonusId");
                 });
@@ -618,10 +617,6 @@ namespace ITI.SkyLord.Migrations
                     b.HasOne("ITI.SkyLord.TechnologyLevel")
                         .WithMany()
                         .HasForeignKey("TechnologyLevelLevelId");
-
-                    b.HasOne("ITI.SkyLord.Unit")
-                        .WithMany()
-                        .HasForeignKey("UnitUnitId");
                 });
 
             modelBuilder.Entity("ITI.SkyLord.Building", b =>

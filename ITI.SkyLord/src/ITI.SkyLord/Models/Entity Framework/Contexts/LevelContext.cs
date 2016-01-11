@@ -37,6 +37,7 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
         public DbSet<Level> Levels { get; set; }
         public DbSet<BuildingLevel> BuildingLevels { get; set; }
         public DbSet<TechnologyLevel> TechnologyLevels { get; set; }
+        public DbSet<FieldLevel> FieldLevels { get; set; }
         public DbSet<Requirement> Requirements { get; set; }
 
     }

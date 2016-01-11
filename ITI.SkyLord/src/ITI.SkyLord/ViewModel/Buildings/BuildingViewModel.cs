@@ -5,6 +5,8 @@ namespace ITI.SkyLord.ViewModel
 {
     public class BuildingViewModel : StandardViewModel
     {
+        public long IslandId { get; set; }
+        public Dictionary<string, string> ErrorMessage { get; set; }
         public List<Building> Buildings { get; set; }
         public Dictionary<int, Ressource> NextLevelCosts { get; set; }
         public List<Building> AvailableBuildings { get; set; }

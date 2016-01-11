@@ -6,22 +6,7 @@
     Layout = "_Layout";
 }
 
-<script type="text/javascript">
-    $(function () {
-        $("#CategoryID").change(function () {
-            $('#Construcion').submit();
-        });
-    });
-
-</script>
-
 <ul>
-    @*@foreach( Building building in Model.Buildings.OrderBy( b => b.Position) )
-        {
-            <li>
-                Coucou @building.Name
-            </li>
-        }*@
     @for ( int i = 1; i <= Model.Layout.CurrentIsland.PossiblePositions; i++ )
     {
         Building building = Model.Layout.CurrentIsland.Buildings.Where( b => b.Position == i ).SingleOrDefault();
@@ -29,8 +14,9 @@
             <h4>Emplacement @i :</h4>
             @if ( building == null )
             {
-                <form id="Construcion" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId" asp-controller="Building" asp-action="AddBuilding">
+                <form asp-route-islandId="@Model.Layout.CurrentIsland.IslandId" asp-controller="Building" asp-action="AddBuilding">
                     <input type="number" value="@i" asp-for="@Model.Position" style="display : none" />
+                    <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
 
                     @Html.DropDownListFor( m => m.TargetBuilding, Model.AvailableConstructionBuildings, "-- Consutruire --", new { onchange = "this.form.submit()" } )
                 </form>
@@ -53,19 +39,5 @@
                 </form>
     }
         </li>
-    }
-</ul>
-<ul>
-    @foreach ( var building in Model.AvailableBuildings )
-    {
-        <li>
-            @building.Name
-            <form asp-route-islandId="@Model.Layout.CurrentIsland.IslandId" asp-controller="Building" asp-action="AddBuilding">
-
-                <input type="number" value=@{ Write( (int)building.BuildingName ); } asp-for="@Model.TargetBuilding" style="display : none" />
-                <button>Construire</button>
-            </form>
-        </li>
-
     }
 </ul>

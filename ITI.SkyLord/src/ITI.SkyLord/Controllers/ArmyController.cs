@@ -129,6 +129,17 @@ namespace ITI.SkyLord.Controllers
             return RedirectToAction( "Index", new { islandId = islandId } );
         }
 
+        public IActionResult UpgradeUnit( ArmyViewModel model,  long islandId )
+        {
+            Bonus bonusToAdd = new Bonus
+            {
+                Modifier = 10,
+                BonusType = BonusType.army_attack
+            };
+
+            return View();
+        }
+
         private Island GetIsland( long islandId )
         {
             if ( islandId == 0 )
@@ -182,10 +193,13 @@ namespace ITI.SkyLord.Controllers
         /// <returns>An ArmyViewModel containing all available units and the armies contained on the island</returns>
         private ArmyViewModel CreateArmyViewModel( long islandId )
         {
+            List<Army> currentIslandArmies = ArmyContext.Islands.Include( i => i.Armies ).ThenInclude( a => a.Regiments )
+                .ThenInclude( r => r.Unit ).ThenInclude( u => u.UnitStatistics )
+                .Single( i => i.IslandId == islandId ).Armies.ToList();
             ArmyViewModel avm =  new ArmyViewModel
             {
                 AvailableUnits = ArmyContext.Units.Include( u => u.UnitCost ).Include( u => u.UnitStatistics ).ToList(),
-                CurrentIslandArmies = GetIsland( islandId ).Armies.ToList()
+                CurrentIslandArmies = currentIslandArmies
             };
             ArmyContext.FillStandardVM( avm, PlayerContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
             return avm;

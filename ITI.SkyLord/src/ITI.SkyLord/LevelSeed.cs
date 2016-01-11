@@ -123,16 +123,16 @@ namespace ITI.SkyLord
                 Requirement woodFieldLevel10Requirement = AddBuildingRequirement( context, BuildingName.woodField, 9 );
 
                 // Set up Levels
-                BuildingLevel woodFieldLevel1 = AddBuildingLevel( context, BuildingName.woodField, 1, woodFieldLevel1Cost, null );
-                BuildingLevel woodFieldLevel2 = AddBuildingLevel( context, BuildingName.woodField, 2, woodFieldLevel2Cost, CreateRequirementList( woodFieldLevel2Requirement ) );
-                BuildingLevel woodFieldLevel3 = AddBuildingLevel( context, BuildingName.woodField, 3, woodFieldLevel3Cost, CreateRequirementList( woodFieldLevel3Requirement ) );
-                BuildingLevel woodFieldLevel4 = AddBuildingLevel( context, BuildingName.woodField, 4, woodFieldLevel3Cost, CreateRequirementList( woodFieldLevel4Requirement ) );
-                BuildingLevel woodFieldLevel5 = AddBuildingLevel( context, BuildingName.woodField, 5, woodFieldLevel5Cost, CreateRequirementList( woodFieldLevel5Requirement ) );
-                BuildingLevel woodFieldLevel6 = AddBuildingLevel( context, BuildingName.woodField, 6, woodFieldLevel6Cost, CreateRequirementList( woodFieldLevel6Requirement ) );
-                BuildingLevel woodFieldLevel7 = AddBuildingLevel( context, BuildingName.woodField, 7, woodFieldLevel7Cost, CreateRequirementList( woodFieldLevel7Requirement ) );
-                BuildingLevel woodFieldLevel8 = AddBuildingLevel( context, BuildingName.woodField, 8, woodFieldLevel8Cost, CreateRequirementList( woodFieldLevel8Requirement ) );
-                BuildingLevel woodFieldLevel9 = AddBuildingLevel( context, BuildingName.woodField, 9, woodFieldLevel9Cost, CreateRequirementList( woodFieldLevel9Requirement ) );
-                BuildingLevel woodFieldLevel10 = AddBuildingLevel( context, BuildingName.woodField, 10, woodFieldLevel10Cost, CreateRequirementList( woodFieldLevel10Requirement ) );
+                FieldLevel woodFieldLevel1 = AddFieldLevel( context, BuildingName.woodField, 1, woodFieldLevel1Cost, null, 100 );
+                FieldLevel woodFieldLevel2 = AddFieldLevel( context, BuildingName.woodField, 2, woodFieldLevel2Cost, CreateRequirementList( woodFieldLevel2Requirement ), 200 );
+                FieldLevel woodFieldLevel3 = AddFieldLevel( context, BuildingName.woodField, 3, woodFieldLevel3Cost, CreateRequirementList( woodFieldLevel3Requirement ), 400 );
+                FieldLevel woodFieldLevel4 = AddFieldLevel( context, BuildingName.woodField, 4, woodFieldLevel3Cost, CreateRequirementList( woodFieldLevel4Requirement ), 600 );
+                FieldLevel woodFieldLevel5 = AddFieldLevel( context, BuildingName.woodField, 5, woodFieldLevel5Cost, CreateRequirementList( woodFieldLevel5Requirement ), 1000 );
+                FieldLevel woodFieldLevel6 = AddFieldLevel( context, BuildingName.woodField, 6, woodFieldLevel6Cost, CreateRequirementList( woodFieldLevel6Requirement ), 1500 );
+                FieldLevel woodFieldLevel7 = AddFieldLevel( context, BuildingName.woodField, 7, woodFieldLevel7Cost, CreateRequirementList( woodFieldLevel7Requirement ), 2000 );
+                FieldLevel woodFieldLevel8 = AddFieldLevel( context, BuildingName.woodField, 8, woodFieldLevel8Cost, CreateRequirementList( woodFieldLevel8Requirement ), 3000);
+                FieldLevel woodFieldLevel9 = AddFieldLevel( context, BuildingName.woodField, 9, woodFieldLevel9Cost, CreateRequirementList( woodFieldLevel9Requirement ), 5000 );
+                FieldLevel woodFieldLevel10 = AddFieldLevel( context, BuildingName.woodField, 10, woodFieldLevel10Cost, CreateRequirementList( woodFieldLevel10Requirement ), 10000 );
 
                 context.SaveChanges();
             }
@@ -166,16 +166,16 @@ namespace ITI.SkyLord
                 Requirement cristalFieldLevel10Requirement = AddBuildingRequirement( context, BuildingName.cristalField, 9 );
 
                 // Set up Levels
-                BuildingLevel cristalFieldLevel1 = AddBuildingLevel( context, BuildingName.cristalField, 1, cristalFieldLevel1Cost, null );
-                BuildingLevel cristalFieldLevel2 = AddBuildingLevel( context, BuildingName.cristalField, 2, cristalFieldLevel2Cost, CreateRequirementList( cristalFieldLevel2Requirement ) );
-                BuildingLevel cristalFieldLevel3 = AddBuildingLevel( context, BuildingName.cristalField, 3, cristalFieldLevel3Cost, CreateRequirementList( cristalFieldLevel3Requirement ) );
-                BuildingLevel cristalFieldLevel4 = AddBuildingLevel( context, BuildingName.cristalField, 4, cristalFieldLevel3Cost, CreateRequirementList( cristalFieldLevel4Requirement ) );
-                BuildingLevel cristalFieldLevel5 = AddBuildingLevel( context, BuildingName.cristalField, 5, cristalFieldLevel5Cost, CreateRequirementList( cristalFieldLevel5Requirement ) );
-                BuildingLevel cristalFieldLevel6 = AddBuildingLevel( context, BuildingName.cristalField, 6, cristalFieldLevel6Cost, CreateRequirementList( cristalFieldLevel6Requirement ) );
-                BuildingLevel cristalFieldLevel7 = AddBuildingLevel( context, BuildingName.cristalField, 7, cristalFieldLevel7Cost, CreateRequirementList( cristalFieldLevel7Requirement ) );
-                BuildingLevel cristalFieldLevel8 = AddBuildingLevel( context, BuildingName.cristalField, 8, cristalFieldLevel8Cost, CreateRequirementList( cristalFieldLevel8Requirement ) );
-                BuildingLevel cristalFieldLevel9 = AddBuildingLevel( context, BuildingName.cristalField, 9, cristalFieldLevel9Cost, CreateRequirementList( cristalFieldLevel9Requirement ) );
-                BuildingLevel cristalFieldLevel10 = AddBuildingLevel( context, BuildingName.cristalField, 10, cristalFieldLevel10Cost, CreateRequirementList( cristalFieldLevel10Requirement ) );
+                FieldLevel cristalFieldLevel1 = AddFieldLevel( context, BuildingName.cristalField, 1, cristalFieldLevel1Cost, null, 100 );
+                FieldLevel cristalFieldLevel2 = AddFieldLevel( context, BuildingName.cristalField, 2, cristalFieldLevel2Cost, CreateRequirementList( cristalFieldLevel2Requirement ), 200 );
+                FieldLevel cristalFieldLevel3 = AddFieldLevel( context, BuildingName.cristalField, 3, cristalFieldLevel3Cost, CreateRequirementList( cristalFieldLevel3Requirement ), 400 );
+                FieldLevel cristalFieldLevel4 = AddFieldLevel( context, BuildingName.cristalField, 4, cristalFieldLevel3Cost, CreateRequirementList( cristalFieldLevel4Requirement ), 600 );
+                FieldLevel cristalFieldLevel5 = AddFieldLevel( context, BuildingName.cristalField, 5, cristalFieldLevel5Cost, CreateRequirementList( cristalFieldLevel5Requirement ), 1000 );
+                FieldLevel cristalFieldLevel6 = AddFieldLevel( context, BuildingName.cristalField, 6, cristalFieldLevel6Cost, CreateRequirementList( cristalFieldLevel6Requirement ), 1500 );
+                FieldLevel cristalFieldLevel7 = AddFieldLevel( context, BuildingName.cristalField, 7, cristalFieldLevel7Cost, CreateRequirementList( cristalFieldLevel7Requirement ), 2000 );
+                FieldLevel cristalFieldLevel8 = AddFieldLevel( context, BuildingName.cristalField, 8, cristalFieldLevel8Cost, CreateRequirementList( cristalFieldLevel8Requirement ), 3000 );
+                FieldLevel cristalFieldLevel9 = AddFieldLevel( context, BuildingName.cristalField, 9, cristalFieldLevel9Cost, CreateRequirementList( cristalFieldLevel9Requirement ), 5000 );
+                FieldLevel cristalFieldLevel10 = AddFieldLevel( context, BuildingName.cristalField, 10, cristalFieldLevel10Cost, CreateRequirementList( cristalFieldLevel10Requirement ), 10000 );
 
                 context.SaveChanges();
             }
@@ -208,16 +208,16 @@ namespace ITI.SkyLord
                 Requirement metalFieldLevel10Requirement = AddBuildingRequirement( context, BuildingName.metalField, 9 );
 
                 // Set up Levels
-                BuildingLevel metalFieldLevel1 = AddBuildingLevel( context, BuildingName.metalField, 1, metalFieldLevel1Cost, null );
-                BuildingLevel metalFieldLevel2 = AddBuildingLevel( context, BuildingName.metalField, 2, metalFieldLevel2Cost, CreateRequirementList( metalFieldLevel2Requirement ) );
-                BuildingLevel metalFieldLevel3 = AddBuildingLevel( context, BuildingName.metalField, 3, metalFieldLevel3Cost, CreateRequirementList( metalFieldLevel3Requirement ) );
-                BuildingLevel metalFieldLevel4 = AddBuildingLevel( context, BuildingName.metalField, 4, metalFieldLevel3Cost, CreateRequirementList( metalFieldLevel4Requirement ) );
-                BuildingLevel metalFieldLevel5 = AddBuildingLevel( context, BuildingName.metalField, 5, metalFieldLevel5Cost, CreateRequirementList( metalFieldLevel5Requirement ) );
-                BuildingLevel metalFieldLevel6 = AddBuildingLevel( context, BuildingName.metalField, 6, metalFieldLevel6Cost, CreateRequirementList( metalFieldLevel6Requirement ) );
-                BuildingLevel metalFieldLevel7 = AddBuildingLevel( context, BuildingName.metalField, 7, metalFieldLevel7Cost, CreateRequirementList( metalFieldLevel7Requirement ) );
-                BuildingLevel metalFieldLevel8 = AddBuildingLevel( context, BuildingName.metalField, 8, metalFieldLevel8Cost, CreateRequirementList( metalFieldLevel8Requirement ) );
-                BuildingLevel metalFieldLevel9 = AddBuildingLevel( context, BuildingName.metalField, 9, metalFieldLevel9Cost, CreateRequirementList( metalFieldLevel9Requirement ) );
-                BuildingLevel metalFieldLevel10 = AddBuildingLevel( context, BuildingName.metalField, 10, metalFieldLevel10Cost, CreateRequirementList( metalFieldLevel10Requirement ) );
+                FieldLevel metalFieldLevel1 = AddFieldLevel( context, BuildingName.metalField, 1, metalFieldLevel1Cost, null, 100 );
+                FieldLevel metalFieldLevel2 = AddFieldLevel( context, BuildingName.metalField, 2, metalFieldLevel2Cost, CreateRequirementList( metalFieldLevel2Requirement ), 200 );
+                FieldLevel metalFieldLevel3 = AddFieldLevel( context, BuildingName.metalField, 3, metalFieldLevel3Cost, CreateRequirementList( metalFieldLevel3Requirement ), 400 );
+                FieldLevel metalFieldLevel4 = AddFieldLevel( context, BuildingName.metalField, 4, metalFieldLevel3Cost, CreateRequirementList( metalFieldLevel4Requirement ), 600 );
+                FieldLevel metalFieldLevel5 = AddFieldLevel( context, BuildingName.metalField, 5, metalFieldLevel5Cost, CreateRequirementList( metalFieldLevel5Requirement ), 1000 );
+                FieldLevel metalFieldLevel6 = AddFieldLevel( context, BuildingName.metalField, 6, metalFieldLevel6Cost, CreateRequirementList( metalFieldLevel6Requirement ), 1500 );
+                FieldLevel metalFieldLevel7 = AddFieldLevel( context, BuildingName.metalField, 7, metalFieldLevel7Cost, CreateRequirementList( metalFieldLevel7Requirement ), 2000 );
+                FieldLevel metalFieldLevel8 = AddFieldLevel( context, BuildingName.metalField, 8, metalFieldLevel8Cost, CreateRequirementList( metalFieldLevel8Requirement ), 3000 );
+                FieldLevel metalFieldLevel9 = AddFieldLevel( context, BuildingName.metalField, 9, metalFieldLevel9Cost, CreateRequirementList( metalFieldLevel9Requirement ), 5000 );
+                FieldLevel metalFieldLevel10 = AddFieldLevel( context, BuildingName.metalField, 10, metalFieldLevel10Cost, CreateRequirementList( metalFieldLevel10Requirement ), 10000 );
 
                 context.SaveChanges();
             }
@@ -251,16 +251,16 @@ namespace ITI.SkyLord
                 Requirement magicFieldLevel10Requirement = AddBuildingRequirement( context, BuildingName.magicField, 9 );
 
                 // Set up Levels
-                BuildingLevel magicFieldLevel1 = AddBuildingLevel( context, BuildingName.magicField, 1, magicFieldLevel1Cost, null );
-                BuildingLevel magicFieldLevel2 = AddBuildingLevel( context, BuildingName.magicField, 2, magicFieldLevel2Cost, CreateRequirementList( magicFieldLevel2Requirement ) );
-                BuildingLevel magicFieldLevel3 = AddBuildingLevel( context, BuildingName.magicField, 3, magicFieldLevel3Cost, CreateRequirementList( magicFieldLevel3Requirement ) );
-                BuildingLevel magicFieldLevel4 = AddBuildingLevel( context, BuildingName.magicField, 4, magicFieldLevel3Cost, CreateRequirementList( magicFieldLevel4Requirement ) );
-                BuildingLevel magicFieldLevel5 = AddBuildingLevel( context, BuildingName.magicField, 5, magicFieldLevel5Cost, CreateRequirementList( magicFieldLevel5Requirement ) );
-                BuildingLevel magicFieldLevel6 = AddBuildingLevel( context, BuildingName.magicField, 6, magicFieldLevel6Cost, CreateRequirementList( magicFieldLevel6Requirement ) );
-                BuildingLevel magicFieldLevel7 = AddBuildingLevel( context, BuildingName.magicField, 7, magicFieldLevel7Cost, CreateRequirementList( magicFieldLevel7Requirement ) );
-                BuildingLevel magicFieldLevel8 = AddBuildingLevel( context, BuildingName.magicField, 8, magicFieldLevel8Cost, CreateRequirementList( magicFieldLevel8Requirement ) );
-                BuildingLevel magicFieldLevel9 = AddBuildingLevel( context, BuildingName.magicField, 9, magicFieldLevel9Cost, CreateRequirementList( magicFieldLevel9Requirement ) );
-                BuildingLevel magicFieldLevel10 = AddBuildingLevel( context, BuildingName.magicField, 10, magicFieldLevel10Cost, CreateRequirementList( magicFieldLevel10Requirement ) );
+                FieldLevel magicFieldLevel1 = AddFieldLevel( context, BuildingName.magicField, 1, magicFieldLevel1Cost, null, 100 );
+                FieldLevel magicFieldLevel2 = AddFieldLevel( context, BuildingName.magicField, 2, magicFieldLevel2Cost, CreateRequirementList( magicFieldLevel2Requirement ), 200 );
+                FieldLevel magicFieldLevel3 = AddFieldLevel( context, BuildingName.magicField, 3, magicFieldLevel3Cost, CreateRequirementList( magicFieldLevel3Requirement ), 400 );
+                FieldLevel magicFieldLevel4 = AddFieldLevel( context, BuildingName.magicField, 4, magicFieldLevel3Cost, CreateRequirementList( magicFieldLevel4Requirement ), 600 );
+                FieldLevel magicFieldLevel5 = AddFieldLevel( context, BuildingName.magicField, 5, magicFieldLevel5Cost, CreateRequirementList( magicFieldLevel5Requirement ), 1000 );
+                FieldLevel magicFieldLevel6 = AddFieldLevel( context, BuildingName.magicField, 6, magicFieldLevel6Cost, CreateRequirementList( magicFieldLevel6Requirement ), 1500 );
+                FieldLevel magicFieldLevel7 = AddFieldLevel( context, BuildingName.magicField, 7, magicFieldLevel7Cost, CreateRequirementList( magicFieldLevel7Requirement ), 2000 );
+                FieldLevel magicFieldLevel8 = AddFieldLevel( context, BuildingName.magicField, 8, magicFieldLevel8Cost, CreateRequirementList( magicFieldLevel8Requirement ), 3000 );
+                FieldLevel magicFieldLevel9 = AddFieldLevel( context, BuildingName.magicField, 9, magicFieldLevel9Cost, CreateRequirementList( magicFieldLevel9Requirement ), 5000 );
+                FieldLevel magicFieldLevel10 = AddFieldLevel( context, BuildingName.magicField, 10, magicFieldLevel10Cost, CreateRequirementList( magicFieldLevel10Requirement ), 10000 );
 
                 context.SaveChanges();
             }
@@ -321,6 +321,20 @@ namespace ITI.SkyLord
             return buildingLevel;
         }
 
+        FieldLevel AddFieldLevel( LevelContext context, BuildingName buildingName, int number, Ressource cost, List<Requirement> requirements, int production )
+        {
+            FieldLevel fieldLevel = new FieldLevel
+            {
+                Number = number,
+                BuildingName = buildingName,
+                Cost = cost,
+                Requirements = requirements,
+                Production = production
+            };
+            context.Add( fieldLevel );
+            return fieldLevel;
+
+        }
         Requirement AddBuildingRequirement( LevelContext context, BuildingName buildingName, int number )
         {
             Requirement requirement = new Requirement

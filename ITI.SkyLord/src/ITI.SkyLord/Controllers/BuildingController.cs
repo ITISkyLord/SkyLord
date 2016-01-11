@@ -55,10 +55,8 @@ namespace ITI.SkyLord.Controllers
         public IActionResult SeeBuildings( long islandId )
         {
             long playerId = LevelContext.GetPlayer( User.GetUserId() ).PlayerId;
-
-            BuildingViewModel buildingViewModel = CreateBuildingViewModel( islandId, playerId );
-            return View( buildingViewModel );
-
+            BuildingViewModel model = CreateBuildingViewModel( islandId, playerId );
+            return View( model );
         }
 
         /// <summary>
@@ -95,7 +93,7 @@ namespace ITI.SkyLord.Controllers
 
             BuildingManager buildingManager = new BuildingManager( LevelContext, new LevelManager( LevelContext ), new RessourceManager( LevelContext ) );
 
-            if( !buildingManager.IsEnoughForNextLevel( model.TargetBuilding, islandId, playerId, model.Position ) )
+            if ( !buildingManager.IsEnoughForNextLevel( model.TargetBuilding, islandId, playerId, model.Position ) )
             {
                 return RedirectToAction( "SeeBuildings", new { islandId = islandId } );
             }
@@ -120,7 +118,7 @@ namespace ITI.SkyLord.Controllers
 
             model.Buildings = buildingManager.GetBuildingsOnCurrentIsland( islandId, playerId );
             model.NextLevelCosts = new Dictionary<int, Ressource>();
-            foreach( Building building in model.Buildings )
+            foreach ( Building building in model.Buildings )
             {
                 model.NextLevelCosts.Add( building.Position, levelManager.FindNextLevel( building.Level ).Cost );
             }
@@ -135,7 +133,7 @@ namespace ITI.SkyLord.Controllers
             BuildingViewModel model = new BuildingViewModel();
             LevelContext.FillStandardVM( model, LevelContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
 
-            return CreateBuildingViewModel( model, islandId, playerId ) ;
+            return CreateBuildingViewModel( model, islandId, playerId );
         }
     }
 }
