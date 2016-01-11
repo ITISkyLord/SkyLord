@@ -28,7 +28,9 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <img src="~/images/SkyLord.png" class="img-responsive" />
+                <a asp-controller="Home" asp-action="Index" asp-route-islandId="@Model.Layout.IslandId">
+                    <img src="~/images/SkyLord.png" class="img-responsive" />
+                </a>
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav navbar-right">
@@ -52,9 +54,9 @@
 
     <div class="jumbotron text-center">
         @*<h4>Points</h4>
-        <form class="form-inline">
-            <input type="text" id="points" class="form-control" size="5" placeholder="0" readonly />
-        </form>*@
+            <form class="form-inline">
+                <input type="text" id="points" class="form-control" size="5" placeholder="0" readonly />
+            </form>*@
         <br /><h4>Ressources</h4>
 
         <form class="form-inline">
@@ -97,18 +99,18 @@
         </div>
     </div>
 
-           
-            <footer class="container-fluid text-center">
-                <ul class="nav nav-pills nav-justified">
-                    <li><a asp-controller="Home" asp-action="Index">Mentions légales</a></li>
-                    <li><a asp-controller="Home" asp-action="Index">Support</a></li>
-                    <li><a asp-controller="Home" asp-action="Index">Version du site</a></li>
-                    <li><a asp-controller="Home" asp-action="Index">Mentions légales</a></li>
-                    <li><a href="https://www.facebook.com/skylordgame">Notre page Facebook</a></li>
-                    <li><a href="http://intechinfo.fr">IN'TECH</a></li>
-                </ul>
-            </footer>
-        
+
+    <footer class="container-fluid text-center">
+        <ul class="nav nav-pills nav-justified">
+            <li><a asp-controller="Home" asp-action="Index">Mentions légales</a></li>
+            <li><a asp-controller="Home" asp-action="Index">Support</a></li>
+            <li><a asp-controller="Home" asp-action="Index">Version du site</a></li>
+            <li><a asp-controller="Home" asp-action="Index">Mentions légales</a></li>
+            <li><a href="https://www.facebook.com/skylordgame">Notre page Facebook</a></li>
+            <li><a href="http://intechinfo.fr">IN'TECH</a></li>
+        </ul>
+    </footer>
+
     <environment names="Development">
         <!-- Quand on est en développement -->
         @*<script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.8.0.js"></script>*@
