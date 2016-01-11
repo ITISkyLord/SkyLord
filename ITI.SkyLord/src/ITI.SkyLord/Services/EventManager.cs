@@ -187,7 +187,11 @@ namespace ITI.SkyLord
             // Ajouter une unité dans l'armée, voir avec Army Controller
             // Gérer les listes d'unités à ajouter, à l'instar de UnitsToAdd dans la model relié à ArmyController.
             // Gérer le temps d'attente entre les unités et vérifier que ça ne pose pas de problème d'ajouter une unité à une armée qui est partie en attaque.
-            ArmyManager am = new ArmyManager( _context );
+
+            // Recherche du vrai element, on peut inclure les elements du coup :D
+            ue = _context.UnitEvents.Where( e => e.EventId == ue.EventId ).Single();
+
+            ArmyManager am = _allManager.ArmyManager;   // Kévin : Non Erwan on n'instancie pas de manager, on se le fait injecter.
             am.AddUnit( ue.Unit, 1, ue.island );
             _context.SaveChanges();
             // TODO : Si plusieurs lignes sont finies en même temps, on peut les cumuler avec ArmyManager.AddUnit
@@ -212,12 +216,15 @@ namespace ITI.SkyLord
 
         internal void Resolve(BuildingEvent be)
         {
+            be = _context.BuildingEvents.Where( e => e.EventId == be.EventId ).Single();
+
             // Cette methode sera à changer vu qu'il faut que l'on construise sur un emplacement précis de l'island
             _allManager.BuildingManager.AddBuildingToIsland( be.BuildingToBuild.BuildingName, be.island.IslandId );
         }
 
         internal void Resolve(UpgradeEvent ue)
         {
+            ue = _context.UpgradeEvents.Where( e => e.EventId == ue.EventId ).Single();
             _allManager.BuildingManager.LevelUpBuilding( ue.buildingToUpgrade, ue.island.IslandId );
         }
         
