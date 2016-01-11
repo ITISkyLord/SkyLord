@@ -1,8 +1,6 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model ITI.SkyLord.ViewModel.World.WorldMapViewModel
 @{
-    Layout = "";
+
 }
 
 
@@ -21,11 +19,13 @@
         overflow: hidden;
     }
 
-    td {
-        border: green solid 1px;
+    .map td {
+        border: black solid 1px;
         width: 64px;
         height: 64px;
-        background-color: green;
+        background-color: rgba(0,0,0,0);
+        min-width: 64px;
+        min-height: 64px;
         max-width: 64px;
         max-height: 64px;
         overflow: hidden;
@@ -34,38 +34,80 @@
     #MyIsland {
         background-color: pink;
     }
+    
+    .Island:hover {
+        cursor: pointer;
+    }
+
+    td.Island {
+        background-color: green;
+    }
+    
+    td.Empty {
+        background-color: yellow;
+    }
+
+    #Menu {
+        position: absolute;
+
+        background-color: black;
+        color: white;
+        border-radius: 20px;
+        border: solid rgba(39, 36, 36, 0.00) 1px;
+        width: 150px;
+        max-width: 150px;
+        min-width: 150px;
+    }
+    #Menu ul 
+    {
+        list-style-type: none;
+    }
+
+
 </style>
 
 <div class="map">
     <div id="draggable">
+        <!-- Map OTD -->
         <table>
-            <?php
-			$i = 0;
-			$j = 0;
-
-			for($i=0; $i<100; $i++)
-			{
-            ?>
-            <tr>
-                <?php
-				for($j=0; $j<100; $j++)
-				{
-					if($i == 10 && $j == 10)
-						$island='id=MyIsland';
-					else
-						$island='';
-
-					echo "<td x='".$j."' y='".$i."' ".$island.">xxxxxxxxxxxxxxxxxxxx</td>";
-
-				}
-
-                ?>
-            </tr>
-            <?php
-			}
-            ?>
+            @for (var i = 0; i < 100; i++)
+            {
+                <tr>
+                    @for (var j = 0; j < 100; j++)
+                    {
+                        string key = i + "_" + j;
+                        Island island = null;
+                        if(Model.Layout.CurrentIsland.Coordinates.X == j && Model.Layout.CurrentIsland.Coordinates.Y == i)
+                        {
+                            <td class="Island" id="MyIsland" x="@j" y="@i" islandid="@Model.Layout.CurrentIsland.IslandId"></td>
+                        }
+                        else if (Model.Map.TryGetValue(key, out island))
+                        {
+                            <td class="Island" x="@j" y="@i" islandid="@island.IslandId"></td>
+                        }
+                        else
+                        {
+                            <td class="Empty"> empty</td>
+                        }
+                    }
+                </tr>
+            }
         </table>
+    
     </div>
+</div>
 
-    <script src="~/js/worldmap.js"></script>
+<!-- Petit Menu OTD-->
+<div id="Menu" style="display:none;">
+    <ul>
+        <li><a id="Attaquer" href="/Fight?islandId={{islandId}}">Attaquer</a></li>
+        <li><a id="Supporter" href="/Supporter?islandId={{islandId}}">Supporter</a></li>
+        <li><a id="Espionner" href="/Espionner?islandId={{islandId}}">Espionner</a></li>
+        <li><a id="Voir" href="/See?islandId={{islandId}}">Voir</a></li>
+        <li><a id="Message" href="/Message?islandId={{islandId}}">Message</a></li>
+    </ul>
+</div>
+
+
+<script src="~/js/worldmap.js"></script>
 

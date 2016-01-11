@@ -11,3 +11,4 @@
 /// <reference path="lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js" />
 /// <reference path="svg/Tour.js" />
 /// <reference path="ts/testsnap.js" />
+/// <reference path="ts/worldmap.js" />
