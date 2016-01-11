@@ -142,7 +142,7 @@ namespace ITI.SkyLord
             List<Event> allEvent = _context.Events.Where( e => e.done==false && e.endingDate < DateTime.Now && e.island.IslandId==islandId).ToList();
             
             // All army movements where player is the target
-            List<ArmyEvent> eventsWhereTarget = _context.ArmyEvents.Include(e => e.done == false && e.endingDate > DateTime.Now && e.destination.IslandId == islandId).Where(e => e.destination.IslandId == islandId).ToList();
+            List<ArmyEvent> eventsWhereTarget = _context.ArmyEvents.Include(u => u.army).ThenInclude( j => j.Regiments).Where(e => e.done == false && e.endingDate > DateTime.Now && e.destination.IslandId == islandId).ToList();
             // Sélectionne les éléments pas encore fait et qui doivent être résolus, dans l'ordre de finission-
             //List<Event> listEvent = _context.Events.Where( e => e.done == false && e.endingDate > DateTime.Now ).OrderBy( e => e.endingDate ).ToList();
 
