@@ -1,14 +1,25 @@
 /// <reference path="jquery.d.ts" />
 /// <reference path="jquery-ui.d.ts" />
+/*
+
+WorldMap :
+Gère la world map pour la vue /World
+
+*/
+// Variables à définir en cas de changement de tailles des elements
 var taillecase = 64;
 var taillemap = 500;
+// Main
 $(document).ready(function () {
     // On rend l'élément draggable
     $("#draggable").draggable();
+    // Centre la map sur l'island de la personne
     var pos = GetCoordinate($("#MyIsland"));
     $("#draggable").css("top", pos.X + "px");
     $("#draggable").css("left", pos.Y + "px");
+    // Récupère le node du menu quand on clique sur une island
     var menu = $("#Menu");
+    // Charge l'island dans le menu et place le menu et l'affiche avec petite animation
     $(".Island").click(function (event) {
         // Met la bonne information dans le lien
         var islandId = +$(this).attr("islandid");
@@ -21,6 +32,7 @@ $(document).ready(function () {
         }
         event.stopPropagation();
     });
+    // Fais disparaitre le menu quand on clique ailleurs que sur l'island
     $(".map").mousedown(function (event) {
         menu.fadeOut();
     });
@@ -33,6 +45,7 @@ $(document).ready(function () {
         return false;
     });
 });
+// Struct pour gérer les coordonnées X,Y
 var Coordinate = (function () {
     function Coordinate(x, y) {
         this.X = x;
@@ -40,6 +53,7 @@ var Coordinate = (function () {
     }
     return Coordinate;
 })();
+// Helper pour le centrage sur l'island courrante
 function GetCoordinate(islandNode) {
     var x = +$(islandNode).attr("x");
     var y = +$(islandNode).attr("y");

@@ -1,8 +1,4 @@
 ﻿@model ITI.SkyLord.ViewModel.World.WorldMapViewModel
-@{
-
-}
-
 
 <style>
     #draggable {
@@ -10,7 +6,6 @@
         position: relative;
         top: -100px;
     }
-
     .map {
         width: 500px;
         height: 500px;
@@ -18,7 +13,6 @@
         background-color: blue;
         overflow: hidden;
     }
-
     .map td {
         border: black solid 1px;
         width: 64px;
@@ -30,23 +24,18 @@
         max-height: 64px;
         overflow: hidden;
     }
-
     #MyIsland {
         background-color: pink;
     }
-    
     .Island:hover {
         cursor: pointer;
     }
-
     td.Island {
         background-color: green;
     }
-    
     td.Empty {
         background-color: yellow;
     }
-
     #Menu {
         position: absolute;
 
@@ -62,10 +51,9 @@
     {
         list-style-type: none;
     }
-
-
 </style>
 
+<!-- World Map -->
 <div class="map">
     <div id="draggable">
         <!-- Map OTD -->
@@ -87,13 +75,12 @@
                         }
                         else
                         {
-                            <td class="Empty"> empty</td>
+                            <td class="Empty"></td>
                         }
                     }
                 </tr>
             }
         </table>
-    
     </div>
 </div>
 
@@ -107,7 +94,6 @@
         <li><a id="Message" href="/Message?islandId={{islandId}}">Message</a></li>
     </ul>
 </div>
-
 
 <script src="~/js/worldmap.js"></script>
 
