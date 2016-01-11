@@ -45,59 +45,6 @@
         </div>
     </nav>
 
-    @*<div class="HomeContainer">*@
-
-    @*<div class="RegisterBlock">
-            <h2>Inscription</h2>
-
-            <form asp-controller="Account" asp-action="Register" method="post" class="form-horizontal" role="form">
-
-                <h4>Créer un nouveau joueur</h4>
-                <hr />
-                <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
-
-                <div class="form-group">
-                    <label asp-for="@Model.registerViewModel.Pseudo" class="col-md-2 control-label"></label>
-                    <div class="col-md-10">
-                        <input asp-for="@Model.registerViewModel.Pseudo" class="form-control" />
-                        <span asp-validation-for="@Model.registerViewModel.Pseudo" class="text-danger"></span>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label asp-for="@Model.registerViewModel.Email" class="col-md-2 control-label"></label>
-                    <div class="col-md-10">
-                        <input asp-for="@Model.registerViewModel.Email" class="form-control" />
-                        <span asp-validation-for="@Model.registerViewModel.Email" class="text-danger"></span>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label asp-for="@Model.registerViewModel.Password" class="col-md-2 control-label"></label>
-                    <div class="col-md-10">
-                        <input asp-for="@Model.registerViewModel.Password" class="form-control" />
-                        <span asp-validation-for="@Model.registerViewModel.Password" class="text-danger"></span>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label asp-for="@Model.registerViewModel.ConfirmPassword" class="col-md-2 control-label"></label>
-                    <div class="col-md-10">
-                        <input asp-for="@Model.registerViewModel.ConfirmPassword" class="form-control" />
-                        <span asp-validation-for="@Model.registerViewModel.ConfirmPassword" class="text-danger"></span>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col-md-offset-1 col-md-10">
-                        <button type="submit" class="btn btn-default">Enregistrer</button>
-                    </div>
-                </div>
-
-            </form>
-
-        </div>*@
-
     @*<div class="ConnectionBlock">
             <h2>Connexion</h2>
             <form asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal" role="form">

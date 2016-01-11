@@ -14,6 +14,8 @@ namespace ITI.SkyLord.ViewModels.Profil
         [DataType( DataType.Text )]
         [Display( Name = "Description" )]
         public string Description { get; set; }
+        public string Mail { get; set; }
+        public string SiteWeb { get; set; }
 
        
     }

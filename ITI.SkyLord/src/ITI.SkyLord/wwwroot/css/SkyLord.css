@@ -6779,7 +6779,7 @@ body {
   color: #fff !important;
 }
 .navbar .img-responsive {
-  height: 90px;
+  height: 75px;
   position: absolute;
   top: 0px;
   left: 0px;
@@ -6798,7 +6798,7 @@ body {
   background-color: "white";
   height: auto;
   width: auto;
-  height: 130%;
+  height: 100%;
 }
 .SkyLordContainer > .navbar-header,
 .SkyLordContainer > .navbar-collapse {
@@ -6829,7 +6829,7 @@ body {
   height: auto;
   width: auto;
   line-height: 30px;
-  height: 925px;
+  height: 712px;
   width: 600px;
   float: left;
   padding: 0px;
@@ -7083,7 +7083,7 @@ footer a {
   color: #fff !important;
 }
 .SkyLordNavBar ul .img-responsive {
-  height: 90px;
+  height: 75px;
   position: absolute;
   top: 0px;
   left: 0px;

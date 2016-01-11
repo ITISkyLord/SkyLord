@@ -57,19 +57,22 @@
             <form class="form-inline">
                 <input type="text" id="points" class="form-control" size="5" placeholder="0" readonly />
             </form>*@
-        <br /><h4>Ressources</h4>
+        <div class="container">
+            <h4>Ressources</h4>
 
-        <form class="form-inline">
-            Bois : <input type="text" class="form-control" size="5" placeholder=@Model.Layout.CurrentIsland.AllRessources.Wood readonly>
-            Magie : <input type="text" class="form-control" size="5" placeholder=@Model.Layout.CurrentIsland.AllRessources.Magic readonly>
-            Métal : <input type="text" class="form-control" size="5" placeholder=@Model.Layout.CurrentIsland.AllRessources.Metal readonly>
-            Cristal : <input type="text" class="form-control" size="5" placeholder=@Model.Layout.CurrentIsland.AllRessources.Cristal readonly>
-        </form>
+            <form class="form-inline">
+                Bois : <input type="text" class="form-control" size="5" placeholder=@Model.Layout.CurrentIsland.AllRessources.Wood readonly>
+                Magie : <input type="text" class="form-control" size="5" placeholder=@Model.Layout.CurrentIsland.AllRessources.Magic readonly>
+                Métal : <input type="text" class="form-control" size="5" placeholder=@Model.Layout.CurrentIsland.AllRessources.Metal readonly>
+                Cristal : <input type="text" class="form-control" size="5" placeholder=@Model.Layout.CurrentIsland.AllRessources.Cristal readonly>
+            </form>
 
-        <form asp-controller="Player" asp-action="SeeInformationOfAnPlayerString" asp-route-islandId="@Model.Layout.IslandId" method="post" role="form">
-            <br /><input type="text" placeholder="Recherche ..." name="namePlayer" id="searchPlayer" size="40" style="color:black" />
-            <button class="btn btn-danger">Go</button>
-        </form>
+            <form asp-controller="Player" asp-action="SeeInformationOfAnPlayerString" asp-route-islandId="@Model.Layout.IslandId" method="post" role="form">
+                <br /><input type="text" placeholder="Recherche ..." name="namePlayer" id="searchPlayer" size="40" style="color:black" />
+                <button class="btn btn-danger">Go</button>
+            </form>
+        </div>
+
     </div>
 
     <div class="SkyLordContainer">

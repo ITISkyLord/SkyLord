@@ -58,5 +58,28 @@ namespace ITI.SkyLord.Controllers
             PlayerContext.FillStandardVM( profilViewModel, PlayerContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
             return View("Index", profilViewModel );
         }
+
+
+        [HttpPost]
+        public IActionResult changeMail(ProfilViewModel model, long islandId = 0)
+        {
+            // Ajouter la description dans la BDD
+
+            Player p = PlayerContext.GetPlayer(User.GetUserId());
+            p = PlayerContext.Players.Include(z => z.Profil).Where(x => x.PlayerId == p.PlayerId).First();
+            Profil oldProfil = p.Profil;
+            oldProfil.Mail = model.Mail;
+            PlayerContext.SaveChanges();
+
+            ViewData["name"] = p.Name;
+            ProfilViewModel profilViewModel = new ProfilViewModel();
+            if (!String.IsNullOrEmpty(p.Profil.Mail))
+                profilViewModel.Mail = p.Profil.Mail;
+            else
+                profilViewModel.Mail = "Champ invalide";
+
+            PlayerContext.FillStandardVM(profilViewModel, PlayerContext.GetPlayer(User.GetUserId()).PlayerId, islandId);
+            return View("Index", profilViewModel);
+        }
     }
 }

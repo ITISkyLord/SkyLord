@@ -13,6 +13,8 @@ namespace ITI.SkyLord
         public long ProfilId { get; set; }
 
         public string Description { get; set; }
+        public string Mail { get; set; }
+        public string SiteWeb { get; set; }
         #endregion
     }
 }
