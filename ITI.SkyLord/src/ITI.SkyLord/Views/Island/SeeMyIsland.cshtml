@@ -1,6 +1,6 @@
 ﻿@addTagHelper "*, Microsoft.AspNet.Mvc.TagHelpers"
 
-@model ITI.SkyLord.ViewModel.SeeIslands.SeeIslandsViewModel
+@model ITI.SkyLord.ViewModel.SeeIslands.SeeIslandViewModel
 @using ITI.SkyLord
 
 @{
@@ -8,19 +8,16 @@
     Layout = "_Layout";
 }
 
-<h1>Liste d'îles</h1>
+<h2>@Model.CurrentIsland.Name (@Model.CurrentIsland.Coordinates.X, @Model.CurrentIsland.Coordinates.Y)</h2>
+<h3>Buildings :</h3>
+<ul>
+    
+    @foreach(var building in Model.CurrentIsland.Buildings)
+    {
+        <li>@building.BuildingName</li>
+    }
 
-<table>
-    <tr>
-        <th>Ile(s) :</th>
-    </tr>
-        <tr>
-            <td>@Model.CurrentIsland.Name</td>
-            <td>Ses coordonnées sont : [@Model.CurrentIsland.Coordinates.X ; @Model.CurrentIsland.Coordinates.Y]</td>
-            <td><a asp-controller="Ressource" asp-route-islandId="@Model.CurrentIsland.IslandId" asp-action="SeeRessources">Voir vos ressources</a></td>
-        </tr>
-</table>
-
+</ul>
 
 
 

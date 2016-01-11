@@ -57,6 +57,7 @@ namespace ITI.SkyLord.Controllers
             long playerId = LevelContext.GetPlayer( User.GetUserId() ).PlayerId;
 
             BuildingViewModel buildingViewModel = CreateBuildingViewModel( islandId, playerId );
+
             return View( buildingViewModel );
 
         }
