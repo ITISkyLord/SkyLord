@@ -42,6 +42,7 @@ namespace ITI.SkyLord.Controllers
                 base.OnActionExecuting( context );
             }
         }
+
         public IActionResult Index()
         {
             return View();

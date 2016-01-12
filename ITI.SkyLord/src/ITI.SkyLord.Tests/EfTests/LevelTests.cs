@@ -302,7 +302,6 @@ namespace ITI.SkyLord.Tests.EfTests
         //        }
         //    }
         //}
-
         //[Test]
         //public void IsNextLevelAvailable_for_building_returns_false_if_conditions_are_not_met()
         //{
@@ -409,7 +408,6 @@ namespace ITI.SkyLord.Tests.EfTests
         //        }
         //    }
         //}
-
         //[Test]
         //public void IsNextLevelAvailable_for_technlogy_returns_true_if_conditions_are_met()
         //{
@@ -537,7 +535,6 @@ namespace ITI.SkyLord.Tests.EfTests
         //        }
         //    }
         //}
-
         //[Test]
         //public void IsNextLevelAvailable_for_technlogy_returns_false_if_conditions_are_not_met()
         //{
@@ -648,7 +645,6 @@ namespace ITI.SkyLord.Tests.EfTests
         //        }
         //    }
         //}
-
         //[Test]
         //public void LevelUp_method_for_building_returns_true_and_increments_level_if_a_superior_level_exists()
         //{
@@ -1007,74 +1003,74 @@ namespace ITI.SkyLord.Tests.EfTests
         }
 
         [Test]
-        //public void SeedLevels_for_Tower_works()
-        //{
-        //    LevelSeed levelSeed = new LevelSeed();
-        //    levelSeed.SeedTowerLevels();
-        //}
+        public void SeedLevels_for_Tower_works()
+        {
+            LevelSeed levelSeed = new LevelSeed();
+            levelSeed.SeedTowerLevels();
+        }
 
-        //[Test]
-        //public void SeedLevels_for_WoodField_works()
-        //{
-        //    LevelSeed levelSeed = new LevelSeed();
-        //    levelSeed.SeedWoodLevels();
-        //}
+        [Test]
+        public void SeedLevels_for_WoodField_works()
+        {
+            LevelSeed levelSeed = new LevelSeed();
+            levelSeed.SeedWoodLevels();
+        }
 
-        //[Test]
-        //public void SeedLevels_for_CristalField_works()
-        //{
-        //    LevelSeed levelSeed = new LevelSeed();
-        //    levelSeed.SeedCristalLevels();
-        //}
+        [Test]
+        public void SeedLevels_for_CristalField_works()
+        {
+            LevelSeed levelSeed = new LevelSeed();
+            levelSeed.SeedCristalLevels();
+        }
 
-        //[Test]
-        //public void SeedLevels_for_MagicField_works()
-        //{
-        //    LevelSeed levelSeed = new LevelSeed();
-        //    levelSeed.SeedMagicLevels();
-        //}
+        [Test]
+        public void SeedLevels_for_MagicField_works()
+        {
+            LevelSeed levelSeed = new LevelSeed();
+            levelSeed.SeedMagicLevels();
+        }
 
-        //[Test]
-        //public void SeedLevels_for_MetalField_works()
-        //{
-        //    LevelSeed levelSeed = new LevelSeed();
-        //    levelSeed.SeedMetalLevels();
-        //}
+        [Test]
+        public void SeedLevels_for_MetalField_works()
+        {
+            LevelSeed levelSeed = new LevelSeed();
+            levelSeed.SeedMetalLevels();
+        }
 
-        //[Test]
-        //public void SeedLevels_for_Invocation_works()
-        //{
-        //    LevelSeed levelSeed = new LevelSeed();
-        //    levelSeed.SeedInvocationLevels();
-        //}
+        [Test]
+        public void SeedLevels_for_Invocation_works()
+        {
+            LevelSeed levelSeed = new LevelSeed();
+            levelSeed.SeedInvocationLevels();
+        }
         #endregion
 
-        private Ressource Multiplyressource( Ressource initialRessource, int factor )
-        {
-            return new Ressource
-            {
-                Wood = initialRessource.Wood * factor,
-                Metal = initialRessource.Metal * factor,
-                Cristal = initialRessource.Cristal * factor,
-                Magic = initialRessource.Magic * factor
-            };
-        }
+        //private Ressource Multiplyressource( Ressource initialRessource, int factor )
+        //{
+        //    return new Ressource
+        //    {
+        //        Wood = initialRessource.Wood * factor,
+        //        Metal = initialRessource.Metal * factor,
+        //        Cristal = initialRessource.Cristal * factor,
+        //        Magic = initialRessource.Magic * factor
+        //    };
+        //}
 
-        void AddPlayerAndUser( Player p, CustomContext context )
-        {
-            ApplicationUser appUser = new ApplicationUser();
-            User_Player userPlayer = new User_Player( p, appUser );
+        //void AddPlayerAndUser( Player p, CustomContext context )
+        //{
+        //    ApplicationUser appUser = new ApplicationUser();
+        //    User_Player userPlayer = new User_Player( p, appUser );
 
-            context.Users.Add( appUser );
-            context.Players.Add( p );
-            context.User_Players.Add( userPlayer );
-        }
+        //    context.Users.Add( appUser );
+        //    context.Players.Add( p );
+        //    context.User_Players.Add( userPlayer );
+        //}
 
-        void RemovePlayerAndUser( Player p, CustomContext context )
-        {
-                context.Remove( p );
-                context.User_Players.Remove( p.UserPlayer );
-                context.Users.Remove( p.UserPlayer.User );
-        }
+        //void RemovePlayerAndUser( Player p, CustomContext context )
+        //{
+        //        context.Remove( p );
+        //        context.User_Players.Remove( p.UserPlayer );
+        //        context.Users.Remove( p.UserPlayer.User );
+        //}
     }
 }

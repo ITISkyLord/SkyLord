@@ -50,7 +50,7 @@ namespace ITI.SkyLord.Controllers
 
             SeeIslandViewModel islandViewModel = CreateBuildingViewModel(currentIsland.IslandId, LevelContext.GetPlayer(User.GetUserId()).PlayerId);
 
-            return View( islandViewModel );
+            return View(islandViewModel);
         }
 
         private Island GetIsland( long islandId )
@@ -88,12 +88,20 @@ namespace ITI.SkyLord.Controllers
 
             model.Layout.CurrentPlayer = LevelContext.GetPlayer(User.GetUserId());
             Island currentIsland = IslandContext.GetIsland(islandId, model.Layout.CurrentPlayer.PlayerId);
+            model.CurrentIsland = currentIsland;
 
             RessourceManager ressourceManager = new RessourceManager(LevelContext);
             LevelManager levelManager = new LevelManager(LevelContext);
             BuildingManager buildingManager = new BuildingManager(LevelContext, levelManager, ressourceManager);
 
             model.Buildings = buildingManager.GetBuildingsOnCurrentIsland(islandId, playerId);
+
+            model.DicoBuildings = new Dictionary<string, Building>();
+            foreach(var building in model.Buildings)
+            {
+                model.DicoBuildings.Add(building.Position.ToString(), building);
+            }
+
             model.NextLevelCosts = new Dictionary<int, Ressource>();
             foreach (Building building in model.Buildings)
             {
