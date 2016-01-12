@@ -8,5 +8,6 @@ namespace ITI.SkyLord
     public class BuildingLevel : Level
     {
         public BuildingName BuildingName { get; set; }
+        public IList<BonusBuilding> BuildingBonuses { get; set; }
     }
 }
