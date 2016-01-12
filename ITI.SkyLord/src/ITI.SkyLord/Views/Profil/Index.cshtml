@@ -12,23 +12,30 @@
                     <p>@ViewData["name"]</p> <small><cite title="Source Title">Gotham, United Kingdom  <i class="glyphicon glyphicon-map-marker"></i></cite></small>
                 </blockquote>
                 <p>
-                    <i class="glyphicon glyphicon-envelope"></i> @Model.Layout.CurrentPlayer.Mail
-                    <br /> <i class="glyphicon glyphicon-globe"></i> www.bootsnipp.com
                     <br /> <i class="glyphicon glyphicon-gift"></i> January 30, 1974
                 </p>
-                <form asp-controller="Profil" asp-action="changeMail" asp-route-islandId="@Model.Layout.IslandId" role="form" method="post">
-                   <input type="text" class="form-control" size="1"/>
-                    <button>Changer email</button>
-                </form>
-                <form asp-controller="Profil" asp-action="changeDescription" asp-route-islandId="@Model.Layout.IslandId" role="form" method="post">
-                    <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
-                    <div class="form-group">
-                        <span class="glyphicons glyphicons-person"></span>
-                        <textarea asp-for="Description" class="form-control" rows="5">@Model.Description</textarea>
-                        <span asp-validation-for="Description"></span>
-                        <button>Changer description</button>
-                    </div>
-                </form>
+
+                <label for="mail"> <i class="glyphicon glyphicon-envelope"></i> @Model.Layout.CurrentPlayer.Mail</label>
+                    <form asp-controller="Profil" asp-action="changeMail" asp-route-islandId="@Model.Layout.IslandId" role="form" method="post">
+                        <input type="text" placeholder="Nouveau mail ..." name="newMail" size="40" />
+                        <button class="btn btn-info">Changer mail</button>
+                    </form>
+
+                <label for="web"> <i class="glyphicon glyphicon-globe"></i> @Model.Layout.CurrentPlayer.Profil.SiteWeb</label>
+                    <form asp-controller="Profil" asp-action="changeWeb" asp-route-islandId="@Model.Layout.IslandId" role="form" method="post">
+                        <input type="text" placeholder="Nouveau site web ..." name="newWeb" size="40" />
+                        <button class="btn btn-info">Changer site</button>
+                    </form>
+
+                    <form asp-controller="Profil" asp-action="changeDescription" asp-route-islandId="@Model.Layout.IslandId" role="form" method="post">
+                        <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
+                        <div class="form-group">
+                            <label for="description">Description: @Model.Layout.CurrentPlayer.Profil.Description</label>
+                            <textarea asp-for="Description" class="form-control" rows="5">Changer de description ...</textarea>
+                            <span asp-validation-for="Description"></span>
+                            <button class="btn btn-info">Changer description</button>
+                        </div>
+                    </form>
             </div>
         </div>
     </div>

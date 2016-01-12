@@ -19,64 +19,87 @@ namespace ITI.SkyLord.Controllers
         public PlayerContext PlayerContext { get; set; }
 
         // GET: /<controller>/
-        public IActionResult Index( long islandId = 0 )
+        public IActionResult Index(long islandId = 0)
         {
             //Récupérer la description dans la BDD
 
             Player p = PlayerContext.GetPlayer(User.GetUserId());
-            p = PlayerContext.Players.Include(z => z.Profil).Where( x => x.PlayerId == p.PlayerId ).First();
+            p = PlayerContext.Players.Include(z => z.Profil).Where(x => x.PlayerId == p.PlayerId).First();
             ViewData["name"] = p.Name;
 
             ProfilViewModel profilViewModel = new ProfilViewModel();
-            if( !String.IsNullOrEmpty( p.Profil.Description ) )
+            if (!String.IsNullOrEmpty(p.Profil.Description))
                 profilViewModel.Description = p.Profil.Description;
             else
                 profilViewModel.Description = "Aucune description";
 
-            PlayerContext.FillStandardVM( profilViewModel, PlayerContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
-            return View( profilViewModel );
+            PlayerContext.FillStandardVM(profilViewModel, PlayerContext.GetPlayer(User.GetUserId()).PlayerId, islandId);
+            return View(profilViewModel);
         }
 
         [HttpPost]
-        public IActionResult changeDescription( ProfilViewModel model, long islandId = 0 )
-        {
-            // Ajouter la description dans la BDD
-
-            Player p = PlayerContext.GetPlayer( User.GetUserId() );
-            p = PlayerContext.Players.Include( z => z.Profil ).Where( x => x.PlayerId == p.PlayerId ).First();
-            Profil oldProfil = p.Profil;
-            oldProfil.Description = model.Description;
-            PlayerContext.SaveChanges();
-
-            ViewData["name"] = p.Name;
-            ProfilViewModel profilViewModel = new ProfilViewModel();
-            if( !String.IsNullOrEmpty( p.Profil.Description ) )
-                profilViewModel.Description = p.Profil.Description;
-            else
-                profilViewModel.Description = "Aucune description";
-
-            PlayerContext.FillStandardVM( profilViewModel, PlayerContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
-            return View("Index", profilViewModel );
-        }
-
-
-        [HttpPost]
-        public IActionResult changeMail(ProfilViewModel model, long islandId = 0)
+        public IActionResult changeDescription(ProfilViewModel model, long islandId = 0)
         {
             // Ajouter la description dans la BDD
 
             Player p = PlayerContext.GetPlayer(User.GetUserId());
             p = PlayerContext.Players.Include(z => z.Profil).Where(x => x.PlayerId == p.PlayerId).First();
             Profil oldProfil = p.Profil;
-            oldProfil.Mail = model.Mail;
+            oldProfil.Description = model.Description;
+            PlayerContext.SaveChanges();
+
+            ViewData["name"] = p.Name;
+            ProfilViewModel profilViewModel = new ProfilViewModel();
+            if (!String.IsNullOrEmpty(p.Profil.Description))
+                profilViewModel.Description = p.Profil.Description;
+            else
+                profilViewModel.Description = "Aucune description";
+
+            PlayerContext.FillStandardVM(profilViewModel, PlayerContext.GetPlayer(User.GetUserId()).PlayerId, islandId);
+            return View("Index", profilViewModel);
+        }
+
+
+        [HttpPost]
+        public IActionResult changeMail(string newMail, long islandId = 0)
+        {
+            // Change the old mail by the new mail in the BDD
+            Player p = PlayerContext.GetPlayer(User.GetUserId());
+            p = PlayerContext.Players.Include(z => z.Profil).Where(x => x.PlayerId == p.PlayerId).First();
+            Profil oldProfil = p.Profil;
+            oldProfil.Mail = newMail;
+            p.Mail = newMail;
             PlayerContext.SaveChanges();
 
             ViewData["name"] = p.Name;
             ProfilViewModel profilViewModel = new ProfilViewModel();
             if (!String.IsNullOrEmpty(p.Profil.Mail))
+            {
                 profilViewModel.Mail = p.Profil.Mail;
-            else
-                profilViewModel.Mail = "Champ invalide";
+            }
+            else profilViewModel.Mail = "Champ invalide";
+
+            PlayerContext.FillStandardVM(profilViewModel, PlayerContext.GetPlayer(User.GetUserId()).PlayerId, islandId);
+            return View("Index", profilViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult changeWeb(string newWeb, long islandId = 0)
+        {
+            // Change the old mail by the new mail in the BDD
+            Player p = PlayerContext.GetPlayer(User.GetUserId());
+            p = PlayerContext.Players.Include(z => z.Profil).Where(x => x.PlayerId == p.PlayerId).First();
+            Profil oldProfil = p.Profil;
+            oldProfil.SiteWeb = newWeb;
+            PlayerContext.SaveChanges();
+
+            ViewData["name"] = p.Name;
+            ProfilViewModel profilViewModel = new ProfilViewModel();
+            if (!String.IsNullOrEmpty(p.Profil.SiteWeb))
+            {
+                profilViewModel.SiteWeb = p.Profil.SiteWeb;
+            }
+            else profilViewModel.Mail = "Champ invalide";
 
             PlayerContext.FillStandardVM(profilViewModel, PlayerContext.GetPlayer(User.GetUserId()).PlayerId, islandId);
             return View("Index", profilViewModel);
