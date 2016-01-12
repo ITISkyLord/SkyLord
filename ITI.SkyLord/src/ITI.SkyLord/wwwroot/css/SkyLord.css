@@ -6760,26 +6760,38 @@ body {
   line-height: 1.42857143 !important;
   letter-spacing: 4px;
   border-radius: 0;
+  /*.navbar-nav li a:hover, .navbar-nav li button[type=submit]:hover, .navbar-nav li.active a {
+        color: #fff;
+        /*text-decoration: none !important;
+        padding: 15px 15px 15px 15px;
+    }*/
 }
-.navbar .navbar li a,
-.navbar .navbar li button[type=submit],
-.navbar .navbar .navbar-brand {
+.navbar .navbar-nav li input[type=text] {
+  padding: 1px 15px 1px 15px;
+}
+.navbar li a,
+.navbar li button[type=submit],
+.navbar .navbar-brand {
   color: #3C0732;
+  padding: 15px 15px 15px 15px;
+  border: none;
 }
-.navbar .navbar-nav li a:hover,
-.navbar .navbar-nav li button[type=submit]:hover,
-.navbar .navbar-nav li.active a,
-.navbar .navbar-nav li.active button[type=submit] {
-  color: #fff;
-  text-decoration: none !important;
+.navbar li a,
+.navbar li button[type=submit],
+.navbar .navbar-brand {
+  color: #3C0732;
+  padding: 15px 15px 15px 15px;
+  border: none;
+}
+.navbar .btn-link {
   padding: 15px 15px 15px 15px;
 }
 .navbar .navbar-nav li a:hover,
 .navbar .navbar-nav li button[type=submit]:hover,
-.navbar .navbar-nav li.active a,
-.navbar .navbar-nav li.active button[type=submit] {
+.navbar .navbar-nav li.active a {
   background-color: #3C0732;
   padding: 15px 15px 15px 15px;
+  text-decoration: none !important;
 }
 .navbar .navbar-default .navbar-toggle {
   border-color: transparent;
@@ -7026,6 +7038,11 @@ footer a {
   line-height: 1.42857143 !important;
   letter-spacing: 4px;
   border-radius: 0;
+  /*.navbar-nav li a:hover, .navbar-nav li button[type=submit]:hover, .navbar-nav li.active a {
+        color: #fff;
+        /*text-decoration: none !important;
+        padding: 15px 15px 15px 15px;
+    }*/
   height: 50px;
 }
 .SkyLordNavBar ul > li {
@@ -7072,25 +7089,32 @@ footer a {
     border-radius: 4px;
   }
 }
-.SkyLordNavBar ul .navbar li a,
-.SkyLordNavBar ul .navbar li button[type=submit],
-.SkyLordNavBar ul .navbar .navbar-brand {
-  color: #3C0732;
+.SkyLordNavBar ul .navbar-nav li input[type=text] {
+  padding: 1px 15px 1px 15px;
 }
-.SkyLordNavBar ul .navbar-nav li a:hover,
-.SkyLordNavBar ul .navbar-nav li button[type=submit]:hover,
-.SkyLordNavBar ul .navbar-nav li.active a,
-.SkyLordNavBar ul .navbar-nav li.active button[type=submit] {
-  color: #fff;
-  text-decoration: none !important;
+.SkyLordNavBar ul li a,
+.SkyLordNavBar ul li button[type=submit],
+.SkyLordNavBar ul .navbar-brand {
+  color: #3C0732;
+  padding: 15px 15px 15px 15px;
+  border: none;
+}
+.SkyLordNavBar ul li a,
+.SkyLordNavBar ul li button[type=submit],
+.SkyLordNavBar ul .navbar-brand {
+  color: #3C0732;
+  padding: 15px 15px 15px 15px;
+  border: none;
+}
+.SkyLordNavBar ul .btn-link {
   padding: 15px 15px 15px 15px;
 }
 .SkyLordNavBar ul .navbar-nav li a:hover,
 .SkyLordNavBar ul .navbar-nav li button[type=submit]:hover,
-.SkyLordNavBar ul .navbar-nav li.active a,
-.SkyLordNavBar ul .navbar-nav li.active button[type=submit] {
+.SkyLordNavBar ul .navbar-nav li.active a {
   background-color: #3C0732;
   padding: 15px 15px 15px 15px;
+  text-decoration: none !important;
 }
 .SkyLordNavBar ul .navbar-default .navbar-toggle {
   border-color: transparent;

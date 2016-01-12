@@ -15,26 +15,38 @@ html, body {
     letter-spacing: 4px;
     border-radius: 0;
 
-    input[type=text]
+    .navbar-nav li input[type=text]
     {
-        padding: 15px 15px 15px 15px;
+        padding: 1px 15px 1px 15px;
     }
 
-    .navbar li a, .navbar li button[type=submit], .navbar .navbar-brand {
+    li a, li button[type=submit], .navbar-brand {
         color: #3C0732;
         padding: 15px 15px 15px 15px;
         border:none;
     }
 
-    .navbar-nav li a:hover, .navbar-nav li button[type=submit]:hover, .navbar-nav li.active a, .navbar-nav li.active button[type=submit] {
-        color: #fff;
-        text-decoration: none !important;
+    
+    li a,  li button[type=submit], .navbar-brand {
+        color: #3C0732;
         padding: 15px 15px 15px 15px;
+        border:none;
     }
 
-    .navbar-nav li a:hover, .navbar-nav li button[type=submit]:hover, .navbar-nav li.active a, .navbar-nav li.active button[type=submit] {
+    /*.navbar-nav li a:hover, .navbar-nav li button[type=submit]:hover, .navbar-nav li.active a {
+        color: #fff;
+        /*text-decoration: none !important;
+        padding: 15px 15px 15px 15px;
+    }*/
+
+    .btn-link {
+        padding: 15px 15px 15px 15px;
+     }
+
+    .navbar-nav li a:hover, .navbar-nav li button[type=submit]:hover, .navbar-nav li.active a {
         background-color: #3C0732;
         padding: 15px 15px 15px 15px;
+         text-decoration: none !important;
     }
 
     .navbar-default .navbar-toggle {
