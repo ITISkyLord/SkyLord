@@ -18,7 +18,7 @@ namespace ITI.SkyLord.Controllers
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             base.OnActionExecuting(context);
-
+                
             // On résoud tout les events du player courrant
             EventManager em = new EventManager(SetupContext, new EventPackManager(SetupContext));
             var Player = SetupContext.GetPlayer(User.GetUserId());

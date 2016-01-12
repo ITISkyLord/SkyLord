@@ -8,6 +8,7 @@ using ITI.SkyLord.Models.Entity_Framework.Contexts.Interface;
 using ITI.SkyLord.ViewModel;
 using System;
 using System.Linq;
+using System.Security.Claims;
 
 namespace ITI.SkyLord.Models.Entity_Framework.Contexts
 {
@@ -94,7 +95,10 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
         #endregion Enumerations
 
         #region Helper
-
+        public long GetPlayer(ClaimsPrincipal user)
+        {
+            return GetPlayer(user.GetUserId()).PlayerId;
+        }
         public Player GetPlayer(string userId)
         {
             return Players.Where(pl => pl.UserPlayer.User.Id == userId).First();
