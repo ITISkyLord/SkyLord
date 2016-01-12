@@ -34,17 +34,22 @@
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a asp-controller="Home" asp-action="Index" asp-route-islandId="@Model.Layout.IslandId">Amis</a></li>
                     <li><a asp-controller="Army" asp-action="Index" asp-route-islandId="@Model.Layout.IslandId">Armées</a></li>
                     <li><a asp-controller="Player" asp-action="SeePlayers" asp-route-islandId="@Model.Layout.IslandId">Joueurs</a></li>
                     <li><a asp-controller="Message" asp-action="GetAllMessages" asp-route-islandId="@Model.Layout.IslandId">Messages</a></li>
-                    <li><a asp-controller="Home" asp-action="Index">Guilde</a></li>
-                    <li><a asp-controller="Home" asp-action="Index">Forum</a></li>
                     <li><a asp-controller="Home" asp-action="Index">Classement</a></li>
                     <li><a asp-controller="Profil" asp-action="Index" asp-route-islandId="@Model.Layout.IslandId">Profil</a></li>
                     <li>
                         <form asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm">
-                            <button type="submit" class="btn btn-link navbar-btn navbar-link">Déconnexion</button>
+                            <button type="submit" class="btn btn-link">Déconnexion</button>
+                        </form>
+                    </li>
+                    <li>
+                        <form asp-controller="Player" asp-action="SeeInformationOfAnPlayerString" asp-route-islandId="@Model.Layout.IslandId" method="post" role="form">
+                            <center>
+                                <input type="text" placeholder="Recherche ..." name="namePlayer" id="searchPlayer" size="15" style="color:black" />
+                                <button class="btn btn-danger">Go</button>
+                            </center>
                         </form>
                     </li>
                 </ul>
@@ -65,11 +70,6 @@
                 Magie : <input type="text" class="form-control" size="5" placeholder=@Model.Layout.CurrentIsland.AllRessources.Magic readonly>
                 Métal : <input type="text" class="form-control" size="5" placeholder=@Model.Layout.CurrentIsland.AllRessources.Metal readonly>
                 Cristal : <input type="text" class="form-control" size="5" placeholder=@Model.Layout.CurrentIsland.AllRessources.Cristal readonly>
-            </form>
-
-            <form asp-controller="Player" asp-action="SeeInformationOfAnPlayerString" asp-route-islandId="@Model.Layout.IslandId" method="post" role="form">
-                <br /><input type="text" placeholder="Recherche ..." name="namePlayer" id="searchPlayer" size="40" style="color:black" />
-                <button class="btn btn-danger">Go</button>
             </form>
         </div>
 
