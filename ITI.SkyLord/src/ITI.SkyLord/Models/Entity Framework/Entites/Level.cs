@@ -16,6 +16,6 @@ namespace ITI.SkyLord
         [System.ComponentModel.DataAnnotations.Association("toRequirements", "Requirements", "RequirementId", IsForeignKey = false )]
         public IList<Requirement> Requirements { get; set; }
         public int Duration { get; set; }
-        public IList<Bonus> Bonuses { get; set; }
+        public IList<BonusTechnology> Bonuses { get; set; }
     }
 }

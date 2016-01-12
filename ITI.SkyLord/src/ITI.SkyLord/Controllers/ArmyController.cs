@@ -131,7 +131,7 @@ namespace ITI.SkyLord.Controllers
 
         public IActionResult UpgradeUnit( ArmyViewModel model,  long islandId )
         {
-            Bonus bonusToAdd = new Bonus
+            BonusTechnology bonusToAdd = new BonusTechnology
             {
                 Modifier = 10,
                 BonusType = BonusType.army_attack

@@ -37,7 +37,7 @@ namespace ITI.SkyLord.Services
         //    }
         //}
 
-        public Unit ResolveUnitBonus( Unit unit, UnitBonus bonus, long playerId )
+        public Unit ResolveUnitBonus( Unit unit, BonusTechnologyOnUnit bonus, long playerId )
         {
             switch ( bonus.BonusType )
             {
@@ -57,11 +57,11 @@ namespace ITI.SkyLord.Services
             return unit;
         }
 
-        public void ResolveAllUnitsBonus( UnitBonus bonus, long playerId )
+        public void ResolveAllUnitsBonus( BonusTechnologyOnUnit bonus, long playerId )
         {
             List<Island> playerIslands = GetAllIslandsArmiesFromPlayer( playerId );
 
-            List<Unit> unitsToResolve = GetUnitsByUnitType( playerIslands, bonus.Target );
+            List<Unit> unitsToResolve = GetUnitsByUnitType( playerIslands, bonus.TargetUnit );
 
             foreach( Unit unit in unitsToResolve )
             {
