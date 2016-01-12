@@ -28,12 +28,12 @@ namespace ITI.SkyLord.Controllers
         public IActionResult YoloTestAdd()
         {
             TechnologyEvent te = new TechnologyEvent();
-            te.begginningDate = DateTime.Now;
-            te.endingDate = DateTime.Now.AddHours(2);
-            te.done = false;
+            te.BegginningDate = DateTime.Now;
+            te.EndingDate = DateTime.Now.AddHours(2);
+            te.Done = false;
             te.EventType = EventDiscrimator.TechnologyEvent;
 
-            te.island = SetupContext.Islands.Where(i=>i.IslandId==1).FirstOrDefault();
+            te.Island = SetupContext.Islands.Where(i=>i.IslandId==1).FirstOrDefault();
 
             SetupContext.Events.Add(te);
             SetupContext.SaveChanges();

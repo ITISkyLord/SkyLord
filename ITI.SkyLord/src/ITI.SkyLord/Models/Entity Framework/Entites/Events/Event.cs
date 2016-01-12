@@ -9,10 +9,10 @@ namespace ITI.SkyLord.Models.Entity_Framework.Entites.Events
     {
         public long EventId { get; set; }
         public string EventType { get; set; }
-        public DateTime begginningDate { get; set; }
-        public DateTime endingDate { get; set; }
-        public bool done { get; set; }
-        public Island island { get; set; }
+        public DateTime BegginningDate { get; set; }
+        public DateTime EndingDate { get; set; }
+        public bool Done { get; set; }
+        public Island Island { get; set; }
 
         abstract public void Accept(EventManager visitor);
     }

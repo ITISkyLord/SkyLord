@@ -7,7 +7,7 @@ namespace ITI.SkyLord.Models.Entity_Framework.Entites.Events
 {
     public class TechnologyEvent : Event
     {
-        public Technology technology { get; set; }
+        public Technology Technology { get; set; }
 
         public override void Accept(EventManager em) => em.Resolve(this);
 
