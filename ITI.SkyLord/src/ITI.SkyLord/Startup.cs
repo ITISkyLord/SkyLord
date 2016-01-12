@@ -88,7 +88,7 @@ namespace ITI.SkyLord
         // Configure is called after ConfigureServices is called.
         public void Configure( IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory )
         {
-            loggerFactory.MinimumLevel = LogLevel.Information;
+           // loggerFactory.MinimumLevel = LogLevel.Information;
             loggerFactory.AddDebug();
 
             // Configure the HTTP request pipeline.

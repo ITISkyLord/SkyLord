@@ -31,6 +31,7 @@ namespace ITI.SkyLord
                 {
                     EventType = EventDiscrimator.UnitEvent,
                     Unit = unit,
+                    UnitIdd = unit.UnitId,
                     BegginningDate = begginningDate,
                     EndingDate = begginningDate.AddSeconds( unit.Duration ),
                     Island = island,
@@ -139,33 +140,21 @@ namespace ITI.SkyLord
         private void ResolveAllForIsland(long islandId)
         {
             // All events of the player
-            List<Event> allEvent = _context.Events.Where( e => e.Done==false && e.EndingDate < DateTime.Now && e.Island.IslandId==islandId).ToList();
+            List<Event> allEvent = _context.Events.Where( e => e.Done == false && e.EndingDate < DateTime.Now && e.Island.IslandId==islandId).ToList();
             
             // All army movements where player is the target
-            List<ArmyEvent> eventsWhereTarget = _context.ArmyEvents.Include(u => u.Army).ThenInclude( j => j.Regiments).Where(e => e.Done == false && e.EndingDate > DateTime.Now && e.Destination.IslandId == islandId).ToList();
-            // Sélectionne les éléments pas encore fait et qui doivent être résolus, dans l'ordre de finission-
-            //List<Event> listEvent = _context.Events.Where( e => e.done == false && e.endingDate > DateTime.Now ).OrderBy( e => e.endingDate ).ToList();
-
-            List<UnitEvent> listUnitEvent = _context.UnitEvents.Include(u => u.Unit).ThenInclude( u => u.UnitStatistics).Where( e => e.Done == false && e.EndingDate < DateTime.Now ).OrderBy( e => e.EndingDate ).ToList();
-            foreach( UnitEvent unitEvent in listUnitEvent )
+            List<ArmyEvent> eventsWhereTarget = _context.ArmyEvents.Include(u => u.Army).ThenInclude( j => j.Regiments).Where(e => e.Done == false && e.EndingDate < DateTime.Now && e.Destination.IslandId == islandId).ToList();
 
             // Merge the two lists order them by date of attack
-            allEvent = allEvent.Intersect( eventsWhereTarget ).OrderBy( e => e.EndingDate ).ToList();
+            allEvent = allEvent.Union( eventsWhereTarget ).OrderBy( e => e.EndingDate ).ToList();
 
             // So, we execute all events ( with a super visitor pattern OTFD )
             foreach(Event @event in allEvent)
             {
-                //unitEvent.Accept( this );
-                //unitEvent.done = true;
                 @event.Accept(this);
                 @event.Done = true;
+                _context.SaveChanges(); // À voir si on peut pas le mettre ailleurs que dans le manager
             }
-            //foreach( Event even in listEvent )
-            //{
-
-            //    even.Accept( this );
-            //    even.done = true;
-            //}
         }
 
         /// <summary>
@@ -174,7 +163,7 @@ namespace ITI.SkyLord
         /// <param name="playerId"></param>
         public void ResolveAllForPlayer( long playerId )
         {
-            List<Island> islands = _context.Islands.Include (i => i.Owner ).Where( i => i.Owner.PlayerId == playerId ).ToList();
+            List<Island> islands = _context.Islands.Include(i => i.Owner ).Where( i => i.Owner.PlayerId == playerId ).ToList();
             foreach( Island island in islands )
             {
                 ResolveAllForIsland( island.IslandId );
@@ -184,25 +173,13 @@ namespace ITI.SkyLord
 
         public void Resolve( UnitEvent ue )
         {
-            // Ajouter une unité dans l'armée, voir avec Army Controller
-            // Gérer les listes d'unités à ajouter, à l'instar de UnitsToAdd dans la model relié à ArmyController.
-            // Gérer le temps d'attente entre les unités et vérifier que ça ne pose pas de problème d'ajouter une unité à une armée qui est partie en attaque.
-
-            // Recherche du vrai element, on peut inclure les elements du coup :D
-            ue = _context.UnitEvents.Where( e => e.EventId == ue.EventId ).Single();
-
-            ArmyManager am = _allManager.ArmyManager;   // Kévin : Non Erwan on n'instancie pas de manager, on se le fait injecter.
-            am.AddUnit( ue.Unit, 1, ue.Island );
-            _context.SaveChanges();
+            // À remettre en place quand on aura la solutions pour Include
+           // UnitEvent unitEvent = _context.UnitEvents.Include(a=>a.Unit).ThenInclude( b => b.UnitStatistics ).Where( e => e.EventId == ue.EventId ).First();
+            Unit unit = _context.Units.Include( y => y.UnitStatistics ).Where( u => u.UnitId == ue.UnitIdd ).Single();
+            ArmyManager am = _allManager.ArmyManager;
+            am.AddUnit( unit, 1, ue.Island );
             // TODO : Si plusieurs lignes sont finies en même temps, on peut les cumuler avec ArmyManager.AddUnit
 
-            //UnitName uN = (UnitName)Enum.Parse( typeof( UnitName ), kvp.Key, true );
-            //am.AddUnit
-            //    (
-            //        _context.Units.Where( u => u.UnitName == uN ).Single(),
-            //        kvp.Value,
-            //        ue.island
-            //    );
         }
         
         public void Resolve( ArmyEvent ae )

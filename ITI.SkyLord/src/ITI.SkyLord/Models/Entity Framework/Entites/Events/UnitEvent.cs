@@ -7,9 +7,8 @@ namespace ITI.SkyLord.Models.Entity_Framework.Entites.Events
 {
     public class UnitEvent : Event
     {
-        
         public Unit Unit { get; set; }
-      //  public int number { get; set; }
+        public int UnitIdd { get; set; }
         public override void Accept(EventManager em) => em.Resolve(this);
 
     }
