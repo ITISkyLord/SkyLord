@@ -1,0 +1,43 @@
+﻿@import "bootstrap/bootstrap.less";
+
+/*.Section (@background-image: url("../images/SkyLord.png")) {
+    border: solid black 3px;
+    border-radius: 20px;
+    background-color: #fff;
+    background-image: @background-image;
+    height: auto;
+    width:auto;
+}*/
+
+.Section (@background-color: "white") {
+    border: solid black 3px;
+    border-radius: 1px;
+    background-color: @background-color;
+    height: auto;
+    width: auto;
+}
+
+.Image(@background-image: url("../images/site_fond.png")) {
+    background-image: @background-image;
+}
+
+.Col(@nb: 1) {
+    .make-lg-column(@nb);
+    .make-md-column(@nb);
+    .make-sm-column(@nb);
+    .make-xs-column(@nb);
+}
+
+.MakeResponsive(@lgcol: 12, @mdcol: 12, @smcol: 12, @xscol: 12) {
+    .make-lg-column(@lgcol);
+    .make-md-column(@mdcol);
+    .make-sm-column(@smcol);
+    .make-xs-column(@xscol);
+}
+
+.MakeOffset(@lgcol: 12, @mdcol: 12, @smcol: 12, @xscol: 12) {
+    .make-lg-column-offset(@lgcol);
+    .make-md-column-offset(@mdcol);
+    .make-sm-column-offset(@smcol);
+    .make-xs-column-offset(@xscol);
+}

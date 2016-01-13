@@ -8,9 +8,10 @@ using ITI.SkyLord.Models.Entity_Framework.Contexts;
 namespace ITI.SkyLord.Migrations
 {
     [DbContext(typeof(SetupContext))]
-    partial class SetupContextModelSnapshot : ModelSnapshot
+    [Migration("20160111152733_AddInformationInProfil")]
+    partial class AddInformationInProfil
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.0-rc1-16348")
@@ -38,48 +39,6 @@ namespace ITI.SkyLord.Migrations
                     b.HasKey("ArmyId");
                 });
 
-            modelBuilder.Entity("ITI.SkyLord.BonusBuilding", b =>
-                {
-                    b.Property<long>("BonusBuildingId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("BonusType");
-
-                    b.Property<long?>("BuildingLevelLevelId");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired();
-
-                    b.Property<int>("Modifier");
-
-                    b.HasKey("BonusBuildingId");
-
-                    b.HasAnnotation("Relational:DiscriminatorProperty", "Discriminator");
-
-                    b.HasAnnotation("Relational:DiscriminatorValue", "BonusBuilding");
-                });
-
-            modelBuilder.Entity("ITI.SkyLord.BonusTechnology", b =>
-                {
-                    b.Property<long>("BonusTechnologyId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("BonusType");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired();
-
-                    b.Property<int>("Modifier");
-
-                    b.Property<long?>("TechnologyLevelLevelId");
-
-                    b.HasKey("BonusTechnologyId");
-
-                    b.HasAnnotation("Relational:DiscriminatorProperty", "Discriminator");
-
-                    b.HasAnnotation("Relational:DiscriminatorValue", "BonusTechnology");
-                });
-
             modelBuilder.Entity("ITI.SkyLord.Building", b =>
                 {
                     b.Property<int>("BuildingId")
@@ -93,8 +52,6 @@ namespace ITI.SkyLord.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<int>("Position");
-
                     b.HasKey("BuildingId");
                 });
 
@@ -107,18 +64,11 @@ namespace ITI.SkyLord.Migrations
 
                     b.Property<long?>("CostRessourceId");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired();
-
                     b.Property<int>("Duration");
 
                     b.Property<int>("Number");
 
                     b.HasKey("LevelId");
-
-                    b.HasAnnotation("Relational:DiscriminatorProperty", "Discriminator");
-
-                    b.HasAnnotation("Relational:DiscriminatorValue", "BuildingLevel");
                 });
 
             modelBuilder.Entity("ITI.SkyLord.CombatReport", b =>
@@ -206,8 +156,6 @@ namespace ITI.SkyLord.Migrations
 
                     b.Property<long?>("OwnerPlayerId");
 
-                    b.Property<int>("PossiblePositions");
-
                     b.HasKey("IslandId");
                 });
 
@@ -262,29 +210,6 @@ namespace ITI.SkyLord.Migrations
                     b.Property<long?>("SenderPlayerId");
 
                     b.HasKey("MessageId");
-                });
-
-            modelBuilder.Entity("ITI.SkyLord.Models.Entity_Framework.Entites.Events.Event", b =>
-                {
-                    b.Property<long>("EventId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("BegginningDate");
-
-                    b.Property<bool>("Done");
-
-                    b.Property<DateTime>("EndingDate");
-
-                    b.Property<string>("EventType")
-                        .IsRequired();
-
-                    b.Property<long?>("IslandIslandId");
-
-                    b.HasKey("EventId");
-
-                    b.HasAnnotation("Relational:DiscriminatorProperty", "EventType");
-
-                    b.HasAnnotation("Relational:DiscriminatorValue", "Event");
                 });
 
             modelBuilder.Entity("ITI.SkyLord.Player", b =>
@@ -425,8 +350,6 @@ namespace ITI.SkyLord.Migrations
 
                     b.Property<int>("Duration");
 
-                    b.Property<bool>("IsModel");
-
                     b.Property<string>("Name");
 
                     b.Property<long?>("UnitCostRessourceId");
@@ -458,8 +381,6 @@ namespace ITI.SkyLord.Migrations
                     b.Property<int>("PhysicResist");
 
                     b.Property<int>("Speed");
-
-                    b.Property<int>("TimeToBuild");
 
                     b.HasKey("UnitStatisticsId");
                 });
@@ -619,128 +540,12 @@ namespace ITI.SkyLord.Migrations
                     b.HasAnnotation("Relational:TableName", "AspNetUserRoles");
                 });
 
-            modelBuilder.Entity("ITI.SkyLord.BonusBuildingOnBuilding", b =>
-                {
-                    b.HasBaseType("ITI.SkyLord.BonusBuilding");
-
-                    b.Property<int>("TargetBuilding");
-
-                    b.HasAnnotation("Relational:DiscriminatorValue", "BonusBuildingOnBuilding");
-                });
-
-            modelBuilder.Entity("ITI.SkyLord.BonusBuildingOnTechnology", b =>
-                {
-                    b.HasBaseType("ITI.SkyLord.BonusBuilding");
-
-                    b.Property<int>("TargetTechnology");
-
-                    b.HasAnnotation("Relational:DiscriminatorValue", "BonusBuildingOnTechnology");
-                });
-
-            modelBuilder.Entity("ITI.SkyLord.BonusBuildingOnUnit", b =>
-                {
-                    b.HasBaseType("ITI.SkyLord.BonusBuilding");
-
-                    b.Property<int>("TargetUnit");
-
-                    b.HasAnnotation("Relational:DiscriminatorValue", "BonusBuildingOnUnit");
-                });
-
-            modelBuilder.Entity("ITI.SkyLord.BonusTechnologyOnBuilding", b =>
-                {
-                    b.HasBaseType("ITI.SkyLord.BonusTechnology");
-
-                    b.Property<int>("TargetBuilding");
-
-                    b.HasAnnotation("Relational:DiscriminatorValue", "BonusTechnologyOnBuilding");
-                });
-
-            modelBuilder.Entity("ITI.SkyLord.BonusTechnologyOnTechnology", b =>
-                {
-                    b.HasBaseType("ITI.SkyLord.BonusTechnology");
-
-                    b.Property<int>("TargetTechnology");
-
-                    b.HasAnnotation("Relational:DiscriminatorValue", "BonusTechnologyOnTechnology");
-                });
-
-            modelBuilder.Entity("ITI.SkyLord.BonusTechnologyOnUnit", b =>
-                {
-                    b.HasBaseType("ITI.SkyLord.BonusTechnology");
-
-                    b.Property<int>("TargetUnit");
-
-                    b.HasAnnotation("Relational:DiscriminatorValue", "BonusTechnologyOnUnit");
-                });
-
-            modelBuilder.Entity("ITI.SkyLord.FieldLevel", b =>
-                {
-                    b.HasBaseType("ITI.SkyLord.BuildingLevel");
-
-                    b.Property<int>("Production");
-
-                    b.HasAnnotation("Relational:DiscriminatorValue", "FieldLevel");
-                });
-
             modelBuilder.Entity("ITI.SkyLord.MageLevel", b =>
                 {
                     b.HasBaseType("ITI.SkyLord.Level");
 
 
                     b.HasAnnotation("Relational:DiscriminatorValue", "MageLevel");
-                });
-
-            modelBuilder.Entity("ITI.SkyLord.Models.Entity_Framework.Entites.Events.ArmyEvent", b =>
-                {
-                    b.HasBaseType("ITI.SkyLord.Models.Entity_Framework.Entites.Events.Event");
-
-                    b.Property<long?>("ArmyArmyId");
-
-                    b.Property<int>("ArmyMovement");
-
-                    b.Property<long?>("DestinationIslandId");
-
-                    b.HasAnnotation("Relational:DiscriminatorValue", "ArmyEvent");
-                });
-
-            modelBuilder.Entity("ITI.SkyLord.Models.Entity_Framework.Entites.Events.BuildingEvent", b =>
-                {
-                    b.HasBaseType("ITI.SkyLord.Models.Entity_Framework.Entites.Events.Event");
-
-                    b.Property<int?>("BuildingToBuildBuildingId");
-
-                    b.Property<int>("PositionToBuild");
-
-                    b.HasAnnotation("Relational:DiscriminatorValue", "BuildingEvent");
-                });
-
-            modelBuilder.Entity("ITI.SkyLord.Models.Entity_Framework.Entites.Events.TechnologyEvent", b =>
-                {
-                    b.HasBaseType("ITI.SkyLord.Models.Entity_Framework.Entites.Events.Event");
-
-                    b.Property<long?>("TechnologyTechnologyId");
-
-                    b.HasAnnotation("Relational:DiscriminatorValue", "TechnologyEvent");
-                });
-
-            modelBuilder.Entity("ITI.SkyLord.Models.Entity_Framework.Entites.Events.UnitEvent", b =>
-                {
-                    b.HasBaseType("ITI.SkyLord.Models.Entity_Framework.Entites.Events.Event");
-
-                    b.Property<int>("UnitIdd");
-
-                    b.Property<int?>("UnitUnitId");
-
-                    b.HasAnnotation("Relational:DiscriminatorValue", "UnitEvent");
-                });
-
-            modelBuilder.Entity("ITI.SkyLord.Models.Entity_Framework.Entites.Events.UpgradeEvent", b =>
-                {
-                    b.HasBaseType("ITI.SkyLord.Models.Entity_Framework.Entites.Events.Event");
-
-                    b.Property<int?>("BuildingToUpgradeBuildingId");
-
-                    b.HasAnnotation("Relational:DiscriminatorValue", "UpgradeEvent");
                 });
 
             modelBuilder.Entity("ITI.SkyLord.Models.Entity_Framework.ApplicationUser", b =>
@@ -763,20 +568,6 @@ namespace ITI.SkyLord.Migrations
                     b.HasOne("ITI.SkyLord.Island")
                         .WithMany()
                         .HasForeignKey("IslandIslandId");
-                });
-
-            modelBuilder.Entity("ITI.SkyLord.BonusBuilding", b =>
-                {
-                    b.HasOne("ITI.SkyLord.BuildingLevel")
-                        .WithMany()
-                        .HasForeignKey("BuildingLevelLevelId");
-                });
-
-            modelBuilder.Entity("ITI.SkyLord.BonusTechnology", b =>
-                {
-                    b.HasOne("ITI.SkyLord.TechnologyLevel")
-                        .WithMany()
-                        .HasForeignKey("TechnologyLevelLevelId");
                 });
 
             modelBuilder.Entity("ITI.SkyLord.Building", b =>
@@ -857,13 +648,6 @@ namespace ITI.SkyLord.Migrations
                     b.HasOne("ITI.SkyLord.Player")
                         .WithMany()
                         .HasForeignKey("SenderPlayerId");
-                });
-
-            modelBuilder.Entity("ITI.SkyLord.Models.Entity_Framework.Entites.Events.Event", b =>
-                {
-                    b.HasOne("ITI.SkyLord.Island")
-                        .WithMany()
-                        .HasForeignKey("IslandIslandId");
                 });
 
             modelBuilder.Entity("ITI.SkyLord.Player", b =>
@@ -979,75 +763,8 @@ namespace ITI.SkyLord.Migrations
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("ITI.SkyLord.BonusBuildingOnBuilding", b =>
-                {
-                });
-
-            modelBuilder.Entity("ITI.SkyLord.BonusBuildingOnTechnology", b =>
-                {
-                });
-
-            modelBuilder.Entity("ITI.SkyLord.BonusBuildingOnUnit", b =>
-                {
-                });
-
-            modelBuilder.Entity("ITI.SkyLord.BonusTechnologyOnBuilding", b =>
-                {
-                });
-
-            modelBuilder.Entity("ITI.SkyLord.BonusTechnologyOnTechnology", b =>
-                {
-                });
-
-            modelBuilder.Entity("ITI.SkyLord.BonusTechnologyOnUnit", b =>
-                {
-                });
-
-            modelBuilder.Entity("ITI.SkyLord.FieldLevel", b =>
-                {
-                });
-
             modelBuilder.Entity("ITI.SkyLord.MageLevel", b =>
                 {
-                });
-
-            modelBuilder.Entity("ITI.SkyLord.Models.Entity_Framework.Entites.Events.ArmyEvent", b =>
-                {
-                    b.HasOne("ITI.SkyLord.Army")
-                        .WithMany()
-                        .HasForeignKey("ArmyArmyId");
-
-                    b.HasOne("ITI.SkyLord.Island")
-                        .WithMany()
-                        .HasForeignKey("DestinationIslandId");
-                });
-
-            modelBuilder.Entity("ITI.SkyLord.Models.Entity_Framework.Entites.Events.BuildingEvent", b =>
-                {
-                    b.HasOne("ITI.SkyLord.Building")
-                        .WithMany()
-                        .HasForeignKey("BuildingToBuildBuildingId");
-                });
-
-            modelBuilder.Entity("ITI.SkyLord.Models.Entity_Framework.Entites.Events.TechnologyEvent", b =>
-                {
-                    b.HasOne("ITI.SkyLord.Technology")
-                        .WithMany()
-                        .HasForeignKey("TechnologyTechnologyId");
-                });
-
-            modelBuilder.Entity("ITI.SkyLord.Models.Entity_Framework.Entites.Events.UnitEvent", b =>
-                {
-                    b.HasOne("ITI.SkyLord.Unit")
-                        .WithMany()
-                        .HasForeignKey("UnitUnitId");
-                });
-
-            modelBuilder.Entity("ITI.SkyLord.Models.Entity_Framework.Entites.Events.UpgradeEvent", b =>
-                {
-                    b.HasOne("ITI.SkyLord.Building")
-                        .WithMany()
-                        .HasForeignKey("BuildingToUpgradeBuildingId");
                 });
         }
     }

@@ -8,16 +8,13 @@
     Layout = "_Layout";
 }
 
-<h1>Liste d'îles</h1>
+<h1>Île</h1>
 
 <table>
-    <tr>
-        <th>Ile(s) :</th>
-    </tr>
         <tr>
             <td>@Model.CurrentIsland.Name</td>
-            <td>Ses coordonnées sont : [@Model.CurrentIsland.Coordinates.X ; @Model.CurrentIsland.Coordinates.Y]</td>
-            <td><a asp-controller="Ressource" asp-route-islandId="@Model.CurrentIsland.IslandId" asp-action="SeeRessources">Voir vos ressources</a></td>
+            @*<td>Ses coordonnées sont : [@Model.CurrentIsland.Coordinates.X ; @Model.CurrentIsland.Coordinates.Y]</td>
+            <td><a asp-controller="Ressource" asp-route-islandId="@Model.CurrentIsland.IslandId" asp-action="SeeRessources">Voir vos ressources</a></td>*@
         </tr>
 </table>
 
