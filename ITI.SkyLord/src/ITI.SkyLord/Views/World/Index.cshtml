@@ -2,11 +2,24 @@
 
 <style>
     #draggable {
-        background-color: rgba(0,0,0,0);
         position: relative;
         top: -100px;
+        
+        width: 10000px;
+        height: 10000px;
+
+        background-color: pink !important;
+
+        background-image: url("/images/WorldMap/Nuage.jpg");
+        background-repeat: repeat;
+        background-size: 500px 500px;
+
     }
     .map {
+        background-image: url("/images/WorldMap/Nuage.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+
         width: 500px;
         height: 500px;
         border: black solid 2px;
@@ -14,7 +27,6 @@
         overflow: hidden;
     }
     .map td {
-        border: black solid 1px;
         width: 64px;
         height: 64px;
         background-color: rgba(0,0,0,0);
@@ -27,14 +39,20 @@
     #MyIsland {
         background-color: pink;
     }
+    
     .Island:hover {
         cursor: pointer;
+        border: solid black 5px;
     }
+    
     td.Island {
-        background-color: green;
+        background-image: url("/images/WorldMap/villagechibi.png");
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
     }
     td.Empty {
-        background-color: yellow;
+        background-color: rgba(0,0,0,0);
     }
     #Menu {
         position: absolute;
@@ -55,33 +73,33 @@
 
 <!-- World Map -->
 <div class="map">
-    <div id="draggable">
-        <!-- Map OTD -->
-        <table>
-            @for (var i = 0; i < 100; i++)
+<div id="draggable">
+<!-- Map OTD -->
+<table>
+@for (var i = 0; i < 100; i++)
+{
+    <tr>
+        @for (var j = 0; j < 100; j++)
+        {
+            string key = i + "_" + j;
+            Island island = null;
+            if(Model.Layout.CurrentIsland.Coordinates.X == j && Model.Layout.CurrentIsland.Coordinates.Y == i)
             {
-                <tr>
-                    @for (var j = 0; j < 100; j++)
-                    {
-                        string key = i + "_" + j;
-                        Island island = null;
-                        if(Model.Layout.CurrentIsland.Coordinates.X == j && Model.Layout.CurrentIsland.Coordinates.Y == i)
-                        {
-                            <td class="Island" id="MyIsland" x="@j" y="@i" islandid="@Model.Layout.CurrentIsland.IslandId"></td>
-                        }
-                        else if (Model.Map.TryGetValue(key, out island))
-                        {
-                            <td class="Island" x="@j" y="@i" islandid="@island.IslandId"></td>
-                        }
-                        else
-                        {
-                            <td class="Empty"></td>
-                        }
-                    }
-                </tr>
+                <td class="Island" id="MyIsland" x="@j" y="@i" islandid="@Model.Layout.CurrentIsland.IslandId"></td>
             }
-        </table>
-    </div>
+            else if (Model.Map.TryGetValue(key, out island))
+            {
+                <td class="Island" x="@j" y="@i" islandid="@island.IslandId"></td>
+            }
+            else
+            {
+                <td class="Empty"></td>
+            }
+        }
+    </tr>
+}
+</table>
+</div>
 </div>
 
 <!-- Petit Menu OTD-->
