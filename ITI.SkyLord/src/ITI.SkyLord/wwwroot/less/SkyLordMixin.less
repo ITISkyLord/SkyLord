@@ -14,15 +14,14 @@
     border-radius: 1px;
     background-color: @background-color;
     height: auto;
-    width:auto;
+    width: auto;
 }
 
-.Image(@background-image: url("../../images/"))
-{
+.Image(@background-image: url("../images/site_fond.png")) {
     background-image: @background-image;
 }
 
-.Col(@nb:1) {
+.Col(@nb: 1) {
     .make-lg-column(@nb);
     .make-md-column(@nb);
     .make-sm-column(@nb);

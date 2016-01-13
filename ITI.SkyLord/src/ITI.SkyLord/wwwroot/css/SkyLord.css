@@ -6754,6 +6754,8 @@ body {
 .navbar {
   margin-bottom: 0;
   background-color: rgba(255, 255, 255, 0.94);
+  background-image: url("../images/site_fond2.png");
+  /*.Image();*/
   z-index: 9999;
   border: 0;
   font-size: 17px !important;
@@ -6780,14 +6782,19 @@ body {
 }
 .navbar .btn-link {
   padding: 15px 15px 15px 15px;
+  color: #3C0732;
+}
+.navbar .btn-link:hover {
+  padding: 15px 15px 15px 15px;
+  background-color: whitesmoke;
 }
 .navbar .navbar-nav li a:hover,
 .navbar .navbar-nav li button[type=submit]:hover,
 .navbar .navbar-nav li.active a {
-  background-color: #3C0732;
+  background-color: whitesmoke;
   padding: 15px 15px 15px 15px;
   text-decoration: none !important;
-  color: whitesmoke;
+  color: #3C0732;
 }
 .navbar .navbar-default .navbar-toggle {
   border-color: transparent;
@@ -6802,6 +6809,7 @@ body {
 .jumbotron {
   height: 100px;
   margin: 0;
+  background-image: url("../images/site_fond2.png");
 }
 .SkyLordContainer {
   margin-right: auto;
@@ -6814,6 +6822,7 @@ body {
   height: auto;
   width: auto;
   height: 100%;
+  background-image: url("../images/site_fond.png");
 }
 .SkyLordContainer > .navbar-header,
 .SkyLordContainer > .navbar-collapse {
@@ -6844,10 +6853,11 @@ body {
   height: auto;
   width: auto;
   line-height: 30px;
-  height: 640px;
+  height: 663px;
   width: 600px;
   float: left;
   padding: 0px;
+  background-image: url("../images/site_fond2.png");
 }
 @media (min-width: 1200px) {
   .SkyLordContainer .SkyLordMainRow .SkylordSideBar {
@@ -6977,7 +6987,8 @@ body {
 footer {
   font-size: 17px;
   margin-bottom: 1px;
-  background-color: whitesmoke;
+  /*background-color: whitesmoke;*/
+  background-image: url("../images/site_fond2.png");
 }
 footer li,
 footer a {
@@ -7028,6 +7039,8 @@ footer a {
   border: 1px solid transparent;
   margin-bottom: 0;
   background-color: rgba(255, 255, 255, 0.94);
+  background-image: url("../images/site_fond2.png");
+  /*.Image();*/
   z-index: 9999;
   border: 0;
   font-size: 17px !important;
@@ -7099,14 +7112,19 @@ footer a {
 }
 .SkyLordNavBar ul .btn-link {
   padding: 15px 15px 15px 15px;
+  color: #3C0732;
+}
+.SkyLordNavBar ul .btn-link:hover {
+  padding: 15px 15px 15px 15px;
+  background-color: whitesmoke;
 }
 .SkyLordNavBar ul .navbar-nav li a:hover,
 .SkyLordNavBar ul .navbar-nav li button[type=submit]:hover,
 .SkyLordNavBar ul .navbar-nav li.active a {
-  background-color: #3C0732;
+  background-color: whitesmoke;
   padding: 15px 15px 15px 15px;
   text-decoration: none !important;
-  color: whitesmoke;
+  color: #3C0732;
 }
 .SkyLordNavBar ul .navbar-default .navbar-toggle {
   border-color: transparent;
