@@ -14,7 +14,6 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
     public class IslandContext : CustomContext
     {
         public IConfigurationRoot Configuration { get; set; }
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             var builder = new ConfigurationBuilder()
@@ -33,5 +32,6 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
         public DbSet<Technology> Technologies { get; set; }
         public DbSet<Unit> Units { get; set; }
         public override DbSet<Player> Players { get; set; }
+
     }
 }

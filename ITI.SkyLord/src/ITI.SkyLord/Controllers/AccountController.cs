@@ -12,10 +12,7 @@ using Microsoft.Extensions.Logging;
 using ITI.SkyLord.Models;
 using ITI.SkyLord.Models.Entity_Framework.Contexts;
 using ITI.SkyLord.ViewModels.Account;
-using ITI.SkyLord.Services;
 using ITI.SkyLord.Controllers;
-using ITI.SkyLord.Models.ObjectModel;
-using ITI.SkyLord.ViewModel;
 
 namespace ITI.SkyLord.Models.Entity_Framework.Controllers
 {

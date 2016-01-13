@@ -8,7 +8,6 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Mvc;
 using Microsoft.Extensions.Logging;
 using ITI.SkyLord.Models;
-using ITI.SkyLord.Services;
 using ITI.SkyLord.ViewModels.Manage;
 
 namespace ITI.SkyLord.Models.Entity_Framework.Controllers

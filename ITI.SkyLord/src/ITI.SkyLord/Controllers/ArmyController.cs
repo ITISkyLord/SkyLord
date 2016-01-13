@@ -7,19 +7,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using ITI.SkyLord.Services;
 using ITI.SkyLord.ViewModel;
 
 namespace ITI.SkyLord.Controllers
 {
-    public class ArmyController : Controller
+    public class ArmyController : GenericController
     {
-        [FromServices]
-        public IslandContext IslandContext { get; set; }
-        [FromServices]
-        public PlayerContext PlayerContext { get; set; }
-        [FromServices]
-        public ArmyContext ArmyContext { get; set; }
 
         public IActionResult Index( long IslandId = 0 )
         {
@@ -28,23 +21,26 @@ namespace ITI.SkyLord.Controllers
 
         public IActionResult AddUnit( ArmyViewModel model, long islandId = 0 )
         {
-            ArmyManager am = new ArmyManager( ArmyContext );
+            ArmyManager am = new ArmyManager( SetupContext );
             if( model.UnitsToAdd.Count( kvp => kvp.Value == 0 ) != model.UnitsToAdd.Count() && !model.UnitsToAdd.Any( kvp => kvp.Value < 0 ) )
             {
-                foreach ( KeyValuePair<string, int> kvp in model.UnitsToAdd )
+                EventManager em = new EventManager( SetupContext, new EventPackManager( SetupContext ));
+
+                foreach( KeyValuePair<string, int> kvp in model.UnitsToAdd )
                 {
-                    if ( kvp.Value > 0 )
+                    if( kvp.Value > 0 )
                     {
                         UnitName uN = (UnitName)Enum.Parse( typeof( UnitName ), kvp.Key, true );
-                        am.AddUnit
-                            (
-                                ArmyContext.Units.Where( u => u.UnitName == uN ).Single(),
-                                kvp.Value,
-                                GetIsland( islandId )
-                            );
+                        em.AddUnitEvent( SetupContext, SetupContext.Units.Where( u => u.UnitName == uN ).Single(), kvp.Value, GetIsland( islandId ) );
+                        //am.AddUnit
+                        //    (
+                        //        SetupContext.Units.Where( u => u.UnitName == uN ).Single(),
+                        //        kvp.Value,
+                        //        GetIsland( islandId )
+                        //    );
                     }
                 }
-                ArmyContext.SaveChanges();
+                SetupContext.SaveChanges();
             }
             else
             {
@@ -64,7 +60,7 @@ namespace ITI.SkyLord.Controllers
 
         public IActionResult Fight( SetAttackingArmyViewModel model, long islandId = 0 )
         {
-            Army defendingArmyFromAttacker = ArmyContext.Armies
+            Army defendingArmyFromAttacker = SetupContext.Armies
                                     .Include( a => a.Island )
                                     .Include( a => a.Regiments )
                                     .ThenInclude( r => r.Unit )
@@ -78,12 +74,12 @@ namespace ITI.SkyLord.Controllers
                 && model.Target != 0
                 )
             {
-                Island island = ArmyContext.Islands.Include( i => i.Owner )
+                Island island = SetupContext.Islands.Include( i => i.Owner )
                 .Include( i => i.AllRessources )
                 .Include( i => i.Armies ).ThenInclude( a => a.Regiments )
                 .ThenInclude( r => r.Unit ).ThenInclude( r => r.UnitStatistics )
                 .Where( i => i.IslandId == model.Target ).FirstOrDefault();
-                ArmyManager am = new ArmyManager( ArmyContext );
+                ArmyManager am = new ArmyManager(SetupContext);
                 Island attackingIsland = GetIsland( islandId );
                 Army attackingArmy = am.CreateArmy( model.UnitsToSend, attackingIsland );
                 Army defendingArmy = island.Armies.Where( a => a.ArmyState == ArmyState.defense ).SingleOrDefault();
@@ -91,10 +87,10 @@ namespace ITI.SkyLord.Controllers
                     defendingArmy = new Army { Island = island, Regiments = new List<Regiment>(), ArmyState = ArmyState.defense };
 
                 CombatResult combatResult = am.ResolveCombat( attackingArmy, defendingArmy );
-                ArmyContext.SaveChanges();
+                SetupContext.SaveChanges();
 
                 CombatReportViewModel combatReportViewModel = new CombatReportViewModel { CombatResult = combatResult };
-                ArmyContext.FillStandardVM( combatReportViewModel, PlayerContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
+                SetupContext.FillStandardVM( combatReportViewModel, SetupContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
 
                 return View( "Fight", combatReportViewModel );
             }
@@ -118,13 +114,13 @@ namespace ITI.SkyLord.Controllers
 
         public IActionResult RejoinArmies( long id, long islandId = 0 )
         {
-            ArmyManager am = new ArmyManager( ArmyContext );
+            ArmyManager am = new ArmyManager(SetupContext);
             Army attackingArmy = am.GetArmy( id );
             
             if( attackingArmy != null )
             {
                 am.JoinArmies( attackingArmy.Island.Armies.SingleOrDefault( a => a.ArmyState == ArmyState.defense ), attackingArmy );
-                ArmyContext.SaveChanges();
+                SetupContext.SaveChanges();
             }
             return RedirectToAction( "Index", new { islandId = islandId } );
         }
@@ -144,8 +140,8 @@ namespace ITI.SkyLord.Controllers
         {
             if ( islandId == 0 )
             {
-                long activePlayerId = PlayerContext.GetPlayer( User.GetUserId() ).PlayerId;
-                return ArmyContext.Islands
+                long activePlayerId = SetupContext.GetPlayer( User.GetUserId() ).PlayerId;
+                return SetupContext.Islands
                     .Include( i => i.Armies )
                     .ThenInclude( a => a.Regiments )
                     .ThenInclude( r => r.Unit )
@@ -156,7 +152,7 @@ namespace ITI.SkyLord.Controllers
             }
             else
             {
-                return ArmyContext.Islands
+                return SetupContext.Islands
                     .Include( i => i.Armies)
                     .ThenInclude( a => a.Regiments)
                     .ThenInclude( r => r.Unit)
@@ -171,7 +167,7 @@ namespace ITI.SkyLord.Controllers
         private SetAttackingArmyViewModel CreateSetAttackingArmyViewModel( SetAttackingArmyViewModel model, long islandId )
         {
             Island currentIsland = GetIsland( islandId );
-            model.CurrentDefenseArmy = ArmyContext.Armies
+            model.CurrentDefenseArmy = SetupContext.Armies
                                     .Include( a => a.Island )
                                     .Include( a => a.Regiments )
                                     .ThenInclude( r => r.Unit )
@@ -179,10 +175,10 @@ namespace ITI.SkyLord.Controllers
                                     .Where( a => a.Island.IslandId == currentIsland.IslandId && a.ArmyState == ArmyState.defense )
                                     .SingleOrDefault();
 
-            long activePlayerId = PlayerContext.GetPlayer( User.GetUserId() ).PlayerId;
-            model.EnnemyIslands = ArmyContext.Islands.Include( i => i.Owner ).Include( i => i.Coordinates ).Where( i => i.Owner.PlayerId != activePlayerId && i.Owner != null ).ToList();
+            long activePlayerId = SetupContext.GetPlayer( User.GetUserId() ).PlayerId;
+            model.EnnemyIslands = SetupContext.Islands.Include( i => i.Owner ).Include( i => i.Coordinates ).Where( i => i.Owner.PlayerId != activePlayerId && i.Owner != null ).ToList();
 
-            ArmyContext.FillStandardVM( model, activePlayerId, islandId );
+            SetupContext.FillStandardVM( model, activePlayerId, islandId );
             return model;
         }
 
@@ -198,10 +194,10 @@ namespace ITI.SkyLord.Controllers
                 .Single( i => i.IslandId == islandId ).Armies.ToList();
             ArmyViewModel avm =  new ArmyViewModel
             {
-                AvailableUnits = ArmyContext.Units.Include( u => u.UnitCost ).Include( u => u.UnitStatistics ).ToList(),
+                AvailableUnits = SetupContext.Units.Include( u => u.UnitCost ).Include( u => u.UnitStatistics ).ToList(),
                 CurrentIslandArmies = currentIslandArmies
             };
-            ArmyContext.FillStandardVM( avm, PlayerContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
+            SetupContext.FillStandardVM( avm, SetupContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
             return avm;
         }
     }

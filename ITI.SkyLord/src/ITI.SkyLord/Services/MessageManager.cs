@@ -5,14 +5,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Security.Claims;
+using ITI.SkyLord.Models.Entity_Framework.Contexts.Interface;
 
-namespace ITI.SkyLord.Models.Managers
+namespace ITI.SkyLord
 {
     public class MessageManager
     {
-        private MessageContext messageContext { get; }
+        private IMessageContext messageContext { get; }
 
-        public MessageManager(MessageContext mc)
+        public MessageManager(IMessageContext mc)
         {
             messageContext = mc;
         }

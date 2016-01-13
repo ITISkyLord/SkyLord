@@ -4,19 +4,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ITI.SkyLord.Models.Entity_Framework.Contexts.Interface;
 
-namespace ITI.SkyLord.Services
+namespace ITI.SkyLord
 {
     public class LevelManager
     {
-        public LevelContext CurrentContext { get; set; }
+        public ILevelContext CurrentContext { get; set; }
 
         /// <summary>
         /// Creates a new LevelManager instance
         /// </summary>
         /// <param name="currentContext">An opened LevelContext</param>
         /// <param name="currentIsland">The island examined</param>
-        public LevelManager( LevelContext currentContext )
+        public LevelManager( ILevelContext currentContext )
         {
             CurrentContext = currentContext;
         }

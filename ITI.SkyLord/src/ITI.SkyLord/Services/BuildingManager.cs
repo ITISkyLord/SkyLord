@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ITI.SkyLord.Models.Entity_Framework.Contexts;
+using ITI.SkyLord.Models.Entity_Framework.Contexts.Interface;
 using Microsoft.Data.Entity;
 
-namespace ITI.SkyLord.Services
+namespace ITI.SkyLord
 {
     public class BuildingManager
     {
         long _lastCurrentIsland = 0;
         List<Building> _buildingsOnIlsand;
 
-        public LevelContext CurrentContext { get; }
+        public ILevelContext CurrentContext { get; }
         public LevelManager LevelManager { get; set; }
         public RessourceManager RessourceManager { get; set; }
 
@@ -218,5 +219,6 @@ namespace ITI.SkyLord.Services
             }
             return false;
         }
+
     }
 }

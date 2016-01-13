@@ -1,22 +1,19 @@
 ﻿using ITI.SkyLord.Models.Entity_Framework.Contexts;
+using ITI.SkyLord.Models.Entity_Framework.Contexts.Interface;
 using Microsoft.Data.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ITI.SkyLord.Services
+namespace ITI.SkyLord
 {
     public class ArmyManager
     {
-        public ArmyContext CurrentContext { get; set; }
+        public IArmyContext CurrentContext { get; set; }
         public BonusManager BonusManager { get; set; }
 
-        public ArmyManager( ArmyContext context )
-        {
-            CurrentContext = context;
-        }
-        public ArmyManager( ArmyContext context, BonusManager bonusManager )
+        public ArmyManager( IArmyContext context, BonusManager bonusManager )
         {
             CurrentContext = context;
             BonusManager = bonusManager;

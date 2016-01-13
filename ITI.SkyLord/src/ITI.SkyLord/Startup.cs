@@ -2,7 +2,6 @@
 using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Data.Entity;
-using ITI.SkyLord.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.Extensions.Logging;
@@ -15,7 +14,6 @@ using ITI.SkyLord.Controllers;
 using System;
 using Microsoft.AspNet.Cryptography.KeyDerivation;
 using Microsoft.Data.Entity.ChangeTracking;
-using ITI.SkyLord.Services;
 using System.Collections.Generic;
 
 namespace ITI.SkyLord
@@ -67,13 +65,17 @@ namespace ITI.SkyLord
             // Add MVC services to the services container.
             services.AddMvc();
 
-
+            // TODO : Doit être supprimer
             services.AddScoped<PlayerContext>();
             services.AddScoped<IslandContext>();
             services.AddScoped<ArmyContext>();
             services.AddScoped<ArmyManager>();
             services.AddScoped<LevelContext>();
             services.AddScoped<MessageContext>();
+            // Fin Doit être supprimer
+
+
+            services.AddScoped<SetupContext>();
             // Uncomment the following line to add Web API services which makes it easier to port Web API 2 controllers.
             // You will also need to add the Microsoft.AspNet.Mvc.WebApiCompatShim package to the 'dependencies' section of project.json.
             // services.AddWebApiConventions();
@@ -86,7 +88,7 @@ namespace ITI.SkyLord
         // Configure is called after ConfigureServices is called.
         public void Configure( IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory )
         {
-            loggerFactory.MinimumLevel = LogLevel.Information;
+           // loggerFactory.MinimumLevel = LogLevel.Information;
             loggerFactory.AddDebug();
 
             // Configure the HTTP request pipeline.
@@ -224,7 +226,7 @@ namespace ITI.SkyLord
                             UnitDamageType = UnitDamageType.physical,
                             UnitCost = gobelinCost,
                             UnitStatistics = gobelinStatistics,
-                            Duration = 60,
+                            Duration = 10,
                             IsModel = true
                         };
                         context.Units.Add( gobelin );

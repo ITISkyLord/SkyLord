@@ -264,6 +264,29 @@ namespace ITI.SkyLord.Migrations
                     b.HasKey("MessageId");
                 });
 
+            modelBuilder.Entity("ITI.SkyLord.Models.Entity_Framework.Entites.Events.Event", b =>
+                {
+                    b.Property<long>("EventId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("BegginningDate");
+
+                    b.Property<bool>("Done");
+
+                    b.Property<DateTime>("EndingDate");
+
+                    b.Property<string>("EventType")
+                        .IsRequired();
+
+                    b.Property<long?>("IslandIslandId");
+
+                    b.HasKey("EventId");
+
+                    b.HasAnnotation("Relational:DiscriminatorProperty", "EventType");
+
+                    b.HasAnnotation("Relational:DiscriminatorValue", "Event");
+                });
+
             modelBuilder.Entity("ITI.SkyLord.Player", b =>
                 {
                     b.Property<long>("PlayerId");
@@ -431,6 +454,8 @@ namespace ITI.SkyLord.Migrations
                     b.Property<int>("PhysicResist");
 
                     b.Property<int>("Speed");
+
+                    b.Property<int>("TimeToBuild");
 
                     b.HasKey("UnitStatisticsId");
                 });
@@ -661,6 +686,59 @@ namespace ITI.SkyLord.Migrations
                     b.HasAnnotation("Relational:DiscriminatorValue", "MageLevel");
                 });
 
+            modelBuilder.Entity("ITI.SkyLord.Models.Entity_Framework.Entites.Events.ArmyEvent", b =>
+                {
+                    b.HasBaseType("ITI.SkyLord.Models.Entity_Framework.Entites.Events.Event");
+
+                    b.Property<long?>("ArmyArmyId");
+
+                    b.Property<int>("ArmyMovement");
+
+                    b.Property<long?>("DestinationIslandId");
+
+                    b.HasAnnotation("Relational:DiscriminatorValue", "ArmyEvent");
+                });
+
+            modelBuilder.Entity("ITI.SkyLord.Models.Entity_Framework.Entites.Events.BuildingEvent", b =>
+                {
+                    b.HasBaseType("ITI.SkyLord.Models.Entity_Framework.Entites.Events.Event");
+
+                    b.Property<int?>("BuildingToBuildBuildingId");
+
+                    b.Property<int>("Indice");
+
+                    b.HasAnnotation("Relational:DiscriminatorValue", "BuildingEvent");
+                });
+
+            modelBuilder.Entity("ITI.SkyLord.Models.Entity_Framework.Entites.Events.TechnologyEvent", b =>
+                {
+                    b.HasBaseType("ITI.SkyLord.Models.Entity_Framework.Entites.Events.Event");
+
+                    b.Property<long?>("TechnologyTechnologyId");
+
+                    b.HasAnnotation("Relational:DiscriminatorValue", "TechnologyEvent");
+                });
+
+            modelBuilder.Entity("ITI.SkyLord.Models.Entity_Framework.Entites.Events.UnitEvent", b =>
+                {
+                    b.HasBaseType("ITI.SkyLord.Models.Entity_Framework.Entites.Events.Event");
+
+                    b.Property<int>("UnitIdd");
+
+                    b.Property<int?>("UnitUnitId");
+
+                    b.HasAnnotation("Relational:DiscriminatorValue", "UnitEvent");
+                });
+
+            modelBuilder.Entity("ITI.SkyLord.Models.Entity_Framework.Entites.Events.UpgradeEvent", b =>
+                {
+                    b.HasBaseType("ITI.SkyLord.Models.Entity_Framework.Entites.Events.Event");
+
+                    b.Property<int?>("BuildingToUpgradeBuildingId");
+
+                    b.HasAnnotation("Relational:DiscriminatorValue", "UpgradeEvent");
+                });
+
             modelBuilder.Entity("ITI.SkyLord.Models.Entity_Framework.ApplicationUser", b =>
                 {
                     b.HasBaseType("Microsoft.AspNet.Identity.EntityFramework.IdentityUser");
@@ -775,6 +853,13 @@ namespace ITI.SkyLord.Migrations
                     b.HasOne("ITI.SkyLord.Player")
                         .WithMany()
                         .HasForeignKey("SenderPlayerId");
+                });
+
+            modelBuilder.Entity("ITI.SkyLord.Models.Entity_Framework.Entites.Events.Event", b =>
+                {
+                    b.HasOne("ITI.SkyLord.Island")
+                        .WithMany()
+                        .HasForeignKey("IslandIslandId");
                 });
 
             modelBuilder.Entity("ITI.SkyLord.Player", b =>
@@ -920,6 +1005,45 @@ namespace ITI.SkyLord.Migrations
 
             modelBuilder.Entity("ITI.SkyLord.MageLevel", b =>
                 {
+                });
+
+            modelBuilder.Entity("ITI.SkyLord.Models.Entity_Framework.Entites.Events.ArmyEvent", b =>
+                {
+                    b.HasOne("ITI.SkyLord.Army")
+                        .WithMany()
+                        .HasForeignKey("ArmyArmyId");
+
+                    b.HasOne("ITI.SkyLord.Island")
+                        .WithMany()
+                        .HasForeignKey("DestinationIslandId");
+                });
+
+            modelBuilder.Entity("ITI.SkyLord.Models.Entity_Framework.Entites.Events.BuildingEvent", b =>
+                {
+                    b.HasOne("ITI.SkyLord.Building")
+                        .WithMany()
+                        .HasForeignKey("BuildingToBuildBuildingId");
+                });
+
+            modelBuilder.Entity("ITI.SkyLord.Models.Entity_Framework.Entites.Events.TechnologyEvent", b =>
+                {
+                    b.HasOne("ITI.SkyLord.Technology")
+                        .WithMany()
+                        .HasForeignKey("TechnologyTechnologyId");
+                });
+
+            modelBuilder.Entity("ITI.SkyLord.Models.Entity_Framework.Entites.Events.UnitEvent", b =>
+                {
+                    b.HasOne("ITI.SkyLord.Unit")
+                        .WithMany()
+                        .HasForeignKey("UnitUnitId");
+                });
+
+            modelBuilder.Entity("ITI.SkyLord.Models.Entity_Framework.Entites.Events.UpgradeEvent", b =>
+                {
+                    b.HasOne("ITI.SkyLord.Building")
+                        .WithMany()
+                        .HasForeignKey("BuildingToUpgradeBuildingId");
                 });
         }
     }

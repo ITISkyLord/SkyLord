@@ -12,15 +12,8 @@ using Microsoft.AspNet.Mvc.Rendering;
 
 namespace ITI.SkyLord.Controllers
 {
-    public class BuildingController : Controller
+    public class BuildingController : GenericController
     {
-        [FromServices]
-        public LevelContext LevelContext { get; set; }
-        [FromServices]
-        public IslandContext IslandContext { get; set; }
-        [FromServices]
-        public PlayerContext PlayerContext { get; set; }
-
         public override void OnActionExecuting( ActionExecutingContext context )
         {
             if ( User.IsSignedIn() )
@@ -79,17 +72,17 @@ namespace ITI.SkyLord.Controllers
 
             if ( buildingManager.AddBuildingToIsland( model.TargetBuilding, islandId, model.Position ) )
             {
-                LevelContext.SaveChanges();
+                SetupContext.SaveChanges();
             }
             return RedirectToAction( "SeeBuildings", new { islandId = islandId } );
         }
 
         public IActionResult LevelUpBuilding( BuildingViewModel model, long islandId = 0 )
         {
-            long playerId = PlayerContext.GetPlayer( User.GetUserId() ).PlayerId;
+            long playerId = SetupContext.GetPlayer( User.GetUserId() ).PlayerId;
             BuildingViewModel buildingViewModel = new BuildingViewModel();
 
-            // TODO Changer en SetupContext
+            
             BuildingManager buildingManager = new BuildingManager( LevelContext, new LevelManager( LevelContext ), new RessourceManager( LevelContext ) );
             
             
@@ -101,7 +94,7 @@ namespace ITI.SkyLord.Controllers
 
             if ( buildingManager.LevelUpBuilding( model.TargetBuilding, islandId, playerId, model.Position ) )
             {
-                LevelContext.SaveChanges();
+                SetupContext.SaveChanges();
             }
             return RedirectToAction( "SeeBuildings", new { islandId = islandId } );
         }
