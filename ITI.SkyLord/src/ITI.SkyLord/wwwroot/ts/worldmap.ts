@@ -79,8 +79,9 @@ $(document).ready(function () {
 
         // Met l'affichage
         if ($(menu).css("display") == "none") {
-            menu.css("top", event.clientX + "px");
-            menu.css("left", event.clientY - 100+ "px");
+            console.log(" click : x : " + event.clientX + " y : " + event.clientY);
+            menu.css("top", event.clientX-200 + "px");
+            menu.css("left", event.clientY-200 + "px");
             menu.fadeIn();
         }
         event.stopPropagation();
