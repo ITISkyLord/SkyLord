@@ -705,7 +705,7 @@ namespace ITI.SkyLord.Migrations
 
                     b.Property<int?>("BuildingToBuildBuildingId");
 
-                    b.Property<int>("Indice");
+                    b.Property<int>("PositionToBuild");
 
                     b.HasAnnotation("Relational:DiscriminatorValue", "BuildingEvent");
                 });

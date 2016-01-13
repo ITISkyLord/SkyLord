@@ -196,6 +196,14 @@ namespace ITI.SkyLord
 
             if ( _lastCurrentIsland != currentIslandId )
             {
+                Island testIsland = CurrentContext.Islands.First( i => i.IslandId == currentIslandId );
+                Island testIsland2 = CurrentContext.Islands.Include( i => i.Buildings )
+                    .First( i => i.IslandId == currentIslandId );
+                Island testIsland3 = CurrentContext.Islands
+                    .Include( i => i.Buildings )
+                        .ThenInclude( b=> b.Level )
+                    .First( i => i.IslandId == currentIslandId );
+
                 _buildingsOnIlsand = CurrentContext.Islands
                     .Include( i => i.Buildings )
                     .ThenInclude( b => b.Level )

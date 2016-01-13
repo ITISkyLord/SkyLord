@@ -9,19 +9,23 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using ITI.SkyLord.ViewModel;
 using ITI.SkyLord.Services;
+using Microsoft.AspNet.Mvc.ModelBinding;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace ITI.SkyLord.Controllers
 {
+
     public class ArmyController : GenericController
     {
 
-        public IActionResult Index( long IslandId = 0 )
+        public IActionResult Index( long IslandId = 0)
         {
             return View( CreateArmyViewModel( IslandId ) );
         }
 
         public IActionResult AddUnit( ArmyViewModel model, long islandId = 0 )
         {
+
             ArmyManager am = new ArmyManager( SetupContext, new BonusManager( SetupContext ) );
             if ( model.UnitsToAdd.Count( kvp => kvp.Value == 0 ) != model.UnitsToAdd.Count() && !model.UnitsToAdd.Any( kvp => kvp.Value < 0 ) )
             {
@@ -32,7 +36,7 @@ namespace ITI.SkyLord.Controllers
                     if ( kvp.Value > 0 )
                     {
                         UnitName uN = (UnitName)Enum.Parse( typeof( UnitName ), kvp.Key, true );
-                        em.AddUnitEvent( SetupContext, SetupContext.Units.Where( u => u.UnitName == uN ).Single(), kvp.Value, GetIsland( islandId ) );
+                        em.AddUnitEvent( SetupContext, SetupContext.Units.Single( u => u.UnitName == uN && u.IsModel ), kvp.Value, GetIsland( islandId ) );
                         //am.AddUnit
                         //    (
                         //        SetupContext.Units.Where( u => u.UnitName == uN ).Single(),
@@ -46,12 +50,17 @@ namespace ITI.SkyLord.Controllers
             else
             {
                 if ( model.UnitsToAdd.Any( kvp => kvp.Value < 0 ) )
+                {
                     ModelState.AddModelError( "UnitsToAdd", "Les unités ne peuvent pas être négatives." );
+                }
                 else
+                {
                     ModelState.AddModelError( "UnitsToAdd", "Aucune unité sélectionnée." );
+
+                }
             }
 
-            return View( "Index", CreateArmyViewModel( islandId ) );
+            return RedirectToAction( "Index", new { islandId = islandId});
         }
 
         public IActionResult SetAttackingArmy( SetAttackingArmyViewModel model, long islandId = 0 )
@@ -190,16 +199,20 @@ namespace ITI.SkyLord.Controllers
         /// <returns>An ArmyViewModel containing all available units and the armies contained on the island</returns>
         private ArmyViewModel CreateArmyViewModel( long islandId )
         {
+            return CreateArmyViewModel( islandId, new ArmyViewModel() );
+        }
+
+        private ArmyViewModel CreateArmyViewModel( long islandId, ArmyViewModel model )
+        {
             List<Army> currentIslandArmies = SetupContext.Islands.Include( i => i.Armies ).ThenInclude( a => a.Regiments )
                 .ThenInclude( r => r.Unit ).ThenInclude( u => u.UnitStatistics )
                 .Single( i => i.IslandId == islandId ).Armies.ToList();
-            ArmyViewModel avm = new ArmyViewModel
-            {
-                AvailableUnits = SetupContext.Units.Include( u => u.UnitCost ).Include( u => u.UnitStatistics ).ToList(),
-                CurrentIslandArmies = currentIslandArmies
-            };
-            SetupContext.FillStandardVM( avm, SetupContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
-            return avm;
+
+            model.AvailableUnits = SetupContext.Units.Include( u => u.UnitCost ).Include( u => u.UnitStatistics ).ToList();
+            model.CurrentIslandArmies = currentIslandArmies;
+            
+            SetupContext.FillStandardVM( model, SetupContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
+            return model;
         }
     }
 
