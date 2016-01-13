@@ -6826,6 +6826,7 @@ body {
   width: auto;
   height: 100%;
   background-image: url("../images/site_fond.png");
+  background-size: 1560px;
 }
 .SkyLordContainer > .navbar-header,
 .SkyLordContainer > .navbar-collapse {
@@ -7006,7 +7007,6 @@ body {
 footer {
   font-size: 17px;
   margin-bottom: 1px;
-  /*background-color: whitesmoke;*/
   background-image: url("../images/site_fond2.png");
 }
 footer li,
