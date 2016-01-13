@@ -6783,6 +6783,10 @@ body {
 .navbar .btn-link {
   padding: 15px 15px 15px 15px;
   color: #825847;
+  font-size: 17px;
+  font-weight: bold;
+  line-height: 20px;
+  letter-spacing: 4px;
 }
 .navbar .btn-link:hover {
   padding: 15px 15px 15px 15px;
@@ -6790,9 +6794,12 @@ body {
   color: #825847;
   font-weight: bold;
 }
+.navbar .navbar-nav li a {
+  color: #825847;
+  font-weight: bold;
+}
 .navbar .navbar-nav li a:hover,
-.navbar .navbar-nav li button[type=submit]:hover,
-.navbar .navbar-nav li.active a {
+.navbar .navbar-nav li button[type=submit]:hover {
   background-color: whitesmoke;
   padding: 15px 15px 15px 15px;
   text-decoration: none !important;
@@ -6813,6 +6820,7 @@ body {
   height: 10px;
   margin: 0;
   background-image: url("../images/site_fond2.png");
+  overflow: auto;
 }
 .SkyLordContainer {
   margin-right: auto;
@@ -7012,6 +7020,7 @@ footer {
 footer li,
 footer a {
   color: #825847;
+  font-weight: bold;
 }
 footer li a:hover {
   color: #825847;
@@ -7136,6 +7145,10 @@ footer li a:hover {
 .SkyLordNavBar ul .btn-link {
   padding: 15px 15px 15px 15px;
   color: #825847;
+  font-size: 17px;
+  font-weight: bold;
+  line-height: 20px;
+  letter-spacing: 4px;
 }
 .SkyLordNavBar ul .btn-link:hover {
   padding: 15px 15px 15px 15px;
@@ -7143,9 +7156,12 @@ footer li a:hover {
   color: #825847;
   font-weight: bold;
 }
+.SkyLordNavBar ul .navbar-nav li a {
+  color: #825847;
+  font-weight: bold;
+}
 .SkyLordNavBar ul .navbar-nav li a:hover,
-.SkyLordNavBar ul .navbar-nav li button[type=submit]:hover,
-.SkyLordNavBar ul .navbar-nav li.active a {
+.SkyLordNavBar ul .navbar-nav li button[type=submit]:hover {
   background-color: whitesmoke;
   padding: 15px 15px 15px 15px;
   text-decoration: none !important;
