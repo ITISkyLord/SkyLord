@@ -7004,3 +7004,6 @@ footer li,
 footer a {
   color: #825847;
 }
+footer li a:hover {
+  color: #825847;
+}

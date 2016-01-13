@@ -7013,6 +7013,9 @@ footer li,
 footer a {
   color: #825847;
 }
+footer li a:hover {
+  color: #825847;
+}
 .jumbotron {
   /*background-color: coral;*/
   color: whitesmoke;
