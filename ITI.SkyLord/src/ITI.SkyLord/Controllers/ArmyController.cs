@@ -11,13 +11,12 @@ using ITI.SkyLord.ViewModel;
 using ITI.SkyLord.Services;
 using Microsoft.AspNet.Mvc.ModelBinding;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNet.Mvc.Filters;
 
 namespace ITI.SkyLord.Controllers
 {
-
     public class ArmyController : GenericController
     {
-
         public IActionResult Index( long IslandId = 0)
         {
             return View( CreateArmyViewModel( IslandId ) );
@@ -25,7 +24,6 @@ namespace ITI.SkyLord.Controllers
 
         public IActionResult AddUnit( ArmyViewModel model, long islandId = 0 )
         {
-
             ArmyManager am = new ArmyManager( SetupContext, new BonusManager( SetupContext ) );
             if ( model.UnitsToAdd.Count( kvp => kvp.Value == 0 ) != model.UnitsToAdd.Count() && !model.UnitsToAdd.Any( kvp => kvp.Value < 0 ) )
             {
@@ -56,10 +54,8 @@ namespace ITI.SkyLord.Controllers
                 else
                 {
                     ModelState.AddModelError( "UnitsToAdd", "Aucune unité sélectionnée." );
-
                 }
             }
-
             return RedirectToAction( "Index", new { islandId = islandId});
         }
 
@@ -207,12 +203,67 @@ namespace ITI.SkyLord.Controllers
             List<Army> currentIslandArmies = SetupContext.Islands.Include( i => i.Armies ).ThenInclude( a => a.Regiments )
                 .ThenInclude( r => r.Unit ).ThenInclude( u => u.UnitStatistics )
                 .Single( i => i.IslandId == islandId ).Armies.ToList();
+            LevelManager levelManager = new LevelManager( SetupContext );
 
-            model.AvailableUnits = SetupContext.Units.Include( u => u.UnitCost ).Include( u => u.UnitStatistics ).ToList();
+            model.AvailableUnits = new List<Unit>();
+            //model.AvailableUnits = SetupContext.Units.Include( u => u.UnitCost ).Include( u => u.UnitStatistics ).
+            //    Where( u => levelManager.IsUnitAvailable( u, islandId) ).ToList();
+            foreach( Unit unit in SetupContext.Units.Include( u => u.UnitCost ).Include( u => u.UnitStatistics ).Include( u => u.Requirements).ToList() )
+            {
+                if ( levelManager.IsUnitAvailable( unit, islandId ) )
+                    model.AvailableUnits.Add( unit );
+            }
             model.CurrentIslandArmies = currentIslandArmies;
             
             SetupContext.FillStandardVM( model, SetupContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
             return model;
+        }
+
+        public abstract class ModelStateTempDataTransfer : ActionFilterAttribute
+        {
+            protected static readonly string Key = typeof( ModelStateTempDataTransfer ).FullName;
+        }
+
+        public class ExportModelStateToTempData : ModelStateTempDataTransfer
+        {
+            public override void OnActionExecuted( ActionExecutedContext filterContext )
+            {
+                //Only export when ModelState is not valid
+                if ( !filterContext.ModelState.IsValid )
+                {
+                    //Export if we are redirecting
+                    if ( ( filterContext.Result is RedirectResult ) || ( filterContext.Result is RedirectToRouteResult ) )
+                    {   
+                        ((Controller)filterContext.Controller).TempData[ Key ] = filterContext.ModelState;
+                    }
+                }
+
+                base.OnActionExecuted( filterContext );
+            }
+        }
+
+        public class ImportModelStateFromTempData : ModelStateTempDataTransfer
+        {
+            public override void OnActionExecuted( ActionExecutedContext filterContext )
+            {
+                ModelStateDictionary modelState = ((Controller)filterContext.Controller).TempData[ Key ] as ModelStateDictionary;
+
+                if ( modelState != null )
+                {
+                    //Only Import if we are viewing
+                    if ( filterContext.Result is ViewResult )
+                    {
+                        filterContext.ModelState.Merge( modelState );
+                    }
+                    else
+                    {
+                        //Otherwise remove it.
+                        ((Controller)filterContext.Controller).TempData.Remove( Key );
+                    }
+                }
+
+                base.OnActionExecuted( filterContext );
+            }
         }
     }
 

@@ -2,6 +2,7 @@
 /// <reference path="../gulpfile.js" />
 /// <reference path="js/less.js" />
 /// <reference path="js/searchplayer.js" />
+/// <reference path="js/seeisland.js" />
 /// <reference path="js/testsnap.js" />
 /// <reference path="js/worldmap.js" />
 /// <reference path="lib/bootstrap/dist/js/bootstrap.js" />

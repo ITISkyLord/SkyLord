@@ -64,9 +64,14 @@ namespace ITI.SkyLord
             Island currentIsland = CurrentContext.GetIsland( currentIslandId, activePlayerId );
             if ( nextLevel != null )
             {
-                return AreAllRequirementsMet( FindNextLevel( currentLevel ), currentIslandId );
+                return AreAllRequirementsMet( (List<Requirement>)FindNextLevel( currentLevel ).Requirements, currentIslandId );
             }
             return false;
+        }
+
+        public bool IsUnitAvailable( Unit unit, long currentIslandId )
+        {
+            return AreAllRequirementsMet( (List<Requirement>)unit.Requirements, currentIslandId );
         }
 
         public Level FindNextLevel( Level currentLevel )
@@ -89,29 +94,29 @@ namespace ITI.SkyLord
             return levelFound;
         }
 
-        public bool AreAllRequirementsMet( Level level, long currentIslandId )
+        public bool AreAllRequirementsMet( List<Requirement> requirements, long currentIslandId )
         {
             //If there is no requirement, return true
-            if ( level.Requirements == null || level.Requirements.Count() == 0 )
+            if ( requirements == null || requirements.Count() == 0 )
                 return true;
 
             List<Building> buildingsOnIsland = GetBuildingsOnCurrentIsland( currentIslandId );
             IList<Technology> playersTechnologies = CurrentContext.Islands.SingleOrDefault( i => i.IslandId == currentIslandId ).Owner.Technologies;
 
             // If requirements contains at least a technology but the player doesn't have any yet, return false
-            if ( playersTechnologies == null && level.Requirements.Any( r => r.TechnologyName != TechnologyName.none ) )
+            if ( playersTechnologies == null && requirements.Any( r => r.TechnologyName != TechnologyName.none ) )
                 return false;
 
             if ( playersTechnologies != null )
             {
-                foreach ( Requirement requirement in level.Requirements.Where( r => r.TechnologyName != TechnologyName.none ) )
+                foreach ( Requirement requirement in requirements.Where( r => r.TechnologyName != TechnologyName.none ) )
                 {
                     if ( !IsTechnologyRequirementMet( requirement, playersTechnologies ) )
                         return false;
                 }
             }
 
-            foreach ( Requirement requirement in level.Requirements.Where( r => r.BuildingName != BuildingName.none ) )
+            foreach ( Requirement requirement in requirements.Where( r => r.BuildingName != BuildingName.none ) )
             {
                 if ( !IsBuildingRequirementMet( requirement, buildingsOnIsland ) )
                     return false;

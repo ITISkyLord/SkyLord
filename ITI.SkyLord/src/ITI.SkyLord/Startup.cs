@@ -181,7 +181,7 @@ namespace ITI.SkyLord
                 }
 
                 //Add defaultUnits
-                using( ArmyContext context = new ArmyContext() )
+                using( SetupContext context = new SetupContext() )
                 {
 
                     cyclop = context.Units.Where( u => u.UnitName == UnitName.cyclop && u.IsModel).SingleOrDefault();
@@ -197,6 +197,8 @@ namespace ITI.SkyLord
                         context.Ressources.Add( cyclopCost );
                         UnitStatistics cyclopStatistics = new UnitStatistics { Attack = 150, PhysicResist = 80, MagicResist = 50, Capacity = 200, Speed = 15, Consumption = 20 };
                         context.UnitStatistics.Add( cyclopStatistics );
+                        Requirement cyclopRequirement = new Requirement { BuildingName = BuildingName.barrack, Number = 2 };
+                        context.Requirements.Add( cyclopRequirement );
 
                         cyclop = new Unit
                         {
@@ -207,7 +209,8 @@ namespace ITI.SkyLord
                             UnitCost = cyclopCost,
                             UnitStatistics = cyclopStatistics,
                             Duration = 120,
-                            IsModel = true
+                            IsModel = true,
+                            Requirements = new List<Requirement> { cyclopRequirement }
                         };
                         context.Units.Add( cyclop );
                     }
