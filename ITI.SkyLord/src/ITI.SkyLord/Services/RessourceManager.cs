@@ -1,4 +1,5 @@
 ﻿using ITI.SkyLord.Models.Entity_Framework.Contexts;
+using ITI.SkyLord.Models.Entity_Framework.Contexts.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,9 @@ namespace ITI.SkyLord.Services
 {
     public class RessourceManager
     {
-        public LevelContext CurrentContext { get; }
+        public ILevelContext CurrentContext { get; }
 
-        public RessourceManager( LevelContext levelContext )
+        public RessourceManager( ILevelContext levelContext )
         {
             CurrentContext = levelContext;
         }

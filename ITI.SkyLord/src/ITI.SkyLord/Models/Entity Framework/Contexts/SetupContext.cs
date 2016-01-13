@@ -160,6 +160,24 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
                     .SingleOrDefault(i => i.IslandId == islandId && i.Owner.PlayerId == activePlayerId);
             }
         }
+
+        public void ValidateIsland( long islandId, long playerId )
+        {
+            bool islandIsFound = false;
+            if ( islandId == 0 )
+            {
+                islandIsFound = Islands.Any( i => i.IsCapital && i.Owner.PlayerId == playerId );
+            }
+            else
+            {
+                islandIsFound = Islands.Any( i => i.IslandId == islandId && i.Owner.PlayerId == playerId );
+            }
+
+            if ( !islandIsFound )
+            {
+                throw new ArgumentException( "The islandId does not belong to the connected player !" );
+            }
+        }
         void IDbContext.OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             OnConfiguring(optionsBuilder);

@@ -23,7 +23,6 @@ namespace ITI.SkyLord.Controllers
             EventManager em = new EventManager(SetupContext, new EventPackManager(SetupContext));
             var Player = SetupContext.GetPlayer(User.GetUserId());
             em.ResolveAllForPlayer(Player.PlayerId);
-
         }
 
 

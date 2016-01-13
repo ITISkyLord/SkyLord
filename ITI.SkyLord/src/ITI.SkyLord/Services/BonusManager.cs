@@ -1,4 +1,5 @@
 ﻿using ITI.SkyLord.Models.Entity_Framework.Contexts;
+using ITI.SkyLord.Models.Entity_Framework.Contexts.Interface;
 using Microsoft.Data.Entity;
 using System;
 using System.Collections.Generic;
@@ -9,9 +10,9 @@ namespace ITI.SkyLord.Services
 {
     public class BonusManager
     {
-        public LevelContext CurrentContext { get; }
+        public ILevelContext CurrentContext { get; }
 
-        public BonusManager( LevelContext currentContext )
+        public BonusManager( ILevelContext currentContext )
         {
             CurrentContext = currentContext;
         }

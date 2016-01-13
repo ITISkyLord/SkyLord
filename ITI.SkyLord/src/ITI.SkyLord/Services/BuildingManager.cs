@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using ITI.SkyLord.Models.Entity_Framework.Contexts;
 using ITI.SkyLord.Models.Entity_Framework.Contexts.Interface;
 using Microsoft.Data.Entity;
+using ITI.SkyLord.Services;
 
 namespace ITI.SkyLord
 {
@@ -13,11 +14,11 @@ namespace ITI.SkyLord
         long _lastCurrentIsland = 0;
         List<Building> _buildingsOnIlsand;
 
-        public ILevelContext CurrentContext { get; }
-        public LevelManager LevelManager { get; set; }
-        public RessourceManager RessourceManager { get; set; }
+        private ILevelContext CurrentContext { get; }
+        private LevelManager LevelManager { get; }
+        private RessourceManager RessourceManager { get; }
 
-        public BuildingManager( LevelContext currentContext, LevelManager levelManager, RessourceManager ressourceManager )
+        public BuildingManager( ILevelContext currentContext, LevelManager levelManager, RessourceManager ressourceManager )
         {
             CurrentContext = currentContext;
             LevelManager = levelManager;
