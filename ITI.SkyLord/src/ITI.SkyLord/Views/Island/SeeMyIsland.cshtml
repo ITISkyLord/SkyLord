@@ -1,23 +1,164 @@
 ﻿@addTagHelper "*, Microsoft.AspNet.Mvc.TagHelpers"
 
-@model ITI.SkyLord.ViewModel.SeeIslands.SeeIslandsViewModel
+@model ITI.SkyLord.ViewModel.SeeIslands.SeeIslandViewModel
+
+@using System.Collections.Generic
 @using ITI.SkyLord
 
 @{
     ViewData["Title"] = "View Islands";
     Layout = "_Layout";
+    Model.CurrentIsland = Model.CurrentIsland;
+
 }
 
-<h1>Île</h1>
+<style>
+    #Fond {
+        display: block;
+        border: solid black 2px;
 
-<table>
-        <tr>
-            <td>@Model.CurrentIsland.Name</td>
-            @*<td>Ses coordonnées sont : [@Model.CurrentIsland.Coordinates.X ; @Model.CurrentIsland.Coordinates.Y]</td>
-            <td><a asp-controller="Ressource" asp-route-islandId="@Model.CurrentIsland.IslandId" asp-action="SeeRessources">Voir vos ressources</a></td>*@
-        </tr>
-</table>
+        width: 500px;
+        min-width: 500px;
+        max-width: 500px;
 
+        height: 600px;
+        min-height: 600px;
+        max-height: 600px;
+
+        background-image: url("/images/SeeMyIsland/nuage_fond.jpg");
+        background-repeat: no-repeat;
+        background-position : center;
+    }
+
+    #Island {
+        position: relative;
+        top:0px;
+        left: 0px;
+
+        display: block;
+            
+        width: 500px;
+        min-width: 500px;
+        max-width: 500px;
+
+        height: 600px;
+        min-height: 600px;
+        max-height: 600px;
+
+        background-image: url("/images/SeeMyIsland/ile.png");
+        background-repeat: no-repeat;
+        background-position : center;
+    }
+
+    .Building {
+
+        position: relative;
+
+        width: 100px;
+        min-width: 100px;
+        max-width: 100px;
+
+        height: 100px;
+        min-height: 100px;
+        max-height: 100px;
+        background-color: pink;
+        border: black solid 1px;
+
+    }
+
+    #place_1 {
+        top:100px;
+        left: 100px;
+    }
+    #place_2 {
+        top:200px;
+        left: 200px;
+    }
+    #place_3 {
+        top:300px;
+        left: 300px;
+    }
+    #place_4 {
+        top:400px;
+        left: 400px;
+    }
+    #place_5 {
+        top:500px;
+        left: 500px;
+    }
+    #place_6 {
+        top:600px;
+        left: 600px;
+    }
+    #place_7 {
+        top:700px;
+        left: 700px;
+    }
+    #place_8 {
+        top:800px;
+        left: 800px;
+    }
+    #place_9 {
+        top: 900px;
+        left: 900px;
+    }
+    #place_10 {
+        top:1000px;
+        left: 1000px;
+    }
+
+    .Building[buildingname="Tour de Mage"]
+    {
+        height: 200px;
+        min-height: 200px;
+        max-height: 200px;
+        background-color: yellow;
+    }
+
+</style>
+
+<h2>@Model.CurrentIsland.Name (@Model.CurrentIsland.Coordinates.X, @Model.CurrentIsland.Coordinates.Y)</h2>
+
+
+<div id="Fond">
+    <div id="Island">
+        @for (var i = 1; i != 11; i++)
+        {
+            Building myBuilding;
+            string name;
+            
+            @if (Model.DicoBuildings.TryGetValue(i.ToString(), out myBuilding))
+            {
+                name = myBuilding.Name;
+            }
+            else
+            {
+                name = "Empty";
+            }
+            
+            <div class="Building" buildingname="@name" id="place_@i">
+                @{
+                    name += ".png";
+                }               
+                <img src="~/images/SeeMyIsland/@name" />
+            </div>
+         }
+    </div>
+
+</div>
+
+<h3>Buildings :</h3>
+<ul>
+    @if (Model.CurrentIsland.Buildings != null)
+    {
+        @foreach (var building in Model.CurrentIsland.Buildings)
+        {
+            <li>@building.BuildingName</li>
+        }
+    }
+    
+
+</ul>
 
 
 

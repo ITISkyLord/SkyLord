@@ -18,6 +18,7 @@
     <environment names="Staging,Production">
         <link rel="stylesheet" type="text/css" href="~/css/SkyLord.css" />
     </environment>
+                <a asp-controller="Island" asp-action="OverView" asp-route-islandId="@Model.Layout.IslandId">Vue d'ensemble</a>
 
     <environment names="Development">
         <!-- Quand on est en développement -->
@@ -128,6 +129,9 @@
                         {
                             <li><a asp-controller="Island" asp-action="SeeMyIsland" asp-route-islandId="@island.IslandId">@island.Name</a></li>
                         }
+                @if (Model.Layout.CurrentIsland != null)
+                {
+                }
                     }
                 </ul>
             </div>

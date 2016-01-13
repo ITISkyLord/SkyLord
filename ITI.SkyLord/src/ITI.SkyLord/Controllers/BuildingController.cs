@@ -35,6 +35,7 @@ namespace ITI.SkyLord.Controllers
                 base.OnActionExecuting( context );
             }
         }
+
         public IActionResult Index()
         {
             return View();
@@ -50,6 +51,7 @@ namespace ITI.SkyLord.Controllers
             long playerId = SetupContext.GetPlayer( User.GetUserId() ).PlayerId;
             BuildingViewModel model = CreateBuildingViewModel( islandId, playerId );
             return View( model );
+
         }
 
         /// <summary>
