@@ -43,16 +43,26 @@ namespace ITI.SkyLord
             {
                 ctx.UnitEvents.Add( ue );
             }
-
         }
 
-        public void AddArmyEvent( IArmyEventContext ctx, Army army, Island island, ArmyMovement am, int timeToDistance, Island destination )
+        public void AddArmyEvent( IArmyEventContext ctx, Army army, Island island, ArmyMovement am, Island destination )
         {
             // NE PAS OUBLIER D'AJOUTER L'ÉVÈNEMENT DE RETOUR
             int secondsToGo = TimeToGoHereFromHere( island, destination, army);
             DateTime begginningDate = FindLastEndingDateInQueue( EventDiscrimator.ArmyEvent, island );
-
-            ctx.ArmyEvents.Add( new ArmyEvent() { EventType = EventDiscrimator.ArmyEvent, Army = army, ArmyMovement = am, BegginningDate = begginningDate, EndingDate = DateTime.Now.AddSeconds( secondsToGo ), Destination = destination, Done = false, Island = island } );
+            ctx.ArmyEvents.Add( new ArmyEvent()
+            {
+                EventType = EventDiscrimator.ArmyEvent,
+                Army = army,
+                ArmyIdd = army.ArmyId,
+                ArmyMovement = am,
+                BegginningDate = begginningDate,
+                EndingDate = DateTime.Now.AddSeconds( secondsToGo ),
+                Destination = destination,
+                DestinationIdd = destination.IslandId,
+                Done = false,
+                Island = island
+            } );
         }
 
         private int TimeToGoHereFromHere( Island island, Island destination, Army army )
@@ -137,21 +147,24 @@ namespace ITI.SkyLord
         /// Selectionne les éléments pas encore fait et qui doivent être résolu, dans l'ordre de finission
         /// </summary>
         /// <param name="islandId"></param>
-        private void ResolveAllForIsland(long islandId)
+        private void ResolveAllForIsland( long islandId, bool useEventsWhereTarget = true )
         {
             // All events of the player
             List<Event> allEvent = _context.Events.Where( e => e.Done == false && e.EndingDate < DateTime.Now && e.Island.IslandId==islandId).ToList();
-            
+
             // All army movements where player is the target
-            List<ArmyEvent> eventsWhereTarget = _context.ArmyEvents.Include(u => u.Army).ThenInclude( j => j.Regiments).Where(e => e.Done == false && e.EndingDate < DateTime.Now && e.Destination.IslandId == islandId).ToList();
+            if( useEventsWhereTarget )
+            {
+                List<ArmyEvent> eventsWhereTarget = _context.ArmyEvents.Include(u => u.Army).ThenInclude( j => j.Regiments).Where(e => e.Done == false && e.EndingDate < DateTime.Now && e.DestinationIdd == islandId).ToList();
+                allEvent = allEvent.Union( eventsWhereTarget ).OrderBy( e => e.EndingDate ).ToList();
+            }
 
             // Merge the two lists order them by date of attack
-            allEvent = allEvent.Union( eventsWhereTarget ).OrderBy( e => e.EndingDate ).ToList();
 
             // So, we execute all events ( with a super visitor pattern OTFD )
-            foreach(Event @event in allEvent)
+            foreach( Event @event in allEvent )
             {
-                @event.Accept(this);
+                @event.Accept( this );
                 @event.Done = true;
                 _context.SaveChanges(); // À voir si on peut pas le mettre ailleurs que dans le manager
             }
@@ -174,24 +187,73 @@ namespace ITI.SkyLord
         public void Resolve( UnitEvent ue )
         {
             // À remettre en place quand on aura la solutions pour Include
-           // UnitEvent unitEvent = _context.UnitEvents.Include(a=>a.Unit).ThenInclude( b => b.UnitStatistics ).Where( e => e.EventId == ue.EventId ).First();
+            // UnitEvent unitEvent = _context.UnitEvents.Include(a=>a.Unit).ThenInclude( b => b.UnitStatistics ).Where( e => e.EventId == ue.EventId ).First();
             Unit unit = _context.Units.Include( y => y.UnitStatistics ).Where( u => u.UnitId == ue.UnitIdd ).Single();
             ArmyManager am = _allManager.ArmyManager;
             am.AddUnit( unit, 1, ue.Island );
             // TODO : Si plusieurs lignes sont finies en même temps, on peut les cumuler avec ArmyManager.AddUnit
 
         }
-        
+
         public void Resolve( ArmyEvent ae )
         {
-            throw new NotImplementedException();
+            // Résolution de Army Event
+            // Le combat doit se passer et/ou l'armée doit rejoindre une autre armée.
+            // Attention aux ressources transférées.
+            //ArmyEvent armyEvent = _context.ArmyEvents
+            //                              .Include( a => a.Destination)
+            //                              .Where( e => e.EventId == ae.EventId ).First();
+            ArmyManager am = _allManager.ArmyManager;
+            Army attackingArmy = _context.Armies
+                                        .Include( i => i.Island ).ThenInclude( i => i.Coordinates )
+                                        .Include( i => i.Island)
+                                        .ThenInclude( i => i.Armies).ThenInclude( i => i.Regiments)
+                                        .Include( y => y.Regiments )
+                                        .ThenInclude( z => z.Unit )
+                                        .ThenInclude( z => z.UnitStatistics )
+                                        .Include( i => i.Island ).ThenInclude( i => i.AllRessources )
+                                        .Where( u => u.ArmyId == ae.ArmyIdd )
+                                        .Single();
+            if( ae.ArmyMovement == ArmyMovement.attacking )
+            {
+                Island destination = _context.Islands
+                                    .Include( c => c.Coordinates )
+                                    .Include( i => i.Armies )
+                                    .ThenInclude( r => r.Regiments)
+                                    .ThenInclude( r => r.Unit)
+                                    .Include(i => i.AllRessources )
+                                    .Where( i => i.IslandId == ae.DestinationIdd )
+                                    .Single();
+
+                ResolveAllForIsland( destination.IslandId, false );
+                Army defendingArmy = destination.Armies.Where( a => a.ArmyState == ArmyState.defense ).SingleOrDefault();
+                //   defendingArmy.Island = destination;
+                if( defendingArmy == null )
+                    defendingArmy = new Army { Island = destination, Regiments = new List<Regiment>(), ArmyState = ArmyState.defense };
+
+                CombatResult combatResult = am.ResolveCombat( attackingArmy, defendingArmy );
+                this.AddArmyEvent( _context, attackingArmy, attackingArmy.Island, ArmyMovement.returning, destination );
+            }
+            else if( ae.ArmyMovement == ArmyMovement.returning )
+            {
+                if( attackingArmy != null )
+                {
+                    // L'armée est déjà présente à l'aller
+                    attackingArmy = am.JoinArmies( ae.Island.Armies.SingleOrDefault( a => a.ArmyState == ArmyState.defense ), attackingArmy );
+                    _context.SaveChanges();
+                }
+            }
+
+
+            //    CombatReportViewModel combatReportViewModel = new CombatReportViewModel { CombatResult = combatResult };
+
         }
         public void Resolve( TechnologyEvent te )
         {
             throw new NotImplementedException();
         }
 
-        internal void Resolve(BuildingEvent be)
+        internal void Resolve( BuildingEvent be )
         {
             be = _context.BuildingEvents.Where( e => e.EventId == be.EventId ).Single();
 
@@ -199,13 +261,13 @@ namespace ITI.SkyLord
             _allManager.BuildingManager.AddBuildingToIsland( be.BuildingToBuild.BuildingName, be.Island.IslandId );
         }
 
-        internal void Resolve(UpgradeEvent ue)
+        internal void Resolve( UpgradeEvent ue )
         {
             ue = _context.UpgradeEvents.Where( e => e.EventId == ue.EventId ).Single();
             _allManager.BuildingManager.LevelUpBuilding( ue.BuildingToUpgrade, ue.Island.IslandId );
         }
-        
-       
+
+
         #endregion
     }
 }

@@ -15,7 +15,7 @@
         <li> ArmyId : @a.ArmyId</li>
         @foreach ( Regiment r in a.Regiments )
         {
-            <li> Unité : @r.Unit.Name  Nombre : @r.Number</li>
+            <li>État : @r.Army.ArmyState <br />Unité : @r.Unit.Name  Nombre : @r.Number</li>
         }
     </ul>
 }

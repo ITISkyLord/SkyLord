@@ -8,7 +8,7 @@ namespace ITI.SkyLord
 {
     public class CombatReport
     {
-        [Key]
+        // Je ne suis pas une entité, je suis créé à la fin d'un combat.
         public long CombatreportId { get; set; }
 
         public Player Receiver { get; set; }

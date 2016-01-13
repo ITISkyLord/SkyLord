@@ -4,28 +4,24 @@ using Microsoft.Data.Entity.Migrations;
 
 namespace ITI.SkyLord.Migrations
 {
-    public partial class AddIndiceToBuildingEvent : Migration
+    public partial class AddArmyandDestinationIdd : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(name: "FK_UnitEvent_Unit_unitUnitId", table: "Event");
             migrationBuilder.DropForeignKey(name: "FK_Player_User_Player_PlayerId", table: "Player");
             migrationBuilder.DropForeignKey(name: "FK_IdentityRoleClaim<string>_IdentityRole_RoleId", table: "AspNetRoleClaims");
             migrationBuilder.DropForeignKey(name: "FK_IdentityUserClaim<string>_IdentityUser_UserId", table: "AspNetUserClaims");
             migrationBuilder.DropForeignKey(name: "FK_IdentityUserLogin<string>_IdentityUser_UserId", table: "AspNetUserLogins");
             migrationBuilder.DropForeignKey(name: "FK_IdentityUserRole<string>_IdentityRole_RoleId", table: "AspNetUserRoles");
             migrationBuilder.DropForeignKey(name: "FK_IdentityUserRole<string>_IdentityUser_UserId", table: "AspNetUserRoles");
-            migrationBuilder.AddColumn<int>(
-                name: "Indice",
+            migrationBuilder.AddColumn<long>(
+                name: "ArmyIdd",
                 table: "Event",
                 nullable: true);
-            migrationBuilder.AddForeignKey(
-                name: "FK_UnitEvent_Unit_UnitUnitId",
+            migrationBuilder.AddColumn<long>(
+                name: "DestinationIdd",
                 table: "Event",
-                column: "UnitUnitId",
-                principalTable: "Unit",
-                principalColumn: "UnitId",
-                onDelete: ReferentialAction.Restrict);
+                nullable: true);
             migrationBuilder.AddForeignKey(
                 name: "FK_Player_User_Player_PlayerId",
                 table: "Player",
@@ -68,29 +64,18 @@ namespace ITI.SkyLord.Migrations
                 principalTable: "AspNetUsers",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
-            migrationBuilder.RenameColumn(
-                name: "unitUnitId",
-                table: "Event",
-                newName: "UnitUnitId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(name: "FK_UnitEvent_Unit_UnitUnitId", table: "Event");
             migrationBuilder.DropForeignKey(name: "FK_Player_User_Player_PlayerId", table: "Player");
             migrationBuilder.DropForeignKey(name: "FK_IdentityRoleClaim<string>_IdentityRole_RoleId", table: "AspNetRoleClaims");
             migrationBuilder.DropForeignKey(name: "FK_IdentityUserClaim<string>_IdentityUser_UserId", table: "AspNetUserClaims");
             migrationBuilder.DropForeignKey(name: "FK_IdentityUserLogin<string>_IdentityUser_UserId", table: "AspNetUserLogins");
             migrationBuilder.DropForeignKey(name: "FK_IdentityUserRole<string>_IdentityRole_RoleId", table: "AspNetUserRoles");
             migrationBuilder.DropForeignKey(name: "FK_IdentityUserRole<string>_IdentityUser_UserId", table: "AspNetUserRoles");
-            migrationBuilder.DropColumn(name: "Indice", table: "Event");
-            migrationBuilder.AddForeignKey(
-                name: "FK_UnitEvent_Unit_unitUnitId",
-                table: "Event",
-                column: "unitUnitId",
-                principalTable: "Unit",
-                principalColumn: "UnitId",
-                onDelete: ReferentialAction.Restrict);
+            migrationBuilder.DropColumn(name: "ArmyIdd", table: "Event");
+            migrationBuilder.DropColumn(name: "DestinationIdd", table: "Event");
             migrationBuilder.AddForeignKey(
                 name: "FK_Player_User_Player_PlayerId",
                 table: "Player",
@@ -133,10 +118,6 @@ namespace ITI.SkyLord.Migrations
                 principalTable: "AspNetUsers",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
-            migrationBuilder.RenameColumn(
-                name: "UnitUnitId",
-                table: "Event",
-                newName: "unitUnitId");
         }
     }
 }

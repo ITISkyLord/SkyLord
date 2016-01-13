@@ -8,7 +8,9 @@ namespace ITI.SkyLord.Models.Entity_Framework.Entites.Events
     public class ArmyEvent : Event
     {
         public Army Army { get; set; }
+        public long ArmyIdd { get; set; }
         public Island Destination { get; set; }
+        public long DestinationIdd { get; set; }
         public ArmyMovement ArmyMovement { get; set; }
 
         // Super Visitor Pattern OTD

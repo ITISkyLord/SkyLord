@@ -8,8 +8,8 @@ using ITI.SkyLord.Models.Entity_Framework.Contexts;
 namespace ITI.SkyLord.Migrations
 {
     [DbContext(typeof(SetupContext))]
-    [Migration("20160111130102_AddIndiceToBuildingEvent")]
-    partial class AddIndiceToBuildingEvent
+    [Migration("20160112142610_AddArmyandDestinationIdd")]
+    partial class AddArmyandDestinationIdd
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -217,16 +217,16 @@ namespace ITI.SkyLord.Migrations
                     b.Property<long>("EventId")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<DateTime>("BegginningDate");
+
+                    b.Property<bool>("Done");
+
+                    b.Property<DateTime>("EndingDate");
+
                     b.Property<string>("EventType")
                         .IsRequired();
 
-                    b.Property<DateTime>("begginningDate");
-
-                    b.Property<bool>("done");
-
-                    b.Property<DateTime>("endingDate");
-
-                    b.Property<long?>("islandIslandId");
+                    b.Property<long?>("IslandIslandId");
 
                     b.HasKey("EventId");
 
@@ -573,11 +573,15 @@ namespace ITI.SkyLord.Migrations
                 {
                     b.HasBaseType("ITI.SkyLord.Models.Entity_Framework.Entites.Events.Event");
 
-                    b.Property<long?>("armyArmyId");
+                    b.Property<long?>("ArmyArmyId");
 
-                    b.Property<int>("armyMovement");
+                    b.Property<long>("ArmyIdd");
 
-                    b.Property<long?>("destinationIslandId");
+                    b.Property<int>("ArmyMovement");
+
+                    b.Property<long>("DestinationIdd");
+
+                    b.Property<long?>("DestinationIslandId");
 
                     b.HasAnnotation("Relational:DiscriminatorValue", "ArmyEvent");
                 });
@@ -597,7 +601,7 @@ namespace ITI.SkyLord.Migrations
                 {
                     b.HasBaseType("ITI.SkyLord.Models.Entity_Framework.Entites.Events.Event");
 
-                    b.Property<long?>("technologyTechnologyId");
+                    b.Property<long?>("TechnologyTechnologyId");
 
                     b.HasAnnotation("Relational:DiscriminatorValue", "TechnologyEvent");
                 });
@@ -605,6 +609,8 @@ namespace ITI.SkyLord.Migrations
             modelBuilder.Entity("ITI.SkyLord.Models.Entity_Framework.Entites.Events.UnitEvent", b =>
                 {
                     b.HasBaseType("ITI.SkyLord.Models.Entity_Framework.Entites.Events.Event");
+
+                    b.Property<int>("UnitIdd");
 
                     b.Property<int?>("UnitUnitId");
 
@@ -615,7 +621,7 @@ namespace ITI.SkyLord.Migrations
                 {
                     b.HasBaseType("ITI.SkyLord.Models.Entity_Framework.Entites.Events.Event");
 
-                    b.Property<int?>("buildingToUpgradeBuildingId");
+                    b.Property<int?>("BuildingToUpgradeBuildingId");
 
                     b.HasAnnotation("Relational:DiscriminatorValue", "UpgradeEvent");
                 });
@@ -726,7 +732,7 @@ namespace ITI.SkyLord.Migrations
                 {
                     b.HasOne("ITI.SkyLord.Island")
                         .WithMany()
-                        .HasForeignKey("islandIslandId");
+                        .HasForeignKey("IslandIslandId");
                 });
 
             modelBuilder.Entity("ITI.SkyLord.Player", b =>
@@ -850,11 +856,11 @@ namespace ITI.SkyLord.Migrations
                 {
                     b.HasOne("ITI.SkyLord.Army")
                         .WithMany()
-                        .HasForeignKey("armyArmyId");
+                        .HasForeignKey("ArmyArmyId");
 
                     b.HasOne("ITI.SkyLord.Island")
                         .WithMany()
-                        .HasForeignKey("destinationIslandId");
+                        .HasForeignKey("DestinationIslandId");
                 });
 
             modelBuilder.Entity("ITI.SkyLord.Models.Entity_Framework.Entites.Events.BuildingEvent", b =>
@@ -868,7 +874,7 @@ namespace ITI.SkyLord.Migrations
                 {
                     b.HasOne("ITI.SkyLord.Technology")
                         .WithMany()
-                        .HasForeignKey("technologyTechnologyId");
+                        .HasForeignKey("TechnologyTechnologyId");
                 });
 
             modelBuilder.Entity("ITI.SkyLord.Models.Entity_Framework.Entites.Events.UnitEvent", b =>
@@ -882,7 +888,7 @@ namespace ITI.SkyLord.Migrations
                 {
                     b.HasOne("ITI.SkyLord.Building")
                         .WithMany()
-                        .HasForeignKey("buildingToUpgradeBuildingId");
+                        .HasForeignKey("BuildingToUpgradeBuildingId");
                 });
         }
     }

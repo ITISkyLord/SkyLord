@@ -574,7 +574,11 @@ namespace ITI.SkyLord.Migrations
 
                     b.Property<long?>("ArmyArmyId");
 
+                    b.Property<long>("ArmyIdd");
+
                     b.Property<int>("ArmyMovement");
+
+                    b.Property<long>("DestinationIdd");
 
                     b.Property<long?>("DestinationIslandId");
 

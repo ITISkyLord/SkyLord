@@ -190,10 +190,8 @@ namespace ITI.SkyLord
                         regimentFound.Number += reg.Number;
                     }
                 }
-
-                CurrentContext.Armies.Remove( armyOnMovement );
-                // CurrentContext.SaveChanges();
-                return armyOnIsland;
+                armyOnMovement.ArmyState = ArmyState.obsolete;
+                return armyOnMovement;
             }
         }
 
@@ -231,6 +229,7 @@ namespace ITI.SkyLord
                 Console.WriteLine( "loss = " + number );
                 this.SubstractFromRegiment( army, r.Unit, number);
             }
+          //  CurrentContext.SaveChanges(); À voir si ça été changé après l'impact sur l'attaqué, EventManager
         }
 
         internal void SubstractFromArmy( Army armyToRemoveFrom, Army armyToBeRemoved )
@@ -243,19 +242,23 @@ namespace ITI.SkyLord
             }
         }
 
+        /// <summary>
+        /// Put the army on obsolete. 
+        /// </summary>
+        /// <param name="army"></param>
         internal void RemoveArmy( Army army )
         {
-            if ( army.Regiments == null )
-                CurrentContext.Remove( army );
+            if( army.Regiments == null )
+                army.ArmyState = ArmyState.obsolete;
+            // Remplace la suppression.
             else
             {
-                foreach ( Regiment r in army.Regiments )
+                foreach( Regiment r in army.Regiments )
                 {
                     CurrentContext.Remove( r );
                 }
-                // CurrentContext.SaveChanges();
-                CurrentContext.Remove( army );
-                // CurrentContext.SaveChanges();
+                army.ArmyState = ArmyState.obsolete;
+                // Remplace la suppression.
             }
         }
 
