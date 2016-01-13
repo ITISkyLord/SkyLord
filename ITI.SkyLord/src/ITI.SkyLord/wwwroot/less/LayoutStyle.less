@@ -7,9 +7,7 @@ html, body {
 
 .navbar {
     margin-bottom: 0;
-    background-color: rgba(255,255,255,.94);
     background-image: url("../images/site_fond2.png");
-    /*.Image();*/
     z-index: 9999;
     border: 0;
     font-size: 17px !important;
@@ -19,6 +17,7 @@ html, body {
 
     .navbar-nav li input[type=text] {
         padding: 1px 15px 1px 15px;
+        line-height: 20px;
     }
 
     li a, li button[type=submit], .navbar-brand {
@@ -37,10 +36,10 @@ html, body {
     .btn-link {
         padding: 15px 15px 15px 15px;
         color: #825847;
-        font-size:17px;
-        font-weight:bold;
-        line-height:20px;
-        letter-spacing:4px;
+        font-size: 17px;
+        font-weight: bold;
+        line-height: 20px;
+        letter-spacing: 4px;
     }
 
     .btn-link:hover {
@@ -53,7 +52,7 @@ html, body {
     .navbar-nav {
         li a {
             color: #825847;
-            font-weight:bold;
+            font-weight: bold;
         }
 
         li a:hover, li button[type=submit]:hover {
@@ -82,7 +81,7 @@ html, body {
     height: 10px;
     margin: 0;
     background-image: url("../images/site_fond2.png");
-    overflow: auto;
+    overflow: hidden;
 }
 
 .SkyLordContainer {
@@ -99,13 +98,14 @@ html, body {
             .Col(1);
             .Section();
             line-height: 30px;
+            font-size: 12px;
             height: 100%;
             width: 600px;
             float: left;
             padding: 0;
             margin: 0;
             background-image: url("../images/site_fond2.png");
-            overflow: auto; /* Enable scrolling if the sidenav has too much content */
+            /*overflow: auto;*/ /* Enable scrolling if the sidenav has too much content */
             a {
                 display: block;
                 color: #825847;
@@ -219,10 +219,12 @@ footer {
 
     li, a {
         color: #825847;
-        font-weight:bold;
+        font-weight: bold;
     }
 
     li a:hover {
         color: #825847;
     }
 }
+
+

@@ -6753,9 +6753,7 @@ body {
 }
 .navbar {
   margin-bottom: 0;
-  background-color: rgba(255, 255, 255, 0.94);
   background-image: url("../images/site_fond2.png");
-  /*.Image();*/
   z-index: 9999;
   border: 0;
   font-size: 17px !important;
@@ -6765,6 +6763,7 @@ body {
 }
 .navbar .navbar-nav li input[type=text] {
   padding: 1px 15px 1px 15px;
+  line-height: 20px;
 }
 .navbar li a,
 .navbar li button[type=submit],
@@ -6820,7 +6819,7 @@ body {
   height: 10px;
   margin: 0;
   background-image: url("../images/site_fond2.png");
-  overflow: auto;
+  overflow: hidden;
 }
 .SkyLordContainer {
   margin-right: auto;
@@ -6865,13 +6864,14 @@ body {
   height: auto;
   width: auto;
   line-height: 30px;
+  font-size: 12px;
   height: 100%;
   width: 600px;
   float: left;
   padding: 0;
   margin: 0;
   background-image: url("../images/site_fond2.png");
-  overflow: auto;
+  /*overflow: auto;*/
   /* Enable scrolling if the sidenav has too much content */
 }
 @media (min-width: 1200px) {
@@ -7070,9 +7070,7 @@ footer li a:hover {
   margin-bottom: 20px;
   border: 1px solid transparent;
   margin-bottom: 0;
-  background-color: rgba(255, 255, 255, 0.94);
   background-image: url("../images/site_fond2.png");
-  /*.Image();*/
   z-index: 9999;
   border: 0;
   font-size: 17px !important;
@@ -7127,6 +7125,7 @@ footer li a:hover {
 }
 .SkyLordNavBar ul .navbar-nav li input[type=text] {
   padding: 1px 15px 1px 15px;
+  line-height: 20px;
 }
 .SkyLordNavBar ul li a,
 .SkyLordNavBar ul li button[type=submit],
