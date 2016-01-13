@@ -9,16 +9,19 @@ namespace ITI.SkyLord.Services
 {
     public class BuildingManager
     {
+        long _lastCurrentIsland = 0;
+        List<Building> _buildingsOnIlsand;
 
         public LevelContext CurrentContext { get; }
         public LevelManager LevelManager { get; set; }
+        public RessourceManager RessourceManager { get; set; }
 
-
-
-        public BuildingManager( LevelContext currentContext, LevelManager levelManager )
+        public BuildingManager( LevelContext currentContext, LevelManager levelManager, RessourceManager ressourceManager )
+        
         {
             CurrentContext = currentContext;
             LevelManager = levelManager;
+            RessourceManager = ressourceManager;
         }
 
         /// <summary>
@@ -26,60 +29,68 @@ namespace ITI.SkyLord.Services
         /// </summary>
         /// <param name="buildingName"></param>
         /// <returns>True : building was added. False : building not allowed.</returns>
-        public bool AddBuildingToIsland( BuildingName buildingName, long currentIslandId )
+        public bool AddBuildingToIsland( BuildingName buildingName, long currentIslandId, int position )
         {
-            Building buildingToAdd;
-            buildingToAdd = new Building
-            {
-                Name = BuildingNameToName( buildingName ),
-                BuildingName = buildingName,
-                Level = CurrentContext.BuildingLevels.Where( bl => bl.BuildingName == buildingName && bl.Number == 1 ).Single()
-            };
+            long playerId = CurrentContext.Islands.Include( i => i.Owner ).SingleOrDefault( i => i.IslandId == currentIslandId ).Owner.PlayerId;
 
-            // If the building already exists AND is supposed to be unique on the island, don't add it and return false
-            if ( GetBuildingsOnCurrentIsland( currentIslandId ).Any( b => buildingToAdd.BuildingName == b.BuildingName ) && IsBuildingUnique( buildingName ) )
+            // If the building already exists AND is supposed to be unique on the island, or if the position is not free, don't add it and return false
+            if ( GetBuildingsOnCurrentIsland( currentIslandId, playerId ).Any( b => buildingName == b.BuildingName ) && IsBuildingUnique( buildingName )
+                || !IsPositionAvailable( position, currentIslandId, playerId ) )
             {
                 return false;
             }
             long playerId = CurrentContext.Islands.Include( i => i.Owner).SingleOrDefault( i => i.IslandId == currentIslandId ).Owner.PlayerId;
 
             Island currentIsland = CurrentContext.GetIsland( currentIslandId, playerId );
-            if( currentIsland.Buildings == null )
+            if ( currentIsland.Buildings == null )
             {
                 currentIsland.Buildings = new List<Building>();
             }
+
+            // Create and add building on the island
+            Building buildingToAdd;
+            buildingToAdd = new Building
+            {
+                Name = BuildingNameToName( buildingName ),
+                BuildingName = buildingName,
+                Level = CurrentContext.BuildingLevels.Include( bl => bl.Cost).First( bl => bl.BuildingName == buildingName && bl.Number == 1 ),
+                Position = position
+            };
             currentIsland.Buildings.Add( buildingToAdd );
+
+            // Substract the ressource
+            RessourceManager.RemoveRessource( CurrentContext.GetIsland( currentIslandId, playerId ).AllRessources, buildingToAdd.Level.Cost );
 
             return true;
         }
 
-        public bool LevelUpBuilding( BuildingName buildingNameToLevelUp, long currentIslandId )
+        public bool LevelUpBuilding( BuildingName buildingNameToLevelUp, long currentIslandId, long playerId, int position )
         {
-            Building buildingToLevelUp = GetBuildingsOnCurrentIsland( currentIslandId ).Single( b => b.BuildingName == buildingNameToLevelUp );
+            Building buildingToLevelUp = GetBuildingsOnCurrentIsland( currentIslandId, playerId ).Single( b => b.BuildingName == buildingNameToLevelUp && b.Position == position );
 
             if ( LevelManager.IsNextLevelAvailable( buildingToLevelUp.Level, currentIslandId ) )
             {
+                Level nextLevel = LevelManager.FindNextLevel( buildingToLevelUp.Level );
+
+                RessourceManager.RemoveRessource( CurrentContext.GetIsland( currentIslandId, playerId ).AllRessources, nextLevel.Cost );
                 return LevelManager.LevelUp( buildingToLevelUp );
             }
             return false;
         }
 
-        public bool LevelUpBuilding( Building buildingToLevelUp, long currentIslandId )
+        public bool IsPositionAvailable( int position, long currentIslandId, long playerId )
         {
-            // TODO Dépenser la THUNE MA COUILLE !!
-            if ( LevelManager.IsNextLevelAvailable( buildingToLevelUp.Level, currentIslandId ) )
-            {
-                return LevelManager.LevelUp( buildingToLevelUp );
-            }
-            return false;
+            return !GetBuildingsOnCurrentIsland( currentIslandId, playerId ).Any( b => b.Position == position );
+        }
+
         }
 
         public List<Building> GetAvailableBuildings()
         {
             List<Building> availableBuildings = new List<Building>();
-            foreach( BuildingName buildingName in Enum.GetValues( typeof( BuildingName ) ) )
+            foreach ( BuildingName buildingName in Enum.GetValues( typeof( BuildingName ) ) )
             {
-                if( buildingName != BuildingName.none )
+                if ( buildingName != BuildingName.none )
                 {
                     availableBuildings.Add( new Building { BuildingName = buildingName, Name = BuildingNameToName( buildingName ) } );
                 }
@@ -87,10 +98,34 @@ namespace ITI.SkyLord.Services
             return availableBuildings;
         }
 
+        public bool IsEnough( Ressource ressourceToChange, Ressource cost )
+        {
+            return RessourceManager.IsEnough( ressourceToChange, cost );
+        }
+
+        public bool IsEnoughForNextLevel( BuildingName buildingName, long islandId, long playerId, int position )
+        {
+            Building buildingToLevelUp = GetBuildingsOnCurrentIsland( islandId, playerId ).Single( b => b.BuildingName == buildingName && b.Position == position );
+
+            Level nextLevel = LevelManager.FindNextLevel( buildingToLevelUp.Level );
+            if( nextLevel != null )
+            {
+                return RessourceManager.IsEnough( CurrentContext.GetIsland( islandId, playerId ).AllRessources, nextLevel.Cost );
+            }
+            return false;
+        }
+
+        public bool IsEnoughForFirstLevel( BuildingName buildingName, long islandId, long playerId )
+        {
+            BuildingLevel buildingToLevelUp = CurrentContext.BuildingLevels.Include( bl => bl.Cost).First( bl => bl.BuildingName == buildingName && bl.Number == 1 );
+
+            return RessourceManager.IsEnough( CurrentContext.GetIsland( islandId, playerId ).AllRessources, buildingToLevelUp.Cost );
+        }
+
         private string BuildingNameToName( BuildingName buildingName )
         {
             string name;
-            switch( buildingName )
+            switch ( buildingName )
             {
                 case BuildingName.academy:
                     name = "Académie";
@@ -128,7 +163,7 @@ namespace ITI.SkyLord.Services
                 case BuildingName.woodField:
                     name = "Camp de bucherons";
                     break;
-                default :
+                default:
                     name = "Error";
                     break;
             }
@@ -140,10 +175,10 @@ namespace ITI.SkyLord.Services
             bool isUnique;
             switch ( buildingName )
             {
-                case BuildingName.cristalField :
-                case BuildingName.magicField :
-                case BuildingName.metalField :
-                case BuildingName.woodField :
+                case BuildingName.cristalField:
+                case BuildingName.magicField:
+                case BuildingName.metalField:
+                case BuildingName.woodField:
                     isUnique = false;
                     break;
 
@@ -154,13 +189,43 @@ namespace ITI.SkyLord.Services
             return isUnique;
         }
 
-        private List<Building> GetBuildingsOnCurrentIsland( long currentIslandId )
+        public List<Building> GetBuildingsOnCurrentIsland( long currentIslandId, long playerId )
         {
-            return CurrentContext.Islands
+            if( currentIslandId == 0 )
+            {
+                currentIslandId = CurrentContext.Islands.Include( i => i.Owner ).Single( i => i.IsCapital && i.Owner.PlayerId == playerId ).IslandId;
+            }
+
+            if ( _lastCurrentIsland != currentIslandId )
+            {
+                _buildingsOnIlsand = CurrentContext.Islands
                     .Include( i => i.Buildings )
                     .ThenInclude( b => b.Level )
-                    .ThenInclude( r => r.Requirements )
-                    .Where( i => i.IslandId == currentIslandId ).SingleOrDefault().Buildings.ToList();
+                    .ThenInclude( l => l.Requirements )
+                    .First( i => i.IslandId == currentIslandId ).Buildings.ToList();
+                _lastCurrentIsland = currentIslandId;
+
+                foreach( Building buiding in _buildingsOnIlsand )
+                {
+                    buiding.Level.Cost = CurrentContext.Buildings.Include( b => b.Level).ThenInclude( l => l.Cost)
+                        .First( b => b.BuildingId == buiding.BuildingId ).Level.Cost;
+                }
+            }
+            return _buildingsOnIlsand;
         }
+
+        private bool LevelUpBuilding( Building buildingToLevelUp, long currentIslandId )
+        {
+            if ( LevelManager.IsNextLevelAvailable( buildingToLevelUp.Level, currentIslandId ) )
+            {
+                return LevelManager.LevelUp( buildingToLevelUp );
+            }
+            return false;
+        }
+
+        //private Building GetBuildingAtPosition( int position, long currentIslandId )
+        //{
+        //    return GetBuildingsOnCurrentIsland( currentIslandId ).SingleOrDefault( b => b.Position == position );
+        //}
     }
 }

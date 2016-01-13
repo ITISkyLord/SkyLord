@@ -15,7 +15,11 @@
         <li> ArmyId : @a.ArmyId</li>
         @foreach ( Regiment r in a.Regiments )
         {
-            <li> Unité : @r.Unit.Name  Nombre : @r.Number</li>
+            <li> 
+                Unité : @r.Unit.Name  Nombre : @r.Number
+                Stats : Attaque = @r.Unit.UnitStatistics.Attack
+                @*<form asp-controller="Army" asp - action="UpgradeUnit" asp-route-islandId="@Model.Layout.IslandId" method="post" role="form"></form>*@
+            </li> 
         }
     </ul>
 }

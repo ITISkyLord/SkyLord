@@ -24,5 +24,6 @@ namespace ITI.SkyLord
         public Ressource UnitCost { get; set; }
         
         public int Duration { get; set; }
+        public bool IsModel { get; set; }
     }
 }
