@@ -6810,7 +6810,7 @@ body {
   left: 0px;
 }
 .jumbotron {
-  height: 100px;
+  height: 10px;
   margin: 0;
   background-image: url("../images/site_fond2.png");
 }
@@ -6852,7 +6852,7 @@ body {
   padding-right: 15px;
   border: solid black 3px;
   border-radius: 1px;
-  background-color: pink;
+  background-color: "white";
   height: auto;
   width: auto;
   line-height: 30px;
@@ -6905,8 +6905,6 @@ body {
   min-height: 1px;
   padding-left: 15px;
   padding-right: 15px;
-  border: solid black 3px;
-  border-radius: 1px;
   background-color: "white";
   height: auto;
   width: auto;
@@ -7015,10 +7013,14 @@ footer li,
 footer a {
   color: #825847;
 }
+footer li a:hover {
+  color: #825847;
+}
 .jumbotron {
-  background-color: coral;
+  /*background-color: coral;*/
   color: whitesmoke;
   padding: 100px 25px;
+  height: 10px;
 }
 .bg-grey {
   /*background-color: lightskyblue;*/
