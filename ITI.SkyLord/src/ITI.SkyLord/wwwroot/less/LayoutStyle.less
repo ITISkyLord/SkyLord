@@ -29,19 +29,21 @@ html, body {
 
 
     li a, li button[type=submit], .navbar-brand {
-        color: #3C0732;
+        color: #825847;
         padding: 15px 15px 15px 15px;
         border: none;
     }
 
     .btn-link {
         padding: 15px 15px 15px 15px;
-        color: #3C0732
-        
+        color: #825847;
     }
+
     .btn-link:hover {
         padding: 15px 15px 15px 15px;
-         background-color: whitesmoke;
+        background-color: whitesmoke;
+        color:#825847;
+        font-weight:bold;
     }
 
     .navbar-nav {
@@ -49,7 +51,8 @@ html, body {
             background-color: whitesmoke;
             padding: 15px 15px 15px 15px;
             text-decoration: none !important;
-            color: #3C0732;
+            color: #825847;
+            font-weight:bold;
         }
     }
 
@@ -86,11 +89,30 @@ html, body {
             .Col(1);
             .Section(pink);
             line-height: 30px;
-            height: 663px;
+            height: 100%;
             width: 600px;
             float: left;
-            padding: 0px;
+            padding: 0;
+            margin: 0;
             background-image: url("../images/site_fond2.png");
+            overflow: auto; /* Enable scrolling if the sidenav has too much content */
+            a {
+                display: block;
+                color: #825847;
+                padding: 8px 0 8px 16px;
+                text-decoration: none;
+                font-weight:bold;
+            }
+
+            a:hover {
+                 background-color: whitesmoke;
+                color: #825847;
+            }
+
+            li a:hover {
+                background-color: whitesmoke;
+                color: #825847;
+            }
         }
 
         .PageContent {
@@ -187,6 +209,6 @@ footer {
     background-image: url("../images/site_fond2.png");
 
     li, a {
-        color: #3C0732;
+        color: #825847;
     }
 }
