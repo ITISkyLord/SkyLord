@@ -90,7 +90,7 @@ namespace ITI.SkyLord.Controllers
             BuildingViewModel buildingViewModel = new BuildingViewModel();
 
             // TODO Changer en SetupContext
-            BuildingManager buildingManager = new BuildingManager( LevelContext, new LevelManager( LevelContext ) );
+            BuildingManager buildingManager = new BuildingManager( LevelContext, new LevelManager( LevelContext ), new RessourceManager( LevelContext ) );
             
             
 

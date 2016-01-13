@@ -17,7 +17,6 @@ namespace ITI.SkyLord.Services
         public RessourceManager RessourceManager { get; set; }
 
         public BuildingManager( LevelContext currentContext, LevelManager levelManager, RessourceManager ressourceManager )
-        
         {
             CurrentContext = currentContext;
             LevelManager = levelManager;
@@ -39,7 +38,6 @@ namespace ITI.SkyLord.Services
             {
                 return false;
             }
-            long playerId = CurrentContext.Islands.Include( i => i.Owner).SingleOrDefault( i => i.IslandId == currentIslandId ).Owner.PlayerId;
 
             Island currentIsland = CurrentContext.GetIsland( currentIslandId, playerId );
             if ( currentIsland.Buildings == null )
@@ -53,7 +51,7 @@ namespace ITI.SkyLord.Services
             {
                 Name = BuildingNameToName( buildingName ),
                 BuildingName = buildingName,
-                Level = CurrentContext.BuildingLevels.Include( bl => bl.Cost).First( bl => bl.BuildingName == buildingName && bl.Number == 1 ),
+                Level = CurrentContext.BuildingLevels.Include( bl => bl.Cost ).First( bl => bl.BuildingName == buildingName && bl.Number == 1 ),
                 Position = position
             };
             currentIsland.Buildings.Add( buildingToAdd );
@@ -83,8 +81,6 @@ namespace ITI.SkyLord.Services
             return !GetBuildingsOnCurrentIsland( currentIslandId, playerId ).Any( b => b.Position == position );
         }
 
-        }
-
         public List<Building> GetAvailableBuildings()
         {
             List<Building> availableBuildings = new List<Building>();
@@ -108,7 +104,7 @@ namespace ITI.SkyLord.Services
             Building buildingToLevelUp = GetBuildingsOnCurrentIsland( islandId, playerId ).Single( b => b.BuildingName == buildingName && b.Position == position );
 
             Level nextLevel = LevelManager.FindNextLevel( buildingToLevelUp.Level );
-            if( nextLevel != null )
+            if ( nextLevel != null )
             {
                 return RessourceManager.IsEnough( CurrentContext.GetIsland( islandId, playerId ).AllRessources, nextLevel.Cost );
             }
@@ -117,7 +113,7 @@ namespace ITI.SkyLord.Services
 
         public bool IsEnoughForFirstLevel( BuildingName buildingName, long islandId, long playerId )
         {
-            BuildingLevel buildingToLevelUp = CurrentContext.BuildingLevels.Include( bl => bl.Cost).First( bl => bl.BuildingName == buildingName && bl.Number == 1 );
+            BuildingLevel buildingToLevelUp = CurrentContext.BuildingLevels.Include( bl => bl.Cost ).First( bl => bl.BuildingName == buildingName && bl.Number == 1 );
 
             return RessourceManager.IsEnough( CurrentContext.GetIsland( islandId, playerId ).AllRessources, buildingToLevelUp.Cost );
         }
@@ -191,7 +187,7 @@ namespace ITI.SkyLord.Services
 
         public List<Building> GetBuildingsOnCurrentIsland( long currentIslandId, long playerId )
         {
-            if( currentIslandId == 0 )
+            if ( currentIslandId == 0 )
             {
                 currentIslandId = CurrentContext.Islands.Include( i => i.Owner ).Single( i => i.IsCapital && i.Owner.PlayerId == playerId ).IslandId;
             }
@@ -205,9 +201,9 @@ namespace ITI.SkyLord.Services
                     .First( i => i.IslandId == currentIslandId ).Buildings.ToList();
                 _lastCurrentIsland = currentIslandId;
 
-                foreach( Building buiding in _buildingsOnIlsand )
+                foreach ( Building buiding in _buildingsOnIlsand )
                 {
-                    buiding.Level.Cost = CurrentContext.Buildings.Include( b => b.Level).ThenInclude( l => l.Cost)
+                    buiding.Level.Cost = CurrentContext.Buildings.Include( b => b.Level ).ThenInclude( l => l.Cost )
                         .First( b => b.BuildingId == buiding.BuildingId ).Level.Cost;
                 }
             }
@@ -222,10 +218,5 @@ namespace ITI.SkyLord.Services
             }
             return false;
         }
-
-        //private Building GetBuildingAtPosition( int position, long currentIslandId )
-        //{
-        //    return GetBuildingsOnCurrentIsland( currentIslandId ).SingleOrDefault( b => b.Position == position );
-        //}
     }
 }
