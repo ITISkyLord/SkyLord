@@ -91,9 +91,9 @@ namespace ITI.SkyLord.Controllers
             Island currentIsland = IslandContext.GetIsland(islandId, model.Layout.CurrentPlayer.PlayerId);
             model.CurrentIsland = currentIsland;
 
-            RessourceManager ressourceManager = new RessourceManager(LevelContext);
-            LevelManager levelManager = new LevelManager(LevelContext);
-            BuildingManager buildingManager = new BuildingManager(LevelContext, levelManager, ressourceManager);
+            RessourceManager ressourceManager = new RessourceManager(SetupContext);
+            LevelManager levelManager = new LevelManager(SetupContext);
+            BuildingManager buildingManager = new BuildingManager(SetupContext, levelManager, ressourceManager);
 
             model.Buildings = buildingManager.GetBuildingsOnCurrentIsland(islandId, playerId);
 

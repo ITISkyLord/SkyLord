@@ -6810,7 +6810,7 @@ body {
   height: 10px;
   margin: 0;
   background-image: url("../images/site_fond2.png");
-  overflow: hidden;
+  overflow: auto;
 }
 .SkyLordContainer {
   margin-right: auto;
