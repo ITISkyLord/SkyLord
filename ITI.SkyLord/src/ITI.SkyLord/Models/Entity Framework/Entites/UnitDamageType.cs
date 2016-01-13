@@ -8,6 +8,6 @@ namespace ITI.SkyLord
     public enum UnitDamageType
     {
         magical,
-        physical,
+        physical
     }
 }

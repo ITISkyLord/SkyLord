@@ -27,6 +27,7 @@ namespace ITI.SkyLord
         public int Loyalty { get; set; }
 
         public bool IsCapital { get; set; }
+        public int PossiblePositions { get; set; }
         #endregion
     }
 }

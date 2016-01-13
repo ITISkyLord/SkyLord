@@ -16,7 +16,6 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
         public virtual DbSet<Player> Players { get; set; }
         public virtual DbSet<User_Player> User_Players { get; set; }
 
-
         public void FillStandardVM( StandardViewModel svm, long playerId, long islandId )
         {
             svm.Layout = new LayoutViewModel();
@@ -26,6 +25,14 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
             svm.Layout.CurrentPlayer = Players.Single( p => p.PlayerId == playerId );
             svm.Layout.IslandId = islandId;
         }
+        public void FillStandardVM(StandardViewModel svm, long playerId)
+        {
+            svm.Layout = new LayoutViewModel();
+            svm.Layout.AllIslands = Islands.Include(i => i.Owner).Where(i => i.Owner.PlayerId == playerId).ToList();
+            svm.Layout.CurrentIsland = null;
+            svm.Layout.CurrentPlayer = Players.Single(p => p.PlayerId == playerId);
+            svm.Layout.IslandId = 0;
+        }
 
         public Player GetPlayer( string userId )
         {
@@ -34,9 +41,10 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
 
         public Island GetIsland( long islandId, long playerId )
         {
-            if( islandId == 0 )
+            ValidateIsland( islandId, playerId );
+
+            if ( islandId == 0 )
             {
-                long activePlayerId = playerId;
                 return Islands
                     .Include( i => i.Armies )
                     .ThenInclude( a => a.Regiments )
@@ -47,11 +55,10 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
                     .Include( i => i.Buildings )
                     .ThenInclude( b => b.Level )
                     //.ThenInclude( r => r.Requirements )
-                    .SingleOrDefault( i => i.IsCapital && i.Owner.PlayerId == activePlayerId );
+                    .SingleOrDefault( i => i.IsCapital && i.Owner.PlayerId == playerId );
             }
             else
             {
-                long activePlayerId = playerId;
                 return Islands
                     .Include( i => i.Armies )
                     .ThenInclude( a => a.Regiments )
@@ -62,7 +69,25 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
                     .Include( i => i.Buildings )
                     .ThenInclude( b => b.Level )
                     //.ThenInclude( r => r.Requirements )
-                    .SingleOrDefault( i => i.IslandId == islandId && i.Owner.PlayerId == activePlayerId );
+                    .SingleOrDefault( i => i.IslandId == islandId && i.Owner.PlayerId == playerId );
+            }
+        }
+
+        public void ValidateIsland( long islandId, long playerId )
+        {
+            bool islandIsFound = false;
+            if ( islandId == 0 )
+            {
+                islandIsFound = Islands.Any( i => i.IsCapital && i.Owner.PlayerId == playerId );
+            }
+            else
+            {
+                islandIsFound = Islands.Any( i => i.IslandId == islandId && i.Owner.PlayerId == playerId );
+            }
+
+            if( !islandIsFound )
+            {
+                throw new ArgumentException( "The islandId does not belong to the connected player !" );
             }
         }
     }

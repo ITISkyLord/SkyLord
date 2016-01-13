@@ -18,6 +18,44 @@
     <environment names="Staging,Production">
         <link rel="stylesheet" type="text/css" href="~/css/SkyLord.css" />
     </environment>
+                <a asp-controller="Island" asp-action="OverView" asp-route-islandId="@Model.Layout.IslandId">Vue d'ensemble</a>
+
+    <environment names="Development">
+        <!-- Quand on est en développement -->
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/jquery-ui/jquery-ui.js"></script>
+
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="~/lib/hammer.js/hammer.js"></script>
+        <script src="~/lib/bootstrap-touch-carousel/dist/js/bootstrap-touch-carousel.js"></script>
+        <script src="~/js/searchPlayer.js"></script>
+    </environment>
+
+    <environment names="Staging,Production">
+        <!-- Quand on est en production -->
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.8.0.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery">
+        </script>
+        <script src="~/lib/jquery-ui/jquery-ui.js"></script>
+        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.0.0/bootstrap.min.js"
+                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal">
+        </script>
+        <script src="https://ajax.aspnetcdn.com/ajax/hammer.js/2.0.4/hammer.min.js"
+                asp-fallback-src="~/lib/hammer.js/hammer.js"
+                asp-fallback-test="window.Hammer">
+        </script>
+        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap-touch-carousel/0.8.0/js/bootstrap-touch-carousel.js"
+                asp-fallback-src="~/lib/bootstrap-touch-carousel/dist/js/bootstrap-touch-carousel.js"
+                asp-fallback-test="window.Hammer && window.Hammer.Instance">
+        </script>
+    </environment>
+
+
+
+
+
 </head>
 <body>
     <div class="jumbotron text-center">
@@ -32,6 +70,7 @@
                     <a asp-controller="Home" asp-action="Index" asp-route-islandId="@Model.Layout.IslandId">
                         <img src="~/images/SkyLord.png" class="img-responsive" />
                     </a>
+                <a asp-controller="World" asp-action="Index" asp-route-islandId="@Model.Layout.IslandId">Carte du monde</a>
                 </div>
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav navbar-right">
@@ -88,6 +127,9 @@
                         {
                             <li><a asp-controller="Island" asp-action="SeeMyIsland" asp-route-islandId="@island.IslandId">@island.Name</a></li>
                         }
+                @if (Model.Layout.CurrentIsland != null)
+                {
+                }
                     }
                 </ul>
             </div>
@@ -112,37 +154,7 @@
         </ul>
     </footer>
 
-    <environment names="Development">
-        <!-- Quand on est en développement -->
-        @*<script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.8.0.js"></script>*@
-        <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.22/jquery-ui.js"></script>
-
-        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-        <script src="~/lib/hammer.js/hammer.js"></script>
-        <script src="~/lib/bootstrap-touch-carousel/dist/js/bootstrap-touch-carousel.js"></script>
-        <script src="~/js/searchPlayer.js"></script>
-    </environment>
-
-    <environment names="Staging,Production">
-        <!-- Quand on est en production -->
-        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.1.4.min.js"
-                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                asp-fallback-test="window.jQuery">
-        </script>
-        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.0.0/bootstrap.min.js"
-                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
-                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal">
-        </script>
-        <script src="https://ajax.aspnetcdn.com/ajax/hammer.js/2.0.4/hammer.min.js"
-                asp-fallback-src="~/lib/hammer.js/hammer.js"
-                asp-fallback-test="window.Hammer">
-        </script>
-        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap-touch-carousel/0.8.0/js/bootstrap-touch-carousel.js"
-                asp-fallback-src="~/lib/bootstrap-touch-carousel/dist/js/bootstrap-touch-carousel.js"
-                asp-fallback-test="window.Hammer && window.Hammer.Instance">
-        </script>
-    </environment>
+    
 
     @RenderSection("scripts", required: false)
 </body>

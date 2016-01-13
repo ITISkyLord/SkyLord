@@ -1,0 +1,117 @@
+﻿@model ITI.SkyLord.ViewModel.World.WorldMapViewModel
+
+<style>
+    #draggable {
+        position: relative;
+        top: -100px;
+        
+        width: 10000px;
+        height: 10000px;
+
+        background-color: pink !important;
+
+        background-image: url("/images/WorldMap/Nuage.jpg");
+        background-repeat: repeat;
+        background-size: 500px 500px;
+
+    }
+    .map {
+        background-image: url("/images/WorldMap/Nuage.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+
+        width: 500px;
+        height: 500px;
+        border: black solid 2px;
+        background-color: blue;
+        overflow: hidden;
+    }
+    .map td {
+        width: 64px;
+        height: 64px;
+        background-color: rgba(0,0,0,0);
+        min-width: 64px;
+        min-height: 64px;
+        max-width: 64px;
+        max-height: 64px;
+        overflow: hidden;
+    }
+    #MyIsland {
+        background-color: pink;
+    }
+    
+    .Island:hover {
+        cursor: pointer;
+        border: solid black 5px;
+    }
+    
+    td.Island {
+        background-image: url("/images/WorldMap/villagechibi.png");
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+    td.Empty {
+        background-color: rgba(0,0,0,0);
+    }
+    #Menu {
+        position: absolute;
+
+        background-color: black;
+        color: white;
+        border-radius: 20px;
+        border: solid rgba(39, 36, 36, 0.00) 1px;
+        width: 150px;
+        max-width: 150px;
+        min-width: 150px;
+    }
+    #Menu ul 
+    {
+        list-style-type: none;
+    }
+</style>
+
+<!-- World Map -->
+<div class="map">
+<div id="draggable">
+<!-- Map OTD -->
+<table>
+@for (var i = 0; i < 100; i++)
+{
+    <tr>
+        @for (var j = 0; j < 100; j++)
+        {
+            string key = i + "_" + j;
+            Island island = null;
+            if(Model.Layout.CurrentIsland.Coordinates.X == j && Model.Layout.CurrentIsland.Coordinates.Y == i)
+            {
+                <td class="Island" id="MyIsland" x="@j" y="@i" islandid="@Model.Layout.CurrentIsland.IslandId"></td>
+            }
+            else if (Model.Map.TryGetValue(key, out island))
+            {
+                <td class="Island" x="@j" y="@i" islandid="@island.IslandId"></td>
+            }
+            else
+            {
+                <td class="Empty"></td>
+            }
+        }
+    </tr>
+}
+</table>
+</div>
+</div>
+
+<!-- Petit Menu OTD-->
+<div id="Menu" style="display:none;">
+    <ul>
+        <li><a id="Attaquer" href="/Fight?islandId={{islandId}}">Attaquer</a></li>
+        <li><a id="Supporter" href="/Supporter?islandId={{islandId}}">Supporter</a></li>
+        <li><a id="Espionner" href="/Espionner?islandId={{islandId}}">Espionner</a></li>
+        <li><a id="Voir" href="/See?islandId={{islandId}}">Voir</a></li>
+        <li><a id="Message" href="/Message?islandId={{islandId}}">Message</a></li>
+    </ul>
+</div>
+
+<script src="~/js/worldmap.js"></script>
+
