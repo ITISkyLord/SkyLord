@@ -8,9 +8,10 @@ using ITI.SkyLord.Models.Entity_Framework.Contexts;
 namespace ITI.SkyLord.Migrations
 {
     [DbContext(typeof(SetupContext))]
-    partial class SetupContextModelSnapshot : ModelSnapshot
+    [Migration("20160113111219_ChangeCombatReport")]
+    partial class ChangeCombatReport
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.0-rc1-16348")
@@ -570,8 +571,6 @@ namespace ITI.SkyLord.Migrations
 
                     b.Property<long?>("DestinationIslandId");
 
-                    b.Property<long?>("PillagedRessourcesRessourceId");
-
                     b.HasAnnotation("Relational:DiscriminatorValue", "ArmyEvent");
                 });
 
@@ -843,10 +842,6 @@ namespace ITI.SkyLord.Migrations
                     b.HasOne("ITI.SkyLord.Island")
                         .WithMany()
                         .HasForeignKey("DestinationIslandId");
-
-                    b.HasOne("ITI.SkyLord.Ressource")
-                        .WithMany()
-                        .HasForeignKey("PillagedRessourcesRessourceId");
                 });
 
             modelBuilder.Entity("ITI.SkyLord.Models.Entity_Framework.Entites.Events.BuildingEvent", b =>

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ITI.SkyLord.Models.Entity_Framework.Entites.Events;
 
 namespace ITI.SkyLord
 {
@@ -13,6 +14,8 @@ namespace ITI.SkyLord
     {
         private Army _winningArmy;
         private Army _loosingArmy;
+
+        internal Dictionary<string,int> Loss { get; set; }
 
         private readonly ArmyManager _armyManager;
 
@@ -27,7 +30,7 @@ namespace ITI.SkyLord
         /// <param name="attackingArmy"></param>
         /// <param name="defendingArmy"></param>
         /// <returns></returns>
-        public CombatResult Resolve( Army attackingArmy, Army defendingArmy )
+        public CombatResult Resolve( Army attackingArmy, Army defendingArmy, ArmyEvent ae, SetupContext ctx )
         {
             if ( attackingArmy == null ) throw new ArgumentNullException( "attackingArmy is null" );
             if ( defendingArmy == null ) throw new ArgumentNullException( "defendingArmy is null" );
@@ -54,7 +57,7 @@ namespace ITI.SkyLord
             magicResist = GetMagicResist( defendingArmy );
             Fight( attackingArmy, defendingArmy, attackPointsPhysic, physicResist, attackPointsMagic, magicResist, ratioPhysicAttack, ratioMagicAttack );
 
-            return new CombatResult( _winningArmy, _loosingArmy, this);
+            return new CombatResult( _winningArmy, _loosingArmy, this, ae, ctx);
         }
 
         /// <summary>
@@ -135,7 +138,7 @@ namespace ITI.SkyLord
             double result = 100 * Math.Pow( ( totalLooser / totalWinner ), ( 1.5 - 0.08 * Math.Log10( ( numberInWinnerArmy + numberInLooserArmy ) / 1000 ) ) );
             Console.WriteLine( "result est : " + result );
 
-            _armyManager.SubstractFromArmy( _winningArmy, ( result / 100 ) );
+            Loss = _armyManager.SubstractFromArmy( _winningArmy, ( result / 100 ) );
             if( _loosingArmy.Regiments.Count > 0 )
                 _armyManager.RemoveArmy( _loosingArmy );
 

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Security.Claims;
 using ITI.SkyLord.Models.Entity_Framework.Contexts.Interface;
+using Microsoft.Data.Entity;
 
 namespace ITI.SkyLord
 {
@@ -37,7 +38,7 @@ namespace ITI.SkyLord
 
         public IList<Message> GetAllMessage(Player player)
         {
-            List<Message> listMessages = messageContext.Messages.Where(m => m.Receiver.PlayerId == player.PlayerId).ToList();
+            List<Message> listMessages = messageContext.Messages.Include( m => m.Sender ).Where(m => m.Receiver.PlayerId == player.PlayerId).ToList();
             return listMessages;
         }
 
@@ -51,7 +52,7 @@ namespace ITI.SkyLord
         {
             bool succes = false;
 
-            if (message != null && message.Receiver == sender)
+            if( message != null && message.Receiver == sender )
             {
                 SendMessage(message.Receiver, message.Sender, coreMessage, message.MessageObject, false);
                 succes = true;

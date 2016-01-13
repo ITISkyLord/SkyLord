@@ -91,7 +91,6 @@ namespace ITI.SkyLord.Controllers
                 eventManager.AddArmyEvent( SetupContext, attackingArmy, attackingIsland, ArmyMovement.attacking, island );
                 SetupContext.SaveChanges();
 
-
                 //Army defendingArmy = island.Armies.Where( a => a.ArmyState == ArmyState.defense ).SingleOrDefault();
                 //if ( defendingArmy == null )
                 //    defendingArmy = new Army { Island = island, Regiments = new List<Regiment>(), ArmyState = ArmyState.defense };

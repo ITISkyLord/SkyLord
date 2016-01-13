@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ITI.SkyLord.Models.Entity_Framework.Entites.Events;
 
 namespace ITI.SkyLord
 {
@@ -18,9 +19,9 @@ namespace ITI.SkyLord
             
         }
 
-        public CombatResult ResolveCombat( Army attackingArmy, Army defendingArmy )
+        public CombatResult ResolveCombat( Army attackingArmy, Army defendingArmy, ArmyEvent ae, SetupContext ctx  )
         {
-            return new CombatManager(this).Resolve( attackingArmy, defendingArmy );
+            return new CombatManager(this).Resolve( attackingArmy, defendingArmy, ae, ctx );
         }
 
         public Army GetArmy( long id )
@@ -218,17 +219,20 @@ namespace ITI.SkyLord
                 throw new ArgumentException( " A regiment cannot have a negative value." );
         }
 
-        internal void SubstractFromArmy( Army army, double ratio )
+        internal Dictionary<string,int> SubstractFromArmy( Army army, double ratio )
         {
             Army tmpArmy = this.CopyArmy( army );
+            Dictionary<string,int> loss = new Dictionary<string, int>();
 
             foreach ( Regiment r in tmpArmy.Regiments )
             {
                 int number = (int)( r.Number * ratio );
+                loss.Add( r.Unit.Name, number );
                 Console.WriteLine( "number in the unit : " + r.Name + " = " + r.Number );
                 Console.WriteLine( "loss = " + number );
                 this.SubstractFromRegiment( army, r.Unit, number);
             }
+            return loss;
           //  CurrentContext.SaveChanges(); À voir si ça été changé après l'impact sur l'attaqué, EventManager
         }
 

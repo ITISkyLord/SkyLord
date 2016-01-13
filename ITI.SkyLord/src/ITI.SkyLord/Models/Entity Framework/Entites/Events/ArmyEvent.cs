@@ -12,7 +12,7 @@ namespace ITI.SkyLord.Models.Entity_Framework.Entites.Events
         public Island Destination { get; set; }
         public long DestinationIdd { get; set; }
         public ArmyMovement ArmyMovement { get; set; }
-
+        public Ressource PillagedRessources { get; set; }
         // Super Visitor Pattern OTD
         public override void Accept(EventManager em) => em.Resolve(this);
 

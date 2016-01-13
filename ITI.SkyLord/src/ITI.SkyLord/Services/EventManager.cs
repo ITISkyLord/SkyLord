@@ -195,7 +195,7 @@ namespace ITI.SkyLord
 
         }
 
-        public void Resolve( ArmyEvent ae )
+        public void Resolve( ArmyEvent armyEvent )
         {
             // Résolution de Army Event
             // Le combat doit se passer et/ou l'armée doit rejoindre une autre armée.
@@ -203,7 +203,7 @@ namespace ITI.SkyLord
             //ArmyEvent armyEvent = _context.ArmyEvents
             //                              .Include( a => a.Destination)
             //                              .Where( e => e.EventId == ae.EventId ).First();
-            ArmyManager am = _allManager.ArmyManager;
+            ArmyManager armyManager = _allManager.ArmyManager;
             Army attackingArmy = _context.Armies
                                         .Include( i => i.Island ).ThenInclude( i => i.Coordinates )
                                         .Include( i => i.Island)
@@ -212,17 +212,18 @@ namespace ITI.SkyLord
                                         .ThenInclude( z => z.Unit )
                                         .ThenInclude( z => z.UnitStatistics )
                                         .Include( i => i.Island ).ThenInclude( i => i.AllRessources )
-                                        .Where( u => u.ArmyId == ae.ArmyIdd )
+                                        .Where( u => u.ArmyId == armyEvent.ArmyIdd )
                                         .Single();
-            if( ae.ArmyMovement == ArmyMovement.attacking )
+            if( armyEvent.ArmyMovement == ArmyMovement.attacking )
             {
                 Island destination = _context.Islands
                                     .Include( c => c.Coordinates )
+                                    .Include( p => p.Owner )
                                     .Include( i => i.Armies )
                                     .ThenInclude( r => r.Regiments)
-                                    .ThenInclude( r => r.Unit)
+                                    .ThenInclude( r => r.Unit).ThenInclude( r=> r.UnitStatistics )
                                     .Include(i => i.AllRessources )
-                                    .Where( i => i.IslandId == ae.DestinationIdd )
+                                    .Where( i => i.IslandId == armyEvent.DestinationIdd )
                                     .Single();
 
                 ResolveAllForIsland( destination.IslandId, false );
@@ -231,15 +232,19 @@ namespace ITI.SkyLord
                 if( defendingArmy == null )
                     defendingArmy = new Army { Island = destination, Regiments = new List<Regiment>(), ArmyState = ArmyState.defense };
 
-                CombatResult combatResult = am.ResolveCombat( attackingArmy, defendingArmy );
+                CombatResult combatResult = armyManager.ResolveCombat( attackingArmy, defendingArmy, armyEvent, _context );
+                _context.Messages.Add(combatResult.CombatReport);
+                _context.SaveChanges();
                 this.AddArmyEvent( _context, attackingArmy, attackingArmy.Island, ArmyMovement.returning, destination );
             }
-            else if( ae.ArmyMovement == ArmyMovement.returning )
+            else if( armyEvent.ArmyMovement == ArmyMovement.returning )
             {
                 if( attackingArmy != null )
                 {
+                    Ressource pillagedRessources = armyEvent.PillagedRessources;
                     // L'armée est déjà présente à l'aller
-                    attackingArmy = am.JoinArmies( ae.Island.Armies.SingleOrDefault( a => a.ArmyState == ArmyState.defense ), attackingArmy );
+                    attackingArmy.Island.AllRessources.ChangeRessources( pillagedRessources );
+                    attackingArmy = armyManager.JoinArmies( armyEvent.Island.Armies.SingleOrDefault( a => a.ArmyState == ArmyState.defense ), attackingArmy );
                     _context.SaveChanges();
                 }
             }
