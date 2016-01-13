@@ -6751,11 +6751,6 @@ body {
   line-height: 1.42857143 !important;
   letter-spacing: 4px;
   border-radius: 0;
-  /*.navbar-nav li a:hover, .navbar-nav li button[type=submit]:hover, .navbar-nav li.active a {
-        color: #fff;
-        /*text-decoration: none !important;
-        padding: 15px 15px 15px 15px;
-    }*/
 }
 .navbar .navbar-nav li input[type=text] {
   padding: 1px 15px 1px 15px;
@@ -6783,6 +6778,7 @@ body {
   background-color: #3C0732;
   padding: 15px 15px 15px 15px;
   text-decoration: none !important;
+  color: whitesmoke;
 }
 .navbar .navbar-default .navbar-toggle {
   border-color: transparent;
