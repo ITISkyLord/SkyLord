@@ -195,9 +195,8 @@
         </script>
     </div>
 
-    <!-- /.ViewContent -->
     <center><h2>Le jeu</h2></center>
-    <div id="game" class="carousel slide text-center" data-ride="carousel">
+    <div id="myCarousel" class="carousel slide text-center" data-ride="carousel">
         <!-- Indicators -->
         <ol class="carousel-indicators">
             <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -208,13 +207,13 @@
         <!-- Wrapper for slides -->
         <div class="carousel-inner" role="listbox">
             <div class="item active">
-                <h4>"This company is the best. I am so happy with the result!"<br><span style="font-style:normal;">Michael Roe, Vice President, Comment Box</span></h4>
+                <img src="~/images/villagechibi.png" />
             </div>
             <div class="item">
-                <h4>"One word... WOW!!"<br><span style="font-style:normal;">John Doe, Salesman, Rep Inc</span></h4>
+                <img src="~/images/portail.png"/>
             </div>
             <div class="item">
-                <h4>"Could I... BE any more happy with this company?"<br><span style="font-style:normal;">Chandler Bing, Actor, FriendsAlot</span></h4>
+                <img src="~/images/labo.png" />
             </div>
         </div>
 
@@ -331,12 +330,12 @@
         </div>
     </div>
 
-        <!-- Set height and width with CSS -->
-        <div id="googleMap" class="container" style="height:400px;width:100%;"></div>
+    <!-- Set height and width with CSS -->
+    <div id="googleMap" class="container" style="height:400px;width:100%;"></div>
 
-        <!-- Add Google Maps -->
-        <script src="http://maps.googleapis.com/maps/api/js"></script>
-        <script>
+    <!-- Add Google Maps -->
+    <script src="http://maps.googleapis.com/maps/api/js"></script>
+    <script>
         var myCenter = new google.maps.LatLng(48.8167, 2.3833);
 
         function initialize() {
@@ -358,16 +357,16 @@
         }
 
         google.maps.event.addDomListener(window, 'load', initialize);
-        </script>
-    
+    </script>
+
     <footer class="container-fluid text-center">
         <ul class="nav nav-pills nav-justified">
             <li><a asp-controller="Home" asp-action="Index">Mentions légales</a></li>
             <li><a asp-controller="Home" asp-action="Index">Support</a></li>
             <li><a asp-controller="Home" asp-action="Index">Version du site</a></li>
             <li><a asp-controller="Home" asp-action="Index">Mentions légales</a></li>
-            <li><a href="https://www.facebook.com/skylordgame">Notre page Facebook</a></li>
-            <li><a href="http://intechinfo.fr">IN'TECH</a></li>
+            <li><a href="https://www.facebook.com/skylordgame" target="_blank">Notre page Facebook</a></li>
+            <li><a href="http://intechinfo.fr" target="_blank">IN'TECH</a></li>
         </ul>
     </footer>
 </body>

@@ -10,7 +10,8 @@
 }*/
 
 .Section (@background-color: "white") {
-    border: solid black 3px;
+    //border: solid black 3px;
+    border: none;
     border-radius: 1px;
     background-color: @background-color;
     height: auto;
@@ -25,7 +26,8 @@
 
 .Image(@background-image: url("../images/site_fond.png")) {
     background-image: @background-image;
-    background-size:1560px;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
 }
 
 .Col(@nb: 1) {
