@@ -9,27 +9,30 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using ITI.SkyLord.ViewModel;
 using ITI.SkyLord.Models.Entity_Framework.Entites.Events;
+using ITI.SkyLord.Services;
+using Microsoft.AspNet.Mvc.ModelBinding;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNet.Mvc.Filters;
 
 namespace ITI.SkyLord.Controllers
 {
     public class ArmyController : GenericController
     {
-
-        public IActionResult Index( long IslandId = 0 )
+        public IActionResult Index( long IslandId = 0)
         {
             return View( CreateArmyViewModel( IslandId ) );
         }
 
         public IActionResult AddUnit( ArmyViewModel model, long islandId = 0 )
         {
-            ArmyManager am = new ArmyManager( SetupContext );
-            if( model.UnitsToAdd.Count( kvp => kvp.Value == 0 ) != model.UnitsToAdd.Count() && !model.UnitsToAdd.Any( kvp => kvp.Value < 0 ) )
+            ArmyManager am = new ArmyManager( SetupContext, new BonusManager( SetupContext ) );
+            if ( model.UnitsToAdd.Count( kvp => kvp.Value == 0 ) != model.UnitsToAdd.Count() && !model.UnitsToAdd.Any( kvp => kvp.Value < 0 ) )
             {
                 EventManager eventManager = new EventManager( SetupContext, new EventPackManager( SetupContext ));
 
-                foreach( KeyValuePair<string, int> kvp in model.UnitsToAdd )
+                foreach ( KeyValuePair<string, int> kvp in model.UnitsToAdd )
                 {
-                    if( kvp.Value > 0 )
+                    if ( kvp.Value > 0 )
                     {
                         UnitName uN = (UnitName)Enum.Parse( typeof( UnitName ), kvp.Key, true );
                         eventManager.AddUnitEvent( SetupContext, SetupContext.Units.Where( u => u.UnitName == uN ).Single(), kvp.Value, GetIsland( islandId ) );
@@ -45,13 +48,16 @@ namespace ITI.SkyLord.Controllers
             }
             else
             {
-                if( model.UnitsToAdd.Any( kvp => kvp.Value < 0) )
+                if ( model.UnitsToAdd.Any( kvp => kvp.Value < 0 ) )
+                {
                     ModelState.AddModelError( "UnitsToAdd", "Les unités ne peuvent pas être négatives." );
+                }
                 else
+                {
                     ModelState.AddModelError( "UnitsToAdd", "Aucune unité sélectionnée." );
+                }
             }
-
-            return View( "Index", CreateArmyViewModel( islandId ) );
+            return RedirectToAction( "Index", new { islandId = islandId});
         }
 
         public IActionResult SetAttackingArmy( SetAttackingArmyViewModel model, long islandId = 0 )
@@ -69,7 +75,7 @@ namespace ITI.SkyLord.Controllers
                                     .SingleOrDefault();
 
             if ( model.UnitsToSend.Count( kvp => kvp.Value == 0 ) != model.UnitsToSend.Count() && !model.UnitsToSend.Any( kvp => kvp.Value < 0 )
-                && !model.UnitsToSend.Any( kvp => kvp.Value > 
+                && !model.UnitsToSend.Any( kvp => kvp.Value >
                 defendingArmyFromAttacker.Regiments.Single( r => r.Unit.UnitName == (UnitName)Enum.Parse( typeof( UnitName ), kvp.Key, true ) ).Number )
                 && model.Target != 0
                 )
@@ -82,8 +88,7 @@ namespace ITI.SkyLord.Controllers
                                                     .Include( i => i.Armies ).ThenInclude( a => a.Regiments )
                                                     .ThenInclude( r => r.Unit ).ThenInclude( r => r.UnitStatistics )
                                                     .Where( i => i.IslandId == model.Target ).FirstOrDefault();
-
-                ArmyManager am = new ArmyManager( SetupContext );
+                ArmyManager am = new ArmyManager( SetupContext, new BonusManager( SetupContext ) );
                 Island attackingIsland = GetIsland( islandId );
                 Army attackingArmy = am.CreateArmy( model.UnitsToSend, attackingIsland );
                 SetupContext.Armies.Add( attackingArmy );
@@ -106,7 +111,7 @@ namespace ITI.SkyLord.Controllers
             {
                 if ( model.UnitsToSend.Any( kvp => kvp.Value < 0 ) )
                     ModelState.AddModelError( "UnitsToSend", "Les unités ne peuvent pas être négatives." );
-                else if ( model.UnitsToSend.Count( kvp => kvp.Value == 0) == model.UnitsToSend.Count() )
+                else if ( model.UnitsToSend.Count( kvp => kvp.Value == 0 ) == model.UnitsToSend.Count() )
                     ModelState.AddModelError( "UnitsToSend", "Aucune unité sélectionnée." );
                 else if ( model.Target == 0 )
                 {
@@ -121,15 +126,26 @@ namespace ITI.SkyLord.Controllers
 
         public IActionResult RejoinArmies( long id, long islandId = 0 )
         {
-            ArmyManager am = new ArmyManager( SetupContext );
+            ArmyManager am = new ArmyManager( SetupContext, new BonusManager( SetupContext ) );
             Army attackingArmy = am.GetArmy( id );
-            
-            if( attackingArmy != null )
+
+            if ( attackingArmy != null )
             {
                 am.JoinArmies( attackingArmy.Island.Armies.SingleOrDefault( a => a.ArmyState == ArmyState.defense ), attackingArmy );
                 SetupContext.SaveChanges();
             }
             return RedirectToAction( "Index", new { islandId = islandId } );
+        }
+
+        public IActionResult UpgradeUnit( ArmyViewModel model, long islandId )
+        {
+            BonusTechnology bonusToAdd = new BonusTechnology
+            {
+                Modifier = 10,
+                BonusType = BonusType.army_attack
+            };
+
+            return View();
         }
 
         private Island GetIsland( long islandId )
@@ -149,9 +165,9 @@ namespace ITI.SkyLord.Controllers
             else
             {
                 return SetupContext.Islands
-                    .Include( i => i.Armies)
-                    .ThenInclude( a => a.Regiments)
-                    .ThenInclude( r => r.Unit)
+                    .Include( i => i.Armies )
+                    .ThenInclude( a => a.Regiments )
+                    .ThenInclude( r => r.Unit )
                     .Include( i => i.AllRessources )
                     .Include( i => i.Owner )
                     .Include( i => i.Coordinates )
@@ -185,13 +201,75 @@ namespace ITI.SkyLord.Controllers
         /// <returns>An ArmyViewModel containing all available units and the armies contained on the island</returns>
         private ArmyViewModel CreateArmyViewModel( long islandId )
         {
-            ArmyViewModel avm =  new ArmyViewModel
+            return CreateArmyViewModel( islandId, new ArmyViewModel() );
+        }
+
+        private ArmyViewModel CreateArmyViewModel( long islandId, ArmyViewModel model )
+        {
+            List<Army> currentIslandArmies = SetupContext.Islands.Include( i => i.Armies ).ThenInclude( a => a.Regiments )
+                .ThenInclude( r => r.Unit ).ThenInclude( u => u.UnitStatistics )
+                .Single( i => i.IslandId == islandId ).Armies.ToList();
+            LevelManager levelManager = new LevelManager( SetupContext );
+
+            model.AvailableUnits = new List<Unit>();
+            //model.AvailableUnits = SetupContext.Units.Include( u => u.UnitCost ).Include( u => u.UnitStatistics ).
+            //    Where( u => levelManager.IsUnitAvailable( u, islandId) ).ToList();
+            foreach( Unit unit in SetupContext.Units.Include( u => u.UnitCost ).Include( u => u.UnitStatistics ).Include( u => u.Requirements).ToList() )
             {
-                AvailableUnits = SetupContext.Units.Include( u => u.UnitCost ).Include( u => u.UnitStatistics ).ToList(),
-                CurrentIslandArmies = GetIsland( islandId ).Armies.Where( a => a.ArmyState != ArmyState.obsolete).ToList()
-            };
-            SetupContext.FillStandardVM( avm, SetupContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
-            return avm;
+                if ( levelManager.IsUnitAvailable( unit, islandId ) )
+                    model.AvailableUnits.Add( unit );
+            }
+            model.CurrentIslandArmies = currentIslandArmies;
+            
+            SetupContext.FillStandardVM( model, SetupContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
+            return model;
+        }
+
+        public abstract class ModelStateTempDataTransfer : ActionFilterAttribute
+        {
+            protected static readonly string Key = typeof( ModelStateTempDataTransfer ).FullName;
+        }
+
+        public class ExportModelStateToTempData : ModelStateTempDataTransfer
+        {
+            public override void OnActionExecuted( ActionExecutedContext filterContext )
+            {
+                //Only export when ModelState is not valid
+                if ( !filterContext.ModelState.IsValid )
+                {
+                    //Export if we are redirecting
+                    if ( ( filterContext.Result is RedirectResult ) || ( filterContext.Result is RedirectToRouteResult ) )
+                    {   
+                        ((Controller)filterContext.Controller).TempData[ Key ] = filterContext.ModelState;
+                    }
+                }
+
+                base.OnActionExecuted( filterContext );
+            }
+        }
+
+        public class ImportModelStateFromTempData : ModelStateTempDataTransfer
+        {
+            public override void OnActionExecuted( ActionExecutedContext filterContext )
+            {
+                ModelStateDictionary modelState = ((Controller)filterContext.Controller).TempData[ Key ] as ModelStateDictionary;
+
+                if ( modelState != null )
+                {
+                    //Only Import if we are viewing
+                    if ( filterContext.Result is ViewResult )
+                    {
+                        filterContext.ModelState.Merge( modelState );
+                    }
+                    else
+                    {
+                        //Otherwise remove it.
+                        ((Controller)filterContext.Controller).TempData.Remove( Key );
+                    }
+                }
+
+                base.OnActionExecuted( filterContext );
+            }
         }
     }
 

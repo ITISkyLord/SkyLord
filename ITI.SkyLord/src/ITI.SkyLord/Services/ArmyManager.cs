@@ -1,5 +1,6 @@
 ﻿using ITI.SkyLord.Models.Entity_Framework.Contexts;
 using ITI.SkyLord.Models.Entity_Framework.Contexts.Interface;
+using ITI.SkyLord.Services;
 using Microsoft.Data.Entity;
 using System;
 using System.Collections.Generic;
@@ -12,11 +13,12 @@ namespace ITI.SkyLord
     public class ArmyManager
     {
         public IArmyContext CurrentContext { get; set; }
+        public BonusManager BonusManager { get; set; }
 
-        public ArmyManager( IArmyContext context)
+        public ArmyManager( IArmyContext context, BonusManager bonusManager )
         {
             CurrentContext = context;
-            
+            BonusManager = bonusManager;
         }
 
         public CombatResult ResolveCombat( Army attackingArmy, Army defendingArmy, ArmyEvent ae, SetupContext ctx  )
@@ -55,7 +57,6 @@ namespace ITI.SkyLord
                     Island = islandFound
                 };
                 CurrentContext.Armies.Add( newArmy );
-                // CurrentContext.SaveChanges();
 
                 armyFound = newArmy;
             }
@@ -63,6 +64,10 @@ namespace ITI.SkyLord
             Regiment regimentFound = CurrentContext.Regiments.FirstOrDefault( r => r.ArmyId == armyFound.ArmyId && r.Unit.UnitId == unit.UnitId );
             if ( regimentFound == null )
             {
+                Unit unitToAdd = CloneUnit( unit );
+
+                // BonusManager.ResolveUnitBonus( unitToAdd, island.Owner.PlayerId );
+
                 Regiment newRegiment = new Regiment
                 {
                     Unit = CurrentContext.Units.SingleOrDefault( u => u.UnitId == unit.UnitId ),
@@ -70,13 +75,10 @@ namespace ITI.SkyLord
                     ArmyId = armyFound.ArmyId
                 };
                 CurrentContext.Regiments.Add( newRegiment );
-
-                // CurrentContext.SaveChanges();
             }
             else
             {
                 regimentFound.Number += number;
-                // CurrentContext.SaveChanges();
             }
 
             return armyFound;
@@ -92,17 +94,14 @@ namespace ITI.SkyLord
             Regiment regimentFound = CurrentContext.Regiments.Single( r => r.ArmyId == armyFound.ArmyId && r.Unit.UnitId == unit.UnitId );
 
             regimentFound.Number -= number;
-            // CurrentContext.SaveChanges();
 
             if ( regimentFound.Number < 0 ) throw new ArgumentException( "A regiment cannot have a negative Number roperty." );
             if ( regimentFound.Number == 0 )
             {
                 CurrentContext.Regiments.Remove( regimentFound );
-                // CurrentContext.SaveChanges();
                 if ( CurrentContext.Regiments.Where( r => r.ArmyId == armyFound.ArmyId ).Count() == 0 )
                 {
                     CurrentContext.Armies.Remove( armyFound );
-                    // CurrentContext.SaveChanges();
                 }
             }
             return armyFound;
@@ -280,6 +279,21 @@ namespace ITI.SkyLord
             }
 
             return number;
+        }
+
+        Unit CloneUnit( Unit source )
+        {
+            return new Unit
+            {
+                Name = source.Name,
+                UnitName = source.UnitName,
+                Duration = source.Duration,
+                UnitDamageType = source.UnitDamageType,
+                UnitType = source.UnitType,
+                UnitCost = source.UnitCost,
+                UnitStatistics = source.UnitStatistics,
+                IsModel = false
+            };
         }
     }
 }

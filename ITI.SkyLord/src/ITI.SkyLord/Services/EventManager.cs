@@ -263,13 +263,13 @@ namespace ITI.SkyLord
             be = _context.BuildingEvents.Where( e => e.EventId == be.EventId ).Single();
 
             // Cette methode sera à changer vu qu'il faut que l'on construise sur un emplacement précis de l'island
-            _allManager.BuildingManager.AddBuildingToIsland( be.BuildingToBuild.BuildingName, be.Island.IslandId );
+            _allManager.BuildingManager.AddBuildingToIsland( be.BuildingToBuild.BuildingName, be.Island.IslandId, be.PositionToBuild );
         }
 
         internal void Resolve( UpgradeEvent ue )
         {
             ue = _context.UpgradeEvents.Where( e => e.EventId == ue.EventId ).Single();
-            _allManager.BuildingManager.LevelUpBuilding( ue.BuildingToUpgrade, ue.Island.IslandId );
+            _allManager.BuildingManager.LevelUpBuilding( ue.BuildingToUpgrade.BuildingName, ue.Island.IslandId, ue.Island.Owner.PlayerId, ue.BuildingToUpgrade.Position );
         }
 
 

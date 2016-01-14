@@ -1,26 +1,182 @@
 ﻿@addTagHelper "*, Microsoft.AspNet.Mvc.TagHelpers"
 
-@model ITI.SkyLord.ViewModel.SeeIslands.SeeIslandsViewModel
+@model ITI.SkyLord.ViewModel.SeeIslands.SeeIslandViewModel
+
+@using System.Collections.Generic
 @using ITI.SkyLord
 
 @{
     ViewData["Title"] = "View Islands";
     Layout = "_Layout";
+    Model.CurrentIsland = Model.CurrentIsland;
+
 }
 
-<h1>Liste d'îles</h1>
+<style>
+    #Fond {
+        display: block;
+        border: solid black 2px;
 
-<table>
-    <tr>
-        <th>Ile(s) :</th>
-    </tr>
-        <tr>
-            <td>@Model.CurrentIsland.Name</td>
-            <td>Ses coordonnées sont : [@Model.CurrentIsland.Coordinates.X ; @Model.CurrentIsland.Coordinates.Y]</td>
-            <td><a asp-controller="Ressource" asp-route-islandId="@Model.CurrentIsland.IslandId" asp-action="SeeRessources">Voir vos ressources</a></td>
-        </tr>
-</table>
+        width: 500px;
+        min-width: 500px;
+        max-width: 500px;
 
+        height: 600px;
+        min-height: 600px;
+        max-height: 600px;
+
+        background-image: url("/images/SeeMyIsland/nuage_fond.jpg");
+        background-repeat: no-repeat;
+        background-position : center;
+    }
+
+    #Island {
+        position: relative;
+        top:0px;
+        left: 0px;
+
+        display: block;
+            
+        width: 500px;
+        min-width: 500px;
+        max-width: 500px;
+
+        height: 600px;
+        min-height: 600px;
+        max-height: 600px;
+
+        background-image: url("/images/SeeMyIsland/ile.png");
+        background-repeat: no-repeat;
+        background-position : center;
+    }
+
+    .Building {
+        position: relative;
+
+        width: 50px;
+        min-width: 50px;
+        max-width: 50px;
+
+        height: 50px;
+        min-height: 50px;
+        max-height: 50px;
+        background-color: pink;
+        border: black solid 1px;
+    }
+
+    .Building img {
+        width: 50px;
+        min-width: 50px;
+        max-width: 50px;
+
+        height: 50px;
+        min-height: 50px;
+        max-height: 50px;
+    }
+
+    #place_1 {
+        top:213px;
+        left: 209px;
+    }
+    #place_2 {
+        top:236px;
+        left: 209px;
+    }
+    #place_3 {
+        top:167px;
+        left: 140px;
+    }
+    #place_4 {
+        top:150px;
+        left: 90px;
+    }
+    #place_5 {
+        top:140px;
+        left: 140px;
+    }
+    #place_6 {
+        top:105px;
+        left: 209px;
+    }
+    #place_7 {
+        top:38px;
+        left: 270px;
+    }
+    #place_8 {
+        top:-44px;
+        left: 332px;
+    }
+    #place_9 {
+        top: -126px;
+        left: 276px;
+    }
+    #place_10 {
+        top:-25px;
+        left: 209px;
+    }
+
+    .Building[buildingname="Tour de Mage"] 
+    {
+        height: 100px;
+        min-height: 100px;
+        max-height: 100px;
+        background-color: yellow;
+    }
+    .Building[buildingname="Tour de Mage"] img
+    {
+        width: 50px;
+        min-width: 50px;
+        max-width: 50px;
+
+        height: 100px;
+        min-height: 100px;
+        max-height: 100px;
+    }
+
+</style>
+
+<h2>@Model.CurrentIsland.Name (@Model.CurrentIsland.Coordinates.X, @Model.CurrentIsland.Coordinates.Y)</h2>
+
+
+<div id="Fond">
+    <div id="Island">
+        @for (var i = 1; i != 11; i++)
+        {
+            Building myBuilding;
+            string name;
+            
+            @if (Model.DicoBuildings.TryGetValue(i.ToString(), out myBuilding))
+            {
+                name = myBuilding.Name;
+            }
+            else
+            {
+                name = "Empty";
+            }
+            
+            <div class="Building" buildingname="@name" id="place_@i">
+                @{
+                    name += ".png";
+                }               
+                <img src="~/images/SeeMyIsland/@name" />
+            </div>
+         }
+    </div>
+
+</div>
+
+<h3>Buildings :</h3>
+<ul>
+    @if (Model.CurrentIsland.Buildings != null)
+    {
+        @foreach (var building in Model.CurrentIsland.Buildings)
+        {
+            <li>@building.BuildingName</li>
+        }
+    }
+    
+
+</ul>
 
 
 

@@ -1,9 +1,374 @@
 ﻿@using System.Security.Claims
+@using System.Collections.Generic
+@using Microsoft.AspNet.Http
+@using Microsoft.AspNet.Http.Authentication
+@using ITI.SkyLord.Models.Entity_Framework
+
 @{
     ViewData["Title"] = "Skylord";
     Layout = "";
-}
-<p>Bienvenue sur Skylord</p>
+    @model ITI.SkyLord.ViewModel.Account.AccountViewModel
 
-    <a asp-controller="Account" asp-action="Register">Inscription</a><br />
-    <a asp-controller="Account" asp-action="LogIn">Connexion</a><br />
+    @inject SignInManager<ApplicationUser> SignInManager
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="~/css/SkyLord.css" />
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</head>
+
+<body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="50">
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <img src="~/images/SkyLord.png" class="img-responsive" />
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#game">Le jeu</a></li>
+                    <li><a href="#rules">Les règles</a></li>
+                    <li><a href="#team">L'équipe</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#googleMap">Où sommes-nous</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    @*<div class="ConnectionBlock">
+            <h2>Connexion</h2>
+            <form asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal" role="form">
+                <hr />
+
+                <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
+
+                <div class="form-group">
+                    <label asp-for="@Model.loginViewModel.Email" class="col-md-3 control-label"></label>
+                    <div class="col-md-9">
+                        <input asp-for="@Model.loginViewModel.Email" class="form-control" />
+                        <span asp-validation-for="@Model.loginViewModel.Email" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="@Model.loginViewModel.Password" class="col-md-3 control-label"></label>
+                    <div class="col-md-9">
+                        <input asp-for="@Model.loginViewModel.Password" class="form-control" />
+                        <span asp-validation-for="@Model.loginViewModel.Password" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-1 col-md-10">
+                        <div class="checkbox">
+                            <input asp-for="@Model.loginViewModel.RememberMe" />
+                            <label asp-for="@Model.loginViewModel.RememberMe"></label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-1 col-md-10">
+                        <button type="submit" class="btn btn-default">Log in</button>
+                    </div>
+                </div>
+
+                <p>
+                    <a asp-action="ForgotPassword">Mot de passe oublié TODO ?</a>
+                </p>
+            </form>
+
+        </div>*@
+
+    @*</div>*@
+
+    <div class="container">
+        <!-- Trigger the modal with a button -->
+        <br /><br /><br /><center><button type="button" class="btn btn-default btn-lg" id="BtnRegister">Inscription</button></center>
+
+        <!-- Modal -->
+        <div class="modal fade" id="ModalRegister" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header" style="padding:35px 50px;">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4><span class="glyphicon glyphicon-lock"></span> Inscription</h4>
+                    </div>
+                    <div class="modal-body" style="padding:40px 50px;">
+                        <form asp-controller="Account" asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal" role="form">
+                            <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
+                            <div class="form-group">
+                                <label for="usrname"><span class="glyphicon glyphicon-user"></span> Pseudo</label>
+                                <input asp-for="@Model.registerViewModel.Pseudo" class="form-control" />
+                                <span asp-validation-for="@Model.registerViewModel.Pseudo" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="mail"><span class="glyphicon glyphicon-eye-open"></span> Email</label>
+                                <input asp-for="@Model.registerViewModel.Email" class="form-control" />
+                                <span asp-validation-for="@Model.registerViewModel.Email" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Mot de passe</label>
+                                <input asp-for="@Model.registerViewModel.Password" class="form-control" />
+                                <span asp-validation-for="@Model.registerViewModel.Password" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Confirmez votre mot de passe</label>
+                                <input asp-for="@Model.registerViewModel.ConfirmPassword" class="form-control" />
+                                <span asp-validation-for="@Model.registerViewModel.ConfirmPassword" class="text-danger"></span>
+                            </div>
+                            <button type="submit" class="btn btn-default btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Enregistrer</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            $(document).ready(function () {
+                $("#BtnRegister").click(function () {
+                    $("#ModalRegister").modal();
+                });
+            });
+        </script>
+    </div>
+
+    <div class="container">
+        <!-- Trigger the modal with a button -->
+        <center><button type="button" class="btn btn-default btn-lg" id="BtnLogin">Connexion</button></center>
+
+        <!-- Modal -->
+        <div class="modal fade" id="ModalLogin" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header" style="padding:35px 50px;">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4><span class="glyphicon glyphicon-lock"></span> Connexion</h4>
+                    </div>
+                    <div class="modal-body" style="padding:40px 50px;">
+                        <form asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal" role="form">
+                            <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
+                            <div class="form-group">
+                                <label for="usrname"><span class="glyphicon glyphicon-user"></span> Utilisateur</label>
+                                <input asp-for="@Model.loginViewModel.Email" class="form-control" placeholder="Entrez votre mail" />
+                                <span asp-validation-for="@Model.loginViewModel.Email" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Mot de passe</label>
+                                <input asp-for="@Model.loginViewModel.Password" class="form-control" placeholder="Entrez votre mot de passe" />
+                                <span asp-validation-for="@Model.loginViewModel.Password" class="text-danger"></span>
+                            </div>
+                            <div class="checkbox">
+                                <label><input type="checkbox" value="" checked>Se souvenir de moi</label>
+                            </div>
+                            <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Jouer</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Annuler</button>
+                        <p>Pas encore un membre ? <a href="#">S'enregistrer</a></p>
+                        <p>Oublie de votre <a href="#">mot de passe ?</a></p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <script>
+            $(document).ready(function () {
+                $("#BtnLogin").click(function () {
+                    $("#ModalLogin").modal();
+                });
+            });
+        </script>
+    </div>
+
+    <!-- /.ViewContent -->
+    <center><h2>Le jeu</h2></center>
+    <div id="game" class="carousel slide text-center" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+        </ol>
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner" role="listbox">
+            <div class="item active">
+                <h4>"This company is the best. I am so happy with the result!"<br><span style="font-style:normal;">Michael Roe, Vice President, Comment Box</span></h4>
+            </div>
+            <div class="item">
+                <h4>"One word... WOW!!"<br><span style="font-style:normal;">John Doe, Salesman, Rep Inc</span></h4>
+            </div>
+            <div class="item">
+                <h4>"Could I... BE any more happy with this company?"<br><span style="font-style:normal;">Chandler Bing, Actor, FriendsAlot</span></h4>
+            </div>
+        </div>
+
+        <!-- Left and right controls -->
+        <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+
+    <div id="team" class="container text-center">
+        <h3>L'équipe</h3>
+        <p><em>Présentation de la team !</em></p>
+        <p>We have created a fictional band website. Lorem ipsum..</p>
+        <br>
+        <div class="row">
+            <div class="col-sm-2">
+                <p><strong>Kévin Roussel</strong></p><br>
+                <a href="#demo" data-toggle="collapse">
+                    <img src="~/images/SkyLord.png" class="img-circle person" alt="Random Name">
+                </a>
+                <div id="demo" class="collapse">
+                    <p>Guitarist and Lead Vocalist</p>
+                    <p>Loves long walks on the beach</p>
+                    <p>Member since 1988</p>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <p><strong>Tristan Letrou</strong></p><br>
+                <a href="#demo2" data-toggle="collapse">
+                    <img src="~/images/SkyLord.png" class="img-circle person" alt="Random Name">
+                </a>
+                <div id="demo2" class="collapse">
+                    <p>Guitarist and Lead Vocalist</p>
+                    <p>Loves long walks on the beach</p>
+                    <p>Member since 1988</p>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <p><strong>Aymeric Richard</strong></p><br>
+                <a href="#demo3" data-toggle="collapse">
+                    <img src="~/images/SkyLord.png" class="img-circle person" alt="Random Name">
+                </a>
+                <div id="demo3" class="collapse">
+                    <p>Guitarist and Lead Vocalist</p>
+                    <p>Loves long walks on the beach</p>
+                    <p>Member since 1988</p>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <p><strong>Erwan</strong></p><br>
+                <a href="#demo4" data-toggle="collapse">
+                    <img src="~/images/SkyLord.png" class="img-circle person" alt="Random Name">
+                </a>
+                <div id="demo4" class="collapse">
+                    <p>Guitarist and Lead Vocalist</p>
+                    <p>Loves long walks on the beach</p>
+                    <p>Member since 1988</p>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <p><strong>Maxime</strong></p><br>
+                <a href="#demo5" data-toggle="collapse">
+                    <img src="~/images/SkyLord.png" class="img-circle person" alt="Random Name">
+                </a>
+                <div id="demo5" class="collapse">
+                    <p>Guitarist and Lead Vocalist</p>
+                    <p>Loves long walks on the beach</p>
+                    <p>Member since 1988</p>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <p><strong>Loïc</strong></p><br>
+                <a href="#demo6" data-toggle="collapse">
+                    <img src="~/images/SkyLord.png" class="img-circle person" alt="Random Name">
+                </a>
+                <div id="demo6" class="collapse">
+                    <p>Guitarist and Lead Vocalist</p>
+                    <p>Loves long walks on the beach</p>
+                    <p>Member since 1988</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="contact" class="container-fluid bg-grey">
+        <h2 class="text-center">CONTACT</h2>
+        <div class="row">
+            <div class="col-sm-5">
+                <p><span class="glyphicon glyphicon-map-marker"></span> Ivry sur seine, France</p>
+                <p><span class="glyphicon glyphicon-phone"></span> +00 00000000</p>
+                <p><span class="glyphicon glyphicon-envelope"></span> SkyLordTeam@intechinfo.fr</p>
+            </div>
+            <div class="col-sm-7">
+                <div class="row">
+                    <div class="col-sm-6 form-group">
+                        <input class="form-control" id="name" name="name" placeholder="Nom" type="text" required>
+                    </div>
+                    <div class="col-sm-6 form-group">
+                        <input class="form-control" id="email" name="email" placeholder="Email" type="email" required>
+                    </div>
+                </div>
+                <textarea class="form-control" id="comments" name="comments" placeholder="Commentaire" rows="5"></textarea><br>
+                <div class="row">
+                    <div class="col-sm-12 form-group">
+                        <button class="btn btn-default pull-right" type="submit">Envoyer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <!-- Set height and width with CSS -->
+        <div id="googleMap" class="container" style="height:400px;width:100%;"></div>
+
+        <!-- Add Google Maps -->
+        <script src="http://maps.googleapis.com/maps/api/js"></script>
+        <script>
+        var myCenter = new google.maps.LatLng(48.8167, 2.3833);
+
+        function initialize() {
+            var mapProp = {
+                center: myCenter,
+                zoom: 12,
+                scrollwheel: false,
+                draggable: false,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+
+            var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+
+            var marker = new google.maps.Marker({
+                position: myCenter,
+            });
+
+            marker.setMap(map);
+        }
+
+        google.maps.event.addDomListener(window, 'load', initialize);
+        </script>
+    
+    <footer class="container-fluid text-center">
+        <ul class="nav nav-pills nav-justified">
+            <li><a asp-controller="Home" asp-action="Index">Mentions légales</a></li>
+            <li><a asp-controller="Home" asp-action="Index">Support</a></li>
+            <li><a asp-controller="Home" asp-action="Index">Version du site</a></li>
+            <li><a asp-controller="Home" asp-action="Index">Mentions légales</a></li>
+            <li><a href="https://www.facebook.com/skylordgame">Notre page Facebook</a></li>
+            <li><a href="http://intechinfo.fr">IN'TECH</a></li>
+        </ul>
+    </footer>
+</body>
+</html>

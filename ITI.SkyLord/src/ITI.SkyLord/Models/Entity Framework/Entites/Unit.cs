@@ -22,7 +22,11 @@ namespace ITI.SkyLord
         public UnitStatistics UnitStatistics { get; set; }
 
         public Ressource UnitCost { get; set; }
-        
+
+        public IList<Requirement> Requirements { get; set; }
+
         public int Duration { get; set; }
+
+        public bool IsModel { get; set; }
     }
 }

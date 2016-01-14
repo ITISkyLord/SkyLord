@@ -13,7 +13,6 @@ namespace ITI.SkyLord
         public long LevelId { get; set; }
         public int Number { get; set; }
         public Ressource Cost { get; set; }
-        [System.ComponentModel.DataAnnotations.Association("toRequirements", "Requirements", "RequirementId", IsForeignKey = false )]
         public IList<Requirement> Requirements { get; set; }
         public int Duration { get; set; }
     }

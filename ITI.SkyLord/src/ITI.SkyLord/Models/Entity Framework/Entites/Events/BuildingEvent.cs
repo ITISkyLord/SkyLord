@@ -9,7 +9,7 @@ namespace ITI.SkyLord.Models.Entity_Framework.Entites.Events
     public class BuildingEvent : Event
     {
         public Building BuildingToBuild { get; set; }
-        public int Indice { get; set; }
+        public int PositionToBuild { get; set; }
 
         public override void Accept(EventManager em) => em.Resolve(this);
 

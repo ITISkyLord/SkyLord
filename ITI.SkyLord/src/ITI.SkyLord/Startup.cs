@@ -172,6 +172,7 @@ namespace ITI.SkyLord
                             island.Loyalty = 100;
                             island.Coordinates = coord;
                             island.AllRessources = ressource;
+                            island.PossiblePositions = 15;
 
                             context.Islands.Add( island );
                             context.SaveChanges();
@@ -180,15 +181,15 @@ namespace ITI.SkyLord
                 }
 
                 //Add defaultUnits
-                using( ArmyContext context = new ArmyContext() )
+                using( SetupContext context = new SetupContext() )
                 {
 
-                    cyclop = context.Units.Where( u => u.UnitName == UnitName.cyclop ).SingleOrDefault();
-                    gobelin = context.Units.Where( u => u.UnitName == UnitName.gobelin ).SingleOrDefault();
-                    guard = context.Units.Where( u => u.UnitName == UnitName.guard ).SingleOrDefault();
-                    necromancer = context.Units.Where( u => u.UnitName == UnitName.necromancer ).SingleOrDefault();
-                    troll = context.Units.Where( u => u.UnitName == UnitName.troll ).SingleOrDefault();
-                    warrior = context.Units.Where( u => u.UnitName == UnitName.warrior ).SingleOrDefault();
+                    cyclop = context.Units.Where( u => u.UnitName == UnitName.cyclop && u.IsModel).SingleOrDefault();
+                    gobelin = context.Units.Where( u => u.UnitName == UnitName.gobelin && u.IsModel ).SingleOrDefault();
+                    guard = context.Units.Where( u => u.UnitName == UnitName.guard && u.IsModel ).SingleOrDefault();
+                    necromancer = context.Units.Where( u => u.UnitName == UnitName.necromancer && u.IsModel ).SingleOrDefault();
+                    troll = context.Units.Where( u => u.UnitName == UnitName.troll && u.IsModel ).SingleOrDefault();
+                    warrior = context.Units.Where( u => u.UnitName == UnitName.warrior && u.IsModel ).SingleOrDefault();
 
                     if( cyclop == null )
                     {
@@ -196,6 +197,8 @@ namespace ITI.SkyLord
                         context.Ressources.Add( cyclopCost );
                         UnitStatistics cyclopStatistics = new UnitStatistics { Attack = 150, PhysicResist = 80, MagicResist = 50, Capacity = 200, Speed = 15, Consumption = 20 };
                         context.UnitStatistics.Add( cyclopStatistics );
+                        Requirement cyclopRequirement = new Requirement { BuildingName = BuildingName.barrack, Number = 2 };
+                        context.Requirements.Add( cyclopRequirement );
 
                         cyclop = new Unit
                         {
@@ -205,10 +208,11 @@ namespace ITI.SkyLord
                             UnitDamageType = UnitDamageType.magical,
                             UnitCost = cyclopCost,
                             UnitStatistics = cyclopStatistics,
-                            Duration = 120
+                            Duration = 120,
+                            IsModel = true,
+                            Requirements = new List<Requirement> { cyclopRequirement }
                         };
                         context.Units.Add( cyclop );
-                        //context.SaveChanges();
                     }
                     if( gobelin == null )
                     {
@@ -225,10 +229,10 @@ namespace ITI.SkyLord
                             UnitDamageType = UnitDamageType.physical,
                             UnitCost = gobelinCost,
                             UnitStatistics = gobelinStatistics,
-                            Duration = 10
+                            Duration = 10,
+                            IsModel = true
                         };
                         context.Units.Add( gobelin );
-                        //context.SaveChanges();
                     }
                     if( guard == null )
                     {
@@ -245,10 +249,10 @@ namespace ITI.SkyLord
                             UnitDamageType = UnitDamageType.physical,
                             UnitCost = guardCost,
                             UnitStatistics = guardStatistics,
-                            Duration = 90
+                            Duration = 90,
+                            IsModel = true
                         };
                         context.Units.Add( guard );
-                        //context.SaveChanges();
                     }
                     if( necromancer == null )
                     {
@@ -265,10 +269,10 @@ namespace ITI.SkyLord
                             UnitDamageType = UnitDamageType.magical,
                             UnitCost = necromancerCost,
                             UnitStatistics = necromancerStatistics,
-                            Duration = 90
+                            Duration = 90,
+                            IsModel = true
                         };
                         context.Units.Add( necromancer );
-                        //context.SaveChanges();
                     }
                     if( troll == null )
                     {
@@ -285,10 +289,10 @@ namespace ITI.SkyLord
                             UnitDamageType = UnitDamageType.physical,
                             UnitCost = trollCost,
                             UnitStatistics = trollStatistics,
-                            Duration = 150
+                            Duration = 150,
+                            IsModel = true
                         };
                         context.Units.Add( troll );
-                        //context.SaveChanges();
                     }
                     if( warrior == null )
                     {
@@ -305,7 +309,8 @@ namespace ITI.SkyLord
                             UnitDamageType = UnitDamageType.physical,
                             UnitCost = warriorCost,
                             UnitStatistics = warriorStatistics,
-                            Duration = 70
+                            Duration = 70,
+                            IsModel = true
                         };
                         context.Units.Add( warrior );
                         context.SaveChanges();

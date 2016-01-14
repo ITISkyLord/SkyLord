@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ITI.SkyLord.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,9 +15,9 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
 
         public EventPackManager(SetupContext ctx)
         {
-            ArmyManager = new ArmyManager(ctx);
+            ArmyManager = new ArmyManager(ctx, new BonusManager( ctx ) );
             var LevelManager = new LevelManager(ctx);
-            BuildingManager = new BuildingManager(ctx,LevelManager);
+            BuildingManager = new BuildingManager(ctx,LevelManager, new RessourceManager( ctx ) );
 
             //LevelManager = new LevelManager(ctx);
             //TechnologyManager = new TechnologyManager(ctx);
