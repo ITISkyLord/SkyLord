@@ -6823,7 +6823,6 @@ body {
   margin-left: auto;
   padding-left: 15px;
   padding-right: 15px;
-  border: none;
   border-radius: 1px;
   background-color: "white";
   height: auto;
@@ -6852,11 +6851,11 @@ body {
 }
 .SkyLordContainer .SkyLordMainRow .SkylordSideBar {
   position: relative;
+  float: left;
   width: 8.33333333%;
   min-height: 1px;
   padding-left: 15px;
   padding-right: 15px;
-  border: none;
   border-radius: 1px;
   background-color: "white";
   height: auto;
@@ -6864,12 +6863,10 @@ body {
   font-size: 12px;
   height: 100%;
   width: auto;
-  float: left;
   padding: 0;
   margin: 0;
   background-image: url("../images/site_side.png");
-  /*/*background-repeat: no-repeat;
-            background-size: 100% 100%;*/
+  background-size: 100% 100%;
 }
 @media (min-width: 1200px) {
   .SkyLordContainer .SkyLordMainRow .SkylordSideBar {
