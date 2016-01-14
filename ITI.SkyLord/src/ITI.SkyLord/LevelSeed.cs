@@ -11,7 +11,7 @@ namespace ITI.SkyLord
 
         public void SeedBarrackLevels()
         {
-            using ( LevelContext context = new LevelContext() )
+            using ( SetupContext context = new SetupContext() )
             {
                 // Add BarrackCosts
                 Ressource barrackLevel1Cost = AddRessource( context, 100, 50, 0, 0 );
@@ -36,9 +36,12 @@ namespace ITI.SkyLord
                 Requirement barrackLevel9Requirement = AddBuildingRequirement( context, BuildingName.barrack, 8 );
                 Requirement barrackLevel10Requirement = AddBuildingRequirement( context, BuildingName.barrack, 9 );
 
+                //Add Bonuses
+                BonusBuildingOnUnit monsterDurationBonus = AddBonusBuildingOnUnit( context, BonusType.duration, UnitType.monster, 10 );
+
                 // Set up Levels
                 BuildingLevel barrackLevel1 = AddBuildingLevel( context, BuildingName.barrack, 1, barrackLevel1Cost, null);
-                BuildingLevel barrackLevel2 = AddBuildingLevel( context, BuildingName.barrack, 2, barrackLevel2Cost, CreateRequirementList( barrackLevel2Requirement) );
+                BuildingLevel barrackLevel2 = AddBuildingLevel( context, BuildingName.barrack, 2, barrackLevel2Cost, CreateRequirementList( barrackLevel2Requirement), CreateBonusBuildingList( monsterDurationBonus ) );
                 BuildingLevel barrackLevel3 = AddBuildingLevel( context, BuildingName.barrack, 3, barrackLevel3Cost, CreateRequirementList( barrackLevel3Requirement) );
                 BuildingLevel barrackLevel4 = AddBuildingLevel( context, BuildingName.barrack, 4, barrackLevel3Cost, CreateRequirementList( barrackLevel4Requirement ) );
                 BuildingLevel barrackLevel5 = AddBuildingLevel( context, BuildingName.barrack, 5, barrackLevel5Cost, CreateRequirementList( barrackLevel5Requirement ) );
@@ -54,7 +57,7 @@ namespace ITI.SkyLord
 
         public void SeedTowerLevels()
         {
-            using ( LevelContext context = new LevelContext() )
+            using ( SetupContext context = new SetupContext() )
             {
                 // Add towerCosts
                 Ressource towerLevel1Cost = AddRessource( context, 100, 50, 0, 0 );
@@ -97,7 +100,7 @@ namespace ITI.SkyLord
 
         public void SeedWoodLevels()
         {
-            using ( LevelContext context = new LevelContext() )
+            using ( SetupContext context = new SetupContext() )
             {
                 // Add woodFieldCosts
                 Ressource woodFieldLevel1Cost = AddRessource( context, 100, 50, 0, 0 );
@@ -140,7 +143,7 @@ namespace ITI.SkyLord
 
         public void SeedCristalLevels()
         {
-            using ( LevelContext context = new LevelContext() )
+            using ( SetupContext context = new SetupContext() )
             {
                 // Add cristalFieldCosts
                 Ressource cristalFieldLevel1Cost = AddRessource( context, 100, 50, 0, 0 );
@@ -182,7 +185,7 @@ namespace ITI.SkyLord
         }
         public void SeedMetalLevels()
         {
-            using ( LevelContext context = new LevelContext() )
+            using ( SetupContext context = new SetupContext() )
             {
                 // Add metalFieldCosts
                 Ressource metalFieldLevel1Cost = AddRessource( context, 100, 50, 0, 0 );
@@ -225,7 +228,7 @@ namespace ITI.SkyLord
 
         public void SeedMagicLevels()
         {
-            using ( LevelContext context = new LevelContext() )
+            using ( SetupContext context = new SetupContext() )
             {
                 // Add magicFieldCosts
                 Ressource magicFieldLevel1Cost = AddRessource( context, 100, 50, 0, 0 );
@@ -267,7 +270,7 @@ namespace ITI.SkyLord
         }
         public void SeedInvocationLevels()
         {
-            using ( LevelContext context = new LevelContext() )
+            using ( SetupContext context = new SetupContext() )
             {
                 // Add invocationCosts
                 Ressource invocationLevel1Cost = AddRessource( context, 100, 50, 0, 0 );
@@ -308,7 +311,20 @@ namespace ITI.SkyLord
             }
         }
 
-        BuildingLevel AddBuildingLevel( LevelContext context, BuildingName buildingName, int number, Ressource cost, List<Requirement> requirements )
+        BonusBuildingOnUnit AddBonusBuildingOnUnit ( SetupContext context, BonusType bonusType, UnitType unitType, int modifier )
+        {
+            BonusBuildingOnUnit bonus = new BonusBuildingOnUnit
+            {
+                BonusType = bonusType,
+                Modifier = modifier,
+                TargetUnit = unitType
+            };
+            context.Add( bonus );
+
+            return bonus;
+        }
+
+        BuildingLevel AddBuildingLevel( SetupContext context, BuildingName buildingName, int number, Ressource cost, List<Requirement> requirements )
         {
             BuildingLevel buildingLevel = new BuildingLevel
             {
@@ -320,8 +336,21 @@ namespace ITI.SkyLord
             context.Add( buildingLevel );
             return buildingLevel;
         }
+        BuildingLevel AddBuildingLevel( SetupContext context, BuildingName buildingName, int number, Ressource cost, List<Requirement> requirements, List<BonusBuilding> bonuses )
+        {
+            BuildingLevel buildingLevel = new BuildingLevel
+            {
+                Number = number,
+                BuildingName = buildingName,
+                Cost = cost,
+                Requirements = requirements,
+                BuildingBonuses = bonuses
+            };
+            context.Add( buildingLevel );
+            return buildingLevel;
+        }
 
-        FieldLevel AddFieldLevel( LevelContext context, BuildingName buildingName, int number, Ressource cost, List<Requirement> requirements, int production )
+        FieldLevel AddFieldLevel( SetupContext context, BuildingName buildingName, int number, Ressource cost, List<Requirement> requirements, int production )
         {
             FieldLevel fieldLevel = new FieldLevel
             {
@@ -335,7 +364,7 @@ namespace ITI.SkyLord
             return fieldLevel;
 
         }
-        Requirement AddBuildingRequirement( LevelContext context, BuildingName buildingName, int number )
+        Requirement AddBuildingRequirement( SetupContext context, BuildingName buildingName, int number )
         {
             Requirement requirement = new Requirement
             {
@@ -356,7 +385,17 @@ namespace ITI.SkyLord
             return requirements;
         }
 
-        Ressource AddRessource( LevelContext context, int wood, int metal, int cristal, int magic )
+        List<BonusBuilding> CreateBonusBuildingList( params BonusBuilding[ ] args )
+        {
+            List<BonusBuilding> bonuses = new List<BonusBuilding>();
+            foreach ( BonusBuilding b in args )
+            {
+                bonuses.Add( b );
+            }
+            return bonuses;
+        }
+
+        Ressource AddRessource( SetupContext context, int wood, int metal, int cristal, int magic )
         {
             Ressource ressource = new Ressource {
                 Wood = wood,
@@ -368,7 +407,7 @@ namespace ITI.SkyLord
             return ressource;
         }
 
-        Ressource AddRessourceTimes2( LevelContext context, Ressource initialRessource )
+        Ressource AddRessourceTimes2( SetupContext context, Ressource initialRessource )
         {
             Ressource multipliedRessoure = Multiplyressource( initialRessource, 2 );
             context.Add( multipliedRessoure );
