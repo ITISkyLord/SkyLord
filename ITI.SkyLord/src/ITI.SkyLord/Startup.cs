@@ -96,7 +96,6 @@ namespace ITI.SkyLord
             // Add the following to the request pipeline only in development environment.
             if( env.IsDevelopment() )
             {
-                app.UseBrowserLink();
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
             }
@@ -104,6 +103,11 @@ namespace ITI.SkyLord
             {
                 // Add Error handling middleware which catches all application specific errors and
                 // sends the request to the following path or controller action.
+
+                // TODO : Enlever cette ligne après hein :D
+                app.UseDeveloperExceptionPage();
+                app.UseDatabaseErrorPage();
+
                 app.UseExceptionHandler( "/Home/Error" );
             }
 

@@ -90,7 +90,9 @@ namespace ITI.SkyLord
             {
                 if ( buildingName != BuildingName.none )
                 {
-                    availableBuildings.Add( new Building { BuildingName = buildingName, Name = BuildingNameToName( buildingName ) } );
+                    var firstLevel = CurrentContext.BuildingLevels.Include(l => l.Cost).Where(l => l.BuildingName == buildingName && l.Number == 1).SingleOrDefault();
+
+                    availableBuildings.Add( new Building { BuildingName = buildingName, Name = BuildingNameToName( buildingName ), Level= firstLevel} );
                 }
             }
             return availableBuildings;

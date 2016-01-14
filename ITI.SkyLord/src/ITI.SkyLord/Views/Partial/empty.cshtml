@@ -1,0 +1,28 @@
+﻿@model ITI.SkyLord.ViewModel.Partial.BuildingPartialViewModel
+
+<h2>Terrain vierge</h2>
+
+<p>Choisissez le bâtiment que vous voulez construire :</p>
+
+<div class="row">
+    @foreach (var t in Model.AvailableBuildings)
+    {
+        <div class="col-lg-4" style="margin-top: 20px; height: 100px">
+            @{Write(t.Name);}
+
+            <br />
+            @if (t.Level != null)
+            {
+
+                Write(" Bois : " + t.Level.Cost.Wood + " Cristal :  " + t.Level.Cost.Cristal + " Metal : " + t.Level.Cost.Metal + " Magic : " + t.Level.Cost.Magic);
+            }
+            else
+            {
+                Write(" Pas de Level disponible");
+            }
+            <br />
+            <button>Construire</button>
+        </div>
+    }
+
+</div>
