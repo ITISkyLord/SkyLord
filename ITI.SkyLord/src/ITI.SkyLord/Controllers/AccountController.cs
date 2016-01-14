@@ -74,17 +74,17 @@ namespace ITI.SkyLord.Models.Entity_Framework.Controllers
                 if (result.IsLockedOut)
                 {
                     _logger.LogWarning(2, "User account locked out.");
-                    return RedirectToAction("Index", "Home", model);
+                    return RedirectToAction("Index", "Home");
                 }
                 else
                 {
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                    return RedirectToAction("Index", "Home", model);
+                    return RedirectToAction("Index", "Home");
                 }
             }
 
             // If we got this far, something failed, redisplay form
-            return RedirectToAction("Index", "Home", model);
+            return RedirectToAction("Index", "Home");
         }
 
         //
@@ -151,7 +151,7 @@ namespace ITI.SkyLord.Models.Entity_Framework.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            return RedirectToAction("Index", "Home", model);
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]
