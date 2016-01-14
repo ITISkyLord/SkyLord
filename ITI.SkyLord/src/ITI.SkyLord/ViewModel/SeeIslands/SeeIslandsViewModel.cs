@@ -12,9 +12,13 @@ namespace ITI.SkyLord.ViewModel.SeeIslands
         public List<Building> Buildings { get; set; }
         public Dictionary<string, Building> DicoBuildings { get; set; }
         public Dictionary<int, Ressource> NextLevelCosts { get; set; }
-        public List<Building> AvailableBuildings { get; set; }
         public SelectList AvailableConstructionBuildings { get; set; }
         public BuildingName TargetBuilding { get; set; }
         public int Position { get; set; }
+
+        // For EmptyBuilding
+        public List<Building> AvailableBuildings { get; set; }
+
+
     }
 }

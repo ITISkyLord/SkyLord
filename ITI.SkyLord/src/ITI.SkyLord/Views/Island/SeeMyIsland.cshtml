@@ -191,7 +191,7 @@
 
             <div class="templatebuilding" id="ui_@i" buildingname="@name" style="display:none;">
                 @{
-                    BuildingPartialViewModel partialModel = new BuildingPartialViewModel() { CurrentBuilding = myBuilding };
+                    BuildingPartialViewModel partialModel = new BuildingPartialViewModel() { CurrentBuilding = myBuilding, Position = i, AvailableBuildings = Model.AvailableBuildings };
                     Write(Html.Partial("~/Views/Partial/" + name + ".cshtml", partialModel));
                 }
             </div>

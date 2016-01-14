@@ -7,7 +7,9 @@ namespace ITI.SkyLord.ViewModel.Partial
 {
     public class BuildingPartialViewModel
     {
+        public List<Building> AvailableBuildings { get; set; }
         public Building CurrentBuilding { get; set; }
+        public int Position { get; set; }
 
     }
 }
