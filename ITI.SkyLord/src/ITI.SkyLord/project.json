@@ -49,7 +49,7 @@
     "commands": {
         "web": "Microsoft.AspNet.Server.Kestrel",
         "ef": "EntityFramework.Commands",
-        "watch-web": " Microsoft.Dnx.Watcher web --configuration Debug --port 5700 --debug test"
+        "watch-web": " Microsoft.Dnx.Watcher web --configuration Debug"
     },
 
     "frameworks": {

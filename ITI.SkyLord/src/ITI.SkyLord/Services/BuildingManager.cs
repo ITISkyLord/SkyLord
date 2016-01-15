@@ -16,13 +16,11 @@ namespace ITI.SkyLord
 
         private ILevelContext CurrentContext { get; }
         private LevelManager LevelManager { get; }
-        private RessourceManager RessourceManager { get; }
 
-        public BuildingManager( ILevelContext currentContext, LevelManager levelManager, RessourceManager ressourceManager )
+        public BuildingManager( ILevelContext currentContext, LevelManager levelManager )
         {
             CurrentContext = currentContext;
             LevelManager = levelManager;
-            RessourceManager = ressourceManager;
         }
 
         /// <summary>
