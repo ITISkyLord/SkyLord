@@ -71,7 +71,7 @@ namespace ITI.SkyLord.Services
             switch ( bonus.BonusType )
             {
                 case BonusType.army_attack:
-                    unit.UnitStatistics.Attack = unit.UnitStatistics.Attack * ( bonus.Modifier / 100 );
+                    unit.UnitStatistics.Attack += unit.UnitStatistics.Attack * ( bonus.Modifier / 100 );
                     break;
                 case BonusType.army_magicalDefense:
                     unit.UnitStatistics.MagicResist += unit.UnitStatistics.MagicResist * ( bonus.Modifier / 100 );
@@ -130,6 +130,11 @@ namespace ITI.SkyLord.Services
         }
         #endregion
 
+        #region BuildingBonuses
+
+        // IF BuildingName = BuildingName.none ==> touche tous les buildings !!
+
+        #endregion
         List<Island> GetAllIslandsArmiesFromPlayer( long playerId )
         {
             return CurrentContext.Players
