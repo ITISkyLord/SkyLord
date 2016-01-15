@@ -18,8 +18,8 @@ html, body {
     border-radius: 0;
 
     .navbar-nav li input[type=text] {
-        padding: 5px 15px 5px 15px;
-        line-height:40px;
+        padding: 2px 10px 2px 10px;
+        line-height: 40px;
     }
 
     li a, li button[type=submit], .navbar-brand {
@@ -79,16 +79,24 @@ html, body {
     }
 }
 
+.ui-autocomplete {
+    background-image: url("../images/site_ressource.png");
+    width: 100%;
+    height: 10px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    color: #825847;
+    font-size: 17px;
+    font-weight: bold;
+}
+
 .jumbotron {
     margin: 0;
-    margin-top:33px;
+    margin-top: 29px;
     background-image: url("../images/site_ressource.png");
     background-size: cover;
-    /*overflow: hidden;
-    padding-top: 45px;
-    padding-bottom: 20px;*/
     background-repeat: no-repeat;
-    padding:74px;
+    padding: 74px;
 }
 
 .SkyLordContainer {
@@ -189,7 +197,8 @@ html, body {
                     .Col(2);
                     .Section(green);
                 }
-            }*/
+            }
+        }*/
         }
     }
 }
@@ -209,4 +218,21 @@ footer {
     li a:hover {
         color: #825847;
     }
+}
+
+.profilContainer {
+    .container-fluid;
+    .Section();
+    height: 100%;
+    .Image(url("../images/sitecarton.png"));
+
+    blockquote {
+        border-left: none;
+    }
+}
+
+.form-control {
+    text-align: center;
+    font-weight: bold;
+    font-style: italic;
 }

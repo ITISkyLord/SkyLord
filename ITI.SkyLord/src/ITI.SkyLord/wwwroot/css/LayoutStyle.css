@@ -6463,7 +6463,9 @@ button.close {
 .SkyLordContainer:before,
 .SkyLordContainer:after,
 .SkyLordContainer .SkyLordMainRow:before,
-.SkyLordContainer .SkyLordMainRow:after {
+.SkyLordContainer .SkyLordMainRow:after,
+.profilContainer:before,
+.profilContainer:after {
   content: " ";
   display: table;
 }
@@ -6484,7 +6486,8 @@ button.close {
 .modal-header:after,
 .modal-footer:after,
 .SkyLordContainer:after,
-.SkyLordContainer .SkyLordMainRow:after {
+.SkyLordContainer .SkyLordMainRow:after,
+.profilContainer:after {
   clear: both;
 }
 .center-block {
@@ -6755,7 +6758,7 @@ body {
   border-radius: 0;
 }
 .navbar .navbar-nav li input[type=text] {
-  padding: 5px 15px 5px 15px;
+  padding: 2px 10px 2px 10px;
   line-height: 40px;
 }
 .navbar li a,
@@ -6808,14 +6811,21 @@ body {
   top: 0px;
   left: 0px;
 }
+.ui-autocomplete {
+  background-image: url("../images/site_ressource.png");
+  width: 100%;
+  height: 10px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  color: #825847;
+  font-size: 17px;
+  font-weight: bold;
+}
 .jumbotron {
   margin: 0;
-  margin-top: 33px;
+  margin-top: 29px;
   background-image: url("../images/site_ressource.png");
   background-size: cover;
-  /*overflow: hidden;
-    padding-top: 45px;
-    padding-bottom: 20px;*/
   background-repeat: no-repeat;
   padding: 74px;
 }
@@ -6966,7 +6976,8 @@ body {
                     .Col(2);
                     .Section(green);
                 }
-            }*/
+            }
+        }*/
 }
 @media (min-width: 1200px) {
   .SkyLordContainer .SkyLordMainRow .PageContent {
@@ -7000,4 +7011,38 @@ footer a {
 }
 footer li a:hover {
   color: #825847;
+}
+.profilContainer {
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 1px;
+  background-color: "white";
+  height: auto;
+  width: auto;
+  height: 100%;
+  background-image: url("../images/sitecarton.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+.profilContainer > .navbar-header,
+.profilContainer > .navbar-collapse {
+  margin-right: -15px;
+  margin-left: -15px;
+}
+@media (min-width: 768px) {
+  .profilContainer > .navbar-header,
+  .profilContainer > .navbar-collapse {
+    margin-right: 0;
+    margin-left: 0;
+  }
+}
+.profilContainer blockquote {
+  border-left: none;
+}
+.form-control {
+  text-align: center;
+  font-weight: bold;
+  font-style: italic;
 }
