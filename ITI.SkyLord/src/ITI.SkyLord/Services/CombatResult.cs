@@ -4,12 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ITI.SkyLord.Models.Entity_Framework.Contexts;
+using ITI.SkyLord.Models.Entity_Framework.Entites.Events;
+using ITI.SkyLord.Services;
 
 namespace ITI.SkyLord
 {
     public class CombatResult
     {
         Ressource _pillagedRessources;
+        Message _combatReportWinner;
+        Message _combatReportLooser;
+        Ressource _winningRessource;
+        Ressource _loosingRessource;
         Army _winningArmy;
         Army _loosingArmy;
         CombatManager _combatManager;
@@ -25,6 +31,23 @@ namespace ITI.SkyLord
             }
         }
 
+        public Message CombatReportWinner
+        {
+            get
+            {
+                return _combatReportWinner;
+            }
+        }
+        public Message CombatReportLooser
+        {
+            get
+            {
+                return _combatReportLooser;
+            }
+        }
+
+        private SetupContext _context { get; set; }
+
         public Army WinningArmy
         {
             get
@@ -32,7 +55,6 @@ namespace ITI.SkyLord
                 return _winningArmy;
             }
         }
-
         public Army LoosingArmy
         {
             get
@@ -51,31 +73,86 @@ namespace ITI.SkyLord
         }
         #endregion
 
-        public CombatResult( Army winningArmy, Army loosingArmy, CombatManager cm )
+        public CombatResult( Army winningArmy, Army loosingArmy, CombatManager cm, ArmyEvent ae, SetupContext ctx )
         {
             if( winningArmy == null ) throw new ArgumentNullException( "Winning Army", "The winning army cannot be null" );
             if( loosingArmy == null ) throw new ArgumentNullException( "Loosing Army", "The loosing army cannot be null" );
-
+            _context = ctx;
             _combatManager = cm;
+            EventPackManager epm = new EventPackManager(ctx);
+            _winningRessource = RessourceManager.CloneRessource( winningArmy.Island.AllRessources );
+            _loosingRessource = RessourceManager.CloneRessource( loosingArmy.Island.AllRessources );
+
 
             this._winningArmy = winningArmy;
             this._loosingArmy = loosingArmy;
             if( winningArmy.ArmyState == ArmyState.movement )
             {
                 _pillagedRessources = CalculatePillagedResult();
-
-                //Island isl1 = cm.ArmyManager.CurrentContext.Islands.Where(i=> i.IslandId == winningArmy.Island.IslandId).SingleOrDefault();
-                //Island isl2 = cm.ArmyManager.CurrentContext.Islands.Where(i=> i.IslandId == loosingArmy.Island.IslandId).SingleOrDefault();
-                //isl1.AllRessources = _winningArmy.Island.AllRessources;
-                //isl2.AllRessources = _loosingArmy.Island.AllRessources;
-
-                //cm.ArmyManager.CurrentContext.SaveChanges();
+                if( _pillagedRessources == null )
+                    _pillagedRessources = new Ressource();
 
             }
             else
                 _pillagedRessources = null;
-        }
 
+            //ae.PillagedRessources = new Ressource() { Cristal = 100, Magic = 100, Metal = 100, Wood = 100 };
+
+            ctx.Ressources.Add( _pillagedRessources );
+            ae.PillagedRessources = _pillagedRessources;
+            ctx.SaveChanges();
+
+            #region CombatReport
+            string coreMessageWinner = "";
+            string coreMessageLooser = "";
+
+            if( _pillagedRessources == null && winningArmy.ArmyState == ArmyState.movement )
+            {
+                coreMessageWinner = _winningArmy.Island.Name + " (vous) a gagné contre " + _loosingArmy.Island.Name + ".\n "
+                + _winningArmy.Island.Name + " n'a pillé aucune ressource."
+                + _loosingArmy.Island.Name + " a perdu toutes ses troupes et " + _winningArmy.Island.Name + " (vous) a perdu : ";
+
+                coreMessageLooser = _loosingArmy.Island.Name + " (vous) a perdu contre " + _winningArmy.Island.Name + ".\n Mais "
+                + _winningArmy.Island.Name + " n'a pillé aucune ressource."
+                + " Vous avez perdu toutes vos troupes et " + _winningArmy.Island.Name + " a perdu : ";
+            }
+            else if( winningArmy.ArmyState == ArmyState.movement )
+            {
+                coreMessageWinner = _winningArmy.Island.Name + " a gagné contre " + _loosingArmy.Island.Name + ".\n"
+                + _winningArmy.Island.Name + " a pillé " + _pillagedRessources.Wood + " bois, " + _pillagedRessources.Metal + " métal, " + _pillagedRessources.Cristal + " cristal et " + _pillagedRessources.Wood + " magie."
+                + _loosingArmy.Island.Name + " a perdu toutes ses troupes en défenses et " + _winningArmy.Island.Name + " a perdu : ";
+
+                coreMessageLooser = _loosingArmy.Island.Name + " a perdu contre " + _winningArmy.Island.Name + ".\n"
+                + _winningArmy.Island.Name + " a pillé " + _pillagedRessources.Wood + " bois, " + _pillagedRessources.Metal + " métal, " + _pillagedRessources.Cristal + " cristal et " + _pillagedRessources.Wood + " magie."
+                + _loosingArmy.Island.Name + " a perdu toutes ses troupes en défenses et " + _winningArmy.Island.Name + " a perdu : ";
+            }
+            else
+            {
+                coreMessageWinner = _winningArmy.Island.Name + " (vous) a gagné contre " + _loosingArmy.Island.Name + ".\n "
+                + _loosingArmy.Island.Name + " a perdu toutes ses troupes et " + _winningArmy.Island.Name + " (vous) a perdu : ";
+
+                coreMessageLooser = _loosingArmy.Island.Name + " (vous) a perdu contre " + _winningArmy.Island.Name + ".\n "
+                 + _loosingArmy.Island.Name + " a perdu toutes ses troupes et " + _winningArmy.Island.Name + " (vous) a perdu : ";
+            }
+
+
+            foreach( KeyValuePair<string, int> kvp in cm.Loss )
+            {
+                coreMessageWinner += " \n" + kvp.Value + " " + kvp.Key + " sur " + _winningArmy.Regiments.Where(a => a.Unit.Name == kvp.Key).Select( b => b.Number.ToString()).First();
+            }
+
+            coreMessageWinner += ".";
+            _combatReportWinner = new Message()
+            {
+                MessageObject = _winningArmy.Island.Name + "a gagné contre " + _loosingArmy.Island.Name + ".",
+                Read = false,
+                isCombatReport = true,
+                Sender = _loosingArmy.Island.Owner,
+                Receiver = _winningArmy.Island.Owner,
+                CoreMessage = coreMessageWinner
+            }; 
+            #endregion
+        }
         private Ressource CalculatePillagedResult()
         {
             int eachCapacityPillaged = 0;
@@ -90,48 +167,40 @@ namespace ITI.SkyLord
             ressources = new Ressource { Wood = eachCapacityPillaged, Metal = eachCapacityPillaged, Cristal = eachCapacityPillaged, Magic = eachCapacityPillaged };
 
             Ressource newRessources = recursivite();
-            if( ressources == newRessources )
+            if( ressources.Equals( newRessources ) )
             {
-                _winningArmy.Island.AllRessources.ChangeRessources( ressources );
-                _loosingArmy.Island.AllRessources.ChangeRessources( ressources, false );
+                //   _context.SaveChanges();
+                RessourceManager.RemoveRessource( _loosingArmy.Island.AllRessources, _loosingRessource );
+               // _loosingRessource.ChangeRessources( ressources, false );
+                _loosingArmy.Island.AllRessources = _loosingRessource;
             }
             else if( _flag > 0 )
             {
 
                 eachCapacityPillaged = _capacityOfPillaged / _flag;
-                if( eachCapacityPillaged < _loosingArmy.Island.AllRessources.Wood )
+                if( eachCapacityPillaged < _loosingRessource.Wood )
                 {
-                    _loosingArmy.Island.AllRessources.AddWood( -eachCapacityPillaged );
-                    _winningArmy.Island.AllRessources.AddWood( eachCapacityPillaged );
+                    _loosingRessource.AddWood( -eachCapacityPillaged );
+                    _winningRessource.AddWood( eachCapacityPillaged );
                 }
-                if( eachCapacityPillaged < _loosingArmy.Island.AllRessources.Metal )
+                if( eachCapacityPillaged < _loosingRessource.Metal )
                 {
-                    _loosingArmy.Island.AllRessources.AddMetal( -eachCapacityPillaged );
-                    _winningArmy.Island.AllRessources.AddMetal( eachCapacityPillaged );
+                    _loosingRessource.AddMetal( -eachCapacityPillaged );
+                    _winningRessource.AddMetal( eachCapacityPillaged );
                 }
-                if( eachCapacityPillaged < _loosingArmy.Island.AllRessources.Cristal )
+                if( eachCapacityPillaged < _loosingRessource.Cristal )
                 {
-                    _loosingArmy.Island.AllRessources.AddCristal( -eachCapacityPillaged );
-                    _winningArmy.Island.AllRessources.AddCristal( eachCapacityPillaged );
+                    _loosingRessource.AddCristal( -eachCapacityPillaged );
+                    _winningRessource.AddCristal( eachCapacityPillaged );
                 }
-                if( eachCapacityPillaged < _loosingArmy.Island.AllRessources.Magic )
+                if( eachCapacityPillaged < _loosingRessource.Magic )
                 {
-                    _loosingArmy.Island.AllRessources.AddMagic( -eachCapacityPillaged );
-                    _winningArmy.Island.AllRessources.AddMagic( eachCapacityPillaged );
+                    _loosingRessource.AddMagic( -eachCapacityPillaged );
+                    _winningRessource.AddMagic( eachCapacityPillaged );
                 }
+
+                ressources = null;
             }
-
-            //Console.WriteLine( "Après : _loosingArmy wood : " + _loosingArmy.Island.AllRessources.Wood );
-            //Console.WriteLine( "Après : _loosingArmy metal : " + _loosingArmy.Island.AllRessources.Metal );
-            //Console.WriteLine( "Après : _loosingArmy cristal : " + _loosingArmy.Island.AllRessources.Cristal );
-            //Console.WriteLine( "Après : _loosingArmy magic : " + _loosingArmy.Island.AllRessources.Magic );
-            //Console.WriteLine();
-            //Console.WriteLine( "Après : _winningArmy wood : " + _winningArmy.Island.AllRessources.Wood );
-            //Console.WriteLine( "Après : _winningArmy metal : " + _winningArmy.Island.AllRessources.Metal );
-            //Console.WriteLine( "Après : _winningArmy cristal : " + _winningArmy.Island.AllRessources.Cristal );
-            //Console.WriteLine( "Après : _winningArmy magic : " + _winningArmy.Island.AllRessources.Magic );
-            //Console.WriteLine();
-
             return ressources;
 
         }
@@ -142,66 +211,65 @@ namespace ITI.SkyLord
             Ressource ressources = new Ressource { Wood = eachCapacityPillaged, Metal = eachCapacityPillaged, Cristal = eachCapacityPillaged, Magic = eachCapacityPillaged };
 
             int rest = 0;
-            if( ressources.Wood > _loosingArmy.Island.AllRessources.Wood && _loosingArmy.Island.AllRessources.Wood > 1 )
+            if( ressources.Wood > _loosingRessource.Wood && _loosingRessource.Wood > 1 )
             {
                 rest = FindRest( "wood", ressources );
-                _winningArmy.Island.AllRessources.AddWood( _loosingArmy.Island.AllRessources.Wood );
-                _loosingArmy.Island.AllRessources.AddWood( -( _loosingArmy.Island.AllRessources.Wood ) );
+                _winningRessource.AddWood( _loosingRessource.Wood );
+                _loosingRessource.AddWood( -( _loosingRessource.Wood ) );
                 _capacityOfPillaged += rest;
                 ressources = recursivite();
                 _flag -= 1;
             }
-            if( ressources.Metal > _loosingArmy.Island.AllRessources.Metal && _loosingArmy.Island.AllRessources.Metal > 1 )
+            if( ressources.Metal > _loosingRessource.Metal && _loosingRessource.Metal > 1 )
             {
                 rest = FindRest( "metal", ressources );
-                _winningArmy.Island.AllRessources.AddMetal( _loosingArmy.Island.AllRessources.Metal );
-                _loosingArmy.Island.AllRessources.AddMetal( -( _loosingArmy.Island.AllRessources.Metal ) );
+                _winningRessource.AddMetal( _loosingRessource.Metal );
+                _loosingRessource.AddMetal( -( _loosingRessource.Metal ) );
                 _capacityOfPillaged += rest;
                 ressources = recursivite();
                 _flag -= 1;
 
             }
-            if( ressources.Cristal > _loosingArmy.Island.AllRessources.Cristal && _loosingArmy.Island.AllRessources.Cristal > 1 )
+            if( ressources.Cristal > _loosingRessource.Cristal && _loosingRessource.Cristal > 1 )
             {
                 rest = FindRest( "cristal", ressources );
-                _winningArmy.Island.AllRessources.AddCristal( _loosingArmy.Island.AllRessources.Cristal );
-                _loosingArmy.Island.AllRessources.AddCristal( -( _loosingArmy.Island.AllRessources.Cristal ) );
+                _winningRessource.AddCristal( _loosingRessource.Cristal );
+                _loosingRessource.AddCristal( -( _loosingRessource.Cristal ) );
                 _capacityOfPillaged += rest;
                 ressources = recursivite();
                 _flag -= 1;
             }
-            if( ressources.Magic > _loosingArmy.Island.AllRessources.Magic && _loosingArmy.Island.AllRessources.Magic > 1 )
+            if( ressources.Magic > _loosingRessource.Magic && _loosingRessource.Magic > 1 )
             {
                 rest = FindRest( "magic", ressources );
-                _winningArmy.Island.AllRessources.AddMagic( _loosingArmy.Island.AllRessources.Magic );
-                _loosingArmy.Island.AllRessources.AddMagic( -( _loosingArmy.Island.AllRessources.Magic ) );
+                _winningRessource.AddMagic( _loosingRessource.Magic );
+                _loosingRessource.AddMagic( -( _loosingRessource.Magic ) );
                 _capacityOfPillaged += rest;
                 ressources = recursivite();
                 _flag -= 1;
             }
             return ressources;
         }
-
         private int FindRest( string ressourceName, Ressource ressource )
         {
             int rest = 0;
             if( ressourceName == "wood" )
             {
-                rest = (_loosingArmy.Island.AllRessources.Wood - ressource.Wood);
+                rest = (_loosingRessource.Wood - ressource.Wood);
             }
             else if( ressourceName == "metal" )
             {
-                rest = (_loosingArmy.Island.AllRessources.Metal - ressource.Metal);
+                rest = (_loosingRessource.Metal - ressource.Metal);
 
             }
             else if( ressourceName == "cristal" )
             {
-                rest = (_loosingArmy.Island.AllRessources.Cristal - ressource.Cristal);
+                rest = (_loosingRessource.Cristal - ressource.Cristal);
 
             }
             else if( ressourceName == "magic" )
             {
-                rest = (_loosingArmy.Island.AllRessources.Magic - ressource.Magic);
+                rest = (_loosingRessource.Magic - ressource.Magic);
             }
 
             return -rest;

@@ -17,7 +17,7 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
         {
             ArmyManager = new ArmyManager(ctx, new BonusManager( ctx ) );
             var LevelManager = new LevelManager(ctx);
-            BuildingManager = new BuildingManager(ctx,LevelManager);
+            BuildingManager = new BuildingManager(ctx,LevelManager );
 
             //LevelManager = new LevelManager(ctx);
             //TechnologyManager = new TechnologyManager(ctx);

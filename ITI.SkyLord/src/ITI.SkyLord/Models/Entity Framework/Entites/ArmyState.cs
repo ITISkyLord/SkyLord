@@ -9,6 +9,7 @@ namespace ITI.SkyLord
     {
         defense,
         movement,
-        supporting
+        supporting,
+        obsolete
     }
 }

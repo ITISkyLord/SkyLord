@@ -19,6 +19,10 @@ namespace ITI.SkyLord.ViewModel.SeeIslands
         // For EmptyBuilding
         public List<Building> AvailableBuildings { get; set; }
 
+        // For InvocationBuilding
+        public Army CurrentArmy { get; set; }
+        public List<Unit> AllUnits { get; set; }
+        public List<Unit> AvailableUnit { get; set; }
 
     }
 }

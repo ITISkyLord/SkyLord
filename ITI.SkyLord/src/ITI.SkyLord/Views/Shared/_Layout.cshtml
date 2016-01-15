@@ -18,7 +18,6 @@
     <environment names="Staging,Production">
         <link rel="stylesheet" type="text/css" href="~/css/SkyLord.css" />
     </environment>
-    <a asp-controller="Island" asp-action="OverView" asp-route-islandId="@Model.Layout.IslandId">Vue d'ensemble</a>
 
     <environment names="Development">
         <!-- Quand on est en développement -->
@@ -110,7 +109,7 @@
     <div class="SkyLordContainer">
         <div class="SkyLordMainRow">
             <div class="SkylordSideBar">
-                <a asp-controller="Home" asp-action="Index" asp-route-islandId="@Model.Layout.IslandId">Vue d'ensemble</a>
+                <a asp-controller="Island" asp-action="OverView" asp-route-islandId="@Model.Layout.IslandId">Vue d'ensemble</a>
                 <a asp-controller="World" asp-action="Index" asp-route-islandId="@Model.Layout.IslandId">Carte du monde</a>
                 <ul>
                     <li><a asp-controller="Island" asp-action="SeeMyIsland">Capitale</a></li>
