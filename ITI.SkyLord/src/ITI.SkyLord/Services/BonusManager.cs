@@ -17,57 +17,99 @@ namespace ITI.SkyLord.Services
             CurrentContext = currentContext;
         }
 
-        //public List<Bonus> GetUnitBonuses( Unit unit, long playerId )
-        //{
-        //    List<Island> playerIslands = CurrentContext.Players
-        //        .Include( p => p.Technologies ).ThenInclude( t => t.Level ).ThenInclude( tl => tl.Bonuses )
-        //        .Include( p => p.Islands ).ThenInclude( i => i.Buildings ).ThenInclude( b => b.Level ).ThenInclude( bl => bl.Bonuses )
-        //        .Single( p => p.PlayerId == playerId ).Islands.ToList();
+        #region Units bonuses
+        public List<BonusBuildingOnUnit> GetBonusesBuildingOnUnit( Unit unit, long islandId )
+        {
+            List<Building> builingsOnIsland = CurrentContext.Islands
+                .Include( i => i.Buildings ).ThenInclude( b => b.Level ).ThenInclude( bl => bl.BuildingBonuses )
+                .Single( i => i.IslandId == islandId ).Buildings.ToList();
 
-        //    // Ne pas répéter 2 fois le même bonus (Equality conparer ??)
-        //    List<Building> allBuildings = new List<Building>();
-        //    foreach( List<Building> buildingList in playerIslands.Select( i => i.Buildings) )
-        //    {
-        //        allBuildings.Intersect( buildingList );
-        //    }
+            List<BonusBuildingOnUnit> allBuildingBonusesOnUnit = new List<BonusBuildingOnUnit>();
+            foreach ( List<BonusBuilding> buildingBonusList in builingsOnIsland.Select( b => b.Level.BuildingBonuses ) )
+            {
+                foreach ( BonusBuildingOnUnit bonus in buildingBonusList )
+                {
+                    if ( bonus is BonusBuildingOnUnit )
+                        allBuildingBonusesOnUnit.Add( bonus );
+                }
+            }
+            return allBuildingBonusesOnUnit;
+        }
 
-        //    List<BuildingLevel> allBuildingLevels = new List<BuildingLevel>();
-        //    foreach( BuildingLevel buildingLevel in allBuildingLevels )
-        //    {
-        //        allBuildingLevels.Intersect
-        //    }
-        //}
+        public List<BonusTechnologyOnUnit> GetBonusesTechnologyOnUnit( Unit unit, long playerId )
+        {
+            List<Technology> playerTechnology = CurrentContext.Players.Include( p => p.Technologies ).ThenInclude( t => t.Level ).ThenInclude( tl => tl.TechnologyBonuses )
+                .Single( p => p.PlayerId == playerId ).Technologies.ToList();
 
-        public Unit ResolveUnitBonus( Unit unit, BonusTechnologyOnUnit bonus, long playerId )
+            List<BonusTechnologyOnUnit> allTechnologyBonusesOnUnit = new List<BonusTechnologyOnUnit>();
+            foreach ( List<BonusTechnology> technologyList in playerTechnology.Select( t => t.Level.TechnologyBonuses ) )
+            {
+                foreach ( BonusTechnologyOnUnit bonus in technologyList )
+                {
+                    if ( bonus is BonusTechnologyOnUnit )
+                        allTechnologyBonusesOnUnit.Add( bonus );
+                }
+            }
+            return allTechnologyBonusesOnUnit;
+        }
+
+        public void ResolveAllUnitBonuses( Unit unit, long playerId, long islandId )
+        {
+            foreach ( BonusTechnologyOnUnit bonus in GetBonusesTechnologyOnUnit( unit, playerId ) )
+            {
+                ResolveUnitBonus( unit, bonus );
+            }
+
+            foreach ( BonusBuildingOnUnit bonus in GetBonusesBuildingOnUnit( unit, islandId ) )
+            {
+                ResolveUnitBonus( unit, bonus );
+            }
+        }
+
+        public Unit ResolveUnitBonus( Unit unit, BonusTechnologyOnUnit bonus )
         {
             switch ( bonus.BonusType )
             {
                 case BonusType.army_attack:
-                    unit.UnitStatistics.Attack += bonus.Modifier;
+                    unit.UnitStatistics.Attack = unit.UnitStatistics.Attack * ( bonus.Modifier / 100 );
                     break;
                 case BonusType.army_magicalDefense:
-                    unit.UnitStatistics.MagicResist += bonus.Modifier;
+                    unit.UnitStatistics.MagicResist += unit.UnitStatistics.MagicResist * ( bonus.Modifier / 100 );
                     break;
                 case BonusType.army_physicalDefense:
-                    unit.UnitStatistics.PhysicResist += bonus.Modifier;
+                    unit.UnitStatistics.PhysicResist += unit.UnitStatistics.PhysicResist * ( bonus.Modifier / 100 );
                     break;
-                default :
+                case BonusType.duration:
+                    unit.Duration -= unit.Duration * ( bonus.Modifier / 100 );
+                    break;
+                default:
                     throw new NotImplementedException( "You are trying to handle a not existing type of bonus !" );
             }
 
             return unit;
         }
 
-        public void ResolveAllUnitsBonus( BonusTechnologyOnUnit bonus, long playerId )
+        public Unit ResolveUnitBonus( Unit unit, BonusBuildingOnUnit bonus )
         {
-            List<Island> playerIslands = GetAllIslandsArmiesFromPlayer( playerId );
-
-            List<Unit> unitsToResolve = GetUnitsByUnitType( playerIslands, bonus.TargetUnit );
-
-            foreach( Unit unit in unitsToResolve )
+            switch ( bonus.BonusType )
             {
-                ResolveUnitBonus( unit, bonus, playerId );
+                case BonusType.army_attack:
+                    unit.UnitStatistics.Attack = unit.UnitStatistics.Attack * ( bonus.Modifier / 100 );
+                    break;
+                case BonusType.army_magicalDefense:
+                    unit.UnitStatistics.MagicResist += unit.UnitStatistics.MagicResist * ( bonus.Modifier / 100 );
+                    break;
+                case BonusType.army_physicalDefense:
+                    unit.UnitStatistics.PhysicResist += unit.UnitStatistics.PhysicResist * ( bonus.Modifier / 100 );
+                    break;
+                case BonusType.duration:
+                    unit.Duration -= unit.Duration * ( bonus.Modifier / 100 );
+                    break;
+                default:
+                    throw new NotImplementedException( "You are trying to handle a not existing type of bonus !" );
             }
+
+            return unit;
         }
 
         List<Unit> GetUnitsByUnitType( List<Island> playerIslands, UnitType unitType )
@@ -86,6 +128,7 @@ namespace ITI.SkyLord.Services
 
             return regimentToResolve.Where( r => r.Unit.UnitType == unitType ).Select( r => r.Unit ).ToList();
         }
+        #endregion
 
         List<Island> GetAllIslandsArmiesFromPlayer( long playerId )
         {

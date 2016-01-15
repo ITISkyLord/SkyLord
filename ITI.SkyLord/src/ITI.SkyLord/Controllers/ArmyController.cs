@@ -18,9 +18,18 @@ namespace ITI.SkyLord.Controllers
 {
     public class ArmyController : GenericController
     {
-        public IActionResult Index( long IslandId = 0)
+        public IActionResult Index( long islandId = 0)
         {
-            return View( CreateArmyViewModel( IslandId ) );
+            //
+            // TESTS DE BONUS
+            //
+            //long playerId = SetupContext.GetPlayer( User.GetUserId() ).PlayerId;
+            //BonusManager bonusManager = new BonusManager( SetupContext );
+            //Unit testUnit = SetupContext.Armies.Include( a => a.Island ).Include( a => a.Regiments ).ThenInclude( r => r.Unit ).ThenInclude( u => u.UnitStatistics )
+            //    .Single( a => a.Island.IslandId == islandId ).Regiments.First().Unit;
+
+            //List<BonusBuildingOnUnit> bonuses = bonusManager.GetBonusesBuildingOnUnit( testUnit, islandId );
+            return View( CreateArmyViewModel( islandId ) );
         }
 
         public IActionResult AddUnit( ArmyViewModel model, long islandId = 0 )

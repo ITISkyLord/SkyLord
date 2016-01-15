@@ -16,13 +16,11 @@ namespace ITI.SkyLord
 
         private ILevelContext CurrentContext { get; }
         private LevelManager LevelManager { get; }
-        private RessourceManager RessourceManager { get; }
 
-        public BuildingManager( ILevelContext currentContext, LevelManager levelManager, RessourceManager ressourceManager )
+        public BuildingManager( ILevelContext currentContext, LevelManager levelManager )
         {
             CurrentContext = currentContext;
             LevelManager = levelManager;
-            RessourceManager = ressourceManager;
         }
 
         /// <summary>
@@ -90,7 +88,9 @@ namespace ITI.SkyLord
             {
                 if ( buildingName != BuildingName.none )
                 {
-                    availableBuildings.Add( new Building { BuildingName = buildingName, Name = BuildingNameToName( buildingName ) } );
+                    var firstLevel = CurrentContext.BuildingLevels.Include(l => l.Cost).Where(l => l.BuildingName == buildingName && l.Number == 1).SingleOrDefault();
+
+                    availableBuildings.Add( new Building { BuildingName = buildingName, Name = BuildingNameToName( buildingName ), Level= firstLevel} );
                 }
             }
             return availableBuildings;

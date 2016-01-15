@@ -1,0 +1,47 @@
+﻿@model ITI.SkyLord.ViewModel.Partial.BuildingPartialViewModel
+@using ITI.SkyLord.Services;
+
+<h2>Terrain vierge</h2>
+    
+<p>Choisissez le bâtiment que vous voulez construire :</p>
+
+<div class="row">
+    @foreach (var CurrentBuilding in Model.AvailableBuildings)
+    {
+        <div class="col-lg-4" style="margin-top: 20px; height: 100px">
+            @{Write(CurrentBuilding.Name);}
+
+            <br />
+            @if (CurrentBuilding.Level != null)
+            {
+
+                Write(" Bois : " + CurrentBuilding.Level.Cost.Wood + " Cristal :  " + CurrentBuilding.Level.Cost.Cristal + " Metal : " + CurrentBuilding.Level.Cost.Metal + " Magic : " + CurrentBuilding.Level.Cost.Magic);
+            }
+            else
+            {
+                Write(" Pas de Level disponible");
+            }
+            <br />
+
+            <form asp-route-islandId="@Model.Layout.CurrentIsland.IslandId" asp-controller="Building" asp-action="AddBuilding">
+                <input type="hidden" value="@Model.Position" asp-for="@Model.Position"/>
+                <input type="hidden" asp-for="@Model.TargetBuilding" value="@CurrentBuilding.BuildingName" />
+                <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
+
+                @if( CurrentBuilding.Level != null && CurrentBuilding.Level.Cost != null && RessourceManager.IsEnough(Model.Layout.CurrentIsland.AllRessources, CurrentBuilding.Level.Cost))
+                {
+                    <input type="submit" name="Construire">
+                }
+                else
+                {
+                    <p>Pas assez</p>
+
+                }
+
+            </form>
+
+
+        </div>
+    }
+
+</div>

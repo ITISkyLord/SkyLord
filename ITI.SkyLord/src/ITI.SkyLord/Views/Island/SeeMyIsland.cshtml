@@ -4,6 +4,8 @@
 
 @using System.Collections.Generic
 @using ITI.SkyLord
+@using ITI.SkyLord.ViewModel.Partial
+
 
 @{
     ViewData["Title"] = "View Islands";
@@ -13,7 +15,7 @@
 }
 
 <style>
-    #Fond {
+    #SeeMyIsland {
         display: block;
         border: solid black 2px;
 
@@ -115,14 +117,14 @@
         left: 209px;
     }
 
-    .Building[buildingname="Tour de Mage"] 
+    .Building[buildingname="tower"] 
     {
         height: 100px;
         min-height: 100px;
         max-height: 100px;
         background-color: yellow;
     }
-    .Building[buildingname="Tour de Mage"] img
+    .Building[buildingname="tower"] img
     {
         width: 50px;
         min-width: 50px;
@@ -133,50 +135,76 @@
         max-height: 100px;
     }
 
+    .templatebuilding {
+        height: 600px;
+        background-color: #bada55;
+
+    }
+
 </style>
 
 <h2>@Model.CurrentIsland.Name (@Model.CurrentIsland.Coordinates.X, @Model.CurrentIsland.Coordinates.Y)</h2>
 
+<div class="row">
+    <div id="SeeMyIsland" class="col-lg-6">
+        <div id="Island">
+            @for (var i = 1; i != 11; i++)
+            {
+                Building myBuilding;
+                string name;
 
-<div id="Fond">
-    <div id="Island">
+                @if (Model.DicoBuildings.TryGetValue(i.ToString(), out myBuilding))
+                {
+                    name = myBuilding.BuildingName.ToString();
+                }
+                else
+                {
+                    name = "empty";
+                }
+
+                <div class="Building" buildingname="@name" id="place_@i" templateid="@i">
+                    @{
+                        name += ".png";
+                    }
+                    <img src="~/images/SeeMyIsland/@name" alt=@name/>
+                </div>
+                }
+        </div>
+
+    </div>
+
+    <div id="UI" class="col-lg-6">
+
         @for (var i = 1; i != 11; i++)
         {
             Building myBuilding;
             string name;
-            
+
             @if (Model.DicoBuildings.TryGetValue(i.ToString(), out myBuilding))
             {
-                name = myBuilding.Name;
+                name = myBuilding.BuildingName.ToString();
             }
             else
             {
-                name = "Empty";
+                name = "empty";
             }
-            
-            <div class="Building" buildingname="@name" id="place_@i">
-                @{
-                    name += ".png";
-                }               
-                <img src="~/images/SeeMyIsland/@name" />
-            </div>
-         }
-    </div>
 
+            <div class="templatebuilding" id="ui_@i" buildingname="@name" style="display:none;">
+                @{
+                    BuildingPartialViewModel partialModel = new BuildingPartialViewModel()
+                    {
+                        CurrentBuilding = myBuilding,
+                        Position = i,
+                        AvailableBuildings = Model.AvailableBuildings,
+                        Layout =Model.Layout,
+                    };
+                    Write(Html.Partial("~/Views/Partial/" + name + ".cshtml", partialModel));
+                }
+            </div>
+                    }
+
+    </div>
 </div>
 
-<h3>Buildings :</h3>
-<ul>
-    @if (Model.CurrentIsland.Buildings != null)
-    {
-        @foreach (var building in Model.CurrentIsland.Buildings)
-        {
-            <li>@building.BuildingName</li>
-        }
-    }
-    
-
-</ul>
-
-
+<script src="/js/seeIsland.js"></script>
 
