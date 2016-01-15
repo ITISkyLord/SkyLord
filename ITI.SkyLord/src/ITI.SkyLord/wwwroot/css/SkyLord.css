@@ -6464,8 +6464,8 @@ button.close {
 .SkyLordContainer:after,
 .SkyLordContainer .SkyLordMainRow:before,
 .SkyLordContainer .SkyLordMainRow:after,
-.profilContainer:before,
-.profilContainer:after {
+.SkyLordContainer .profilContainer:before,
+.SkyLordContainer .profilContainer:after {
   content: " ";
   display: table;
 }
@@ -6487,7 +6487,7 @@ button.close {
 .modal-footer:after,
 .SkyLordContainer:after,
 .SkyLordContainer .SkyLordMainRow:after,
-.profilContainer:after {
+.SkyLordContainer .profilContainer:after {
   clear: both;
 }
 .center-block {
@@ -6997,6 +6997,40 @@ body {
     width: 91.66666667%;
   }
 }
+.SkyLordContainer .profilContainer {
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 1px;
+  background-color: "white";
+  height: auto;
+  width: auto;
+  height: 100%;
+  background-image: url("../images/sitecarton.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+.SkyLordContainer .profilContainer > .navbar-header,
+.SkyLordContainer .profilContainer > .navbar-collapse {
+  margin-right: -15px;
+  margin-left: -15px;
+}
+@media (min-width: 768px) {
+  .SkyLordContainer .profilContainer > .navbar-header,
+  .SkyLordContainer .profilContainer > .navbar-collapse {
+    margin-right: 0;
+    margin-left: 0;
+  }
+}
+.SkyLordContainer .profilContainer blockquote {
+  border-left: none;
+}
+.SkyLordContainer .form-control {
+  text-align: center;
+  font-weight: bold;
+  font-style: italic;
+}
 footer {
   font-size: 17px;
   margin-bottom: 1px;
@@ -7011,40 +7045,6 @@ footer a {
 }
 footer li a:hover {
   color: #825847;
-}
-.profilContainer {
-  margin-right: auto;
-  margin-left: auto;
-  padding-left: 15px;
-  padding-right: 15px;
-  border-radius: 1px;
-  background-color: "white";
-  height: auto;
-  width: auto;
-  height: 100%;
-  background-image: url("../images/sitecarton.png");
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-}
-.profilContainer > .navbar-header,
-.profilContainer > .navbar-collapse {
-  margin-right: -15px;
-  margin-left: -15px;
-}
-@media (min-width: 768px) {
-  .profilContainer > .navbar-header,
-  .profilContainer > .navbar-collapse {
-    margin-right: 0;
-    margin-left: 0;
-  }
-}
-.profilContainer blockquote {
-  border-left: none;
-}
-.form-control {
-  text-align: center;
-  font-weight: bold;
-  font-style: italic;
 }
 /*.SkyLordNavBar {
     .Col(12);
@@ -7100,6 +7100,12 @@ footer li a:hover {
 .modal-header .modal-footer,
 .close .modal-footer {
   background-color: #f9f9f9;
+}
+a {
+  color: #825847;
+}
+a hover {
+  color: whitesmoke;
 }
 .carousel-control.right,
 .carousel-control.left {

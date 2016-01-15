@@ -18,6 +18,9 @@
                     <div class="form-group">
                         <hr /><br /><textarea class="form-control" rows="5" id="description" readonly>@Model.Description</textarea><hr />
                     </div>
+                        <a asp-controller="Profil" asp-action="ChangeProfil" asp-route-islandId="@Model.Layout.IslandId">
+                            <span style="font-size:1.9em;" class="glyphicon glyphicon-pencil"></span>
+                        </a>
                 </div>
             </div>
 
