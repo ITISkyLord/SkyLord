@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ITI.SkyLord.Models.Entity_Framework.Contexts;
 using ITI.SkyLord.Models.Entity_Framework.Entites.Events;
+using ITI.SkyLord.Services;
 
 namespace ITI.SkyLord
 {
@@ -20,6 +21,7 @@ namespace ITI.SkyLord
         CombatManager _combatManager;
         int _capacityOfPillaged;
         int _flag = 4;
+        RessourceManager _ressourceManager;
         #region Properties
 
         public Ressource PillagedRessources
@@ -27,6 +29,14 @@ namespace ITI.SkyLord
             get
             {
                 return _pillagedRessources;
+            }
+        }
+
+        private RessourceManager RessourceManager
+        {
+            get
+            {
+                return _ressourceManager;
             }
         }
 
@@ -45,13 +55,6 @@ namespace ITI.SkyLord
             get
             {
                 return _winningArmy;
-            }
-        }
-        internal ArmyEvent ArmyEvent
-        {
-            get
-            {
-                return _armyEvent;
             }
         }
         public Army LoosingArmy
@@ -78,8 +81,11 @@ namespace ITI.SkyLord
             if( loosingArmy == null ) throw new ArgumentNullException( "Loosing Army", "The loosing army cannot be null" );
             _context = ctx;
             _combatManager = cm;
-            _winningRessource = winningArmy.Island.AllRessources;
-            _loosingRessource = loosingArmy.Island.AllRessources;
+            EventPackManager epm = new EventPackManager(ctx);
+            _ressourceManager = epm.RessourceManager;
+            _winningRessource = _ressourceManager.CloneRessource( winningArmy.Island.AllRessources );
+            _loosingRessource = _ressourceManager.CloneRessource( loosingArmy.Island.AllRessources );
+
 
             this._winningArmy = winningArmy;
             this._loosingArmy = loosingArmy;
@@ -87,26 +93,30 @@ namespace ITI.SkyLord
             {
                 _pillagedRessources = CalculatePillagedResult();
                 if( _pillagedRessources == null )
-                    ArmyEvent.PillagedRessources = new Ressource();
-                else
-                    ArmyEvent.PillagedRessources = _pillagedRessources;
+                    _pillagedRessources = new Ressource();
 
             }
             else
                 _pillagedRessources = null;
 
+            //ae.PillagedRessources = new Ressource() { Cristal = 100, Magic = 100, Metal = 100, Wood = 100 };
+            Ressource tmpRessource = RessourceManager.CloneRessource( _pillagedRessources );
+            ctx.Ressources.Add( tmpRessource );
+            ae.PillagedRessources = tmpRessource;
+            ctx.SaveChanges();
+            #region CombatReport
             string coreMessage;
-            if(_pillagedRessources == null)
+            if( _pillagedRessources == null )
             {
-                 coreMessage = _winningArmy.Island.Name + " a gagné contre " + _loosingArmy.Island.Name + ".\n"
-                 + _winningArmy.Island.Name + " n'a pillé aucune ressource."
-                 + _loosingArmy.Island.Name + " a perdu toutes ses troupes en défenses et " + _winningArmy.Island.Name + " a perdu : ";
+                coreMessage = _winningArmy.Island.Name + " a gagné contre " + _loosingArmy.Island.Name + ".\n"
+                + _winningArmy.Island.Name + " n'a pillé aucune ressource."
+                + _loosingArmy.Island.Name + " a perdu toutes ses troupes en défenses et " + _winningArmy.Island.Name + " a perdu : ";
             }
             else
             {
-                 coreMessage = _winningArmy.Island.Name + " a gagné contre " + _loosingArmy.Island.Name + ".\n"
-                 + _winningArmy.Island.Name + " a pillé " + _pillagedRessources.Wood + " bois, " + _pillagedRessources.Metal + "métal, " + _pillagedRessources.Cristal + "cristal et " + _pillagedRessources.Wood + " magie."
-                 + _loosingArmy.Island.Name + " a perdu toutes ses troupes en défenses et " + _winningArmy.Island.Name + " a perdu : ";
+                coreMessage = _winningArmy.Island.Name + " a gagné contre " + _loosingArmy.Island.Name + ".\n"
+                + _winningArmy.Island.Name + " a pillé " + _pillagedRessources.Wood + " bois, " + _pillagedRessources.Metal + "métal, " + _pillagedRessources.Cristal + "cristal et " + _pillagedRessources.Wood + " magie."
+                + _loosingArmy.Island.Name + " a perdu toutes ses troupes en défenses et " + _winningArmy.Island.Name + " a perdu : ";
             }
 
             foreach( KeyValuePair<string, int> kvp in cm.Loss )
@@ -123,8 +133,9 @@ namespace ITI.SkyLord
                 Sender = _loosingArmy.Island.Owner,
                 Receiver = _winningArmy.Island.Owner,
                 CoreMessage = coreMessage
-            };
-            
+            }; 
+            #endregion
+
 
         }
         private Ressource CalculatePillagedResult()
@@ -141,10 +152,11 @@ namespace ITI.SkyLord
             ressources = new Ressource { Wood = eachCapacityPillaged, Metal = eachCapacityPillaged, Cristal = eachCapacityPillaged, Magic = eachCapacityPillaged };
 
             Ressource newRessources = recursivite();
-            if( ressources == newRessources )
+            if( ressources.Equals( newRessources ) )
             {
-             //   _context.SaveChanges();
-                _loosingRessource.ChangeRessources( ressources, false );
+                //   _context.SaveChanges();
+                RessourceManager.RemoveRessource( _loosingArmy.Island.AllRessources, _loosingRessource );
+               // _loosingRessource.ChangeRessources( ressources, false );
                 _loosingArmy.Island.AllRessources = _loosingRessource;
             }
             else if( _flag > 0 )

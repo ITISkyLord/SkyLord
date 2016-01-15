@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using ITI.SkyLord.Models.Entity_Framework.Entites.Events;
 using ITI.SkyLord.Models.Entity_Framework.Contexts;
 using Microsoft.Data.Entity;
+using ITI.SkyLord.Services;
 
 namespace ITI.SkyLord
 {
@@ -187,7 +188,10 @@ namespace ITI.SkyLord
         public void Resolve( UnitEvent ue )
         {
             // À remettre en place quand on aura la solutions pour Include
+
+            //  /!\ HERE IS THE PROBLEM with Include. /!\
             // UnitEvent unitEvent = _context.UnitEvents.Include(a=>a.Unit).ThenInclude( b => b.UnitStatistics ).Where( e => e.EventId == ue.EventId ).First();
+
             Unit unit = _context.Units.Include( y => y.UnitStatistics ).Where( u => u.UnitId == ue.UnitIdd ).Single();
             ArmyManager am = _allManager.ArmyManager;
             am.AddUnit( unit, 1, ue.Island );
@@ -241,9 +245,9 @@ namespace ITI.SkyLord
             {
                 if( attackingArmy != null )
                 {
-                    Ressource pillagedRessources = armyEvent.PillagedRessources;
+                    _allManager.RessourceManager.AddRessource( attackingArmy.Island.AllRessources, armyEvent.PillagedRessources );
                     // L'armée est déjà présente à l'aller
-                    attackingArmy.Island.AllRessources.ChangeRessources( pillagedRessources );
+                    //attackingArmy.Island.AllRessources.ChangeRessources( pillagedRessources );
                     attackingArmy = armyManager.JoinArmies( armyEvent.Island.Armies.SingleOrDefault( a => a.ArmyState == ArmyState.defense ), attackingArmy );
                     _context.SaveChanges();
                 }

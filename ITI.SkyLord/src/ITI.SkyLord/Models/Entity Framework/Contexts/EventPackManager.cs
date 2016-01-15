@@ -10,6 +10,7 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
     {
         public ArmyManager ArmyManager { get; }
         public BuildingManager BuildingManager { get; }
+        public RessourceManager RessourceManager { get; }
         // public LevelManager LevelManager { get; }
         // public TechnologyManager Technology { get; }
 
@@ -17,7 +18,8 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
         {
             ArmyManager = new ArmyManager(ctx, new BonusManager( ctx ) );
             var LevelManager = new LevelManager(ctx);
-            BuildingManager = new BuildingManager(ctx,LevelManager, new RessourceManager( ctx ) );
+            RessourceManager = new RessourceManager( ctx );
+            BuildingManager = new BuildingManager(ctx,LevelManager, RessourceManager );
 
             //LevelManager = new LevelManager(ctx);
             //TechnologyManager = new TechnologyManager(ctx);

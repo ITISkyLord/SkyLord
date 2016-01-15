@@ -95,7 +95,7 @@ namespace ITI.SkyLord.Services
             return true;
         }
 
-        private Ressource CloneRessource( Ressource source )
+        internal Ressource CloneRessource( Ressource source )
         {
             return new Ressource
             {
