@@ -7104,8 +7104,11 @@ footer li a:hover {
 a {
   color: #825847;
 }
-a hover {
+button {
   color: whitesmoke;
+  border: none;
+  border-radius: 50px;
+  background-color: #825847;
 }
 .carousel-control.right,
 .carousel-control.left {

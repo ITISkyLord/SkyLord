@@ -53,14 +53,14 @@ namespace ITI.SkyLord.Controllers
         }
 
         [HttpPost]
-        public IActionResult changeDescription(ProfilViewModel model, long islandId = 0)
+        public IActionResult changeDescription(string description, long islandId = 0)
         {
             // Ajouter la description dans la BDD
 
             Player p = PlayerContext.GetPlayer(User.GetUserId());
             p = PlayerContext.Players.Include(z => z.Profil).Where(x => x.PlayerId == p.PlayerId).First();
             Profil oldProfil = p.Profil;
-            oldProfil.Description = model.Description;
+            oldProfil.Description = description;
             PlayerContext.SaveChanges();
 
             ViewData["name"] = p.Name;

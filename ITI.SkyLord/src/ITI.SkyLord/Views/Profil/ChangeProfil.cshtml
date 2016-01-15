@@ -5,7 +5,7 @@
     <div class="container text-center">
         <div class="row">
             <div class="col-sm-2 col-md-2">
-                <img src="~/images/SkyLord.png" class="img-rounded img-responsive" alt="Random Name">
+                <img src="~/images/avatar4.jpg" class="img-rounded img-responsive" alt="Random Name">
             </div>
 
             <div class="profilContainer">
@@ -15,15 +15,17 @@
                     </blockquote>
 
                     <hr /><label for="mail"> <i class="glyphicon glyphicon-envelope"></i> @Model.Layout.CurrentPlayer.Mail</label>
-                    <div class="form-group">
-                        <hr /><br /><textarea class="form-control" rows="5" id="description" placeholder="@Model.Description"></textarea><hr />
-                    </div>
-                    <a asp-controller="Profil" asp-action="Index" asp-route-islandId="@Model.Layout.IslandId">
-                        <strong><span style="font-size:1.9em;" id="pencil" class="glyphicon glyphicon-circle-arrow-left"></span></strong>
-                    </a>
-                    <form asp-controller="Profil" asp-action="changeDescription" asp-route-islandId="@Model.Layout.IslandId">
-                         <button><strong><span style="font-size:1.9em;" id="pencil" class="glyphicon glyphicon-ok"></span></strong></button>
+
+                    <form asp-controller="Profil" asp-action="changeDescription" asp-route-islandId="@Model.Layout.IslandId" role="form" method="post">
+                        <div class="form-group">
+                            <br /> <textarea asp-for"Description" name="description" class="form-control" rows="5" id="description" placeholder="@Model.Description"></textarea><hr />
+                            <button><span style="font-size:2.3em;" id="pencil" class="glyphicon glyphicon-ok"></span></button>
+                        </div>
                     </form>
+
+                    <a asp-controller="Profil" asp-action="Index" asp-route-islandId="@Model.Layout.IslandId">
+                        <strong><span style="font-size:2.9em;" id="pencil" class="glyphicon glyphicon-circle-arrow-left"></span></strong>
+                    </a>
                 </div>
             </div>
 
