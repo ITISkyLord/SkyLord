@@ -211,6 +211,7 @@ namespace ITI.SkyLord.Controllers
                 .Single( i => i.IslandId == islandId ).Armies.Where( a => a.ArmyState != ArmyState.obsolete ).ToList();
             LevelManager levelManager = new LevelManager( SetupContext );
 
+
             model.AvailableUnits = new List<Unit>();
             //model.AvailableUnits = SetupContext.Units.Include( u => u.UnitCost ).Include( u => u.UnitStatistics ).
             //    Where( u => levelManager.IsUnitAvailable( u, islandId) ).ToList();
