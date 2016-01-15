@@ -20,7 +20,6 @@ namespace ITI.SkyLord.Controllers
     {
         public IActionResult Index( long islandId = 0)
         {
-            //
             // TESTS DE BONUS
             //
             //long playerId = SetupContext.GetPlayer( User.GetUserId() ).PlayerId;
