@@ -109,7 +109,7 @@ namespace ITI.SkyLord.Controllers
             model.CurrentArmy = armyManager.GetCurrentDefenseArmy(islandId);
 
             // Toutes les unités possibles  
-            model.AllUnits = SetupContext.Units.ToList();
+            model.AllUnits = SetupContext.Units.Include(u => u.UnitCost).ToList();
             model.AvailableUnit = SetupContext.Units.Where(u => levelManager.IsUnitAvailable(u, islandId)).ToList();
 
             return model;

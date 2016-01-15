@@ -22,6 +22,10 @@ else
                     var number = regiment == null ? 0 : regiment.Number;
                 }
                 <td>@number</td>
+                <td>@unit.UnitCost.Wood Bois</td>
+                <td>@unit.UnitCost.Metal Métal</td>
+                <td>@unit.UnitCost.Magic Magie</td>
+                <td>@unit.UnitCost.Cristal Cristal</td>
                 <td><input type="number" asp-for="UnitAmount" min="0" step="1" value="0" /></td>
                 <td><input type="submit" /></td>
             </tr>
