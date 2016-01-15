@@ -10,6 +10,7 @@ namespace ITI.SkyLord.ViewModel.Partial
         public List<Building> AvailableBuildings { get; set; }
         public Building CurrentBuilding { get; set; }
         public int Position { get; set; }
-
+        public LayoutViewModel Layout { get; set; }
+        public BuildingName TargetBuilding { get; set; }
     }
 }
