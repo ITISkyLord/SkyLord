@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ITI.SkyLord.Models.Entity_Framework.Entites.Events;
 
 namespace ITI.SkyLord
 {
@@ -20,9 +21,9 @@ namespace ITI.SkyLord
             BonusManager = bonusManager;
         }
 
-        public CombatResult ResolveCombat( Army attackingArmy, Army defendingArmy )
+        public CombatResult ResolveCombat( Army attackingArmy, Army defendingArmy, ArmyEvent ae, SetupContext ctx  )
         {
-            return new CombatManager(this).Resolve( attackingArmy, defendingArmy );
+            return new CombatManager(this).Resolve( attackingArmy, defendingArmy, ae, ctx );
         }
 
         public Army GetArmy( long id )
@@ -189,10 +190,8 @@ namespace ITI.SkyLord
                         regimentFound.Number += reg.Number;
                     }
                 }
-
-                CurrentContext.Armies.Remove( armyOnMovement );
-                // CurrentContext.SaveChanges();
-                return armyOnIsland;
+                armyOnMovement.ArmyState = ArmyState.obsolete;
+                return armyOnMovement;
             }
         }
 
@@ -219,17 +218,21 @@ namespace ITI.SkyLord
                 throw new ArgumentException( " A regiment cannot have a negative value." );
         }
 
-        internal void SubstractFromArmy( Army army, double ratio )
+        internal Dictionary<string,int> SubstractFromArmy( Army army, double ratio )
         {
             Army tmpArmy = this.CopyArmy( army );
+            Dictionary<string,int> loss = new Dictionary<string, int>();
 
             foreach ( Regiment r in tmpArmy.Regiments )
             {
                 int number = (int)( r.Number * ratio );
+                loss.Add( r.Unit.Name, number );
                 Console.WriteLine( "number in the unit : " + r.Name + " = " + r.Number );
                 Console.WriteLine( "loss = " + number );
                 this.SubstractFromRegiment( army, r.Unit, number);
             }
+            return loss;
+          //  CurrentContext.SaveChanges(); À voir si ça été changé après l'impact sur l'attaqué, EventManager
         }
 
         internal void SubstractFromArmy( Army armyToRemoveFrom, Army armyToBeRemoved )
@@ -242,19 +245,23 @@ namespace ITI.SkyLord
             }
         }
 
+        /// <summary>
+        /// Put the army on obsolete. 
+        /// </summary>
+        /// <param name="army"></param>
         internal void RemoveArmy( Army army )
         {
-            if ( army.Regiments == null )
-                CurrentContext.Remove( army );
+            if( army.Regiments == null )
+                army.ArmyState = ArmyState.obsolete;
+            // Remplace la suppression.
             else
             {
-                foreach ( Regiment r in army.Regiments )
+                foreach( Regiment r in army.Regiments )
                 {
                     CurrentContext.Remove( r );
                 }
-                // CurrentContext.SaveChanges();
-                CurrentContext.Remove( army );
-                // CurrentContext.SaveChanges();
+                army.ArmyState = ArmyState.obsolete;
+                // Remplace la suppression.
             }
         }
 

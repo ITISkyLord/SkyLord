@@ -6,15 +6,15 @@ using System.Text;
 
 namespace ITI.SkyLord
 {
-    public class CombatReport
-    {
-        [Key]
-        public long CombatreportId { get; set; }
+    //public class CombatReport
+    //{
+    //    // Je ne suis pas une entité, je suis créé à la fin d'un combat.
+    //    public long CombatReportId { get; set; }
 
-        public Player Receiver { get; set; }
+    //    public Player Receiver { get; set; }
 
-        public string ObjectReport { get; set; }
+    //    public string ObjectReport { get; set; }
 
-        public string Report { get; set; }
-    }
+    //    public string Report { get; set; }
+    //}
 }
