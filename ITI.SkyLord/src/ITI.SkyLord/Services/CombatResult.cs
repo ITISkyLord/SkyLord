@@ -16,13 +16,11 @@ namespace ITI.SkyLord
         Message _combatReportLooser;
         Ressource _winningRessource;
         Ressource _loosingRessource;
-        private ArmyEvent _armyEvent;
         Army _winningArmy;
         Army _loosingArmy;
         CombatManager _combatManager;
         int _capacityOfPillaged;
         int _flag = 4;
-        RessourceManager _ressourceManager;
         #region Properties
 
         public Ressource PillagedRessources
@@ -30,14 +28,6 @@ namespace ITI.SkyLord
             get
             {
                 return _pillagedRessources;
-            }
-        }
-
-        private RessourceManager RessourceManager
-        {
-            get
-            {
-                return _ressourceManager;
             }
         }
 
@@ -52,7 +42,7 @@ namespace ITI.SkyLord
         {
             get
             {
-                return _combatReportWinner;
+                return _combatReportLooser;
             }
         }
 
@@ -90,9 +80,8 @@ namespace ITI.SkyLord
             _context = ctx;
             _combatManager = cm;
             EventPackManager epm = new EventPackManager(ctx);
-            _ressourceManager = epm.RessourceManager;
-            _winningRessource = _ressourceManager.CloneRessource( winningArmy.Island.AllRessources );
-            _loosingRessource = _ressourceManager.CloneRessource( loosingArmy.Island.AllRessources );
+            _winningRessource = RessourceManager.CloneRessource( winningArmy.Island.AllRessources );
+            _loosingRessource = RessourceManager.CloneRessource( loosingArmy.Island.AllRessources );
 
 
             this._winningArmy = winningArmy;
@@ -163,8 +152,6 @@ namespace ITI.SkyLord
                 CoreMessage = coreMessageWinner
             }; 
             #endregion
-
-
         }
         private Ressource CalculatePillagedResult()
         {

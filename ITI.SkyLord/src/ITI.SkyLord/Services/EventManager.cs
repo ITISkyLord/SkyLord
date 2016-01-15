@@ -255,7 +255,7 @@ namespace ITI.SkyLord
                 {
                     Ressource pillagedRessource = _context.Ressources.Where(r => r.RessourceId == armyEvent.PillagedRessourcesIdd).SingleOrDefault();
 
-                    _allManager.RessourceManager.AddRessource( attackingArmy.Island.AllRessources, pillagedRessource );
+                    RessourceManager.AddRessource( attackingArmy.Island.AllRessources, pillagedRessource );
                     // L'armée est déjà présente à l'aller
                     //attackingArmy.Island.AllRessources.ChangeRessources( pillagedRessources );
                     attackingArmy = armyManager.JoinArmies( armyEvent.Island.Armies.SingleOrDefault( a => a.ArmyState == ArmyState.defense ), attackingArmy );
