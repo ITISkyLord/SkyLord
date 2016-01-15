@@ -12,6 +12,7 @@ using ITI.SkyLord.Services;
 using Microsoft.AspNet.Mvc.ModelBinding;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNet.Mvc.Filters;
+using ITI.SkyLord.ViewModel.Partial;
 
 namespace ITI.SkyLord.Controllers
 {
@@ -31,41 +32,23 @@ namespace ITI.SkyLord.Controllers
             return View( CreateArmyViewModel( islandId ) );
         }
 
-        public IActionResult AddUnit( ArmyViewModel model, long islandId = 0 )
+        public IActionResult AddUnit( BuildingPartialViewModel model, long islandId = 0 )
         {
-            ArmyManager am = new ArmyManager( SetupContext, new BonusManager( SetupContext ) );
-            if ( model.UnitsToAdd.Count( kvp => kvp.Value == 0 ) != model.UnitsToAdd.Count() && !model.UnitsToAdd.Any( kvp => kvp.Value < 0 ) )
-            {
-                EventManager em = new EventManager( SetupContext, new EventPackManager( SetupContext ) );
 
-                foreach ( KeyValuePair<string, int> kvp in model.UnitsToAdd )
-                {
-                    if ( kvp.Value > 0 )
-                    {
-                        UnitName uN = (UnitName)Enum.Parse( typeof( UnitName ), kvp.Key, true );
-                        em.AddUnitEvent( SetupContext, SetupContext.Units.Single( u => u.UnitName == uN && u.IsModel ), kvp.Value, GetIsland( islandId ) );
-                        //am.AddUnit
-                        //    (
-                        //        SetupContext.Units.Where( u => u.UnitName == uN ).Single(),
-                        //        kvp.Value,
-                        //        GetIsland( islandId )
-                        //    );
-                    }
-                }
-                SetupContext.SaveChanges();
+            ArmyManager am = new ArmyManager( SetupContext, new BonusManager( SetupContext ) );
+            EventManager em = new EventManager( SetupContext, new EventPackManager( SetupContext ) );
+
+            if(model.UnitAmount <= 0)
+            {
+                ModelState.AddModelError("UnitsToAdd", "Les unités ne peuvent pas être négatives.");
             }
             else
             {
-                if ( model.UnitsToAdd.Any( kvp => kvp.Value < 0 ) )
-                {
-                    ModelState.AddModelError( "UnitsToAdd", "Les unités ne peuvent pas être négatives." );
-                }
-                else
-                {
-                    ModelState.AddModelError( "UnitsToAdd", "Aucune unité sélectionnée." );
-                }
+                em.AddUnitEvent( SetupContext, SetupContext.Units.Single( u => u.UnitName == model.UnitTarget && u.IsModel ), model.UnitAmount, GetIsland( islandId ) );
+                SetupContext.SaveChanges();
             }
-            return RedirectToAction( "Index", new { islandId = islandId});
+            return RedirectToAction("SeeMyIsland", "Island", new { islandId = islandId});
+
         }
 
         public IActionResult SetAttackingArmy( SetAttackingArmyViewModel model, long islandId = 0 )

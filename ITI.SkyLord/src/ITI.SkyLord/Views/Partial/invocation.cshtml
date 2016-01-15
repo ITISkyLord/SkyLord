@@ -1,3 +1,37 @@
 ﻿@model ITI.SkyLord.ViewModel.Partial.BuildingPartialViewModel
 
-<p>Je suis un invocation !!! :D</p>
+<h2>Portail d'invocation</h2>
+
+@if(Model.CurrentArmy == null)
+{
+    <p>Pas encore d'unité pour le moment</p>
+}
+else
+{
+    <h3>Armée actuelle sur place :</h3>
+    <table>
+
+    @foreach (var unit in Model.AllUnits)
+    {
+        <form asp-controller="Army" asp-action="AddUnit" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId">
+            <input type="hidden" asp-for="UnitTarget" value="@unit.Name" />
+            <tr>
+                <td>@unit.Name</td>
+                @{
+                    var regiment = Model.CurrentArmy.Regiments.Where(r => r.Unit.Name == unit.Name).FirstOrDefault();
+                    var number = regiment == null ? 0 : regiment.Number;
+                }
+                <td>@number</td>
+                <td><input type="number" asp-for="UnitAmount" min="0" step="1" value="0" /></td>
+                <td><input type="submit" /></td>
+            </tr>
+        </form>
+                    }
+    </table>
+    
+}
+
+
+
+
+

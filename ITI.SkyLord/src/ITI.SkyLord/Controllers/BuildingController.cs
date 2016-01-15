@@ -63,7 +63,7 @@ namespace ITI.SkyLord.Controllers
         /// <returns>Redirects to SeeBuildings</returns>
         [HttpPost]
         public IActionResult AddBuilding( BuildingPartialViewModel model, long islandId = 0 )
-        {
+        { 
             BuildingViewModel buildingViewModel = new BuildingViewModel();
             long playerId = SetupContext.GetPlayer( User.GetUserId() ).PlayerId;
 
@@ -89,8 +89,6 @@ namespace ITI.SkyLord.Controllers
             
             BuildingManager buildingManager = new BuildingManager( SetupContext, new LevelManager( SetupContext ));
             
-            
-
             if ( !buildingManager.IsEnoughForNextLevel( model.TargetBuilding, islandId, playerId, model.Position ) )
             {
                 return RedirectToAction( "SeeBuildings", new { islandId = islandId } );
