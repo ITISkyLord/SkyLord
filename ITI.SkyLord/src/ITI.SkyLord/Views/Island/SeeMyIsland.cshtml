@@ -197,6 +197,9 @@
                         Position = i,
                         AvailableBuildings = Model.AvailableBuildings,
                         Layout =Model.Layout,
+                        CurrentArmy = Model.CurrentArmy,
+                        AvailableUnit = Model.AvailableUnit,
+                        AllUnits = Model.AllUnits
                     };
                     Write(Html.Partial("~/Views/Partial/" + name + ".cshtml", partialModel));
                 }
