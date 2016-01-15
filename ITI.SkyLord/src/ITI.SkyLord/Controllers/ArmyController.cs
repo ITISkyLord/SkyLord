@@ -208,7 +208,7 @@ namespace ITI.SkyLord.Controllers
         {
             List<Army> currentIslandArmies = SetupContext.Islands.Include( i => i.Armies ).ThenInclude( a => a.Regiments )
                 .ThenInclude( r => r.Unit ).ThenInclude( u => u.UnitStatistics )
-                .Single( i => i.IslandId == islandId ).Armies.ToList();
+                .Single( i => i.IslandId == islandId ).Armies.Where( a => a.ArmyState != ArmyState.obsolete ).ToList();
             LevelManager levelManager = new LevelManager( SetupContext );
 
             model.AvailableUnits = new List<Unit>();

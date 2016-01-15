@@ -46,11 +46,15 @@ namespace ITI.SkyLord
             }
         }
 
-        public void AddArmyEvent( IArmyEventContext ctx, Army army, Island island, ArmyMovement am, Island destination )
+        public void AddArmyEvent( IArmyEventContext ctx, Army army, Island island, ArmyMovement am, Island destination, Ressource pillagedRessources = null )
         {
             // NE PAS OUBLIER D'AJOUTER L'ÉVÈNEMENT DE RETOUR
             int secondsToGo = TimeToGoHereFromHere( island, destination, army);
             DateTime begginningDate = FindLastEndingDateInQueue( EventDiscrimator.ArmyEvent, island );
+            long pillagedRessourceId;
+            if( pillagedRessources == null ) pillagedRessourceId = 0;
+            else pillagedRessourceId = pillagedRessources.RessourceId;
+             
             ctx.ArmyEvents.Add( new ArmyEvent()
             {
                 EventType = EventDiscrimator.ArmyEvent,
@@ -62,6 +66,8 @@ namespace ITI.SkyLord
                 Destination = destination,
                 DestinationIdd = destination.IslandId,
                 Done = false,
+                PillagedRessources = pillagedRessources,
+                PillagedRessourcesIdd = pillagedRessourceId,
                 Island = island
             } );
         }
@@ -218,6 +224,7 @@ namespace ITI.SkyLord
                                         .Include( i => i.Island ).ThenInclude( i => i.AllRessources )
                                         .Where( u => u.ArmyId == armyEvent.ArmyIdd )
                                         .Single();
+
             if( armyEvent.ArmyMovement == ArmyMovement.attacking )
             {
                 Island destination = _context.Islands
@@ -237,15 +244,18 @@ namespace ITI.SkyLord
                     defendingArmy = new Army { Island = destination, Regiments = new List<Regiment>(), ArmyState = ArmyState.defense };
 
                 CombatResult combatResult = armyManager.ResolveCombat( attackingArmy, defendingArmy, armyEvent, _context );
-                _context.Messages.Add(combatResult.CombatReport);
+                _context.Messages.Add( combatResult.CombatReportWinner );
+                _context.Messages.Add( combatResult.CombatReportLooser );
                 _context.SaveChanges();
-                this.AddArmyEvent( _context, attackingArmy, attackingArmy.Island, ArmyMovement.returning, destination );
+                this.AddArmyEvent( _context, attackingArmy, attackingArmy.Island, ArmyMovement.returning, destination, combatResult.PillagedRessources );
             }
             else if( armyEvent.ArmyMovement == ArmyMovement.returning )
             {
                 if( attackingArmy != null )
                 {
-                    _allManager.RessourceManager.AddRessource( attackingArmy.Island.AllRessources, armyEvent.PillagedRessources );
+                    Ressource pillagedRessource = _context.Ressources.Where(r => r.RessourceId == armyEvent.PillagedRessourcesIdd).SingleOrDefault();
+
+                    _allManager.RessourceManager.AddRessource( attackingArmy.Island.AllRessources, pillagedRessource );
                     // L'armée est déjà présente à l'aller
                     //attackingArmy.Island.AllRessources.ChangeRessources( pillagedRessources );
                     attackingArmy = armyManager.JoinArmies( armyEvent.Island.Armies.SingleOrDefault( a => a.ArmyState == ArmyState.defense ), attackingArmy );
