@@ -31,5 +31,6 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
         public DbSet<World> Worlds { get; set; }
         public DbSet<Island> Islands { get; set; }
         public DbSet<Coordinate> Coordinates { get; set; }
+
     }
 }

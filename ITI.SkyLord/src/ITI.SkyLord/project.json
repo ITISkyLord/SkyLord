@@ -1,7 +1,7 @@
 {
-  "webroot": "wwwroot",
-  "userSecretsId": "Skylord",
-  "version": "1.0.0-*",
+    "webroot": "wwwroot",
+    "userSecretsId": "Skylord",
+    "version": "1.0.0-*",
 
     "dependencies": {
         "EntityFramework.Commands": "7.0.0-rc1-final",
@@ -14,6 +14,7 @@
         "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-rc1-final",
         "Microsoft.AspNet.IISPlatformHandler": "1.0.0-rc1-final",
         "Microsoft.AspNet.Mvc": "6.0.0-rc1-final",
+        "Microsoft.AspNet.Mvc.Core": "6.0.0-rc1-final",
         "Microsoft.AspNet.Mvc.Razor": "6.0.0-rc1-final",
         "Microsoft.AspNet.Mvc.TagHelpers": "6.0.0-rc1-final",
         "Microsoft.AspNet.Server.Kestrel": "1.0.0-rc1-final",
@@ -25,32 +26,51 @@
         "Microsoft.Extensions.DependencyInjection.Abstractions": "1.0.0-rc1-final",
         "Microsoft.Extensions.Logging.Debug": "1.0.0-rc1-final",
         "Microsoft.Extensions.PlatformAbstractions": "1.0.0-rc1-final",
-        "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0-rc1-final"
+        "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0-rc1-final",
+        "Microsoft.Dnx.Watcher": "1.0.0-rc1-final"
     },
 
-  "commands": {
-    "web": "Microsoft.AspNet.Server.Kestrel",
-    "ef": "EntityFramework.Commands"
-  },
+    "urlForConfiguration": "http://docs.asp.net/en/latest/dnx/projects.html#dnx-projects-compiliationsettings",
 
-  "frameworks": {
-    "dnx451": { },
-    "dnxcore50": { }
-  },
+    "configurations": {
+        "Debug": {
+            "compilationOptions": {
+                "define": [ "DEBUG", "TRACE" ]
+            }
+        },
+        "Release": {
+            "compilationOptions": {
+                "define": [ "RELEASE", "TRACE" ],
+                "optimize": true
+            }
+        }
+    },
 
-  "exclude": [
-    "wwwroot",
-    "node_modules",
-    "bower_components"
-  ],
-  "publishExclude": [
-    "node_modules",
-    "bower_components",
-    "**.xproj",
-    "**.user",
-    "**.vspscc"
-  ],
-  "scripts": {
-    "prepublish": [ "npm install", "bower install", "gulp clean", "gulp min" ]
-  }
+    "commands": {
+        "web": "Microsoft.AspNet.Server.Kestrel",
+        "ef": "EntityFramework.Commands",
+        "watch-web": " Microsoft.Dnx.Watcher web --configuration Debug --port 5700 --debug test"
+    },
+
+    "frameworks": {
+        "dnx451": { },
+        "dnxcore50": { }
+    },
+
+    "exclude": [
+        "wwwroot",
+        "node_modules",
+        "bower_components"
+    ],
+    "publishExclude": [
+        "node_modules",
+        "bower_components",
+        "**.xproj",
+        "**.user",
+        "**.vspscc"
+    ],
+    "scripts": {
+        "prepublish": [ "npm install", "bower install", "gulp clean", "gulp min" ]
+    }
+
 }

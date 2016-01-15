@@ -2,7 +2,6 @@
 using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Data.Entity;
-using ITI.SkyLord.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.Extensions.Logging;
@@ -15,7 +14,6 @@ using ITI.SkyLord.Controllers;
 using System;
 using Microsoft.AspNet.Cryptography.KeyDerivation;
 using Microsoft.Data.Entity.ChangeTracking;
-using ITI.SkyLord.Services;
 using System.Collections.Generic;
 
 namespace ITI.SkyLord
@@ -67,13 +65,17 @@ namespace ITI.SkyLord
             // Add MVC services to the services container.
             services.AddMvc();
 
-
+            // TODO : Doit être supprimer
             services.AddScoped<PlayerContext>();
             services.AddScoped<IslandContext>();
             services.AddScoped<ArmyContext>();
             services.AddScoped<ArmyManager>();
             services.AddScoped<LevelContext>();
             services.AddScoped<MessageContext>();
+            // Fin Doit être supprimer
+
+
+            services.AddScoped<SetupContext>();
             // Uncomment the following line to add Web API services which makes it easier to port Web API 2 controllers.
             // You will also need to add the Microsoft.AspNet.Mvc.WebApiCompatShim package to the 'dependencies' section of project.json.
             // services.AddWebApiConventions();
@@ -86,7 +88,7 @@ namespace ITI.SkyLord
         // Configure is called after ConfigureServices is called.
         public void Configure( IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory )
         {
-            loggerFactory.MinimumLevel = LogLevel.Information;
+           // loggerFactory.MinimumLevel = LogLevel.Information;
             loggerFactory.AddDebug();
 
             // Configure the HTTP request pipeline.
@@ -94,7 +96,6 @@ namespace ITI.SkyLord
             // Add the following to the request pipeline only in development environment.
             if( env.IsDevelopment() )
             {
-                app.UseBrowserLink();
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
             }
@@ -102,6 +103,11 @@ namespace ITI.SkyLord
             {
                 // Add Error handling middleware which catches all application specific errors and
                 // sends the request to the following path or controller action.
+
+                // TODO : Enlever cette ligne après hein :D
+                app.UseDeveloperExceptionPage();
+                app.UseDatabaseErrorPage();
+
                 app.UseExceptionHandler( "/Home/Error" );
             }
 
@@ -179,7 +185,7 @@ namespace ITI.SkyLord
                 }
 
                 //Add defaultUnits
-                using( ArmyContext context = new ArmyContext() )
+                using( SetupContext context = new SetupContext() )
                 {
 
                     cyclop = context.Units.Where( u => u.UnitName == UnitName.cyclop && u.IsModel).SingleOrDefault();
@@ -195,6 +201,8 @@ namespace ITI.SkyLord
                         context.Ressources.Add( cyclopCost );
                         UnitStatistics cyclopStatistics = new UnitStatistics { Attack = 150, PhysicResist = 80, MagicResist = 50, Capacity = 200, Speed = 15, Consumption = 20 };
                         context.UnitStatistics.Add( cyclopStatistics );
+                        Requirement cyclopRequirement = new Requirement { BuildingName = BuildingName.barrack, Number = 2 };
+                        context.Requirements.Add( cyclopRequirement );
 
                         cyclop = new Unit
                         {
@@ -205,7 +213,8 @@ namespace ITI.SkyLord
                             UnitCost = cyclopCost,
                             UnitStatistics = cyclopStatistics,
                             Duration = 120,
-                            IsModel = true
+                            IsModel = true,
+                            Requirements = new List<Requirement> { cyclopRequirement }
                         };
                         context.Units.Add( cyclop );
                     }
@@ -224,7 +233,7 @@ namespace ITI.SkyLord
                             UnitDamageType = UnitDamageType.physical,
                             UnitCost = gobelinCost,
                             UnitStatistics = gobelinStatistics,
-                            Duration = 60,
+                            Duration = 10,
                             IsModel = true
                         };
                         context.Units.Add( gobelin );

@@ -1,0 +1,13 @@
+﻿@model ITI.SkyLord.ViewModel.OverViewViewModel
+@{
+}
+<ul>
+    @foreach(var island in Model.Layout.AllIslands)
+    {
+        <li>
+            <h2>@island.Name</h2>
+            <a asp-controller="Island" asp-action="SeeMyIsland" asp-route-islandId="@island.IslandId">Voir l'île</a>
+        </li>
+    }
+
+</ul>

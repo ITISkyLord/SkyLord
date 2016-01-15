@@ -12,15 +12,8 @@ using Microsoft.AspNet.Mvc.Rendering;
 
 namespace ITI.SkyLord.Controllers
 {
-    public class BuildingController : Controller
+    public class BuildingController : GenericController
     {
-        [FromServices]
-        public LevelContext LevelContext { get; set; }
-        [FromServices]
-        public IslandContext IslandContext { get; set; }
-        [FromServices]
-        public PlayerContext PlayerContext { get; set; }
-
         public override void OnActionExecuting( ActionExecutingContext context )
         {
             if ( User.IsSignedIn() )
@@ -29,19 +22,20 @@ namespace ITI.SkyLord.Controllers
                 if ( Request.Query.ContainsKey( "islandId" ) )
                 {
                     // If islandId is present, check it with ValidateIsland method
-                    long activePlayerId = LevelContext.GetPlayer( User.GetUserId() ).PlayerId;
-                    LevelContext.ValidateIsland( long.Parse( Request.Query[ "islandId" ] ), activePlayerId );
+                    long activePlayerId = SetupContext.GetPlayer( User.GetUserId() ).PlayerId;
+                    SetupContext.ValidateIsland( long.Parse( Request.Query[ "islandId" ] ), activePlayerId );
                 }
                 //else
                 //{
                 //    // If islandId is not present, add it to the query
-                //    long activePlayerId = LevelContext.GetPlayer( User.GetUserId() ).PlayerId;
-                //    Island userCapital = LevelContext.GetIsland( 0, activePlayerId );
+                //    long activePlayerId = SetupContext.GetPlayer( User.GetUserId() ).PlayerId;
+                //    Island userCapital = SetupContext.GetIsland( 0, activePlayerId );
                 //    Request.QueryString.Add( "islandId", userCapital.IslandId.ToString() );
                 //}
                 base.OnActionExecuting( context );
             }
         }
+
         public IActionResult Index()
         {
             return View();
@@ -54,9 +48,10 @@ namespace ITI.SkyLord.Controllers
         /// <returns>Buildings view</returns>
         public IActionResult SeeBuildings( long islandId )
         {
-            long playerId = LevelContext.GetPlayer( User.GetUserId() ).PlayerId;
+            long playerId = SetupContext.GetPlayer( User.GetUserId() ).PlayerId;
             BuildingViewModel model = CreateBuildingViewModel( islandId, playerId );
             return View( model );
+
         }
 
         /// <summary>
@@ -68,9 +63,9 @@ namespace ITI.SkyLord.Controllers
         public IActionResult AddBuilding( BuildingViewModel model, long islandId = 0 )
         {
             BuildingViewModel buildingViewModel = new BuildingViewModel();
-            long playerId = LevelContext.GetPlayer( User.GetUserId() ).PlayerId;
+            long playerId = SetupContext.GetPlayer( User.GetUserId() ).PlayerId;
 
-            BuildingManager buildingManager = new BuildingManager( LevelContext, new LevelManager( LevelContext ), new RessourceManager( LevelContext ) );
+            BuildingManager buildingManager = new BuildingManager( SetupContext, new LevelManager( SetupContext ), new RessourceManager( SetupContext ) );
 
             if ( !buildingManager.IsEnoughForFirstLevel( model.TargetBuilding, islandId, playerId ) )
             {
@@ -79,19 +74,20 @@ namespace ITI.SkyLord.Controllers
 
             if ( buildingManager.AddBuildingToIsland( model.TargetBuilding, islandId, model.Position ) )
             {
-                LevelContext.SaveChanges();
+                SetupContext.SaveChanges();
             }
             return RedirectToAction( "SeeBuildings", new { islandId = islandId } );
         }
 
         public IActionResult LevelUpBuilding( BuildingViewModel model, long islandId = 0 )
         {
-            long playerId = PlayerContext.GetPlayer( User.GetUserId() ).PlayerId;
+            long playerId = SetupContext.GetPlayer( User.GetUserId() ).PlayerId;
             BuildingViewModel buildingViewModel = new BuildingViewModel();
 
-            // TODO Changer en SetupContext
-
-            BuildingManager buildingManager = new BuildingManager( LevelContext, new LevelManager( LevelContext ), new RessourceManager( LevelContext ) );
+            
+            BuildingManager buildingManager = new BuildingManager( SetupContext, new LevelManager( SetupContext ), new RessourceManager( SetupContext ) );
+            
+            
 
             if ( !buildingManager.IsEnoughForNextLevel( model.TargetBuilding, islandId, playerId, model.Position ) )
             {
@@ -100,21 +96,21 @@ namespace ITI.SkyLord.Controllers
 
             if ( buildingManager.LevelUpBuilding( model.TargetBuilding, islandId, playerId, model.Position ) )
             {
-                LevelContext.SaveChanges();
+                SetupContext.SaveChanges();
             }
             return RedirectToAction( "SeeBuildings", new { islandId = islandId } );
         }
 
         private BuildingViewModel CreateBuildingViewModel( BuildingViewModel model, long islandId, long playerId )
         {
-            LevelContext.FillStandardVM( model, LevelContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
+            SetupContext.FillStandardVM( model, SetupContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
 
-            model.Layout.CurrentPlayer = LevelContext.GetPlayer( User.GetUserId() );
-            Island currentIsland = IslandContext.GetIsland( islandId, model.Layout.CurrentPlayer.PlayerId );
+            model.Layout.CurrentPlayer = SetupContext.GetPlayer( User.GetUserId() );
+            Island currentIsland = SetupContext.GetIsland( islandId, model.Layout.CurrentPlayer.PlayerId );
 
-            RessourceManager ressourceManager = new RessourceManager( LevelContext );
-            LevelManager levelManager = new LevelManager( LevelContext );
-            BuildingManager buildingManager = new BuildingManager( LevelContext, levelManager, ressourceManager );
+            RessourceManager ressourceManager = new RessourceManager( SetupContext );
+            LevelManager levelManager = new LevelManager( SetupContext );
+            BuildingManager buildingManager = new BuildingManager( SetupContext, levelManager, ressourceManager );
 
             model.Buildings = buildingManager.GetBuildingsOnCurrentIsland( islandId, playerId );
             model.NextLevelCosts = new Dictionary<int, Ressource>();
@@ -131,7 +127,7 @@ namespace ITI.SkyLord.Controllers
         private BuildingViewModel CreateBuildingViewModel( long islandId, long playerId )
         {
             BuildingViewModel model = new BuildingViewModel();
-            LevelContext.FillStandardVM( model, LevelContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
+            SetupContext.FillStandardVM( model, SetupContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
 
             return CreateBuildingViewModel( model, islandId, playerId );
         }

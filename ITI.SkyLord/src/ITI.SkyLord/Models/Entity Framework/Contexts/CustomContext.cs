@@ -25,6 +25,14 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
             svm.Layout.CurrentPlayer = Players.Single( p => p.PlayerId == playerId );
             svm.Layout.IslandId = islandId;
         }
+        public void FillStandardVM(StandardViewModel svm, long playerId)
+        {
+            svm.Layout = new LayoutViewModel();
+            svm.Layout.AllIslands = Islands.Include(i => i.Owner).Where(i => i.Owner.PlayerId == playerId).ToList();
+            svm.Layout.CurrentIsland = null;
+            svm.Layout.CurrentPlayer = Players.Single(p => p.PlayerId == playerId);
+            svm.Layout.IslandId = 0;
+        }
 
         public Player GetPlayer( string userId )
         {
@@ -46,7 +54,7 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
                     .Include( i => i.Coordinates )
                     .Include( i => i.Buildings )
                     .ThenInclude( b => b.Level )
-                    //  .ThenInclude( r => r.Requirements )
+                    //.ThenInclude( r => r.Requirements )
                     .SingleOrDefault( i => i.IsCapital && i.Owner.PlayerId == playerId );
             }
             else
@@ -60,7 +68,7 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
                     .Include( i => i.Coordinates )
                     .Include( i => i.Buildings )
                     .ThenInclude( b => b.Level )
-                    //  .ThenInclude( r => r.Requirements )
+                    //.ThenInclude( r => r.Requirements )
                     .SingleOrDefault( i => i.IslandId == islandId && i.Owner.PlayerId == playerId );
             }
         }

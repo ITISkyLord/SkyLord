@@ -12,10 +12,8 @@ using Microsoft.Extensions.Logging;
 using ITI.SkyLord.Models;
 using ITI.SkyLord.Models.Entity_Framework.Contexts;
 using ITI.SkyLord.ViewModels.Account;
-using ITI.SkyLord.Services;
 using ITI.SkyLord.Controllers;
-using ITI.SkyLord.Models.ObjectModel;
-using ITI.SkyLord.ViewModel;
+using ITI.SkyLord.ViewModel.Account;
 
 namespace ITI.SkyLord.Models.Entity_Framework.Controllers
 {
@@ -33,6 +31,7 @@ namespace ITI.SkyLord.Models.Entity_Framework.Controllers
         private readonly IEmailSender _emailSender;
         private readonly ISmsSender _smsSender;
         private readonly ILogger _logger;
+
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
@@ -48,28 +47,18 @@ namespace ITI.SkyLord.Models.Entity_Framework.Controllers
         }
 
         //
-        // GET: /Account/Login
-        [HttpGet]
-        [AllowAnonymous]
-        public IActionResult Login(string returnUrl = null)
-        {
-            ViewData["ReturnUrl"] = returnUrl;
-            return View();
-        }
-
-        //
         // POST: /Account/Login
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
+        public async Task<IActionResult> Login(AccountViewModel model, string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+                var result = await _signInManager.PasswordSignInAsync(model.loginViewModel.Email, model.loginViewModel.Password, model.loginViewModel.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
                     //StandardViewModel svm = new StandardViewModel();
@@ -80,31 +69,22 @@ namespace ITI.SkyLord.Models.Entity_Framework.Controllers
                 }
                 if (result.RequiresTwoFactor)
                 {
-                    return RedirectToAction(nameof(SendCode), new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+                    return RedirectToAction(nameof(SendCode), new { ReturnUrl = returnUrl, RememberMe = model.loginViewModel.RememberMe });
                 }
                 if (result.IsLockedOut)
                 {
                     _logger.LogWarning(2, "User account locked out.");
-                    return View("Lockout");
+                    return RedirectToAction("Index", "Home");
                 }
                 else
                 {
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                    return View(model);
+                    return RedirectToAction("Index", "Home");
                 }
             }
 
             // If we got this far, something failed, redisplay form
-            return View(model);
-        }
-
-        //
-        // GET: /Account/Register
-        [HttpGet]
-        [AllowAnonymous]
-        public IActionResult Register()
-        {
-            return View();
+            return RedirectToAction("Index", "Home");
         }
 
         //
@@ -112,13 +92,12 @@ namespace ITI.SkyLord.Models.Entity_Framework.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(RegisterViewModel model)
+        public async Task<IActionResult> Register(AccountViewModel model)
         {
-            
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await _userManager.CreateAsync(user, model.Password);
+                var user = new ApplicationUser { UserName = model.registerViewModel.Email, Email = model.registerViewModel.Email };
+                var result = await _userManager.CreateAsync(user, model.registerViewModel.Password);
                 if (result.Succeeded)
                 {
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=532713
@@ -132,25 +111,25 @@ namespace ITI.SkyLord.Models.Entity_Framework.Controllers
 
                     Island island = null;
 
-                    using( PlayerContext context = new PlayerContext() )
+                    using (PlayerContext context = new PlayerContext())
                     {
-                    //    Player p = new Player( context.GetWorld(), model.Pseudo, model.Email, model.Password );
+                        //    Player p = new Player( context.GetWorld(), model.Pseudo, model.Email, model.Password );
                         Player p = new Player();
                         p.World = context.GetWorld();
-                        p.Name = model.Pseudo;
-                        p.Mail = model.Email;
-                        p.Password = model.Password;
+                        p.Name = model.registerViewModel.Pseudo;
+                        p.Mail = model.registerViewModel.Email;
+                        p.Password = model.registerViewModel.Password;
                         p.Profil = new Profil();
                         p.Profil.Description = "";
                         island = context.Islands.Include(i => i.Coordinates).Where(i => i.Owner == null ).OrderBy(i => IslandManager.DistanceFromCenter(i)).First();
                         p.Islands = new List<Island>();
                         island.IsCapital = true;
                         island.Name = "Île de " + p.Name;
-                        p.Islands.Add( island );
+                        p.Islands.Add(island);
                         island.Owner = p;
-                        context.Players.Add( p );
-                        context.Profils.Add( p.Profil );
-                        context.User_Players.Add( new User_Player( p, user ) );
+                        context.Players.Add(p);
+                        context.Profils.Add(p.Profil);
+                        context.User_Players.Add(new User_Player(p, user));
 
                         context.SaveChanges();
                     }
@@ -165,17 +144,16 @@ namespace ITI.SkyLord.Models.Entity_Framework.Controllers
                     island.Buildings = new List<Building> { mageTower };
                     LevelContext.SaveChanges();
 
-                    return RedirectToAction( nameof( HomeController.Index ), "Home" );
+                    return RedirectToAction("SeeMyIsland", "Island");
                 }
+
                 AddErrors(result);
             }
 
             // If we got this far, something failed, redisplay form
-            return View(model);
+            return RedirectToAction("Index", "Home");
         }
 
-        //
-        // POST: /Account/LogOff
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> LogOff()
@@ -185,94 +163,95 @@ namespace ITI.SkyLord.Models.Entity_Framework.Controllers
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 
-        //
-        // POST: /Account/ExternalLogin
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public IActionResult ExternalLogin(string provider, string returnUrl = null)
-        {
-            // Request a redirect to the external login provider.
-            var redirectUrl = Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl });
-            var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
-            return new ChallengeResult(provider, properties);
-        }
+        ////
+        //// POST: /Account/ExternalLogin
+        //[HttpPost]
+        //[AllowAnonymous]
+        //[ValidateAntiForgeryToken]
+        //public IActionResult ExternalLogin(string provider, string returnUrl = null)
+        //{
+        //    // Request a redirect to the external login provider.
+        //    var redirectUrl = Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl });
+        //    var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
+        //    return new ChallengeResult(provider, properties);
+        //}
+        
 
-        //
-        // GET: /Account/ExternalLoginCallback
-        [HttpGet]
-        [AllowAnonymous]
-        public async Task<IActionResult> ExternalLoginCallback(string returnUrl = null)
-        {
-            var info = await _signInManager.GetExternalLoginInfoAsync();
-            if (info == null)
-            {
-                return RedirectToAction(nameof(Login));
-            }
+        ////
+        //// GET: /Account/ExternalLoginCallback
+        //[HttpGet]
+        //[AllowAnonymous]
+        //public async Task<IActionResult> ExternalLoginCallback(string returnUrl = null)
+        //{
+        //    var info = await _signInManager.GetExternalLoginInfoAsync();
+        //    if (info == null)
+        //    {
+        //        return RedirectToAction(nameof(Login));
+        //    }
 
-            // Sign in the user with this external login provider if the user already has a login.
-            var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false);
-            if (result.Succeeded)
-            {
-                _logger.LogInformation(5, "User logged in with {Name} provider.", info.LoginProvider);
-                return RedirectToLocal(returnUrl);
-            }
-            if (result.RequiresTwoFactor)
-            {
-                return RedirectToAction(nameof(SendCode), new { ReturnUrl = returnUrl });
-            }
-            if (result.IsLockedOut)
-            {
-                return View("Lockout");
-            }
-            else
-            {
-                // If the user does not have an account, then ask the user to create an account.
-                ViewData["ReturnUrl"] = returnUrl;
-                ViewData["LoginProvider"] = info.LoginProvider;
-                var email = info.ExternalPrincipal.FindFirstValue(ClaimTypes.Email);
-                return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = email });
-            }
-        }
+        //    // Sign in the user with this external login provider if the user already has a login.
+        //    var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false);
+        //    if (result.Succeeded)
+        //    {
+        //        _logger.LogInformation(5, "User logged in with {Name} provider.", info.LoginProvider);
+        //        return RedirectToLocal(returnUrl);
+        //    }
+        //    if (result.RequiresTwoFactor)
+        //    {
+        //        return RedirectToAction(nameof(SendCode), new { ReturnUrl = returnUrl });
+        //    }
+        //    if (result.IsLockedOut)
+        //    {
+        //        return View("Lockout");
+        //    }
+        //    else
+        //    {
+        //        // If the user does not have an account, then ask the user to create an account.
+        //        ViewData["ReturnUrl"] = returnUrl;
+        //        ViewData["LoginProvider"] = info.LoginProvider;
+        //        var email = info.ExternalPrincipal.FindFirstValue(ClaimTypes.Email);
+        //        return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = email });
+        //    }
+        //}
 
-        //
-        // POST: /Account/ExternalLoginConfirmation
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl = null)
-        {
-            if (User.IsSignedIn())
-            {
-                return RedirectToAction(nameof(ManageController.Index), "Manage");
-            }
+        ////
+        //// POST: /Account/ExternalLoginConfirmation
+        //[HttpPost]
+        //[AllowAnonymous]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl = null)
+        //{
+        //    if (User.IsSignedIn())
+        //    {
+        //        return RedirectToAction(nameof(ManageController.Index), "Manage");
+        //    }
 
-            if (ModelState.IsValid)
-            {
-                // Get the information about the user from the external login provider
-                var info = await _signInManager.GetExternalLoginInfoAsync();
-                if (info == null)
-                {
-                    return View("ExternalLoginFailure");
-                }
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await _userManager.CreateAsync(user);
-                if (result.Succeeded)
-                {
-                    result = await _userManager.AddLoginAsync(user, info);
-                    if (result.Succeeded)
-                    {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
-                        _logger.LogInformation(6, "User created an account using {Name} provider.", info.LoginProvider);
-                        return RedirectToLocal(returnUrl);
-                    }
-                }
-                AddErrors(result);
-            }
+        //    if (ModelState.IsValid)
+        //    {
+        //        // Get the information about the user from the external login provider
+        //        var info = await _signInManager.GetExternalLoginInfoAsync();
+        //        if (info == null)
+        //        {
+        //            return View("ExternalLoginFailure");
+        //        }
+        //        var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+        //        var result = await _userManager.CreateAsync(user);
+        //        if (result.Succeeded)
+        //        {
+        //            result = await _userManager.AddLoginAsync(user, info);
+        //            if (result.Succeeded)
+        //            {
+        //                await _signInManager.SignInAsync(user, isPersistent: false);
+        //                _logger.LogInformation(6, "User created an account using {Name} provider.", info.LoginProvider);
+        //                return RedirectToLocal(returnUrl);
+        //            }
+        //        }
+        //        AddErrors(result);
+        //    }
 
-            ViewData["ReturnUrl"] = returnUrl;
-            return View(model);
-        }
+        //    ViewData["ReturnUrl"] = returnUrl;
+        //    return View(model);
+        //}
 
         // GET: /Account/ConfirmEmail
         [HttpGet]
@@ -507,7 +486,7 @@ namespace ITI.SkyLord.Models.Entity_Framework.Controllers
             }
             else
             {
-                return RedirectToAction( "SeeMyIsland", "Island" );
+                return RedirectToAction("SeeMyIsland", "Island");
             }
         }
 

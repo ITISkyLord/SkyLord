@@ -3,20 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ITI.SkyLord.Models.Entity_Framework.Contexts;
+using ITI.SkyLord.Models.Entity_Framework.Contexts.Interface;
 using Microsoft.Data.Entity;
+using ITI.SkyLord.Services;
 
-namespace ITI.SkyLord.Services
+namespace ITI.SkyLord
 {
     public class BuildingManager
     {
         long _lastCurrentIsland = 0;
         List<Building> _buildingsOnIlsand;
 
-        public LevelContext CurrentContext { get; }
-        public LevelManager LevelManager { get; set; }
-        public RessourceManager RessourceManager { get; set; }
+        private ILevelContext CurrentContext { get; }
+        private LevelManager LevelManager { get; }
+        private RessourceManager RessourceManager { get; }
 
-        public BuildingManager( LevelContext currentContext, LevelManager levelManager, RessourceManager ressourceManager )
+        public BuildingManager( ILevelContext currentContext, LevelManager levelManager, RessourceManager ressourceManager )
         {
             CurrentContext = currentContext;
             LevelManager = levelManager;
@@ -24,7 +26,7 @@ namespace ITI.SkyLord.Services
         }
 
         /// <summary>
-        /// 
+        /// Adds a level 1 building to an Island, checks if the building can be built
         /// </summary>
         /// <param name="buildingName"></param>
         /// <returns>True : building was added. False : building not allowed.</returns>
@@ -51,7 +53,7 @@ namespace ITI.SkyLord.Services
             {
                 Name = BuildingNameToName( buildingName ),
                 BuildingName = buildingName,
-                Level = CurrentContext.BuildingLevels.Include( bl => bl.Cost).First( bl => bl.BuildingName == buildingName && bl.Number == 1 ),
+                Level = CurrentContext.BuildingLevels.Include( bl => bl.Cost ).First( bl => bl.BuildingName == buildingName && bl.Number == 1 ),
                 Position = position
             };
             currentIsland.Buildings.Add( buildingToAdd );
@@ -88,7 +90,9 @@ namespace ITI.SkyLord.Services
             {
                 if ( buildingName != BuildingName.none )
                 {
-                    availableBuildings.Add( new Building { BuildingName = buildingName, Name = BuildingNameToName( buildingName ) } );
+                    var firstLevel = CurrentContext.BuildingLevels.Include(l => l.Cost).Where(l => l.BuildingName == buildingName && l.Number == 1).SingleOrDefault();
+
+                    availableBuildings.Add( new Building { BuildingName = buildingName, Name = BuildingNameToName( buildingName ), Level= firstLevel} );
                 }
             }
             return availableBuildings;
@@ -104,7 +108,7 @@ namespace ITI.SkyLord.Services
             Building buildingToLevelUp = GetBuildingsOnCurrentIsland( islandId, playerId ).Single( b => b.BuildingName == buildingName && b.Position == position );
 
             Level nextLevel = LevelManager.FindNextLevel( buildingToLevelUp.Level );
-            if( nextLevel != null )
+            if ( nextLevel != null )
             {
                 return RessourceManager.IsEnough( CurrentContext.GetIsland( islandId, playerId ).AllRessources, nextLevel.Cost );
             }
@@ -113,7 +117,7 @@ namespace ITI.SkyLord.Services
 
         public bool IsEnoughForFirstLevel( BuildingName buildingName, long islandId, long playerId )
         {
-            BuildingLevel buildingToLevelUp = CurrentContext.BuildingLevels.Include( bl => bl.Cost).First( bl => bl.BuildingName == buildingName && bl.Number == 1 );
+            BuildingLevel buildingToLevelUp = CurrentContext.BuildingLevels.Include( bl => bl.Cost ).First( bl => bl.BuildingName == buildingName && bl.Number == 1 );
 
             return RessourceManager.IsEnough( CurrentContext.GetIsland( islandId, playerId ).AllRessources, buildingToLevelUp.Cost );
         }
@@ -187,13 +191,21 @@ namespace ITI.SkyLord.Services
 
         public List<Building> GetBuildingsOnCurrentIsland( long currentIslandId, long playerId )
         {
-            if( currentIslandId == 0 )
+            if ( currentIslandId == 0 )
             {
                 currentIslandId = CurrentContext.Islands.Include( i => i.Owner ).Single( i => i.IsCapital && i.Owner.PlayerId == playerId ).IslandId;
             }
 
             if ( _lastCurrentIsland != currentIslandId )
             {
+                Island testIsland = CurrentContext.Islands.First( i => i.IslandId == currentIslandId );
+                Island testIsland2 = CurrentContext.Islands.Include( i => i.Buildings )
+                    .First( i => i.IslandId == currentIslandId );
+                Island testIsland3 = CurrentContext.Islands
+                    .Include( i => i.Buildings )
+                        .ThenInclude( b=> b.Level )
+                    .First( i => i.IslandId == currentIslandId );
+
                 _buildingsOnIlsand = CurrentContext.Islands
                     .Include( i => i.Buildings )
                     .ThenInclude( b => b.Level )
@@ -201,9 +213,9 @@ namespace ITI.SkyLord.Services
                     .First( i => i.IslandId == currentIslandId ).Buildings.ToList();
                 _lastCurrentIsland = currentIslandId;
 
-                foreach( Building buiding in _buildingsOnIlsand )
+                foreach ( Building buiding in _buildingsOnIlsand )
                 {
-                    buiding.Level.Cost = CurrentContext.Buildings.Include( b => b.Level).ThenInclude( l => l.Cost)
+                    buiding.Level.Cost = CurrentContext.Buildings.Include( b => b.Level ).ThenInclude( l => l.Cost )
                         .First( b => b.BuildingId == buiding.BuildingId ).Level.Cost;
                 }
             }
@@ -219,9 +231,5 @@ namespace ITI.SkyLord.Services
             return false;
         }
 
-        //private Building GetBuildingAtPosition( int position, long currentIslandId )
-        //{
-        //    return GetBuildingsOnCurrentIsland( currentIslandId ).SingleOrDefault( b => b.Position == position );
-        //}
     }
 }
