@@ -2,13 +2,13 @@
 
 @model ProfilViewModel
 @{
-    <div class="container text-center">
-        <div class="row">
-            <div class="col-sm-2 col-md-2">
-                <img src="~/images/avatar4.jpg" class="img-rounded img-responsive" alt="Random Name">
-            </div>
+    <div class="profilContainer">
+        <div class="container text-center">
+            <div class="row">
 
-            <div class="profilContainer">
+                <div class="col-sm-2 col-md-2">
+                    <img src="~/images/avatar4.jpg" id="pp" class="img-rounded img-responsive" alt="Random Name">
+                </div>
                 <div class="col-sm-8 col-md-8">
                     <blockquote>
                         <cite title="Source Title">@ViewData["name"]</cite>
@@ -18,9 +18,9 @@
                     <div class="form-group">
                         <hr /><br /><textarea class="form-control" rows="5" id="description" readonly>@Model.Description</textarea><hr />
                     </div>
-                        <a asp-controller="Profil" asp-action="ChangeProfil" asp-route-islandId="@Model.Layout.IslandId">
-                            <span style="font-size:2.9em;" class="glyphicon glyphicon-pencil"></span>
-                        </a>
+                    <a asp-controller="Profil" asp-action="ChangeProfil" asp-route-islandId="@Model.Layout.IslandId">
+                        <span style="font-size:2.9em;" class="glyphicon glyphicon-pencil"></span>
+                    </a>
                 </div>
             </div>
 

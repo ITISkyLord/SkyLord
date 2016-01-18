@@ -6837,7 +6837,7 @@ body {
   border-radius: 1px;
   background-color: "white";
   height: auto;
-  width: auto;
+  width: 100%;
   height: 100%;
   background-image: url("../images/site_fond.png");
   background-repeat: no-repeat;
@@ -6870,6 +6870,7 @@ body {
   border-radius: 1px;
   background-color: "white";
   height: auto;
+  width: 100%;
   line-height: 30px;
   font-size: 12px;
   height: 100%;
@@ -7005,7 +7006,7 @@ body {
   border-radius: 1px;
   background-color: "white";
   height: auto;
-  width: auto;
+  width: 100%;
   height: 100%;
   background-image: url("../images/sitecarton.png");
   background-repeat: no-repeat;
@@ -7022,6 +7023,9 @@ body {
     margin-right: 0;
     margin-left: 0;
   }
+}
+.SkyLordContainer .profilContainer #pp {
+  padding: 5px;
 }
 .SkyLordContainer .profilContainer blockquote {
   border-left: none;

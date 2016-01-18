@@ -45,53 +45,6 @@
         </div>
     </nav>
 
-    @*<div class="ConnectionBlock">
-            <h2>Connexion</h2>
-            <form asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal" role="form">
-                <hr />
-
-                <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
-
-                <div class="form-group">
-                    <label asp-for="@Model.loginViewModel.Email" class="col-md-3 control-label"></label>
-                    <div class="col-md-9">
-                        <input asp-for="@Model.loginViewModel.Email" class="form-control" />
-                        <span asp-validation-for="@Model.loginViewModel.Email" class="text-danger"></span>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label asp-for="@Model.loginViewModel.Password" class="col-md-3 control-label"></label>
-                    <div class="col-md-9">
-                        <input asp-for="@Model.loginViewModel.Password" class="form-control" />
-                        <span asp-validation-for="@Model.loginViewModel.Password" class="text-danger"></span>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col-md-offset-1 col-md-10">
-                        <div class="checkbox">
-                            <input asp-for="@Model.loginViewModel.RememberMe" />
-                            <label asp-for="@Model.loginViewModel.RememberMe"></label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col-md-offset-1 col-md-10">
-                        <button type="submit" class="btn btn-default">Log in</button>
-                    </div>
-                </div>
-
-                <p>
-                    <a asp-action="ForgotPassword">Mot de passe oublié TODO ?</a>
-                </p>
-            </form>
-
-        </div>*@
-
-    @*</div>*@
-
     <div class="container">
         <!-- Trigger the modal with a button -->
         <br /><br /><br /><center><button type="button" class="btn btn-default btn-lg" id="BtnRegister">Inscription</button></center>
@@ -210,7 +163,7 @@
                 <img src="~/images/villagechibi.png" />
             </div>
             <div class="item">
-                <img src="~/images/portail.png"/>
+                <img src="~/images/portail.png" />
             </div>
             <div class="item">
                 <img src="~/images/labo.png" />
@@ -292,12 +245,11 @@
             <div class="col-sm-2">
                 <p><strong>Loïc</strong></p><br>
                 <a href="#demo6" data-toggle="collapse">
-                    <img src="~/images/SkyLord.png" class="img-circle person" alt="Random Name">
+                    <img src="~/images/loic.jpg" class="img-circle person" alt="Random Name">
                 </a>
                 <div id="demo6" class="collapse">
-                    <p>Guitarist and Lead Vocalist</p>
-                    <p>Loves long walks on the beach</p>
-                    <p>Member since 1988</p>
+                    <p>Développeur & designer de SkyLord</p>
+                    <p>Membre depuis 2015</p>
                 </div>
             </div>
         </div>
