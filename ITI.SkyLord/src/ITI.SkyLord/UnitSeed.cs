@@ -273,7 +273,7 @@ namespace ITI.SkyLord
                 // Add Unit
                 Unit champion = new Unit
                 {
-                    Name = "Chevalier",
+                    Name = "Champion",
                     UnitName = UnitName.champion,
                     UnitType = UnitType.soldier,
                     UnitDamageType = UnitDamageType.physical,
