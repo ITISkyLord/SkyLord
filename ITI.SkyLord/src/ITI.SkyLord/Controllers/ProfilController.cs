@@ -37,6 +37,26 @@ namespace ITI.SkyLord.Controllers
             return View(profilViewModel);
         }
 
+        public IActionResult ProfilOfOtherPlayer(long islandId, long id )
+        {
+            //Récupérer la description dans la BDD
+            Player currentPlayer = PlayerContext.GetPlayer(User.GetUserId());
+            Player p = PlayerContext.Players.Include(z => z.Profil).Where(x => x.PlayerId == id).First();
+            ViewData["name"] = p.Name;
+            ViewData["mail"] = p.Mail;
+            ViewData["id"] = p.PlayerId;
+            ViewData["currentPlayerId"] = currentPlayer.PlayerId;
+
+            ProfilViewModel profilViewModel = new ProfilViewModel();
+            if (!String.IsNullOrEmpty(p.Profil.Description))
+                profilViewModel.Description = p.Profil.Description;
+            else
+                profilViewModel.Description = "Aucune description";
+
+            PlayerContext.FillStandardVM(profilViewModel, PlayerContext.GetPlayer(User.GetUserId()).PlayerId, islandId);
+            return View(profilViewModel);
+        }
+
         public IActionResult ChangeProfil(long islandId = 0)
         {
             Player p = PlayerContext.GetPlayer(User.GetUserId());
