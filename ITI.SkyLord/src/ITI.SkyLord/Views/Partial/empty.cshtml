@@ -7,19 +7,21 @@
     @foreach (var CurrentBuilding in Model.AvailableBuildings)
     {
         <div class="col-sm-6 col-md-6">
-            @{Write(CurrentBuilding.Name);}
+            <div class="buildings">
+                <div class="building-head">
+                    @{Write(CurrentBuilding.Name);}
+                </div>
+               
+                @if (CurrentBuilding.Level != null)
+                {
+                    Write(" Bois: " + CurrentBuilding.Level.Cost.Wood + " Cristal:  " + CurrentBuilding.Level.Cost.Cristal + " Metal: " + CurrentBuilding.Level.Cost.Metal + " Magie: " + CurrentBuilding.Level.Cost.Magic);
+                }
+                else
+                {
+                    Write("Pas disponible");
+                }
+            </div>
 
-            <br />
-            @if (CurrentBuilding.Level != null)
-            {
-
-                Write(" Bois: " + CurrentBuilding.Level.Cost.Wood + " Cristal:  " + CurrentBuilding.Level.Cost.Cristal + " Metal: " + CurrentBuilding.Level.Cost.Metal + " Magie: " + CurrentBuilding.Level.Cost.Magic);
-            }
-            else
-            {
-                Write(" Pas disponible");
-            }
-            <br />
 
             <form asp-route-islandId="@Model.Layout.CurrentIsland.IslandId" asp-controller="Building" asp-action="AddBuilding">
                 <input type="hidden" value="@Model.Position" asp-for="@Model.Position" />
@@ -32,11 +34,11 @@
                 }
                 else
                 {
-                    @*<p>Pas assez</p>*@
+                    //Write("Pas assez de ressources");
 
                 }
 
             </form>
         </div>
-                }
+                    }
 </div>
