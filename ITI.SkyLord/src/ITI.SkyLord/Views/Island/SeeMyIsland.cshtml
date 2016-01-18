@@ -191,10 +191,10 @@
 
             <div class="templatebuilding" id="ui_@i" buildingname="@name" style="display:none;">
                 @{
-                    Ressource cost;
-                    if(!Model.NextLevelCosts.TryGetValue(i, out cost))
+                    Level nextLevel;
+                    if(!Model.NextLevel.TryGetValue(i, out nextLevel))
                     {
-                        cost = null;
+                        nextLevel = null;
                     }
 
 
@@ -207,7 +207,7 @@
                         CurrentArmy = Model.CurrentArmy,
                         AvailableUnit = Model.AvailableUnit,
                         AllUnits = Model.AllUnits,
-                        NextBuildingLevelCost = cost
+                        NextBuildingLevel = nextLevel
                     };
                     Write(Html.Partial("~/Views/Partial/" + name + ".cshtml", partialModel));
                 }

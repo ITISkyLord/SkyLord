@@ -11,7 +11,7 @@ namespace ITI.SkyLord.ViewModel.Partial
         public LayoutViewModel Layout { get; set; }
 
         // Next Level of Current Building
-        public Ressource NextBuildingLevelCost { get; set; }
+        public Level NextBuildingLevel { get; set; }
 
         // Empty
         public List<Building> AvailableBuildings { get; set; }
