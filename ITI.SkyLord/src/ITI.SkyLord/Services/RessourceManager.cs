@@ -95,6 +95,10 @@ namespace ITI.SkyLord.Services
             return true;
         }
 
+        //
+        // Créer une méthode qui rend le nombre max de Cost payable avec les fonds courants de l'ile
+        //
+
         private Ressource CloneRessource( Ressource source )
         {
             return new Ressource
