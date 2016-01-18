@@ -10,8 +10,8 @@ namespace ITI.SkyLord
         none,
         tower,
         barrack,
+        forge,
         laboratory,
-        library,
         invocation,
         academy,
         cache,
@@ -19,6 +19,7 @@ namespace ITI.SkyLord
         metalField,
         cristalField,
         magicField,
-        shield
+        shield,
+        forge
     }
 }

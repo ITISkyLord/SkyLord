@@ -90,6 +90,10 @@ namespace ITI.SkyLord.Services
         }
 
         public static Ressource CloneRessource( Ressource source )
+        //
+        // Créer une méthode qui rend le nombre max de Cost payable avec les fonds courants de l'ile
+        //
+
         {
             return new Ressource
             {

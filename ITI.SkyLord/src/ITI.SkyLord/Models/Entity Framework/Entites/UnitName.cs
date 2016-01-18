@@ -2,11 +2,29 @@
 {
     public enum UnitName
     {
-        cyclop,
+        soldier,
+        archer,
+        knight,
+        griffin,
+        champion,
         gobelin,
-        guard,
-        necromancer,
+        harpy,
+        dirtGolem,
         troll,
-        warrior
+        phenix,
+        juggernaut,
+        wisp,
+        novice,
+        necromancer,
+        summoner,
+        prophet,
+        scorpion,
+        flameThrower,
+        saboteur,
+        livingArmor,
+        ironGolem,
+        prismaticGolem,
+        canoe,
+        carrier
     }
 }

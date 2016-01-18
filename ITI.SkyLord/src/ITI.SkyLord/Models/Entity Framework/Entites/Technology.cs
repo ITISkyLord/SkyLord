@@ -9,14 +9,14 @@ namespace ITI.SkyLord
     public class Technology
     {
 
-        #region Properties
         [Key]
         public long TechnologyId { get; set; }
 
         public string Name { get; set; }
+
         public TechnologyName TechnologyName { get; set; }
+
         public TechnologyLevel Level { get; set; }
-        #endregion
 
     }
 

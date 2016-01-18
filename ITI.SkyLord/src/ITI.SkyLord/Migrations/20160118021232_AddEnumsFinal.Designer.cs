@@ -8,9 +8,10 @@ using ITI.SkyLord.Models.Entity_Framework.Contexts;
 namespace ITI.SkyLord.Migrations
 {
     [DbContext(typeof(SetupContext))]
-    partial class SetupContextModelSnapshot : ModelSnapshot
+    [Migration("20160118021232_AddEnumsFinal")]
+    partial class AddEnumsFinal
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.0-rc1-16348")
@@ -119,6 +120,20 @@ namespace ITI.SkyLord.Migrations
                     b.HasAnnotation("Relational:DiscriminatorProperty", "Discriminator");
 
                     b.HasAnnotation("Relational:DiscriminatorValue", "BuildingLevel");
+                });
+
+            modelBuilder.Entity("ITI.SkyLord.CombatReport", b =>
+                {
+                    b.Property<long>("CombatreportId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ObjectReport");
+
+                    b.Property<long?>("ReceiverPlayerId");
+
+                    b.Property<string>("Report");
+
+                    b.HasKey("CombatreportId");
                 });
 
             modelBuilder.Entity("ITI.SkyLord.Coordinate", b =>
@@ -246,8 +261,6 @@ namespace ITI.SkyLord.Migrations
                     b.Property<long?>("ReceiverPlayerId");
 
                     b.Property<long?>("SenderPlayerId");
-
-                    b.Property<bool>("isCombatReport");
 
                     b.HasKey("MessageId");
                 });
@@ -697,17 +710,9 @@ namespace ITI.SkyLord.Migrations
 
                     b.Property<long?>("ArmyArmyId");
 
-                    b.Property<long>("ArmyIdd");
-
                     b.Property<int>("ArmyMovement");
 
-                    b.Property<long>("DestinationIdd");
-
                     b.Property<long?>("DestinationIslandId");
-
-                    b.Property<long>("PillagedRessourcesIdd");
-
-                    b.Property<long?>("PillagedRessourcesRessourceId");
 
                     b.HasAnnotation("Relational:DiscriminatorValue", "ArmyEvent");
                 });
@@ -804,6 +809,13 @@ namespace ITI.SkyLord.Migrations
                     b.HasOne("ITI.SkyLord.Ressource")
                         .WithMany()
                         .HasForeignKey("CostRessourceId");
+                });
+
+            modelBuilder.Entity("ITI.SkyLord.CombatReport", b =>
+                {
+                    b.HasOne("ITI.SkyLord.Player")
+                        .WithMany()
+                        .HasForeignKey("ReceiverPlayerId");
                 });
 
             modelBuilder.Entity("ITI.SkyLord.GuildMember", b =>
@@ -1030,10 +1042,6 @@ namespace ITI.SkyLord.Migrations
                     b.HasOne("ITI.SkyLord.Island")
                         .WithMany()
                         .HasForeignKey("DestinationIslandId");
-
-                    b.HasOne("ITI.SkyLord.Ressource")
-                        .WithMany()
-                        .HasForeignKey("PillagedRessourcesRessourceId");
                 });
 
             modelBuilder.Entity("ITI.SkyLord.Models.Entity_Framework.Entites.Events.BuildingEvent", b =>

@@ -25,11 +25,11 @@ namespace ITI.SkyLord
             // Setup configuration sources.
 
             var builder = new ConfigurationBuilder()
-                .SetBasePath(appEnv.ApplicationBasePath)
-                .AddJsonFile("appsettings.json")
-                .AddJsonFile($"config.{env.EnvironmentName}.json", optional: true);
+                .SetBasePath( appEnv.ApplicationBasePath )
+                .AddJsonFile( "appsettings.json" )
+                .AddJsonFile( $"config.{env.EnvironmentName}.json", optional: true );
 
-            if( env.IsDevelopment() )
+            if ( env.IsDevelopment() )
             {
                 // This reads the configuration keys from the secret store.
                 // For more details on using the user secret store see http://go.microsoft.com/fwlink/?LinkID=532709
@@ -48,7 +48,7 @@ namespace ITI.SkyLord
             services.AddEntityFramework()
                 .AddSqlServer()
                 .AddDbContext<SetupContext>( options =>
-                     options.UseSqlServer( Configuration["Data:DefaultConnection:ConnectionString"] ) );
+                     options.UseSqlServer( Configuration[ "Data:DefaultConnection:ConnectionString" ] ) );
 
             // Add Identity services to the services container.
             services.AddIdentity<ApplicationUser, IdentityRole>( options =>
@@ -88,13 +88,13 @@ namespace ITI.SkyLord
         // Configure is called after ConfigureServices is called.
         public void Configure( IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory )
         {
-           // loggerFactory.MinimumLevel = LogLevel.Information;
+            // loggerFactory.MinimumLevel = LogLevel.Information;
             loggerFactory.AddDebug();
 
             // Configure the HTTP request pipeline.
 
             // Add the following to the request pipeline only in development environment.
-            if( env.IsDevelopment() )
+            if ( env.IsDevelopment() )
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
@@ -136,20 +136,13 @@ namespace ITI.SkyLord
             #region Seeding
             World defaultWorld = null;
 
-            Unit cyclop = null;
-            Unit gobelin = null;
-            Unit guard = null;
-            Unit necromancer = null;
-            Unit troll = null;
-            Unit warrior = null;
-
-            if( env.IsDevelopment() )
+            if ( env.IsDevelopment() )
             {
                 // Add defaultWorld
-                using( WorldContext context = new WorldContext() )
+                using ( WorldContext context = new WorldContext() )
                 {
                     defaultWorld = context.Worlds.FirstOrDefault();
-                    if( defaultWorld == null )
+                    if ( defaultWorld == null )
                     {
                         defaultWorld = new World();
                         context.Add( defaultWorld );
@@ -158,11 +151,11 @@ namespace ITI.SkyLord
                 }
 
                 // Add Islands
-                using( IslandContext context = new IslandContext() )
+                using ( IslandContext context = new IslandContext() )
                 {
-                    if( context.Islands.Count() < 99 )
+                    if ( context.Islands.Count() < 99 )
                     {
-                        for( int i = 0; i < 100; i++ )
+                        for ( int i = 0; i < 100; i++ )
                         {
                             Ressource ressource = new Ressource { Wood = 1000, Metal = 1000, Cristal = 1000, Magic = 1000 };
                             Coordinate coord = new Coordinate();
@@ -183,216 +176,9 @@ namespace ITI.SkyLord
                         }
                     }
                 }
-
-                //Add defaultUnits
-                using( SetupContext context = new SetupContext() )
-                {
-
-                    cyclop = context.Units.Where( u => u.UnitName == UnitName.cyclop && u.IsModel).SingleOrDefault();
-                    gobelin = context.Units.Where( u => u.UnitName == UnitName.gobelin && u.IsModel ).SingleOrDefault();
-                    guard = context.Units.Where( u => u.UnitName == UnitName.guard && u.IsModel ).SingleOrDefault();
-                    necromancer = context.Units.Where( u => u.UnitName == UnitName.necromancer && u.IsModel ).SingleOrDefault();
-                    troll = context.Units.Where( u => u.UnitName == UnitName.troll && u.IsModel ).SingleOrDefault();
-                    warrior = context.Units.Where( u => u.UnitName == UnitName.warrior && u.IsModel ).SingleOrDefault();
-
-                    if( cyclop == null )
-                    {
-                        Ressource cyclopCost = new Ressource { Wood = 400, Metal = 200, Cristal = 100, Magic = 100 };
-                        context.Ressources.Add( cyclopCost );
-                        UnitStatistics cyclopStatistics = new UnitStatistics { Attack = 150, PhysicResist = 80, MagicResist = 50, Capacity = 200, Speed = 15, Consumption = 20 };
-                        context.UnitStatistics.Add( cyclopStatistics );
-                        Requirement cyclopRequirement = new Requirement { BuildingName = BuildingName.barrack, Number = 2 };
-                        context.Requirements.Add( cyclopRequirement );
-
-                        cyclop = new Unit
-                        {
-                            Name = "Cyclope",
-                            UnitType = UnitType.monster,
-                            UnitName = UnitName.cyclop,
-                            UnitDamageType = UnitDamageType.magical,
-                            UnitCost = cyclopCost,
-                            UnitStatistics = cyclopStatistics,
-                            Duration = 120,
-                            IsModel = true,
-                            Requirements = new List<Requirement> { cyclopRequirement }
-                        };
-                        context.Units.Add( cyclop );
-                    }
-                    if( gobelin == null )
-                    {
-                        Ressource gobelinCost = new Ressource { Wood = 100, Metal = 100, Magic = 20 };
-                        context.Ressources.Add( gobelinCost );
-                        UnitStatistics gobelinStatistics = new UnitStatistics { Attack = 40, PhysicResist = 30, MagicResist = 30, Capacity = 50, Speed = 30, Consumption = 5 };
-                        context.UnitStatistics.Add( gobelinStatistics );
-
-                        gobelin = new Unit
-                        {
-                            Name = "Gobelin",
-                            UnitType = UnitType.monster,
-                            UnitName = UnitName.gobelin,
-                            UnitDamageType = UnitDamageType.physical,
-                            UnitCost = gobelinCost,
-                            UnitStatistics = gobelinStatistics,
-                            Duration = 10,
-                            IsModel = true
-                        };
-                        context.Units.Add( gobelin );
-                    }
-                    if( guard == null )
-                    {
-                        Ressource guardCost = new Ressource { Wood = 200, Metal = 100 };
-                        context.Ressources.Add( guardCost );
-                        UnitStatistics guardStatistics = new UnitStatistics { Attack = 70, PhysicResist = 70, MagicResist = 40, Capacity = 100, Speed = 20, Consumption = 10 };
-                        context.UnitStatistics.Add( guardStatistics );
-
-                        guard = new Unit
-                        {
-                            Name = "Garde",
-                            UnitType = UnitType.soldier,
-                            UnitName = UnitName.guard,
-                            UnitDamageType = UnitDamageType.physical,
-                            UnitCost = guardCost,
-                            UnitStatistics = guardStatistics,
-                            Duration = 90,
-                            IsModel = true
-                        };
-                        context.Units.Add( guard );
-                    }
-                    if( necromancer == null )
-                    {
-                        Ressource necromancerCost = new Ressource { Wood = 100, Metal = 100, Cristal = 200, Magic = 50 };
-                        context.Ressources.Add( necromancerCost );
-                        UnitStatistics necromancerStatistics = new UnitStatistics { Attack = 70, PhysicResist = 40, MagicResist = 70, Capacity = 50, Speed = 30, Consumption = 15 };
-                        context.UnitStatistics.Add( necromancerStatistics );
-
-                        necromancer = new Unit
-                        {
-                            Name = "Nécromancien",
-                            UnitType = UnitType.magic,
-                            UnitName = UnitName.necromancer,
-                            UnitDamageType = UnitDamageType.magical,
-                            UnitCost = necromancerCost,
-                            UnitStatistics = necromancerStatistics,
-                            Duration = 90,
-                            IsModel = true
-                        };
-                        context.Units.Add( necromancer );
-                    }
-                    if( troll == null )
-                    {
-                        Ressource trollCost = new Ressource { Wood = 300, Metal = 200, Cristal = 150, Magic = 50 };
-                        context.Ressources.Add( trollCost );
-                        UnitStatistics trollStatistics = new UnitStatistics { Attack = 180, PhysicResist = 60, MagicResist = 100, Capacity = 200, Speed = 15, Consumption = 20 };
-                        context.UnitStatistics.Add( trollStatistics );
-
-                        troll = new Unit
-                        {
-                            Name = "Troll",
-                            UnitType = UnitType.monster,
-                            UnitName = UnitName.troll,
-                            UnitDamageType = UnitDamageType.physical,
-                            UnitCost = trollCost,
-                            UnitStatistics = trollStatistics,
-                            Duration = 150,
-                            IsModel = true
-                        };
-                        context.Units.Add( troll );
-                    }
-                    if( warrior == null )
-                    {
-                        Ressource warriorCost = new Ressource { Wood = 200, Metal = 100, Cristal = 50 };
-                        context.Ressources.Add( warriorCost );
-                        UnitStatistics warriorStatistics = new UnitStatistics { Attack = 80, PhysicResist = 40, MagicResist = 40, Capacity = 125, Speed = 20, Consumption = 15 };
-                        context.UnitStatistics.Add( warriorStatistics );
-
-                        warrior = new Unit
-                        {
-                            Name = "Guerrier",
-                            UnitType = UnitType.soldier,
-                            UnitName = UnitName.warrior,
-                            UnitDamageType = UnitDamageType.physical,
-                            UnitCost = warriorCost,
-                            UnitStatistics = warriorStatistics,
-                            Duration = 70,
-                            IsModel = true
-                        };
-                        context.Units.Add( warrior );
-                        context.SaveChanges();
-                    }
-                }
             }
-            #endregion
-
-            #region Temp seed level
-            //using ( LevelContext context = new LevelContext() )
-            //{
-            //    Ressource barrackLevel1Cost = null;
-            //    Ressource barrackLevel2Cost = null;
-            //    Ressource barrackLevel3Cost = null;
-
-            //    Requirement barrackLevel2Requirement = null;
-            //    Requirement barrackLevel3Requirement = null;
-            //    Requirement barrackLevel3Requirement2 = null;
-
-            //    Level barrackLevel1 = null;
-            //    Level barrackLevel2 = null;
-            //    Level barrackLevel3 = null;
-            //    Level towerLevel2 = null;
-
-
-
-            //    // Set up requirements
-            //    barrackLevel2Requirement = new Requirement { BuildingName = BuildingName.barrack, Number = 1 };
-            //    barrackLevel3Requirement = new Requirement { BuildingName = BuildingName.barrack, Number = 2 };
-            //    barrackLevel3Requirement2 = new Requirement { BuildingName = BuildingName.tower, Number = 2 };
-            //    context.Add( barrackLevel2Requirement );
-            //    context.Add( barrackLevel3Requirement );
-            //    context.Add( barrackLevel3Requirement2 );
-
-            //    // Set up LevelCosts
-            //    barrackLevel1Cost = new Ressource { Wood = 100, Metal = 50 };
-            //    barrackLevel2Cost = Multiplyressource( barrackLevel1Cost, 2 );
-            //    barrackLevel3Cost = Multiplyressource( barrackLevel2Cost, 2 );
-            //    context.Add( barrackLevel1Cost );
-            //    context.Add( barrackLevel2Cost );
-            //    context.Add( barrackLevel3Cost );
-
-            //    // Set up Levels
-            //    barrackLevel1 = new BuildingLevel
-            //    {
-            //        Number = 1,
-            //        BuildingName = BuildingName.barrack,
-            //        Cost = barrackLevel1Cost
-            //    };
-            //    barrackLevel2 = new BuildingLevel
-            //    {
-            //        Number = 2,
-            //        BuildingName = BuildingName.barrack,
-            //        Cost = barrackLevel2Cost,
-            //        Requirements = new List<Requirement> { barrackLevel2Requirement }
-            //    };
-            //    barrackLevel3 = new BuildingLevel
-            //    {
-            //        Number = 3,
-            //        BuildingName = BuildingName.barrack,
-            //        Cost = barrackLevel3Cost,
-            //        Requirements = new List<Requirement> { barrackLevel3Requirement, barrackLevel3Requirement2 }
-            //    };
-            //    towerLevel2 = new BuildingLevel
-            //    {
-            //        Number = 2,
-            //        BuildingName = BuildingName.tower
-            //    };
-            //    context.Add( barrackLevel1 );
-            //    context.Add( barrackLevel2 );
-            //    context.Add( barrackLevel3 );
-            //    context.Add( towerLevel2 );
-
-            //    context.SaveChanges();
-            //}
-            #endregion
-
         }
+        #endregion
 
         private Ressource Multiplyressource( Ressource initialRessource, int factor )
         {
