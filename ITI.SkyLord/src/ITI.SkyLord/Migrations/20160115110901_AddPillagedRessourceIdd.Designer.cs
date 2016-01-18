@@ -8,9 +8,10 @@ using ITI.SkyLord.Models.Entity_Framework.Contexts;
 namespace ITI.SkyLord.Migrations
 {
     [DbContext(typeof(SetupContext))]
-    partial class SetupContextModelSnapshot : ModelSnapshot
+    [Migration("20160115110901_AddPillagedRessourceIdd")]
+    partial class AddPillagedRessourceIdd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.0-rc1-16348")
@@ -672,17 +673,6 @@ namespace ITI.SkyLord.Migrations
                     b.HasAnnotation("Relational:DiscriminatorValue", "FieldLevel");
                 });
 
-            modelBuilder.Entity("ITI.SkyLord.ShieldLevel", b =>
-                {
-                    b.HasBaseType("ITI.SkyLord.BuildingLevel");
-
-                    b.Property<int>("Defense");
-
-                    b.Property<int>("Offense");
-
-                    b.HasAnnotation("Relational:DiscriminatorValue", "ShieldLevel");
-                });
-
             modelBuilder.Entity("ITI.SkyLord.MageLevel", b =>
                 {
                     b.HasBaseType("ITI.SkyLord.Level");
@@ -1010,10 +1000,6 @@ namespace ITI.SkyLord.Migrations
                 });
 
             modelBuilder.Entity("ITI.SkyLord.FieldLevel", b =>
-                {
-                });
-
-            modelBuilder.Entity("ITI.SkyLord.ShieldLevel", b =>
                 {
                 });
 

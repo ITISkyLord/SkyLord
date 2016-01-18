@@ -16,13 +16,11 @@ namespace ITI.SkyLord
 
         private ILevelContext CurrentContext { get; }
         private LevelManager LevelManager { get; }
-        private RessourceManager RessourceManager { get; }
 
-        public BuildingManager( ILevelContext currentContext, LevelManager levelManager, RessourceManager ressourceManager )
+        public BuildingManager( ILevelContext currentContext, LevelManager levelManager )
         {
             CurrentContext = currentContext;
             LevelManager = levelManager;
-            RessourceManager = ressourceManager;
         }
 
         /// <summary>
@@ -96,6 +94,11 @@ namespace ITI.SkyLord
                 }
             }
             return availableBuildings;
+        }
+
+        public Building GetBuildingOnPosition(long islandId, int position)
+        {
+            return CurrentContext.Islands.Include(i => i.Buildings).Where(i => i.IslandId == islandId).Single().Buildings.Where(b => b.Position == position).FirstOrDefault();
         }
 
         public bool IsEnough( Ressource ressourceToChange, Ressource cost )
@@ -189,21 +192,15 @@ namespace ITI.SkyLord
 
         public List<Building> GetBuildingsOnCurrentIsland( long currentIslandId, long playerId )
         {
+            // Search Capital if islandId is not set
             if ( currentIslandId == 0 )
             {
                 currentIslandId = CurrentContext.Islands.Include( i => i.Owner ).Single( i => i.IsCapital && i.Owner.PlayerId == playerId ).IslandId;
             }
 
+
             if ( _lastCurrentIsland != currentIslandId )
             {
-                Island testIsland = CurrentContext.Islands.First( i => i.IslandId == currentIslandId );
-                Island testIsland2 = CurrentContext.Islands.Include( i => i.Buildings )
-                    .First( i => i.IslandId == currentIslandId );
-                Island testIsland3 = CurrentContext.Islands
-                    .Include( i => i.Buildings )
-                        .ThenInclude( b=> b.Level )
-                    .First( i => i.IslandId == currentIslandId );
-
                 _buildingsOnIlsand = CurrentContext.Islands
                     .Include( i => i.Buildings )
                     .ThenInclude( b => b.Level )
@@ -216,6 +213,7 @@ namespace ITI.SkyLord
                     buiding.Level.Cost = CurrentContext.Buildings.Include( b => b.Level ).ThenInclude( l => l.Cost )
                         .First( b => b.BuildingId == buiding.BuildingId ).Level.Cost;
                 }
+
             }
             return _buildingsOnIlsand;
         }

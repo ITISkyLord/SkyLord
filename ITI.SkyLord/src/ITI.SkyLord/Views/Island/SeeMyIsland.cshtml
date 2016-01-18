@@ -166,9 +166,9 @@
                     @{
                         name += ".png";
                     }
-                    <img src="~/images/SeeMyIsland/@name" />
+                    <img src="~/images/SeeMyIsland/@name" alt=@name/>
                 </div>
-                        }
+                }
         </div>
 
     </div>
@@ -191,7 +191,24 @@
 
             <div class="templatebuilding" id="ui_@i" buildingname="@name" style="display:none;">
                 @{
-                    BuildingPartialViewModel partialModel = new BuildingPartialViewModel() { CurrentBuilding = myBuilding, Position = i, AvailableBuildings = Model.AvailableBuildings };
+                    Ressource cost;
+                    if(!Model.NextLevelCosts.TryGetValue(i, out cost))
+                    {
+                        cost = null;
+                    }
+
+
+                    BuildingPartialViewModel partialModel = new BuildingPartialViewModel()
+                    {
+                        CurrentBuilding = myBuilding,
+                        Position = i,
+                        AvailableBuildings = Model.AvailableBuildings,
+                        Layout =Model.Layout,
+                        CurrentArmy = Model.CurrentArmy,
+                        AvailableUnit = Model.AvailableUnit,
+                        AllUnits = Model.AllUnits,
+                        NextBuildingLevelCost = cost
+                    };
                     Write(Html.Partial("~/Views/Partial/" + name + ".cshtml", partialModel));
                 }
             </div>

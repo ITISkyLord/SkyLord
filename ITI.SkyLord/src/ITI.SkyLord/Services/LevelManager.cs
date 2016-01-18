@@ -77,17 +77,17 @@ namespace ITI.SkyLord
         public Level FindNextLevel( Level currentLevel )
         {
             Level levelFound = null;
+            // Recherche si Building
             if ( currentLevel is BuildingLevel )
             {
                 BuildingLevel buildingLevel = (BuildingLevel)currentLevel;
-
                 levelFound = CurrentContext.BuildingLevels.Include( bl => bl.Requirements ).Include( bl => bl.Cost )
                     .SingleOrDefault( bl => bl.BuildingName == buildingLevel.BuildingName && bl.Number == buildingLevel.Number + 1 );
             }
+            // Recherche si Technology
             else if ( currentLevel is TechnologyLevel )
             {
                 TechnologyLevel technoLevel = (TechnologyLevel)currentLevel;
-
                 levelFound = CurrentContext.TechnologyLevels.Include( bl => bl.Requirements ).Include( bl => bl.Cost )
                     .SingleOrDefault( bl => bl.TechnologyName == technoLevel.TechnologyName && bl.Number == technoLevel.Number + 1 );
             }

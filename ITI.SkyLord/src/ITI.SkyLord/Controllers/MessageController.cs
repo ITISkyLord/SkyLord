@@ -23,21 +23,21 @@ namespace ITI.SkyLord.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetMessage(int id)
+        public IActionResult GetMessage( int id )
         {
             return View();
         }
 
         [HttpGet]
-        public IActionResult GetAllMessages(long islandId = 0)
+        public IActionResult GetAllMessages( long islandId = 0 )
         {
-            MessageManager messageManager = new MessageManager(SetupContext);
-            Player currentPlayer = SetupContext.GetPlayer(User.GetUserId());
+            MessageManager messageManager = new MessageManager( SetupContext );
+            Player currentPlayer = SetupContext.GetPlayer( User.GetUserId() );
             MessageViewModel mvm = new MessageViewModel();
 
-            mvm.AllMessages = (List<Message>)messageManager.GetAllMessage(currentPlayer);
+            mvm.AllMessages = messageManager.GetAllMessage( currentPlayer ).ToList();
 
-            SetupContext.FillStandardVM(mvm, SetupContext.GetPlayer(User.GetUserId()).PlayerId, islandId);
+            SetupContext.FillStandardVM( mvm, SetupContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
             return View(mvm);
         }
 

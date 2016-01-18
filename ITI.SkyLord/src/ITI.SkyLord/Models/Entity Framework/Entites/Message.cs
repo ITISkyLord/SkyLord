@@ -19,6 +19,7 @@ namespace ITI.SkyLord
         public Player Receiver { get; set; }
 
         public Player Sender { get; set; }
+        public bool isCombatReport { get; set; }
         public bool Read { get; set; }
         #endregion
     }

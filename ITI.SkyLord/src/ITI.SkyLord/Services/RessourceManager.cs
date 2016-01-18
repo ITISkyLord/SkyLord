@@ -8,16 +8,10 @@ using System.Threading.Tasks;
 
 namespace ITI.SkyLord.Services
 {
-    public class RessourceManager
+    public static class RessourceManager
     {
-        public ILevelContext CurrentContext { get; }
 
-        public RessourceManager( ILevelContext levelContext )
-        {
-            CurrentContext = levelContext;
-        }
-
-        public bool IsEnough( Ressource ressourceToCheck, Ressource cost )
+        public static bool IsEnough( Ressource ressourceToCheck, Ressource cost )
         {
             return IsEnough
                 (
@@ -29,7 +23,7 @@ namespace ITI.SkyLord.Services
                 );
         }
 
-        bool IsEnough( Ressource ressourceToCheck, int wood, int metal, int cristal, int magic )
+        public static bool IsEnough( Ressource ressourceToCheck, int wood, int metal, int cristal, int magic )
         {
             Ressource clone = CloneRessource( ressourceToCheck );
 
@@ -40,7 +34,7 @@ namespace ITI.SkyLord.Services
 
             return true;
         }
-        public bool RemoveRessource( Ressource ressourceToChange, Ressource cost )
+        public static bool RemoveRessource( Ressource ressourceToChange, Ressource cost )
         {
             return RemoveRessource
                 (
@@ -52,7 +46,7 @@ namespace ITI.SkyLord.Services
                 );
         }
 
-        public bool AddRessource( Ressource ressourceToChange, Ressource cost )
+        public static bool AddRessource( Ressource ressourceToChange, Ressource cost )
         {
             return AddRessource
                 (
@@ -64,7 +58,7 @@ namespace ITI.SkyLord.Services
                 );
         }
 
-        public bool AddRessource( Ressource ressourceToChange, int wood, int metal, int cristal, int magic )
+        public static bool AddRessource( Ressource ressourceToChange, int wood, int metal, int cristal, int magic )
         {
             if ( wood < 0 || metal < 0 || cristal < 0 || magic < 0 ) throw new ArgumentException( "The parameters must me positive" );
             if ( ressourceToChange == null ) throw new ArgumentException( "The ressource to change cannot be null" );
@@ -77,7 +71,7 @@ namespace ITI.SkyLord.Services
             return true;
         }
 
-        public bool RemoveRessource( Ressource ressourceToChange, int wood, int metal, int cristal, int magic )
+        public static bool RemoveRessource( Ressource ressourceToChange, int wood, int metal, int cristal, int magic )
         {
             if ( wood < 0 || metal < 0 || cristal < 0 || magic < 0 ) throw new ArgumentException( "The parameters must me positive" );
             if ( ressourceToChange == null ) throw new ArgumentException( "The ressource to change cannot be null" );
@@ -95,11 +89,11 @@ namespace ITI.SkyLord.Services
             return true;
         }
 
+        public static Ressource CloneRessource( Ressource source )
         //
         // Créer une méthode qui rend le nombre max de Cost payable avec les fonds courants de l'ile
         //
 
-        private Ressource CloneRessource( Ressource source )
         {
             return new Ressource
             {

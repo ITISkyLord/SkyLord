@@ -56,7 +56,7 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
         public DbSet<Apprentice> Apprentices { get; set; }
         public DbSet<Army> Armies { get; set; }
         public DbSet<Building> Buildings { get; set; }
-        public DbSet<CombatReport> CombatReports { get; set; }
+     //   public DbSet<CombatReport> CombatReports { get; set; }
         public DbSet<GuildMember> GuildMembers { get; set; }
         public DbSet<GuildRole> GuildRoles { get; set; }
         public DbSet<Regiment> Regiments { get; set; }
