@@ -8,12 +8,19 @@
 @{
     Write(Html.Partial("~/Views/Partial/LevelUpBuilding.cshtml", Model));
 
-    ShieldLevel = (ShieldLevel)Model.CurrentBuilding.Level;
-
-
+    ShieldLevel building = (ShieldLevel)Model.CurrentBuilding.Level;
 }
 
+<h3>Caractéristiques</h3>
+<p>Attaque : @building.Offense</p>
+<p>Défense : @building.Defense</p>
 
+<h3>Next Level</h3>
+@{ 
+    var nextLevel = (ShieldLevel)Model.NextBuildingLevel;
+}
+<p>Attaque : @nextLevel.Offense</p>
+<p>Défense : @nextLevel.Defense</p>
 
 <ul>
     <li>LevelUp</li>
