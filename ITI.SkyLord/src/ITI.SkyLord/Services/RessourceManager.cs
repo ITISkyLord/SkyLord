@@ -21,7 +21,7 @@ namespace ITI.SkyLord.Services
             List<Building> ressourcesBuildings = GetRessourcesBuildings(island.Buildings);
             DateTime checkTime = GetLastCheckTime(island.IslandId, context);
 
-            if( checkTime != null ) // If null, checkTime will be set after the if{} anyway for initialisation
+            if( checkTime.Equals( new DateTime() ) && ressourcesBuildings != null ) // If null, checkTime will be set after the if{} anyway for initialisation
             {
                 // Calculate gap between last time and now
                 int gap = (int)(DateTime.Now - checkTime).TotalSeconds;
@@ -46,25 +46,37 @@ namespace ITI.SkyLord.Services
             context.SaveChanges();
         }
 
-        #region Resolve Ressources Helpers
-        private static int GetProductionEachSecond(FieldLevel field)
+        #region Resolve Resources Helpers
+        private static int GetProductionEachSecond( FieldLevel field )
         {
             return field.Production / 3600;
         }
         private static void SetLastCheckTime( long islandId, SetupContext context )
         {
-            context.ResourceLastTimeCheck.Where( r => r.IslandId == islandId ).SingleOrDefault().CheckTime = DateTime.Now;
+            var lastCheck = context.ResourceLastTimeCheck.Where( r => r.IslandId == islandId ).SingleOrDefault();
+            if( lastCheck == null )
+            {
+                lastCheck = new RessourceLastTimeCheck { IslandId = islandId };
+            }
+            lastCheck.CheckTime = DateTime.Now;
         }
         private static DateTime GetLastCheckTime( long islandId, SetupContext context )
         {
-            return context.ResourceLastTimeCheck.Where( r => r.IslandId == islandId ).SingleOrDefault().CheckTime;
-
+            var lastCheck = context.ResourceLastTimeCheck.Where( r => r.IslandId == islandId ).SingleOrDefault();
+            if( lastCheck != null )
+            {
+                return lastCheck.CheckTime;
+            }
+            return new DateTime();
         }
         private static List<Building> GetRessourcesBuildings( IList<Building> buildings )
         {
-            return buildings.Where( b => b.BuildingName == BuildingName.cristalField &&
-                                         b.BuildingName == BuildingName.woodField &&
-                                         b.BuildingName == BuildingName.magicField &&
+            if( buildings == null )
+                return null;
+            return buildings
+                .Where( b => b.BuildingName == BuildingName.cristalField ||
+                                         b.BuildingName == BuildingName.woodField ||
+                                         b.BuildingName == BuildingName.magicField ||
                                          b.BuildingName == BuildingName.metalField
                                          ).ToList();
         }

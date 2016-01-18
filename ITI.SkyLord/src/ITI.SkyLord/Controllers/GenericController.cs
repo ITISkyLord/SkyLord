@@ -16,19 +16,19 @@ namespace ITI.SkyLord.Controllers
         public SetupContext SetupContext { get; set; }
 
 
-        public override void OnActionExecuting(ActionExecutingContext context)
+        public override void OnActionExecuting( ActionExecutingContext context )
         {
-            base.OnActionExecuting(context);
-                
+            base.OnActionExecuting( context );
+
             var player = SetupContext.GetPlayer(User.GetUserId());
 
             // Resolve all events from curent player
             EventManager em = new EventManager(SetupContext, new EventPackManager(SetupContext));
-            em.ResolveAllForPlayer(player.PlayerId);
+            em.ResolveAllForPlayer( player.PlayerId );
 
 
             // resolve ressources
-            foreach (Island island in player.Islands)
+            foreach( Island island in SetupContext.GetAllIslands( player.PlayerId ) )
             {
                 RessourceManager.ResolveResources( island, SetupContext );
             }
