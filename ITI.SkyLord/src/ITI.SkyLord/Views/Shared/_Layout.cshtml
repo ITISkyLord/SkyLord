@@ -18,7 +18,6 @@
     <environment names="Staging,Production">
         <link rel="stylesheet" type="text/css" href="~/css/SkyLord.css" />
     </environment>
-                <a asp-controller="Island" asp-action="OverView" asp-route-islandId="@Model.Layout.IslandId">Vue d'ensemble</a>
 
     <environment names="Development">
         <!-- Quand on est en développement -->
@@ -69,7 +68,7 @@
                 <a asp-controller="Home" asp-action="Index" asp-route-islandId="@Model.Layout.IslandId">
                     <img src="~/images/SkyLord.png" class="img-responsive" />
                 </a>
-                <a asp-controller="World" asp-action="Index" asp-route-islandId="@Model.Layout.IslandId">Carte du monde</a>
+                <!--<a asp-controller="World" asp-action="Index" asp-route-islandId="@Model.Layout.IslandId">Carte du monde</a>-->
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav navbar-right">
@@ -117,7 +116,7 @@
         <div class="SkyLordMainRow">
             <div class="SkylordSideBar">
                 <img src="~/images/SkyLord.png" class="img-responsive" />
-                <a asp-controller="Home" asp-action="Index" asp-route-islandId="@Model.Layout.IslandId">Vue d'ensemble</a>
+                <a asp-controller="Island" asp-action="OverView" asp-route-islandId="@Model.Layout.IslandId">Vue d'ensemble</a>
                 <a asp-controller="Home" asp-action="Index" asp-route-islandId="@Model.Layout.IslandId">Carte du monde</a>
                 <p>Mes îles</p>
                 <ul>

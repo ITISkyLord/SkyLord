@@ -8,6 +8,6 @@ namespace ITI.SkyLord.ViewModel
     public class MessageViewModel : StandardViewModel
     {
        public List<Message> AllMessages { get; set; }
-        public Message Message { get; set; }
+       public Message Message { get; set; }
     }
 }
