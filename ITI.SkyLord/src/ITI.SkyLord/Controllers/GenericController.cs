@@ -30,7 +30,7 @@ namespace ITI.SkyLord.Controllers
             // resolve ressources
             foreach (Island island in player.Islands)
             {
-                RessourceManager.ResolveResources(island, context);
+                RessourceManager.ResolveResources( island, SetupContext );
             }
         }
 
