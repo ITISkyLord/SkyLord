@@ -7137,9 +7137,10 @@ body {
   border: 1px solid white;
 }
 .SkyLordContainer .templatebuilding .buildings .building-head {
-  color: #825847;
+  text-align: center;
+  color: whitesmoke;
   font-weight: bold;
-  font-size: 13px;
+  font-size: 17px;
   background-image: url("../images/site_haut2.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
@@ -7149,6 +7150,30 @@ body {
   border-top-right-radius: 0px;
   border-bottom-left-radius: 0px;
   border-bottom-right-radius: 0px;
+}
+.SkyLordContainer .templatebuilding .buildings .building-body {
+  color: #825847;
+  font-weight: bold;
+  font-size: 13px;
+  text-align: center;
+}
+.SkyLordContainer .templatebuilding .buildings .building-btn {
+  text-align: center;
+}
+.SkyLordContainer .templatebuilding .buildings .building-btn .btn-link {
+  color: #825847;
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 3px;
+  text-decoration: none;
+  text-align: center;
+}
+.SkyLordContainer .templatebuilding .buildings .building-btn .btn-link:hover {
+  color: #825847;
+  font-size: 17px;
+  font-weight: bold;
+  letter-spacing: 3px;
+  background-color: whitesmoke;
 }
 footer {
   font-size: 17px;
