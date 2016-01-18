@@ -1,3 +1,23 @@
 ﻿@model ITI.SkyLord.ViewModel.Partial.BuildingPartialViewModel
 
-<p>Je suis un shield !!! :D</p>
+<h2>@Model.CurrentBuilding.BuildingName</h2>
+
+<p class="BuildingDescription">[Desription à faire]</p>
+
+
+@{
+    Write(Html.Partial("~/Views/Partial/LevelUpBuilding.cshtml", Model));
+
+    ShieldLevel = (ShieldLevel)Model.CurrentBuilding.Level;
+
+
+}
+
+
+
+<ul>
+    <li>LevelUp</li>
+    <li>Attack et Protection</li>
+    <li>Futur Attack et Protection</li>
+</ul>
+

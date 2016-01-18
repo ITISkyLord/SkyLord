@@ -6,6 +6,7 @@ using ITI.SkyLord.Models.Entity_Framework.Contexts;
 using ITI.SkyLord.Models.Entity_Framework.Contexts.Interface;
 using Microsoft.Data.Entity;
 using ITI.SkyLord.Services;
+using System.Collections;
 
 namespace ITI.SkyLord
 {
@@ -93,6 +94,7 @@ namespace ITI.SkyLord
                     availableBuildings.Add( new Building { BuildingName = buildingName, Name = BuildingNameToName( buildingName ), Level= firstLevel} );
                 }
             }
+
             return availableBuildings;
         }
 
@@ -164,7 +166,10 @@ namespace ITI.SkyLord
                     name = "Tour de Mage";
                     break;
                 case BuildingName.woodField:
-                    name = "Camp de bucherons";
+                    name = "Camp de bûcherons";
+                    break;
+                case BuildingName.forge:
+                    name = "Forge";
                     break;
                 default:
                     name = "Error";
@@ -219,6 +224,30 @@ namespace ITI.SkyLord
             }
             return _buildingsOnIlsand;
         }
+
+        public List<Building> RemoveAlreadyBuiltBuilding (List<Building> availibleBuilding, List<Building> buildingBuilt)
+        {
+            var listBuildingToRemove = new List<Building>();
+
+            // On fait la liste des buildings que l'on a déjà crée
+            foreach (Building b in availibleBuilding)
+            {
+                if ( IsBuildingUnique(b.BuildingName) && buildingBuilt.Where(c => c.BuildingName == b.BuildingName).FirstOrDefault() != null)
+                {
+                    listBuildingToRemove.Add(b);
+                }
+            }
+
+            // On efface ceux qui sont déjà crée
+            foreach(var b in listBuildingToRemove)
+            {
+                availibleBuilding.Remove(b);
+
+            }
+             
+            return availibleBuilding;
+        }
+
 
         private bool LevelUpBuilding( Building buildingToLevelUp, long currentIslandId )
         {

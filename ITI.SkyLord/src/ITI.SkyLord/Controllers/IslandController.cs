@@ -110,6 +110,9 @@ namespace ITI.SkyLord.Controllers
             // Tout les batiments qui existe
             model.AvailableBuildings = buildingManager.GetAvailableBuildings();
 
+            // On retire tout les batiments qui sont uniques et que l'on a déjà construit sur notre island
+            model.AvailableBuildings = buildingManager.RemoveAlreadyBuiltBuilding(model.AvailableBuildings, model.Buildings);
+
             // Army sur l'island
             model.CurrentArmy = armyManager.GetCurrentDefenseArmy(islandId);
 
