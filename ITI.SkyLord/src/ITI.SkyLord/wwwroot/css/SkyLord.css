@@ -7175,6 +7175,19 @@ body {
   letter-spacing: 3px;
   background-color: whitesmoke;
 }
+.SkyLordContainer .seePlayers {
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+}
+.SkyLordContainer .seePlayers .table th {
+  color: white;
+  font-weight: bold;
+}
+.SkyLordContainer .seePlayers .table td {
+  color: #825847;
+  font-weight: bold;
+}
 footer {
   font-size: 17px;
   margin-bottom: 1px;
