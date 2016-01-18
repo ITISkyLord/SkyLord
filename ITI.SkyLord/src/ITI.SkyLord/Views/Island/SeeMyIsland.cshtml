@@ -191,6 +191,13 @@
 
             <div class="templatebuilding" id="ui_@i" buildingname="@name" style="display:none;">
                 @{
+                    Ressource cost;
+                    if(!Model.NextLevelCosts.TryGetValue(i, out cost))
+                    {
+                        cost = null;
+                    }
+
+
                     BuildingPartialViewModel partialModel = new BuildingPartialViewModel()
                     {
                         CurrentBuilding = myBuilding,
@@ -199,7 +206,8 @@
                         Layout =Model.Layout,
                         CurrentArmy = Model.CurrentArmy,
                         AvailableUnit = Model.AvailableUnit,
-                        AllUnits = Model.AllUnits
+                        AllUnits = Model.AllUnits,
+                        NextBuildingLevelCost = cost
                     };
                     Write(Html.Partial("~/Views/Partial/" + name + ".cshtml", partialModel));
                 }
