@@ -8,6 +8,7 @@ namespace ITI.SkyLord
 {
     public enum UnitType
     {
+        all,
         soldier,
         monster,
         magic,
