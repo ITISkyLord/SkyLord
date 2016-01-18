@@ -128,7 +128,7 @@ namespace ITI.SkyLord.Services
             switch ( bonus.BonusType )
             {
                 case BonusType.army_attack:
-                    unit.UnitStatistics.Attack = unit.UnitStatistics.Attack * ( bonus.Modifier / 100 );
+                    unit.UnitStatistics.Attack = (int)( unit.UnitStatistics.Attack * ( (double)bonus.Modifier / 100 ) );
                     break;
                 case BonusType.army_magicalDefense:
                     unit.UnitStatistics.MagicResist += unit.UnitStatistics.MagicResist * ( bonus.Modifier / 100 );
@@ -143,7 +143,7 @@ namespace ITI.SkyLord.Services
                     unit.UnitStatistics.Capacity += unit.UnitStatistics.Capacity * ( bonus.Modifier / 100 );
                     break;
                 case BonusType.duration:
-                    unit.Duration -= unit.Duration * ( bonus.Modifier / 100 );
+                    unit.Duration -= (int)( unit.Duration * ( (double)bonus.Modifier / 100 ) );
                     break;
                 default:
                     throw new NotImplementedException( "You are trying to handle a not existing type of bonus !" );

@@ -77,7 +77,7 @@ namespace ITI.SkyLord
                     Capacity = 100,
                     Consumption = 5,
                     // Valeur temporaire pour les tests !
-                    TimeToBuild = 5
+                    TimeToBuild = 10
                 };
                 context.Add( soliderStatistics );
 
@@ -95,7 +95,7 @@ namespace ITI.SkyLord
                     UnitStatistics = soliderStatistics,
                     Requirements = CreateRequirementList( soldierRequirement ),
                     // Valeur temporaire pour les tests !
-                    Duration = 5,
+                    Duration = 10,
                     IsModel = true
                 };
                 context.Add( soldier );
