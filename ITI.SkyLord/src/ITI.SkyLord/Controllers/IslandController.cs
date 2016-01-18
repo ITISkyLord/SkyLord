@@ -96,14 +96,14 @@ namespace ITI.SkyLord.Controllers
             }
 
             // Tout les nexts level de chaque batiments
-            model.NextLevelCosts = new Dictionary<int, Ressource>();
+            model.NextLevel = new Dictionary<int, Level>();
             foreach (Building building in model.Buildings)
             { 
                 // Si le next level existe => on l'ajoute au dico OTD
                 var nextLevel = levelManager.FindNextLevel(building.Level);
                 if(nextLevel != null)
                 {
-                    model.NextLevelCosts.Add(building.Position, nextLevel.Cost);
+                    model.NextLevel.Add(building.Position, nextLevel);
                 }
             }
 

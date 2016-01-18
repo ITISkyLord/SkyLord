@@ -6,21 +6,21 @@
 <h3>Niveau suivant</h3>
 <div class="row">
 
-    @if(Model.NextBuildingLevelCost == null)
+    @if(Model.NextBuildingLevel == null)
     {
         <p class="col-lg-12">Level maximum atteint</p>
     }
     else
     {
-        <div class="col-lg-2">@Model.NextBuildingLevelCost.Wood Bois</div>
-        <div class="col-lg-2">@Model.NextBuildingLevelCost.Metal Métal</div>
-        <div class="col-lg-2">@Model.NextBuildingLevelCost.Magic Magie</div>
-        <div class="col-lg-2">@Model.NextBuildingLevelCost.Cristal Cristal</div>
+        <div class="col-lg-2">@Model.NextBuildingLevel.Cost.Wood Bois</div>
+        <div class="col-lg-2">@Model.NextBuildingLevel.Cost.Metal Métal</div>
+        <div class="col-lg-2">@Model.NextBuildingLevel.Cost.Magic Magie</div>
+        <div class="col-lg-2">@Model.NextBuildingLevel.Cost.Cristal Cristal</div>
 
         <div class="col-lg-2">
             <div class="col-lg-3">
                 <form asp-controller="Building" asp-action="LevelUpBuilding" asp-route-buildingPosition="@Model.Position" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId">
-                    @if(RessourceManager.IsEnough(Model.Layout.CurrentIsland.AllRessources, Model.NextBuildingLevelCost))
+                    @if(RessourceManager.IsEnough(Model.Layout.CurrentIsland.AllRessources, Model.NextBuildingLevel.Cost))
                     {
                         <input type="submit" value="Level Up" />
                     }
