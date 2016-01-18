@@ -54,6 +54,7 @@ namespace ITI.SkyLord
             using ( SetupContext context = new SetupContext() )
             {
                 // Add towerCosts
+                Ressource towerLevel1Cost = AddRessource( context, 100, 100, 0, 0 );
                 Ressource towerLevel2Cost = AddRessource( context, 200, 200, 0, 0 );
                 Ressource towerLevel3Cost = AddMiltipliedRessource( context, towerLevel2Cost, 2.5 );
                 Ressource towerLevel4Cost = AddMiltipliedRessource( context, towerLevel3Cost, 2.5 );
@@ -76,7 +77,7 @@ namespace ITI.SkyLord
                 BonusBuildingOnBuilding buildingsDurationBonusLevel10 = AddBonusBuilding( context, BonusType.duration, BuildingName.none, 20 );
 
                 // Set up Levels
-                BuildingLevel towerLevel1 = AddBuildingLevel( context, BuildingName.tower, 1, null, 0, null, null );
+                BuildingLevel towerLevel1 = AddBuildingLevel( context, BuildingName.tower, 1, towerLevel1Cost, 0, null, null );
                 BuildingLevel towerLevel2 = AddBuildingLevel( context, BuildingName.tower, 2, towerLevel2Cost, 60,
                     null,
                     CreateBonusBuildingList( buildingsDurationBonusLevel2 ) );
@@ -785,6 +786,7 @@ namespace ITI.SkyLord
             using ( SetupContext context = new SetupContext() )
             {
                 // Add shieldCosts
+                Ressource shieldLevel1Cost = AddRessource( context, 50, 50, 25, 0 );
                 Ressource shieldLevel2Cost = AddRessource( context, 100, 100, 50, 0 );
                 Ressource shieldLevel3Cost = AddMiltipliedRessource( context, shieldLevel2Cost, 2.5 );
                 Ressource shieldLevel4Cost = AddMiltipliedRessource( context, shieldLevel3Cost, 2.75 );
@@ -807,6 +809,8 @@ namespace ITI.SkyLord
                 Requirement shieldLevel10Requirement = AddBuildingRequirement( context, BuildingName.shield, 9 );
 
                 // Set up Levels
+                ShieldLevel shieldLevel1 = AddShieldLevel( context, BuildingName.shield, 1, shieldLevel1Cost, 30,
+                    null, 25, 0 );
                 ShieldLevel shieldLevel2 = AddShieldLevel( context, BuildingName.shield, 2, shieldLevel2Cost, 60,
                     CreateRequirementList( shieldLevel2Requirement ), 50, 0 );
                 ShieldLevel shieldLevel3 = AddShieldLevel( context, BuildingName.shield, 3, shieldLevel3Cost, (int)( shieldLevel2.Duration * 2.5 ),
