@@ -999,56 +999,17 @@ namespace ITI.SkyLord.Tests.EfTests
         //}
 
 
-        #region SeedLevels
+        #region Seed
 
         [Test]
-        public void SeedLevels_for_Barrack_works()
+        public void SeedAllTheThings()
         {
             LevelSeed levelSeed = new LevelSeed();
-            levelSeed.SeedBarrackLevels();
+            UnitSeed unitSeed = new UnitSeed();
+            levelSeed.SeedLevels();
+            unitSeed.SeedUnits();
         }
 
-        [Test]
-        public void SeedLevels_for_Tower_works()
-        {
-            LevelSeed levelSeed = new LevelSeed();
-            levelSeed.SeedTowerLevels();
-        }
-
-        [Test]
-        public void SeedLevels_for_WoodField_works()
-        {
-            LevelSeed levelSeed = new LevelSeed();
-            levelSeed.SeedWoodLevels();
-        }
-
-        [Test]
-        public void SeedLevels_for_CristalField_works()
-        {
-            LevelSeed levelSeed = new LevelSeed();
-            levelSeed.SeedCristalLevels();
-        }
-
-        [Test]
-        public void SeedLevels_for_MagicField_works()
-        {
-            LevelSeed levelSeed = new LevelSeed();
-            levelSeed.SeedMagicLevels();
-        }
-
-        [Test]
-        public void SeedLevels_for_MetalField_works()
-        {
-            LevelSeed levelSeed = new LevelSeed();
-            levelSeed.SeedMetalLevels();
-        }
-
-        [Test]
-        public void SeedLevels_for_Invocation_works()
-        {
-            LevelSeed levelSeed = new LevelSeed();
-            levelSeed.SeedInvocationLevels();
-        }
         #endregion
 
         private Ressource Multiplyressource( Ressource initialRessource, int factor )

@@ -88,9 +88,9 @@ namespace ITI.SkyLord
             {
                 if ( buildingName != BuildingName.none )
                 {
-                    var firstLevel = CurrentContext.BuildingLevels.Include(l => l.Cost).Where(l => l.BuildingName == buildingName && l.Number == 1).SingleOrDefault();
+                    BuildingLevel firstLevel = CurrentContext.BuildingLevels.Include(l => l.Cost).Where(l => l.BuildingName == buildingName && l.Number == 1).SingleOrDefault();
 
-                    availableBuildings.Add( new Building { BuildingName = buildingName, Name = BuildingNameToName( buildingName ), Level= firstLevel} );
+                    availableBuildings.Add( new Building { BuildingName = buildingName, Name = BuildingNameToName( buildingName ), Level = firstLevel} );
                 }
             }
             return availableBuildings;
@@ -148,8 +148,6 @@ namespace ITI.SkyLord
                 case BuildingName.laboratory:
                     name = "Laboratoire";
                     break;
-                case BuildingName.library:
-                    name = "Bibliothèque";
                     break;
                 case BuildingName.magicField:
                     name = "Champ de magie";
