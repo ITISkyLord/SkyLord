@@ -11,7 +11,7 @@
     <h3>Armée actuelle sur place :</h3>
     <table>
 
-@foreach (var unit in Model.AllUnits)
+@foreach (var unit in Model.AvailableUnit)
 {
     <form asp-controller="Army" asp-action="AddUnit" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId">
         <input type="hidden" asp-for="UnitTarget" value="@unit.Name" />
