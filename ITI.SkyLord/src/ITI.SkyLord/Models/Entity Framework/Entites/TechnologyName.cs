@@ -8,7 +8,17 @@ namespace ITI.SkyLord
     public enum TechnologyName
     {
         none,
-        propulsion,
-        armor
+        armor,
+        weapons,
+        magicBoots,
+        magicalProtection,
+        magicalStaff,
+        levitation,
+        shell,
+        claws,
+        wings,
+        plating,
+        hold,
+        propulsion
     }
 }

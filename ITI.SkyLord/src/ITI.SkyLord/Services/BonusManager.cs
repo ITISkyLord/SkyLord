@@ -27,10 +27,16 @@ namespace ITI.SkyLord.Services
             List<BonusBuildingOnUnit> allBuildingBonusesOnUnit = new List<BonusBuildingOnUnit>();
             foreach ( List<BonusBuilding> buildingBonusList in builingsOnIsland.Select( b => b.Level.BuildingBonuses ) )
             {
-                foreach ( BonusBuildingOnUnit bonus in buildingBonusList )
+                foreach ( BonusBuilding bonus in buildingBonusList )
                 {
                     if ( bonus is BonusBuildingOnUnit )
-                        allBuildingBonusesOnUnit.Add( bonus );
+                    {
+                        BonusBuildingOnUnit bonusBuildingOnUnit = (BonusBuildingOnUnit)bonus;
+                        if ( bonusBuildingOnUnit.TargetUnit == UnitType.all || bonusBuildingOnUnit.TargetUnit == unit.UnitType )
+                        {
+                            allBuildingBonusesOnUnit.Add( bonusBuildingOnUnit );
+                        }
+                    }
                 }
             }
             return allBuildingBonusesOnUnit;
@@ -38,16 +44,22 @@ namespace ITI.SkyLord.Services
 
         public List<BonusTechnologyOnUnit> GetBonusesTechnologyOnUnit( Unit unit, long playerId )
         {
-            List<Technology> playerTechnology = CurrentContext.Players.Include( p => p.Technologies ).ThenInclude( t => t.Level ).ThenInclude( tl => tl.TechnologyBonuses )
+            List<Technology> playerTechnologies = CurrentContext.Players.Include( p => p.Technologies ).ThenInclude( t => t.Level ).ThenInclude( tl => tl.TechnologyBonuses )
                 .Single( p => p.PlayerId == playerId ).Technologies.ToList();
 
             List<BonusTechnologyOnUnit> allTechnologyBonusesOnUnit = new List<BonusTechnologyOnUnit>();
-            foreach ( List<BonusTechnology> technologyList in playerTechnology.Select( t => t.Level.TechnologyBonuses ) )
+            foreach ( List<BonusTechnology> technologyList in playerTechnologies.Select( t => t.Level.TechnologyBonuses ) )
             {
-                foreach ( BonusTechnologyOnUnit bonus in technologyList )
+                foreach ( BonusTechnology bonus in technologyList )
                 {
                     if ( bonus is BonusTechnologyOnUnit )
-                        allTechnologyBonusesOnUnit.Add( bonus );
+                    {
+                        BonusTechnologyOnUnit bonusTechnologyOnUnit = (BonusTechnologyOnUnit)bonus;
+                        if( bonusTechnologyOnUnit.TargetUnit == UnitType.all || bonusTechnologyOnUnit.TargetUnit == unit.UnitType )
+                        {
+                            allTechnologyBonusesOnUnit.Add( bonusTechnologyOnUnit );
+                        }
+                    }
                 }
             }
             return allTechnologyBonusesOnUnit;
@@ -79,6 +91,9 @@ namespace ITI.SkyLord.Services
                 case BonusType.army_physicalDefense:
                     unit.UnitStatistics.PhysicResist += unit.UnitStatistics.PhysicResist * ( bonus.Modifier / 100 );
                     break;
+                case BonusType.army_speed:
+                    unit.UnitStatistics.Speed += unit.UnitStatistics.Speed * ( bonus.Modifier / 100 );
+                    break;
                 case BonusType.duration:
                     unit.Duration -= unit.Duration * ( bonus.Modifier / 100 );
                     break;
@@ -101,6 +116,9 @@ namespace ITI.SkyLord.Services
                     break;
                 case BonusType.army_physicalDefense:
                     unit.UnitStatistics.PhysicResist += unit.UnitStatistics.PhysicResist * ( bonus.Modifier / 100 );
+                    break;
+                case BonusType.army_speed:
+                    unit.UnitStatistics.Speed += unit.UnitStatistics.Speed * ( bonus.Modifier / 100 );
                     break;
                 case BonusType.duration:
                     unit.Duration -= unit.Duration * ( bonus.Modifier / 100 );
@@ -133,6 +151,12 @@ namespace ITI.SkyLord.Services
         #region BuildingBonuses
 
         // IF BuildingName = BuildingName.none ==> touche tous les buildings !!
+
+        #endregion
+
+        // IF TechnologyName = TechnologyName.none ==> touche toutes les technos !!
+
+        #region TechnologyBonuses
 
         #endregion
         List<Island> GetAllIslandsArmiesFromPlayer( long playerId )
