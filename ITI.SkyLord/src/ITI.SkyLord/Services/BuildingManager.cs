@@ -101,11 +101,6 @@ namespace ITI.SkyLord
             return CurrentContext.Islands.Include(i => i.Buildings).Where(i => i.IslandId == islandId).Single().Buildings.Where(b => b.Position == position).FirstOrDefault();
         }
 
-        public bool IsEnough( Ressource ressourceToChange, Ressource cost )
-        {
-            return RessourceManager.IsEnough( ressourceToChange, cost );
-        }
-
         public bool IsEnoughForNextLevel( BuildingName buildingName, long islandId, long playerId, int position )
         {
             Building buildingToLevelUp = GetBuildingsOnCurrentIsland( islandId, playerId ).Single( b => b.BuildingName == buildingName && b.Position == position );
@@ -216,15 +211,6 @@ namespace ITI.SkyLord
 
             }
             return _buildingsOnIlsand;
-        }
-
-        private bool LevelUpBuilding( Building buildingToLevelUp, long currentIslandId )
-        {
-            if ( LevelManager.IsNextLevelAvailable( buildingToLevelUp.Level, currentIslandId ) )
-            {
-                return LevelManager.LevelUp( buildingToLevelUp );
-            }
-            return false;
         }
 
     }
