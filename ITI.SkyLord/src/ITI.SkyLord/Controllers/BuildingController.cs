@@ -81,24 +81,28 @@ namespace ITI.SkyLord.Controllers
             return RedirectToAction( "SeeMyIsland", "Island", new { islandId = islandId } );
         }
 
-        public IActionResult LevelUpBuilding( BuildingViewModel model, long islandId = 0 )
+        public IActionResult LevelUpBuilding( int buildingPosition, long islandId = 0  )
         {
             long playerId = SetupContext.GetPlayer( User.GetUserId() ).PlayerId;
             BuildingViewModel buildingViewModel = new BuildingViewModel();
-
-            
             BuildingManager buildingManager = new BuildingManager( SetupContext, new LevelManager( SetupContext ));
-            
-            if ( !buildingManager.IsEnoughForNextLevel( model.TargetBuilding, islandId, playerId, model.Position ) )
+
+            // Récupère le building ciblé
+            Building buildingTarget = buildingManager.GetBuildingOnPosition(islandId, buildingPosition);
+
+            // Si pas assez de ressource
+            if ( !buildingManager.IsEnoughForNextLevel(buildingTarget.BuildingName, islandId, playerId, buildingTarget.Position ) )
             {
-                return RedirectToAction( "SeeBuildings", new { islandId = islandId } );
+                return RedirectToAction( "SeeMyIsland", "Island", new { islandId = islandId } );
             }
 
-            if ( buildingManager.LevelUpBuilding( model.TargetBuilding, islandId, playerId, model.Position ) )
+            // Si tout est bon => LevelUp
+            else if ( buildingManager.LevelUpBuilding(buildingTarget.BuildingName, islandId, playerId, buildingTarget.Position ) )
             {
                 SetupContext.SaveChanges();
             }
-            return RedirectToAction( "SeeBuildings", new { islandId = islandId } );
+
+            return RedirectToAction( "SeeMyIsland", "Island", new { islandId = islandId } );
         }
 
         private BuildingViewModel CreateBuildingViewModel( BuildingViewModel model, long islandId, long playerId )

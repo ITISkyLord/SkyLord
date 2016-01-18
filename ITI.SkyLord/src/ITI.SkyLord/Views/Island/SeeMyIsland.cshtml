@@ -61,6 +61,13 @@
 
             <div class="templatebuilding" id="ui_@i" buildingname="@name" style="display:none;">
                 @{
+                    Level nextLevel;
+                    if(!Model.NextLevel.TryGetValue(i, out nextLevel))
+                    {
+                        nextLevel = null;
+                    }
+
+
                     BuildingPartialViewModel partialModel = new BuildingPartialViewModel()
                     {
                         CurrentBuilding = myBuilding,
@@ -69,7 +76,8 @@
                         Layout = Model.Layout,
                         CurrentArmy = Model.CurrentArmy,
                         AvailableUnit = Model.AvailableUnit,
-                        AllUnits = Model.AllUnits
+                        AllUnits = Model.AllUnits,
+                        NextBuildingLevel = nextLevel
                     };
                     Write(Html.Partial("~/Views/Partial/" + name + ".cshtml", partialModel));
                 }

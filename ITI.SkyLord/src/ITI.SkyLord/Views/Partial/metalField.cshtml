@@ -1,3 +1,8 @@
 ﻿@model ITI.SkyLord.ViewModel.Partial.BuildingPartialViewModel
+@using ITI.SkyLord.ViewModel.Partial;
 
-<p>Je suis un metal field !!! :D</p>
+<h2>@Model.CurrentBuilding.Name</h2>
+@{
+    Write(Html.Partial("~/Views/Partial/LevelUpBuilding.cshtml", Model));
+    Write(Html.Partial("~/Views/Partial/GenericField.cshtml", new GenericFieldViewModel { BuildingPartial = Model, NameOfRessource = "Métal" }));
+}

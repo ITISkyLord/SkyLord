@@ -10,12 +10,13 @@ namespace ITI.SkyLord.ViewModel.Partial
 
         public LayoutViewModel Layout { get; set; }
 
+        // Next Level of Current Building
+        public Level NextBuildingLevel { get; set; }
+
         // Empty
         public List<Building> AvailableBuildings { get; set; }
-
         public Building CurrentBuilding { get; set; }
         public int Position { get; set; }
-
         public BuildingName TargetBuilding { get; set; }
 
         // Invocation
