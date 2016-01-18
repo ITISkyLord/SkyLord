@@ -7035,6 +7035,103 @@ body {
   font-weight: bold;
   font-style: italic;
 }
+.SkyLordContainer #SeeMyIsland {
+  border: 1px solid #f4511e;
+  border-radius: 0;
+  transition: box-shadow 0.5s;
+  width: 500px;
+  height: 580px;
+  background-image: url("/images/SeeMyIsland/nuage_fond.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  display: block;
+  border: solid #825847 2px;
+}
+.SkyLordContainer #SeeMyIsland #Island {
+  position: relative;
+  top: 0px;
+  left: 0px;
+  display: block;
+  width: 500px;
+  min-width: 500px;
+  max-width: 500px;
+  height: 600px;
+  min-height: 600px;
+  max-height: 600px;
+  background-image: url("/images/SeeMyIsland/ile.png");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.SkyLordContainer #SeeMyIsland .Building {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  border: black solid 1px;
+}
+.SkyLordContainer #SeeMyIsland .Building img {
+  width: 50px;
+  height: 50px;
+}
+.SkyLordContainer #SeeMyIsland #place_1 {
+  top: 213px;
+  left: 209px;
+}
+.SkyLordContainer #SeeMyIsland #place_2 {
+  top: 236px;
+  left: 209px;
+}
+.SkyLordContainer #SeeMyIsland #place_3 {
+  top: 167px;
+  left: 140px;
+}
+.SkyLordContainer #SeeMyIsland #place_4 {
+  top: 150px;
+  left: 90px;
+}
+.SkyLordContainer #SeeMyIsland #place_5 {
+  top: 140px;
+  left: 140px;
+}
+.SkyLordContainer #SeeMyIsland #place_6 {
+  top: 105px;
+  left: 209px;
+}
+.SkyLordContainer #SeeMyIsland #place_7 {
+  top: 38px;
+  left: 270px;
+}
+.SkyLordContainer #SeeMyIsland #place_8 {
+  top: -44px;
+  left: 332px;
+}
+.SkyLordContainer #SeeMyIsland #place_9 {
+  top: -126px;
+  left: 276px;
+}
+.SkyLordContainer #SeeMyIsland #place_10 {
+  top: -25px;
+  left: 209px;
+}
+.SkyLordContainer #SeeMyIsland .Building[buildingname="tower"] {
+  height: 100px;
+  min-height: 100px;
+}
+.SkyLordContainer #SeeMyIsland .Building[buildingname="tower"] img {
+  width: 50px;
+  height: 100px;
+}
+.SkyLordContainer .templatebuilding {
+  border: 1px solid #825847;
+  border-radius: 0;
+  transition: box-shadow 0.5s;
+  width: 520px;
+  height: 580px;
+  background-image: url("../images/site_ressource.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: block;
+}
 footer {
   font-size: 17px;
   margin-bottom: 1px;
