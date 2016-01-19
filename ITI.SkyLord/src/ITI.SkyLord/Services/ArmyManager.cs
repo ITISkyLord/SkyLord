@@ -61,16 +61,17 @@ namespace ITI.SkyLord
                 armyFound = newArmy;
             }
 
+            // Look for a regiment containing the same unitName
             Regiment regimentFound = CurrentContext.Regiments.FirstOrDefault( r => r.ArmyId == armyFound.ArmyId && r.Unit.UnitId == unit.UnitId );
             if ( regimentFound == null )
             {
-                Unit unitToAdd = CloneUnit( unit );
-
-                // BonusManager.ResolveUnitBonus( unitToAdd, island.Owner.PlayerId );
+                // If the regiment with this specific unit was not found, add this unit to DB and add it to the regiment
+                CurrentContext.Add( unit );
 
                 Regiment newRegiment = new Regiment
                 {
-                    Unit = CurrentContext.Units.SingleOrDefault( u => u.UnitId == unit.UnitId ),
+                    //Unit = CurrentContext.Units.SingleOrDefault( u => u.UnitId == unit.UnitId ),
+                    Unit = unit,
                     Number = number,
                     ArmyId = armyFound.ArmyId
                 };
@@ -78,6 +79,7 @@ namespace ITI.SkyLord
             }
             else
             {
+                // If the regiment was found, just update the number : the unit is already modified when a new technology was added to the player
                 regimentFound.Number += number;
             }
 
