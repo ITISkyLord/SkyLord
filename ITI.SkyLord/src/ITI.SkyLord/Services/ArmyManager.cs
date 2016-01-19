@@ -66,12 +66,12 @@ namespace ITI.SkyLord
             if ( regimentFound == null )
             {
                 // If the regiment with this specific unit was not found, add this unit to DB and add it to the regiment
-                CurrentContext.Add( unit );
+               // CurrentContext.Add( unit );
 
                 Regiment newRegiment = new Regiment
                 {
-                    //Unit = CurrentContext.Units.SingleOrDefault( u => u.UnitId == unit.UnitId ),
-                    Unit = unit,
+                    Unit = CurrentContext.Units.SingleOrDefault( u => u.UnitId == unit.UnitId ),
+                 //   Unit = unit,
                     Number = number,
                     ArmyId = armyFound.ArmyId
                 };
@@ -234,7 +234,6 @@ namespace ITI.SkyLord
                 this.SubstractFromRegiment( army, r.Unit, number);
             }
             return loss;
-          //  CurrentContext.SaveChanges(); À voir si ça été changé après l'impact sur l'attaqué, EventManager
         }
 
         internal void SubstractFromArmy( Army armyToRemoveFrom, Army armyToBeRemoved )

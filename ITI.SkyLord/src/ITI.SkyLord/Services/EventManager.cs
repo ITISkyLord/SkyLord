@@ -277,7 +277,12 @@ namespace ITI.SkyLord
         }
         public void Resolve( TechnologyEvent te )
         {
-            throw new NotImplementedException();
+            TechnologyManager tm = new TechnologyManager( _context, new LevelManager(_context) , new BonusManager( _context ));
+            TechnologyEvent technoEvent = _context.TechnologyEvents
+                                                  .Include( e => e.Island )
+                                                  .Include( e => e.Technology )
+                                                  .Where( e => e.EventId == te.EventId).Single();
+            tm.AddTechnology( technoEvent.Technology.TechnologyName, technoEvent.Island.Owner.PlayerId, technoEvent.Island.IslandId );
         }
 
         internal void Resolve( BuildingEvent be )

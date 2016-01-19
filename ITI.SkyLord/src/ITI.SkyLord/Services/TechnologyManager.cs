@@ -124,7 +124,7 @@ namespace ITI.SkyLord.Services
         }
 
 
-        private List<Technology> GetPlayersTechnologies( long playerId )
+        internal List<Technology> GetPlayersTechnologies( long playerId )
         {
             List<Technology> technologyList = CurrentContext.Players.Include( p => p.Technologies ).ThenInclude( t => t.Level ).ThenInclude( tl => tl.Requirements )
                 .Single( p => p.PlayerId == playerId ).Technologies.ToList();
