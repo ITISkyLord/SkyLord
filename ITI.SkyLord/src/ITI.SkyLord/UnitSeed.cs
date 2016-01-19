@@ -75,9 +75,7 @@ namespace ITI.SkyLord
                     MagicResist = 25,
                     Speed = 100,
                     Capacity = 100,
-                    Consumption = 5,
-                    // Valeur temporaire pour les tests !
-                    TimeToBuild = 10
+                    Consumption = 5
                 };
                 context.Add( soliderStatistics );
 
@@ -122,8 +120,7 @@ namespace ITI.SkyLord
                     MagicResist = 25,
                     Speed = 75,
                     Capacity = 75,
-                    Consumption = 5,
-                    TimeToBuild = 120
+                    Consumption = 5
                 };
                 context.Add( archerStatistics );
 
@@ -167,8 +164,7 @@ namespace ITI.SkyLord
                     MagicResist = 150,
                     Speed = 150,
                     Capacity = 100,
-                    Consumption = 15,
-                    TimeToBuild = 450
+                    Consumption = 15
                 };
                 context.Add( knightStatistics );
 
@@ -213,8 +209,7 @@ namespace ITI.SkyLord
                     MagicResist = 200,
                     Speed = 200,
                     Capacity = 200,
-                    Consumption = 30,
-                    TimeToBuild = 600
+                    Consumption = 30
                 };
                 context.Add( griffinStatistics );
 
@@ -259,8 +254,7 @@ namespace ITI.SkyLord
                     MagicResist = 500,
                     Speed = 100,
                     Capacity = 100,
-                    Consumption = 100,
-                    TimeToBuild = 1500
+                    Consumption = 100
                 };
                 context.Add( championStatistics );
 
@@ -310,8 +304,7 @@ namespace ITI.SkyLord
                     MagicResist = 50,
                     Speed = 125,
                     Capacity = 75,
-                    Consumption = 5,
-                    TimeToBuild = 50
+                    Consumption = 5
                 };
                 context.Add( gobelinStatistics );
 
@@ -354,8 +347,7 @@ namespace ITI.SkyLord
                     MagicResist = 100,
                     Speed = 175,
                     Capacity = 125,
-                    Consumption = 10,
-                    TimeToBuild = 90
+                    Consumption = 10
                 };
                 context.Add( harpyStatistics );
 
@@ -399,8 +391,7 @@ namespace ITI.SkyLord
                     MagicResist = 200,
                     Speed = 25,
                     Capacity = 25,
-                    Consumption = 50,
-                    TimeToBuild = 180
+                    Consumption = 50
                 };
                 context.Add( dirtGolemStatistics );
 
@@ -444,8 +435,7 @@ namespace ITI.SkyLord
                     MagicResist = 250,
                     Speed = 125,
                     Capacity = 250,
-                    Consumption = 50,
-                    TimeToBuild = 490
+                    Consumption = 50
                 };
                 context.Add( trollStatistics );
 
@@ -490,8 +480,7 @@ namespace ITI.SkyLord
                     MagicResist = 600,
                     Speed = 175,
                     Capacity = 125,
-                    Consumption = 75,
-                    TimeToBuild = 900
+                    Consumption = 75
                 };
                 context.Add( phenixStatistics );
 
@@ -536,8 +525,7 @@ namespace ITI.SkyLord
                     MagicResist = 1500,
                     Speed = 75,
                     Capacity = 2000,
-                    Consumption = 500,
-                    TimeToBuild = 5000
+                    Consumption = 500
                 };
                 context.Add( juggernautStatistics );
 
@@ -586,8 +574,7 @@ namespace ITI.SkyLord
                     MagicResist = 50,
                     Speed = 200,
                     Capacity = 50,
-                    Consumption = 4,
-                    TimeToBuild = 50
+                    Consumption = 4
                 };
                 context.Add( wispStatistics );
 
@@ -630,8 +617,7 @@ namespace ITI.SkyLord
                     MagicResist = 100,
                     Speed = 100,
                     Capacity = 100,
-                    Consumption = 10,
-                    TimeToBuild = 100
+                    Consumption = 10
                 };
                 context.Add( noviceStatistics );
 
@@ -675,8 +661,7 @@ namespace ITI.SkyLord
                     MagicResist = 200,
                     Speed = 100,
                     Capacity = 150,
-                    Consumption = 25,
-                    TimeToBuild = 260
+                    Consumption = 25
                 };
                 context.Add( necromancerStatistics );
 
@@ -721,8 +706,7 @@ namespace ITI.SkyLord
                     MagicResist = 750,
                     Speed = 100,
                     Capacity = 250,
-                    Consumption = 100,
-                    TimeToBuild = 800
+                    Consumption = 100
                 };
                 context.Add( summonerStatistics );
 
@@ -767,8 +751,7 @@ namespace ITI.SkyLord
                     MagicResist = 1500,
                     Speed = 75,
                     Capacity = 200,
-                    Consumption = 250,
-                    TimeToBuild = 1850
+                    Consumption = 250
                 };
                 context.Add( prophetStatistics );
 
@@ -818,8 +801,7 @@ namespace ITI.SkyLord
                     MagicResist = 100,
                     Speed = 50,
                     Capacity = 25,
-                    Consumption = 10,
-                    TimeToBuild = 75
+                    Consumption = 10
                 };
                 context.Add( scorpionStatistics );
 
@@ -862,8 +844,7 @@ namespace ITI.SkyLord
                     MagicResist = 225,
                     Speed = 50,
                     Capacity = 25,
-                    Consumption = 20,
-                    TimeToBuild = 140
+                    Consumption = 20
                 };
                 context.Add( flameThrowerStatistics );
 
@@ -907,8 +888,7 @@ namespace ITI.SkyLord
                     MagicResist = 250,
                     Speed = 50,
                     Capacity = 25,
-                    Consumption = 150,
-                    TimeToBuild = 260
+                    Consumption = 150
                 };
                 context.Add( saboteurStatistics );
 
@@ -953,8 +933,7 @@ namespace ITI.SkyLord
                     MagicResist = 350,
                     Speed = 100,
                     Capacity = 150,
-                    Consumption = 100,
-                    TimeToBuild = 500
+                    Consumption = 100
                 };
                 context.Add( livingArmorStatistics );
 
@@ -998,8 +977,7 @@ namespace ITI.SkyLord
                     MagicResist = 1000,
                     Speed = 25,
                     Capacity = 25,
-                    Consumption = 300,
-                    TimeToBuild = 1200
+                    Consumption = 300
                 };
                 context.Add( ironGolemStatistics );
 
@@ -1043,8 +1021,7 @@ namespace ITI.SkyLord
                     MagicResist = 1000,
                     Speed = 100,
                     Capacity = 200,
-                    Consumption = 250,
-                    TimeToBuild = 2600
+                    Consumption = 250
                 };
                 context.Add( prismaticGolemStatistics );
 
@@ -1089,8 +1066,7 @@ namespace ITI.SkyLord
                     MagicResist = 100,
                     Speed = 125,
                     Capacity = 5000,
-                    Consumption = 25,
-                    TimeToBuild = 120
+                    Consumption = 25
                 };
                 context.Add( canoeStatistics );
 
@@ -1133,8 +1109,7 @@ namespace ITI.SkyLord
                     MagicResist = 200,
                     Speed = 80,
                     Capacity = 25000,
-                    Consumption = 50,
-                    TimeToBuild = 250
+                    Consumption = 50
                 };
                 context.Add( carrierStatistics );
 

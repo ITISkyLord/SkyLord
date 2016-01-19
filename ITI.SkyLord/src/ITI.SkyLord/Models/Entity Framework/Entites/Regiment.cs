@@ -15,9 +15,6 @@ namespace ITI.SkyLord
         [Key]
         public long RegimentId { get; set; }
 
-
-        internal string Name { get; set; }
-
         public Unit Unit { get; set; }
 
         public int Number { get; set; }
