@@ -21,23 +21,11 @@ namespace ITI.SkyLord.Controllers
     {
         public IActionResult Index( long islandId = 0 )
         {
-            // TESTS DE BONUS
-            //
-            long playerId = SetupContext.GetPlayer( User.GetUserId() ).PlayerId;
-
-            BonusManager bonusManager = new BonusManager( SetupContext );
-            Unit testUnit = SetupContext.Armies.Include( a => a.Island ).Include( a => a.Regiments ).ThenInclude( r => r.Unit ).ThenInclude( u => u.UnitStatistics )
-                .Single( a => a.Island.IslandId == islandId ).Regiments.First().Unit;
-
-            Unit modifiedUnit = bonusManager.ResolveAllUnitBonuses( testUnit, playerId, islandId );
-            int modifiedUnitDuration = bonusManager.GetModifiedDuration( testUnit, playerId, islandId );
-
             return View( CreateArmyViewModel( islandId ) );
         }
 
         public IActionResult AddUnit( BuildingPartialViewModel model, long islandId = 0 )
         {
-
             ArmyManager am = new ArmyManager( SetupContext, new BonusManager( SetupContext ) );
             EventManager em = new EventManager( SetupContext, new EventPackManager( SetupContext ) );
 
