@@ -207,6 +207,7 @@ html, body {
         .Section();
         height: 100%;
         .Image(url("../images/sitecarton.png"));
+        overflow:auto;
 
         #pp {
             padding: 5px;
@@ -384,21 +385,28 @@ html, body {
         }
     }
 
-    .seePlayers {
-        color: white;
-        font-weight: bold;
-        font-size: 20px;
+    .playerContainer {
+        .container-fluid;
+        .Section();
+        height: 100%;
+        .Image(url("../images/sitecarton.png"));
+        overflow:auto;
 
-        .table th {
-            color:white;
+        .seePlayers {
+            color: white;
             font-weight: bold;
-        }
+            font-size: 20px;
 
-        .table td {
-            color:#825847;
-            font-weight: bold;
-        }
+            .table th {
+                color: white;
+                font-weight: bold;
+            }
 
+            .table td {
+                color: #825847;
+                font-weight: bold;
+            }
+        }
     }
 }
 

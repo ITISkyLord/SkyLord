@@ -6465,7 +6465,9 @@ button.close {
 .SkyLordContainer .SkyLordMainRow:before,
 .SkyLordContainer .SkyLordMainRow:after,
 .SkyLordContainer .profilContainer:before,
-.SkyLordContainer .profilContainer:after {
+.SkyLordContainer .profilContainer:after,
+.SkyLordContainer .playerContainer:before,
+.SkyLordContainer .playerContainer:after {
   content: " ";
   display: table;
 }
@@ -6487,7 +6489,8 @@ button.close {
 .modal-footer:after,
 .SkyLordContainer:after,
 .SkyLordContainer .SkyLordMainRow:after,
-.SkyLordContainer .profilContainer:after {
+.SkyLordContainer .profilContainer:after,
+.SkyLordContainer .playerContainer:after {
   clear: both;
 }
 .center-block {
@@ -7003,6 +7006,7 @@ body {
   background-image: url("../images/sitecarton.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
+  overflow: auto;
 }
 .SkyLordContainer .profilContainer > .navbar-header,
 .SkyLordContainer .profilContainer > .navbar-collapse {
@@ -7166,16 +7170,43 @@ body {
   letter-spacing: 3px;
   background-color: whitesmoke;
 }
-.SkyLordContainer .seePlayers {
+.SkyLordContainer .playerContainer {
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 1px;
+  background-color: "white";
+  height: auto;
+  width: 100%;
+  height: 100%;
+  background-image: url("../images/sitecarton.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  overflow: auto;
+}
+.SkyLordContainer .playerContainer > .navbar-header,
+.SkyLordContainer .playerContainer > .navbar-collapse {
+  margin-right: -15px;
+  margin-left: -15px;
+}
+@media (min-width: 768px) {
+  .SkyLordContainer .playerContainer > .navbar-header,
+  .SkyLordContainer .playerContainer > .navbar-collapse {
+    margin-right: 0;
+    margin-left: 0;
+  }
+}
+.SkyLordContainer .playerContainer .seePlayers {
   color: white;
   font-weight: bold;
   font-size: 20px;
 }
-.SkyLordContainer .seePlayers .table th {
+.SkyLordContainer .playerContainer .seePlayers .table th {
   color: white;
   font-weight: bold;
 }
-.SkyLordContainer .seePlayers .table td {
+.SkyLordContainer .playerContainer .seePlayers .table td {
   color: #825847;
   font-weight: bold;
 }
