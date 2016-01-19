@@ -20,6 +20,5 @@ namespace ITI.SkyLord
         cristalField,
         magicField,
         shield,
-        forge
     }
 }
