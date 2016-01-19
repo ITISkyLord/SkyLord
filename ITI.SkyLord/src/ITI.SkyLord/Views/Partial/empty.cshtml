@@ -1,47 +1,46 @@
 ﻿@model ITI.SkyLord.ViewModel.Partial.BuildingPartialViewModel
 @using ITI.SkyLord.Services;
 
-<h2>Terrain vierge</h2>
-    
-<p>Choisissez le bâtiment que vous voulez construire :</p>
-
+<center><h2>Terrain vierge</h2></center>
 <div class="row">
     @foreach (var CurrentBuilding in Model.AvailableBuildings)
     {
-        <div class="col-lg-4" style="margin-top: 20px; height: 100px">
-            @{Write(CurrentBuilding.Name);}
+        <div class="col-sm-6 col-md-6">
+            <div class="buildings">
 
-            <br />
-            @if (CurrentBuilding.Level != null)
-            {
+                <div class="building-head">
+                    @{Write(CurrentBuilding.Name);}
+                </div>
 
-                Write(" Bois : " + CurrentBuilding.Level.Cost.Wood + " Cristal :  " + CurrentBuilding.Level.Cost.Cristal + " Metal : " + CurrentBuilding.Level.Cost.Metal + " Magic : " + CurrentBuilding.Level.Cost.Magic);
-            }
-            else
-            {
-                Write(" Pas de Level disponible");
-            }
-            <br />
-
-            <form asp-route-islandId="@Model.Layout.CurrentIsland.IslandId" asp-controller="Building" asp-action="AddBuilding">
-                <input type="hidden" value="@Model.Position" asp-for="@Model.Position"/>
-                <input type="hidden" asp-for="@Model.TargetBuilding" value="@CurrentBuilding.BuildingName" />
-                <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
-
-                @if( CurrentBuilding.Level != null && CurrentBuilding.Level.Cost != null && RessourceManager.IsEnough(Model.Layout.CurrentIsland.AllRessources, CurrentBuilding.Level.Cost))
+                <div class="building-body">
+                    @if (CurrentBuilding.Level != null)
                 {
-                    <input type="submit" name="Construire">
+                    Write(" Bois: " + CurrentBuilding.Level.Cost.Wood + " Cristal:  " + CurrentBuilding.Level.Cost.Cristal + " Metal: " + CurrentBuilding.Level.Cost.Metal + " Magie: " + CurrentBuilding.Level.Cost.Magic);
                 }
                 else
                 {
-                    <p>Pas assez</p>
-
+                    Write("Pas disponible");
                 }
+                </div>
 
-            </form>
+                <div class="building-btn">
+                    <form asp-route-islandId="@Model.Layout.CurrentIsland.IslandId" asp-controller="Building" asp-action="AddBuilding">
+                        <input type="hidden" value="@Model.Position" asp-for="@Model.Position" />
+                        <input type="hidden" asp-for="@Model.TargetBuilding" value="@CurrentBuilding.BuildingName" />
+                        <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
 
+                        @if (CurrentBuilding.Level != null && CurrentBuilding.Level.Cost != null && RessourceManager.IsEnough(Model.Layout.CurrentIsland.AllRessources, CurrentBuilding.Level.Cost))
+                {
+                            <center><input type="submit" class="btn btn-link" value="Construire" name="Construire"></center>
+                        }
+                        else
+                        {
+                           Write("Pas assez de ressources");
+                        }
 
+                    </form>
+                </div>
+            </div>
         </div>
-    }
-
+                        }
 </div>
