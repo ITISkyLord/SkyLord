@@ -38,7 +38,10 @@ namespace ITI.SkyLord.Services
                 Level = CurrentContext.TechnologyLevels.Include( tl => tl.Cost ).First( tl => tl.TechnologyName == technologyName && tl.Number == 1 )
             };
             currentPlayer.Technologies.Add( technologyToAdd );
-            
+
+            // Update all the units with the newly added bonus
+            BonusManager.ResolvePlayersArmies( playerId );
+
             return true;
         }
 

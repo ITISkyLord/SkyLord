@@ -19,9 +19,41 @@ namespace ITI.SkyLord.Services
 
         #region Units bonuses
 
+        /// <summary>
+        /// Get the modified duration of a unit, DOES NOT CHANGE DB
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <param name="playerId"></param>
+        /// <param name="islandId"></param>
+        /// <returns></returns>
         public int GetModifiedDuration( Unit unit, long playerId, long islandId )
         {
             return ResolveAllUnitBonuses( unit, playerId, islandId ).Duration;
+        }
+
+        /// <summary>
+        /// Resolves all the units contained in all the armies of a player (CHANGES THE UNIT IN DB !)
+        /// </summary>
+        /// <param name="playerId">The player</param>
+        public void ResolvePlayersArmies( long playerId )
+        {
+            List<Island> playersIslands = CurrentContext.Islands.Include( i => i.Owner ).Include( i => i.Armies )
+                .ThenInclude( a => a.Regiments ).ThenInclude( r => r.Unit ).ThenInclude( u => u.UnitStatistics )
+                .Where( i => i.Owner.PlayerId == playerId ).ToList();
+            List<Regiment> allPlayersRegiments = new List<Regiment>();
+
+            foreach( Island island in playersIslands )
+            {
+                foreach( Army army in island.Armies )
+                {
+                    allPlayersRegiments.AddRange( army.Regiments );
+                }
+            }
+
+            foreach ( Unit unit in allPlayersRegiments.Select( r => r.Unit ) )
+            {
+                ResolveTechnologyBonusesOnUnit( unit, playerId );
+            }
         }
 
         /// <summary>
@@ -47,6 +79,20 @@ namespace ITI.SkyLord.Services
             return resolvedUnit;
         }
 
+        /// <summary>
+        /// Resolves all technology bonuses on a unit, changes directly the unit in DB !
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <param name="playerId"></param>
+        /// <returns></returns>
+        public Unit ResolveTechnologyBonusesOnUnit( Unit unit, long playerId )
+        {
+            foreach ( BonusTechnologyOnUnit bonus in GetBonusesTechnologyOnUnit( unit, playerId ) )
+            {
+                ResolveUnitBonus( unit, bonus );
+            }
+            return unit;
+        }
         public List<BonusBuildingOnUnit> GetBonusesBuildingOnUnit( Unit unit, long islandId )
         {
             List<Building> builingsOnIsland = CurrentContext.Islands
@@ -166,8 +212,7 @@ namespace ITI.SkyLord.Services
                 MagicResist = unit.UnitStatistics.MagicResist,
                 Speed = unit.UnitStatistics.Speed,
                 Capacity = unit.UnitStatistics.Capacity,
-                Consumption = unit.UnitStatistics.Capacity,
-                TimeToBuild = unit.UnitStatistics.TimeToBuild
+                Consumption = unit.UnitStatistics.Capacity
             };
 
             return new Unit

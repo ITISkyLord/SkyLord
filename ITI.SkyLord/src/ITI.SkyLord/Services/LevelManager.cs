@@ -74,6 +74,11 @@ namespace ITI.SkyLord
             return AreAllRequirementsMet( (List<Requirement>)unit.Requirements, currentIslandId );
         }
 
+        public bool IsTechnologyAvailable( Technology technology, long islandId )
+        {
+            return AreAllRequirementsMet( (List<Requirement>)technology.Level.Requirements, islandId );
+        }
+
         public Level FindNextLevel( Level currentLevel )
         {
             Level levelFound = null;
@@ -123,6 +128,28 @@ namespace ITI.SkyLord
             }
             return true;
         }
+
+        //public List<Availability> AreAllRequirementsMet( List<Requirement> requirements, long currentIslandId )
+        //{
+        //    List<Building> buildingsOnIsland = GetBuildingsOnCurrentIsland( currentIslandId );
+        //    IList<Technology> playersTechnologies = CurrentContext.Islands.SingleOrDefault( i => i.IslandId == currentIslandId ).Owner.Technologies;
+
+        //    if ( playersTechnologies != null )
+        //    {
+        //        foreach ( Requirement requirement in requirements.Where( r => r.TechnologyName != TechnologyName.none ) )
+        //        {
+        //            if ( !IsTechnologyRequirementMet( requirement, playersTechnologies ) )
+        //                return false;
+        //        }
+        //    }
+
+        //    foreach ( Requirement requirement in requirements.Where( r => r.BuildingName != BuildingName.none ) )
+        //    {
+        //        if ( !IsBuildingRequirementMet( requirement, buildingsOnIsland ) )
+        //            return false;
+        //    }
+        //    return true;
+        //}
 
         public bool IsBuildingRequirementMet( Requirement buildingRequirement, IList<Building> buildingsOnIsland )
         {

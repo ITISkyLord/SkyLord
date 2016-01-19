@@ -8,7 +8,6 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts.Interface
 {
     public interface ILevelContext : ICustomContext
     {
-
         DbSet<Ressource> Ressources { get; set; }
         DbSet<Building> Buildings { get; set; }
         DbSet<Technology> Technologies { get; set; }
@@ -16,6 +15,8 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts.Interface
         DbSet<BuildingLevel> BuildingLevels { get; set; }
         DbSet<TechnologyLevel> TechnologyLevels { get; set; }
         DbSet<Requirement> Requirements { get; set; }
-
+        DbSet<Army> Armies { get; set; }
+        DbSet<Regiment> Regiments { get; set; }
+        DbSet<Unit> Units { get; set; }
     }
 }
