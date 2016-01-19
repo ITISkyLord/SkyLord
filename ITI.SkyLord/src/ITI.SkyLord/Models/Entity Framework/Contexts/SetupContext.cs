@@ -62,7 +62,6 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
         public DbSet<GuildRole> GuildRoles { get; set; }
         public DbSet<Regiment> Regiments { get; set; }
         public DbSet<Ressource> Ressources { get; set; }
-        public DbSet<RessourceLastTimeCheck> ResourceLastTimeCheck { get; set; }
         public DbSet<Spell> Spells { get; set; }
         public DbSet<Technology> Technologies { get; set; }
         public DbSet<Unit> Units { get; set; }

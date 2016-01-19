@@ -19,7 +19,7 @@ namespace ITI.SkyLord.Services
         {
             Ressource ressourcesGathered = new Ressource();
             List<Building> ressourcesBuildings = GetRessourcesBuildings(island.Buildings);
-            DateTime checkTime = GetLastCheckTime(island.IslandId, context);
+            DateTime checkTime = GetLastCheckTime(island);
 
             if( checkTime.Equals( new DateTime() ) && ressourcesBuildings != null ) // If null, checkTime will be set after the if{} anyway for initialisation
             {
@@ -42,7 +42,7 @@ namespace ITI.SkyLord.Services
                 // case if you got robbed, remove ressources ?
             }
 
-            SetLastCheckTime( island.IslandId, context );
+            SetLastCheckTime( island );
             context.SaveChanges();
         }
 
@@ -51,21 +51,15 @@ namespace ITI.SkyLord.Services
         {
             return field.Production / 3600;
         }
-        private static void SetLastCheckTime( long islandId, SetupContext context )
+        private static void SetLastCheckTime( Island island )
         {
-            var lastCheck = context.ResourceLastTimeCheck.Where( r => r.IslandId == islandId ).SingleOrDefault();
-            if( lastCheck == null )
-            {
-                lastCheck = new RessourceLastTimeCheck { IslandId = islandId };
-            }
-            lastCheck.CheckTime = DateTime.Now;
+            island.CheckTime = DateTime.Now;
         }
-        private static DateTime GetLastCheckTime( long islandId, SetupContext context )
+        private static DateTime GetLastCheckTime( Island island )
         {
-            var lastCheck = context.ResourceLastTimeCheck.Where( r => r.IslandId == islandId ).SingleOrDefault();
-            if( lastCheck != null )
+            if( island.CheckTime != null )
             {
-                return lastCheck.CheckTime;
+                return island.CheckTime;
             }
             return new DateTime();
         }

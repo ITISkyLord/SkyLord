@@ -8,8 +8,8 @@ using ITI.SkyLord.Models.Entity_Framework.Contexts;
 namespace ITI.SkyLord.Migrations
 {
     [DbContext(typeof(SetupContext))]
-    [Migration("20160118145346_RessourcesLastTimeChecked")]
-    partial class RessourcesLastTimeChecked
+    [Migration("20160119155448_CheckTimeResources")]
+    partial class CheckTimeResources
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -182,6 +182,8 @@ namespace ITI.SkyLord.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<long?>("AllRessourcesRessourceId");
+
+                    b.Property<DateTime>("CheckTime");
 
                     b.Property<long?>("CoordinatesCoordinateId");
 
@@ -363,16 +365,6 @@ namespace ITI.SkyLord.Migrations
                     b.Property<int>("Wood");
 
                     b.HasKey("RessourceId");
-                });
-
-            modelBuilder.Entity("ITI.SkyLord.RessourceLastTimeCheck", b =>
-                {
-                    b.Property<long>("IslandId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("CheckTime");
-
-                    b.HasKey("IslandId");
                 });
 
             modelBuilder.Entity("ITI.SkyLord.Spell", b =>

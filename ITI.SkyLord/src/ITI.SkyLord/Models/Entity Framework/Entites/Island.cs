@@ -28,6 +28,12 @@ namespace ITI.SkyLord
 
         public bool IsCapital { get; set; }
         public int PossiblePositions { get; set; }
+
+        /// <summary>
+        /// Last time resources production was checked
+        /// </summary>
+        public DateTime CheckTime { get; set; }
+
         #endregion
     }
 }

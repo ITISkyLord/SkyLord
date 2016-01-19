@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Data.Entity.Migrations;
-using Microsoft.Data.Entity.Metadata;
 
 namespace ITI.SkyLord.Migrations
 {
-    public partial class RessourcesLastTimeChecked : Migration
+    public partial class CheckTimeResources : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,18 +14,11 @@ namespace ITI.SkyLord.Migrations
             migrationBuilder.DropForeignKey(name: "FK_IdentityUserLogin<string>_IdentityUser_UserId", table: "AspNetUserLogins");
             migrationBuilder.DropForeignKey(name: "FK_IdentityUserRole<string>_IdentityRole_RoleId", table: "AspNetUserRoles");
             migrationBuilder.DropForeignKey(name: "FK_IdentityUserRole<string>_IdentityUser_UserId", table: "AspNetUserRoles");
-            migrationBuilder.CreateTable(
-                name: "RessourceLastTimeCheck",
-                columns: table => new
-                {
-                    IslandId = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CheckTime = table.Column<DateTime>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_RessourceLastTimeCheck", x => x.IslandId);
-                });
+            migrationBuilder.AddColumn<DateTime>(
+                name: "CheckTime",
+                table: "Island",
+                nullable: false,
+                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
             migrationBuilder.AddForeignKey(
                 name: "FK_Player_User_Player_PlayerId",
                 table: "Player",
@@ -79,7 +71,7 @@ namespace ITI.SkyLord.Migrations
             migrationBuilder.DropForeignKey(name: "FK_IdentityUserLogin<string>_IdentityUser_UserId", table: "AspNetUserLogins");
             migrationBuilder.DropForeignKey(name: "FK_IdentityUserRole<string>_IdentityRole_RoleId", table: "AspNetUserRoles");
             migrationBuilder.DropForeignKey(name: "FK_IdentityUserRole<string>_IdentityUser_UserId", table: "AspNetUserRoles");
-            migrationBuilder.DropTable("RessourceLastTimeCheck");
+            migrationBuilder.DropColumn(name: "CheckTime", table: "Island");
             migrationBuilder.AddForeignKey(
                 name: "FK_Player_User_Player_PlayerId",
                 table: "Player",
