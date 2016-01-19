@@ -28,10 +28,10 @@ namespace ITI.SkyLord.Controllers
             BonusManager bonusManager = new BonusManager( SetupContext );
             if( SetupContext.Armies.Where( a => a.Island.IslandId == islandId ).Any() )
             {
-                Unit testUnit = SetupContext.Armies.Include( a => a.Island ).Include( a => a.Regiments ).ThenInclude( r => r.Unit ).ThenInclude( u => u.UnitStatistics )
+                //Unit testUnit = SetupContext.Armies.Include(a => a.Island).Include(a => a.Regiments).ThenInclude(r => r.Unit).ThenInclude(u => u.UnitStatistics);
 
-                Unit modifiedUnit = bonusManager.ResolveAllUnitBonuses( testUnit, playerId, islandId );
-                int modifiedUnitDuration = bonusManager.GetModifiedDuration( testUnit, playerId, islandId );
+                //Unit modifiedUnit = bonusManager.ResolveAllUnitBonuses( testUnit, playerId, islandId );
+                //int modifiedUnitDuration = bonusManager.GetModifiedDuration( testUnit, playerId, islandId );
             }
             ModelState.AddModelError( string.Empty, "Vous n'avez pas d'armées." );
             return View( CreateArmyViewModel( islandId ) );
