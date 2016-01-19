@@ -11,12 +11,12 @@
                     response($.map(data, function (item) {
                         return {
                             label: item,
-                            value: item + ""
+                            value: item 
                         }
                     }))
                 }
             });
         },
-        minLength: 1,
+        minLength: 10,
     });
 });

@@ -7,9 +7,9 @@ html, body {
 
 .navbar {
     margin-bottom: 0;
-    background-color: rgba(255,255,255,.94);
-    background-image: url("../images/site_fond2.png");
-    /*.Image();*/
+    background-image: url("../images/site_haut2.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
     z-index: 9999;
     border: 0;
     font-size: 17px !important;
@@ -18,7 +18,8 @@ html, body {
     border-radius: 0;
 
     .navbar-nav li input[type=text] {
-        padding: 1px 15px 1px 15px;
+        padding: 2px 10px 2px 10px;
+        line-height: 40px;
     }
 
     li a, li button[type=submit], .navbar-brand {
@@ -37,6 +38,10 @@ html, body {
     .btn-link {
         padding: 15px 15px 15px 15px;
         color: #825847;
+        font-size: 17px;
+        font-weight: bold;
+        line-height: 20px;
+        letter-spacing: 4px;
     }
 
     .btn-link:hover {
@@ -47,7 +52,12 @@ html, body {
     }
 
     .navbar-nav {
-        li a:hover, li button[type=submit]:hover, li.active a {
+        li a {
+            color: #825847;
+            font-weight: bold;
+        }
+
+        li a:hover, li button[type=submit]:hover {
             background-color: whitesmoke;
             padding: 15px 15px 15px 15px;
             text-decoration: none !important;
@@ -69,10 +79,24 @@ html, body {
     }
 }
 
-.jumbotron {
+.ui-autocomplete {
+    background-image: url("../images/site_ressource.png");
+    width: 100%;
     height: 10px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    color: #825847;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.jumbotron {
     margin: 0;
-    background-image: url("../images/site_fond2.png");
+    margin-top: 29px;
+    background-image: url("../images/site_ressource.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding: 74px;
 }
 
 .SkyLordContainer {
@@ -89,13 +113,14 @@ html, body {
             .Col(1);
             .Section();
             line-height: 30px;
+            font-size: 12px;
             height: 100%;
-            width: 600px;
-            float: left;
+            width: auto;
             padding: 0;
             margin: 0;
-            background-image: url("../images/site_fond2.png");
-            overflow: auto; /* Enable scrolling if the sidenav has too much content */
+            background-image: url("../images/site_side.png");
+            background-size: 100% 100%;
+
             a {
                 display: block;
                 color: #825847;
@@ -172,43 +197,222 @@ html, body {
                     .Col(2);
                     .Section(green);
                 }
-            }*/
+            }
+        }*/
         }
     }
-}
+    // Part Profil
+    .profilContainer {
+        .container-fluid;
+        .Section();
+        height: 100%;
+        .Image(url("../images/sitecarton.png"));
 
-.carousel-control.right, .carousel-control.left {
-    background-image: none;
-    color: #f4511e;
-}
+        #pp {
+            padding: 5px;
+        }
 
-.carousel-indicators li {
-    border-color: #f4511e;
-
-    .carousel-indicators li.active {
-        background-color: #f4511e;
+        blockquote {
+            border-left: none;
+        }
     }
-}
 
-.item h4 {
-    font-size: 19px;
-    line-height: 1.375em;
-    font-weight: 400;
-    font-style: italic;
-    margin: 70px 0;
+    .form-control {
+        text-align: center;
+        font-weight: bold;
+        font-style: italic;
+    }
+    // Partie See My Island
+    #SeeMyIsland {
+        border: 1px solid #f4511e;
+        border-radius: 0;
+        transition: box-shadow 0.5s;
+        width: 500px;
+        height: 580px;
+        background-image: url("/images/SeeMyIsland/nuage_fond.jpg");
+        background-repeat: no-repeat;
+        background-position: center;
+        display: block;
+        border: solid #825847 2px;
 
-    .item span {
-        font-style: normal;
+        #Island {
+            position: relative;
+            top: 0px;
+            left: 0px;
+            display: block;
+            width: 500px;
+            min-width: 500px;
+            max-width: 500px;
+            height: 600px;
+            min-height: 600px;
+            max-height: 600px;
+            background-image: url("/images/SeeMyIsland/ile.png");
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .Building {
+            position: relative;
+            width: 50px;
+            height: 50px;
+            border: black solid 1px;
+        }
+
+        .Building img {
+            width: 50px;
+            height: 50px;
+        }
+
+        #place_1 {
+            top: 213px;
+            left: 209px;
+        }
+
+        #place_2 {
+            top: 236px;
+            left: 209px;
+        }
+
+        #place_3 {
+            top: 167px;
+            left: 140px;
+        }
+
+        #place_4 {
+            top: 150px;
+            left: 90px;
+        }
+
+        #place_5 {
+            top: 140px;
+            left: 140px;
+        }
+
+        #place_6 {
+            top: 105px;
+            left: 209px;
+        }
+
+        #place_7 {
+            top: 38px;
+            left: 270px;
+        }
+
+        #place_8 {
+            top: -44px;
+            left: 332px;
+        }
+
+        #place_9 {
+            top: -126px;
+            left: 276px;
+        }
+
+        #place_10 {
+            top: -25px;
+            left: 209px;
+        }
+
+        .Building[buildingname="tower"] {
+            height: 100px;
+            min-height: 100px;
+        }
+
+        .Building[buildingname="tower"] img {
+            width: 50px;
+            height: 100px;
+        }
+    }
+
+    .templatebuilding {
+        border: 1px solid #825847;
+        border-radius: 0;
+        transition: box-shadow 0.5s;
+        width: 580px;
+        height: 580px;
+        .Image(url("../images/site_ressource.png"));
+        background-repeat: no-repeat;
+        background-position: center;
+        display: block;
+        overflow: auto;
+
+        .buildings {
+            border: 1px solid white;
+
+            .building-head {
+                text-align: center;
+                color: whitesmoke;
+                font-weight: bold;
+                font-size: 17px;
+                background-image: url("../images/site_haut2.png");
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
+                padding: 10px;
+                border-bottom: 1px solid transparent;
+                border-top-left-radius: 0px;
+                border-top-right-radius: 0px;
+                border-bottom-left-radius: 0px;
+                border-bottom-right-radius: 0px;
+            }
+
+            .building-body {
+                color: #825847;
+                font-weight: bold;
+                font-size: 13px;
+                text-align: center;
+            }
+
+            .building-btn {
+                text-align: center;
+
+                .btn-link {
+                    color: #825847;
+                    font-size: 14px;
+                    font-weight: bold;
+                    letter-spacing: 3px;
+                    text-decoration: none;
+                    text-align: center;
+                }
+
+                .btn-link:hover {
+                    color: #825847;
+                    font-size: 17px;
+                    font-weight: bold;
+                    letter-spacing: 3px;
+                    background-color: whitesmoke;
+                }
+            }
+        }
+    }
+
+    .seePlayers {
+        color: white;
+        font-weight: bold;
+        font-size: 20px;
+
+        .table th {
+            color:white;
+            font-weight: bold;
+        }
+
+        .table td {
+            color:#825847;
+            font-weight: bold;
+        }
+
     }
 }
 
 footer {
     font-size: 17px;
     margin-bottom: 1px;
-    background-image: url("../images/site_fond2.png");
+    background-image: url("../images/site_haut3.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
 
     li, a {
         color: #825847;
+        font-weight: bold;
     }
 
     li a:hover {
