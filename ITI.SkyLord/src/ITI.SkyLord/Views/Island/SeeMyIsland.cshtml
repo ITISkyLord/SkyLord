@@ -51,18 +51,18 @@
                 string name;
 
             @if (Model.DicoBuildings.TryGetValue(i.ToString(), out myBuilding))
-                {
-                    name = myBuilding.BuildingName.ToString();
-                }
-                else
-                {
-                }
-            name = "empty";
+            {
+                name = myBuilding.BuildingName.ToString();
+            }
+            else
+            {
+                name = "empty";
+            }
 
             <div class="templatebuilding" id="ui_@i" buildingname="@name" style="display:none;">
                 @{
                     Level nextLevel;
-                    if(!Model.NextLevel.TryGetValue(i, out nextLevel))
+                    if (!Model.NextLevel.TryGetValue(i, out nextLevel))
                     {
                         nextLevel = null;
                     }
