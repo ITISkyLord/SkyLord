@@ -21,9 +21,18 @@ namespace ITI.SkyLord.Controllers
     {
         public IActionResult Index( long islandId = 0 )
         {
-            if( SetupContext.Armies.Where( a => a.Island.IslandId == islandId ).Any() )
-            {
-            ModelState.AddModelError( string.Empty, "Vous n'avez pas d'armées." );
+            //long playerId = SetupContext.GetPlayer( User.GetUserId() ).PlayerId;
+
+            //BonusManager bonusManager = new BonusManager( SetupContext );
+            //if ( SetupContext.Armies.Where( a => a.Island.IslandId == islandId ).Any() )
+            //{
+            //    Unit testUnit = SetupContext.Armies.Include( a => a.Island ).Include( a => a.Regiments ).ThenInclude( r => r.Unit ).ThenInclude( u => u.UnitStatistics )
+            //    .Single( a => a.Island.IslandId == islandId ).Regiments.First().Unit;
+
+            //    Unit modifiedUnit = bonusManager.ResolveAllUnitBonuses( testUnit, playerId, islandId );
+            //    int modifiedUnitDuration = bonusManager.GetModifiedDuration( testUnit, playerId, islandId );
+            //}
+            //ModelState.AddModelError( string.Empty, "Vous n'avez pas d'armées." );
             return View( CreateArmyViewModel( islandId ) );
         }
 
@@ -32,7 +41,7 @@ namespace ITI.SkyLord.Controllers
             ArmyManager am = new ArmyManager( SetupContext, new BonusManager( SetupContext ) );
             EventManager em = new EventManager( SetupContext, new EventPackManager( SetupContext ) );
 
-            if( model.UnitAmount <= 0 )
+            if ( model.UnitAmount <= 0 )
             {
                 ModelState.AddModelError( "UnitsToAdd", "Les unités ne peuvent pas être négatives." );
             }
@@ -43,12 +52,14 @@ namespace ITI.SkyLord.Controllers
                 if( unit.UnitCost.Wood * model.UnitAmount > island.AllRessources.Wood || unit.UnitCost.Metal * model.UnitAmount > island.AllRessources.Metal * model.UnitAmount || unit.UnitCost.Cristal * model.UnitAmount > island.AllRessources.Cristal || unit.UnitCost.Magic * model.UnitAmount > island.AllRessources.Magic )
                 {
                     ModelState.AddModelError( "UnitsToAdd", "Vous n'avez pas assez de ressources." );
-
                 }
                 else
                 {
+                    long playerId = SetupContext.GetPlayer( User.GetUserId() ).PlayerId;
+
+                    BonusManager bonusManager = new BonusManager( SetupContext );
                     RessourceManager.RemoveRessource( island.AllRessources, unit.UnitCost.Wood * model.UnitAmount, unit.UnitCost.Metal * model.UnitAmount, unit.UnitCost.Cristal * model.UnitAmount, unit.UnitCost.Magic * model.UnitAmount );
-                    em.AddUnitEvent( SetupContext, unit, model.UnitAmount, island );
+                    em.AddUnitEvent( SetupContext, bonusManager.ResolveAllUnitBonuses( unit, playerId, islandId) , model.UnitAmount, island );
                     //SetupContext.Ressources.Update( island.AllRessources );
                     SetupContext.SaveChanges();
                 }
