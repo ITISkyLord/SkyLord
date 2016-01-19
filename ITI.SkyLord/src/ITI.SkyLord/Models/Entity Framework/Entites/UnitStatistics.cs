@@ -24,8 +24,6 @@ namespace ITI.SkyLord
 
         public int Consumption { get; set; }
 
-        public int TimeToBuild { get; set; }
-
         #endregion
     }
 }

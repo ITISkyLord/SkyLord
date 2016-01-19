@@ -229,7 +229,7 @@ namespace ITI.SkyLord
             {
                 int number = (int)( r.Number * ratio );
                 loss.Add( r.Unit.Name, number );
-                Console.WriteLine( "number in the unit : " + r.Name + " = " + r.Number );
+                Console.WriteLine( "number in the unit :  = " + r.Number );
                 Console.WriteLine( "loss = " + number );
                 this.SubstractFromRegiment( army, r.Unit, number);
             }
