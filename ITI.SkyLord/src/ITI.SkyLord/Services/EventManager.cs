@@ -22,6 +22,14 @@ namespace ITI.SkyLord
             _unitEvents = new List<UnitEvent>();
         }
 
+        internal List<BuildingEvent> GetBuildingEventsOnThisBuildingPosition( long islandId, int position )
+        {
+            List<BuildingEvent> events = new List<BuildingEvent>();
+            // Récupérer les évènements liés à une position
+            events = _context.BuildingEvents.Include( e => e.Island ).ThenInclude( e => e.Buildings ).Where( i => i.Island.IslandId == islandId && i.BuildingToBuild.Position == position ).ToList();
+
+            return events;
+        }
         public void AddUnitEvent( IUnitEventContext ctx, Unit unit, int number, Island island )
         {
 
