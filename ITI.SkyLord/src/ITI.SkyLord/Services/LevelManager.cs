@@ -64,7 +64,7 @@ namespace ITI.SkyLord
             Island currentIsland = CurrentContext.GetIsland( currentIslandId, activePlayerId );
             if ( nextLevel != null )
             {
-                return AreAllRequirementsMet( (List<Requirement>)FindNextLevel( currentLevel ).Requirements, currentIslandId );
+                return AreAllRequirementsMet( FindNextLevel( currentLevel ).Requirements.ToList(), currentIslandId );
             }
             return false;
         }
