@@ -24,5 +24,10 @@ namespace ITI.SkyLord.ViewModel.SeeIslands
         public List<Unit> AllUnits { get; set; }
         public List<Unit> AvailableUnit { get; set; }
 
+        // For LaboratoryBuilding
+        public List<Technology> AvailableTechnologies { get; set; }
+        //public Technology CurrentTechnology { get; set; }
+        //public TechnologyName TargetTechnology { get; set; }
+
     }
 }

@@ -1,31 +1,40 @@
 ﻿@addTagHelper "*, Microsoft.AspNet.Mvc.TagHelpers"
-@model BuildingViewModel
+@model ITI.SkyLord.ViewModel.Technologies.TechnologyViewModel
 
 @{
-    ViewData[ "Title" ] = "View Buildings";
+    ViewData["Title"] = "Vue des technologies";
     Layout = "_Layout";
 }
-
+<h3> Technologies actuelles</h3>
 <ul>
-    @for ( int i = 1; i <= Model.Layout.CurrentIsland.PossiblePositions; i++ )
+    
+    @foreach( Technology tech in Model.Technologies)
     {
-        Building building = Model.Layout.CurrentIsland.Buildings.Where( b => b.Position == i ).SingleOrDefault();
+        <form asp-route-islandId="@Model.Layout.CurrentIsland.IslandId" asp-controller="Technology" asp-action="AddTechnology">
+            @Html.DropDownListFor( m => m.TargetTechnology, Model.AvailableSearchingTechnologies, "-- Rechercher --", new { onchange = "this.form.submit()" } )
+
+
+        </form>
+    }
+    @*@for( int i = 0; i < Model.Layout.CurrentIsland.PossiblePositions; i++ )
+    {
+        Technology building = Model.Layout.CurrentPlayer.Technologies.Where( b => b. == i ).SingleOrDefault();
         <li>
             <h4>Emplacement @i :</h4>
-            @if ( building == null )
+            @if( building == null )
             {
                 <form asp-route-islandId="@Model.Layout.CurrentIsland.IslandId" asp-controller="Building" asp-action="AddBuilding">
                     <input type="number" value="@i" asp-for="@Model.Position" style="display : none" />
                     <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
 
-                    @Html.DropDownListFor( m => m.TargetBuilding, Model.AvailableConstructionBuildings, "-- Construire --", new { onchange = "this.form.submit()" } )
+                    @Html.DropDownListFor( m => m.TargetBuilding, Model.AvailableConstructionBuildings, "-- Consutruire --", new { onchange = "this.form.submit()" } )
                 </form>
             }
             else
             {
                 @building.Name { Write( " ( Niveau " ); } @building.Level.Number { Write( " ) " ); }
                 {
-                    string nextLevelCost = " Coût du prochain niveau : Bois "
+                    string nextLevelCost = " Cout du prochain niveau : Bois "
                         + Model.NextLevelCosts[i].Wood
                         + " Métal : " + Model.NextLevelCosts[ i ].Metal
                         + " Cristal : " + Model.NextLevelCosts[ i ].Cristal
@@ -39,5 +48,6 @@
                 </form>
     }
         </li>
-    }
+    }*@
 </ul>
+

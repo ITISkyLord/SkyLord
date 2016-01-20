@@ -673,7 +673,7 @@ namespace ITI.SkyLord
                 // Add Unit
                 Unit necromancer = new Unit
                 {
-                    Name = "necromancer",
+                    Name = "Nécromancien",
                     UnitName = UnitName.necromancer,
                     UnitType = UnitType.magic,
                     UnitDamageType = UnitDamageType.magical,

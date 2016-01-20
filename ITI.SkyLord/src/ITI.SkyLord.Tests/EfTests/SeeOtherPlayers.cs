@@ -15,7 +15,7 @@ namespace ITI.SkyLord.Tests
 
         public SeeOtherPlayers()
         {
-            using (PlayerContext context = new PlayerContext())
+            using (SetupContext context = new SetupContext())
             {
                _world = context.GetWorld();
             }

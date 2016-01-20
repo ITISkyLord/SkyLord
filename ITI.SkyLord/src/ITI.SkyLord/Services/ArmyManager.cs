@@ -65,8 +65,11 @@ namespace ITI.SkyLord
             Regiment regimentFound = CurrentContext.Regiments.FirstOrDefault( r => r.ArmyId == armyFound.ArmyId && r.Unit.UnitId == unit.UnitId );
             if ( regimentFound == null )
             {
-                // If the regiment with this specific unit was not found, add this unit to DB and add it to the regiment
-                CurrentContext.Add( unit );
+                // If the regiment with this specific unit was not found, resolve bonuses on the unit and add it (and its stats) to the DB
+                // The already present units normally have been updated each time a new bonus was added by a technology
+                Unit modifiedUnit = BonusManager.ResolveAllUnitBonuses( unit, island.Owner.PlayerId, island.IslandId );
+                CurrentContext.Add( modifiedUnit.UnitStatistics );
+                CurrentContext.Add( modifiedUnit );
 
                 Regiment newRegiment = new Regiment
                 {
@@ -234,7 +237,6 @@ namespace ITI.SkyLord
                 this.SubstractFromRegiment( army, r.Unit, number);
             }
             return loss;
-          //  CurrentContext.SaveChanges(); À voir si ça été changé après l'impact sur l'attaqué, EventManager
         }
 
         internal void SubstractFromArmy( Army armyToRemoveFrom, Army armyToBeRemoved )

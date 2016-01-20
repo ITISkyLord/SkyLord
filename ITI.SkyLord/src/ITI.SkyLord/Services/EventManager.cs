@@ -206,7 +206,8 @@ namespace ITI.SkyLord
             //  /!\ HERE IS THE PROBLEM with Include. /!\
             // UnitEvent unitEvent = _context.UnitEvents.Include(a=>a.Unit).ThenInclude( b => b.UnitStatistics ).Where( e => e.EventId == ue.EventId ).First();
 
-            Unit unit = _context.Units.Include( y => y.UnitStatistics ).Where( u => u.UnitId == ue.UnitIdd ).Single();
+            Unit unit = _context.Units.Include( u => u.Requirements).Include( u => u.UnitCost).Include( u => u.UnitStatistics )
+                .Single( u => u.UnitId == ue.UnitIdd );
             ArmyManager am = _allManager.ArmyManager;
             am.AddUnit( unit, 1, ue.Island );
             // TODO : Si plusieurs lignes sont finies en même temps, on peut les cumuler avec ArmyManager.AddUnit
@@ -277,7 +278,12 @@ namespace ITI.SkyLord
         }
         public void Resolve( TechnologyEvent te )
         {
-            throw new NotImplementedException();
+            TechnologyManager tm = new TechnologyManager( _context, new LevelManager(_context) , new BonusManager( _context ));
+            TechnologyEvent technoEvent = _context.TechnologyEvents
+                                                  .Include( e => e.Island )
+                                                  .Include( e => e.Technology )
+                                                  .Where( e => e.EventId == te.EventId).Single();
+            tm.AddTechnology( technoEvent.Technology.TechnologyName, technoEvent.Island.Owner.PlayerId, technoEvent.Island.IslandId );
         }
 
         internal void Resolve( BuildingEvent be )

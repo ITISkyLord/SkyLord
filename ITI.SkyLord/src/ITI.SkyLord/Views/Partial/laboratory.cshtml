@@ -1,8 +1,30 @@
-﻿@model ITI.SkyLord.ViewModel.Partial.BuildingPartialViewModel
+﻿@*@model ITI.SkyLord.ViewModel.Partial.BuildingPartialViewModel
 
 <p>Je suis un laboratory !!! :D</p>
 
 <ul>
     <li>LevelUp</li>
 </ul>
+
+@foreach( Technology technology in Model.AvailableTechnologies )
+{
+    <form asp-controller="Technology" asp-action="AddTechnology" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId">
+        <input type="hidden" asp-for="TargetTechnology" value="@technology.TechnologyName" />
+        <div class="row" style="margin-bottom: 20px;">
+            <div class="col-lg-2">@technology.TechnologyName</div>
+            @{
+
+            }
+            <div class="col-lg-1">@technology.Level.Cost.Wood Bois</div>
+            <div class="col-lg-1">@technology.Level.Cost.Metal Métal</div>
+            <div class="col-lg-1">@technology.Level.Cost.Magic Magie</div>
+            <div class="col-lg-1">@technology.Level.Cost.Cristal Cristal</div>
+            @{
+
+            }
+            //   <div class="col-lg-3"><input style="width: 100%;" type="number" asp-for="UnitAmount" min="0" step="1" value="0" /></div>
+            <div class="col-lg-1"><input type="submit" value="Former" /></div>
+        </div>
+    </form>
+}*@
 
