@@ -49,7 +49,7 @@ namespace ITI.SkyLord.Services
         {
             Technology technologyToLevelUp = GetPlayersTechnologies( playerId ).Single( t => t.TechnologyName == technologyNameToLevelUp );
 
-            if ( LevelManager.IsNextLevelAvailable( technologyToLevelUp.Level, currentIslandId ) )
+            if ( LevelManager.GetNextLevelAvailablility( technologyToLevelUp, currentIslandId ).IsItemAvailable )
             {
                 Level nextLevel = LevelManager.FindNextLevel( technologyToLevelUp.Level );
 

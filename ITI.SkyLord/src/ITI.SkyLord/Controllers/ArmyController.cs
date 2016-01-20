@@ -261,7 +261,7 @@ namespace ITI.SkyLord.Controllers
             //    Where( u => levelManager.IsUnitAvailable( u, islandId) ).ToList();
             foreach( Unit unit in SetupContext.Units.Include( u => u.UnitCost ).Include( u => u.UnitStatistics ).Include( u => u.Requirements ).ToList() )
             {
-                if( levelManager.IsUnitAvailable( unit, islandId ) )
+                if( levelManager.GetAvailablility( unit, islandId ).IsItemAvailable )
                     model.AvailableUnits.Add( unit );
             }
             model.CurrentIslandArmies = currentIslandArmies;
