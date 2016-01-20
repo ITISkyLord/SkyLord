@@ -14,15 +14,15 @@ namespace ITI.SkyLord.Controllers
 {
     public class IslandController : GenericController
     {
-        public IActionResult OverView(long islandId)
+        public IActionResult OverView( long islandId )
         {
             OverViewViewModel ovvm = new OverViewViewModel();
 
-            SetupContext.GetIsland(islandId, SetupContext.GetPlayer(User));
-            SetupContext.ValidateIsland(islandId, SetupContext.GetPlayer(User));
+            SetupContext.GetIsland( islandId, SetupContext.GetPlayer( User ) );
+            SetupContext.ValidateIsland( islandId, SetupContext.GetPlayer( User ) );
 
-            SetupContext.FillStandardVM(ovvm, SetupContext.GetPlayer(User.GetUserId()).PlayerId, SetupContext.GetPlayer(User));
-            return View(ovvm);
+            SetupContext.FillStandardVM( ovvm, SetupContext.GetPlayer( User.GetUserId() ).PlayerId, SetupContext.GetPlayer( User ) );
+            return View( ovvm );
         }
 
         public IActionResult Index()
@@ -30,7 +30,7 @@ namespace ITI.SkyLord.Controllers
             return View();
         }
 
-        
+
         /// <summary>
         /// See the island(s) of the current player
         /// </summary>
@@ -40,16 +40,16 @@ namespace ITI.SkyLord.Controllers
         {
             Island currentIsland = GetIsland( islandId );
 
-            SeeIslandViewModel islandViewModel = CreateBuildingViewModel(currentIsland.IslandId, SetupContext.GetPlayer(User.GetUserId()).PlayerId);
+            SeeIslandViewModel islandViewModel = CreateBuildingViewModel( currentIsland.IslandId, SetupContext.GetPlayer( User.GetUserId() ).PlayerId );
 
-            return View(islandViewModel);
+            return View( islandViewModel );
         }
 
         private Island GetIsland( long islandId )
         {
             if ( islandId == 0 )
             {
-                long activePlayerId = SetupContext.GetPlayer( User);
+                long activePlayerId = SetupContext.GetPlayer( User );
                 return SetupContext.Islands
                     .Include( i => i.Armies )
                     .ThenInclude( a => a.Regiments )
@@ -57,7 +57,7 @@ namespace ITI.SkyLord.Controllers
                     .Include( i => i.AllRessources )
                     .Include( i => i.Owner )
                     .Include( i => i.Coordinates )
-                    .Include(i => i.Buildings)
+                    .Include( i => i.Buildings )
                     .SingleOrDefault( i => i.IsCapital && i.Owner.PlayerId == activePlayerId );
             }
             else
@@ -74,37 +74,37 @@ namespace ITI.SkyLord.Controllers
             }
         }
 
-        private SeeIslandViewModel CreateBuildingViewModel(SeeIslandViewModel model, long islandId, long playerId)
+        private SeeIslandViewModel CreateBuildingViewModel( SeeIslandViewModel model, long islandId, long playerId )
         {
             LevelManager levelManager = new LevelManager( SetupContext );
-            BuildingManager buildingManager = new BuildingManager( SetupContext, levelManager);
-            ArmyManager armyManager = new ArmyManager(SetupContext, new BonusManager(SetupContext));
+            BuildingManager buildingManager = new BuildingManager( SetupContext, levelManager );
+            ArmyManager armyManager = new ArmyManager( SetupContext, new BonusManager( SetupContext ) );
 
             // Fill Standard
-            SetupContext.FillStandardVM(model, SetupContext.GetPlayer(User.GetUserId()).PlayerId, islandId);
+            SetupContext.FillStandardVM( model, SetupContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
 
             // Current Player & Island
-            model.Layout.CurrentPlayer = SetupContext.GetPlayer(User.GetUserId());
-            Island currentIsland = SetupContext.GetIsland(islandId, model.Layout.CurrentPlayer.PlayerId);
+            model.Layout.CurrentPlayer = SetupContext.GetPlayer( User.GetUserId() );
+            Island currentIsland = SetupContext.GetIsland( islandId, model.Layout.CurrentPlayer.PlayerId );
             model.CurrentIsland = currentIsland;
 
             // Tous les buildings sur l'island
-            model.Buildings = buildingManager.GetBuildingsOnCurrentIsland(islandId, playerId);
+            model.Buildings = buildingManager.GetBuildingsOnCurrentIsland( islandId, playerId );
             model.DicoBuildings = new Dictionary<string, Building>();
-            foreach(var building in model.Buildings)
+            foreach ( var building in model.Buildings )
             {
-                model.DicoBuildings.Add(building.Position.ToString(), building);
+                model.DicoBuildings.Add( building.Position.ToString(), building );
             }
 
             // Tout les nexts level de chaque batiments
             model.NextLevel = new Dictionary<int, Level>();
-            foreach (Building building in model.Buildings)
-            { 
+            foreach ( Building building in model.Buildings )
+            {
                 // Si le next level existe => on l'ajoute au dico OTD
-                var nextLevel = levelManager.FindNextLevel(building.Level);
-                if(nextLevel != null)
+                var nextLevel = levelManager.FindNextLevel( building.Level );
+                if ( nextLevel != null )
                 {
-                    model.NextLevel.Add(building.Position, nextLevel);
+                    model.NextLevel.Add( building.Position, nextLevel );
                 }
             }
 
@@ -112,23 +112,23 @@ namespace ITI.SkyLord.Controllers
             model.AvailableBuildings = buildingManager.GetAvailableBuildings();
 
             // On retire tout les bâtiments qui sont uniques et que l'on a déjà construit sur notre island
-            model.AvailableBuildings = buildingManager.RemoveAlreadyBuiltBuilding(model.AvailableBuildings, model.Buildings);
+            model.AvailableBuildings = buildingManager.RemoveAlreadyBuiltBuilding( model.AvailableBuildings, model.Buildings );
 
             // Army sur l'island
-            model.CurrentArmy = armyManager.GetCurrentDefenseArmy(islandId);
+            model.CurrentArmy = armyManager.GetCurrentDefenseArmy( islandId );
 
             // Toutes les unités possibles  
-            model.AllUnits = SetupContext.Units.Include(u => u.UnitCost).ToList();
-            model.AvailableUnit = SetupContext.Units.Where(u => levelManager.IsUnitAvailable(u, islandId)).ToList();
+            model.AllUnits = SetupContext.Units.Include( u => u.UnitCost ).ToList();
+            model.AvailableUnit = SetupContext.Units.Where( u => levelManager.GetAvailablility( u, islandId ).IsItemAvailable ).ToList();
 
             return model;
         }
-        private SeeIslandViewModel CreateBuildingViewModel(long islandId, long playerId)
+        private SeeIslandViewModel CreateBuildingViewModel( long islandId, long playerId )
         {
             SeeIslandViewModel model = new SeeIslandViewModel();
-            SetupContext.FillStandardVM(model, SetupContext.GetPlayer(User), islandId);
+            SetupContext.FillStandardVM( model, SetupContext.GetPlayer( User ), islandId );
 
-            return CreateBuildingViewModel(model, islandId, playerId);
+            return CreateBuildingViewModel( model, islandId, playerId );
         }
 
 

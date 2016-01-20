@@ -57,7 +57,7 @@ namespace ITI.SkyLord
             };
             currentIsland.Buildings.Add( buildingToAdd );
 
-            // Substract the ressource
+            // Substract the ressource DO THIS WHEN BuildingEvent is fired !!
             RessourceManager.RemoveRessource( CurrentContext.GetIsland( currentIslandId, playerId ).AllRessources, buildingToAdd.Level.Cost );
 
             return true;
@@ -67,7 +67,7 @@ namespace ITI.SkyLord
         {
             Building buildingToLevelUp = GetBuildingsOnCurrentIsland( currentIslandId, playerId ).Single( b => b.BuildingName == buildingNameToLevelUp && b.Position == position );
 
-            if ( LevelManager.IsNextLevelAvailable( buildingToLevelUp.Level, currentIslandId ) )
+            if ( LevelManager.GetNextLevelAvailablility( buildingToLevelUp, currentIslandId ).IsItemAvailable )
             {
                 Level nextLevel = LevelManager.FindNextLevel( buildingToLevelUp.Level );
 
