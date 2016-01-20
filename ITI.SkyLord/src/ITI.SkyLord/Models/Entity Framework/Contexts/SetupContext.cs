@@ -134,6 +134,11 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
             svm.Layout.CurrentPlayer = Players.Single(p => p.PlayerId == playerId);
             svm.Layout.IslandId = islandId;
         }
+        /// <summary>
+        /// This method contain armies (regiments, unit), ressources, owner, coordinates and buildings
+        /// </summary>
+        /// <param name="playerId"></param>
+        /// <returns></returns>
         public List<Island> GetAllIslands( long playerId )
         {
                 return Islands
@@ -143,6 +148,8 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
                     .Include( i => i.AllRessources )
                     .Include( i => i.Owner )
                     .Include( i => i.Coordinates )
+                    .Include( i => i.Buildings)
+                    .ThenInclude( b => b.Level)
                     .Where( i => i.Owner.PlayerId == playerId ).ToList();
         }
 

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Microsoft.Data.Entity;
 
 namespace ITI.SkyLord.Services
 {
@@ -18,38 +19,52 @@ namespace ITI.SkyLord.Services
         public static void ResolveResources( Island island, SetupContext context )
         {
             Ressource ressourcesGathered = new Ressource();
-            List<Building> ressourcesBuildings = GetRessourcesBuildings(island.Buildings);
+            List<Building> ressourcesBuildings = GetRessourcesBuildings(island.Buildings.ToList());
             DateTime checkTime = GetLastCheckTime(island);
 
-            if( checkTime.Equals( new DateTime() ) && ressourcesBuildings != null ) // If null, checkTime will be set after the if{} anyway for initialisation
+            if( !checkTime.Equals( new DateTime() ) && ressourcesBuildings != null ) // If null, checkTime will be set after the if{} anyway for initialisation
             {
                 // Calculate gap between last time and now
                 int gap = (int)(DateTime.Now - checkTime).TotalSeconds;
 
                 // Get all fields
-                Building cristalField = ressourcesBuildings.Where( b => b.BuildingName == BuildingName.cristalField ).Single();
-                Building woodField = ressourcesBuildings.Where( b => b.BuildingName == BuildingName.woodField ).Single();
-                Building metalField = ressourcesBuildings.Where( b => b.BuildingName == BuildingName.metalField ).Single();
-                Building magicField = ressourcesBuildings.Where( b => b.BuildingName == BuildingName.magicField ).Single();
+                Building cristalField = ressourcesBuildings.Where( b => b.BuildingName == BuildingName.cristalField ).SingleOrDefault();
+                Building woodField = ressourcesBuildings.Where( b => b.BuildingName == BuildingName.woodField ).SingleOrDefault();
+                Building metalField = ressourcesBuildings.Where( b => b.BuildingName == BuildingName.metalField ).SingleOrDefault();
+                Building magicField = ressourcesBuildings.Where( b => b.BuildingName == BuildingName.magicField ).SingleOrDefault();
 
                 // Create an object Ressource that contain the amount earned since last check
-                ressourcesGathered.Cristal = gap * GetProductionEachSecond( (FieldLevel)cristalField.Level );
-                ressourcesGathered.Wood = gap * GetProductionEachSecond( (FieldLevel)woodField.Level );
-                ressourcesGathered.Metal = gap * GetProductionEachSecond( (FieldLevel)metalField.Level );
-                ressourcesGathered.Magic = gap * GetProductionEachSecond( (FieldLevel)magicField.Level );
+                if( cristalField != null )
+                    ressourcesGathered.Cristal = (int)(gap * GetProductionEachSecond( (FieldLevel)cristalField.Level ));
+                if( woodField != null )
+                    ressourcesGathered.Wood = (int)(gap * GetProductionEachSecond( (FieldLevel)woodField.Level ));
+                if( metalField != null )
+                    ressourcesGathered.Metal = (int)(gap * GetProductionEachSecond( (FieldLevel)metalField.Level ));
+                if( magicField != null )
+                    ressourcesGathered.Magic = (int)(gap * GetProductionEachSecond( (FieldLevel)magicField.Level ));
 
-                AddRessource( island.AllRessources, ressourcesGathered );
+                // Add ressources only if all ressources that exist are able to be added
+                if( (ressourcesGathered.Metal >= 1 || metalField == null) && (ressourcesGathered.Magic >= 1 || magicField == null) && (ressourcesGathered.Wood >= 1 || woodField == null) && (ressourcesGathered.Cristal >= 1 || cristalField == null) )
+                {
+                    AddRessource( island.AllRessources, ressourcesGathered );
+                    SetLastCheckTime( island );
+                }
                 // case if you got robbed, remove ressources ?
             }
 
-            SetLastCheckTime( island );
+            // set checktime for initialisation
+            if( checkTime.Equals( new DateTime() ) && ressourcesBuildings != null )
+            {
+                SetLastCheckTime( island );
+            }
+
             context.SaveChanges();
         }
 
         #region Resolve Resources Helpers
-        private static int GetProductionEachSecond( FieldLevel field )
+        private static double GetProductionEachSecond( FieldLevel field )
         {
-            return field.Production / 3600;
+            return (double)field.Production / 3600f;
         }
         private static void SetLastCheckTime( Island island )
         {
@@ -63,7 +78,7 @@ namespace ITI.SkyLord.Services
             }
             return new DateTime();
         }
-        private static List<Building> GetRessourcesBuildings( IList<Building> buildings )
+        private static List<Building> GetRessourcesBuildings( List<Building> buildings )
         {
             if( buildings == null )
                 return null;
