@@ -8,6 +8,7 @@ using ITI.SkyLord.ViewModel.Technologies;
 using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.Filters;
 using Microsoft.Data.Entity;
+using Microsoft.AspNet.Mvc.Rendering;
 
 namespace ITI.SkyLord.Controllers
 {
@@ -52,10 +53,11 @@ namespace ITI.SkyLord.Controllers
         {
             SetupContext.FillStandardVM( model, SetupContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
 
-            model.Layout.CurrentPlayer = SetupContext.GetPlayer( User.GetUserId() );
+            //model.Layout.CurrentPlayer = SetupContext.GetPlayer( User.GetUserId() );
             Island currentIsland = SetupContext.GetIsland( islandId, model.Layout.CurrentPlayer.PlayerId );
 
             LevelManager levelManager = new LevelManager( SetupContext );
+            BonusManager bonusManager = new BonusManager( SetupContext );
             TechnologyManager technologyManager = new TechnologyManager( SetupContext, levelManager, new BonusManager( SetupContext ) );
 
 
@@ -65,9 +67,8 @@ namespace ITI.SkyLord.Controllers
             {
                 model.NextLevelCosts.Add( technology.TechnologyName, levelManager.FindNextLevel( technology.Level ).Cost );
             }
-            // model.AvailableTechnologies = .GetAvailableBuildings(); ISTechnologyAvailable à récupérer auprès de Tristan
-            model.ExistingTechnologies = SetupContext.Technologies.ToList();
-            model.AvailableTechnologies = SetupContext.Technologies.ToList();
+            model.AvailableTechnologies = technologyManager.GetAvailableTechnologies();
+            model.AvailableSearchingTechnologies = new SelectList( model.AvailableTechnologies.Where( t => levelManager.GetNextLevelAvailablility( t, islandId ).IsItemAvailable ) );
 
             return model;
         }

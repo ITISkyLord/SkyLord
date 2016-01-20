@@ -17,7 +17,7 @@ namespace ITI.SkyLord.Tests.EfTests
         [SetUp]
         public void Initialisation()
         {
-            using (PlayerContext context = new PlayerContext())
+            using (SetupContext context = new SetupContext())
             {
                 _world = context.GetWorld();
 
@@ -28,7 +28,7 @@ namespace ITI.SkyLord.Tests.EfTests
         [TearDown]
         public void End()
         {
-            using (PlayerContext context = new PlayerContext())
+            using (SetupContext context = new SetupContext())
             {
 
             }

@@ -21,11 +21,8 @@ namespace ITI.SkyLord.Models.Entity_Framework.Controllers
     public class AccountController : Controller
     {
         [FromServices]
-        public PlayerContext PlayerContext { get; set; }
-
-        [FromServices]
-        public LevelContext LevelContext { get; set; }
-
+        public SetupContext SetupContext { get; set; }
+        
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
@@ -132,7 +129,7 @@ namespace ITI.SkyLord.Models.Entity_Framework.Controllers
 
                     Island island = null;
 
-                    using (PlayerContext context = new PlayerContext())
+                    using (SetupContext context = new SetupContext())
                     {
                         //    Player p = new Player( context.GetWorld(), model.Pseudo, model.Email, model.Password );
                         Player p = new Player();
@@ -163,10 +160,10 @@ namespace ITI.SkyLord.Models.Entity_Framework.Controllers
                         BuildingName = BuildingName.tower,
                         Name = "Tour de mage"
                     };
-                    LevelContext.Add( mageTower );
+                    SetupContext.Add( mageTower );
 
                     island.Buildings = new List<Building> { mageTower };
-                    LevelContext.SaveChanges();
+                    SetupContext.SaveChanges();
 
                     return RedirectToAction("SeeMyIsland", "Island");
                 }
