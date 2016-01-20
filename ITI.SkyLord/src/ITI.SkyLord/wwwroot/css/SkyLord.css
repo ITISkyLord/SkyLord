@@ -6742,7 +6742,7 @@ body {
 }
 .navbar {
   margin-bottom: 0;
-  background-image: url("../images/site_haut2.png");
+  background-image: url("../images/Site/site_haut2.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   z-index: 9999;
@@ -6807,7 +6807,7 @@ body {
   left: 0px;
 }
 .ui-autocomplete {
-  background-image: url("../images/site_ressource.png");
+  background-image: url("../images/Site/site_ressource.png");
   width: 100%;
   height: 10px;
   background-repeat: no-repeat;
@@ -6819,7 +6819,7 @@ body {
 .jumbotron {
   margin: 0;
   margin-top: 29px;
-  background-image: url("../images/site_ressource.png");
+  background-image: url("../images/Site/site_ressource.png");
   background-size: cover;
   background-repeat: no-repeat;
   padding: 74px;
@@ -6834,7 +6834,7 @@ body {
   height: auto;
   width: 100%;
   height: 100%;
-  background-image: url("../images/site_fond.png");
+  background-image: url("../images/Site/site_fond.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }
@@ -6872,7 +6872,7 @@ body {
   width: auto;
   padding: 0;
   margin: 0;
-  background-image: url("../images/site_side.png");
+  background-image: url("../images/Site/site_side.png");
   background-size: 100% 100%;
 }
 @media (min-width: 1200px) {
@@ -7003,7 +7003,7 @@ body {
   height: auto;
   width: 100%;
   height: 100%;
-  background-image: url("../images/sitecarton.png");
+  background-image: url("../images/Site/sitecarton.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   overflow: auto;
@@ -7122,7 +7122,7 @@ body {
   transition: box-shadow 0.5s;
   width: 580px;
   height: 580px;
-  background-image: url("../images/site_ressource.png");
+  background-image: url("../images/Site/site_ressource.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   background-position: center;
@@ -7137,7 +7137,7 @@ body {
   color: whitesmoke;
   font-weight: bold;
   font-size: 17px;
-  background-image: url("../images/site_haut2.png");
+  background-image: url("../images/Site/site_haut2.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   padding: 10px;
@@ -7170,6 +7170,47 @@ body {
   letter-spacing: 3px;
   background-color: whitesmoke;
 }
+.SkyLordContainer .templatebuilding .buildings-build {
+  border: 1px solid white;
+}
+.SkyLordContainer .templatebuilding .buildings-build .buildings-build-head {
+  text-align: center;
+  color: whitesmoke;
+  font-weight: bold;
+  font-size: 17px;
+  background-image: url("../images/Site/site_haut2.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  padding: 10px;
+  border-bottom: 1px solid transparent;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+.SkyLordContainer .templatebuilding .buildings-build .buildings-build-body {
+  color: #825847;
+  font-weight: bold;
+  font-size: 13px;
+  text-align: center;
+}
+.SkyLordContainer .templatebuilding .buildings-build .buildings-build-body .buildings-build-body-txt {
+  padding: 20px;
+}
+.SkyLordContainer .templatebuilding .buildings-build .buildings-build-body .btn-link {
+  color: #825847;
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 3px;
+  text-decoration: none;
+  text-align: center;
+}
+.SkyLordContainer .templatebuilding .buildings-build .buildings-build-body .btn-link:hover {
+  color: #825847;
+  font-weight: bold;
+  letter-spacing: 3px;
+  background-color: whitesmoke;
+}
 .SkyLordContainer .playerContainer {
   margin-right: auto;
   margin-left: auto;
@@ -7180,7 +7221,7 @@ body {
   height: auto;
   width: 100%;
   height: 100%;
-  background-image: url("../images/sitecarton.png");
+  background-image: url("../images/Site/sitecarton.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   overflow: auto;
@@ -7213,7 +7254,7 @@ body {
 footer {
   font-size: 17px;
   margin-bottom: 1px;
-  background-image: url("../images/site_haut3.png");
+  background-image: url("../images/Site/site_haut3.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }
