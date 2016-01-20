@@ -1023,7 +1023,7 @@ namespace ITI.SkyLord.Tests.EfTests
             };
         }
 
-        void AddPlayerAndUser( Player p, CustomContext context )
+        void AddPlayerAndUser( Player p, SetupContext context )
         {
             ApplicationUser appUser = new ApplicationUser();
             User_Player userPlayer = new User_Player( p, appUser );
@@ -1033,7 +1033,7 @@ namespace ITI.SkyLord.Tests.EfTests
             context.User_Players.Add( userPlayer );
         }
 
-        void RemovePlayerAndUser( Player p, CustomContext context )
+        void RemovePlayerAndUser( Player p, SetupContext context )
         {
                 context.Remove( p );
                 context.User_Players.Remove( p.UserPlayer );
