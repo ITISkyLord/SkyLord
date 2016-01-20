@@ -9,6 +9,7 @@ using ITI.SkyLord.Services;
 using System.Collections.Generic;
 using Microsoft.AspNet.Mvc.Rendering;
 using ITI.SkyLord.ViewModel.Technologies;
+using ITI.SkyLord.Models.Entity_Framework.Entites.Events;
 
 namespace ITI.SkyLord.Controllers
 {
@@ -79,6 +80,7 @@ namespace ITI.SkyLord.Controllers
             LevelManager levelManager = new LevelManager( SetupContext );
             BuildingManager buildingManager = new BuildingManager( SetupContext, levelManager);
             ArmyManager armyManager = new ArmyManager(SetupContext, new BonusManager(SetupContext));
+            EventManager eventManager = new EventManager(SetupContext, new EventPackManager(SetupContext));
 
             // Fill Standard
             SetupContext.FillStandardVM(model, SetupContext.GetPlayer(User.GetUserId()).PlayerId, islandId);
@@ -88,12 +90,14 @@ namespace ITI.SkyLord.Controllers
             Island currentIsland = SetupContext.GetIsland(islandId, model.Layout.CurrentPlayer.PlayerId);
             model.CurrentIsland = currentIsland;
 
-            // Tous les buildings sur l'island
+            // Tous les buildings sur l'island avec l'event de chaque island
             model.Buildings = buildingManager.GetBuildingsOnCurrentIsland(islandId, playerId);
+            model.AllBuildingEventOnIsland = new Dictionary<int, List<BuildingEvent>>();
             model.DicoBuildings = new Dictionary<string, Building>();
             foreach(var building in model.Buildings)
             {
                 model.DicoBuildings.Add(building.Position.ToString(), building);
+                model.AllBuildingEventOnIsland.Add(building.Position, eventManager.GetBuildingEventsOnThisBuildingPosition(islandId, building.Position));
             }
 
             // Tout les nexts level de chaque batiments
