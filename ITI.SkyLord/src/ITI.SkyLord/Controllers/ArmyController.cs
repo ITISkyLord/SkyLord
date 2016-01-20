@@ -57,9 +57,9 @@ namespace ITI.SkyLord.Controllers
                 {
                     long playerId = SetupContext.GetPlayer( User.GetUserId() ).PlayerId;
 
-                    BonusManager bonusManager = new BonusManager( SetupContext );
+                    //BonusManager bonusManager = new BonusManager( SetupContext );
                     RessourceManager.RemoveRessource( island.AllRessources, unit.UnitCost.Wood * model.UnitAmount, unit.UnitCost.Metal * model.UnitAmount, unit.UnitCost.Cristal * model.UnitAmount, unit.UnitCost.Magic * model.UnitAmount );
-                    em.AddUnitEvent( SetupContext, bonusManager.ResolveAllUnitBonuses( unit, playerId, islandId) , model.UnitAmount, island );
+                    em.AddUnitEvent( SetupContext, unit /*bonusManager.ResolveAllUnitBonuses( unit, playerId, islandId)*/ , model.UnitAmount, island );
                     //SetupContext.Ressources.Update( island.AllRessources );
                     SetupContext.SaveChanges();
                 }

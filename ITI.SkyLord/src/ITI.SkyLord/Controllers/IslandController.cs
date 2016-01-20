@@ -8,6 +8,7 @@ using ITI.SkyLord.ViewModel;
 using ITI.SkyLord.Services;
 using System.Collections.Generic;
 using Microsoft.AspNet.Mvc.Rendering;
+using ITI.SkyLord.ViewModel.Technologies;
 
 namespace ITI.SkyLord.Controllers
 {
@@ -87,7 +88,7 @@ namespace ITI.SkyLord.Controllers
             Island currentIsland = SetupContext.GetIsland( islandId, model.Layout.CurrentPlayer.PlayerId );
             model.CurrentIsland = currentIsland;
 
-            // Tout les buildings sur l'island
+            // Tous les buildings sur l'island
             model.Buildings = buildingManager.GetBuildingsOnCurrentIsland( islandId, playerId );
             model.DicoBuildings = new Dictionary<string, Building>();
             foreach ( var building in model.Buildings )
@@ -107,10 +108,10 @@ namespace ITI.SkyLord.Controllers
                 }
             }
 
-            // Tout les batiments qui existe
+            // Tout les bâtiments qui existent
             model.AvailableBuildings = buildingManager.GetAvailableBuildings();
 
-            // On retire tout les batiments qui sont uniques et que l'on a déjà construit sur notre island
+            // On retire tout les bâtiments qui sont uniques et que l'on a déjà construit sur notre island
             model.AvailableBuildings = buildingManager.RemoveAlreadyBuiltBuilding( model.AvailableBuildings, model.Buildings );
 
             // Army sur l'island
@@ -122,7 +123,6 @@ namespace ITI.SkyLord.Controllers
 
             return model;
         }
-
         private SeeIslandViewModel CreateBuildingViewModel( long islandId, long playerId )
         {
             SeeIslandViewModel model = new SeeIslandViewModel();
@@ -131,6 +131,38 @@ namespace ITI.SkyLord.Controllers
             return CreateBuildingViewModel( model, islandId, playerId );
         }
 
+
+        //private TechnologyViewModel CreateTechnologyViewModel( TechnologyViewModel model, long islandId, long playerId )
+        //{
+        //    SetupContext.FillStandardVM( model, SetupContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
+
+        //    model.Layout.CurrentPlayer = SetupContext.GetPlayer( User.GetUserId() );
+        //    Island currentIsland = SetupContext.GetIsland( islandId, model.Layout.CurrentPlayer.PlayerId );
+
+        //    LevelManager levelManager = new LevelManager( SetupContext );
+        //    TechnologyManager technologyManager = new TechnologyManager( SetupContext, levelManager, new BonusManager( SetupContext ) );
+
+
+        //    model.Technologies = technologyManager.GetPlayersTechnologies( playerId );
+        //    model.NextLevelCosts = new Dictionary<TechnologyName, Ressource>();
+        //    foreach( Technology technology in model.Technologies )
+        //    {
+        //        model.NextLevelCosts.Add( technology.TechnologyName, levelManager.FindNextLevel( technology.Level ).Cost );
+        //    }
+        //    // model.AvailableTechnologies = .GetAvailableBuildings(); ISTechnologyAvailable à récupérer auprès de Tristan
+        //    model.ExistingTechnologies = SetupContext.Technologies.ToList();
+        //    model.AvailableTechnologies = SetupContext.Technologies.ToList();
+
+        //    return model;
+        //}
+
+        //private TechnologyViewModel CreateTechnologyViewModel( long islandId, long playerId )
+        //{
+        //    TechnologyViewModel model = new TechnologyViewModel();
+        //    SetupContext.FillStandardVM( model, SetupContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
+
+        //    return CreateTechnologyViewModel( model, islandId, playerId );
+        //}
 
     }
 }

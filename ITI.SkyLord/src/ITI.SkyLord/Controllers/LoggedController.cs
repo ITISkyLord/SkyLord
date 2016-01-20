@@ -15,7 +15,7 @@ namespace ITI.SkyLord.Controllers
     public class LoggedController : Controller
     {
         [FromServices]
-        public PlayerContext PlayerContext { get; set; }
+        public SetupContext PlayerContext { get; set; }
 
         // GET: /<controller>/
         public IActionResult Index()

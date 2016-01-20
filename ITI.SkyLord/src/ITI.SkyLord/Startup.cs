@@ -65,16 +65,6 @@ namespace ITI.SkyLord
             // Add MVC services to the services container.
             services.AddMvc();
 
-            // TODO : Doit être supprimer
-            services.AddScoped<PlayerContext>();
-            services.AddScoped<IslandContext>();
-            services.AddScoped<ArmyContext>();
-            services.AddScoped<ArmyManager>();
-            services.AddScoped<LevelContext>();
-            services.AddScoped<MessageContext>();
-            // Fin Doit être supprimer
-
-
             services.AddScoped<SetupContext>();
             // Uncomment the following line to add Web API services which makes it easier to port Web API 2 controllers.
             // You will also need to add the Microsoft.AspNet.Mvc.WebApiCompatShim package to the 'dependencies' section of project.json.
@@ -139,7 +129,7 @@ namespace ITI.SkyLord
             if ( env.IsDevelopment() )
             {
                 // Add defaultWorld
-                using ( WorldContext context = new WorldContext() )
+                using (SetupContext context = new SetupContext() )
                 {
                     defaultWorld = context.Worlds.FirstOrDefault();
                     if ( defaultWorld == null )
@@ -151,7 +141,7 @@ namespace ITI.SkyLord
                 }
 
                 // Add Islands
-                using ( IslandContext context = new IslandContext() )
+                using (SetupContext context = new SetupContext() )
                 {
                     if ( context.Islands.Count() < 99 )
                     {

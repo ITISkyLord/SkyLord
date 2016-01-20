@@ -97,10 +97,12 @@ namespace ITI.SkyLord
                 _pillagedRessources = null;
 
             //ae.PillagedRessources = new Ressource() { Cristal = 100, Magic = 100, Metal = 100, Wood = 100 };
-
-            ctx.Ressources.Add( _pillagedRessources );
-            ae.PillagedRessources = _pillagedRessources;
-            ctx.SaveChanges();
+            if( _pillagedRessources != null)
+            {
+                ctx.Ressources.Add( _pillagedRessources );
+                ae.PillagedRessources = _pillagedRessources;
+                ctx.SaveChanges();
+            }
 
             #region CombatReport
             string coreMessageWinner = "";
@@ -138,7 +140,9 @@ namespace ITI.SkyLord
 
             foreach( KeyValuePair<string, int> kvp in cm.Loss )
             {
-                coreMessageWinner += " \n" + kvp.Value + " " + kvp.Key + " sur " + _winningArmy.Regiments.Where(a => a.Unit.Name == kvp.Key).Select( b => b.Number.ToString()).First();
+                coreMessageWinner += " \n" + kvp.Value + " " + kvp.Key /*+ " sur " + _winningArmy.Regiments.Where(a => a.Unit.Name == kvp.Key).Select( b => b.Number.ToString()).First()*/;
+                coreMessageLooser += " \n" + kvp.Value + " " + kvp.Key /*+ " sur " + _winningArmy.Regiments.Where(a => a.Unit.Name == kvp.Key).Select( b => b.Number.ToString()).First()*/;
+
             }
 
             coreMessageWinner += ".";
@@ -150,7 +154,17 @@ namespace ITI.SkyLord
                 Sender = _loosingArmy.Island.Owner,
                 Receiver = _winningArmy.Island.Owner,
                 CoreMessage = coreMessageWinner
-            }; 
+            };
+            coreMessageLooser += ".";
+            _combatReportLooser = new Message()
+            {
+                MessageObject = _loosingArmy.Island.Name + "a perdu contre " + _winningArmy.Island.Name + ".",
+                Read = false,
+                isCombatReport = true,
+                Sender = _winningArmy.Island.Owner,
+                Receiver = _loosingArmy.Island.Owner,
+                CoreMessage = coreMessageLooser
+            };
             #endregion
         }
         private Ressource CalculatePillagedResult()
