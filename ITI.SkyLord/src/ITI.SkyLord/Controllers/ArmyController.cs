@@ -224,6 +224,7 @@ namespace ITI.SkyLord.Controllers
         private SetAttackingArmyViewModel CreateSetAttackingArmyViewModel( SetAttackingArmyViewModel model, long islandId )
         {
             Island currentIsland = GetIsland( islandId );
+
             model.CurrentDefenseArmy = SetupContext.Armies
                                     .Include( a => a.Island )
                                     .Include( a => a.Regiments )

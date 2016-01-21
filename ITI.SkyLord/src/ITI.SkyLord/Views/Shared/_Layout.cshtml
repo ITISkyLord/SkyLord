@@ -69,7 +69,7 @@
                 </div>
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a asp-controller="Army" asp-action="Index" asp-route-islandId="@Model.Layout.IslandId">Armées</a></li>
+                        <li><a asp-controller="Army" asp-action="SetAttackingArmy" asp-route-islandId="@Model.Layout.IslandId">Armées</a></li>
                         <li><a asp-controller="Player" asp-action="SeePlayers" asp-route-islandId="@Model.Layout.IslandId">Joueurs</a></li>
                         <li><a asp-controller="Message" asp-action="GetAllMessages" asp-route-islandId="@Model.Layout.IslandId">Messages</a></li>
                         <li><a asp-controller="Home" asp-action="Index">Classement</a></li>
