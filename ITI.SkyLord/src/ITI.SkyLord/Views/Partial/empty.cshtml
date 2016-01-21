@@ -55,17 +55,17 @@
                             {
                                 BuildingEvent myEvent = Model.EventsOnBuilding.First();
 
-        <p>
-            Construction en cours :
-            @{Write(BuildingManager.StaticBuildingNameToName(myEvent.BuildingToBuild));}
-            <br />
-            Temps de construction restant : 
-            @{ 
-                TimeSpan tempsRestant = myEvent.EndingDate - DateTime.Now;
-                Write(tempsRestant.Hours + "h" + tempsRestant.Minutes+"min"+tempsRestant.Seconds+"sec" );
-            }
-            
-        </p>
-    }
+                                <p>
+                                    Construction en cours :
+                                    @{Write(BuildingManager.StaticBuildingNameToName(myEvent.BuildingToBuild));}
+                                    <br />
+                                    Temps de construction restant :
+                                    @{
+                                        TimeSpan tempsRestant = myEvent.EndingDate - DateTime.Now;
+                                        Write(tempsRestant.Hours + "h" + tempsRestant.Minutes + "min" + tempsRestant.Seconds + "sec");
+                                    }
+
+                                </p>
+                                        }
 
 </div>

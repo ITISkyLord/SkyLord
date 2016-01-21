@@ -1,7 +1,9 @@
 ﻿@model ITI.SkyLord.ViewModel.Partial.BuildingPartialViewModel
 
-<h2>@Model.CurrentBuilding.BuildingName</h2>
+<div class="head">
+    <h2>@BuildingManager.StaticBuildingNameToName(Model.CurrentBuilding.BuildingName)</h2>
 
+</div>
 <p class="BuildingDescription">[Desription à faire]</p>
 
 
@@ -16,7 +18,7 @@
 <p>Défense : @building.Defense</p>
 
 <h3>Next Level</h3>
-@{ 
+@{
     var nextLevel = (ShieldLevel)Model.NextBuildingLevel;
 }
 <p>Attaque : @nextLevel.Offense</p>

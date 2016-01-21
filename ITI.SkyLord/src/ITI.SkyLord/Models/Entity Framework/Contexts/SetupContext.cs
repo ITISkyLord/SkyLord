@@ -9,6 +9,7 @@ using ITI.SkyLord.ViewModel;
 using System;
 using System.Linq;
 using System.Security.Claims;
+using System.Collections.Generic;
 
 namespace ITI.SkyLord.Models.Entity_Framework.Contexts
 {
@@ -101,7 +102,7 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
         public BonusType BonusType { get; set; }
         #endregion Enumerations
 
-        #region Helper
+        #region Helpers
         public long GetPlayer(ClaimsPrincipal user)
         {
             return GetPlayer(user.GetUserId()).PlayerId;
@@ -131,6 +132,25 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
             svm.Layout.CurrentPlayer = Players.Single(p => p.PlayerId == playerId);
             svm.Layout.IslandId = islandId;
         }
+        /// <summary>
+        /// This method contain armies (regiments, unit), ressources, owner, coordinates and buildings
+        /// </summary>
+        /// <param name="playerId"></param>
+        /// <returns></returns>
+        public List<Island> GetAllIslands( long playerId )
+        {
+                return Islands
+                    .Include( i => i.Armies )
+                    .ThenInclude( a => a.Regiments )
+                    .ThenInclude( r => r.Unit )
+                    .Include( i => i.AllRessources )
+                    .Include( i => i.Owner )
+                    .Include( i => i.Coordinates )
+                    .Include( i => i.Buildings)
+                    .ThenInclude( b => b.Level)
+                    .Where( i => i.Owner.PlayerId == playerId ).ToList();
+        }
+
         public Island GetIsland(long islandId, long playerId)
         {
             if (islandId == 0)
