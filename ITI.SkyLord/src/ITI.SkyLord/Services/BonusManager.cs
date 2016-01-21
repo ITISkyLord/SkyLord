@@ -100,22 +100,22 @@ namespace ITI.SkyLord.Services
             switch ( bonus.BonusType )
             {
                 case BonusType.army_attack:
-                    unit.UnitStatistics.Attack += unit.UnitStatistics.Attack * ( bonus.Modifier / 100 );
+                    unit.UnitStatistics.Attack += (int)( unit.UnitStatistics.Attack * ( (double)bonus.Modifier / 100 ) );
                     break;
                 case BonusType.army_magicalDefense:
-                    unit.UnitStatistics.MagicResist += unit.UnitStatistics.MagicResist * ( bonus.Modifier / 100 );
+                    unit.UnitStatistics.MagicResist += (int)( unit.UnitStatistics.MagicResist * ( (double)bonus.Modifier / 100 ) );
                     break;
                 case BonusType.army_physicalDefense:
-                    unit.UnitStatistics.PhysicResist += unit.UnitStatistics.PhysicResist * ( bonus.Modifier / 100 );
+                    unit.UnitStatistics.PhysicResist += (int)( unit.UnitStatistics.PhysicResist * ( (double)bonus.Modifier / 100 ) );
                     break;
                 case BonusType.army_speed:
-                    unit.UnitStatistics.Speed += unit.UnitStatistics.Speed * ( bonus.Modifier / 100 );
+                    unit.UnitStatistics.Speed += (int)( unit.UnitStatistics.Speed * ( (double)bonus.Modifier / 100 ) );
                     break;
                 case BonusType.army_capacity:
-                    unit.UnitStatistics.Capacity += unit.UnitStatistics.Capacity * ( bonus.Modifier / 100 );
+                    unit.UnitStatistics.Capacity += (int)( unit.UnitStatistics.Capacity * ( (double)bonus.Modifier / 100 ) );
                     break;
                 case BonusType.duration:
-                    unit.Duration -= unit.Duration * ( bonus.Modifier / 100 );
+                    unit.Duration -= (int)( unit.Duration * ( (double)bonus.Modifier / 100 ) );
                     break;
                 default:
                     throw new NotImplementedException( "You are trying to handle a not existing type of bonus !" );
@@ -221,7 +221,7 @@ namespace ITI.SkyLord.Services
             switch ( bonus.BonusType )
             {
                 case BonusType.duration:
-                    buildingLevel.Duration -= buildingLevel.Duration * ( bonus.Modifier / 100 );
+                    buildingLevel.Duration -= (int)( buildingLevel.Duration * ( (double)bonus.Modifier / 100 ) );
                     break;
                 case BonusType.queueRange:
                     throw new NotImplementedException( "Queue Range is not handled yet !" );
@@ -282,7 +282,7 @@ namespace ITI.SkyLord.Services
         {
             List<BonusOnTechnology> allTechnologyBonusesOnBuildng = new List<BonusOnTechnology>();
 
-            foreach ( Bonus bonus in GetAllBonusesOnCurrentIsland( playerId, islandId) )
+            foreach ( Bonus bonus in GetAllBonusesOnCurrentIsland( playerId, islandId ) )
             {
                 if ( bonus is BonusOnTechnology )
                 {
@@ -301,7 +301,7 @@ namespace ITI.SkyLord.Services
             switch ( bonus.BonusType )
             {
                 case BonusType.duration:
-                    technologyLevel.Duration -= technologyLevel.Duration * ( bonus.Modifier / 100 );
+                    technologyLevel.Duration -= (int)( technologyLevel.Duration * ( (double)bonus.Modifier / 100 ) );
                     break;
                 default:
                     throw new NotImplementedException( "You are trying to handle a not existing type of bonus !" );
@@ -335,8 +335,25 @@ namespace ITI.SkyLord.Services
             // Get the bonus lists stored in technologies and buildings
             List<Technology> playersTechnology = CurrentContext.Players.Include( p => p.Technologies ).ThenInclude( t => t.Level ).ThenInclude( tl => tl.Bonuses )
                 .Single( p => p.PlayerId == playerId ).Technologies.ToList();
+
+            // Fill the levels with bonuses because thenInclude doesn't do its job
+            List<TechnologyLevel> playersTechnologyLevels = new List<TechnologyLevel>();
+            foreach ( TechnologyLevel level in playersTechnology.Select( t => t.Level ) )
+            {
+                level.Bonuses = CurrentContext.TechnologyLevels.Include( t => t.Bonuses ).Single( tl => tl.LevelId == level.LevelId ).Bonuses.ToList();
+                playersTechnologyLevels.Add( level );
+            }
+
             List<Building> buildingsOnIsland = CurrentContext.Islands.Include( i => i.Buildings ).ThenInclude( b => b.Level ).ThenInclude( bl => bl.Bonuses )
                 .Single( i => i.IslandId == islandId ).Buildings.ToList();
+
+            // Fill the levels with bonuses because thenInclude doesn't do its job
+            List<BuildingLevel> buildingsLevelsOnIsland = new List<BuildingLevel>();
+            foreach ( BuildingLevel level in buildingsOnIsland.Select( b => b.Level ) )
+            {
+                level.Bonuses = CurrentContext.BuildingLevels.Include( b => b.Bonuses ).Single( bl => bl.LevelId == level.LevelId ).Bonuses.ToList();
+                buildingsLevelsOnIsland.Add( level );
+            }
 
             // Agglomerate all those lists
             List<Bonus> allBonuses = new List<Bonus>();
