@@ -1,18 +1,27 @@
 ﻿@model ITI.SkyLord.ViewModel.Partial.GenericFieldViewModel
 
-<h2>Production actuelle :</h2>
+<div class="buildings-build">
+    <div class="buildings-build-body">
 
-@{ 
-    FieldLevel fieldLevel = (FieldLevel)Model.BuildingPartial.CurrentBuilding.Level;
-    int production = fieldLevel.Production;
-}
-
-<p>@production / heure @Model.NameOfRessource</p>
-
-<h2>Production prochain niveau :</h2>
-@{ 
-    int nextProduction = ((FieldLevel)Model.BuildingPartial.NextBuildingLevel).Production;
-}
-<p>@nextProduction / heure @Model.NameOfRessource</p>
+        <div class="buildings-build-head">
+            Production actuelle :
+        </div>
 
 
+        @{
+            FieldLevel fieldLevel = (FieldLevel)Model.BuildingPartial.CurrentBuilding.Level;
+            int production = fieldLevel.Production;
+        }
+
+        <p>@production / heure @Model.NameOfRessource</p>
+
+        <div class="buildings-build-head">
+            Production prochain niveau :
+        </div>
+
+        @{
+            int nextProduction = ((FieldLevel)Model.BuildingPartial.NextBuildingLevel).Production;
+        }
+        <p>@nextProduction / heure @Model.NameOfRessource</p>
+    </div>
+</div>

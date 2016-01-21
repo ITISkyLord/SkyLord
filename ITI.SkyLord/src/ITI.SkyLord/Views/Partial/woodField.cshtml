@@ -2,11 +2,11 @@
 @using ITI.SkyLord.ViewModel.Partial;
 
 <div class="head">
-
+    <h2>@BuildingManager.StaticBuildingNameToName(Model.CurrentBuilding.BuildingName)</h2>
 </div>
-<h2>@BuildingManager.StaticBuildingNameToName(Model.CurrentBuilding.BuildingName)</h2>
 
-@{ 
+
+@{
     Write(Html.Partial("~/Views/Partial/LevelUpBuilding.cshtml", Model));
-    Write(Html.Partial("~/Views/Partial/GenericField.cshtml", new GenericFieldViewModel { BuildingPartial = Model, NameOfRessource="Bois"}));
+    Write(Html.Partial("~/Views/Partial/GenericField.cshtml", new GenericFieldViewModel { BuildingPartial = Model, NameOfRessource = "Bois" }));
 }
