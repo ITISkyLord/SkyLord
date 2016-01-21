@@ -6822,7 +6822,7 @@ body {
   background-image: url("../images/Site/site_ressource.png");
   background-size: cover;
   background-repeat: no-repeat;
-  padding: 74px;
+  padding: 70px;
 }
 .SkyLordContainer {
   margin-right: auto;
@@ -7031,6 +7031,16 @@ body {
   font-weight: bold;
   font-style: italic;
 }
+.SkyLordContainer .island-header {
+  height: 100%;
+  background-image: url("../images/Site/sitecarton.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  text-align: center;
+  color: #825847;
+  letter-spacing: 3px;
+  /*line-height:20px;*/
+}
 .SkyLordContainer #SeeMyIsland {
   border: 1px solid #f4511e;
   border-radius: 0;
@@ -7192,7 +7202,7 @@ body {
   text-align: center;
   color: whitesmoke;
   font-weight: bold;
-  font-size: 17px;
+  font-size: 25px;
   background-image: url("../images/Site/site_haut2.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
