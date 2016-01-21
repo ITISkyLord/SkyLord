@@ -64,20 +64,24 @@ namespace ITI.SkyLord.Controllers
         [HttpPost]
         public IActionResult AddBuilding( BuildingPartialViewModel model, long islandId = 0 )
         { 
+
             BuildingViewModel buildingViewModel = new BuildingViewModel();
+
             long playerId = SetupContext.GetPlayer( User.GetUserId() ).PlayerId;
+            Island island = SetupContext.GetIsland(islandId, playerId);
 
             BuildingManager buildingManager = new BuildingManager( SetupContext, new LevelManager( SetupContext ));
+            EventManager eventManager = new EventManager(SetupContext, new EventPackManager(SetupContext));
 
+            // Test assez de ressource
             if ( !buildingManager.IsEnoughForFirstLevel( model.TargetBuilding, islandId, playerId ) )
             {
                 return RedirectToAction( "SeeBuildings", new { islandId = islandId } );
             }
 
-            if ( buildingManager.AddBuildingToIsland( model.TargetBuilding, islandId, model.Position ) )
-            {
-                SetupContext.SaveChanges();
-            }
+            // Maintenant création de l'event pour la construction du building
+            eventManager.AddBuildingEvent(SetupContext, model.TargetBuilding, island, model.Position);
+
             return RedirectToAction( "SeeMyIsland", "Island", new { islandId = islandId } );
         }
 

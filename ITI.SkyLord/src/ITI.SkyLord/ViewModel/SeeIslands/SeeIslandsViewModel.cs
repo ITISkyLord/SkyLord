@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Mvc.Rendering;
+﻿using ITI.SkyLord.Models.Entity_Framework.Entites.Events;
+using Microsoft.AspNet.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,7 @@ namespace ITI.SkyLord.ViewModel.SeeIslands
         
         // For EmptyBuilding
         public List<Building> AvailableBuildings { get; set; }
+        public Dictionary<int, List<BuildingEvent>> AllBuildingEventOnIsland { get; set; } // int is BuildingPosition
 
         // For InvocationBuilding
         public Army CurrentArmy { get; set; }

@@ -122,7 +122,7 @@ namespace ITI.SkyLord
             return RessourceManager.IsEnough( CurrentContext.GetIsland( islandId, playerId ).AllRessources, buildingToLevelUp.Cost );
         }
 
-        private string BuildingNameToName( BuildingName buildingName )
+        static public string StaticBuildingNameToName (BuildingName buildingName)
         {
             string name;
             switch ( buildingName )
@@ -169,6 +169,12 @@ namespace ITI.SkyLord
                     break;
             }
             return name;
+        }
+
+
+        private string BuildingNameToName( BuildingName buildingName )
+        {
+            return BuildingManager.StaticBuildingNameToName(buildingName);
         }
 
         private bool IsBuildingUnique( BuildingName buildingName )
