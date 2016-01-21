@@ -28,28 +28,28 @@ namespace ITI.SkyLord.Services
                 int gap = (int)(DateTime.Now - checkTime).TotalSeconds;
 
                 // Get all fields
-                Building cristalField = ressourcesBuildings.Where( b => b.BuildingName == BuildingName.cristalField ).SingleOrDefault();
-                Building woodField = ressourcesBuildings.Where( b => b.BuildingName == BuildingName.woodField ).SingleOrDefault();
-                Building metalField = ressourcesBuildings.Where( b => b.BuildingName == BuildingName.metalField ).SingleOrDefault();
-                Building magicField = ressourcesBuildings.Where( b => b.BuildingName == BuildingName.magicField ).SingleOrDefault();
+                List<Building> cristalFields = ressourcesBuildings.Where( b => b.BuildingName == BuildingName.cristalField ).ToList();
+                List<Building>  woodFields = ressourcesBuildings.Where( b => b.BuildingName == BuildingName.woodField ).ToList();
+                List<Building>  metalFields = ressourcesBuildings.Where( b => b.BuildingName == BuildingName.metalField ).ToList();
+                List<Building>  magicFields = ressourcesBuildings.Where( b => b.BuildingName == BuildingName.magicField ).ToList();
 
                 // Create an object Ressource that contain the amount earned since last check
-                if( cristalField != null )
-                    ressourcesGathered.Cristal = (int)(gap * GetProductionEachSecond( (FieldLevel)cristalField.Level ));
-                if( woodField != null )
-                    ressourcesGathered.Wood = (int)(gap * GetProductionEachSecond( (FieldLevel)woodField.Level ));
-                if( metalField != null )
-                    ressourcesGathered.Metal = (int)(gap * GetProductionEachSecond( (FieldLevel)metalField.Level ));
-                if( magicField != null )
-                    ressourcesGathered.Magic = (int)(gap * GetProductionEachSecond( (FieldLevel)magicField.Level ));
+                foreach( Building cristalField in cristalFields )
+                    ressourcesGathered.Cristal += (int)(gap * GetProductionEachSecond( (FieldLevel)cristalField.Level ));
+                foreach( Building woodField in woodFields )
+                    ressourcesGathered.Wood += (int)(gap * GetProductionEachSecond( (FieldLevel)woodField.Level ));
+                foreach( Building metalField in metalFields )
+                    ressourcesGathered.Metal += (int)(gap * GetProductionEachSecond( (FieldLevel)metalField.Level ));
+                foreach( Building magicField in magicFields )
+                    ressourcesGathered.Magic += (int)(gap * GetProductionEachSecond( (FieldLevel)magicField.Level ));
 
                 // Add ressources only if all ressources that exist are able to be added
-                if( (ressourcesGathered.Metal >= 1 || metalField == null) && (ressourcesGathered.Magic >= 1 || magicField == null) && (ressourcesGathered.Wood >= 1 || woodField == null) && (ressourcesGathered.Cristal >= 1 || cristalField == null) )
+                if( (ressourcesGathered.Metal >= 1 || metalFields.Count < 1) && (ressourcesGathered.Magic >= 1 || magicFields.Count < 1) && (ressourcesGathered.Wood >= 1 || woodFields.Count < 1) && (ressourcesGathered.Cristal >= 1 || cristalFields.Count < 1) )
                 {
                     AddRessource( island.AllRessources, ressourcesGathered );
                     SetLastCheckTime( island );
                 }
-                // case if you got robbed, remove ressources ?
+                // In case you got robbed, remove ressources ?
             }
 
             // set checktime for initialisation
