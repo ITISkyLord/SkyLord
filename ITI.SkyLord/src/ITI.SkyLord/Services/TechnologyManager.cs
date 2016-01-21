@@ -78,7 +78,7 @@ namespace ITI.SkyLord.Services
             return RessourceManager.IsEnough( CurrentContext.GetIsland( islandId, playerId ).AllRessources, technologyToLevelUp.Level.Cost );
         }
 
-        private string TechnologyNameToName( TechnologyName technologyName )
+        public string TechnologyNameToName( TechnologyName technologyName )
         {
             string name;
             switch ( technologyName )
@@ -140,9 +140,9 @@ namespace ITI.SkyLord.Services
             return technologyList;
         }
 
-        public List<Technology> GetAvailableTechnologies()
+        public List<TechnologyLevel> GetAvailableTechnologies()
         {
-            List<Technology> availableTechnologies = new List<Technology>();
+            List<TechnologyLevel> availableTechnologies = new List<TechnologyLevel>();
             foreach ( TechnologyName technologyName in Enum.GetValues( typeof( TechnologyName ) ) )
             {
                 if ( technologyName != TechnologyName.none )
@@ -150,7 +150,7 @@ namespace ITI.SkyLord.Services
                     TechnologyLevel firstLevel = CurrentContext.TechnologyLevels.Include( l => l.Cost ).Include( l => l.Requirements)
                         .Where( l => l.TechnologyName == technologyName && l.Number == 1 ).Single();
 
-                    availableTechnologies.Add( new Technology { TechnologyName = technologyName, Name = TechnologyNameToName( technologyName ), Level = firstLevel } );
+                    availableTechnologies.Add( firstLevel );
                 }
             }
             return availableTechnologies;

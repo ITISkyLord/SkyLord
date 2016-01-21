@@ -77,7 +77,11 @@
                         CurrentArmy = Model.CurrentArmy,
                         AvailableUnit = Model.AvailableUnit,
                         AllUnits = Model.AllUnits,
-                        NextBuildingLevel = nextLevel
+                        NextBuildingLevel = nextLevel,
+                        AllTechnologies = Model.AllTechnologies,
+                        OwnTechnologies = Model.OwnTechnologies,
+                        AvailableTechnologies = Model.AvailableTechnologies,
+                        TechnologyManager = Model.TechnologyManager
                     };
                     Write(Html.Partial("~/Views/Partial/" + name + ".cshtml", partialModel));
                 }

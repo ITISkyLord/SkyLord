@@ -9,6 +9,7 @@ using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.Filters;
 using Microsoft.Data.Entity;
 using Microsoft.AspNet.Mvc.Rendering;
+using ITI.SkyLord.Models.Entity_Framework.Contexts;
 
 namespace ITI.SkyLord.Controllers
 {
@@ -61,14 +62,14 @@ namespace ITI.SkyLord.Controllers
             TechnologyManager technologyManager = new TechnologyManager( SetupContext, levelManager, new BonusManager( SetupContext ) );
 
 
-            model.Technologies = technologyManager.GetPlayersTechnologies( playerId );
+            model.OwnTechnologies = technologyManager.GetPlayersTechnologies( playerId );
             model.NextLevelCosts = new Dictionary<TechnologyName, Ressource>();
-            foreach( Technology technology in model.Technologies )
+            foreach( Technology technology in model.OwnTechnologies )
             {
                 model.NextLevelCosts.Add( technology.TechnologyName, levelManager.FindNextLevel( technology.Level ).Cost );
             }
             model.AvailableTechnologies = technologyManager.GetAvailableTechnologies();
-            model.AvailableSearchingTechnologies = new SelectList( model.AvailableTechnologies.Where( t => levelManager.GetNextLevelAvailablility( t, islandId ).IsItemAvailable ) );
+            //    model.AvailableSearchingTechnologies = new SelectList( model.AvailableTechnologies.Where( t => levelManager.GetNextLevelAvailablility( t., islandId ).IsItemAvailable ) );
 
             return model;
         }
@@ -81,5 +82,32 @@ namespace ITI.SkyLord.Controllers
             return CreateTechnologyViewModel( model, islandId, playerId );
         }
 
+        internal IActionResult AddTechnology( long islandId, TechnologyViewModel model )
+        {
+
+            EventManager em = new EventManager( SetupContext, new EventPackManager( SetupContext ) );
+            BonusManager bonusManager = new BonusManager( SetupContext );
+
+            TechnologyManager techManager = new TechnologyManager( SetupContext, new LevelManager( SetupContext ), bonusManager);
+            long playerId = model.Layout.CurrentPlayer.PlayerId;
+            Island island = SetupContext.GetIsland( islandId, playerId );
+            if(  techManager.IsEnoughForFirstLevel(model.TargetTechnology, islandId, playerId ))
+            {
+                ModelState.AddModelError( String.Empty, "Vous n'avez pas assez de ressources." );
+            }
+            else
+            {
+                TechnologyLevel target = SetupContext.TechnologyLevels.Single( t => t.TechnologyName == model.TargetTechnology && t.Number == 1);
+                RessourceManager.RemoveRessource( island.AllRessources, target.Cost );
+                Technology technology = new Technology() { Level = target, Name = techManager.TechnologyNameToName( model.TargetTechnology ), TechnologyName = model.TargetTechnology };
+                em.AddTechnologyEvent( SetupContext, technology, island );
+                //SetupContext.Ressources.Update( island.AllRessources );
+                SetupContext.SaveChanges();
+            }
+            return RedirectToAction( "SeeMyIsland", "Island", new
+            {
+                islandId = islandId
+            } );
+        }
     }
 }

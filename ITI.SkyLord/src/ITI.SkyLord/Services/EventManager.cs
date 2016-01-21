@@ -104,7 +104,7 @@ namespace ITI.SkyLord
         public void AddTechnologyEvent( ITechnologyEventContext ctx, Technology technology, Island island )
         {
             DateTime begginningDate = FindLastEndingDateInQueue( EventDiscrimator.TechnologyEvent, island );
-            ctx.TechnologyEvents.Add( new TechnologyEvent() { EventType = EventDiscrimator.TechnologyEvent, Technology = technology, BegginningDate = begginningDate, EndingDate = DateTime.Now.AddSeconds( 100 /* PAREIL QUE AU DESSUS */), Done = false, Island = island } );
+            ctx.TechnologyEvents.Add( new TechnologyEvent() { EventType = EventDiscrimator.TechnologyEvent, Technology = technology, BegginningDate = begginningDate, EndingDate = DateTime.Now.AddSeconds( technology.Level.Duration ), Done = false, Island = island } );
         }
 
         public List<Event> Get( EventType et, IEventContext ctx, int islandId )
@@ -144,6 +144,7 @@ namespace ITI.SkyLord
             }
             else if( eventType == EventDiscrimator.TechnologyEvent )
             {
+                // Sur le player plut^to que sur l'ile? 
                 lastEndingDate = _context.TechnologyEvents.Where( u => u.Island.Equals( island ) && u.Done == false ).OrderByDescending( d => d.EndingDate ).Select( d => d.EndingDate ).FirstOrDefault();
             }
             else
@@ -283,6 +284,10 @@ namespace ITI.SkyLord
                                                   .Include( e => e.Island )
                                                   .Include( e => e.Technology )
                                                   .Where( e => e.EventId == te.EventId).Single();
+
+
+
+            // Le include va pas marcher auquel cas rajouter TechnolgyIdd dans TechnologyEvent voir ArmyEvent
             tm.AddTechnology( technoEvent.Technology.TechnologyName, technoEvent.Island.Owner.PlayerId, technoEvent.Island.IslandId );
         }
 

@@ -121,6 +121,12 @@ namespace ITI.SkyLord.Controllers
             model.AllUnits = SetupContext.Units.Include( u => u.UnitCost ).ToList();
             model.AvailableUnit = SetupContext.Units.Where( u => levelManager.GetAvailablility( u, islandId ).IsItemAvailable ).ToList();
 
+            // Toutes les technologies possibles
+            TechnologyManager techManager = new TechnologyManager( SetupContext, levelManager, new BonusManager( SetupContext ));
+            model.OwnTechnologies = techManager.GetPlayersTechnologies( playerId );
+            model.AllTechnologies = techManager.GetAvailableTechnologies();
+            model.TechnologyManager = techManager;
+            model.AvailableTechnologies = model.AllTechnologies.Where( t => levelManager.GetAvailablility( t, islandId ).IsItemAvailable ).ToList();
             return model;
         }
         private SeeIslandViewModel CreateBuildingViewModel( long islandId, long playerId )
@@ -129,39 +135,6 @@ namespace ITI.SkyLord.Controllers
             SetupContext.FillStandardVM( model, SetupContext.GetPlayer( User ), islandId );
 
             return CreateBuildingViewModel( model, islandId, playerId );
-        }
-
-
-        private TechnologyViewModel CreateTechnologyViewModel( TechnologyViewModel model, long islandId, long playerId )
-        {
-            SetupContext.FillStandardVM( model, SetupContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
-
-            model.Layout.CurrentPlayer = SetupContext.GetPlayer( User.GetUserId() );
-            Island currentIsland = SetupContext.GetIsland( islandId, model.Layout.CurrentPlayer.PlayerId );
-
-            LevelManager levelManager = new LevelManager( SetupContext );
-            TechnologyManager technologyManager = new TechnologyManager( SetupContext, levelManager, new BonusManager( SetupContext ) );
-
-
-            model.Technologies = technologyManager.GetPlayersTechnologies( playerId );
-            model.NextLevelCosts = new Dictionary<TechnologyName, Ressource>();
-            foreach( Technology technology in model.Technologies )
-            {
-                model.NextLevelCosts.Add( technology.TechnologyName, levelManager.FindNextLevel( technology.Level ).Cost );
-            }
-            // model.AvailableTechnologies = .GetAvailableBuildings(); ISTechnologyAvailable à récupérer auprès de Tristan
-            model.ExistingTechnologies = SetupContext.Technologies.ToList();
-            model.AvailableTechnologies = SetupContext.Technologies.ToList();
-
-            return model;
-        }
-
-        private TechnologyViewModel CreateTechnologyViewModel( long islandId, long playerId )
-        {
-            TechnologyViewModel model = new TechnologyViewModel();
-            SetupContext.FillStandardVM( model, SetupContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
-
-            return CreateTechnologyViewModel( model, islandId, playerId );
         }
 
     }

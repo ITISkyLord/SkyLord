@@ -49,7 +49,7 @@ namespace ITI.SkyLord.Controllers
             {
                 Unit unit = SetupContext.Units.Include( u => u.UnitCost ).Include( u => u.UnitStatistics )
                     .Single( u => u.UnitName == model.UnitTarget && u.IsModel );
-                Island island = GetIsland( islandId );
+                Island island = SetupContext.GetIsland( islandId, model.Layout.CurrentPlayer.PlayerId );
                 if ( unit.UnitCost.Wood * model.UnitAmount > island.AllRessources.Wood || unit.UnitCost.Metal * model.UnitAmount > island.AllRessources.Metal * model.UnitAmount || unit.UnitCost.Cristal * model.UnitAmount > island.AllRessources.Cristal || unit.UnitCost.Magic * model.UnitAmount > island.AllRessources.Magic )
                 {
                     ModelState.AddModelError( "UnitsToAdd", "Vous n'avez pas assez de ressources." );
@@ -134,7 +134,7 @@ namespace ITI.SkyLord.Controllers
                                                     .ThenInclude( r => r.Unit ).ThenInclude( r => r.UnitStatistics )
                                                     .Where( i => i.IslandId == model.Target ).FirstOrDefault();
                 ArmyManager am = new ArmyManager( SetupContext, new BonusManager( SetupContext ) );
-                Island attackingIsland = GetIsland( islandId );
+                Island attackingIsland = SetupContext.GetIsland( islandId, model.Layout.CurrentPlayer.PlayerId );
                 Army attackingArmy = am.CreateArmy( model.UnitsToSend, attackingIsland );
                 SetupContext.Armies.Add( attackingArmy );
                 SetupContext.SaveChanges();
@@ -182,6 +182,7 @@ namespace ITI.SkyLord.Controllers
             return RedirectToAction( "Index", new { islandId = islandId } );
         }
 
+        [Obsolete]
         private Island GetIsland( long islandId )
         {
             if ( islandId == 0 )
@@ -212,7 +213,7 @@ namespace ITI.SkyLord.Controllers
 
         private SetAttackingArmyViewModel CreateSetAttackingArmyViewModel( SetAttackingArmyViewModel model, long islandId )
         {
-            Island currentIsland = GetIsland( islandId );
+            Island currentIsland =SetupContext.GetIsland( islandId, model.Layout.CurrentPlayer.PlayerId );
             model.CurrentDefenseArmy = SetupContext.Armies
                                     .Include( a => a.Island )
                                     .Include( a => a.Regiments )

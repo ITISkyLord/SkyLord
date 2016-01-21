@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ITI.SkyLord.Services;
 
 namespace ITI.SkyLord.ViewModel.SeeIslands
 {
@@ -25,7 +26,11 @@ namespace ITI.SkyLord.ViewModel.SeeIslands
         public List<Unit> AvailableUnit { get; set; }
 
         // For LaboratoryBuilding
-        public List<Technology> AvailableTechnologies { get; set; }
+        public List<Technology> OwnTechnologies { get; set; }
+        public List<TechnologyLevel> AvailableTechnologies { get; set; }
+        public List<TechnologyLevel> AllTechnologies { get; set; }
+        public TechnologyManager TechnologyManager { get; set; }
+
         //public Technology CurrentTechnology { get; set; }
         //public TechnologyName TargetTechnology { get; set; }
 
