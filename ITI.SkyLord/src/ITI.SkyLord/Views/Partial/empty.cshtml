@@ -4,7 +4,7 @@
 <center><h2>Terrain vierge</h2></center>
 <div class="row">
 
-    @if (Model.EventsOnBuilding == null)
+    @if (Model.EventsOnBuilding.Count == 0)
     {
         @foreach (var CurrentBuilding in Model.AvailableBuildings)
         {

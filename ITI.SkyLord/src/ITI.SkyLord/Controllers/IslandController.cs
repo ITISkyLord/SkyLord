@@ -90,14 +90,19 @@ namespace ITI.SkyLord.Controllers
             Island currentIsland = SetupContext.GetIsland(islandId, model.Layout.CurrentPlayer.PlayerId);
             model.CurrentIsland = currentIsland;
 
-            // Tous les buildings sur l'island avec l'event de chaque island
+            // Tous les buildings sur l'island
             model.Buildings = buildingManager.GetBuildingsOnCurrentIsland(islandId, playerId);
-            model.AllBuildingEventOnIsland = new Dictionary<int, List<BuildingEvent>>();
             model.DicoBuildings = new Dictionary<string, Building>();
             foreach(var building in model.Buildings)
             {
                 model.DicoBuildings.Add(building.Position.ToString(), building);
-                model.AllBuildingEventOnIsland.Add(building.Position, eventManager.GetBuildingEventsOnThisBuildingPosition(islandId, building.Position));
+            }
+
+            // Récupère tout les events de tout les batiments (de 0 à 10 donc)
+            model.AllBuildingEventOnIsland = new Dictionary<int, List<BuildingEvent>>();
+            for(var i=0; i<=10; i++)
+            {
+                model.AllBuildingEventOnIsland.Add(i, eventManager.GetBuildingEventsOnThisBuildingPosition(islandId, i));
             }
 
             // Tout les nexts level de chaque batiments
