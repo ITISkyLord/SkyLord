@@ -145,7 +145,6 @@ namespace ITI.SkyLord
                 case BuildingName.laboratory:
                     name = "Laboratoire";
                     break;
-                    break;
                 case BuildingName.magicField:
                     name = "Champ de magie";
                     break;

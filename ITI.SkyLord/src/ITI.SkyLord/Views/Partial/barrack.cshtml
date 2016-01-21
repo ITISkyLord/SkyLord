@@ -1,6 +1,8 @@
 ﻿@model ITI.SkyLord.ViewModel.Partial.BuildingPartialViewModel
 
-<p>Je suis un barrack !!! :D</p>
+<div class="head">
+    <h2>@BuildingManager.StaticBuildingNameToName(Model.CurrentBuilding.BuildingName)</h2>
+</div>
 
 <ul>
     <li>Niveau Actuel</li>

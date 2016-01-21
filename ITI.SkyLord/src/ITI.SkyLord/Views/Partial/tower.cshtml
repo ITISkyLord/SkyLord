@@ -1,14 +1,18 @@
 ﻿@model ITI.SkyLord.ViewModel.Partial.BuildingPartialViewModel
 
-<h2>@Model.CurrentBuilding.BuildingName</h2>
+<div class="head">
+    <h2>@BuildingManager.StaticBuildingNameToName(Model.CurrentBuilding.BuildingName)</h2>
+</div>
 
 <p class="BuildingDescription">[Desription à faire]</p>
 
-
-@{    
+@{
     Write(Html.Partial("~/Views/Partial/LevelUpBuilding.cshtml", Model));
 }
 
-<h3>Bonus actuel :</h3>
+<div class="buildings-build-foot">
+    <h3>Bonus actuel :</h3>
+</div>
+
 
 
