@@ -95,12 +95,15 @@ namespace ITI.SkyLord
         public void AddBuildingEvent( IBuildingEventContext ctx, BuildingName building, Island island, int position )
         {
             DateTime begginningDate = FindLastEndingDateInQueue( EventDiscrimator.BuildingEvent, island );
+
+            int duration = _allManager.BuildingManager.GetAvailableBuildings().Where(b => b.BuildingName == building).First().Level.Duration;
+
             ctx.BuildingEvents.Add( new BuildingEvent()
             {
                 EventType = EventDiscrimator.BuildingEvent,
                 BuildingToBuild = building,
                 BegginningDate = begginningDate,
-                EndingDate = DateTime.Now.AddSeconds(/*TIME TO BUILD BUILDING */ 100 ),
+                EndingDate = DateTime.Now.AddSeconds(duration),
                 Done = false,
                 Island = island,
                 PositionToBuild = position

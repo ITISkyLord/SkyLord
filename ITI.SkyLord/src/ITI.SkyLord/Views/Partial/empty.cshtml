@@ -1,5 +1,8 @@
 ﻿@model ITI.SkyLord.ViewModel.Partial.BuildingPartialViewModel
 @using ITI.SkyLord.Services;
+@using System;
+@using ITI.SkyLord.Models.Entity_Framework.Entites.Events;
+
 
 <center><h2>Terrain vierge</h2></center>
 <div class="row">
@@ -17,13 +20,13 @@
 
                     <div class="building-body">
                         @if (CurrentBuilding.Level != null)
-                    {
-                        Write(" Bois: " + CurrentBuilding.Level.Cost.Wood + " Cristal:  " + CurrentBuilding.Level.Cost.Cristal + " Metal: " + CurrentBuilding.Level.Cost.Metal + " Magie: " + CurrentBuilding.Level.Cost.Magic);
-                    }
-                    else
-                    {
-                        Write("Pas disponible");
-                    }
+                        {
+                            Write(" Bois: " + CurrentBuilding.Level.Cost.Wood + " Cristal:  " + CurrentBuilding.Level.Cost.Cristal + " Metal: " + CurrentBuilding.Level.Cost.Metal + " Magie: " + CurrentBuilding.Level.Cost.Magic);
+                        }
+                        else
+                        {
+                            Write("Pas disponible");
+                        }
                     </div>
 
                     <div class="building-btn">
@@ -45,11 +48,24 @@
                     </div>
                 </div>
             </div>
-        }
-    }
+                            }
+                            }
 
-    else {
-        <p>Construction en cours...</p>
+                            else
+                            {
+                                BuildingEvent myEvent = Model.EventsOnBuilding.First();
+
+        <p>
+            Construction en cours :
+            @{Write(BuildingManager.StaticBuildingNameToName(myEvent.BuildingToBuild));}
+            <br />
+            Temps de construction restant : 
+            @{ 
+                TimeSpan tempsRestant = myEvent.EndingDate - DateTime.Now;
+                Write(tempsRestant.Hours + "h" + tempsRestant.Minutes+"min"+tempsRestant.Seconds+"sec" );
+            }
+            
+        </p>
     }
 
 </div>
