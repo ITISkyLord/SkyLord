@@ -78,6 +78,35 @@ namespace ITI.SkyLord.Controllers
             } );
         }
 
+        public IActionResult LevelUpTechnology( long islandId, TechnologyViewModel model )
+        {
+
+            EventManager em = new EventManager( SetupContext, new EventPackManager( SetupContext ) );
+            BonusManager bonusManager = new BonusManager( SetupContext );
+            TechnologyManager techManager = new TechnologyManager( SetupContext, new LevelManager( SetupContext ), bonusManager );
+
+            long playerId = SetupContext.GetPlayer( User );
+            Island island = SetupContext.GetIsland( islandId, playerId );
+
+            if ( !techManager.IsEnoughForNextLevel( model.TargetTechnology, islandId, playerId ) )
+            {
+                ModelState.AddModelError( String.Empty, "Vous n'avez pas assez de ressources." );
+            }
+            else
+            {
+                TechnologyLevel technologyLevel = techManager.GetPlayersTechnologies( playerId ).Single( tl => tl.TechnologyName == model.TargetTechnology ).Level;
+                RessourceManager.RemoveRessource( island.AllRessources, technologyLevel.Cost );
+
+                em.AddTechnologyEvent( SetupContext, model.TargetTechnology, technologyLevel.Duration, island );
+                
+                SetupContext.SaveChanges();
+            }
+            return RedirectToAction( "SeeMyIsland", "Island", new
+            {
+                islandId = islandId
+            } );
+        }
+
         private TechnologyViewModel CreateTechnologyViewModel( TechnologyViewModel model, long islandId, long playerId )
         {
             SetupContext.FillStandardVM( model, SetupContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );

@@ -40,6 +40,25 @@ namespace ITI.SkyLord.Services
             List<Island> playersIslands = CurrentContext.Islands.Include( i => i.Owner ).Include( i => i.Armies )
                 .ThenInclude( a => a.Regiments ).ThenInclude( r => r.Unit ).ThenInclude( u => u.UnitStatistics )
                 .Where( i => i.Owner.PlayerId == playerId ).ToList();
+
+            //List<Regiment> playersRegiments = CurrentContext.Regiments.Include( r => r.Army ).ThenInclude( a => a.Island ).ThenInclude( i => i.Owner)
+            //    //.Include( r => r.Unit ).ThenInclude( u => u.UnitStatistics )
+            //    //.Include( r => r.Unit).ThenInclude( u => u.UnitCost)
+            //    .Include( r => r.Unit ).ThenInclude( u => u.Requirements )
+            //    .Where( r => r.Army.Island.Owner.PlayerId == playerId ).ToList();
+
+            //foreach( Island island in playersIslands )
+            //{
+            //    foreach ( Army army in island.Armies )
+            //    {
+            //        foreach ( Regiment regiment in army.Regiments )
+            //        {
+            //            regiment.Unit.UnitStatistics = CurrentContext.Units.Include( u => u.UnitStatistics ).Single( u => u.UnitId == regiment.Unit.UnitId ).UnitStatistics;
+            //            regiment.Unit.UnitCost = CurrentContext.Units.Include( u => u.UnitCost ).Single( u => u.UnitId == regiment.Unit.UnitId ).UnitCost;
+            //        }
+            //    }
+            //}
+
             List<Regiment> allPlayersRegiments = new List<Regiment>();
 
             foreach ( Island island in playersIslands )
@@ -50,9 +69,23 @@ namespace ITI.SkyLord.Services
                 }
             }
 
-            foreach ( Unit unit in allPlayersRegiments.Select( r => r.Unit ) )
+            foreach ( Regiment regiment in allPlayersRegiments )
             {
-                ResolveBonuses( unit, playerId, islandId );
+                Unit resolvedUnit = ResolveBonuses( regiment.Unit, playerId, islandId );
+
+                CurrentContext.Add( resolvedUnit.UnitStatistics );
+                CurrentContext.Remove( regiment.Unit.UnitStatistics );
+
+                regiment.Unit.Duration = resolvedUnit.Duration;
+                regiment.Unit.IsModel = false;
+                regiment.Unit.Name = resolvedUnit.Name;
+                resolvedUnit.Requirements = resolvedUnit.Requirements;
+                regiment.Unit.UnitCost = resolvedUnit.UnitCost;
+                regiment.Unit.UnitDamageType = resolvedUnit.UnitDamageType;
+                regiment.Unit.UnitName = resolvedUnit.UnitName;
+                regiment.Unit.UnitStatistics = resolvedUnit.UnitStatistics;
+                regiment.Unit.UnitType = resolvedUnit.UnitType;
+                
             }
         }
 
@@ -65,13 +98,13 @@ namespace ITI.SkyLord.Services
         /// <returns>A cloned Unit with all its bonuses applied</returns>
         public Unit ResolveBonuses( Unit unit, long playerId, long islandId )
         {
-            Unit resolvedUnit = CurrentContext.Units.Include( u => u.UnitStatistics )
+            Unit resolvedUnit = CurrentContext.Units.Include( u => u.UnitStatistics ).Include( u => u.Requirements ).Include( u => u.UnitCost )
                 .Single( u => u.UnitName == unit.UnitName && u.IsModel );
 
             resolvedUnit = CloneUnit( resolvedUnit );
             foreach ( BonusOnUnit bonus in GetBonusesOnUnit( unit, islandId, playerId ) )
             {
-                ResolveUnitBonus( resolvedUnit, bonus );
+                resolvedUnit = ResolveUnitBonus( resolvedUnit, bonus );
             }
 
             return resolvedUnit;
@@ -141,6 +174,25 @@ namespace ITI.SkyLord.Services
                 Consumption = unit.UnitStatistics.Capacity
             };
 
+            Ressource unitCost = new Ressource
+            {
+                Wood = unit.UnitCost.Wood,
+                Metal = unit.UnitCost.Metal,
+                Cristal = unit.UnitCost.Cristal,
+                Magic = unit.UnitCost.Magic
+            };
+
+            List<Requirement> unitRequirements = new List<Requirement>();
+            foreach ( Requirement requirement in unit.Requirements )
+            {
+                unitRequirements.Add( new Requirement
+                {
+                    BuildingName = requirement.BuildingName,
+                    TechnologyName = requirement.TechnologyName,
+                    Number = requirement.Number
+                } );
+            }
+
             return new Unit
             {
                 Name = unit.Name,
@@ -149,7 +201,7 @@ namespace ITI.SkyLord.Services
                 UnitDamageType = unit.UnitDamageType,
                 UnitCost = unit.UnitCost,
                 UnitStatistics = unitStatitics,
-                Requirements = unit.Requirements,
+                Requirements = unitRequirements,
                 Duration = unit.Duration,
                 IsModel = false
             };

@@ -139,27 +139,27 @@ namespace ITI.SkyLord
                 Requirement barrackLevel10Requirement = AddBuildingRequirement( context, BuildingName.barrack, 9 );
 
                 //Add Bonuses ( 1% duration bonus monster and soldier type units / barrack level )
-                BonusOnUnit monsterDurationBonusLevel1 = AddBonus( context, BonusType.duration, UnitType.monster, 1 );
-                BonusOnUnit monsterDurationBonusLevel2 = AddBonus( context, BonusType.duration, UnitType.monster, 2 );
-                BonusOnUnit monsterDurationBonusLevel3 = AddBonus( context, BonusType.duration, UnitType.monster, 3 );
-                BonusOnUnit monsterDurationBonusLevel4 = AddBonus( context, BonusType.duration, UnitType.monster, 4 );
-                BonusOnUnit monsterDurationBonusLevel5 = AddBonus( context, BonusType.duration, UnitType.monster, 5 );
-                BonusOnUnit monsterDurationBonusLevel6 = AddBonus( context, BonusType.duration, UnitType.monster, 6 );
-                BonusOnUnit monsterDurationBonusLevel7 = AddBonus( context, BonusType.duration, UnitType.monster, 7 );
-                BonusOnUnit monsterDurationBonusLevel8 = AddBonus( context, BonusType.duration, UnitType.monster, 8 );
-                BonusOnUnit monsterDurationBonusLevel9 = AddBonus( context, BonusType.duration, UnitType.monster, 9 );
-                BonusOnUnit monsterDurationBonusLevel10 = AddBonus( context, BonusType.duration, UnitType.monster, 10 );
+                BonusOnUnit monsterDurationBonusLevel1 = AddBonus( context, BonusType.duration, UnitType.monster, 5 );
+                BonusOnUnit monsterDurationBonusLevel2 = AddBonus( context, BonusType.duration, UnitType.monster, 10 );
+                BonusOnUnit monsterDurationBonusLevel3 = AddBonus( context, BonusType.duration, UnitType.monster, 15 );
+                BonusOnUnit monsterDurationBonusLevel4 = AddBonus( context, BonusType.duration, UnitType.monster, 20 );
+                BonusOnUnit monsterDurationBonusLevel5 = AddBonus( context, BonusType.duration, UnitType.monster, 25 );
+                BonusOnUnit monsterDurationBonusLevel6 = AddBonus( context, BonusType.duration, UnitType.monster, 30 );
+                BonusOnUnit monsterDurationBonusLevel7 = AddBonus( context, BonusType.duration, UnitType.monster, 35 );
+                BonusOnUnit monsterDurationBonusLevel8 = AddBonus( context, BonusType.duration, UnitType.monster, 40 );
+                BonusOnUnit monsterDurationBonusLevel9 = AddBonus( context, BonusType.duration, UnitType.monster, 45 );
+                BonusOnUnit monsterDurationBonusLevel10 = AddBonus( context, BonusType.duration, UnitType.monster, 50 );
 
-                BonusOnUnit soldierDurationBonusLevel1 = AddBonus( context, BonusType.duration, UnitType.soldier, 1 );
-                BonusOnUnit soldierDurationBonusLevel2 = AddBonus( context, BonusType.duration, UnitType.soldier, 2 );
-                BonusOnUnit soldierDurationBonusLevel3 = AddBonus( context, BonusType.duration, UnitType.soldier, 3 );
-                BonusOnUnit soldierDurationBonusLevel4 = AddBonus( context, BonusType.duration, UnitType.soldier, 4 );
-                BonusOnUnit soldierDurationBonusLevel5 = AddBonus( context, BonusType.duration, UnitType.soldier, 5 );
-                BonusOnUnit soldierDurationBonusLevel6 = AddBonus( context, BonusType.duration, UnitType.soldier, 6 );
-                BonusOnUnit soldierDurationBonusLevel7 = AddBonus( context, BonusType.duration, UnitType.soldier, 7 );
-                BonusOnUnit soldierDurationBonusLevel8 = AddBonus( context, BonusType.duration, UnitType.soldier, 8 );
-                BonusOnUnit soldierDurationBonusLevel9 = AddBonus( context, BonusType.duration, UnitType.soldier, 9 );
-                BonusOnUnit soldierDurationBonusLevel10 = AddBonus( context, BonusType.duration, UnitType.soldier, 10 );
+                BonusOnUnit soldierDurationBonusLevel1 = AddBonus( context, BonusType.duration, UnitType.soldier, 5 );
+                BonusOnUnit soldierDurationBonusLevel2 = AddBonus( context, BonusType.duration, UnitType.soldier, 10 );
+                BonusOnUnit soldierDurationBonusLevel3 = AddBonus( context, BonusType.duration, UnitType.soldier, 15 );
+                BonusOnUnit soldierDurationBonusLevel4 = AddBonus( context, BonusType.duration, UnitType.soldier, 20 );
+                BonusOnUnit soldierDurationBonusLevel5 = AddBonus( context, BonusType.duration, UnitType.soldier, 25 );
+                BonusOnUnit soldierDurationBonusLevel6 = AddBonus( context, BonusType.duration, UnitType.soldier, 30 );
+                BonusOnUnit soldierDurationBonusLevel7 = AddBonus( context, BonusType.duration, UnitType.soldier, 35 );
+                BonusOnUnit soldierDurationBonusLevel8 = AddBonus( context, BonusType.duration, UnitType.soldier, 40 );
+                BonusOnUnit soldierDurationBonusLevel9 = AddBonus( context, BonusType.duration, UnitType.soldier, 45);
+                BonusOnUnit soldierDurationBonusLevel10 = AddBonus( context, BonusType.duration, UnitType.soldier, 50 );
 
                 // Set up Levels
                 BuildingLevel barrackLevel1 = AddBuildingLevel( context, BuildingName.barrack, 1, barrackLevel1Cost, 30,
@@ -226,16 +226,16 @@ namespace ITI.SkyLord
                 Requirement forgeLevel10Requirement = AddBuildingRequirement( context, BuildingName.forge, 9 );
 
                 //Add Bonuses ( 1% duration bonus mecanical type units / forge level )
-                BonusOnUnit mecanicalDurationBonusLevel1 = AddBonus( context, BonusType.duration, UnitType.mecanical, 1 );
-                BonusOnUnit mecanicalDurationBonusLevel2 = AddBonus( context, BonusType.duration, UnitType.mecanical, 2 );
-                BonusOnUnit mecanicalDurationBonusLevel3 = AddBonus( context, BonusType.duration, UnitType.mecanical, 3 );
-                BonusOnUnit mecanicalDurationBonusLevel4 = AddBonus( context, BonusType.duration, UnitType.mecanical, 4 );
-                BonusOnUnit mecanicalDurationBonusLevel5 = AddBonus( context, BonusType.duration, UnitType.mecanical, 5 );
-                BonusOnUnit mecanicalDurationBonusLevel6 = AddBonus( context, BonusType.duration, UnitType.mecanical, 6 );
-                BonusOnUnit mecanicalDurationBonusLevel7 = AddBonus( context, BonusType.duration, UnitType.mecanical, 7 );
-                BonusOnUnit mecanicalDurationBonusLevel8 = AddBonus( context, BonusType.duration, UnitType.mecanical, 8 );
-                BonusOnUnit mecanicalDurationBonusLevel9 = AddBonus( context, BonusType.duration, UnitType.mecanical, 9 );
-                BonusOnUnit mecanicalDurationBonusLevel10 = AddBonus( context, BonusType.duration, UnitType.mecanical, 10 );
+                BonusOnUnit mecanicalDurationBonusLevel1 = AddBonus( context, BonusType.duration, UnitType.mecanical, 10 );
+                BonusOnUnit mecanicalDurationBonusLevel2 = AddBonus( context, BonusType.duration, UnitType.mecanical, 20 );
+                BonusOnUnit mecanicalDurationBonusLevel3 = AddBonus( context, BonusType.duration, UnitType.mecanical, 30 );
+                BonusOnUnit mecanicalDurationBonusLevel4 = AddBonus( context, BonusType.duration, UnitType.mecanical, 40 );
+                BonusOnUnit mecanicalDurationBonusLevel5 = AddBonus( context, BonusType.duration, UnitType.mecanical, 50 );
+                BonusOnUnit mecanicalDurationBonusLevel6 = AddBonus( context, BonusType.duration, UnitType.mecanical, 60 );
+                BonusOnUnit mecanicalDurationBonusLevel7 = AddBonus( context, BonusType.duration, UnitType.mecanical, 70 );
+                BonusOnUnit mecanicalDurationBonusLevel8 = AddBonus( context, BonusType.duration, UnitType.mecanical, 80 );
+                BonusOnUnit mecanicalDurationBonusLevel9 = AddBonus( context, BonusType.duration, UnitType.mecanical, 90 );
+                BonusOnUnit mecanicalDurationBonusLevel10 = AddBonus( context, BonusType.duration, UnitType.mecanical, 100 );
 
                 // Set up Levels
                 BuildingLevel forgeLevel1 = AddBuildingLevel( context, BuildingName.forge, 1, forgeLevel1Cost, 30,
@@ -302,16 +302,16 @@ namespace ITI.SkyLord
                 Requirement laboratoryLevel10Requirement = AddBuildingRequirement( context, BuildingName.laboratory, 9 );
 
                 //Add Bonuses ( 1% duration bonus all technology developpement / laboratory level )
-                BonusOnTechnology technologyDurationBonusLevel1 = AddBonus( context, BonusType.duration, TechnologyName.none, 1 );
-                BonusOnTechnology technologyDurationBonusLevel2 = AddBonus( context, BonusType.duration, TechnologyName.none, 2 );
-                BonusOnTechnology technologyDurationBonusLevel3 = AddBonus( context, BonusType.duration, TechnologyName.none, 3 );
-                BonusOnTechnology technologyDurationBonusLevel4 = AddBonus( context, BonusType.duration, TechnologyName.none, 4 );
-                BonusOnTechnology technologyDurationBonusLevel5 = AddBonus( context, BonusType.duration, TechnologyName.none, 5 );
-                BonusOnTechnology technologyDurationBonusLevel6 = AddBonus( context, BonusType.duration, TechnologyName.none, 6 );
-                BonusOnTechnology technologyDurationBonusLevel7 = AddBonus( context, BonusType.duration, TechnologyName.none, 7 );
-                BonusOnTechnology technologyDurationBonusLevel8 = AddBonus( context, BonusType.duration, TechnologyName.none, 8 );
-                BonusOnTechnology technologyDurationBonusLevel9 = AddBonus( context, BonusType.duration, TechnologyName.none, 9 );
-                BonusOnTechnology technologyDurationBonusLevel10 = AddBonus( context, BonusType.duration, TechnologyName.none, 10 );
+                BonusOnTechnology technologyDurationBonusLevel1 = AddBonus( context, BonusType.duration, TechnologyName.none, 10 );
+                BonusOnTechnology technologyDurationBonusLevel2 = AddBonus( context, BonusType.duration, TechnologyName.none, 20 );
+                BonusOnTechnology technologyDurationBonusLevel3 = AddBonus( context, BonusType.duration, TechnologyName.none, 30 );
+                BonusOnTechnology technologyDurationBonusLevel4 = AddBonus( context, BonusType.duration, TechnologyName.none, 40 );
+                BonusOnTechnology technologyDurationBonusLevel5 = AddBonus( context, BonusType.duration, TechnologyName.none, 50 );
+                BonusOnTechnology technologyDurationBonusLevel6 = AddBonus( context, BonusType.duration, TechnologyName.none, 60 );
+                BonusOnTechnology technologyDurationBonusLevel7 = AddBonus( context, BonusType.duration, TechnologyName.none, 70 );
+                BonusOnTechnology technologyDurationBonusLevel8 = AddBonus( context, BonusType.duration, TechnologyName.none, 80 );
+                BonusOnTechnology technologyDurationBonusLevel9 = AddBonus( context, BonusType.duration, TechnologyName.none, 90 );
+                BonusOnTechnology technologyDurationBonusLevel10 = AddBonus( context, BonusType.duration, TechnologyName.none, 100 );
 
                 // Set up Levels
                 BuildingLevel laboratoryLevel1 = AddBuildingLevel( context, BuildingName.laboratory, 1, laboratoryLevel1Cost, 30,
@@ -378,16 +378,16 @@ namespace ITI.SkyLord
                 Requirement invocationLevel10Requirement = AddBuildingRequirement( context, BuildingName.invocation, 9 );
 
                 //Add Bonuses ( 1% duration bonus on all unit production / invocation level )
-                BonusOnUnit unitDurationBonusLevel1 = AddBonus( context, BonusType.duration, UnitType.all, 1 );
-                BonusOnUnit unitDurationBonusLevel2 = AddBonus( context, BonusType.duration, UnitType.all, 2 );
-                BonusOnUnit unitDurationBonusLevel3 = AddBonus( context, BonusType.duration, UnitType.all, 3 );
-                BonusOnUnit unitDurationBonusLevel4 = AddBonus( context, BonusType.duration, UnitType.all, 4 );
-                BonusOnUnit unitDurationBonusLevel5 = AddBonus( context, BonusType.duration, UnitType.all, 5 );
-                BonusOnUnit unitDurationBonusLevel6 = AddBonus( context, BonusType.duration, UnitType.all, 6 );
-                BonusOnUnit unitDurationBonusLevel7 = AddBonus( context, BonusType.duration, UnitType.all, 7 );
-                BonusOnUnit unitDurationBonusLevel8 = AddBonus( context, BonusType.duration, UnitType.all, 8 );
-                BonusOnUnit unitDurationBonusLevel9 = AddBonus( context, BonusType.duration, UnitType.all, 9 );
-                BonusOnUnit unitDurationBonusLevel10 = AddBonus( context, BonusType.duration, UnitType.all, 10 );
+                BonusOnUnit unitDurationBonusLevel1 = AddBonus( context, BonusType.duration, UnitType.all, 10 );
+                BonusOnUnit unitDurationBonusLevel2 = AddBonus( context, BonusType.duration, UnitType.all, 20 );
+                BonusOnUnit unitDurationBonusLevel3 = AddBonus( context, BonusType.duration, UnitType.all, 30 );
+                BonusOnUnit unitDurationBonusLevel4 = AddBonus( context, BonusType.duration, UnitType.all, 40 );
+                BonusOnUnit unitDurationBonusLevel5 = AddBonus( context, BonusType.duration, UnitType.all, 50 );
+                BonusOnUnit unitDurationBonusLevel6 = AddBonus( context, BonusType.duration, UnitType.all, 60 );
+                BonusOnUnit unitDurationBonusLevel7 = AddBonus( context, BonusType.duration, UnitType.all, 70 );
+                BonusOnUnit unitDurationBonusLevel8 = AddBonus( context, BonusType.duration, UnitType.all, 80 );
+                BonusOnUnit unitDurationBonusLevel9 = AddBonus( context, BonusType.duration, UnitType.all, 90 );
+                BonusOnUnit unitDurationBonusLevel10 = AddBonus( context, BonusType.duration, UnitType.all, 100 );
 
                 // Set up Levels
                 BuildingLevel invocationLevel1 = AddBuildingLevel( context, BuildingName.invocation, 1, invocationLevel1Cost, 30,
@@ -395,7 +395,7 @@ namespace ITI.SkyLord
                     CreateBonusList( unitDurationBonusLevel1 ) );
                 BuildingLevel invocationLevel2 = AddBuildingLevel( context, BuildingName.invocation, 2, invocationLevel2Cost, (int)( invocationLevel1.Duration * 2.5 ),
                     CreateRequirementList( invocationLevel2Requirement ),
-                    CreateBonusList( unitDurationBonusLevel1 ) );
+                    CreateBonusList( unitDurationBonusLevel2 ) );
                 BuildingLevel invocationLevel3 = AddBuildingLevel( context, BuildingName.invocation, 3, invocationLevel3Cost, (int)( invocationLevel2.Duration * 2.5 ),
                     CreateRequirementList( invocationLevel3Requirement ),
                     CreateBonusList( unitDurationBonusLevel3 ) );
@@ -454,16 +454,16 @@ namespace ITI.SkyLord
                 Requirement academyLevel10Requirement = AddBuildingRequirement( context, BuildingName.academy, 9 );
 
                 //Add Bonuses ( 1% duration bonus magic type units / academy level )
-                BonusOnUnit unitDurationBonusLevel1 = AddBonus( context, BonusType.duration, UnitType.magic, 1 );
-                BonusOnUnit unitDurationBonusLevel2 = AddBonus( context, BonusType.duration, UnitType.magic, 2 );
-                BonusOnUnit unitDurationBonusLevel3 = AddBonus( context, BonusType.duration, UnitType.magic, 3 );
-                BonusOnUnit unitDurationBonusLevel4 = AddBonus( context, BonusType.duration, UnitType.magic, 4 );
-                BonusOnUnit unitDurationBonusLevel5 = AddBonus( context, BonusType.duration, UnitType.magic, 5 );
-                BonusOnUnit unitDurationBonusLevel6 = AddBonus( context, BonusType.duration, UnitType.magic, 6 );
-                BonusOnUnit unitDurationBonusLevel7 = AddBonus( context, BonusType.duration, UnitType.magic, 7 );
-                BonusOnUnit unitDurationBonusLevel8 = AddBonus( context, BonusType.duration, UnitType.magic, 8 );
-                BonusOnUnit unitDurationBonusLevel9 = AddBonus( context, BonusType.duration, UnitType.magic, 9 );
-                BonusOnUnit unitDurationBonusLevel10 = AddBonus( context, BonusType.duration, UnitType.magic, 10 );
+                BonusOnUnit unitDurationBonusLevel1 = AddBonus( context, BonusType.duration, UnitType.magic, 10 );
+                BonusOnUnit unitDurationBonusLevel2 = AddBonus( context, BonusType.duration, UnitType.magic, 20 );
+                BonusOnUnit unitDurationBonusLevel3 = AddBonus( context, BonusType.duration, UnitType.magic, 30 );
+                BonusOnUnit unitDurationBonusLevel4 = AddBonus( context, BonusType.duration, UnitType.magic, 40 );
+                BonusOnUnit unitDurationBonusLevel5 = AddBonus( context, BonusType.duration, UnitType.magic, 50 );
+                BonusOnUnit unitDurationBonusLevel6 = AddBonus( context, BonusType.duration, UnitType.magic, 60 );
+                BonusOnUnit unitDurationBonusLevel7 = AddBonus( context, BonusType.duration, UnitType.magic, 70 );
+                BonusOnUnit unitDurationBonusLevel8 = AddBonus( context, BonusType.duration, UnitType.magic, 80 );
+                BonusOnUnit unitDurationBonusLevel9 = AddBonus( context, BonusType.duration, UnitType.magic, 90 );
+                BonusOnUnit unitDurationBonusLevel10 = AddBonus( context, BonusType.duration, UnitType.magic, 100 );
 
                 // Set up Levels
                 BuildingLevel academyLevel1 = AddBuildingLevel( context, BuildingName.academy, 1, academyLevel1Cost, 30,
@@ -471,7 +471,7 @@ namespace ITI.SkyLord
                     CreateBonusList( unitDurationBonusLevel1 ) );
                 BuildingLevel academyLevel2 = AddBuildingLevel( context, BuildingName.academy, 2, academyLevel2Cost, (int)( academyLevel1.Duration * 2.5 ),
                     CreateRequirementList( academyLevel2Requirement ),
-                    CreateBonusList( unitDurationBonusLevel1 ) );
+                    CreateBonusList( unitDurationBonusLevel2 ) );
                 BuildingLevel academyLevel3 = AddBuildingLevel( context, BuildingName.academy, 3, academyLevel3Cost, (int)( academyLevel2.Duration * 2.5 ),
                     CreateRequirementList( academyLevel3Requirement ),
                     CreateBonusList( unitDurationBonusLevel3 ) );
@@ -545,7 +545,7 @@ namespace ITI.SkyLord
                     CreateBonusList( unitDurationBonusLevel1 ) );
                 BuildingLevel cacheLevel2 = AddBuildingLevel( context, BuildingName.cache, 2, cacheLevel2Cost, (int)( cacheLevel1.Duration * 2.5 ),
                     CreateRequirementList( cacheLevel2Requirement ),
-                    CreateBonusList( unitDurationBonusLevel1 ) );
+                    CreateBonusList( unitDurationBonusLevel2 ) );
                 BuildingLevel cacheLevel3 = AddBuildingLevel( context, BuildingName.cache, 3, cacheLevel3Cost, (int)( cacheLevel2.Duration * 2.5 ),
                     CreateRequirementList( cacheLevel3Requirement ),
                     CreateBonusList( unitDurationBonusLevel3 ) );
@@ -866,19 +866,19 @@ namespace ITI.SkyLord
                 Requirement armorLevel10Requirement = AddTechnologyRequirement( context, TechnologyName.armor, 9 );
 
                 //Add Bonuses ( 1% physical defense bonus soldier type units / armor level )
-                BonusOnUnit armorBonusLevel1 = AddBonus( context, BonusType.army_physicalDefense, UnitType.soldier, 1 );
-                BonusOnUnit armorBonusLevel2 = AddBonus( context, BonusType.army_physicalDefense, UnitType.soldier, 2 );
-                BonusOnUnit armorBonusLevel3 = AddBonus( context, BonusType.army_physicalDefense, UnitType.soldier, 3 );
-                BonusOnUnit armorBonusLevel4 = AddBonus( context, BonusType.army_physicalDefense, UnitType.soldier, 4 );
-                BonusOnUnit armorBonusLevel5 = AddBonus( context, BonusType.army_physicalDefense, UnitType.soldier, 5 );
-                BonusOnUnit armorBonusLevel6 = AddBonus( context, BonusType.army_physicalDefense, UnitType.soldier, 6 );
-                BonusOnUnit armorBonusLevel7 = AddBonus( context, BonusType.army_physicalDefense, UnitType.soldier, 7 );
-                BonusOnUnit armorBonusLevel8 = AddBonus( context, BonusType.army_physicalDefense, UnitType.soldier, 8 );
-                BonusOnUnit armorBonusLevel9 = AddBonus( context, BonusType.army_physicalDefense, UnitType.soldier, 9 );
-                BonusOnUnit armorBonusLevel10 = AddBonus( context, BonusType.army_physicalDefense, UnitType.soldier, 10 );
+                BonusOnUnit armorBonusLevel1 = AddBonus( context, BonusType.army_physicalDefense, UnitType.soldier, 10 );
+                BonusOnUnit armorBonusLevel2 = AddBonus( context, BonusType.army_physicalDefense, UnitType.soldier, 20 );
+                BonusOnUnit armorBonusLevel3 = AddBonus( context, BonusType.army_physicalDefense, UnitType.soldier, 30 );
+                BonusOnUnit armorBonusLevel4 = AddBonus( context, BonusType.army_physicalDefense, UnitType.soldier, 40 );
+                BonusOnUnit armorBonusLevel5 = AddBonus( context, BonusType.army_physicalDefense, UnitType.soldier, 50 );
+                BonusOnUnit armorBonusLevel6 = AddBonus( context, BonusType.army_physicalDefense, UnitType.soldier, 60 );
+                BonusOnUnit armorBonusLevel7 = AddBonus( context, BonusType.army_physicalDefense, UnitType.soldier, 70 );
+                BonusOnUnit armorBonusLevel8 = AddBonus( context, BonusType.army_physicalDefense, UnitType.soldier, 80 );
+                BonusOnUnit armorBonusLevel9 = AddBonus( context, BonusType.army_physicalDefense, UnitType.soldier, 90 );
+                BonusOnUnit armorBonusLevel10 = AddBonus( context, BonusType.army_physicalDefense, UnitType.soldier, 100 );
 
                 // Set up Levels
-                TechnologyLevel armorLevel1 = AddTechnologyLevel( context, TechnologyName.armor, 1, armorLevel1Cost, 10 /* ONLY FOR TESTS 60*/,
+                TechnologyLevel armorLevel1 = AddTechnologyLevel( context, TechnologyName.armor, 1, armorLevel1Cost, 5 /* ONLY FOR TESTS 60*/,
                     CreateRequirementList( armorLevel1Requirement ),
                     CreateBonusList( armorBonusLevel1 ) );
                 TechnologyLevel armorLevel2 = AddTechnologyLevel( context, TechnologyName.armor, 2, armorLevel2Cost, (int)( armorLevel1.Duration * 2.5 ),
@@ -886,28 +886,28 @@ namespace ITI.SkyLord
                     CreateBonusList( armorBonusLevel2 ) );
                 TechnologyLevel armorLevel3 = AddTechnologyLevel( context, TechnologyName.armor, 3, armorLevel3Cost, (int)( armorLevel2.Duration * 2.5 ),
                     CreateRequirementList( armorLevel3Requirement ),
-                    CreateBonusList( armorBonusLevel2 ) );
+                    CreateBonusList( armorBonusLevel3 ) );
                 TechnologyLevel armorLevel4 = AddTechnologyLevel( context, TechnologyName.armor, 4, armorLevel3Cost, (int)( armorLevel3.Duration * 2.75 ),
                     CreateRequirementList( armorLevel4Requirement ),
-                    CreateBonusList( armorBonusLevel3 ) );
+                    CreateBonusList( armorBonusLevel4 ) );
                 TechnologyLevel armorLevel5 = AddTechnologyLevel( context, TechnologyName.armor, 5, armorLevel5Cost, (int)( armorLevel4.Duration * 2.75 ),
                     CreateRequirementList( armorLevel5Requirement ),
-                    CreateBonusList( armorBonusLevel4 ) );
+                    CreateBonusList( armorBonusLevel5 ) );
                 TechnologyLevel armorLevel6 = AddTechnologyLevel( context, TechnologyName.armor, 6, armorLevel6Cost, (int)( armorLevel5.Duration * 2.75 ),
                     CreateRequirementList( armorLevel6Requirement ),
-                    CreateBonusList( armorBonusLevel5 ) );
+                    CreateBonusList( armorBonusLevel6 ) );
                 TechnologyLevel armorLevel7 = AddTechnologyLevel( context, TechnologyName.armor, 7, armorLevel7Cost, (int)( armorLevel6.Duration * 3.0 ),
                     CreateRequirementList( armorLevel7Requirement ),
-                    CreateBonusList( armorBonusLevel6 ) );
+                    CreateBonusList( armorBonusLevel7 ) );
                 TechnologyLevel armorLevel8 = AddTechnologyLevel( context, TechnologyName.armor, 8, armorLevel8Cost, (int)( armorLevel7.Duration * 3.0 ),
                     CreateRequirementList( armorLevel8Requirement ),
-                    CreateBonusList( armorBonusLevel7 ) );
+                    CreateBonusList( armorBonusLevel8 ) );
                 TechnologyLevel armorLevel9 = AddTechnologyLevel( context, TechnologyName.armor, 9, armorLevel9Cost, (int)( armorLevel8.Duration * 3.0 ),
                     CreateRequirementList( armorLevel9Requirement ),
-                    CreateBonusList( armorBonusLevel8 ) );
+                    CreateBonusList( armorBonusLevel9 ) );
                 TechnologyLevel armorLevel10 = AddTechnologyLevel( context, TechnologyName.armor, 10, armorLevel10Cost, (int)( armorLevel9.Duration * 3.25 ),
                     CreateRequirementList( armorLevel10Requirement ),
-                    CreateBonusList( armorBonusLevel9 ) );
+                    CreateBonusList( armorBonusLevel10 ) );
 
                 context.SaveChanges();
             }
@@ -942,16 +942,16 @@ namespace ITI.SkyLord
                 Requirement weaponsLevel10Requirement = AddTechnologyRequirement( context, TechnologyName.weapons, 9 );
 
                 //Add Bonuses ( 1% attack bonus soldier type units / weapons level )
-                BonusOnUnit weaponsBonusLevel1 = AddBonus( context, BonusType.army_attack, UnitType.soldier, 1 );
-                BonusOnUnit weaponsBonusLevel2 = AddBonus( context, BonusType.army_attack, UnitType.soldier, 2 );
-                BonusOnUnit weaponsBonusLevel3 = AddBonus( context, BonusType.army_attack, UnitType.soldier, 3 );
-                BonusOnUnit weaponsBonusLevel4 = AddBonus( context, BonusType.army_attack, UnitType.soldier, 4 );
-                BonusOnUnit weaponsBonusLevel5 = AddBonus( context, BonusType.army_attack, UnitType.soldier, 5 );
-                BonusOnUnit weaponsBonusLevel6 = AddBonus( context, BonusType.army_attack, UnitType.soldier, 6 );
-                BonusOnUnit weaponsBonusLevel7 = AddBonus( context, BonusType.army_attack, UnitType.soldier, 7 );
-                BonusOnUnit weaponsBonusLevel8 = AddBonus( context, BonusType.army_attack, UnitType.soldier, 8 );
-                BonusOnUnit weaponsBonusLevel9 = AddBonus( context, BonusType.army_attack, UnitType.soldier, 9 );
-                BonusOnUnit weaponsBonusLevel10 = AddBonus( context, BonusType.army_attack, UnitType.soldier, 10 );
+                BonusOnUnit weaponsBonusLevel1 = AddBonus( context, BonusType.army_attack, UnitType.soldier, 10 );
+                BonusOnUnit weaponsBonusLevel2 = AddBonus( context, BonusType.army_attack, UnitType.soldier, 20 );
+                BonusOnUnit weaponsBonusLevel3 = AddBonus( context, BonusType.army_attack, UnitType.soldier, 30 );
+                BonusOnUnit weaponsBonusLevel4 = AddBonus( context, BonusType.army_attack, UnitType.soldier, 40 );
+                BonusOnUnit weaponsBonusLevel5 = AddBonus( context, BonusType.army_attack, UnitType.soldier, 50 );
+                BonusOnUnit weaponsBonusLevel6 = AddBonus( context, BonusType.army_attack, UnitType.soldier, 60 );
+                BonusOnUnit weaponsBonusLevel7 = AddBonus( context, BonusType.army_attack, UnitType.soldier, 70 );
+                BonusOnUnit weaponsBonusLevel8 = AddBonus( context, BonusType.army_attack, UnitType.soldier, 80 );
+                BonusOnUnit weaponsBonusLevel9 = AddBonus( context, BonusType.army_attack, UnitType.soldier, 90 );
+                BonusOnUnit weaponsBonusLevel10 = AddBonus( context, BonusType.army_attack, UnitType.soldier, 100 );
 
                 // Set up Levels
                 TechnologyLevel weaponsLevel1 = AddTechnologyLevel( context, TechnologyName.weapons, 1, weaponsLevel1Cost, 60,
@@ -962,28 +962,28 @@ namespace ITI.SkyLord
                     CreateBonusList( weaponsBonusLevel2 ) );
                 TechnologyLevel weaponsLevel3 = AddTechnologyLevel( context, TechnologyName.weapons, 3, weaponsLevel3Cost, (int)( weaponsLevel2.Duration * 2.5 ),
                     CreateRequirementList( weaponsLevel3Requirement ),
-                    CreateBonusList( weaponsBonusLevel2 ) );
+                    CreateBonusList( weaponsBonusLevel3 ) );
                 TechnologyLevel weaponsLevel4 = AddTechnologyLevel( context, TechnologyName.weapons, 4, weaponsLevel3Cost, (int)( weaponsLevel3.Duration * 2.75 ),
                     CreateRequirementList( weaponsLevel4Requirement ),
-                    CreateBonusList( weaponsBonusLevel3 ) );
+                    CreateBonusList( weaponsBonusLevel4 ) );
                 TechnologyLevel weaponsLevel5 = AddTechnologyLevel( context, TechnologyName.weapons, 5, weaponsLevel5Cost, (int)( weaponsLevel4.Duration * 2.75 ),
                     CreateRequirementList( weaponsLevel5Requirement ),
-                    CreateBonusList( weaponsBonusLevel4 ) );
+                    CreateBonusList( weaponsBonusLevel5 ) );
                 TechnologyLevel weaponsLevel6 = AddTechnologyLevel( context, TechnologyName.weapons, 6, weaponsLevel6Cost, (int)( weaponsLevel5.Duration * 2.75 ),
                     CreateRequirementList( weaponsLevel6Requirement ),
-                    CreateBonusList( weaponsBonusLevel5 ) );
+                    CreateBonusList( weaponsBonusLevel6 ) );
                 TechnologyLevel weaponsLevel7 = AddTechnologyLevel( context, TechnologyName.weapons, 7, weaponsLevel7Cost, (int)( weaponsLevel6.Duration * 3.0 ),
                     CreateRequirementList( weaponsLevel7Requirement ),
-                    CreateBonusList( weaponsBonusLevel6 ) );
+                    CreateBonusList( weaponsBonusLevel7 ) );
                 TechnologyLevel weaponsLevel8 = AddTechnologyLevel( context, TechnologyName.weapons, 8, weaponsLevel8Cost, (int)( weaponsLevel7.Duration * 3.0 ),
                     CreateRequirementList( weaponsLevel8Requirement ),
-                    CreateBonusList( weaponsBonusLevel7 ) );
+                    CreateBonusList( weaponsBonusLevel8 ) );
                 TechnologyLevel weaponsLevel9 = AddTechnologyLevel( context, TechnologyName.weapons, 9, weaponsLevel9Cost, (int)( weaponsLevel8.Duration * 3.0 ),
                     CreateRequirementList( weaponsLevel9Requirement ),
-                    CreateBonusList( weaponsBonusLevel8 ) );
+                    CreateBonusList( weaponsBonusLevel9 ) );
                 TechnologyLevel weaponsLevel10 = AddTechnologyLevel( context, TechnologyName.weapons, 10, weaponsLevel10Cost, (int)( weaponsLevel9.Duration * 3.25 ),
                     CreateRequirementList( weaponsLevel10Requirement ),
-                    CreateBonusList( weaponsBonusLevel9 ) );
+                    CreateBonusList( weaponsBonusLevel10 ) );
 
                 context.SaveChanges();
             }
@@ -1018,16 +1018,16 @@ namespace ITI.SkyLord
                 Requirement magicBootsLevel10Requirement = AddTechnologyRequirement( context, TechnologyName.magicBoots, 9 );
 
                 //Add Bonuses ( 1% speed bonus soldier type units / magicBoots level )
-                BonusOnUnit magicBootsBonusLevel1 = AddBonus( context, BonusType.army_speed, UnitType.soldier, 1 );
-                BonusOnUnit magicBootsBonusLevel2 = AddBonus( context, BonusType.army_speed, UnitType.soldier, 2 );
-                BonusOnUnit magicBootsBonusLevel3 = AddBonus( context, BonusType.army_speed, UnitType.soldier, 3 );
-                BonusOnUnit magicBootsBonusLevel4 = AddBonus( context, BonusType.army_speed, UnitType.soldier, 4 );
-                BonusOnUnit magicBootsBonusLevel5 = AddBonus( context, BonusType.army_speed, UnitType.soldier, 5 );
-                BonusOnUnit magicBootsBonusLevel6 = AddBonus( context, BonusType.army_speed, UnitType.soldier, 6 );
-                BonusOnUnit magicBootsBonusLevel7 = AddBonus( context, BonusType.army_speed, UnitType.soldier, 7 );
-                BonusOnUnit magicBootsBonusLevel8 = AddBonus( context, BonusType.army_speed, UnitType.soldier, 8 );
-                BonusOnUnit magicBootsBonusLevel9 = AddBonus( context, BonusType.army_speed, UnitType.soldier, 9 );
-                BonusOnUnit magicBootsBonusLevel10 = AddBonus( context, BonusType.army_speed, UnitType.soldier, 10 );
+                BonusOnUnit magicBootsBonusLevel1 = AddBonus( context, BonusType.army_speed, UnitType.soldier, 10 );
+                BonusOnUnit magicBootsBonusLevel2 = AddBonus( context, BonusType.army_speed, UnitType.soldier, 20 );
+                BonusOnUnit magicBootsBonusLevel3 = AddBonus( context, BonusType.army_speed, UnitType.soldier, 30 );
+                BonusOnUnit magicBootsBonusLevel4 = AddBonus( context, BonusType.army_speed, UnitType.soldier, 40 );
+                BonusOnUnit magicBootsBonusLevel5 = AddBonus( context, BonusType.army_speed, UnitType.soldier, 50 );
+                BonusOnUnit magicBootsBonusLevel6 = AddBonus( context, BonusType.army_speed, UnitType.soldier, 60 );
+                BonusOnUnit magicBootsBonusLevel7 = AddBonus( context, BonusType.army_speed, UnitType.soldier, 70 );
+                BonusOnUnit magicBootsBonusLevel8 = AddBonus( context, BonusType.army_speed, UnitType.soldier, 80 );
+                BonusOnUnit magicBootsBonusLevel9 = AddBonus( context, BonusType.army_speed, UnitType.soldier, 90 );
+                BonusOnUnit magicBootsBonusLevel10 = AddBonus( context, BonusType.army_speed, UnitType.soldier, 100 );
 
                 // Set up Levels
                 TechnologyLevel magicBootsLevel1 = AddTechnologyLevel( context, TechnologyName.magicBoots, 1, magicBootsLevel1Cost, 60,
@@ -1038,28 +1038,28 @@ namespace ITI.SkyLord
                     CreateBonusList( magicBootsBonusLevel2 ) );
                 TechnologyLevel magicBootsLevel3 = AddTechnologyLevel( context, TechnologyName.magicBoots, 3, magicBootsLevel3Cost, (int)( magicBootsLevel2.Duration * 2.5 ),
                     CreateRequirementList( magicBootsLevel3Requirement ),
-                    CreateBonusList( magicBootsBonusLevel2 ) );
+                    CreateBonusList( magicBootsBonusLevel3 ) );
                 TechnologyLevel magicBootsLevel4 = AddTechnologyLevel( context, TechnologyName.magicBoots, 4, magicBootsLevel3Cost, (int)( magicBootsLevel3.Duration * 2.75 ),
                     CreateRequirementList( magicBootsLevel4Requirement ),
-                    CreateBonusList( magicBootsBonusLevel3 ) );
+                    CreateBonusList( magicBootsBonusLevel4 ) );
                 TechnologyLevel magicBootsLevel5 = AddTechnologyLevel( context, TechnologyName.magicBoots, 5, magicBootsLevel5Cost, (int)( magicBootsLevel4.Duration * 2.75 ),
                     CreateRequirementList( magicBootsLevel5Requirement ),
-                    CreateBonusList( magicBootsBonusLevel4 ) );
+                    CreateBonusList( magicBootsBonusLevel5 ) );
                 TechnologyLevel magicBootsLevel6 = AddTechnologyLevel( context, TechnologyName.magicBoots, 6, magicBootsLevel6Cost, (int)( magicBootsLevel5.Duration * 2.75 ),
                     CreateRequirementList( magicBootsLevel6Requirement ),
-                    CreateBonusList( magicBootsBonusLevel5 ) );
+                    CreateBonusList( magicBootsBonusLevel6 ) );
                 TechnologyLevel magicBootsLevel7 = AddTechnologyLevel( context, TechnologyName.magicBoots, 7, magicBootsLevel7Cost, (int)( magicBootsLevel6.Duration * 3.0 ),
                     CreateRequirementList( magicBootsLevel7Requirement ),
-                    CreateBonusList( magicBootsBonusLevel6 ) );
+                    CreateBonusList( magicBootsBonusLevel7 ) );
                 TechnologyLevel magicBootsLevel8 = AddTechnologyLevel( context, TechnologyName.magicBoots, 8, magicBootsLevel8Cost, (int)( magicBootsLevel7.Duration * 3.0 ),
                     CreateRequirementList( magicBootsLevel8Requirement ),
-                    CreateBonusList( magicBootsBonusLevel7 ) );
+                    CreateBonusList( magicBootsBonusLevel8 ) );
                 TechnologyLevel magicBootsLevel9 = AddTechnologyLevel( context, TechnologyName.magicBoots, 9, magicBootsLevel9Cost, (int)( magicBootsLevel8.Duration * 3.0 ),
                     CreateRequirementList( magicBootsLevel9Requirement ),
-                    CreateBonusList( magicBootsBonusLevel8 ) );
+                    CreateBonusList( magicBootsBonusLevel9 ) );
                 TechnologyLevel magicBootsLevel10 = AddTechnologyLevel( context, TechnologyName.magicBoots, 10, magicBootsLevel10Cost, (int)( magicBootsLevel9.Duration * 3.25 ),
                     CreateRequirementList( magicBootsLevel10Requirement ),
-                    CreateBonusList( magicBootsBonusLevel9 ) );
+                    CreateBonusList( magicBootsBonusLevel10 ) );
 
                 context.SaveChanges();
             }
@@ -1094,16 +1094,16 @@ namespace ITI.SkyLord
                 Requirement magicalProtectionLevel10Requirement = AddTechnologyRequirement( context, TechnologyName.magicalProtection, 9 );
 
                 //Add Bonuses ( 1% defense bonus magical type units / magicalProtection level )
-                BonusOnUnit magicalProtectionBonusLevel1 = AddBonus( context, BonusType.army_magicalDefense, UnitType.magic, 1 );
-                BonusOnUnit magicalProtectionBonusLevel2 = AddBonus( context, BonusType.army_magicalDefense, UnitType.magic, 2 );
-                BonusOnUnit magicalProtectionBonusLevel3 = AddBonus( context, BonusType.army_magicalDefense, UnitType.magic, 3 );
-                BonusOnUnit magicalProtectionBonusLevel4 = AddBonus( context, BonusType.army_magicalDefense, UnitType.magic, 4 );
-                BonusOnUnit magicalProtectionBonusLevel5 = AddBonus( context, BonusType.army_magicalDefense, UnitType.magic, 5 );
-                BonusOnUnit magicalProtectionBonusLevel6 = AddBonus( context, BonusType.army_magicalDefense, UnitType.magic, 6 );
-                BonusOnUnit magicalProtectionBonusLevel7 = AddBonus( context, BonusType.army_magicalDefense, UnitType.magic, 7 );
-                BonusOnUnit magicalProtectionBonusLevel8 = AddBonus( context, BonusType.army_magicalDefense, UnitType.magic, 8 );
-                BonusOnUnit magicalProtectionBonusLevel9 = AddBonus( context, BonusType.army_magicalDefense, UnitType.magic, 9 );
-                BonusOnUnit magicalProtectionBonusLevel10 = AddBonus( context, BonusType.army_magicalDefense, UnitType.magic, 10 );
+                BonusOnUnit magicalProtectionBonusLevel1 = AddBonus( context, BonusType.army_magicalDefense, UnitType.magic, 10 );
+                BonusOnUnit magicalProtectionBonusLevel2 = AddBonus( context, BonusType.army_magicalDefense, UnitType.magic, 20 );
+                BonusOnUnit magicalProtectionBonusLevel3 = AddBonus( context, BonusType.army_magicalDefense, UnitType.magic, 30 );
+                BonusOnUnit magicalProtectionBonusLevel4 = AddBonus( context, BonusType.army_magicalDefense, UnitType.magic, 40 );
+                BonusOnUnit magicalProtectionBonusLevel5 = AddBonus( context, BonusType.army_magicalDefense, UnitType.magic, 50 );
+                BonusOnUnit magicalProtectionBonusLevel6 = AddBonus( context, BonusType.army_magicalDefense, UnitType.magic, 60 );
+                BonusOnUnit magicalProtectionBonusLevel7 = AddBonus( context, BonusType.army_magicalDefense, UnitType.magic, 70 );
+                BonusOnUnit magicalProtectionBonusLevel8 = AddBonus( context, BonusType.army_magicalDefense, UnitType.magic, 80 );
+                BonusOnUnit magicalProtectionBonusLevel9 = AddBonus( context, BonusType.army_magicalDefense, UnitType.magic, 90 );
+                BonusOnUnit magicalProtectionBonusLevel10 = AddBonus( context, BonusType.army_magicalDefense, UnitType.magic, 100 );
 
                 // Set up Levels
                 TechnologyLevel magicalProtectionLevel1 = AddTechnologyLevel( context, TechnologyName.magicalProtection, 1, magicalProtectionLevel1Cost, 75,
@@ -1114,28 +1114,28 @@ namespace ITI.SkyLord
                     CreateBonusList( magicalProtectionBonusLevel2 ) );
                 TechnologyLevel magicalProtectionLevel3 = AddTechnologyLevel( context, TechnologyName.magicalProtection, 3, magicalProtectionLevel3Cost, (int)( magicalProtectionLevel2.Duration * 2.5 ),
                     CreateRequirementList( magicalProtectionLevel3Requirement ),
-                    CreateBonusList( magicalProtectionBonusLevel2 ) );
+                    CreateBonusList( magicalProtectionBonusLevel3 ) );
                 TechnologyLevel magicalProtectionLevel4 = AddTechnologyLevel( context, TechnologyName.magicalProtection, 4, magicalProtectionLevel3Cost, (int)( magicalProtectionLevel3.Duration * 2.75 ),
                     CreateRequirementList( magicalProtectionLevel4Requirement ),
-                    CreateBonusList( magicalProtectionBonusLevel3 ) );
+                    CreateBonusList( magicalProtectionBonusLevel4 ) );
                 TechnologyLevel magicalProtectionLevel5 = AddTechnologyLevel( context, TechnologyName.magicalProtection, 5, magicalProtectionLevel5Cost, (int)( magicalProtectionLevel4.Duration * 2.75 ),
                     CreateRequirementList( magicalProtectionLevel5Requirement ),
-                    CreateBonusList( magicalProtectionBonusLevel4 ) );
+                    CreateBonusList( magicalProtectionBonusLevel5 ) );
                 TechnologyLevel magicalProtectionLevel6 = AddTechnologyLevel( context, TechnologyName.magicalProtection, 6, magicalProtectionLevel6Cost, (int)( magicalProtectionLevel5.Duration * 2.75 ),
                     CreateRequirementList( magicalProtectionLevel6Requirement ),
-                    CreateBonusList( magicalProtectionBonusLevel5 ) );
+                    CreateBonusList( magicalProtectionBonusLevel6 ) );
                 TechnologyLevel magicalProtectionLevel7 = AddTechnologyLevel( context, TechnologyName.magicalProtection, 7, magicalProtectionLevel7Cost, (int)( magicalProtectionLevel6.Duration * 3.0 ),
                     CreateRequirementList( magicalProtectionLevel7Requirement ),
-                    CreateBonusList( magicalProtectionBonusLevel6 ) );
+                    CreateBonusList( magicalProtectionBonusLevel7 ) );
                 TechnologyLevel magicalProtectionLevel8 = AddTechnologyLevel( context, TechnologyName.magicalProtection, 8, magicalProtectionLevel8Cost, (int)( magicalProtectionLevel7.Duration * 3.0 ),
                     CreateRequirementList( magicalProtectionLevel8Requirement ),
-                    CreateBonusList( magicalProtectionBonusLevel7 ) );
+                    CreateBonusList( magicalProtectionBonusLevel8 ) );
                 TechnologyLevel magicalProtectionLevel9 = AddTechnologyLevel( context, TechnologyName.magicalProtection, 9, magicalProtectionLevel9Cost, (int)( magicalProtectionLevel8.Duration * 3.0 ),
                     CreateRequirementList( magicalProtectionLevel9Requirement ),
-                    CreateBonusList( magicalProtectionBonusLevel8 ) );
+                    CreateBonusList( magicalProtectionBonusLevel9 ) );
                 TechnologyLevel magicalProtectionLevel10 = AddTechnologyLevel( context, TechnologyName.magicalProtection, 10, magicalProtectionLevel10Cost, (int)( magicalProtectionLevel9.Duration * 3.25 ),
                     CreateRequirementList( magicalProtectionLevel10Requirement ),
-                    CreateBonusList( magicalProtectionBonusLevel9 ) );
+                    CreateBonusList( magicalProtectionBonusLevel10 ) );
 
                 context.SaveChanges();
             }
@@ -1169,16 +1169,16 @@ namespace ITI.SkyLord
                 Requirement magicalStaffLevel10Requirement = AddTechnologyRequirement( context, TechnologyName.magicalStaff, 9 );
 
                 //Add Bonuses ( 1% attack bonus magical type units / magicalStaff level )
-                BonusOnUnit magicalStaffBonusLevel1 = AddBonus( context, BonusType.army_attack, UnitType.magic, 1 );
-                BonusOnUnit magicalStaffBonusLevel2 = AddBonus( context, BonusType.army_attack, UnitType.magic, 2 );
-                BonusOnUnit magicalStaffBonusLevel3 = AddBonus( context, BonusType.army_attack, UnitType.magic, 3 );
-                BonusOnUnit magicalStaffBonusLevel4 = AddBonus( context, BonusType.army_attack, UnitType.magic, 4 );
-                BonusOnUnit magicalStaffBonusLevel5 = AddBonus( context, BonusType.army_attack, UnitType.magic, 5 );
-                BonusOnUnit magicalStaffBonusLevel6 = AddBonus( context, BonusType.army_attack, UnitType.magic, 6 );
-                BonusOnUnit magicalStaffBonusLevel7 = AddBonus( context, BonusType.army_attack, UnitType.magic, 7 );
-                BonusOnUnit magicalStaffBonusLevel8 = AddBonus( context, BonusType.army_attack, UnitType.magic, 8 );
-                BonusOnUnit magicalStaffBonusLevel9 = AddBonus( context, BonusType.army_attack, UnitType.magic, 9 );
-                BonusOnUnit magicalStaffBonusLevel10 = AddBonus( context, BonusType.army_attack, UnitType.magic, 10 );
+                BonusOnUnit magicalStaffBonusLevel1 = AddBonus( context, BonusType.army_attack, UnitType.magic, 10 );
+                BonusOnUnit magicalStaffBonusLevel2 = AddBonus( context, BonusType.army_attack, UnitType.magic, 20 );
+                BonusOnUnit magicalStaffBonusLevel3 = AddBonus( context, BonusType.army_attack, UnitType.magic, 30 );
+                BonusOnUnit magicalStaffBonusLevel4 = AddBonus( context, BonusType.army_attack, UnitType.magic, 40 );
+                BonusOnUnit magicalStaffBonusLevel5 = AddBonus( context, BonusType.army_attack, UnitType.magic, 50 );
+                BonusOnUnit magicalStaffBonusLevel6 = AddBonus( context, BonusType.army_attack, UnitType.magic, 60 );
+                BonusOnUnit magicalStaffBonusLevel7 = AddBonus( context, BonusType.army_attack, UnitType.magic, 70 );
+                BonusOnUnit magicalStaffBonusLevel8 = AddBonus( context, BonusType.army_attack, UnitType.magic, 80 );
+                BonusOnUnit magicalStaffBonusLevel9 = AddBonus( context, BonusType.army_attack, UnitType.magic, 90 );
+                BonusOnUnit magicalStaffBonusLevel10 = AddBonus( context, BonusType.army_attack, UnitType.magic, 100 );
 
                 // Set up Levels
                 TechnologyLevel magicalStaffLevel1 = AddTechnologyLevel( context, TechnologyName.magicalStaff, 1, magicalStaffLevel1Cost, 75,
@@ -1189,28 +1189,28 @@ namespace ITI.SkyLord
                     CreateBonusList( magicalStaffBonusLevel2 ) );
                 TechnologyLevel magicalStaffLevel3 = AddTechnologyLevel( context, TechnologyName.magicalStaff, 3, magicalStaffLevel3Cost, (int)( magicalStaffLevel2.Duration * 2.5 ),
                     CreateRequirementList( magicalStaffLevel3Requirement ),
-                    CreateBonusList( magicalStaffBonusLevel2 ) );
+                    CreateBonusList( magicalStaffBonusLevel3 ) );
                 TechnologyLevel magicalStaffLevel4 = AddTechnologyLevel( context, TechnologyName.magicalStaff, 4, magicalStaffLevel3Cost, (int)( magicalStaffLevel3.Duration * 2.75 ),
                     CreateRequirementList( magicalStaffLevel4Requirement ),
-                    CreateBonusList( magicalStaffBonusLevel3 ) );
+                    CreateBonusList( magicalStaffBonusLevel4 ) );
                 TechnologyLevel magicalStaffLevel5 = AddTechnologyLevel( context, TechnologyName.magicalStaff, 5, magicalStaffLevel5Cost, (int)( magicalStaffLevel4.Duration * 2.75 ),
                     CreateRequirementList( magicalStaffLevel5Requirement ),
-                    CreateBonusList( magicalStaffBonusLevel4 ) );
+                    CreateBonusList( magicalStaffBonusLevel5 ) );
                 TechnologyLevel magicalStaffLevel6 = AddTechnologyLevel( context, TechnologyName.magicalStaff, 6, magicalStaffLevel6Cost, (int)( magicalStaffLevel5.Duration * 2.75 ),
                     CreateRequirementList( magicalStaffLevel6Requirement ),
-                    CreateBonusList( magicalStaffBonusLevel5 ) );
+                    CreateBonusList( magicalStaffBonusLevel6 ) );
                 TechnologyLevel magicalStaffLevel7 = AddTechnologyLevel( context, TechnologyName.magicalStaff, 7, magicalStaffLevel7Cost, (int)( magicalStaffLevel6.Duration * 3.0 ),
                     CreateRequirementList( magicalStaffLevel7Requirement ),
-                    CreateBonusList( magicalStaffBonusLevel6 ) );
+                    CreateBonusList( magicalStaffBonusLevel7 ) );
                 TechnologyLevel magicalStaffLevel8 = AddTechnologyLevel( context, TechnologyName.magicalStaff, 8, magicalStaffLevel8Cost, (int)( magicalStaffLevel7.Duration * 3.0 ),
                     CreateRequirementList( magicalStaffLevel8Requirement ),
-                    CreateBonusList( magicalStaffBonusLevel7 ) );
+                    CreateBonusList( magicalStaffBonusLevel8 ) );
                 TechnologyLevel magicalStaffLevel9 = AddTechnologyLevel( context, TechnologyName.magicalStaff, 9, magicalStaffLevel9Cost, (int)( magicalStaffLevel8.Duration * 3.0 ),
                     CreateRequirementList( magicalStaffLevel9Requirement ),
-                    CreateBonusList( magicalStaffBonusLevel8 ) );
+                    CreateBonusList( magicalStaffBonusLevel9 ) );
                 TechnologyLevel magicalStaffLevel10 = AddTechnologyLevel( context, TechnologyName.magicalStaff, 10, magicalStaffLevel10Cost, (int)( magicalStaffLevel9.Duration * 3.25 ),
                     CreateRequirementList( magicalStaffLevel10Requirement ),
-                    CreateBonusList( magicalStaffBonusLevel9 ) );
+                    CreateBonusList( magicalStaffBonusLevel10 ) );
 
                 context.SaveChanges();
             }
@@ -1245,19 +1245,19 @@ namespace ITI.SkyLord
                 Requirement levitationLevel10Requirement = AddTechnologyRequirement( context, TechnologyName.levitation, 9 );
 
                 //Add Bonuses ( 1% speed bonus magical type units / levitation level )
-                BonusOnUnit levitationBonusLevel1 = AddBonus( context, BonusType.army_speed, UnitType.magic, 1 );
-                BonusOnUnit levitationBonusLevel2 = AddBonus( context, BonusType.army_speed, UnitType.magic, 2 );
-                BonusOnUnit levitationBonusLevel3 = AddBonus( context, BonusType.army_speed, UnitType.magic, 3 );
-                BonusOnUnit levitationBonusLevel4 = AddBonus( context, BonusType.army_speed, UnitType.magic, 4 );
-                BonusOnUnit levitationBonusLevel5 = AddBonus( context, BonusType.army_speed, UnitType.magic, 5 );
-                BonusOnUnit levitationBonusLevel6 = AddBonus( context, BonusType.army_speed, UnitType.magic, 6 );
-                BonusOnUnit levitationBonusLevel7 = AddBonus( context, BonusType.army_speed, UnitType.magic, 7 );
-                BonusOnUnit levitationBonusLevel8 = AddBonus( context, BonusType.army_speed, UnitType.magic, 8 );
-                BonusOnUnit levitationBonusLevel9 = AddBonus( context, BonusType.army_speed, UnitType.magic, 9 );
-                BonusOnUnit levitationBonusLevel10 = AddBonus( context, BonusType.army_speed, UnitType.magic, 10 );
+                BonusOnUnit levitationBonusLevel1 = AddBonus( context, BonusType.army_speed, UnitType.magic, 10 );
+                BonusOnUnit levitationBonusLevel2 = AddBonus( context, BonusType.army_speed, UnitType.magic, 20 );
+                BonusOnUnit levitationBonusLevel3 = AddBonus( context, BonusType.army_speed, UnitType.magic, 30 );
+                BonusOnUnit levitationBonusLevel4 = AddBonus( context, BonusType.army_speed, UnitType.magic, 40 );
+                BonusOnUnit levitationBonusLevel5 = AddBonus( context, BonusType.army_speed, UnitType.magic, 50 );
+                BonusOnUnit levitationBonusLevel6 = AddBonus( context, BonusType.army_speed, UnitType.magic, 60 );
+                BonusOnUnit levitationBonusLevel7 = AddBonus( context, BonusType.army_speed, UnitType.magic, 70 );
+                BonusOnUnit levitationBonusLevel8 = AddBonus( context, BonusType.army_speed, UnitType.magic, 80 );
+                BonusOnUnit levitationBonusLevel9 = AddBonus( context, BonusType.army_speed, UnitType.magic, 90 );
+                BonusOnUnit levitationBonusLevel10 = AddBonus( context, BonusType.army_speed, UnitType.magic, 100 );
 
                 // Set up Levels
-                TechnologyLevel levitationLevel1 = AddTechnologyLevel( context, TechnologyName.levitation, 1, levitationLevel1Cost, 75,
+                TechnologyLevel levitationLevel1 = AddTechnologyLevel( context, TechnologyName.levitation, 1, levitationLevel1Cost, 5 /* FOR TEST ONLY 75*/,
                     CreateRequirementList( levitationLevel1Requirement ),
                     CreateBonusList( levitationBonusLevel1 ) );
                 TechnologyLevel levitationLevel2 = AddTechnologyLevel( context, TechnologyName.levitation, 2, levitationLevel2Cost, (int)( levitationLevel1.Duration * 2.5 ),
@@ -1265,28 +1265,28 @@ namespace ITI.SkyLord
                     CreateBonusList( levitationBonusLevel2 ) );
                 TechnologyLevel levitationLevel3 = AddTechnologyLevel( context, TechnologyName.levitation, 3, levitationLevel3Cost, (int)( levitationLevel2.Duration * 2.5 ),
                     CreateRequirementList( levitationLevel3Requirement ),
-                    CreateBonusList( levitationBonusLevel2 ) );
+                    CreateBonusList( levitationBonusLevel3 ) );
                 TechnologyLevel levitationLevel4 = AddTechnologyLevel( context, TechnologyName.levitation, 4, levitationLevel3Cost, (int)( levitationLevel3.Duration * 2.75 ),
                     CreateRequirementList( levitationLevel4Requirement ),
-                    CreateBonusList( levitationBonusLevel3 ) );
+                    CreateBonusList( levitationBonusLevel4 ) );
                 TechnologyLevel levitationLevel5 = AddTechnologyLevel( context, TechnologyName.levitation, 5, levitationLevel5Cost, (int)( levitationLevel4.Duration * 2.75 ),
                     CreateRequirementList( levitationLevel5Requirement ),
-                    CreateBonusList( levitationBonusLevel4 ) );
+                    CreateBonusList( levitationBonusLevel5 ) );
                 TechnologyLevel levitationLevel6 = AddTechnologyLevel( context, TechnologyName.levitation, 6, levitationLevel6Cost, (int)( levitationLevel5.Duration * 2.75 ),
                     CreateRequirementList( levitationLevel6Requirement ),
-                    CreateBonusList( levitationBonusLevel5 ) );
+                    CreateBonusList( levitationBonusLevel6 ) );
                 TechnologyLevel levitationLevel7 = AddTechnologyLevel( context, TechnologyName.levitation, 7, levitationLevel7Cost, (int)( levitationLevel6.Duration * 3.0 ),
                     CreateRequirementList( levitationLevel7Requirement ),
-                    CreateBonusList( levitationBonusLevel6 ) );
+                    CreateBonusList( levitationBonusLevel7 ) );
                 TechnologyLevel levitationLevel8 = AddTechnologyLevel( context, TechnologyName.levitation, 8, levitationLevel8Cost, (int)( levitationLevel7.Duration * 3.0 ),
                     CreateRequirementList( levitationLevel8Requirement ),
-                    CreateBonusList( levitationBonusLevel7 ) );
+                    CreateBonusList( levitationBonusLevel8 ) );
                 TechnologyLevel levitationLevel9 = AddTechnologyLevel( context, TechnologyName.levitation, 9, levitationLevel9Cost, (int)( levitationLevel8.Duration * 3.0 ),
                     CreateRequirementList( levitationLevel9Requirement ),
-                    CreateBonusList( levitationBonusLevel8 ) );
+                    CreateBonusList( levitationBonusLevel9 ) );
                 TechnologyLevel levitationLevel10 = AddTechnologyLevel( context, TechnologyName.levitation, 10, levitationLevel10Cost, (int)( levitationLevel9.Duration * 3.25 ),
                     CreateRequirementList( levitationLevel10Requirement ),
-                    CreateBonusList( levitationBonusLevel9 ) );
+                    CreateBonusList( levitationBonusLevel10 ) );
 
                 context.SaveChanges();
             }
@@ -1321,27 +1321,27 @@ namespace ITI.SkyLord
                 Requirement shellLevel10Requirement = AddTechnologyRequirement( context, TechnologyName.shell, 9 );
 
                 //Add Bonuses ( 1% physical and magical defense bonus monster type units / shell level )
-                BonusOnUnit shellMRBonusLevel1 = AddBonus( context, BonusType.army_magicalDefense, UnitType.monster, 1 );
-                BonusOnUnit shellMRBonusLevel2 = AddBonus( context, BonusType.army_magicalDefense, UnitType.monster, 2 );
-                BonusOnUnit shellMRBonusLevel3 = AddBonus( context, BonusType.army_magicalDefense, UnitType.monster, 3 );
-                BonusOnUnit shellMRBonusLevel4 = AddBonus( context, BonusType.army_magicalDefense, UnitType.monster, 4 );
-                BonusOnUnit shellMRBonusLevel5 = AddBonus( context, BonusType.army_magicalDefense, UnitType.monster, 5 );
-                BonusOnUnit shellMRBonusLevel6 = AddBonus( context, BonusType.army_magicalDefense, UnitType.monster, 6 );
-                BonusOnUnit shellMRBonusLevel7 = AddBonus( context, BonusType.army_magicalDefense, UnitType.monster, 7 );
-                BonusOnUnit shellMRBonusLevel8 = AddBonus( context, BonusType.army_magicalDefense, UnitType.monster, 8 );
-                BonusOnUnit shellMRBonusLevel9 = AddBonus( context, BonusType.army_magicalDefense, UnitType.monster, 9 );
-                BonusOnUnit shellMRBonusLevel10 = AddBonus( context, BonusType.army_magicalDefense, UnitType.monster, 10 );
+                BonusOnUnit shellMRBonusLevel1 = AddBonus( context, BonusType.army_magicalDefense, UnitType.monster, 5 );
+                BonusOnUnit shellMRBonusLevel2 = AddBonus( context, BonusType.army_magicalDefense, UnitType.monster, 10 );
+                BonusOnUnit shellMRBonusLevel3 = AddBonus( context, BonusType.army_magicalDefense, UnitType.monster, 15 );
+                BonusOnUnit shellMRBonusLevel4 = AddBonus( context, BonusType.army_magicalDefense, UnitType.monster, 20 );
+                BonusOnUnit shellMRBonusLevel5 = AddBonus( context, BonusType.army_magicalDefense, UnitType.monster, 25 );
+                BonusOnUnit shellMRBonusLevel6 = AddBonus( context, BonusType.army_magicalDefense, UnitType.monster, 30 );
+                BonusOnUnit shellMRBonusLevel7 = AddBonus( context, BonusType.army_magicalDefense, UnitType.monster, 35 );
+                BonusOnUnit shellMRBonusLevel8 = AddBonus( context, BonusType.army_magicalDefense, UnitType.monster, 40 );
+                BonusOnUnit shellMRBonusLevel9 = AddBonus( context, BonusType.army_magicalDefense, UnitType.monster, 45 );
+                BonusOnUnit shellMRBonusLevel10 = AddBonus( context, BonusType.army_magicalDefense, UnitType.monster, 50 );
 
-                BonusOnUnit shellArmorBonusLevel1 = AddBonus( context, BonusType.army_physicalDefense, UnitType.monster, 1 );
-                BonusOnUnit shellArmorBonusLevel2 = AddBonus( context, BonusType.army_physicalDefense, UnitType.monster, 2 );
-                BonusOnUnit shellArmorBonusLevel3 = AddBonus( context, BonusType.army_physicalDefense, UnitType.monster, 3 );
-                BonusOnUnit shellArmorBonusLevel4 = AddBonus( context, BonusType.army_physicalDefense, UnitType.monster, 4 );
-                BonusOnUnit shellArmorBonusLevel5 = AddBonus( context, BonusType.army_physicalDefense, UnitType.monster, 5 );
-                BonusOnUnit shellArmorBonusLevel6 = AddBonus( context, BonusType.army_physicalDefense, UnitType.monster, 6 );
-                BonusOnUnit shellArmorBonusLevel7 = AddBonus( context, BonusType.army_physicalDefense, UnitType.monster, 7 );
-                BonusOnUnit shellArmorBonusLevel8 = AddBonus( context, BonusType.army_physicalDefense, UnitType.monster, 8 );
-                BonusOnUnit shellArmorBonusLevel9 = AddBonus( context, BonusType.army_physicalDefense, UnitType.monster, 9 );
-                BonusOnUnit shellArmorBonusLevel10 = AddBonus( context, BonusType.army_physicalDefense, UnitType.monster, 10 );
+                BonusOnUnit shellArmorBonusLevel1 = AddBonus( context, BonusType.army_physicalDefense, UnitType.monster, 5 );
+                BonusOnUnit shellArmorBonusLevel2 = AddBonus( context, BonusType.army_physicalDefense, UnitType.monster, 10 );
+                BonusOnUnit shellArmorBonusLevel3 = AddBonus( context, BonusType.army_physicalDefense, UnitType.monster, 15 );
+                BonusOnUnit shellArmorBonusLevel4 = AddBonus( context, BonusType.army_physicalDefense, UnitType.monster, 20 );
+                BonusOnUnit shellArmorBonusLevel5 = AddBonus( context, BonusType.army_physicalDefense, UnitType.monster, 25 );
+                BonusOnUnit shellArmorBonusLevel6 = AddBonus( context, BonusType.army_physicalDefense, UnitType.monster, 30 );
+                BonusOnUnit shellArmorBonusLevel7 = AddBonus( context, BonusType.army_physicalDefense, UnitType.monster, 35 );
+                BonusOnUnit shellArmorBonusLevel8 = AddBonus( context, BonusType.army_physicalDefense, UnitType.monster, 40 );
+                BonusOnUnit shellArmorBonusLevel9 = AddBonus( context, BonusType.army_physicalDefense, UnitType.monster, 45 );
+                BonusOnUnit shellArmorBonusLevel10 = AddBonus( context, BonusType.army_physicalDefense, UnitType.monster, 50 );
 
                 // Set up Levels
                 TechnologyLevel shellLevel1 = AddTechnologyLevel( context, TechnologyName.shell, 1, shellLevel1Cost, 75,
@@ -1355,25 +1355,25 @@ namespace ITI.SkyLord
                     CreateBonusList( shellMRBonusLevel3, shellArmorBonusLevel3 ) );
                 TechnologyLevel shellLevel4 = AddTechnologyLevel( context, TechnologyName.shell, 4, shellLevel3Cost, (int)( shellLevel3.Duration * 2.75 ),
                     CreateRequirementList( shellLevel4Requirement ),
-                    CreateBonusList( shellMRBonusLevel4, shellArmorBonusLevel3 ) );
+                    CreateBonusList( shellMRBonusLevel4, shellArmorBonusLevel4 ) );
                 TechnologyLevel shellLevel5 = AddTechnologyLevel( context, TechnologyName.shell, 5, shellLevel5Cost, (int)( shellLevel4.Duration * 2.75 ),
                     CreateRequirementList( shellLevel5Requirement ),
-                    CreateBonusList( shellMRBonusLevel5, shellArmorBonusLevel4 ) );
+                    CreateBonusList( shellMRBonusLevel5, shellArmorBonusLevel5 ) );
                 TechnologyLevel shellLevel6 = AddTechnologyLevel( context, TechnologyName.shell, 6, shellLevel6Cost, (int)( shellLevel5.Duration * 2.75 ),
                     CreateRequirementList( shellLevel6Requirement ),
-                    CreateBonusList( shellMRBonusLevel6, shellArmorBonusLevel5 ) );
+                    CreateBonusList( shellMRBonusLevel6, shellArmorBonusLevel6 ) );
                 TechnologyLevel shellLevel7 = AddTechnologyLevel( context, TechnologyName.shell, 7, shellLevel7Cost, (int)( shellLevel6.Duration * 3.0 ),
                     CreateRequirementList( shellLevel7Requirement ),
-                    CreateBonusList( shellMRBonusLevel7, shellArmorBonusLevel6 ) );
+                    CreateBonusList( shellMRBonusLevel7, shellArmorBonusLevel7 ) );
                 TechnologyLevel shellLevel8 = AddTechnologyLevel( context, TechnologyName.shell, 8, shellLevel8Cost, (int)( shellLevel7.Duration * 3.0 ),
                     CreateRequirementList( shellLevel8Requirement ),
-                    CreateBonusList( shellMRBonusLevel8, shellArmorBonusLevel7 ) );
+                    CreateBonusList( shellMRBonusLevel8, shellArmorBonusLevel8 ) );
                 TechnologyLevel shellLevel9 = AddTechnologyLevel( context, TechnologyName.shell, 9, shellLevel9Cost, (int)( shellLevel8.Duration * 3.0 ),
                     CreateRequirementList( shellLevel9Requirement ),
-                    CreateBonusList( shellMRBonusLevel9, shellArmorBonusLevel8 ) );
+                    CreateBonusList( shellMRBonusLevel9, shellArmorBonusLevel9 ) );
                 TechnologyLevel shellLevel10 = AddTechnologyLevel( context, TechnologyName.shell, 10, shellLevel10Cost, (int)( shellLevel9.Duration * 3.25 ),
                     CreateRequirementList( shellLevel10Requirement ),
-                    CreateBonusList( shellMRBonusLevel10, shellArmorBonusLevel9 ) );
+                    CreateBonusList( shellMRBonusLevel10, shellArmorBonusLevel10 ) );
 
                 context.SaveChanges();
             }
@@ -1408,16 +1408,16 @@ namespace ITI.SkyLord
                 Requirement clawsLevel10Requirement = AddTechnologyRequirement( context, TechnologyName.claws, 9 );
 
                 //Add Bonuses ( 1% attack bonus monster type units / claws level )
-                BonusOnUnit clawsBonusLevel1 = AddBonus( context, BonusType.army_attack, UnitType.monster, 1 );
-                BonusOnUnit clawsBonusLevel2 = AddBonus( context, BonusType.army_attack, UnitType.monster, 2 );
-                BonusOnUnit clawsBonusLevel3 = AddBonus( context, BonusType.army_attack, UnitType.monster, 3 );
-                BonusOnUnit clawsBonusLevel4 = AddBonus( context, BonusType.army_attack, UnitType.monster, 4 );
-                BonusOnUnit clawsBonusLevel5 = AddBonus( context, BonusType.army_attack, UnitType.monster, 5 );
-                BonusOnUnit clawsBonusLevel6 = AddBonus( context, BonusType.army_attack, UnitType.monster, 6 );
-                BonusOnUnit clawsBonusLevel7 = AddBonus( context, BonusType.army_attack, UnitType.monster, 7 );
-                BonusOnUnit clawsBonusLevel8 = AddBonus( context, BonusType.army_attack, UnitType.monster, 8 );
-                BonusOnUnit clawsBonusLevel9 = AddBonus( context, BonusType.army_attack, UnitType.monster, 9 );
-                BonusOnUnit clawsBonusLevel10 = AddBonus( context, BonusType.army_attack, UnitType.monster, 10 );
+                BonusOnUnit clawsBonusLevel1 = AddBonus( context, BonusType.army_attack, UnitType.monster, 10 );
+                BonusOnUnit clawsBonusLevel2 = AddBonus( context, BonusType.army_attack, UnitType.monster, 20 );
+                BonusOnUnit clawsBonusLevel3 = AddBonus( context, BonusType.army_attack, UnitType.monster, 30 );
+                BonusOnUnit clawsBonusLevel4 = AddBonus( context, BonusType.army_attack, UnitType.monster, 40 );
+                BonusOnUnit clawsBonusLevel5 = AddBonus( context, BonusType.army_attack, UnitType.monster, 50 );
+                BonusOnUnit clawsBonusLevel6 = AddBonus( context, BonusType.army_attack, UnitType.monster, 60 );
+                BonusOnUnit clawsBonusLevel7 = AddBonus( context, BonusType.army_attack, UnitType.monster, 70 );
+                BonusOnUnit clawsBonusLevel8 = AddBonus( context, BonusType.army_attack, UnitType.monster, 80 );
+                BonusOnUnit clawsBonusLevel9 = AddBonus( context, BonusType.army_attack, UnitType.monster, 90 );
+                BonusOnUnit clawsBonusLevel10 = AddBonus( context, BonusType.army_attack, UnitType.monster, 100 );
 
                 // Set up Levels
                 TechnologyLevel clawsLevel1 = AddTechnologyLevel( context, TechnologyName.claws, 1, clawsLevel1Cost, 75,
@@ -1484,16 +1484,16 @@ namespace ITI.SkyLord
                 Requirement wingsLevel10Requirement = AddTechnologyRequirement( context, TechnologyName.wings, 9 );
 
                 //Add Bonuses ( 1% speed bonus monster type units / wings level )
-                BonusOnUnit wingsBonusLevel1 = AddBonus( context, BonusType.army_speed, UnitType.monster, 1 );
-                BonusOnUnit wingsBonusLevel2 = AddBonus( context, BonusType.army_speed, UnitType.monster, 2 );
-                BonusOnUnit wingsBonusLevel3 = AddBonus( context, BonusType.army_speed, UnitType.monster, 3 );
-                BonusOnUnit wingsBonusLevel4 = AddBonus( context, BonusType.army_speed, UnitType.monster, 4 );
-                BonusOnUnit wingsBonusLevel5 = AddBonus( context, BonusType.army_speed, UnitType.monster, 5 );
-                BonusOnUnit wingsBonusLevel6 = AddBonus( context, BonusType.army_speed, UnitType.monster, 6 );
-                BonusOnUnit wingsBonusLevel7 = AddBonus( context, BonusType.army_speed, UnitType.monster, 7 );
-                BonusOnUnit wingsBonusLevel8 = AddBonus( context, BonusType.army_speed, UnitType.monster, 8 );
-                BonusOnUnit wingsBonusLevel9 = AddBonus( context, BonusType.army_speed, UnitType.monster, 9 );
-                BonusOnUnit wingsBonusLevel10 = AddBonus( context, BonusType.army_speed, UnitType.monster, 10 );
+                BonusOnUnit wingsBonusLevel1 = AddBonus( context, BonusType.army_speed, UnitType.monster, 10 );
+                BonusOnUnit wingsBonusLevel2 = AddBonus( context, BonusType.army_speed, UnitType.monster, 20 );
+                BonusOnUnit wingsBonusLevel3 = AddBonus( context, BonusType.army_speed, UnitType.monster, 30 );
+                BonusOnUnit wingsBonusLevel4 = AddBonus( context, BonusType.army_speed, UnitType.monster, 40 );
+                BonusOnUnit wingsBonusLevel5 = AddBonus( context, BonusType.army_speed, UnitType.monster, 50 );
+                BonusOnUnit wingsBonusLevel6 = AddBonus( context, BonusType.army_speed, UnitType.monster, 60 );
+                BonusOnUnit wingsBonusLevel7 = AddBonus( context, BonusType.army_speed, UnitType.monster, 70 );
+                BonusOnUnit wingsBonusLevel8 = AddBonus( context, BonusType.army_speed, UnitType.monster, 80 );
+                BonusOnUnit wingsBonusLevel9 = AddBonus( context, BonusType.army_speed, UnitType.monster, 90 );
+                BonusOnUnit wingsBonusLevel10 = AddBonus( context, BonusType.army_speed, UnitType.monster, 100 );
 
                 // Set up Levels
                 TechnologyLevel wingsLevel1 = AddTechnologyLevel( context, TechnologyName.wings, 1, wingsLevel1Cost, 75,
@@ -1504,28 +1504,28 @@ namespace ITI.SkyLord
                     CreateBonusList( wingsBonusLevel2 ) );
                 TechnologyLevel wingsLevel3 = AddTechnologyLevel( context, TechnologyName.wings, 3, wingsLevel3Cost, (int)( wingsLevel2.Duration * 2.5 ),
                     CreateRequirementList( wingsLevel3Requirement ),
-                    CreateBonusList( wingsBonusLevel2 ) );
+                    CreateBonusList( wingsBonusLevel3 ) );
                 TechnologyLevel wingsLevel4 = AddTechnologyLevel( context, TechnologyName.wings, 4, wingsLevel3Cost, (int)( wingsLevel3.Duration * 2.75 ),
                     CreateRequirementList( wingsLevel4Requirement ),
-                    CreateBonusList( wingsBonusLevel3 ) );
+                    CreateBonusList( wingsBonusLevel4 ) );
                 TechnologyLevel wingsLevel5 = AddTechnologyLevel( context, TechnologyName.wings, 5, wingsLevel5Cost, (int)( wingsLevel4.Duration * 2.75 ),
                     CreateRequirementList( wingsLevel5Requirement ),
-                    CreateBonusList( wingsBonusLevel4 ) );
+                    CreateBonusList( wingsBonusLevel5 ) );
                 TechnologyLevel wingsLevel6 = AddTechnologyLevel( context, TechnologyName.wings, 6, wingsLevel6Cost, (int)( wingsLevel5.Duration * 2.75 ),
                     CreateRequirementList( wingsLevel6Requirement ),
-                    CreateBonusList( wingsBonusLevel5 ) );
+                    CreateBonusList( wingsBonusLevel6 ) );
                 TechnologyLevel wingsLevel7 = AddTechnologyLevel( context, TechnologyName.wings, 7, wingsLevel7Cost, (int)( wingsLevel6.Duration * 3.0 ),
                     CreateRequirementList( wingsLevel7Requirement ),
-                    CreateBonusList( wingsBonusLevel6 ) );
+                    CreateBonusList( wingsBonusLevel7 ) );
                 TechnologyLevel wingsLevel8 = AddTechnologyLevel( context, TechnologyName.wings, 8, wingsLevel8Cost, (int)( wingsLevel7.Duration * 3.0 ),
                     CreateRequirementList( wingsLevel8Requirement ),
-                    CreateBonusList( wingsBonusLevel7 ) );
+                    CreateBonusList( wingsBonusLevel8 ) );
                 TechnologyLevel wingsLevel9 = AddTechnologyLevel( context, TechnologyName.wings, 9, wingsLevel9Cost, (int)( wingsLevel8.Duration * 3.0 ),
                     CreateRequirementList( wingsLevel9Requirement ),
-                    CreateBonusList( wingsBonusLevel8 ) );
+                    CreateBonusList( wingsBonusLevel9 ) );
                 TechnologyLevel wingsLevel10 = AddTechnologyLevel( context, TechnologyName.wings, 10, wingsLevel10Cost, (int)( wingsLevel9.Duration * 3.25 ),
                     CreateRequirementList( wingsLevel10Requirement ),
-                    CreateBonusList( wingsBonusLevel9 ) );
+                    CreateBonusList( wingsBonusLevel10 ) );
 
                 context.SaveChanges();
             }
@@ -1561,27 +1561,27 @@ namespace ITI.SkyLord
                 Requirement platingLevel10Requirement = AddTechnologyRequirement( context, TechnologyName.plating, 9 );
 
                 //Add Bonuses ( 2% magicResist and armor bonus mecanic type units / plating level )
-                BonusOnUnit platingMRBonusLevel1 = AddBonus( context, BonusType.army_magicalDefense, UnitType.mecanical, 1 );
-                BonusOnUnit platingMRBonusLevel2 = AddBonus( context, BonusType.army_magicalDefense, UnitType.mecanical, 2 );
-                BonusOnUnit platingMRBonusLevel3 = AddBonus( context, BonusType.army_magicalDefense, UnitType.mecanical, 3 );
-                BonusOnUnit platingMRBonusLevel4 = AddBonus( context, BonusType.army_magicalDefense, UnitType.mecanical, 4 );
-                BonusOnUnit platingMRBonusLevel5 = AddBonus( context, BonusType.army_magicalDefense, UnitType.mecanical, 5 );
-                BonusOnUnit platingMRBonusLevel6 = AddBonus( context, BonusType.army_magicalDefense, UnitType.mecanical, 6 );
-                BonusOnUnit platingMRBonusLevel7 = AddBonus( context, BonusType.army_magicalDefense, UnitType.mecanical, 7 );
-                BonusOnUnit platingMRBonusLevel8 = AddBonus( context, BonusType.army_magicalDefense, UnitType.mecanical, 8 );
-                BonusOnUnit platingMRBonusLevel9 = AddBonus( context, BonusType.army_magicalDefense, UnitType.mecanical, 9 );
-                BonusOnUnit platingMRBonusLevel10 = AddBonus( context, BonusType.army_magicalDefense, UnitType.mecanical, 10 );
+                BonusOnUnit platingMRBonusLevel1 = AddBonus( context, BonusType.army_magicalDefense, UnitType.mecanical, 10 );
+                BonusOnUnit platingMRBonusLevel2 = AddBonus( context, BonusType.army_magicalDefense, UnitType.mecanical, 20 );
+                BonusOnUnit platingMRBonusLevel3 = AddBonus( context, BonusType.army_magicalDefense, UnitType.mecanical, 30 );
+                BonusOnUnit platingMRBonusLevel4 = AddBonus( context, BonusType.army_magicalDefense, UnitType.mecanical, 40 );
+                BonusOnUnit platingMRBonusLevel5 = AddBonus( context, BonusType.army_magicalDefense, UnitType.mecanical, 50 );
+                BonusOnUnit platingMRBonusLevel6 = AddBonus( context, BonusType.army_magicalDefense, UnitType.mecanical, 60 );
+                BonusOnUnit platingMRBonusLevel7 = AddBonus( context, BonusType.army_magicalDefense, UnitType.mecanical, 70 );
+                BonusOnUnit platingMRBonusLevel8 = AddBonus( context, BonusType.army_magicalDefense, UnitType.mecanical, 80 );
+                BonusOnUnit platingMRBonusLevel9 = AddBonus( context, BonusType.army_magicalDefense, UnitType.mecanical, 90 );
+                BonusOnUnit platingMRBonusLevel10 = AddBonus( context, BonusType.army_magicalDefense, UnitType.mecanical, 100 );
 
-                BonusOnUnit platingArmorBonusLevel1 = AddBonus( context, BonusType.army_physicalDefense, UnitType.mecanical, 1 );
-                BonusOnUnit platingArmorBonusLevel2 = AddBonus( context, BonusType.army_physicalDefense, UnitType.mecanical, 2 );
-                BonusOnUnit platingArmorBonusLevel3 = AddBonus( context, BonusType.army_physicalDefense, UnitType.mecanical, 3 );
-                BonusOnUnit platingArmorBonusLevel4 = AddBonus( context, BonusType.army_physicalDefense, UnitType.mecanical, 4 );
-                BonusOnUnit platingArmorBonusLevel5 = AddBonus( context, BonusType.army_physicalDefense, UnitType.mecanical, 5 );
-                BonusOnUnit platingArmorBonusLevel6 = AddBonus( context, BonusType.army_physicalDefense, UnitType.mecanical, 6 );
-                BonusOnUnit platingArmorBonusLevel7 = AddBonus( context, BonusType.army_physicalDefense, UnitType.mecanical, 7 );
-                BonusOnUnit platingArmorBonusLevel8 = AddBonus( context, BonusType.army_physicalDefense, UnitType.mecanical, 8 );
-                BonusOnUnit platingArmorBonusLevel9 = AddBonus( context, BonusType.army_physicalDefense, UnitType.mecanical, 9 );
-                BonusOnUnit platingArmorBonusLevel10 = AddBonus( context, BonusType.army_physicalDefense, UnitType.mecanical, 10 );
+                BonusOnUnit platingArmorBonusLevel1 = AddBonus( context, BonusType.army_physicalDefense, UnitType.mecanical, 10 );
+                BonusOnUnit platingArmorBonusLevel2 = AddBonus( context, BonusType.army_physicalDefense, UnitType.mecanical, 20 );
+                BonusOnUnit platingArmorBonusLevel3 = AddBonus( context, BonusType.army_physicalDefense, UnitType.mecanical, 30 );
+                BonusOnUnit platingArmorBonusLevel4 = AddBonus( context, BonusType.army_physicalDefense, UnitType.mecanical, 40 );
+                BonusOnUnit platingArmorBonusLevel5 = AddBonus( context, BonusType.army_physicalDefense, UnitType.mecanical, 50 );
+                BonusOnUnit platingArmorBonusLevel6 = AddBonus( context, BonusType.army_physicalDefense, UnitType.mecanical, 60 );
+                BonusOnUnit platingArmorBonusLevel7 = AddBonus( context, BonusType.army_physicalDefense, UnitType.mecanical, 70 );
+                BonusOnUnit platingArmorBonusLevel8 = AddBonus( context, BonusType.army_physicalDefense, UnitType.mecanical, 80 );
+                BonusOnUnit platingArmorBonusLevel9 = AddBonus( context, BonusType.army_physicalDefense, UnitType.mecanical, 90 );
+                BonusOnUnit platingArmorBonusLevel10 = AddBonus( context, BonusType.army_physicalDefense, UnitType.mecanical, 100 );
 
                 // Set up Levels
                 TechnologyLevel platingLevel1 = AddTechnologyLevel( context, TechnologyName.plating, 1, platingLevel1Cost, 75,
@@ -1595,25 +1595,25 @@ namespace ITI.SkyLord
                     CreateBonusList( platingMRBonusLevel3, platingArmorBonusLevel3 ) );
                 TechnologyLevel platingLevel4 = AddTechnologyLevel( context, TechnologyName.plating, 4, platingLevel3Cost, (int)( platingLevel3.Duration * 2.75 ),
                     CreateRequirementList( platingLevel4Requirement ),
-                    CreateBonusList( platingMRBonusLevel4, platingArmorBonusLevel3 ) );
+                    CreateBonusList( platingMRBonusLevel4, platingArmorBonusLevel4 ) );
                 TechnologyLevel platingLevel5 = AddTechnologyLevel( context, TechnologyName.plating, 5, platingLevel5Cost, (int)( platingLevel4.Duration * 2.75 ),
                     CreateRequirementList( platingLevel5Requirement ),
-                    CreateBonusList( platingMRBonusLevel5, platingArmorBonusLevel4 ) );
+                    CreateBonusList( platingMRBonusLevel5, platingArmorBonusLevel5 ) );
                 TechnologyLevel platingLevel6 = AddTechnologyLevel( context, TechnologyName.plating, 6, platingLevel6Cost, (int)( platingLevel5.Duration * 2.75 ),
                     CreateRequirementList( platingLevel6Requirement ),
-                    CreateBonusList( platingMRBonusLevel6, platingArmorBonusLevel5 ) );
+                    CreateBonusList( platingMRBonusLevel6, platingArmorBonusLevel6 ) );
                 TechnologyLevel platingLevel7 = AddTechnologyLevel( context, TechnologyName.plating, 7, platingLevel7Cost, (int)( platingLevel6.Duration * 3.0 ),
                     CreateRequirementList( platingLevel7Requirement ),
-                    CreateBonusList( platingMRBonusLevel7, platingArmorBonusLevel6 ) );
+                    CreateBonusList( platingMRBonusLevel7, platingArmorBonusLevel7 ) );
                 TechnologyLevel platingLevel8 = AddTechnologyLevel( context, TechnologyName.plating, 8, platingLevel8Cost, (int)( platingLevel7.Duration * 3.0 ),
                     CreateRequirementList( platingLevel8Requirement ),
-                    CreateBonusList( platingMRBonusLevel8, platingArmorBonusLevel7 ) );
+                    CreateBonusList( platingMRBonusLevel8, platingArmorBonusLevel8 ) );
                 TechnologyLevel platingLevel9 = AddTechnologyLevel( context, TechnologyName.plating, 9, platingLevel9Cost, (int)( platingLevel8.Duration * 3.0 ),
                     CreateRequirementList( platingLevel9Requirement ),
-                    CreateBonusList( platingMRBonusLevel9, platingArmorBonusLevel8 ) );
+                    CreateBonusList( platingMRBonusLevel9, platingArmorBonusLevel9 ) );
                 TechnologyLevel platingLevel10 = AddTechnologyLevel( context, TechnologyName.plating, 10, platingLevel10Cost, (int)( platingLevel9.Duration * 3.25 ),
                     CreateRequirementList( platingLevel10Requirement ),
-                    CreateBonusList( platingMRBonusLevel10, platingArmorBonusLevel9 ) );
+                    CreateBonusList( platingMRBonusLevel10, platingArmorBonusLevel10 ) );
 
                 context.SaveChanges();
             }
@@ -1648,16 +1648,16 @@ namespace ITI.SkyLord
                 Requirement holdLevel10Requirement = AddTechnologyRequirement( context, TechnologyName.hold, 9 );
 
                 //Add Bonuses ( 1% speed bonus utility type units / hold level )
-                BonusOnUnit holdBonusLevel1 = AddBonus( context, BonusType.army_capacity, UnitType.utility, 1 );
-                BonusOnUnit holdBonusLevel2 = AddBonus( context, BonusType.army_capacity, UnitType.utility, 2 );
-                BonusOnUnit holdBonusLevel3 = AddBonus( context, BonusType.army_capacity, UnitType.utility, 3 );
-                BonusOnUnit holdBonusLevel4 = AddBonus( context, BonusType.army_capacity, UnitType.utility, 4 );
-                BonusOnUnit holdBonusLevel5 = AddBonus( context, BonusType.army_capacity, UnitType.utility, 5 );
-                BonusOnUnit holdBonusLevel6 = AddBonus( context, BonusType.army_capacity, UnitType.utility, 6 );
-                BonusOnUnit holdBonusLevel7 = AddBonus( context, BonusType.army_capacity, UnitType.utility, 7 );
-                BonusOnUnit holdBonusLevel8 = AddBonus( context, BonusType.army_capacity, UnitType.utility, 8 );
-                BonusOnUnit holdBonusLevel9 = AddBonus( context, BonusType.army_capacity, UnitType.utility, 9 );
-                BonusOnUnit holdBonusLevel10 = AddBonus( context, BonusType.army_capacity, UnitType.utility, 10 );
+                BonusOnUnit holdBonusLevel1 = AddBonus( context, BonusType.army_capacity, UnitType.utility, 10 );
+                BonusOnUnit holdBonusLevel2 = AddBonus( context, BonusType.army_capacity, UnitType.utility, 20 );
+                BonusOnUnit holdBonusLevel3 = AddBonus( context, BonusType.army_capacity, UnitType.utility, 30 );
+                BonusOnUnit holdBonusLevel4 = AddBonus( context, BonusType.army_capacity, UnitType.utility, 40 );
+                BonusOnUnit holdBonusLevel5 = AddBonus( context, BonusType.army_capacity, UnitType.utility, 50 );
+                BonusOnUnit holdBonusLevel6 = AddBonus( context, BonusType.army_capacity, UnitType.utility, 60 );
+                BonusOnUnit holdBonusLevel7 = AddBonus( context, BonusType.army_capacity, UnitType.utility, 70 );
+                BonusOnUnit holdBonusLevel8 = AddBonus( context, BonusType.army_capacity, UnitType.utility, 80 );
+                BonusOnUnit holdBonusLevel9 = AddBonus( context, BonusType.army_capacity, UnitType.utility, 90 );
+                BonusOnUnit holdBonusLevel10 = AddBonus( context, BonusType.army_capacity, UnitType.utility, 100 );
 
                 // Set up Levels
                 TechnologyLevel holdLevel1 = AddTechnologyLevel( context, TechnologyName.hold, 1, holdLevel1Cost, 75,
@@ -1668,28 +1668,28 @@ namespace ITI.SkyLord
                     CreateBonusList( holdBonusLevel2 ) );
                 TechnologyLevel holdLevel3 = AddTechnologyLevel( context, TechnologyName.hold, 3, holdLevel3Cost, (int)( holdLevel2.Duration * 2.5 ),
                     CreateRequirementList( holdLevel3Requirement ),
-                    CreateBonusList( holdBonusLevel2 ) );
+                    CreateBonusList( holdBonusLevel3 ) );
                 TechnologyLevel holdLevel4 = AddTechnologyLevel( context, TechnologyName.hold, 4, holdLevel3Cost, (int)( holdLevel3.Duration * 2.75 ),
                     CreateRequirementList( holdLevel4Requirement ),
-                    CreateBonusList( holdBonusLevel3 ) );
+                    CreateBonusList( holdBonusLevel4 ) );
                 TechnologyLevel holdLevel5 = AddTechnologyLevel( context, TechnologyName.hold, 5, holdLevel5Cost, (int)( holdLevel4.Duration * 2.75 ),
                     CreateRequirementList( holdLevel5Requirement ),
-                    CreateBonusList( holdBonusLevel4 ) );
+                    CreateBonusList( holdBonusLevel5 ) );
                 TechnologyLevel holdLevel6 = AddTechnologyLevel( context, TechnologyName.hold, 6, holdLevel6Cost, (int)( holdLevel5.Duration * 2.75 ),
                     CreateRequirementList( holdLevel6Requirement ),
-                    CreateBonusList( holdBonusLevel5 ) );
+                    CreateBonusList( holdBonusLevel6 ) );
                 TechnologyLevel holdLevel7 = AddTechnologyLevel( context, TechnologyName.hold, 7, holdLevel7Cost, (int)( holdLevel6.Duration * 3.0 ),
                     CreateRequirementList( holdLevel7Requirement ),
-                    CreateBonusList( holdBonusLevel6 ) );
+                    CreateBonusList( holdBonusLevel7 ) );
                 TechnologyLevel holdLevel8 = AddTechnologyLevel( context, TechnologyName.hold, 8, holdLevel8Cost, (int)( holdLevel7.Duration * 3.0 ),
                     CreateRequirementList( holdLevel8Requirement ),
-                    CreateBonusList( holdBonusLevel7 ) );
+                    CreateBonusList( holdBonusLevel8 ) );
                 TechnologyLevel holdLevel9 = AddTechnologyLevel( context, TechnologyName.hold, 9, holdLevel9Cost, (int)( holdLevel8.Duration * 3.0 ),
                     CreateRequirementList( holdLevel9Requirement ),
-                    CreateBonusList( holdBonusLevel8 ) );
+                    CreateBonusList( holdBonusLevel9 ) );
                 TechnologyLevel holdLevel10 = AddTechnologyLevel( context, TechnologyName.hold, 10, holdLevel10Cost, (int)( holdLevel9.Duration * 3.25 ),
                     CreateRequirementList( holdLevel10Requirement ),
-                    CreateBonusList( holdBonusLevel9 ) );
+                    CreateBonusList( holdBonusLevel10 ) );
 
                 context.SaveChanges();
             }
@@ -1725,16 +1725,16 @@ namespace ITI.SkyLord
                 Requirement propulsionLevel10Requirement = AddTechnologyRequirement( context, TechnologyName.propulsion, 9 );
 
                 //Add Bonuses ( 1% speed bonus utility type units / propulsion level )
-                BonusOnUnit propulsionBonusLevel1 = AddBonus( context, BonusType.army_speed, UnitType.utility, 1 );
-                BonusOnUnit propulsionBonusLevel2 = AddBonus( context, BonusType.army_speed, UnitType.utility, 2 );
-                BonusOnUnit propulsionBonusLevel3 = AddBonus( context, BonusType.army_speed, UnitType.utility, 3 );
-                BonusOnUnit propulsionBonusLevel4 = AddBonus( context, BonusType.army_speed, UnitType.utility, 4 );
-                BonusOnUnit propulsionBonusLevel5 = AddBonus( context, BonusType.army_speed, UnitType.utility, 5 );
-                BonusOnUnit propulsionBonusLevel6 = AddBonus( context, BonusType.army_speed, UnitType.utility, 6 );
-                BonusOnUnit propulsionBonusLevel7 = AddBonus( context, BonusType.army_speed, UnitType.utility, 7 );
-                BonusOnUnit propulsionBonusLevel8 = AddBonus( context, BonusType.army_speed, UnitType.utility, 8 );
-                BonusOnUnit propulsionBonusLevel9 = AddBonus( context, BonusType.army_speed, UnitType.utility, 9 );
-                BonusOnUnit propulsionBonusLevel10 = AddBonus( context, BonusType.army_speed, UnitType.utility, 10 );
+                BonusOnUnit propulsionBonusLevel1 = AddBonus( context, BonusType.army_speed, UnitType.utility, 10 );
+                BonusOnUnit propulsionBonusLevel2 = AddBonus( context, BonusType.army_speed, UnitType.utility, 20 );
+                BonusOnUnit propulsionBonusLevel3 = AddBonus( context, BonusType.army_speed, UnitType.utility, 30 );
+                BonusOnUnit propulsionBonusLevel4 = AddBonus( context, BonusType.army_speed, UnitType.utility, 40 );
+                BonusOnUnit propulsionBonusLevel5 = AddBonus( context, BonusType.army_speed, UnitType.utility, 50 );
+                BonusOnUnit propulsionBonusLevel6 = AddBonus( context, BonusType.army_speed, UnitType.utility, 60 );
+                BonusOnUnit propulsionBonusLevel7 = AddBonus( context, BonusType.army_speed, UnitType.utility, 70 );
+                BonusOnUnit propulsionBonusLevel8 = AddBonus( context, BonusType.army_speed, UnitType.utility, 80 );
+                BonusOnUnit propulsionBonusLevel9 = AddBonus( context, BonusType.army_speed, UnitType.utility, 90 );
+                BonusOnUnit propulsionBonusLevel10 = AddBonus( context, BonusType.army_speed, UnitType.utility, 100 );
 
                 // Set up Levels
                 TechnologyLevel propulsionLevel1 = AddTechnologyLevel( context, TechnologyName.propulsion, 1, propulsionLevel1Cost, 75,
@@ -1745,28 +1745,28 @@ namespace ITI.SkyLord
                     CreateBonusList( propulsionBonusLevel2 ) );
                 TechnologyLevel propulsionLevel3 = AddTechnologyLevel( context, TechnologyName.propulsion, 3, propulsionLevel3Cost, (int)( propulsionLevel2.Duration * 2.5 ),
                     CreateRequirementList( propulsionLevel3Requirement ),
-                    CreateBonusList( propulsionBonusLevel2 ) );
+                    CreateBonusList( propulsionBonusLevel3 ) );
                 TechnologyLevel propulsionLevel4 = AddTechnologyLevel( context, TechnologyName.propulsion, 4, propulsionLevel3Cost, (int)( propulsionLevel3.Duration * 2.75 ),
                     CreateRequirementList( propulsionLevel4Requirement ),
-                    CreateBonusList( propulsionBonusLevel3 ) );
+                    CreateBonusList( propulsionBonusLevel4 ) );
                 TechnologyLevel propulsionLevel5 = AddTechnologyLevel( context, TechnologyName.propulsion, 5, propulsionLevel5Cost, (int)( propulsionLevel4.Duration * 2.75 ),
                     CreateRequirementList( propulsionLevel5Requirement ),
-                    CreateBonusList( propulsionBonusLevel4 ) );
+                    CreateBonusList( propulsionBonusLevel5 ) );
                 TechnologyLevel propulsionLevel6 = AddTechnologyLevel( context, TechnologyName.propulsion, 6, propulsionLevel6Cost, (int)( propulsionLevel5.Duration * 2.75 ),
                     CreateRequirementList( propulsionLevel6Requirement ),
-                    CreateBonusList( propulsionBonusLevel5 ) );
+                    CreateBonusList( propulsionBonusLevel6 ) );
                 TechnologyLevel propulsionLevel7 = AddTechnologyLevel( context, TechnologyName.propulsion, 7, propulsionLevel7Cost, (int)( propulsionLevel6.Duration * 3.0 ),
                     CreateRequirementList( propulsionLevel7Requirement ),
-                    CreateBonusList( propulsionBonusLevel6 ) );
+                    CreateBonusList( propulsionBonusLevel7 ) );
                 TechnologyLevel propulsionLevel8 = AddTechnologyLevel( context, TechnologyName.propulsion, 8, propulsionLevel8Cost, (int)( propulsionLevel7.Duration * 3.0 ),
                     CreateRequirementList( propulsionLevel8Requirement ),
-                    CreateBonusList( propulsionBonusLevel7 ) );
+                    CreateBonusList( propulsionBonusLevel8 ) );
                 TechnologyLevel propulsionLevel9 = AddTechnologyLevel( context, TechnologyName.propulsion, 9, propulsionLevel9Cost, (int)( propulsionLevel8.Duration * 3.0 ),
                     CreateRequirementList( propulsionLevel9Requirement ),
-                    CreateBonusList( propulsionBonusLevel8 ) );
+                    CreateBonusList( propulsionBonusLevel9 ) );
                 TechnologyLevel propulsionLevel10 = AddTechnologyLevel( context, TechnologyName.propulsion, 10, propulsionLevel10Cost, (int)( propulsionLevel9.Duration * 3.25 ),
                     CreateRequirementList( propulsionLevel10Requirement ),
-                    CreateBonusList( propulsionBonusLevel9 ) );
+                    CreateBonusList( propulsionBonusLevel10 ) );
 
                 context.SaveChanges();
             }

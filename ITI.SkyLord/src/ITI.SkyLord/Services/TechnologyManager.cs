@@ -39,9 +39,6 @@ namespace ITI.SkyLord.Services
             };
             currentPlayer.Technologies.Add( technologyToAdd );
 
-            // Update all the units with the newly added bonus
-            BonusManager.ResolvePlayersArmies( playerId, currentIslandId );
-
             return true;
         }
 
@@ -51,8 +48,6 @@ namespace ITI.SkyLord.Services
 
             if ( LevelManager.GetNextLevelAvailablility( technologyToLevelUp, currentIslandId ).IsItemAvailable )
             {
-                Level nextLevel = LevelManager.FindNextLevel( technologyToLevelUp.Level );
-
                 return LevelManager.LevelUp( technologyToLevelUp );
             }
             return false;
