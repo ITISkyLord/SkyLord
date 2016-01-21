@@ -40,7 +40,7 @@ namespace ITI.SkyLord.Services
             currentPlayer.Technologies.Add( technologyToAdd );
 
             // Update all the units with the newly added bonus
-            BonusManager.ResolvePlayersArmies( playerId );
+            BonusManager.ResolvePlayersArmies( playerId, currentIslandId );
 
             return true;
         }

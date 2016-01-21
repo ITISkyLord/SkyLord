@@ -28,7 +28,7 @@ namespace ITI.SkyLord.Services
         /// <returns></returns>
         public int GetModifiedDuration( Unit unit, long playerId, long islandId )
         {
-            return ResolveAllUnitBonuses( unit, playerId, islandId ).Duration;
+            return ResolveBonuses( unit, playerId, islandId ).Duration;
         }
 
         /// <summary>
@@ -67,6 +67,7 @@ namespace ITI.SkyLord.Services
         {
             Unit resolvedUnit = CurrentContext.Units.Include( u => u.UnitStatistics )
                 .Single( u => u.UnitName == unit.UnitName && u.IsModel );
+
             resolvedUnit = CloneUnit( resolvedUnit );
             foreach ( BonusOnUnit bonus in GetBonusesOnUnit( unit, islandId, playerId ) )
             {
@@ -76,7 +77,7 @@ namespace ITI.SkyLord.Services
             return resolvedUnit;
         }
 
-        public List<BonusOnUnit> GetBonusesOnUnit( Unit unit, long islandId, long playerId )
+        private List<BonusOnUnit> GetBonusesOnUnit( Unit unit, long islandId, long playerId )
         {
             List<BonusOnUnit> allBonusOnUnit = new List<BonusOnUnit>();
 
@@ -94,7 +95,7 @@ namespace ITI.SkyLord.Services
             return allBonusOnUnit;
         }
 
-        public Unit ResolveUnitBonus( Unit unit, BonusOnUnit bonus )
+        private Unit ResolveUnitBonus( Unit unit, BonusOnUnit bonus )
         {
             switch ( bonus.BonusType )
             {
@@ -128,7 +129,7 @@ namespace ITI.SkyLord.Services
         /// </summary>
         /// <param name="unit">The Unit to clone</param>
         /// <returns>The cloned Unit</returns>
-        Unit CloneUnit( Unit unit )
+        private Unit CloneUnit( Unit unit )
         {
             UnitStatistics unitStatitics = new UnitStatistics
             {
@@ -155,7 +156,7 @@ namespace ITI.SkyLord.Services
 
         }
 
-        List<Unit> GetUnitsByUnitType( List<Island> playerIslands, UnitType unitType )
+        private List<Unit> GetUnitsByUnitType( List<Island> playerIslands, UnitType unitType )
         {
             List<Army> armiesToResolve = new List<Army>();
             foreach ( List<Army> armyList in playerIslands.Select( i => i.Armies ) )
@@ -177,7 +178,7 @@ namespace ITI.SkyLord.Services
 
         public int GetModifiedDuration( BuildingLevel buildingLevel, long playerId, long islandId )
         {
-            return ResolveAllBuildingLevelBonuses( buildingLevel, playerId, islandId ).Duration;
+            return ResolveBonuses( buildingLevel, playerId, islandId ).Duration;
         }
 
         /// <summary>
@@ -256,7 +257,7 @@ namespace ITI.SkyLord.Services
 
         public int GetModifiedDuration( TechnologyLevel technologyLevel, long playerId, long islandId )
         {
-            return ResolveAllTechnologyLevelBonuses( technologyLevel, playerId, islandId ).Duration;
+            return ResolveBonuses( technologyLevel, playerId, islandId ).Duration;
         }
 
         /// <summary>
@@ -266,15 +267,10 @@ namespace ITI.SkyLord.Services
         /// <param name="playerId">The Id of the player</param>
         /// <param name="islandId">The Id of the island</param>
         /// <returns>A cloned TechnologyLevel with all its bonuses applied</returns>
-        public TechnologyLevel ResolveAllTechnologyLevelBonuses( TechnologyLevel technologyLevel, long playerId, long islandId )
+        public TechnologyLevel ResolveBonuses( TechnologyLevel technologyLevel, long playerId, long islandId )
         {
             TechnologyLevel resolvedTechnologyLevel = CloneTechnologyLevel( technologyLevel );
-            foreach ( BonusBuildingOnTechnology bonus in GetBonusesBuildingOnTechnology( technologyLevel, playerId ) )
-            {
-                ResolveTechnologyBonus( resolvedTechnologyLevel, bonus );
-            }
-
-            foreach ( BonusTechnologyOnTechnology bonus in GetBonusesTechnologyOnTechnology( technologyLevel, islandId ) )
+            foreach ( BonusOnTechnology bonus in GetBonusesOnTechnology( technologyLevel, islandId, playerId ) )
             {
                 ResolveTechnologyBonus( resolvedTechnologyLevel, bonus );
             }
@@ -282,69 +278,25 @@ namespace ITI.SkyLord.Services
             return resolvedTechnologyLevel;
         }
 
-        public List<BonusTechnologyOnTechnology> GetBonusesTechnologyOnTechnology( TechnologyLevel technologyLevel, long playerId )
+        public List<BonusOnTechnology> GetBonusesOnTechnology( TechnologyLevel technologyLevel, long playerId, long islandId )
         {
-            List<TechnologyLevel> playerTechnologieLevels = CurrentContext.Players.Include( p => p.Technologies ).ThenInclude( t => t.Level ).ThenInclude( tl => tl.TechnologyBonuses )
-                .Single( p => p.PlayerId == playerId ).Technologies.ToList().Select( t => t.Level ).ToList();
+            List<BonusOnTechnology> allTechnologyBonusesOnBuildng = new List<BonusOnTechnology>();
 
-            List<BonusTechnologyOnTechnology> allTechnologyBonusesOnBuilding = new List<BonusTechnologyOnTechnology>();
-            foreach ( List<BonusTechnology> buildingBonusList in playerTechnologieLevels.Select( tl => tl.TechnologyBonuses ) )
+            foreach ( Bonus bonus in GetAllBonusesOnCurrentIsland( playerId, islandId) )
             {
-                foreach ( BonusTechnology bonus in buildingBonusList )
+                if ( bonus is BonusOnTechnology )
                 {
-                    if ( bonus is BonusTechnologyOnBuilding )
+                    BonusOnTechnology bonusOnTechnology = (BonusOnTechnology)bonus;
+                    if ( bonusOnTechnology.TargetTechnology == TechnologyName.none || bonusOnTechnology.TargetTechnology == technologyLevel.TechnologyName )
                     {
-                        BonusTechnologyOnTechnology bonusTechnologyOnTechnology = (BonusTechnologyOnTechnology)bonus;
-                        if ( bonusTechnologyOnTechnology.TargetTechnology == TechnologyName.none || bonusTechnologyOnTechnology.TargetTechnology == technologyLevel.TechnologyName )
-                        {
-                            allTechnologyBonusesOnBuilding.Add( bonusTechnologyOnTechnology );
-                        }
-                    }
-                }
-            }
-            return allTechnologyBonusesOnBuilding;
-        }
-
-        public List<BonusBuildingOnTechnology> GetBonusesBuildingOnTechnology( TechnologyLevel technologyLevel, long islandId )
-        {
-            List<BuildingLevel> builingsLevelsOnIsland = CurrentContext.Islands
-                .Include( i => i.Buildings ).ThenInclude( b => b.Level ).ThenInclude( bl => bl.BuildingBonuses )
-                .Single( i => i.IslandId == islandId ).Buildings.ToList().Select( b => b.Level ).ToList();
-
-            List<BonusBuildingOnTechnology> allTechnologyBonusesOnBuildng = new List<BonusBuildingOnTechnology>();
-
-            foreach ( List<BonusBuilding> technologyList in builingsLevelsOnIsland.Select( bl => bl.BuildingBonuses ) )
-            {
-                foreach ( BonusBuilding bonus in technologyList )
-                {
-                    if ( bonus is BonusBuildingOnTechnology )
-                    {
-                        BonusBuildingOnTechnology bonusBuildingOnTechnology = (BonusBuildingOnTechnology)bonus;
-                        if ( bonusBuildingOnTechnology.TargetTechnology == TechnologyName.none || bonusBuildingOnTechnology.TargetTechnology == technologyLevel.TechnologyName )
-                        {
-                            allTechnologyBonusesOnBuildng.Add( bonusBuildingOnTechnology );
-                        }
+                        allTechnologyBonusesOnBuildng.Add( bonusOnTechnology );
                     }
                 }
             }
             return allTechnologyBonusesOnBuildng;
         }
 
-        public TechnologyLevel ResolveTechnologyBonus( TechnologyLevel technologyLevel, BonusTechnologyOnTechnology bonus )
-        {
-            switch ( bonus.BonusType )
-            {
-                case BonusType.duration:
-                    technologyLevel.Duration -= technologyLevel.Duration * ( bonus.Modifier / 100 );
-                    break;
-                default:
-                    throw new NotImplementedException( "You are trying to handle a not existing type of bonus !" );
-            }
-
-            return technologyLevel;
-        }
-
-        public TechnologyLevel ResolveTechnologyBonus( TechnologyLevel technologyLevel, BonusBuildingOnTechnology bonus )
+        public TechnologyLevel ResolveTechnologyBonus( TechnologyLevel technologyLevel, BonusOnTechnology bonus )
         {
             switch ( bonus.BonusType )
             {
@@ -372,7 +324,7 @@ namespace ITI.SkyLord.Services
                 Cost = technologyLevel.Cost,
                 Requirements = technologyLevel.Requirements,
                 Duration = technologyLevel.Duration,
-                TechnologyBonuses = technologyLevel.TechnologyBonuses
+                Bonuses = technologyLevel.Bonuses
             };
         }
 
@@ -380,22 +332,36 @@ namespace ITI.SkyLord.Services
 
         private List<Bonus> GetAllBonusesOnCurrentIsland( long playerId, long islandId )
         {
-            List<Technology> playersTechnology = CurrentContext.Players.Include( p => p.Technologies ).ThenInclude( t => t.Level ).ThenInclude( tl => tl.TechnologyBonuses )
+            // Get the bonus lists stored in technologies and buildings
+            List<Technology> playersTechnology = CurrentContext.Players.Include( p => p.Technologies ).ThenInclude( t => t.Level ).ThenInclude( tl => tl.Bonuses )
                 .Single( p => p.PlayerId == playerId ).Technologies.ToList();
-            List<Building> buildingsOnIsland = CurrentContext.Islands.Include( i => i.Buildings ).ThenInclude( b => b.Level ).ThenInclude( bl => bl.BuildingBonuses )
+            List<Building> buildingsOnIsland = CurrentContext.Islands.Include( i => i.Buildings ).ThenInclude( b => b.Level ).ThenInclude( bl => bl.Bonuses )
                 .Single( i => i.IslandId == islandId ).Buildings.ToList();
 
+            // Agglomerate all those lists
             List<Bonus> allBonuses = new List<Bonus>();
             foreach ( List<Bonus> bonusList in playersTechnology.Select( t => t.Level.Bonuses ) )
-            {
                 allBonuses.AddRange( bonusList );
-            }
             foreach ( List<Bonus> bonusList in buildingsOnIsland.Select( b => b.Level.Bonuses ) )
-            {
                 allBonuses.AddRange( bonusList );
-            }
+
+
+            // Add up the modifiers when 2 bonuses have the same bonus type
+            List<Bonus> copy = new List<Bonus>();
+            List<Bonus> filteredBonuses = ConcatBonusLists( allBonuses, copy );
 
             return allBonuses;
+        }
+
+        private List<Bonus> ConcatBonusLists( List<Bonus> list1, List<Bonus> list2 )
+        {
+            return list1.Concat( list2 )
+                 .ToLookup( b => b.BonusType )
+                 .Select( g => g.Aggregate( ( b1, b2 ) => new Bonus
+                 {
+                     BonusType = b1.BonusType,
+                     Modifier = b1.Modifier + b2.Modifier
+                 } ) ).ToList();
         }
     }
 }

@@ -62,12 +62,12 @@ namespace ITI.SkyLord
             }
 
             // Look for a regiment containing the same unitName
-            Regiment regimentFound = CurrentContext.Regiments.FirstOrDefault( r => r.ArmyId == armyFound.ArmyId && r.Unit.UnitId == unit.UnitId );
+            Regiment regimentFound = CurrentContext.Regiments.FirstOrDefault( r => r.ArmyId == armyFound.ArmyId && r.Unit.UnitName == unit.UnitName );
             if ( regimentFound == null )
             {
                 // If the regiment with this specific unit was not found, resolve bonuses on the unit and add it (and its stats) to the DB
                 // The already present units normally have been updated each time a new bonus was added by a technology
-                Unit modifiedUnit = BonusManager.ResolveAllUnitBonuses( unit, island.Owner.PlayerId, island.IslandId );
+                Unit modifiedUnit = BonusManager.ResolveBonuses( unit, island.Owner.PlayerId, island.IslandId );
                 CurrentContext.Add( modifiedUnit.UnitStatistics );
                 CurrentContext.Add( modifiedUnit );
 

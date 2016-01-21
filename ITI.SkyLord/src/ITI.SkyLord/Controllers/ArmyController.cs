@@ -182,17 +182,6 @@ namespace ITI.SkyLord.Controllers
             return RedirectToAction( "Index", new { islandId = islandId } );
         }
 
-        public IActionResult UpgradeUnit( ArmyViewModel model, long islandId )
-        {
-            BonusTechnology bonusToAdd = new BonusTechnology
-            {
-                Modifier = 10,
-                BonusType = BonusType.army_attack
-            };
-
-            return View();
-        }
-
         private Island GetIsland( long islandId )
         {
             if ( islandId == 0 )
