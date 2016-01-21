@@ -878,7 +878,7 @@ namespace ITI.SkyLord
                 BonusOnUnit armorBonusLevel10 = AddBonus( context, BonusType.army_physicalDefense, UnitType.soldier, 10 );
 
                 // Set up Levels
-                TechnologyLevel armorLevel1 = AddTechnologyLevel( context, TechnologyName.armor, 1, armorLevel1Cost, 60,
+                TechnologyLevel armorLevel1 = AddTechnologyLevel( context, TechnologyName.armor, 1, armorLevel1Cost, 10 /* ONLY FOR TESTS 60*/,
                     CreateRequirementList( armorLevel1Requirement ),
                     CreateBonusList( armorBonusLevel1 ) );
                 TechnologyLevel armorLevel2 = AddTechnologyLevel( context, TechnologyName.armor, 2, armorLevel2Cost, (int)( armorLevel1.Duration * 2.5 ),

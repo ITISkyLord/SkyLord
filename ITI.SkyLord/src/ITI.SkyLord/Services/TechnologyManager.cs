@@ -72,10 +72,10 @@ namespace ITI.SkyLord.Services
 
         public bool IsEnoughForFirstLevel( TechnologyName technologyNameToLevelUp, long islandId, long playerId )
         {
-            Technology technologyToLevelUp = CurrentContext.Technologies.Include( t => t.Level ).ThenInclude( tl => tl.Cost )
-                .Single( t => t.TechnologyName == technologyNameToLevelUp && t.Level.Number == 1 );
+            TechnologyLevel technologyLevel = CurrentContext.TechnologyLevels.Include( tl => tl.Cost )
+                .Single( tl => tl.TechnologyName == technologyNameToLevelUp && tl.Number == 1 );
 
-            return RessourceManager.IsEnough( CurrentContext.GetIsland( islandId, playerId ).AllRessources, technologyToLevelUp.Level.Cost );
+            return RessourceManager.IsEnough( CurrentContext.GetIsland( islandId, playerId ).AllRessources, technologyLevel.Cost );
         }
 
         public string TechnologyNameToName( TechnologyName technologyName )

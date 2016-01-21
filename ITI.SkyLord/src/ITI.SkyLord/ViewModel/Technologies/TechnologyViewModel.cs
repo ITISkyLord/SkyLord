@@ -10,10 +10,7 @@ namespace ITI.SkyLord.ViewModel.Technologies
     {
         public long IslandId { get; set; }
         public List<TechnologyLevel> AllTechnologies { get; set; }
-        public List<TechnologyLevel> AvailableTechnologies { get; set; }
-     //   public SelectList AvailableSearchingTechnologies{ get; set; }
-
-        public Dictionary<TechnologyName, Ressource> NextLevelCosts { get; set; }
+        public List<TechnologyDisplay> TechnologyDisplays { get; set; }
         public TechnologyName TargetTechnology { get; set; }
         public List<Technology> OwnTechnologies { get; set; }
 

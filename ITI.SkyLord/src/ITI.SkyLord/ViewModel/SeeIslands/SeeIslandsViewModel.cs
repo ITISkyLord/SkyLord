@@ -31,6 +31,9 @@ namespace ITI.SkyLord.ViewModel.SeeIslands
         public List<TechnologyLevel> AllTechnologies { get; set; }
         public TechnologyManager TechnologyManager { get; set; }
 
+        public List<TechnologyDisplay> TechnologyDisplays { get; set; }
+        public TechnologyName TargetTechnology { get; set; }
+
         //public Technology CurrentTechnology { get; set; }
         //public TechnologyName TargetTechnology { get; set; }
 

@@ -101,10 +101,16 @@ namespace ITI.SkyLord
             ctx.UpgradeEvents.Add( new UpgradeEvent() { EventType = EventDiscrimator.UpgradeEvent, BuildingToUpgrade = building, BegginningDate = begginningDate, EndingDate = DateTime.Now.AddSeconds(/*TIME TO BUILD BUILDING */ 100 ), Done = false, Island = island } );
         }
 
-        public void AddTechnologyEvent( ITechnologyEventContext ctx, Technology technology, Island island )
+        public void AddTechnologyEvent( ITechnologyEventContext ctx, TechnologyName technologyName, int duration, Island island )
         {
             DateTime begginningDate = FindLastEndingDateInQueue( EventDiscrimator.TechnologyEvent, island );
-            ctx.TechnologyEvents.Add( new TechnologyEvent() { EventType = EventDiscrimator.TechnologyEvent, Technology = technology, BegginningDate = begginningDate, EndingDate = DateTime.Now.AddSeconds( technology.Level.Duration ), Done = false, Island = island } );
+            ctx.TechnologyEvents.Add( new TechnologyEvent() {
+                EventType = EventDiscrimator.TechnologyEvent,
+                TechnologyName = technologyName,
+                BegginningDate = begginningDate,
+                EndingDate = DateTime.Now.AddSeconds( duration ),
+                Done = false, Island = island
+            } );
         }
 
         public List<Event> Get( EventType et, IEventContext ctx, int islandId )
@@ -280,15 +286,10 @@ namespace ITI.SkyLord
         public void Resolve( TechnologyEvent te )
         {
             TechnologyManager tm = new TechnologyManager( _context, new LevelManager(_context) , new BonusManager( _context ));
-            TechnologyEvent technoEvent = _context.TechnologyEvents
-                                                  .Include( e => e.Island )
-                                                  .Include( e => e.Technology )
-                                                  .Where( e => e.EventId == te.EventId).Single();
-
-
+            TechnologyEvent technoEvent = _context.TechnologyEvents.Single( e => e.EventId == te.EventId);
 
             // Le include va pas marcher auquel cas rajouter TechnolgyIdd dans TechnologyEvent voir ArmyEvent
-            tm.AddTechnology( technoEvent.Technology.TechnologyName, technoEvent.Island.Owner.PlayerId, technoEvent.Island.IslandId );
+            tm.AddTechnology( technoEvent.TechnologyName, technoEvent.Island.Owner.PlayerId, technoEvent.Island.IslandId );
         }
 
         internal void Resolve( BuildingEvent be )

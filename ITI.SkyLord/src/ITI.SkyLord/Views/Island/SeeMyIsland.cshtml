@@ -78,9 +78,8 @@
                         AvailableUnit = Model.AvailableUnit,
                         AllUnits = Model.AllUnits,
                         NextBuildingLevel = nextLevel,
-                        AllTechnologies = Model.AllTechnologies,
-                        OwnTechnologies = Model.OwnTechnologies,
-                        AvailableTechnologies = Model.AvailableTechnologies,
+                        TechnologyDisplays = Model.TechnologyDisplays,
+                        TargetTechnology = Model.TargetTechnology,
                         TechnologyManager = Model.TechnologyManager
                     };
                     Write(Html.Partial("~/Views/Partial/" + name + ".cshtml", partialModel));

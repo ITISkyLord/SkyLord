@@ -123,10 +123,7 @@ namespace ITI.SkyLord.Controllers
 
             // Toutes les technologies possibles
             TechnologyManager techManager = new TechnologyManager( SetupContext, levelManager, new BonusManager( SetupContext ));
-            model.OwnTechnologies = techManager.GetPlayersTechnologies( playerId );
-            model.AllTechnologies = techManager.GetAvailableTechnologies();
-            model.TechnologyManager = techManager;
-            model.AvailableTechnologies = model.AllTechnologies.Where( t => levelManager.GetAvailablility( t, islandId ).IsItemAvailable ).ToList();
+            model = CreateTechnologyItems( model, islandId, playerId );
             return model;
         }
         private SeeIslandViewModel CreateBuildingViewModel( long islandId, long playerId )
@@ -135,6 +132,54 @@ namespace ITI.SkyLord.Controllers
             SetupContext.FillStandardVM( model, SetupContext.GetPlayer( User ), islandId );
 
             return CreateBuildingViewModel( model, islandId, playerId );
+        }
+
+        private SeeIslandViewModel CreateTechnologyItems( SeeIslandViewModel model, long islandId, long playerId )
+        {
+            //model.Layout.CurrentPlayer = SetupContext.GetPlayer( User.GetUserId() );
+            Island currentIsland = SetupContext.GetIsland( islandId, model.Layout.CurrentPlayer.PlayerId );
+
+            LevelManager levelManager = new LevelManager( SetupContext );
+            BonusManager bonusManager = new BonusManager( SetupContext );
+            model.TechnologyManager = new TechnologyManager( SetupContext, levelManager, new BonusManager( SetupContext ) );
+
+            List<TechnologyLevel> availableTechnologies = model.TechnologyManager.GetAvailableTechnologies();
+            List<TechnologyLevel> playersTechnologies = model.TechnologyManager.GetPlayersTechnologies( playerId ).Select( t => t.Level ).ToList();
+            model.TechnologyDisplays = new List<TechnologyDisplay>();
+            foreach ( TechnologyLevel technologyLevel in availableTechnologies )
+            {
+                // Look for the technology in the player's technology list
+                TechnologyLevel technologyFound = playersTechnologies.SingleOrDefault( tl => tl.TechnologyName == technologyLevel.TechnologyName );
+
+                bool isResearched = false;
+                bool isAvailable = false;
+                TechnologyLevel levelToAdd = technologyLevel;
+                Ressource CostToDisplay = technologyLevel.Cost;
+
+                // If a technology was found, the player already has it, so we add the current level and the next level cost
+                if ( technologyFound != null )
+                {
+                    isResearched = true;
+                    isAvailable = true;
+                    levelToAdd = technologyFound;
+                    CostToDisplay = levelManager.FindNextLevel( technologyFound ).Cost;
+                }
+                // If no technology was found, we check if the technology is available to the player
+                else if ( levelManager.GetAvailablility( technologyLevel, islandId ).IsItemAvailable )
+                {
+                    isAvailable = true;
+                }
+
+                model.TechnologyDisplays.Add( new TechnologyDisplay
+                {
+                    IsResearched = isResearched,
+                    IsAvailable = isAvailable,
+                    TechnologyLevel = levelToAdd,
+                    Cost = CostToDisplay
+                } );
+            }
+
+            return model;
         }
 
     }

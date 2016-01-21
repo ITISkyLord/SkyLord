@@ -97,7 +97,7 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
         public BonusType BonusType { get; set; }
         #endregion Enumerations
 
-        #region Helper
+        #region Helpers
         public long GetPlayer(ClaimsPrincipal user)
         {
             return GetPlayer(user.GetUserId()).PlayerId;
@@ -124,7 +124,7 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
 
             svm.Layout.AllIslands = Islands.Include(i => i.Owner).Where(i => i.Owner.PlayerId == playerId).ToList();
             svm.Layout.CurrentIsland = GetIsland(islandId, playerId);
-            svm.Layout.CurrentPlayer = Players.Single(p => p.PlayerId == playerId);
+            svm.Layout.CurrentPlayer = Players.Include( p => p.Technologies).ThenInclude( t => t.Level).Single(p => p.PlayerId == playerId);
             svm.Layout.IslandId = islandId;
         }
         public Island GetIsland(long islandId, long playerId)

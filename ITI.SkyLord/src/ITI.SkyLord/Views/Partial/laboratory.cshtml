@@ -6,34 +6,55 @@
     Write( Html.Partial( "~/Views/Partial/LevelUpBuilding.cshtml", Model ) );
 }
 
-@*Faire les OwnTechnologies + LevelUp*@
-
-@if( Model.AvailableTechnologies == null )
+@if( Model.TechnologyDisplays == null )
 {
     <p>Vous n'avez pas de technologies disponibles.</p>
 }
 else
 {
-    <h3>Technologies disponibles</h3>
-    @foreach( TechnologyLevel technologyLevel in Model.AvailableTechnologies )
+    @foreach ( TechnologyDisplay technologyDisplay in Model.TechnologyDisplays )
     {
-        <form asp-controller="Technology" asp-action="AddTechnology" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId">
-            <input type="hidden" asp-for="TargetTechnology" value="@technologyLevel.TechnologyName" />
-            <div class="row" style="margin-bottom: 20px;">
-                <div class="col-lg-2">@Model.TechnologyManager.TechnologyNameToName( technologyLevel.TechnologyName )</div>
-                @{
+        if ( technologyDisplay.IsAvailable && technologyDisplay.IsResearched )
+        {
+            <form asp-controller="Technology" asp-action="LevelUpTechnology" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId">
+                <input type="hidden" asp-for="TargetTechnology" value="@technologyDisplay.TechnologyLevel.TechnologyName" />
+                <div class="row" style="margin-bottom: 20px;">
+                    <div class="col-lg-2"> @{ Write( Model.TechnologyManager.TechnologyNameToName( technologyDisplay.TechnologyLevel.TechnologyName ) + " Niveau actuel : " + technologyDisplay.TechnologyLevel.Number ); } </div>
 
-                }
-                <div class="col-lg-1">@technologyLevel.Cost.Wood Bois</div>
-                <div class="col-lg-1">@technologyLevel.Cost.Metal Métal</div>
-                <div class="col-lg-1">@technologyLevel.Cost.Magic Magie</div>
-                <div class="col-lg-1">@technologyLevel.Cost.Cristal Cristal</div>
-                <div class="col-lg-1"><input type="submit" value="Rechercher" /></div>
-            </div>
-        </form>
-      }
+                    <div class="col-lg-1">@technologyDisplay.Cost.Wood Bois</div>
+                    <div class="col-lg-1">@technologyDisplay.Cost.Metal Métal</div>
+                    <div class="col-lg-1">@technologyDisplay.Cost.Cristal Cristal</div>
+                    <div class="col-lg-1">@technologyDisplay.Cost.Magic Magie</div>
+                    <div class="col-lg-1"><input type="submit" value="Level up !" /></div>
+                </div>
+            </form>
+        }
+        else if( technologyDisplay.IsAvailable && !technologyDisplay.IsResearched )
+        {
+            <form asp-controller="Technology" asp-action="AddTechnology" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId">
+                <input type="hidden" asp-for="TargetTechnology" value="@technologyDisplay.TechnologyLevel.TechnologyName" />
+                <div class="row" style="margin-bottom: 20px;">
+                    <div class="col-lg-2">@Model.TechnologyManager.TechnologyNameToName( @technologyDisplay.TechnologyLevel.TechnologyName )</div>
+
+                    <div class="col-lg-1">@technologyDisplay.Cost.Wood Bois</div>
+                    <div class="col-lg-1">@technologyDisplay.Cost.Metal Métal</div>
+                    <div class="col-lg-1">@technologyDisplay.Cost.Cristal Cristal</div>
+                    <div class="col-lg-1">@technologyDisplay.Cost.Magic Magie</div>
+                    <div class="col-lg-1"><input type="submit" value="Rechercher" /></div>
+                </div>
+            </form>
+        }
+        else
+        {
+            @Model.TechnologyManager.TechnologyNameToName( @technologyDisplay.TechnologyLevel.TechnologyName )
+            <br />
+             Write( "Cette technologie n'est pas encore disponible" );
+            <br />
+        }
+                            <hr />
+    }
 }
-<h3>Toutes les technologies</h3>
+@*<h3>Toutes les technologies</h3>
 @foreach( TechnologyLevel technologyLevel in Model.AllTechnologies )
 {
 
@@ -47,7 +68,7 @@ else
         <div class="col-lg-1">@technologyLevel.Cost.Magic Magie</div>
         <div class="col-lg-1">@technologyLevel.Cost.Cristal Cristal</div>
     </div>
-}
+}*@
 
 
 
