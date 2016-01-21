@@ -47,9 +47,10 @@ namespace ITI.SkyLord.Controllers
             }
             else
             {
-                Unit unit = SetupContext.Units.Include( u => u.UnitCost).Single( u => u.UnitName == model.UnitTarget && u.IsModel );
+                Unit unit = SetupContext.Units.Include( u => u.UnitCost ).Include( u => u.UnitStatistics )
+                    .Single( u => u.UnitName == model.UnitTarget && u.IsModel );
                 Island island = GetIsland( islandId );
-                if( unit.UnitCost.Wood * model.UnitAmount > island.AllRessources.Wood || unit.UnitCost.Metal * model.UnitAmount > island.AllRessources.Metal * model.UnitAmount || unit.UnitCost.Cristal * model.UnitAmount > island.AllRessources.Cristal || unit.UnitCost.Magic * model.UnitAmount > island.AllRessources.Magic )
+                if ( unit.UnitCost.Wood * model.UnitAmount > island.AllRessources.Wood || unit.UnitCost.Metal * model.UnitAmount > island.AllRessources.Metal * model.UnitAmount || unit.UnitCost.Cristal * model.UnitAmount > island.AllRessources.Cristal || unit.UnitCost.Magic * model.UnitAmount > island.AllRessources.Magic )
                 {
                     ModelState.AddModelError( "UnitsToAdd", "Vous n'avez pas assez de ressources." );
                 }
@@ -57,9 +58,9 @@ namespace ITI.SkyLord.Controllers
                 {
                     long playerId = SetupContext.GetPlayer( User.GetUserId() ).PlayerId;
 
-                    //BonusManager bonusManager = new BonusManager( SetupContext );
+                    BonusManager bonusManager = new BonusManager( SetupContext );
                     RessourceManager.RemoveRessource( island.AllRessources, unit.UnitCost.Wood * model.UnitAmount, unit.UnitCost.Metal * model.UnitAmount, unit.UnitCost.Cristal * model.UnitAmount, unit.UnitCost.Magic * model.UnitAmount );
-                    em.AddUnitEvent( SetupContext, unit /*bonusManager.ResolveAllUnitBonuses( unit, playerId, islandId)*/ , model.UnitAmount, island );
+                    em.AddUnitEvent( SetupContext, unit, model.UnitAmount, island );
                     //SetupContext.Ressources.Update( island.AllRessources );
                     SetupContext.SaveChanges();
                 }
@@ -118,13 +119,13 @@ namespace ITI.SkyLord.Controllers
                                     .Where( a => a.Island.IslandId == islandId && a.ArmyState == ArmyState.defense )
                                     .SingleOrDefault();
 
-            if( model.UnitsToSend.Count( kvp => kvp.Value == 0 ) != model.UnitsToSend.Count() && !model.UnitsToSend.Any( kvp => kvp.Value < 0 )
+            if ( model.UnitsToSend.Count( kvp => kvp.Value == 0 ) != model.UnitsToSend.Count() && !model.UnitsToSend.Any( kvp => kvp.Value < 0 )
                 && !model.UnitsToSend.Any( kvp => kvp.Value >
                 defendingArmyFromAttacker.Regiments.Single( r => r.Unit.UnitName == (UnitName)Enum.Parse( typeof( UnitName ), kvp.Key, true ) ).Number )
                 && model.Target != 0
                 )
             {
-                EventManager eventManager = new EventManager( SetupContext, new EventPackManager( SetupContext ));
+                EventManager eventManager = new EventManager( SetupContext, new EventPackManager( SetupContext ) );
 
                 Island island = SetupContext.Islands.Include( i => i.Owner )
                                                     .Include( i => i.Coordinates )
@@ -153,11 +154,11 @@ namespace ITI.SkyLord.Controllers
             }
             else
             {
-                if( model.UnitsToSend.Any( kvp => kvp.Value < 0 ) )
+                if ( model.UnitsToSend.Any( kvp => kvp.Value < 0 ) )
                     ModelState.AddModelError( "UnitsToSend", "Les unités ne peuvent pas être négatives." );
-                else if( model.UnitsToSend.Count( kvp => kvp.Value == 0 ) == model.UnitsToSend.Count() )
+                else if ( model.UnitsToSend.Count( kvp => kvp.Value == 0 ) == model.UnitsToSend.Count() )
                     ModelState.AddModelError( "UnitsToSend", "Aucune unité sélectionnée." );
-                else if( model.Target == 0 )
+                else if ( model.Target == 0 )
                 {
                     ModelState.AddModelError( "UnitsToSend", "Aucune cible sélectionnée." );
                 }
@@ -173,7 +174,7 @@ namespace ITI.SkyLord.Controllers
             ArmyManager am = new ArmyManager( SetupContext, new BonusManager( SetupContext ) );
             Army attackingArmy = am.GetArmy( id );
 
-            if( attackingArmy != null )
+            if ( attackingArmy != null )
             {
                 am.JoinArmies( attackingArmy.Island.Armies.SingleOrDefault( a => a.ArmyState == ArmyState.defense ), attackingArmy );
                 SetupContext.SaveChanges();
@@ -181,20 +182,9 @@ namespace ITI.SkyLord.Controllers
             return RedirectToAction( "Index", new { islandId = islandId } );
         }
 
-        public IActionResult UpgradeUnit( ArmyViewModel model, long islandId )
-        {
-            BonusTechnology bonusToAdd = new BonusTechnology
-            {
-                Modifier = 10,
-                BonusType = BonusType.army_attack
-            };
-
-            return View();
-        }
-
         private Island GetIsland( long islandId )
         {
-            if( islandId == 0 )
+            if ( islandId == 0 )
             {
                 long activePlayerId = SetupContext.GetPlayer( User.GetUserId() ).PlayerId;
                 return SetupContext.Islands
@@ -259,9 +249,9 @@ namespace ITI.SkyLord.Controllers
             model.AvailableUnits = new List<Unit>();
             //model.AvailableUnits = SetupContext.Units.Include( u => u.UnitCost ).Include( u => u.UnitStatistics ).
             //    Where( u => levelManager.IsUnitAvailable( u, islandId) ).ToList();
-            foreach( Unit unit in SetupContext.Units.Include( u => u.UnitCost ).Include( u => u.UnitStatistics ).Include( u => u.Requirements ).ToList() )
+            foreach ( Unit unit in SetupContext.Units.Include( u => u.UnitCost ).Include( u => u.UnitStatistics ).Include( u => u.Requirements ).ToList() )
             {
-                if( levelManager.IsUnitAvailable( unit, islandId ) )
+                if ( levelManager.GetAvailablility( unit, islandId ).IsItemAvailable )
                     model.AvailableUnits.Add( unit );
             }
             model.CurrentIslandArmies = currentIslandArmies;
@@ -280,12 +270,12 @@ namespace ITI.SkyLord.Controllers
             public override void OnActionExecuted( ActionExecutedContext filterContext )
             {
                 //Only export when ModelState is not valid
-                if( !filterContext.ModelState.IsValid )
+                if ( !filterContext.ModelState.IsValid )
                 {
                     //Export if we are redirecting
-                    if( (filterContext.Result is RedirectResult) || (filterContext.Result is RedirectToRouteResult) )
+                    if ( ( filterContext.Result is RedirectResult ) || ( filterContext.Result is RedirectToRouteResult ) )
                     {
-                        ((Controller)filterContext.Controller).TempData[Key] = filterContext.ModelState;
+                        ( (Controller)filterContext.Controller ).TempData[ Key ] = filterContext.ModelState;
                     }
                 }
 
@@ -297,19 +287,19 @@ namespace ITI.SkyLord.Controllers
         {
             public override void OnActionExecuted( ActionExecutedContext filterContext )
             {
-                ModelStateDictionary modelState = ((Controller)filterContext.Controller).TempData[ Key ] as ModelStateDictionary;
+                ModelStateDictionary modelState = ( (Controller)filterContext.Controller ).TempData[ Key ] as ModelStateDictionary;
 
-                if( modelState != null )
+                if ( modelState != null )
                 {
                     //Only Import if we are viewing
-                    if( filterContext.Result is ViewResult )
+                    if ( filterContext.Result is ViewResult )
                     {
                         filterContext.ModelState.Merge( modelState );
                     }
                     else
                     {
                         //Otherwise remove it.
-                        ((Controller)filterContext.Controller).TempData.Remove( Key );
+                        ( (Controller)filterContext.Controller ).TempData.Remove( Key );
                     }
                 }
 

@@ -15,7 +15,7 @@ namespace ITI.SkyLord.Controllers
     public class PlayerController : Controller
     {
         [FromServices]
-        public PlayerContext PlayerContext { get; set; }
+        public SetupContext PlayerContext { get; set; }
 
         public IActionResult Index(long islandId = 0)
         {

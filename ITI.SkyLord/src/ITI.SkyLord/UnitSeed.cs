@@ -81,6 +81,7 @@ namespace ITI.SkyLord
 
                 // Set up Requirements
                 Requirement soldierRequirement = AddBuildingRequirement( context, BuildingName.barrack, 1 );
+                Requirement soldierRequirement2 = AddBuildingRequirement( context, BuildingName.invocation, 1 );
 
                 // Add Unit
                 Unit soldier = new Unit
@@ -91,7 +92,7 @@ namespace ITI.SkyLord
                     UnitDamageType = UnitDamageType.physical,
                     UnitCost = soliderCost,
                     UnitStatistics = soliderStatistics,
-                    Requirements = CreateRequirementList( soldierRequirement ),
+                    Requirements = CreateRequirementList( soldierRequirement, soldierRequirement2 ),
                     // Valeur temporaire pour les tests !
                     Duration = 10,
                     IsModel = true
@@ -127,6 +128,7 @@ namespace ITI.SkyLord
                 // Set up Requirements
                 Requirement archerRequirement = AddBuildingRequirement( context, BuildingName.barrack, 3 );
                 Requirement archerRequirement2 = AddTechnologyRequirement( context, TechnologyName.weapons, 1 );
+                Requirement archerRequirement3 = AddBuildingRequirement( context, BuildingName.invocation, 1 );
 
                 // Add Unit
                 Unit archer = new Unit
@@ -137,7 +139,7 @@ namespace ITI.SkyLord
                     UnitDamageType = UnitDamageType.physical,
                     UnitCost = archerCost,
                     UnitStatistics = archerStatistics,
-                    Requirements = CreateRequirementList( archerRequirement, archerRequirement2 ),
+                    Requirements = CreateRequirementList( archerRequirement, archerRequirement2, archerRequirement3 ),
                     Duration = 120,
                     IsModel = true
                 };
@@ -172,6 +174,8 @@ namespace ITI.SkyLord
                 Requirement knightRequirement = AddBuildingRequirement( context, BuildingName.barrack, 5 );
                 Requirement knightRequirement2 = AddTechnologyRequirement( context, TechnologyName.armor, 2 );
                 Requirement knightRequirement3 = AddTechnologyRequirement( context, TechnologyName.magicBoots, 2 );
+                Requirement knightRequirement4 = AddBuildingRequirement( context, BuildingName.invocation, 1 );
+
 
                 // Add Unit
                 Unit knight = new Unit
@@ -182,7 +186,7 @@ namespace ITI.SkyLord
                     UnitDamageType = UnitDamageType.physical,
                     UnitCost = knightCost,
                     UnitStatistics = knightStatistics,
-                    Requirements = CreateRequirementList( knightRequirement, knightRequirement2, knightRequirement3 ),
+                    Requirements = CreateRequirementList( knightRequirement, knightRequirement2, knightRequirement3, knightRequirement4 ),
                     Duration = 450,
                     IsModel = true
                 };
@@ -217,6 +221,7 @@ namespace ITI.SkyLord
                 Requirement griffinRequirement = AddBuildingRequirement( context, BuildingName.barrack, 7 );
                 Requirement griffinRequirement2 = AddTechnologyRequirement( context, TechnologyName.magicBoots, 5 );
                 Requirement griffinRequirement3 = AddTechnologyRequirement( context, TechnologyName.weapons, 4 );
+                Requirement griffinRequirement4 = AddBuildingRequirement( context, BuildingName.invocation, 1 );
 
                 // Add Unit
                 Unit griffin = new Unit
@@ -227,7 +232,7 @@ namespace ITI.SkyLord
                     UnitDamageType = UnitDamageType.physical,
                     UnitCost = griffinCost,
                     UnitStatistics = griffinStatistics,
-                    Requirements = CreateRequirementList( griffinRequirement, griffinRequirement2, griffinRequirement3 ),
+                    Requirements = CreateRequirementList( griffinRequirement, griffinRequirement2, griffinRequirement3, griffinRequirement4 ),
                     Duration = 160,
                     IsModel = true
                 };
@@ -263,6 +268,7 @@ namespace ITI.SkyLord
                 Requirement championRequirement2 = AddTechnologyRequirement( context, TechnologyName.magicBoots, 7 );
                 Requirement championRequirement3 = AddTechnologyRequirement( context, TechnologyName.weapons, 7 );
                 Requirement championRequirement44 = AddTechnologyRequirement( context, TechnologyName.armor, 8 );
+                Requirement championRequirement5 = AddBuildingRequirement( context, BuildingName.invocation, 1 );
 
                 // Add Unit
                 Unit champion = new Unit
@@ -273,7 +279,7 @@ namespace ITI.SkyLord
                     UnitDamageType = UnitDamageType.physical,
                     UnitCost = championCost,
                     UnitStatistics = championStatistics,
-                    Requirements = CreateRequirementList( championRequirement, championRequirement2, championRequirement3, championRequirement44 ),
+                    Requirements = CreateRequirementList( championRequirement, championRequirement2, championRequirement3, championRequirement44, championRequirement5 ),
                     Duration = 1500,
                     IsModel = true
                 };
@@ -310,6 +316,7 @@ namespace ITI.SkyLord
 
                 // Set up Requirements
                 Requirement gobelinRequirement = AddBuildingRequirement( context, BuildingName.barrack, 2 );
+                Requirement gobelinRequirement2 = AddBuildingRequirement( context, BuildingName.invocation, 1 );
 
                 // Add Unit
                 Unit gobelin = new Unit
@@ -320,7 +327,7 @@ namespace ITI.SkyLord
                     UnitDamageType = UnitDamageType.physical,
                     UnitCost = gobelinCost,
                     UnitStatistics = gobelinStatistics,
-                    Requirements = CreateRequirementList( gobelinRequirement ),
+                    Requirements = CreateRequirementList( gobelinRequirement, gobelinRequirement2 ),
                     Duration = 50,
                     IsModel = true
                 };
@@ -354,6 +361,7 @@ namespace ITI.SkyLord
                 // Set up Requirements
                 Requirement harpyRequirement = AddBuildingRequirement( context, BuildingName.barrack, 2 );
                 Requirement harpyRequirement2 = AddTechnologyRequirement( context, TechnologyName.claws, 1 );
+                Requirement harpyRequirement3 = AddBuildingRequirement( context, BuildingName.invocation, 1 );
 
                 // Add Unit
                 Unit harpy = new Unit
@@ -364,7 +372,7 @@ namespace ITI.SkyLord
                     UnitDamageType = UnitDamageType.physical,
                     UnitCost = harpyCost,
                     UnitStatistics = harpyStatistics,
-                    Requirements = CreateRequirementList( harpyRequirement, harpyRequirement2 ),
+                    Requirements = CreateRequirementList( harpyRequirement, harpyRequirement2, harpyRequirement3 ),
                     Duration = 90,
                     IsModel = true
                 };
@@ -398,6 +406,7 @@ namespace ITI.SkyLord
                 // Set up Requirements
                 Requirement dirtGolemRequirement = AddBuildingRequirement( context, BuildingName.barrack, 4 );
                 Requirement dirtGolemRequirement2 = AddTechnologyRequirement( context, TechnologyName.shell, 2 );
+                Requirement dirtGolemRequirement3 = AddBuildingRequirement( context, BuildingName.invocation, 1 );
 
                 // Add Unit
                 Unit dirtGolem = new Unit
@@ -408,7 +417,7 @@ namespace ITI.SkyLord
                     UnitDamageType = UnitDamageType.physical,
                     UnitCost = dirtGolemCost,
                     UnitStatistics = dirtGolemStatistics,
-                    Requirements = CreateRequirementList( dirtGolemRequirement, dirtGolemRequirement2 ),
+                    Requirements = CreateRequirementList( dirtGolemRequirement, dirtGolemRequirement2, dirtGolemRequirement3 ),
                     Duration = 180,
                     IsModel = true
                 };
@@ -443,6 +452,7 @@ namespace ITI.SkyLord
                 Requirement trollRequirement = AddBuildingRequirement( context, BuildingName.barrack, 6 );
                 Requirement trollRequirement2 = AddTechnologyRequirement( context, TechnologyName.shell, 4 );
                 Requirement trollRequirement3 = AddTechnologyRequirement( context, TechnologyName.claws, 4 );
+                Requirement trollRequirement4 = AddBuildingRequirement( context, BuildingName.invocation, 1 );
 
                 // Add Unit
                 Unit troll = new Unit
@@ -453,7 +463,7 @@ namespace ITI.SkyLord
                     UnitDamageType = UnitDamageType.physical,
                     UnitCost = trollCost,
                     UnitStatistics = trollStatistics,
-                    Requirements = CreateRequirementList( trollRequirement, trollRequirement2, trollRequirement3 ),
+                    Requirements = CreateRequirementList( trollRequirement, trollRequirement2, trollRequirement3, trollRequirement4 ),
                     Duration = 490,
                     IsModel = true
                 };
@@ -488,6 +498,7 @@ namespace ITI.SkyLord
                 Requirement phenixRequirement = AddBuildingRequirement( context, BuildingName.barrack, 8 );
                 Requirement phenixRequirement2 = AddTechnologyRequirement( context, TechnologyName.wings, 6 );
                 Requirement phenixRequirement3 = AddTechnologyRequirement( context, TechnologyName.claws, 7 );
+                Requirement phenixRequirement4 = AddBuildingRequirement( context, BuildingName.invocation, 1 );
 
                 // Add Unit
                 Unit phenix = new Unit
@@ -498,7 +509,7 @@ namespace ITI.SkyLord
                     UnitDamageType = UnitDamageType.physical,
                     UnitCost = phenixCost,
                     UnitStatistics = phenixStatistics,
-                    Requirements = CreateRequirementList( phenixRequirement, phenixRequirement2, phenixRequirement3 ),
+                    Requirements = CreateRequirementList( phenixRequirement, phenixRequirement2, phenixRequirement3, phenixRequirement4 ),
                     Duration = 900,
                     IsModel = true
                 };
@@ -530,22 +541,23 @@ namespace ITI.SkyLord
                 context.Add( juggernautStatistics );
 
                 // Set up Requirements
-                Requirement juggernautRequirement = AddBuildingRequirement( context, BuildingName.barrack, 10 );
-                Requirement juggernautRequirement2 = AddTechnologyRequirement( context, TechnologyName.wings, 10 );
-                Requirement juggernautRequirement3 = AddTechnologyRequirement( context, TechnologyName.claws, 10 );
-                Requirement juggernautRequirement4 = AddTechnologyRequirement( context, TechnologyName.shell, 10 );
+                //Requirement juggernautRequirement = AddBuildingRequirement( context, BuildingName.barrack, 10 );
+                //Requirement juggernautRequirement2 = AddTechnologyRequirement( context, TechnologyName.wings, 10 );
+                //Requirement juggernautRequirement3 = AddTechnologyRequirement( context, TechnologyName.claws, 10 );
+                //Requirement juggernautRequirement4 = AddTechnologyRequirement( context, TechnologyName.shell, 10 );
+                //Requirement juggernautRequirement5 = AddBuildingRequirement( context, BuildingName.invocation, 1 );
 
                 // Add Unit
                 Unit juggernaut = new Unit
                 {
-                    Name = "Phénix",
+                    Name = "Juggernaut",
                     UnitName = UnitName.juggernaut,
                     UnitType = UnitType.monster,
                     UnitDamageType = UnitDamageType.physical,
                     UnitCost = juggernautCost,
                     UnitStatistics = juggernautStatistics,
-                    Requirements = CreateRequirementList( juggernautRequirement, juggernautRequirement2, juggernautRequirement3, juggernautRequirement4 ),
-                    Duration = 900,
+                    //Requirements = CreateRequirementList( juggernautRequirement, juggernautRequirement2, juggernautRequirement3, juggernautRequirement4, juggernautRequirement5 ),
+                    Duration = 10 /*900*/,
                     IsModel = true
                 };
                 context.Add( juggernaut );
@@ -580,6 +592,7 @@ namespace ITI.SkyLord
 
                 // Set up Requirements
                 Requirement wispRequirement = AddBuildingRequirement( context, BuildingName.academy, 1 );
+                Requirement wispRequirement2 = AddBuildingRequirement( context, BuildingName.invocation, 1 );
 
                 // Add Unit
                 Unit wisp = new Unit
@@ -590,7 +603,7 @@ namespace ITI.SkyLord
                     UnitDamageType = UnitDamageType.magical,
                     UnitCost = wispCost,
                     UnitStatistics = wispStatistics,
-                    Requirements = CreateRequirementList( wispRequirement ),
+                    Requirements = CreateRequirementList( wispRequirement, wispRequirement2 ),
                     Duration = 50,
                     IsModel = true
                 };
@@ -624,6 +637,7 @@ namespace ITI.SkyLord
                 // Set up Requirements
                 Requirement noviceRequirement = AddBuildingRequirement( context, BuildingName.academy, 2 );
                 Requirement noviceRequirement2 = AddTechnologyRequirement( context, TechnologyName.magicalProtection, 2 );
+                Requirement noviceRequirement3 = AddBuildingRequirement( context, BuildingName.invocation, 1 );
 
                 // Add Unit
                 Unit novice = new Unit
@@ -634,7 +648,7 @@ namespace ITI.SkyLord
                     UnitDamageType = UnitDamageType.magical,
                     UnitCost = noviceCost,
                     UnitStatistics = noviceStatistics,
-                    Requirements = CreateRequirementList( noviceRequirement, noviceRequirement2 ),
+                    Requirements = CreateRequirementList( noviceRequirement, noviceRequirement2, noviceRequirement3 ),
                     Duration = 100,
                     IsModel = true
                 };
@@ -669,17 +683,18 @@ namespace ITI.SkyLord
                 Requirement necromancerRequirement = AddBuildingRequirement( context, BuildingName.academy, 4 );
                 Requirement necromancerRequirement2 = AddTechnologyRequirement( context, TechnologyName.magicalStaff, 2 );
                 Requirement necromancerRequirement3 = AddTechnologyRequirement( context, TechnologyName.levitation, 1 );
+                Requirement necromancerRequirement4 = AddBuildingRequirement( context, BuildingName.invocation, 1 );
 
                 // Add Unit
                 Unit necromancer = new Unit
                 {
-                    Name = "necromancer",
+                    Name = "Nécromancien",
                     UnitName = UnitName.necromancer,
                     UnitType = UnitType.magic,
                     UnitDamageType = UnitDamageType.magical,
                     UnitCost = necromancerCost,
                     UnitStatistics = necromancerStatistics,
-                    Requirements = CreateRequirementList( necromancerRequirement, necromancerRequirement2, necromancerRequirement3 ),
+                    Requirements = CreateRequirementList( necromancerRequirement, necromancerRequirement2, necromancerRequirement3, necromancerRequirement4 ),
                     Duration = 260,
                     IsModel = true
                 };
@@ -714,6 +729,7 @@ namespace ITI.SkyLord
                 Requirement summonerRequirement = AddBuildingRequirement( context, BuildingName.academy, 6 );
                 Requirement summonerRequirement2 = AddTechnologyRequirement( context, TechnologyName.magicalStaff, 4 );
                 Requirement summonerRequirement3 = AddTechnologyRequirement( context, TechnologyName.magicalProtection, 4 );
+                Requirement summonerRequirement4 = AddBuildingRequirement( context, BuildingName.invocation, 1 );
 
                 // Add Unit
                 Unit summoner = new Unit
@@ -724,7 +740,7 @@ namespace ITI.SkyLord
                     UnitDamageType = UnitDamageType.magical,
                     UnitCost = summonerCost,
                     UnitStatistics = summonerStatistics,
-                    Requirements = CreateRequirementList( summonerRequirement, summonerRequirement2, summonerRequirement3 ),
+                    Requirements = CreateRequirementList( summonerRequirement, summonerRequirement2, summonerRequirement3, summonerRequirement4 ),
                     Duration = 800,
                     IsModel = true
                 };
@@ -760,6 +776,7 @@ namespace ITI.SkyLord
                 Requirement prophetRequirement2 = AddTechnologyRequirement( context, TechnologyName.magicalStaff, 7 );
                 Requirement prophetRequirement3 = AddTechnologyRequirement( context, TechnologyName.magicalProtection, 7 );
                 Requirement prophetRequirement4 = AddTechnologyRequirement( context, TechnologyName.levitation, 6 );
+                Requirement prophetRequirement5 = AddBuildingRequirement( context, BuildingName.invocation, 1 );
 
                 // Add Unit
                 Unit prophet = new Unit
@@ -770,7 +787,7 @@ namespace ITI.SkyLord
                     UnitDamageType = UnitDamageType.magical,
                     UnitCost = prophetCost,
                     UnitStatistics = prophetStatistics,
-                    Requirements = CreateRequirementList( prophetRequirement, prophetRequirement2, prophetRequirement3, prophetRequirement4 ),
+                    Requirements = CreateRequirementList( prophetRequirement, prophetRequirement2, prophetRequirement3, prophetRequirement4, prophetRequirement5 ),
                     Duration = 1850,
                     IsModel = true
                 };
@@ -807,6 +824,7 @@ namespace ITI.SkyLord
 
                 // Set up Requirements
                 Requirement scorpionRequirement = AddBuildingRequirement( context, BuildingName.forge, 1 );
+                Requirement scorpionRequirement2 = AddBuildingRequirement( context, BuildingName.invocation, 1 );
 
                 // Add Unit
                 Unit scorpion = new Unit
@@ -817,7 +835,7 @@ namespace ITI.SkyLord
                     UnitDamageType = UnitDamageType.physical,
                     UnitCost = scorpionCost,
                     UnitStatistics = scorpionStatistics,
-                    Requirements = CreateRequirementList( scorpionRequirement ),
+                    Requirements = CreateRequirementList( scorpionRequirement, scorpionRequirement2 ),
                     Duration = 75,
                     IsModel = true
                 };
@@ -851,6 +869,7 @@ namespace ITI.SkyLord
                 // Set up Requirements
                 Requirement flameThrowerRequirement = AddBuildingRequirement( context, BuildingName.forge, 2 );
                 Requirement flameThrowerRequirement2 = AddTechnologyRequirement( context, TechnologyName.plating, 2 );
+                Requirement flameThrowerRequirement3 = AddBuildingRequirement( context, BuildingName.invocation, 1 );
 
                 // Add Unit
                 Unit flameThrower = new Unit
@@ -861,7 +880,7 @@ namespace ITI.SkyLord
                     UnitDamageType = UnitDamageType.magical,
                     UnitCost = flameThrowerCost,
                     UnitStatistics = flameThrowerStatistics,
-                    Requirements = CreateRequirementList( flameThrowerRequirement, flameThrowerRequirement2 ),
+                    Requirements = CreateRequirementList( flameThrowerRequirement, flameThrowerRequirement2, flameThrowerRequirement3 ),
                     Duration = 140,
                     IsModel = true
                 };
@@ -896,6 +915,7 @@ namespace ITI.SkyLord
                 Requirement saboteurRequirement = AddBuildingRequirement( context, BuildingName.forge, 4 );
                 Requirement saboteurRequirement2 = AddTechnologyRequirement( context, TechnologyName.plating, 3 );
                 Requirement saboteurRequirement3 = AddTechnologyRequirement( context, TechnologyName.propulsion, 3 );
+                Requirement saboteurRequirement4 = AddBuildingRequirement( context, BuildingName.invocation, 1 );
 
                 // Add Unit
                 Unit saboteur = new Unit
@@ -906,7 +926,7 @@ namespace ITI.SkyLord
                     UnitDamageType = UnitDamageType.physical,
                     UnitCost = saboteurCost,
                     UnitStatistics = saboteurStatistics,
-                    Requirements = CreateRequirementList( saboteurRequirement, saboteurRequirement2, saboteurRequirement3 ),
+                    Requirements = CreateRequirementList( saboteurRequirement, saboteurRequirement2, saboteurRequirement3, saboteurRequirement4 ),
                     Duration = 260,
                     IsModel = true
                 };
@@ -940,6 +960,7 @@ namespace ITI.SkyLord
                 // Set up Requirements
                 Requirement livingArmorRequirement = AddBuildingRequirement( context, BuildingName.forge, 5 );
                 Requirement livingArmorRequirement2 = AddTechnologyRequirement( context, TechnologyName.plating, 6 );
+                Requirement livingArmorRequirement3 = AddBuildingRequirement( context, BuildingName.invocation, 1 );
 
                 // Add Unit
                 Unit livingArmor = new Unit
@@ -950,7 +971,7 @@ namespace ITI.SkyLord
                     UnitDamageType = UnitDamageType.magical,
                     UnitCost = livingArmorCost,
                     UnitStatistics = livingArmorStatistics,
-                    Requirements = CreateRequirementList( livingArmorRequirement, livingArmorRequirement2 ),
+                    Requirements = CreateRequirementList( livingArmorRequirement, livingArmorRequirement2, livingArmorRequirement3 ),
                     Duration = 500,
                     IsModel = true
                 };
@@ -984,6 +1005,7 @@ namespace ITI.SkyLord
                 // Set up Requirements
                 Requirement ironGolemRequirement = AddBuildingRequirement( context, BuildingName.forge, 7 );
                 Requirement ironGolemRequirement2 = AddTechnologyRequirement( context, TechnologyName.plating, 8 );
+                Requirement ironGolemRequirement3 = AddBuildingRequirement( context, BuildingName.invocation, 1 );
 
                 // Add Unit
                 Unit ironGolem = new Unit
@@ -994,7 +1016,7 @@ namespace ITI.SkyLord
                     UnitDamageType = UnitDamageType.physical,
                     UnitCost = ironGolemCost,
                     UnitStatistics = ironGolemStatistics,
-                    Requirements = CreateRequirementList( ironGolemRequirement, ironGolemRequirement2 ),
+                    Requirements = CreateRequirementList( ironGolemRequirement, ironGolemRequirement2, ironGolemRequirement3 ),
                     Duration = 1200,
                     IsModel = true
                 };
@@ -1029,6 +1051,7 @@ namespace ITI.SkyLord
                 Requirement prismaticGolemRequirement = AddBuildingRequirement( context, BuildingName.forge, 10 );
                 Requirement prismaticGolemRequirement2 = AddTechnologyRequirement( context, TechnologyName.plating, 10 );
                 Requirement prismaticGolemRequirement3 = AddTechnologyRequirement( context, TechnologyName.propulsion, 10 );
+                Requirement prismaticGolemRequirement4 = AddBuildingRequirement( context, BuildingName.invocation, 1 );
 
                 // Add Unit
                 Unit prismaticGolem = new Unit
@@ -1039,7 +1062,7 @@ namespace ITI.SkyLord
                     UnitDamageType = UnitDamageType.magical,
                     UnitCost = prismaticGolemCost,
                     UnitStatistics = prismaticGolemStatistics,
-                    Requirements = CreateRequirementList( prismaticGolemRequirement, prismaticGolemRequirement2, prismaticGolemRequirement3 ),
+                    Requirements = CreateRequirementList( prismaticGolemRequirement, prismaticGolemRequirement2, prismaticGolemRequirement3, prismaticGolemRequirement4 ),
                     Duration = 2600,
                     IsModel = true
                 };
@@ -1072,6 +1095,7 @@ namespace ITI.SkyLord
 
                 // Set up Requirements
                 Requirement canoeRequirement = AddBuildingRequirement( context, BuildingName.tower, 2 );
+                Requirement canoeRequirement2 = AddBuildingRequirement( context, BuildingName.invocation, 1 );
 
                 // Add Unit
                 Unit canoe = new Unit
@@ -1082,7 +1106,7 @@ namespace ITI.SkyLord
                     UnitDamageType = UnitDamageType.physical,
                     UnitCost = canoeCost,
                     UnitStatistics = canoeStatistics,
-                    Requirements = CreateRequirementList( canoeRequirement ),
+                    Requirements = CreateRequirementList( canoeRequirement, canoeRequirement2 ),
                     Duration = 120,
                     IsModel = true
                 };
@@ -1115,6 +1139,7 @@ namespace ITI.SkyLord
 
                 // Set up Requirements
                 Requirement carrierRequirement = AddTechnologyRequirement( context, TechnologyName.hold, 2 );
+                Requirement carrierRequirement2 = AddBuildingRequirement( context, BuildingName.invocation, 1 );
 
                 // Add Unit
                 Unit carrier = new Unit
@@ -1125,7 +1150,7 @@ namespace ITI.SkyLord
                     UnitDamageType = UnitDamageType.physical,
                     UnitCost = carrierCost,
                     UnitStatistics = carrierStatistics,
-                    Requirements = CreateRequirementList( carrierRequirement ),
+                    Requirements = CreateRequirementList( carrierRequirement, carrierRequirement2 ),
                     Duration = 250,
                     IsModel = true
                 };
