@@ -73,36 +73,6 @@ namespace ITI.SkyLord.Controllers
             } );
 
         }
-        //public IActionResult AddUnit( ArmyViewModel model, long islandId = 0 )
-        //{
-        //    ArmyManager am = new ArmyManager( SetupContext, new BonusManager( SetupContext ) );
-        //    if( model.UnitsToAdd.Count( kvp => kvp.Value == 0 ) != model.UnitsToAdd.Count() && !model.UnitsToAdd.Any( kvp => kvp.Value < 0 ) )
-        //    {
-        //        EventManager eventManager = new EventManager( SetupContext, new EventPackManager( SetupContext ));
-
-        //        foreach( KeyValuePair<string, int> kvp in model.UnitsToAdd )
-        //        {
-        //            if( kvp.Value > 0 )
-        //            {
-        //                UnitName uN = (UnitName)Enum.Parse( typeof( UnitName ), kvp.Key, true );
-        //                eventManager.AddUnitEvent( SetupContext, SetupContext.Units.Where( u => u.UnitName == uN ).Single(), kvp.Value, GetIsland( islandId ) );
-        //            }
-        //        }
-        //        SetupContext.SaveChanges();
-        //    }
-        //    else
-        //    {
-        //        if( model.UnitsToAdd.Any( kvp => kvp.Value < 0 ) )
-        //        {
-        //            ModelState.AddModelError( "UnitsToAdd", "Les unités ne peuvent pas être négatives." );
-        //        }
-        //        else
-        //        {
-        //            ModelState.AddModelError( "UnitsToAdd", "Aucune unité sélectionnée." );
-        //        }
-        //    }
-        //    return RedirectToAction( "Index", new { islandId = islandId } );
-        //}
 
         public IActionResult SetAttackingArmy(SetAttackingArmyViewModel model, long islandId = 0, long EnnemyIslandId = 0)
         {
