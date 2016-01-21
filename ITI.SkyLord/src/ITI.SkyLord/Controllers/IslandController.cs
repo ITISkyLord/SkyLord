@@ -9,6 +9,7 @@ using ITI.SkyLord.Services;
 using System.Collections.Generic;
 using Microsoft.AspNet.Mvc.Rendering;
 using ITI.SkyLord.ViewModel.Technologies;
+using ITI.SkyLord.Models.Entity_Framework.Entites.Events;
 
 namespace ITI.SkyLord.Controllers
 {
@@ -79,6 +80,7 @@ namespace ITI.SkyLord.Controllers
             LevelManager levelManager = new LevelManager( SetupContext );
             BuildingManager buildingManager = new BuildingManager( SetupContext, levelManager );
             ArmyManager armyManager = new ArmyManager( SetupContext, new BonusManager( SetupContext ) );
+            EventManager eventManager = new EventManager(SetupContext, new EventPackManager(SetupContext));
 
             // Fill Standard
             SetupContext.FillStandardVM( model, SetupContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
@@ -94,6 +96,13 @@ namespace ITI.SkyLord.Controllers
             foreach ( var building in model.Buildings )
             {
                 model.DicoBuildings.Add( building.Position.ToString(), building );
+            }
+
+            // Récupère tout les events de tout les batiments (de 0 à 10 donc)
+            model.AllBuildingEventOnIsland = new Dictionary<int, List<BuildingEvent>>();
+            for(var i=0; i<=10; i++)
+            {
+                model.AllBuildingEventOnIsland.Add(i, eventManager.GetBuildingEventsOnThisBuildingPosition(islandId, i));
             }
 
             // Tout les nexts level de chaque batiments

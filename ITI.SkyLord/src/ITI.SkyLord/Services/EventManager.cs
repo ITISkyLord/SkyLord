@@ -26,7 +26,10 @@ namespace ITI.SkyLord
         {
             List<BuildingEvent> events = new List<BuildingEvent>();
             // Récupérer les évènements liés à une position
-            events = _context.BuildingEvents.Include( e => e.Island ).ThenInclude( e => e.Buildings ).Where( i => i.Island.IslandId == islandId && i.BuildingToBuild.Position == position ).ToList();
+            events = _context.BuildingEvents
+                .Include( e => e.Island ).ThenInclude( e => e.Buildings )
+                .Where( i => i.Island.IslandId == islandId && i.PositionToBuild == position && i.Done == false)
+                .ToList();
 
             return events;
         }
@@ -89,10 +92,23 @@ namespace ITI.SkyLord
             return numberOfSeconds;
         }
 
-        public void AddBuildingEvent( IBuildingEventContext ctx, Building building, Island island )
+        public void AddBuildingEvent( IBuildingEventContext ctx, BuildingName building, Island island, int position )
         {
             DateTime begginningDate = FindLastEndingDateInQueue( EventDiscrimator.BuildingEvent, island );
-            ctx.BuildingEvents.Add( new BuildingEvent() { EventType = EventDiscrimator.BuildingEvent, BuildingToBuild = building, BegginningDate = begginningDate, EndingDate = DateTime.Now.AddSeconds(/*TIME TO BUILD BUILDING */ 100 ), Done = false, Island = island } );
+
+            int duration = _allManager.BuildingManager.GetAvailableBuildings().Where(b => b.BuildingName == building).First().Level.Duration;
+
+            ctx.BuildingEvents.Add( new BuildingEvent()
+            {
+                EventType = EventDiscrimator.BuildingEvent,
+                BuildingToBuild = building,
+                BegginningDate = begginningDate,
+                EndingDate = DateTime.Now.AddSeconds(duration),
+                Done = false,
+                Island = island,
+                PositionToBuild = position
+            } );
+            ctx.SaveChanges();
         }
 
         public void AddUpgradeEvent( IBuildingEventContext ctx, Building building, Island island )
@@ -288,10 +304,7 @@ namespace ITI.SkyLord
 
         internal void Resolve( BuildingEvent be )
         {
-            be = _context.BuildingEvents.Where( e => e.EventId == be.EventId ).Single();
-
-            // Cette methode sera à changer vu qu'il faut que l'on construise sur un emplacement précis de l'island
-            _allManager.BuildingManager.AddBuildingToIsland( be.BuildingToBuild.BuildingName, be.Island.IslandId, be.PositionToBuild );
+            _allManager.BuildingManager.AddBuildingToIsland(be.BuildingToBuild, be.Island.IslandId, be.PositionToBuild);
         }
 
         internal void Resolve( UpgradeEvent ue )

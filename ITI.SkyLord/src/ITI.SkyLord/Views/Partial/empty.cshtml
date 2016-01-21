@@ -1,46 +1,71 @@
 ﻿@model ITI.SkyLord.ViewModel.Partial.BuildingPartialViewModel
 @using ITI.SkyLord.Services;
+@using System;
+@using ITI.SkyLord.Models.Entity_Framework.Entites.Events;
+
 
 <center><h2>Terrain vierge</h2></center>
 <div class="row">
-    @foreach (var CurrentBuilding in Model.AvailableBuildings)
+
+    @if (Model.EventsOnBuilding.Count == 0)
     {
-        <div class="col-sm-6 col-md-6">
-            <div class="buildings">
+        @foreach (var CurrentBuilding in Model.AvailableBuildings)
+        {
+            <div class="col-sm-6 col-md-6">
+                <div class="buildings">
 
-                <div class="building-head">
-                    @{Write(CurrentBuilding.Name);}
-                </div>
+                    <div class="building-head">
+                        @{Write(CurrentBuilding.Name);}
+                    </div>
 
-                <div class="building-body">
-                    @if (CurrentBuilding.Level != null)
-                {
-                    Write(" Bois: " + CurrentBuilding.Level.Cost.Wood + " Cristal:  " + CurrentBuilding.Level.Cost.Cristal + " Metal: " + CurrentBuilding.Level.Cost.Metal + " Magie: " + CurrentBuilding.Level.Cost.Magic);
-                }
-                else
-                {
-                    Write("Pas disponible");
-                }
-                </div>
-
-                <div class="building-btn">
-                    <form asp-route-islandId="@Model.Layout.CurrentIsland.IslandId" asp-controller="Building" asp-action="AddBuilding">
-                        <input type="hidden" value="@Model.Position" asp-for="@Model.Position" />
-                        <input type="hidden" asp-for="@Model.TargetBuilding" value="@CurrentBuilding.BuildingName" />
-                        <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
-
-                        @if (CurrentBuilding.Level != null && CurrentBuilding.Level.Cost != null && RessourceManager.IsEnough(Model.Layout.CurrentIsland.AllRessources, CurrentBuilding.Level.Cost))
-                {
-                            <center><input type="submit" class="btn btn-link" value="Construire" name="Construire"></center>
+                    <div class="building-body">
+                        @if (CurrentBuilding.Level != null)
+                        {
+                            Write(" Bois: " + CurrentBuilding.Level.Cost.Wood + " Cristal:  " + CurrentBuilding.Level.Cost.Cristal + " Metal: " + CurrentBuilding.Level.Cost.Metal + " Magie: " + CurrentBuilding.Level.Cost.Magic);
                         }
                         else
                         {
-                           Write("Pas assez de ressources");
+                            Write("Pas disponible");
                         }
+                    </div>
 
-                    </form>
+                    <div class="building-btn">
+                        <form asp-route-islandId="@Model.Layout.CurrentIsland.IslandId" asp-controller="Building" asp-action="AddBuilding">
+                            <input type="hidden" value="@Model.Position" asp-for="@Model.Position" />
+                            <input type="hidden" asp-for="@Model.TargetBuilding" value="@CurrentBuilding.BuildingName" />
+                            <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
+
+                            @if (CurrentBuilding.Level != null && CurrentBuilding.Level.Cost != null && RessourceManager.IsEnough(Model.Layout.CurrentIsland.AllRessources, CurrentBuilding.Level.Cost))
+                            {
+                                <center><input type="submit" class="btn btn-link" value="Construire" name="Construire"></center>
+                            }
+                            else
+                            {
+                                Write("Pas assez de ressources");
+                            }
+
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
-                        }
+                            }
+                            }
+
+                            else
+                            {
+                                BuildingEvent myEvent = Model.EventsOnBuilding.First();
+
+        <p>
+            Construction en cours :
+            @{Write(BuildingManager.StaticBuildingNameToName(myEvent.BuildingToBuild));}
+            <br />
+            Temps de construction restant : 
+            @{ 
+                TimeSpan tempsRestant = myEvent.EndingDate - DateTime.Now;
+                Write(tempsRestant.Hours + "h" + tempsRestant.Minutes+"min"+tempsRestant.Seconds+"sec" );
+            }
+            
+        </p>
+    }
+
 </div>

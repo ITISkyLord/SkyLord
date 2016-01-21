@@ -7,39 +7,61 @@
     Layout = "_Layout";
 }
 
-<h1>Armées</h1>
-
-@*Gérer army null*@
-
-
-    <ul>
-        <li> ArmyId : @Model.CurrentDefenseArmy.ArmyId</li>
-        @foreach ( Regiment r in Model.CurrentDefenseArmy.Regiments )
-        {
-            <li> Unité : @r.Unit.Name  Nombre : @r.Number</li>
-        }
-    </ul>
-
-<form asp-controller="Army" asp-action="Fight" asp-route-islandId="@Model.Layout.IslandId" method="post" role="form">
-    <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
-<table>
-    @foreach ( Regiment r in Model.CurrentDefenseArmy.Regiments )
-    {
-        <tr>
-            <td>@r.Unit.Name</td>
-            <td><input type="number" min="0" max="@r.Number" step="1" asp-for="UnitsToSend[r.Unit.UnitName.ToString()]" value="0"/></td>
-        </tr>
+<style>
+    .ListArmy td {
+        border: 2px solid black;
+        padding-right: 5px;
+        padding-left: 5px;
     }
-</table>
-    <select asp-for="@Model.Target">
-        <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
-        @foreach( Island i in Model.EnnemyIslands )
-        {
-            <option value="@i.IslandId">
-                @i.Name , @i.Owner.Name , [@i.Coordinates.X, @i.Coordinates.Y] 
-            </option>
-        }
-    </select>
-    <input type="submit" value="Envoyer les unités" />
-</form>
+</style>
 
+<h1>Armées</h1>
+@if( Model.CurrentDefenseArmy != null )
+{
+    <form asp-controller="Army" asp-action="Fight" asp-route-islandId="@Model.Layout.IslandId" method="post" role="form">
+
+        <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
+
+        @* Tableau pour voir nos unité et voir qui l'on envoi *@
+        <table class="ListArmy">
+            <tr>
+                <td>Unité</td>
+                <td>Disponible</td>
+                <td>A envoyer</td>
+            </tr>
+
+            @foreach ( Regiment r in Model.CurrentDefenseArmy.Regiments )
+            {
+                <tr>
+                    <td>@r.Unit.Name</td>
+                    <td>@r.Number</td>
+                    <td><input type="number" min="0" max="@r.Number" step="1" asp-for="UnitsToSend[r.Unit.UnitName.ToString()]" value="0"/></td>
+                </tr>
+            }
+        </table>
+
+        <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
+
+        @* Petit moyen pour chercher l'île en fonction des coordonnées *@
+        <label for="pos-x"></label><input type="number" name="pos-x" value="@Model.EnnemyIslands.First().Coordinates.X"/>
+        <label for="pos-y"></label><input type="number" name="pos-y" value="@Model.EnnemyIslands.First().Coordinates.Y"/>
+
+        @* Choix de la cible *@
+        <select asp-for="@Model.Target" id="EnnemyToAttack">
+            @foreach( Island i in Model.EnnemyIslands )
+            {
+                <option value="@i.IslandId" pos-x="@i.Coordinates.X" pos-y="@i.Coordinates.Y" nameOwner="@i.Owner.Name">
+                    @i.Name , @i.Owner.Name , [@i.Coordinates.X, @i.Coordinates.Y] 
+                </option>
+            }
+        </select>
+
+        <input type="submit" value="Envoyer les unités" />
+
+    </form>
+    <script src="/js/AttackManager.js"></script>
+}
+else
+{
+    <p>Vous n'avez pas encore d'armée, allez au portail d'invocation pour vous préparer à la guerre</p>
+}

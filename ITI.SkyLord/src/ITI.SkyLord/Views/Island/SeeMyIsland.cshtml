@@ -5,6 +5,8 @@
 @using System.Collections.Generic
 @using ITI.SkyLord
 @using ITI.SkyLord.ViewModel.Partial
+@using ITI.SkyLord.Models.Entity_Framework.Entites.Events
+
 
 
 @{
@@ -61,13 +63,15 @@
 
             <div class="templatebuilding" id="ui_@i" buildingname="@name" style="display:none;">
                 @{
-                    Level nextLevel;
-                    if (!Model.NextLevel.TryGetValue(i, out nextLevel))
-                    {
-                        nextLevel = null;
-                    }
+                    // On cherche le next s'il existe
+                    Level nextLevel = null;
+                    Model.NextLevel.TryGetValue(i, out nextLevel);
 
+                    // On cherche les buildings event s'ils existent
+                    List<BuildingEvent> buildingEvent = new List<BuildingEvent>();
+                    Model.AllBuildingEventOnIsland.TryGetValue(i, out buildingEvent);
 
+                    // On balance le view model à notre partial
                     BuildingPartialViewModel partialModel = new BuildingPartialViewModel()
                     {
                         CurrentBuilding = myBuilding,
@@ -77,7 +81,9 @@
                         CurrentArmy = Model.CurrentArmy,
                         AvailableUnit = Model.AvailableUnit,
                         AllUnits = Model.AllUnits,
-                        NextBuildingLevel = nextLevel
+                        NextBuildingLevel = nextLevel,
+                        EventsOnBuilding = buildingEvent
+
                     };
                     Write(Html.Partial("~/Views/Partial/" + name + ".cshtml", partialModel));
                 }

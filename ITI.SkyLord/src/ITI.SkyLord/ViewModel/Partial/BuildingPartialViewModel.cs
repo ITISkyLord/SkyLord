@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ITI.SkyLord.Models.Entity_Framework.Entites.Events;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,6 +19,7 @@ namespace ITI.SkyLord.ViewModel.Partial
         public Building CurrentBuilding { get; set; }
         public int Position { get; set; }
         public BuildingName TargetBuilding { get; set; }
+        public List<BuildingEvent> EventsOnBuilding { get; set; }
 
         // Invocation
         public Army CurrentArmy { get; set; }
