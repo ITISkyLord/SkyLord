@@ -11,7 +11,6 @@
         background-image: url("/images/WorldMap/Nuage.jpg");
         background-repeat: repeat;
         background-size: 500px 500px;
-
     }
     .map {
         background-image: url("/images/WorldMap/Nuage.jpg");
@@ -23,7 +22,7 @@
         border: black solid 2px;
         overflow: hidden;
     }
-    .map td {
+    .map td {   
         width: 64px;
         height: 64px;
         background-color: rgba(0,0,0,0);
@@ -36,12 +35,10 @@
     #MyIsland {
         background-color: pink;
     }
-    
     .Island:hover {
         cursor: pointer;
         border: solid black 5px;
     }
-    
     td.Island {
         background-image: url("/images/WorldMap/villagechibi.png");
         background-size: contain;
@@ -102,11 +99,17 @@
 <!-- Petit Menu OTD-->
 <div id="Menu" style="display:none;">
     <ul>
-        <li><a id="Attaquer" href="/Fight?islandId={{islandId}}">Attaquer</a></li>
-        <li><a id="Supporter" href="/Supporter?islandId={{islandId}}">Supporter</a></li>
-        <li><a id="Espionner" href="/Espionner?islandId={{islandId}}">Espionner</a></li>
-        <li><a id="Voir" href="/See?islandId={{islandId}}">Voir</a></li>
-        <li><a id="Message" href="/Message?islandId={{islandId}}">Message</a></li>
+        <li>
+        <form asp-controller="Army" asp-action="SetAttackingArmy" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId">
+            <input type="hidden" name="EnnemyIslandId" value="0" />
+            <input type="submit" value="Attaquer"/>
+        </form>
+        <li>
+            <form asp-controller="Profil" asp-action="ProfilOfOtherPlayer" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId">
+                <input type="hidden" name="EnnemyIslandId" value="0" />
+                <input type="submit" value="Voir profil"/>
+            </form>
+        </li>
     </ul>
 </div>
 

@@ -37,21 +37,36 @@ namespace ITI.SkyLord.Controllers
             return View(profilViewModel);
         }
 
-        public IActionResult ProfilOfOtherPlayer(long islandId, long id )
+        public IActionResult ProfilOfOtherPlayer(long islandId, long EnnemyIslandId)
         {
             //Récupérer la description dans la BDD
             Player currentPlayer = SetupContext.GetPlayer(User.GetUserId());
-            Player p = SetupContext.Players.Include(z => z.Profil).Where(x => x.PlayerId == id).First();
-            ViewData["name"] = p.Name;
-            ViewData["mail"] = p.Mail;
-            ViewData["id"] = p.PlayerId;
-            ViewData["currentPlayerId"] = currentPlayer.PlayerId;
+            Island ennemi = SetupContext.Islands.Include(i => i.Owner).Where(i => i.IslandId == EnnemyIslandId).FirstOrDefault();
 
             ProfilViewModel profilViewModel = new ProfilViewModel();
-            if (!String.IsNullOrEmpty(p.Profil.Description))
-                profilViewModel.Description = p.Profil.Description;
+            // Si le joueur existe => On affiche le profil
+            if(ennemi.Owner != null)
+            {
+                Player p = ennemi.Owner;
+                ViewData["name"] = p.Name;
+                ViewData["mail"] = p.Mail;
+                ViewData["id"] = p.PlayerId;
+                ViewData["currentPlayerId"] = currentPlayer.PlayerId;
+
+                if (!String.IsNullOrEmpty(p.Profil.Description))
+                    profilViewModel.Description = p.Profil.Description;
+                else
+                    profilViewModel.Description = "Aucune description";
+            }
+            // Sinon on dit que c'est un barbare et puis voilà :-)
             else
-                profilViewModel.Description = "Aucune description";
+            {
+                ViewData["name"] = "Barbare";
+                ViewData["mail"] = "barbare@skylord.fr";
+                ViewData["id"] = 0;
+                ViewData["currentPlayerId"] = 0;
+                profilViewModel.Description = "Cette île est inconnu";
+            }
 
             SetupContext.FillStandardVM(profilViewModel, SetupContext.GetPlayer(User.GetUserId()).PlayerId, islandId);
             return View(profilViewModel);

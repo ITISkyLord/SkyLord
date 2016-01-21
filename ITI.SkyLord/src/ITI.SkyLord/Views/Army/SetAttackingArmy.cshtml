@@ -3,7 +3,7 @@
 @using ITI.SkyLord
 
 @{
-    ViewData[ "Title" ] = "Armées";
+    ViewData["Title"] = "Armées";
     Layout = "_Layout";
 }
 
@@ -16,7 +16,44 @@
 </style>
 
 <h1>Armées</h1>
-@if( Model.CurrentDefenseArmy != null )
+
+<h2>Armées en cours de mouvement</h2>
+@{
+    var allAttackingArmies = Model.AllPlayerArmiesEvent.Where(a => a.Army.ArmyState == ArmyState.movement).OrderBy(a => a.EndingDate).ToList();
+    if (allAttackingArmies.Count != 0)
+    {
+        foreach (var army in allAttackingArmies)
+        {
+            if (army.Army.ArmyState == ArmyState.movement)
+            {
+                <p>
+                    @{
+                        if (@army.Destination.Owner != null)
+                        {
+                            <div>Attaque vers @army.Destination.Owner.Name [@army.Destination.Coordinates.X, @army.Destination.Coordinates.Y]</div>
+                        }
+                        else
+                        {
+                            <div>Attaque vers une île barbare [@army.Destination.Coordinates.X, @army.Destination.Coordinates.Y]</div>
+                        }
+                    }
+                    <br />
+                    Arrivé à @army.EndingDate.Hour heure @army.EndingDate.Minute minutes @army.EndingDate.Second secondes
+                </p>
+            }
+            <hr />
+
+        }
+    }
+    else
+    {
+        <p>Aucune attaque planifiée</p>
+    }
+}
+
+
+<h2>Planification d'une attaque</h2>
+@if (Model.CurrentDefenseArmy != null)
 {
     <form asp-controller="Army" asp-action="Fight" asp-route-islandId="@Model.Layout.IslandId" method="post" role="form">
 
@@ -32,27 +69,41 @@
 
             @foreach ( Regiment r in Model.CurrentDefenseArmy.Regiments )
             {
-                <tr>
-                    <td>@r.Unit.Name</td>
-                    <td>@r.Number</td>
-                    <td><input type="number" min="0" max="@r.Number" step="1" asp-for="UnitsToSend[r.Unit.UnitName.ToString()]" value="0"/></td>
-                </tr>
+            <tr>
+                <td>@r.Unit.Name</td>
+                <td>@r.Number</td>
+                <td><input type="number" min="0" max="@r.Number" step="1" asp-for="UnitsToSend[r.Unit.UnitName.ToString()]" value="0" /></td>
+            </tr>
             }
         </table>
 
         <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
 
         @* Petit moyen pour chercher l'île en fonction des coordonnées *@
-        <label for="pos-x"></label><input type="number" name="pos-x" value="@Model.EnnemyIslands.First().Coordinates.X"/>
-        <label for="pos-y"></label><input type="number" name="pos-y" value="@Model.EnnemyIslands.First().Coordinates.Y"/>
+        <label for="pos-x"></label><input type="number" name="pos-x" value="@Model.EnnemyIslands.First().Coordinates.X" />
+        <label for="pos-y"></label><input type="number" name="pos-y" value="@Model.EnnemyIslands.First().Coordinates.Y" />
 
         @* Choix de la cible *@
         <select asp-for="@Model.Target" id="EnnemyToAttack">
             @foreach( Island i in Model.EnnemyIslands )
             {
-                <option value="@i.IslandId" pos-x="@i.Coordinates.X" pos-y="@i.Coordinates.Y" nameOwner="@i.Owner.Name">
-                    @i.Name , @i.Owner.Name , [@i.Coordinates.X, @i.Coordinates.Y] 
-                </option>
+                string name = "";
+                if (i.Owner == null) { name = "Île sauvage"; }
+                else { name = i.Owner.Name; }
+
+                string selected = "";
+                if (Model.EnnemyIslandId == i.IslandId)
+                {
+            <option value="@i.IslandId" pos-x="@i.Coordinates.X" pos-y="@i.Coordinates.Y" nameOwner="@name" selected="selected">
+                @name [@i.Coordinates.X, @i.Coordinates.Y]
+            </option>
+                }
+                else
+                {
+            <option value="@i.IslandId" pos-x="@i.Coordinates.X" pos-y="@i.Coordinates.Y" nameOwner="@name">
+                @name [@i.Coordinates.X, @i.Coordinates.Y]
+            </option>
+                }
             }
         </select>
 

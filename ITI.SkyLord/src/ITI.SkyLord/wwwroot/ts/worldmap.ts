@@ -8,8 +8,6 @@ Gère la world map pour la vue /World
 
 */
 
-
-
 // Variables à définir en cas de changement de tailles des elements
 var taillecase: number = 64;
 var taillemap: number = 500;
@@ -33,40 +31,6 @@ $(document).ready(function () {
             }
         });
 
-    function TestConstraint(node: JQuery) {
-        var pos_x: number = parseInt($(node).css("top"));
-        var pos_y: number = parseInt($(node).css("left"));
-
-        if (pos_x >= 0 && pos_y >= 0) {
-            $(node).css("top", "-1px");
-            $(node).css("left", "-1px");
-            return false;
-        }
-        else if (pos_x < -5900 || pos_y < -5900) {
-            $(node).css("top", "-5899px");
-            $(node).css("left", "-5899px");
-            return false;
-        }
-        else if (pos_x < -5900) {
-            $(node).css("top", "-5899px");
-            return false;
-        }
-        else if (pos_y < -5900) {
-            $(node).css("left", "-5899px");
-            return false;
-        }
-        else if (pos_x >= 0) {
-            $(node).css("top", "-1px");
-            return false;
-        }
-        else if (pos_y >= 0) {
-            $(node).css("left", "-1px");
-            return false;
-        }
-
-    }
-
-
     // Récupère le node du menu quand on clique sur une island
     var menu: JQuery = $("#Menu");
 
@@ -75,7 +39,8 @@ $(document).ready(function () {
 
         // Met la bonne information dans le lien
         var islandId: number = +$(this).attr("islandid");
-        $("#Menu").attr( "islandid", islandId );
+        $("#Menu").attr("islandid", islandId);
+        $("input[name=EnnemyIslandId]").val(islandId);
 
         // Met l'affichage
         if ($(menu).css("display") == "none") {
@@ -83,8 +48,8 @@ $(document).ready(function () {
             var click_x = event.clientX;
             var click_y = event.clientY;
 
-            menu.css("top", click_y + "px");
-            menu.css("left", click_x-100+ "px");
+            menu.css("top", click_y-100 + "px");
+            menu.css("left", click_x-100 + "px");
             menu.fadeIn();
         }
         event.stopPropagation();
@@ -130,4 +95,36 @@ function GetCoordinate(islandNode: JQuery): Coordinate {
 
     return new Coordinate(pos_x, pos_y);
 }
+    function TestConstraint(node: JQuery) {
+        var pos_x: number = parseInt($(node).css("top"));
+        var pos_y: number = parseInt($(node).css("left"));
+
+        if (pos_x >= 0 && pos_y >= 0) {
+            $(node).css("top", "-1px");
+            $(node).css("left", "-1px");
+            return false;
+        }
+        else if (pos_x < -5900 || pos_y < -5900) {
+            $(node).css("top", "-5899px");
+            $(node).css("left", "-5899px");
+            return false;
+        }
+        else if (pos_x < -5900) {
+            $(node).css("top", "-5899px");
+            return false;
+        }
+        else if (pos_y < -5900) {
+            $(node).css("left", "-5899px");
+            return false;
+        }
+        else if (pos_x >= 0) {
+            $(node).css("top", "-1px");
+            return false;
+        }
+        else if (pos_y >= 0) {
+            $(node).css("left", "-1px");
+            return false;
+        }
+
+    }
  
