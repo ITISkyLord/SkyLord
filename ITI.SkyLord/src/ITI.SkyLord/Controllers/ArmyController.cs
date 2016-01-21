@@ -104,11 +104,23 @@ namespace ITI.SkyLord.Controllers
         //    return RedirectToAction( "Index", new { islandId = islandId } );
         //}
 
-        public IActionResult SetAttackingArmy( SetAttackingArmyViewModel model, long islandId = 0 )
+        public IActionResult SetAttackingArmy(SetAttackingArmyViewModel model, long islandId = 0, long EnnemyIslandId = 0)
         {
+            if (EnnemyIslandId != 0) model.EnnemyIslandId = EnnemyIslandId;
+
+            // Tout les mouvements d'armée de l'ile qui ne sont pas encore fait et qui ne sont pas obsolètes
+            model.AllPlayerArmiesEvent = SetupContext
+                .ArmyEvents
+                    .Include(i => i.Island)
+                    .Include(i => i.Army)
+                    .Include(i => i.Destination)
+                        .ThenInclude(i => i.Owner)
+                .Where(ae => ae.Island.IslandId == islandId && ae.Done==false && ae.Army.ArmyState != ArmyState.obsolete)
+                .ToList();
+
+
             return View( CreateSetAttackingArmyViewModel( model, islandId ) );
         }
-
 
         public IActionResult Fight( SetAttackingArmyViewModel model, long islandId = 0 )
         {
@@ -141,16 +153,7 @@ namespace ITI.SkyLord.Controllers
                 eventManager.AddArmyEvent( SetupContext, attackingArmy, attackingIsland, ArmyMovement.attacking, island );
                 SetupContext.SaveChanges();
 
-                //Army defendingArmy = island.Armies.Where( a => a.ArmyState == ArmyState.defense ).SingleOrDefault();
-                //if ( defendingArmy == null )
-                //    defendingArmy = new Army { Island = island, Regiments = new List<Regiment>(), ArmyState = ArmyState.defense };
-
-                //CombatResult combatResult = am.ResolveCombat( attackingArmy, defendingArmy );
-                //SetupContext.SaveChanges();
-
-                //SetupContext.FillStandardVM( combatReportViewModel, SetupContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
-
-                return View( "Index", CreateArmyViewModel( islandId ) );
+                return RedirectToAction("SetAttackingArmy", new { islandId=islandId });
             }
             else
             {
@@ -165,7 +168,7 @@ namespace ITI.SkyLord.Controllers
                 else
                     ModelState.AddModelError( "UnitsToSend", "Vous ne pouvez pas envoyer plus d'unités que vous n'en possédez." );
 
-                return View( "SetAttackingArmy", CreateSetAttackingArmyViewModel( model, islandId ) );
+                return RedirectToAction("SetAttackingArmy", new { islandId=islandId });
             }
         }
 
@@ -234,7 +237,13 @@ namespace ITI.SkyLord.Controllers
                                     .SingleOrDefault();
 
             long activePlayerId = SetupContext.GetPlayer( User.GetUserId() ).PlayerId;
-            model.EnnemyIslands = SetupContext.Islands.Include( i => i.Owner ).Include( i => i.Coordinates ).Where( i => i.Owner.PlayerId != activePlayerId && i.Owner != null ).ToList();
+
+            model.EnnemyIslands = 
+                SetupContext.Islands
+                    .Include( i => i.Owner )
+                    .Include( i => i.Coordinates )
+                .Where( i => i.Owner.PlayerId != activePlayerId )
+                .ToList();
 
             SetupContext.FillStandardVM( model, activePlayerId, islandId );
             return model;
