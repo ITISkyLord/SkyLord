@@ -9,7 +9,15 @@
 }
 
 <h1>Boite de réception</h1>
+<table>
+    <tr>
+        @foreach( Message m in Model.AllMessages.Where( u => u.isCombatReport == false) )
+        {
+            <td><a>@m.MessageObject</a></td>
 
+        }
+    </tr>
+</table>
 @foreach (Message m in Model.AllMessages)
 {
     <span>Auteur: </span>
