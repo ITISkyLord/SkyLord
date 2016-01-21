@@ -317,8 +317,6 @@ namespace ITI.SkyLord.Migrations
                     b.Property<long?>("ArmyId")
                         .HasAnnotation("Relational:ColumnName", "ArmyArmyId");
 
-                    b.Property<string>("Name");
-
                     b.Property<int>("Number");
 
                     b.Property<int?>("UnitUnitId");
@@ -448,8 +446,6 @@ namespace ITI.SkyLord.Migrations
                     b.Property<int>("PhysicResist");
 
                     b.Property<int>("Speed");
-
-                    b.Property<int>("TimeToBuild");
 
                     b.HasKey("UnitStatisticsId");
                 });
@@ -672,6 +668,17 @@ namespace ITI.SkyLord.Migrations
                     b.HasAnnotation("Relational:DiscriminatorValue", "FieldLevel");
                 });
 
+            modelBuilder.Entity("ITI.SkyLord.ShieldLevel", b =>
+                {
+                    b.HasBaseType("ITI.SkyLord.BuildingLevel");
+
+                    b.Property<int>("Defense");
+
+                    b.Property<int>("Offense");
+
+                    b.HasAnnotation("Relational:DiscriminatorValue", "ShieldLevel");
+                });
+
             modelBuilder.Entity("ITI.SkyLord.MageLevel", b =>
                 {
                     b.HasBaseType("ITI.SkyLord.Level");
@@ -705,7 +712,7 @@ namespace ITI.SkyLord.Migrations
                 {
                     b.HasBaseType("ITI.SkyLord.Models.Entity_Framework.Entites.Events.Event");
 
-                    b.Property<int?>("BuildingToBuildBuildingId");
+                    b.Property<int>("BuildingToBuild");
 
                     b.Property<int>("PositionToBuild");
 
@@ -1002,6 +1009,10 @@ namespace ITI.SkyLord.Migrations
                 {
                 });
 
+            modelBuilder.Entity("ITI.SkyLord.ShieldLevel", b =>
+                {
+                });
+
             modelBuilder.Entity("ITI.SkyLord.MageLevel", b =>
                 {
                 });
@@ -1023,9 +1034,6 @@ namespace ITI.SkyLord.Migrations
 
             modelBuilder.Entity("ITI.SkyLord.Models.Entity_Framework.Entites.Events.BuildingEvent", b =>
                 {
-                    b.HasOne("ITI.SkyLord.Building")
-                        .WithMany()
-                        .HasForeignKey("BuildingToBuildBuildingId");
                 });
 
             modelBuilder.Entity("ITI.SkyLord.Models.Entity_Framework.Entites.Events.TechnologyEvent", b =>

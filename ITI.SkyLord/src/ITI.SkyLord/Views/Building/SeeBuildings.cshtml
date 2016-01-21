@@ -18,14 +18,14 @@
                     <input type="number" value="@i" asp-for="@Model.Position" style="display : none" />
                     <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
 
-                    @Html.DropDownListFor( m => m.TargetBuilding, Model.AvailableConstructionBuildings, "-- Consutruire --", new { onchange = "this.form.submit()" } )
+                    @Html.DropDownListFor( m => m.TargetBuilding, Model.AvailableConstructionBuildings, "-- Construire --", new { onchange = "this.form.submit()" } )
                 </form>
             }
             else
             {
                 @building.Name { Write( " ( Niveau " ); } @building.Level.Number { Write( " ) " ); }
                 {
-                    string nextLevelCost = " Cout du prochain niveau : Bois "
+                    string nextLevelCost = " Coût du prochain niveau : Bois "
                         + Model.NextLevelCosts[i].Wood
                         + " Métal : " + Model.NextLevelCosts[ i ].Metal
                         + " Cristal : " + Model.NextLevelCosts[ i ].Cristal

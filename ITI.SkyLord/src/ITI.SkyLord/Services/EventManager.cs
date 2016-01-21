@@ -22,6 +22,17 @@ namespace ITI.SkyLord
             _unitEvents = new List<UnitEvent>();
         }
 
+        internal List<BuildingEvent> GetBuildingEventsOnThisBuildingPosition( long islandId, int position )
+        {
+            List<BuildingEvent> events = new List<BuildingEvent>();
+            // Récupérer les évènements liés à une position
+            events = _context.BuildingEvents
+                .Include( e => e.Island ).ThenInclude( e => e.Buildings )
+                .Where( i => i.Island.IslandId == islandId && i.PositionToBuild == position && i.Done == false)
+                .ToList();
+
+            return events;
+        }
         public void AddUnitEvent( IUnitEventContext ctx, Unit unit, int number, Island island )
         {
 
@@ -81,10 +92,23 @@ namespace ITI.SkyLord
             return numberOfSeconds;
         }
 
-        public void AddBuildingEvent( IBuildingEventContext ctx, Building building, Island island )
+        public void AddBuildingEvent( IBuildingEventContext ctx, BuildingName building, Island island, int position )
         {
             DateTime begginningDate = FindLastEndingDateInQueue( EventDiscrimator.BuildingEvent, island );
-            ctx.BuildingEvents.Add( new BuildingEvent() { EventType = EventDiscrimator.BuildingEvent, BuildingToBuild = building, BegginningDate = begginningDate, EndingDate = DateTime.Now.AddSeconds(/*TIME TO BUILD BUILDING */ 100 ), Done = false, Island = island } );
+
+            int duration = _allManager.BuildingManager.GetAvailableBuildings().Where(b => b.BuildingName == building).First().Level.Duration;
+
+            ctx.BuildingEvents.Add( new BuildingEvent()
+            {
+                EventType = EventDiscrimator.BuildingEvent,
+                BuildingToBuild = building,
+                BegginningDate = begginningDate,
+                EndingDate = DateTime.Now.AddSeconds(duration),
+                Done = false,
+                Island = island,
+                PositionToBuild = position
+            } );
+            ctx.SaveChanges();
         }
 
         public void AddUpgradeEvent( IBuildingEventContext ctx, Building building, Island island )
@@ -198,7 +222,8 @@ namespace ITI.SkyLord
             //  /!\ HERE IS THE PROBLEM with Include. /!\
             // UnitEvent unitEvent = _context.UnitEvents.Include(a=>a.Unit).ThenInclude( b => b.UnitStatistics ).Where( e => e.EventId == ue.EventId ).First();
 
-            Unit unit = _context.Units.Include( y => y.UnitStatistics ).Where( u => u.UnitId == ue.UnitIdd ).Single();
+            Unit unit = _context.Units.Include( u => u.Requirements).Include( u => u.UnitCost).Include( u => u.UnitStatistics )
+                .Single( u => u.UnitId == ue.UnitIdd );
             ArmyManager am = _allManager.ArmyManager;
             am.AddUnit( unit, 1, ue.Island );
             // TODO : Si plusieurs lignes sont finies en même temps, on peut les cumuler avec ArmyManager.AddUnit
@@ -269,15 +294,17 @@ namespace ITI.SkyLord
         }
         public void Resolve( TechnologyEvent te )
         {
-            throw new NotImplementedException();
+            TechnologyManager tm = new TechnologyManager( _context, new LevelManager(_context) , new BonusManager( _context ));
+            TechnologyEvent technoEvent = _context.TechnologyEvents
+                                                  .Include( e => e.Island )
+                                                  .Include( e => e.Technology )
+                                                  .Where( e => e.EventId == te.EventId).Single();
+            tm.AddTechnology( technoEvent.Technology.TechnologyName, technoEvent.Island.Owner.PlayerId, technoEvent.Island.IslandId );
         }
 
         internal void Resolve( BuildingEvent be )
         {
-            be = _context.BuildingEvents.Where( e => e.EventId == be.EventId ).Single();
-
-            // Cette methode sera à changer vu qu'il faut que l'on construise sur un emplacement précis de l'island
-            _allManager.BuildingManager.AddBuildingToIsland( be.BuildingToBuild.BuildingName, be.Island.IslandId, be.PositionToBuild );
+            _allManager.BuildingManager.AddBuildingToIsland(be.BuildingToBuild, be.Island.IslandId, be.PositionToBuild);
         }
 
         internal void Resolve( UpgradeEvent ue )

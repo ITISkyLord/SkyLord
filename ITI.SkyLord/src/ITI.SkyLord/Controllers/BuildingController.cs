@@ -64,41 +64,49 @@ namespace ITI.SkyLord.Controllers
         [HttpPost]
         public IActionResult AddBuilding( BuildingPartialViewModel model, long islandId = 0 )
         { 
+
             BuildingViewModel buildingViewModel = new BuildingViewModel();
+
             long playerId = SetupContext.GetPlayer( User.GetUserId() ).PlayerId;
+            Island island = SetupContext.GetIsland(islandId, playerId);
 
             BuildingManager buildingManager = new BuildingManager( SetupContext, new LevelManager( SetupContext ));
+            EventManager eventManager = new EventManager(SetupContext, new EventPackManager(SetupContext));
 
+            // Test assez de ressource
             if ( !buildingManager.IsEnoughForFirstLevel( model.TargetBuilding, islandId, playerId ) )
             {
                 return RedirectToAction( "SeeBuildings", new { islandId = islandId } );
             }
 
-            if ( buildingManager.AddBuildingToIsland( model.TargetBuilding, islandId, model.Position ) )
-            {
-                SetupContext.SaveChanges();
-            }
+            // Maintenant création de l'event pour la construction du building
+            eventManager.AddBuildingEvent(SetupContext, model.TargetBuilding, island, model.Position);
+
             return RedirectToAction( "SeeMyIsland", "Island", new { islandId = islandId } );
         }
 
-        public IActionResult LevelUpBuilding( BuildingViewModel model, long islandId = 0 )
+        public IActionResult LevelUpBuilding( int buildingPosition, long islandId = 0  )
         {
             long playerId = SetupContext.GetPlayer( User.GetUserId() ).PlayerId;
             BuildingViewModel buildingViewModel = new BuildingViewModel();
-
-            
             BuildingManager buildingManager = new BuildingManager( SetupContext, new LevelManager( SetupContext ));
-            
-            if ( !buildingManager.IsEnoughForNextLevel( model.TargetBuilding, islandId, playerId, model.Position ) )
+
+            // Récupère le building ciblé
+            Building buildingTarget = buildingManager.GetBuildingOnPosition(islandId, buildingPosition);
+
+            // Si pas assez de ressource
+            if ( !buildingManager.IsEnoughForNextLevel(buildingTarget.BuildingName, islandId, playerId, buildingTarget.Position ) )
             {
-                return RedirectToAction( "SeeBuildings", new { islandId = islandId } );
+                return RedirectToAction( "SeeMyIsland", "Island", new { islandId = islandId } );
             }
 
-            if ( buildingManager.LevelUpBuilding( model.TargetBuilding, islandId, playerId, model.Position ) )
+            // Si tout est bon => LevelUp
+            else if ( buildingManager.LevelUpBuilding(buildingTarget.BuildingName, islandId, playerId, buildingTarget.Position ) )
             {
                 SetupContext.SaveChanges();
             }
-            return RedirectToAction( "SeeBuildings", new { islandId = islandId } );
+
+            return RedirectToAction( "SeeMyIsland", "Island", new { islandId = islandId } );
         }
 
         private BuildingViewModel CreateBuildingViewModel( BuildingViewModel model, long islandId, long playerId )

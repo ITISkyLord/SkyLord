@@ -1,3 +1,14 @@
 ﻿@model ITI.SkyLord.ViewModel.Partial.BuildingPartialViewModel
 
-<p>Je suis un tower !!! :D</p>
+<h2>@Model.CurrentBuilding.BuildingName</h2>
+
+<p class="BuildingDescription">[Desription à faire]</p>
+
+
+@{    
+    Write(Html.Partial("~/Views/Partial/LevelUpBuilding.cshtml", Model));
+}
+
+<h3>Bonus actuel :</h3>
+
+

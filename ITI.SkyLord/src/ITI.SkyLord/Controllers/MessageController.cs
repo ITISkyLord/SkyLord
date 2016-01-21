@@ -9,12 +9,9 @@ using System.Threading.Tasks;
 
 namespace ITI.SkyLord.Controllers
 {
-    public class MessageController : Controller
+    public class MessageController : GenericController
     {
-
-        [FromServices]
-        public SetupContext SetupContext { get; set; }
-
+        
         [HttpGet]
         public IActionResult Index()
         {

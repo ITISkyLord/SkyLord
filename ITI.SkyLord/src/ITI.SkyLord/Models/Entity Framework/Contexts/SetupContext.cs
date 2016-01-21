@@ -79,10 +79,16 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
         public DbSet<User_Player> User_Players { get; set; }
         public DbSet<BuildingLevel> BuildingLevels { get; set; }
         public DbSet<TechnologyLevel> TechnologyLevels { get; set; }
-
-
-
-
+        public DbSet<FieldLevel> FieldLevels { get; set; }
+        public DbSet<ShieldLevel> ShieldLevels { get; set; }
+        public DbSet<BonusTechnology> BonusesTechnology { get; set; }
+        public DbSet<BonusTechnologyOnUnit> BonusTechnologyOnUnits { get; set; }
+        public DbSet<BonusTechnologyOnTechnology> BonusTechnologyOnTechnologies { get; set; }
+        public DbSet<BonusTechnologyOnBuilding> BonusTechnologyOnBuildings { get; set; }
+        public DbSet<BonusBuilding> BonusesBuilding { get; set; }
+        public DbSet<BonusBuildingOnUnit> BonusBuildingOnUnits { get; set; }
+        public DbSet<BonusBuildingOnTechnology> BonusBuildingOnTechnologies { get; set; }
+        public DbSet<BonusBuildingOnBuilding> BonusBuildingOnBuildings { get; set; }
         #endregion DbSet
 
         #region Enumerations
@@ -93,15 +99,7 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
         public EventType EventTypes { get; set; }
         public BuildingName BuildingName { get; set; }
         public TechnologyName TechnologyName { get; set; }
-        public DbSet<FieldLevel> FieldLevels { get; set; }
-        public DbSet<BonusTechnology> BonusesTechnology { get; set; }
-        public DbSet<BonusTechnologyOnUnit> BonusTechnologyOnUnits { get; set; }
-        public DbSet<BonusTechnologyOnTechnology> BonusTechnologyOnTechnologies { get; set; }
-        public DbSet<BonusTechnologyOnBuilding> BonusTechnologyOnBuildings { get; set; }
-        public DbSet<BonusBuilding> BonusesBuilding { get; set; }
-        public DbSet<BonusBuildingOnUnit> BonusBuildingOnUnits { get; set; }
-        public DbSet<BonusBuildingOnTechnology> BonusBuildingOnTechnologies { get; set; }
-        public DbSet<BonusBuildingOnBuilding> BonusBuildingOnBuildings { get; set; }
+        public BonusType BonusType { get; set; }
         #endregion Enumerations
 
         #region Helpers

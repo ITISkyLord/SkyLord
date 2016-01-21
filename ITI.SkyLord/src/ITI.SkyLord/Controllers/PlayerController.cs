@@ -15,12 +15,12 @@ namespace ITI.SkyLord.Controllers
     public class PlayerController : Controller
     {
         [FromServices]
-        public PlayerContext PlayerContext { get; set; }
+        public SetupContext PlayerContext { get; set; }
 
-        public IActionResult Index( long islandId = 0 )
+        public IActionResult Index(long islandId = 0)
         {
             StandardViewModel svm = new StandardViewModel();
-            PlayerContext.FillStandardVM( svm, PlayerContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
+            PlayerContext.FillStandardVM(svm, PlayerContext.GetPlayer(User.GetUserId()).PlayerId, islandId);
 
             return View();
         }
@@ -29,10 +29,10 @@ namespace ITI.SkyLord.Controllers
         /// See all players in the game SkyLord
         /// </summary>
         /// <returns></returns>
-        public IActionResult SeePlayers( long islandId = 0 )
+        public IActionResult SeePlayers(long islandId = 0)
         {
-            Player player = PlayerContext.GetPlayer( User.GetUserId() );
-            if ( player != null )
+            Player player = PlayerContext.GetPlayer(User.GetUserId());
+            if (player != null)
             {
                 List<Player> othersPlayer = PlayerContext.Players
                     .Include(p => p.Profil)
@@ -43,7 +43,7 @@ namespace ITI.SkyLord.Controllers
                 sp.Players = othersPlayer;
                 sp.ActivePlayer = player;
 
-                PlayerContext.FillStandardVM( sp, PlayerContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
+                PlayerContext.FillStandardVM(sp, PlayerContext.GetPlayer(User.GetUserId()).PlayerId, islandId);
 
                 return View(sp);
             }
@@ -53,7 +53,7 @@ namespace ITI.SkyLord.Controllers
             }
         }
 
-        public IActionResult SeeInformationOfAnPlayer( int id, long islandId = 0 )
+        public IActionResult SeeInformationOfAnPlayer(int id, long islandId = 0)
         {
             Player playerChoosen = PlayerContext.Players
                 .Include(a => a.Islands).ThenInclude(i => i.Coordinates)
@@ -64,12 +64,12 @@ namespace ITI.SkyLord.Controllers
             SeePlayersViewModel sp = new SeePlayersViewModel();
             sp.ActivePlayer = playerChoosen;
 
-            PlayerContext.FillStandardVM( sp, PlayerContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
+            PlayerContext.FillStandardVM(sp, PlayerContext.GetPlayer(User.GetUserId()).PlayerId, islandId);
 
             return View(sp);
         }
 
-        public IActionResult SeeInformationOfAnPlayerString( string namePlayer, long islandId = 0 )
+        public IActionResult SeeInformationOfAnPlayerString(string namePlayer, long islandId = 0)
         {
             Player playerChoosen = PlayerContext.Players
                 .Include(a => a.Islands).ThenInclude(i => i.Coordinates)
@@ -80,18 +80,21 @@ namespace ITI.SkyLord.Controllers
             SeePlayersViewModel sp = new SeePlayersViewModel();
             sp.ActivePlayer = playerChoosen;
 
-            PlayerContext.FillStandardVM( sp, PlayerContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
+            PlayerContext.FillStandardVM(sp, PlayerContext.GetPlayer(User.GetUserId()).PlayerId, islandId);
 
             return View(sp);
         }
 
 
 
-        public IActionResult Players( string name )
+        public IActionResult Players(string name)
         {
-           Player player = PlayerContext.GetPlayer(User.GetUserId());
+            Player player = PlayerContext.GetPlayer(User.GetUserId());
             var result = PlayerContext.Players.Where(p => p.PlayerId != player.PlayerId).Select(p => p.Name).ToArray();
-            return Json(result.Where(x => x.StartsWith(name, StringComparison.CurrentCultureIgnoreCase)).ToArray());
+
+            if (result.Contains(name)) return Json(result.Where(x => x.StartsWith(name, StringComparison.CurrentCultureIgnoreCase)).ToArray());
+
+            else return RedirectToAction("SeeMyIsland", "Island");
         }
     }
 }

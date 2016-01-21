@@ -1,0 +1,53 @@
+﻿@addTagHelper "*, Microsoft.AspNet.Mvc.TagHelpers"
+@model ITI.SkyLord.ViewModel.Technologies.TechnologyViewModel
+
+@{
+    ViewData["Title"] = "Vue des technologies";
+    Layout = "_Layout";
+}
+<h3> Technologies actuelles</h3>
+<ul>
+    
+    @foreach( Technology tech in Model.Technologies)
+    {
+        <form asp-route-islandId="@Model.Layout.CurrentIsland.IslandId" asp-controller="Technology" asp-action="AddTechnology">
+            @Html.DropDownListFor( m => m.TargetTechnology, Model.AvailableSearchingTechnologies, "-- Rechercher --", new { onchange = "this.form.submit()" } )
+
+
+        </form>
+    }
+    @*@for( int i = 0; i < Model.Layout.CurrentIsland.PossiblePositions; i++ )
+    {
+        Technology building = Model.Layout.CurrentPlayer.Technologies.Where( b => b. == i ).SingleOrDefault();
+        <li>
+            <h4>Emplacement @i :</h4>
+            @if( building == null )
+            {
+                <form asp-route-islandId="@Model.Layout.CurrentIsland.IslandId" asp-controller="Building" asp-action="AddBuilding">
+                    <input type="number" value="@i" asp-for="@Model.Position" style="display : none" />
+                    <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
+
+                    @Html.DropDownListFor( m => m.TargetBuilding, Model.AvailableConstructionBuildings, "-- Consutruire --", new { onchange = "this.form.submit()" } )
+                </form>
+            }
+            else
+            {
+                @building.Name { Write( " ( Niveau " ); } @building.Level.Number { Write( " ) " ); }
+                {
+                    string nextLevelCost = " Cout du prochain niveau : Bois "
+                        + Model.NextLevelCosts[i].Wood
+                        + " Métal : " + Model.NextLevelCosts[ i ].Metal
+                        + " Cristal : " + Model.NextLevelCosts[ i ].Cristal
+                        + " Magie : " + Model.NextLevelCosts[ i ].Magic;
+                    Write( nextLevelCost );
+                }
+                <form asp-route-islandId="@Model.Layout.CurrentIsland.IslandId" asp-controller="Building" asp-action="LevelUpBuilding">
+                    <input type="number" value=@{ Write( (int)building.BuildingName ); } asp-for="@Model.TargetBuilding" style="display : none" />
+                    <input type="number" value="@i" asp-for="@Model.Position" style="display : none" />
+                    <button type="submit" class="btn btn-link navbar-btn navbar-link">Level Up </button>
+                </form>
+    }
+        </li>
+    }*@
+</ul>
+

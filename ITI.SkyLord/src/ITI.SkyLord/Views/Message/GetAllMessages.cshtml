@@ -12,7 +12,9 @@
 
 @foreach (Message m in Model.AllMessages)
 {
-    @m.Sender.Name
-    Write( m.CoreMessage );
+    <span>Auteur: </span>
+    @m.Sender.Name;
+    <br />
+    @m.CoreMessage;
     <hr />
 }

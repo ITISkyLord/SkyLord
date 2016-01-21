@@ -999,55 +999,25 @@ namespace ITI.SkyLord.Tests.EfTests
         //}
 
 
-        #region SeedLevels
+        #region Seed
+
+        //[Test]
+        //public void SeedAllTheThings()
+        //{
+        //    LevelSeed levelSeed = new LevelSeed();
+        //    UnitSeed unitSeed = new UnitSeed();
+        //    levelSeed.SeedLevels();
+        //    unitSeed.SeedUnits();
+        //}
 
         [Test]
-        public void SeedLevels_for_Barrack_works()
+        public void AvailabilityTest()
         {
-            LevelSeed levelSeed = new LevelSeed();
-            levelSeed.SeedBarrackLevels();
-        }
+            RequirementAvailability ra = new RequirementAvailability();
+            //ra.Availabilities.Add( new Availability { Available = true, Requirement = null } );
+            //ra.Availabilities.Add( new Availability { Available = true, Requirement = null } );
 
-        [Test]
-        public void SeedLevels_for_Tower_works()
-        {
-            LevelSeed levelSeed = new LevelSeed();
-            levelSeed.SeedTowerLevels();
-        }
-
-        [Test]
-        public void SeedLevels_for_WoodField_works()
-        {
-            LevelSeed levelSeed = new LevelSeed();
-            levelSeed.SeedWoodLevels();
-        }
-
-        [Test]
-        public void SeedLevels_for_CristalField_works()
-        {
-            LevelSeed levelSeed = new LevelSeed();
-            levelSeed.SeedCristalLevels();
-        }
-
-        [Test]
-        public void SeedLevels_for_MagicField_works()
-        {
-            LevelSeed levelSeed = new LevelSeed();
-            levelSeed.SeedMagicLevels();
-        }
-
-        [Test]
-        public void SeedLevels_for_MetalField_works()
-        {
-            LevelSeed levelSeed = new LevelSeed();
-            levelSeed.SeedMetalLevels();
-        }
-
-        [Test]
-        public void SeedLevels_for_Invocation_works()
-        {
-            LevelSeed levelSeed = new LevelSeed();
-            levelSeed.SeedInvocationLevels();
+            Assert.IsTrue( ra.IsItemAvailable );
         }
         #endregion
 
@@ -1062,7 +1032,7 @@ namespace ITI.SkyLord.Tests.EfTests
             };
         }
 
-        void AddPlayerAndUser( Player p, CustomContext context )
+        void AddPlayerAndUser( Player p, SetupContext context )
         {
             ApplicationUser appUser = new ApplicationUser();
             User_Player userPlayer = new User_Player( p, appUser );
@@ -1072,7 +1042,7 @@ namespace ITI.SkyLord.Tests.EfTests
             context.User_Players.Add( userPlayer );
         }
 
-        void RemovePlayerAndUser( Player p, CustomContext context )
+        void RemovePlayerAndUser( Player p, SetupContext context )
         {
                 context.Remove( p );
                 context.User_Players.Remove( p.UserPlayer );

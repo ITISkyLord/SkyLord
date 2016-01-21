@@ -6463,7 +6463,9 @@ button.close {
 .SkyLordContainer:before,
 .SkyLordContainer:after,
 .SkyLordContainer .SkyLordMainRow:before,
-.SkyLordContainer .SkyLordMainRow:after {
+.SkyLordContainer .SkyLordMainRow:after,
+.SkyLordContainer .profilContainer:before,
+.SkyLordContainer .profilContainer:after {
   content: " ";
   display: table;
 }
@@ -6484,7 +6486,8 @@ button.close {
 .modal-header:after,
 .modal-footer:after,
 .SkyLordContainer:after,
-.SkyLordContainer .SkyLordMainRow:after {
+.SkyLordContainer .SkyLordMainRow:after,
+.SkyLordContainer .profilContainer:after {
   clear: both;
 }
 .center-block {
@@ -6730,23 +6733,15 @@ button.close {
     display: none !important;
   }
 }
-/*.Section (@background-image: url("../images/SkyLord.png")) {
-    border: solid black 3px;
-    border-radius: 20px;
-    background-color: #fff;
-    background-image: @background-image;
-    height: auto;
-    width:auto;
-}*/
 html,
 body {
   height: 100%;
 }
 .navbar {
   margin-bottom: 0;
-  background-color: rgba(255, 255, 255, 0.94);
-  background-image: url("../images/site_fond2.png");
-  /*.Image();*/
+  background-image: url("../images/site_haut2.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
   z-index: 9999;
   border: 0;
   font-size: 17px !important;
@@ -6755,7 +6750,8 @@ body {
   border-radius: 0;
 }
 .navbar .navbar-nav li input[type=text] {
-  padding: 1px 15px 1px 15px;
+  padding: 2px 10px 2px 10px;
+  line-height: 40px;
 }
 .navbar li a,
 .navbar li button[type=submit],
@@ -6774,6 +6770,10 @@ body {
 .navbar .btn-link {
   padding: 15px 15px 15px 15px;
   color: #825847;
+  font-size: 17px;
+  font-weight: bold;
+  line-height: 20px;
+  letter-spacing: 4px;
 }
 .navbar .btn-link:hover {
   padding: 15px 15px 15px 15px;
@@ -6781,9 +6781,12 @@ body {
   color: #825847;
   font-weight: bold;
 }
+.navbar .navbar-nav li a {
+  color: #825847;
+  font-weight: bold;
+}
 .navbar .navbar-nav li a:hover,
-.navbar .navbar-nav li button[type=submit]:hover,
-.navbar .navbar-nav li.active a {
+.navbar .navbar-nav li button[type=submit]:hover {
   background-color: whitesmoke;
   padding: 15px 15px 15px 15px;
   text-decoration: none !important;
@@ -6800,24 +6803,37 @@ body {
   top: 0px;
   left: 0px;
 }
-.jumbotron {
+.ui-autocomplete {
+  background-image: url("../images/site_ressource.png");
+  width: 100%;
   height: 10px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  color: #825847;
+  font-size: 17px;
+  font-weight: bold;
+}
+.jumbotron {
   margin: 0;
-  background-image: url("../images/site_fond2.png");
+  margin-top: 29px;
+  background-image: url("../images/site_ressource.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  padding: 74px;
 }
 .SkyLordContainer {
   margin-right: auto;
   margin-left: auto;
   padding-left: 15px;
   padding-right: 15px;
-  border: solid black 3px;
   border-radius: 1px;
   background-color: "white";
   height: auto;
-  width: auto;
+  width: 100%;
   height: 100%;
   background-image: url("../images/site_fond.png");
-  background-size: 1560px;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
 }
 .SkyLordContainer > .navbar-header,
 .SkyLordContainer > .navbar-collapse {
@@ -6838,24 +6854,23 @@ body {
 }
 .SkyLordContainer .SkyLordMainRow .SkylordSideBar {
   position: relative;
+  float: left;
   width: 8.33333333%;
   min-height: 1px;
   padding-left: 15px;
   padding-right: 15px;
-  border: solid black 3px;
   border-radius: 1px;
   background-color: "white";
   height: auto;
-  width: auto;
+  width: 100%;
   line-height: 30px;
+  font-size: 12px;
   height: 100%;
-  width: 600px;
-  float: left;
+  width: auto;
   padding: 0;
   margin: 0;
-  background-image: url("../images/site_fond2.png");
-  overflow: auto;
-  /* Enable scrolling if the sidenav has too much content */
+  background-image: url("../images/site_side.png");
+  background-size: 100% 100%;
 }
 @media (min-width: 1200px) {
   .SkyLordContainer .SkyLordMainRow .SkylordSideBar {
@@ -6954,7 +6969,8 @@ body {
                     .Col(2);
                     .Section(green);
                 }
-            }*/
+            }
+        }*/
 }
 @media (min-width: 1200px) {
   .SkyLordContainer .SkyLordMainRow .PageContent {
@@ -6974,35 +6990,206 @@ body {
     width: 91.66666667%;
   }
 }
-.carousel-control.right,
-.carousel-control.left {
-  background-image: none;
-  color: #f4511e;
+.SkyLordContainer .profilContainer {
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 1px;
+  background-color: "white";
+  height: auto;
+  width: 100%;
+  height: 100%;
+  background-image: url("../images/sitecarton.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
 }
-.carousel-indicators li {
-  border-color: #f4511e;
+.SkyLordContainer .profilContainer > .navbar-header,
+.SkyLordContainer .profilContainer > .navbar-collapse {
+  margin-right: -15px;
+  margin-left: -15px;
 }
-.carousel-indicators li .carousel-indicators li.active {
-  background-color: #f4511e;
+@media (min-width: 768px) {
+  .SkyLordContainer .profilContainer > .navbar-header,
+  .SkyLordContainer .profilContainer > .navbar-collapse {
+    margin-right: 0;
+    margin-left: 0;
+  }
 }
-.item h4 {
-  font-size: 19px;
-  line-height: 1.375em;
-  font-weight: 400;
+.SkyLordContainer .profilContainer #pp {
+  padding: 5px;
+}
+.SkyLordContainer .profilContainer blockquote {
+  border-left: none;
+}
+.SkyLordContainer .form-control {
+  text-align: center;
+  font-weight: bold;
   font-style: italic;
-  margin: 70px 0;
 }
-.item h4 .item span {
-  font-style: normal;
+.SkyLordContainer #SeeMyIsland {
+  border: 1px solid #f4511e;
+  border-radius: 0;
+  transition: box-shadow 0.5s;
+  width: 500px;
+  height: 580px;
+  background-image: url("/images/SeeMyIsland/nuage_fond.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  display: block;
+  border: solid #825847 2px;
+}
+.SkyLordContainer #SeeMyIsland #Island {
+  position: relative;
+  top: 0px;
+  left: 0px;
+  display: block;
+  width: 500px;
+  min-width: 500px;
+  max-width: 500px;
+  height: 600px;
+  min-height: 600px;
+  max-height: 600px;
+  background-image: url("/images/SeeMyIsland/ile.png");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.SkyLordContainer #SeeMyIsland .Building {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  border: black solid 1px;
+}
+.SkyLordContainer #SeeMyIsland .Building img {
+  width: 50px;
+  height: 50px;
+}
+.SkyLordContainer #SeeMyIsland #place_1 {
+  top: 213px;
+  left: 209px;
+}
+.SkyLordContainer #SeeMyIsland #place_2 {
+  top: 236px;
+  left: 209px;
+}
+.SkyLordContainer #SeeMyIsland #place_3 {
+  top: 167px;
+  left: 140px;
+}
+.SkyLordContainer #SeeMyIsland #place_4 {
+  top: 150px;
+  left: 90px;
+}
+.SkyLordContainer #SeeMyIsland #place_5 {
+  top: 140px;
+  left: 140px;
+}
+.SkyLordContainer #SeeMyIsland #place_6 {
+  top: 105px;
+  left: 209px;
+}
+.SkyLordContainer #SeeMyIsland #place_7 {
+  top: 38px;
+  left: 270px;
+}
+.SkyLordContainer #SeeMyIsland #place_8 {
+  top: -44px;
+  left: 332px;
+}
+.SkyLordContainer #SeeMyIsland #place_9 {
+  top: -126px;
+  left: 276px;
+}
+.SkyLordContainer #SeeMyIsland #place_10 {
+  top: -25px;
+  left: 209px;
+}
+.SkyLordContainer #SeeMyIsland .Building[buildingname="tower"] {
+  height: 100px;
+  min-height: 100px;
+}
+.SkyLordContainer #SeeMyIsland .Building[buildingname="tower"] img {
+  width: 50px;
+  height: 100px;
+}
+.SkyLordContainer .templatebuilding {
+  border: 1px solid #825847;
+  border-radius: 0;
+  transition: box-shadow 0.5s;
+  width: 580px;
+  height: 580px;
+  background-image: url("../images/site_ressource.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: block;
+  overflow: auto;
+}
+.SkyLordContainer .templatebuilding .buildings {
+  border: 1px solid white;
+}
+.SkyLordContainer .templatebuilding .buildings .building-head {
+  text-align: center;
+  color: whitesmoke;
+  font-weight: bold;
+  font-size: 17px;
+  background-image: url("../images/site_haut2.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  padding: 10px;
+  border-bottom: 1px solid transparent;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+.SkyLordContainer .templatebuilding .buildings .building-body {
+  color: #825847;
+  font-weight: bold;
+  font-size: 13px;
+  text-align: center;
+}
+.SkyLordContainer .templatebuilding .buildings .building-btn {
+  text-align: center;
+}
+.SkyLordContainer .templatebuilding .buildings .building-btn .btn-link {
+  color: #825847;
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 3px;
+  text-decoration: none;
+  text-align: center;
+}
+.SkyLordContainer .templatebuilding .buildings .building-btn .btn-link:hover {
+  color: #825847;
+  font-weight: bold;
+  letter-spacing: 3px;
+  background-color: whitesmoke;
+}
+.SkyLordContainer .seePlayers {
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+}
+.SkyLordContainer .seePlayers .table th {
+  color: white;
+  font-weight: bold;
+}
+.SkyLordContainer .seePlayers .table td {
+  color: #825847;
+  font-weight: bold;
 }
 footer {
   font-size: 17px;
   margin-bottom: 1px;
-  background-image: url("../images/site_fond2.png");
+  background-image: url("../images/site_haut3.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
 }
 footer li,
 footer a {
   color: #825847;
+  font-weight: bold;
 }
 footer li a:hover {
   color: #825847;

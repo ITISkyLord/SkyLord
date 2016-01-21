@@ -61,16 +61,20 @@ namespace ITI.SkyLord
                 armyFound = newArmy;
             }
 
+            // Look for a regiment containing the same unitName
             Regiment regimentFound = CurrentContext.Regiments.FirstOrDefault( r => r.ArmyId == armyFound.ArmyId && r.Unit.UnitId == unit.UnitId );
             if ( regimentFound == null )
             {
-                Unit unitToAdd = CloneUnit( unit );
-
-                // BonusManager.ResolveUnitBonus( unitToAdd, island.Owner.PlayerId );
+                // If the regiment with this specific unit was not found, resolve bonuses on the unit and add it (and its stats) to the DB
+                // The already present units normally have been updated each time a new bonus was added by a technology
+                Unit modifiedUnit = BonusManager.ResolveAllUnitBonuses( unit, island.Owner.PlayerId, island.IslandId );
+                CurrentContext.Add( modifiedUnit.UnitStatistics );
+                CurrentContext.Add( modifiedUnit );
 
                 Regiment newRegiment = new Regiment
                 {
-                    Unit = CurrentContext.Units.SingleOrDefault( u => u.UnitId == unit.UnitId ),
+                    //Unit = CurrentContext.Units.SingleOrDefault( u => u.UnitId == unit.UnitId ),
+                    Unit = unit,
                     Number = number,
                     ArmyId = armyFound.ArmyId
                 };
@@ -78,6 +82,7 @@ namespace ITI.SkyLord
             }
             else
             {
+                // If the regiment was found, just update the number : the unit is already modified when a new technology was added to the player
                 regimentFound.Number += number;
             }
 
@@ -227,12 +232,11 @@ namespace ITI.SkyLord
             {
                 int number = (int)( r.Number * ratio );
                 loss.Add( r.Unit.Name, number );
-                Console.WriteLine( "number in the unit : " + r.Name + " = " + r.Number );
+                Console.WriteLine( "number in the unit :  = " + r.Number );
                 Console.WriteLine( "loss = " + number );
                 this.SubstractFromRegiment( army, r.Unit, number);
             }
             return loss;
-          //  CurrentContext.SaveChanges(); À voir si ça été changé après l'impact sur l'attaqué, EventManager
         }
 
         internal void SubstractFromArmy( Army armyToRemoveFrom, Army armyToBeRemoved )

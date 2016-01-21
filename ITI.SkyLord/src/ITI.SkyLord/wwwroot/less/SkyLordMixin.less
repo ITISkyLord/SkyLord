@@ -1,20 +1,10 @@
 ﻿@import "bootstrap/bootstrap.less";
 
-/*.Section (@background-image: url("../images/SkyLord.png")) {
-    border: solid black 3px;
-    border-radius: 20px;
-    background-color: #fff;
-    background-image: @background-image;
-    height: auto;
-    width:auto;
-}*/
-
 .Section (@background-color: "white") {
-    border: solid black 3px;
     border-radius: 1px;
     background-color: @background-color;
     height: auto;
-    width: auto;
+    width: 100%;
 }
 
 .Section2 (@background-color: "white") {
@@ -25,7 +15,8 @@
 
 .Image(@background-image: url("../images/site_fond.png")) {
     background-image: @background-image;
-    background-size:1560px;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
 }
 
 .Col(@nb: 1) {

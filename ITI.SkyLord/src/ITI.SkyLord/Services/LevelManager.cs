@@ -56,75 +56,175 @@ namespace ITI.SkyLord
                 return false;
         }
 
-        public bool IsNextLevelAvailable( Level currentLevel, long currentIslandId )
+        /// <summary>
+        /// Gets the availability of the next level of a building on an island.
+        /// </summary>
+        /// <param name="currentLevel"></param>
+        /// <param name="currentIslandId"></param>
+        /// <returns></returns>
+        public RequirementAvailability GetNextLevelAvailablility( Building building, long currentIslandId )
         {
-            Level nextLevel = FindNextLevel( currentLevel );
-            long activePlayerId = CurrentContext.Islands.SingleOrDefault( i => i.IslandId == currentIslandId ).Owner.PlayerId;
+            Level currentLevel = building.Level;
 
-            Island currentIsland = CurrentContext.GetIsland( currentIslandId, activePlayerId );
-            if ( nextLevel != null )
+            if ( currentLevel == null )
             {
-                return AreAllRequirementsMet( (List<Requirement>)FindNextLevel( currentLevel ).Requirements, currentIslandId );
+                currentLevel = CurrentContext.BuildingLevels.Single( b => b.LevelId == building.Level.LevelId );
             }
-            return false;
+            Level nextLevel = FindNextLevel( currentLevel );
+
+            if( nextLevel == null )
+            {
+                return new RequirementAvailability { Availabilities = new List<Availability> { new Availability { Available = false, Requirement = null } } };
+            }
+            return CreateAvailability( (List<Requirement>)nextLevel.Requirements, currentIslandId );
         }
 
-        public bool IsUnitAvailable( Unit unit, long currentIslandId )
+        /// <summary>
+        /// Gets the availability of the next level of a technology.
+        /// </summary>
+        /// <param name="currentLevel"></param>
+        /// <param name="currentIslandId"></param>
+        /// <returns>A RequirementAvailability object</returns>
+        public RequirementAvailability GetNextLevelAvailablility( Technology technology, long currentIslandId )
         {
-            return AreAllRequirementsMet( (List<Requirement>)unit.Requirements, currentIslandId );
+            Level currentLevel = technology.Level;
+
+            if ( currentLevel == null )
+            {
+                currentLevel = CurrentContext.TechnologyLevels.Single( b => b.LevelId == technology.Level.LevelId );
+            }
+            Level nextLevel = FindNextLevel( currentLevel );
+
+            if ( nextLevel == null )
+            {
+                return new RequirementAvailability { Availabilities = new List<Availability> { new Availability { Available = false, Requirement = null } } };
+            }
+            return CreateAvailability( (List<Requirement>)nextLevel.Requirements, currentIslandId );
+        }
+
+        /// <summary>
+        /// Gets the availability of a building on an island.
+        /// Need to include Requirements of the building level.
+        /// </summary>
+        /// <param name="building"></param>
+        /// <param name="currentIslandId"></param>
+        /// <returns>A RequirementAvailability object</returns>
+        public RequirementAvailability GetAvailablility( Building building, long currentIslandId )
+        {
+            List<Requirement> requirements = (List<Requirement>)building.Level.Requirements;
+
+            if ( building.Level == null || building.Level.Requirements == null )
+            {
+                requirements = (List<Requirement>)CurrentContext.BuildingLevels.Single( bl => bl.LevelId == building.Level.LevelId ).Requirements;
+            }
+            return CreateAvailability( requirements, currentIslandId );
+        }
+
+        /// <summary>
+        /// Gets the availability of a technology.
+        /// Need to include Requirements of the technology.
+        /// </summary>
+        /// <param name="technology"></param>
+        /// <param name="currentIslandId"></param>
+        /// <returns>A RequirementAvailability object</returns>
+        public RequirementAvailability GetAvailablility( Technology technology, long currentIslandId )
+        {
+            List<Requirement> requirements = (List<Requirement>)technology.Level.Requirements;
+
+            if ( technology.Level == null || technology.Level.Requirements == null )
+            {
+                requirements = (List<Requirement>)CurrentContext.TechnologyLevels.Single( tl => tl.LevelId == technology.Level.LevelId ).Requirements;
+            }
+
+            return CreateAvailability( (List<Requirement>)technology.Level.Requirements, currentIslandId );
+        }
+
+        /// <summary>
+        /// Gets the availability of a unit on an island.
+        /// Need to include Requirements of the unit.
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <param name="currentIslandId"></param>
+        /// <returns>A RequirementAvailability object</returns>
+        public RequirementAvailability GetAvailablility( Unit unit, long currentIslandId )
+        {
+            List<Requirement> requirements = (List<Requirement>)unit.Requirements;
+
+            if( unit.Requirements == null )
+            {
+                requirements = (List<Requirement>)CurrentContext.Units.Single( u => u.UnitId == unit.UnitId ).Requirements;
+            }
+            return CreateAvailability( requirements, currentIslandId );
         }
 
         public Level FindNextLevel( Level currentLevel )
         {
             Level levelFound = null;
+            // Recherche si Building
             if ( currentLevel is BuildingLevel )
             {
                 BuildingLevel buildingLevel = (BuildingLevel)currentLevel;
-
                 levelFound = CurrentContext.BuildingLevels.Include( bl => bl.Requirements ).Include( bl => bl.Cost )
                     .SingleOrDefault( bl => bl.BuildingName == buildingLevel.BuildingName && bl.Number == buildingLevel.Number + 1 );
             }
+            // Recherche si Technology
             else if ( currentLevel is TechnologyLevel )
             {
                 TechnologyLevel technoLevel = (TechnologyLevel)currentLevel;
-
                 levelFound = CurrentContext.TechnologyLevels.Include( bl => bl.Requirements ).Include( bl => bl.Cost )
                     .SingleOrDefault( bl => bl.TechnologyName == technoLevel.TechnologyName && bl.Number == technoLevel.Number + 1 );
             }
             return levelFound;
         }
 
-        public bool AreAllRequirementsMet( List<Requirement> requirements, long currentIslandId )
+        /// <summary>
+        /// Creates a RequirementAvailability from a RequirementList
+        /// </summary>
+        /// <param name="requirements">The requirements to check</param>
+        /// <param name="currentIslandId">The current island</param>
+        /// <returns></returns>
+        private RequirementAvailability CreateAvailability( List<Requirement> requirements, long currentIslandId )
         {
-            //If there is no requirement, return true
-            if ( requirements == null || requirements.Count() == 0 )
-                return true;
+            RequirementAvailability availability = new RequirementAvailability();
+            if( requirements == null || requirements.Count() < 1 )
+            {
+                return availability;
+            }
 
             List<Building> buildingsOnIsland = GetBuildingsOnCurrentIsland( currentIslandId );
             IList<Technology> playersTechnologies = CurrentContext.Islands.SingleOrDefault( i => i.IslandId == currentIslandId ).Owner.Technologies;
-
-            // If requirements contains at least a technology but the player doesn't have any yet, return false
-            if ( playersTechnologies == null && requirements.Any( r => r.TechnologyName != TechnologyName.none ) )
-                return false;
-
-            if ( playersTechnologies != null )
+            if( playersTechnologies == null )
             {
+                playersTechnologies = new List<Technology>();
+            }
+            //// If requirements contains at least a technology but the player doesn't have any yet, return null
+            //if ( playersTechnologies == null && requirements.Any( r => r.TechnologyName != TechnologyName.none ) )
+            //    return null;
+
+            //if ( playersTechnologies != null )
+            //{
                 foreach ( Requirement requirement in requirements.Where( r => r.TechnologyName != TechnologyName.none ) )
                 {
-                    if ( !IsTechnologyRequirementMet( requirement, playersTechnologies ) )
-                        return false;
+                    availability.Availabilities.Add( new Availability
+                    {
+                        Available = IsTechnologyRequirementMet( requirement, playersTechnologies ),
+                        Requirement = requirement
+                    } );
                 }
-            }
+            //}
 
             foreach ( Requirement requirement in requirements.Where( r => r.BuildingName != BuildingName.none ) )
             {
-                if ( !IsBuildingRequirementMet( requirement, buildingsOnIsland ) )
-                    return false;
+                availability.Availabilities.Add( new Availability
+                {
+                    Available = IsBuildingRequirementMet( requirement, buildingsOnIsland ),
+                    Requirement = requirement
+                } );
             }
-            return true;
+            return availability;
         }
 
-        public bool IsBuildingRequirementMet( Requirement buildingRequirement, IList<Building> buildingsOnIsland )
+        private bool IsBuildingRequirementMet( Requirement buildingRequirement, IList<Building> buildingsOnIsland )
         {
             bool met = false;
             if ( buildingsOnIsland.Any( b => b.BuildingName == buildingRequirement.BuildingName && b.Level.Number == buildingRequirement.Number ) )
@@ -132,7 +232,7 @@ namespace ITI.SkyLord
             return met;
         }
 
-        public bool IsTechnologyRequirementMet( Requirement technologyRequirement, IList<Technology> playersTechnologies )
+        private bool IsTechnologyRequirementMet( Requirement technologyRequirement, IList<Technology> playersTechnologies )
         {
             bool met = false;
             if ( playersTechnologies.Any( b => b.TechnologyName == technologyRequirement.TechnologyName && b.Level.Number == technologyRequirement.Number ) )

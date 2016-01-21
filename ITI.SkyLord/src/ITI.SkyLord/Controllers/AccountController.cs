@@ -21,11 +21,8 @@ namespace ITI.SkyLord.Models.Entity_Framework.Controllers
     public class AccountController : Controller
     {
         [FromServices]
-        public PlayerContext PlayerContext { get; set; }
-
-        [FromServices]
-        public LevelContext LevelContext { get; set; }
-
+        public SetupContext SetupContext { get; set; }
+        
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
@@ -111,14 +108,14 @@ namespace ITI.SkyLord.Models.Entity_Framework.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(RegisterViewModel model)
+        public async Task<IActionResult> Register(AccountViewModel model)
         {
             if (ModelState.IsValid)
             {
-                //var user = new ApplicationUser { UserName = model.registerViewModel.Email, Email = model.registerViewModel.Email };
-                //var result = await _userManager.CreateAsync(user, model.registerViewModel.Password);
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await _userManager.CreateAsync(user, model.Password);
+                var user = new ApplicationUser { UserName = model.registerViewModel.Email, Email = model.registerViewModel.Email };
+                var result = await _userManager.CreateAsync(user, model.registerViewModel.Password);
+                //var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                //var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=532713
@@ -132,17 +129,17 @@ namespace ITI.SkyLord.Models.Entity_Framework.Controllers
 
                     Island island = null;
 
-                    using (PlayerContext context = new PlayerContext())
+                    using (SetupContext context = new SetupContext())
                     {
                         //    Player p = new Player( context.GetWorld(), model.Pseudo, model.Email, model.Password );
                         Player p = new Player();
                         p.World = context.GetWorld();
-                        //p.Name = model.registerViewModel.Pseudo;
-                        //p.Mail = model.registerViewModel.Email;
-                        //p.Password = model.registerViewModel.Password;
-                        p.Name = model.Pseudo;
-                        p.Mail = model.Email;
-                        p.Password = model.Password;
+                        p.Name = model.registerViewModel.Pseudo;
+                        p.Mail = model.registerViewModel.Email;
+                        p.Password = model.registerViewModel.Password;
+                        //p.Name = model.Pseudo;
+                        //p.Mail = model.Email;
+                        //p.Password = model.Password;
                         p.Profil = new Profil();
                         p.Profil.Description = "";
                         island = context.Islands.Include(i => i.Coordinates).Where(i => i.Owner == null ).OrderBy(i => IslandManager.DistanceFromCenter(i)).First();
@@ -163,10 +160,10 @@ namespace ITI.SkyLord.Models.Entity_Framework.Controllers
                         BuildingName = BuildingName.tower,
                         Name = "Tour de mage"
                     };
-                    LevelContext.Add( mageTower );
+                    SetupContext.Add( mageTower );
 
                     island.Buildings = new List<Building> { mageTower };
-                    LevelContext.SaveChanges();
+                    SetupContext.SaveChanges();
 
                     return RedirectToAction("SeeMyIsland", "Island");
                 }
@@ -175,8 +172,8 @@ namespace ITI.SkyLord.Models.Entity_Framework.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            //return RedirectToAction("Index", "Home");
-            return View( model );
+            return RedirectToAction("Index", "Home");
+            //return View( model );
         }
 
         [HttpPost]

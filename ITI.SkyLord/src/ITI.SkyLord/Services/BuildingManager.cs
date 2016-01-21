@@ -6,6 +6,7 @@ using ITI.SkyLord.Models.Entity_Framework.Contexts;
 using ITI.SkyLord.Models.Entity_Framework.Contexts.Interface;
 using Microsoft.Data.Entity;
 using ITI.SkyLord.Services;
+using System.Collections;
 
 namespace ITI.SkyLord
 {
@@ -56,7 +57,7 @@ namespace ITI.SkyLord
             };
             currentIsland.Buildings.Add( buildingToAdd );
 
-            // Substract the ressource
+            // Substract the ressource DO THIS WHEN BuildingEvent is fired !!
             RessourceManager.RemoveRessource( CurrentContext.GetIsland( currentIslandId, playerId ).AllRessources, buildingToAdd.Level.Cost );
 
             return true;
@@ -66,7 +67,7 @@ namespace ITI.SkyLord
         {
             Building buildingToLevelUp = GetBuildingsOnCurrentIsland( currentIslandId, playerId ).Single( b => b.BuildingName == buildingNameToLevelUp && b.Position == position );
 
-            if ( LevelManager.IsNextLevelAvailable( buildingToLevelUp.Level, currentIslandId ) )
+            if ( LevelManager.GetNextLevelAvailablility( buildingToLevelUp, currentIslandId ).IsItemAvailable )
             {
                 Level nextLevel = LevelManager.FindNextLevel( buildingToLevelUp.Level );
 
@@ -88,17 +89,18 @@ namespace ITI.SkyLord
             {
                 if ( buildingName != BuildingName.none )
                 {
-                    var firstLevel = CurrentContext.BuildingLevels.Include(l => l.Cost).Where(l => l.BuildingName == buildingName && l.Number == 1).SingleOrDefault();
+                    BuildingLevel firstLevel = CurrentContext.BuildingLevels.Include(l => l.Cost).Where(l => l.BuildingName == buildingName && l.Number == 1).SingleOrDefault();
 
-                    availableBuildings.Add( new Building { BuildingName = buildingName, Name = BuildingNameToName( buildingName ), Level= firstLevel} );
+                    availableBuildings.Add( new Building { BuildingName = buildingName, Name = BuildingNameToName( buildingName ), Level = firstLevel} );
                 }
             }
+
             return availableBuildings;
         }
 
-        public bool IsEnough( Ressource ressourceToChange, Ressource cost )
+        public Building GetBuildingOnPosition(long islandId, int position)
         {
-            return RessourceManager.IsEnough( ressourceToChange, cost );
+            return CurrentContext.Islands.Include(i => i.Buildings).Where(i => i.IslandId == islandId).Single().Buildings.Where(b => b.Position == position).FirstOrDefault();
         }
 
         public bool IsEnoughForNextLevel( BuildingName buildingName, long islandId, long playerId, int position )
@@ -120,7 +122,7 @@ namespace ITI.SkyLord
             return RessourceManager.IsEnough( CurrentContext.GetIsland( islandId, playerId ).AllRessources, buildingToLevelUp.Cost );
         }
 
-        private string BuildingNameToName( BuildingName buildingName )
+        static public string StaticBuildingNameToName (BuildingName buildingName)
         {
             string name;
             switch ( buildingName )
@@ -143,8 +145,6 @@ namespace ITI.SkyLord
                 case BuildingName.laboratory:
                     name = "Laboratoire";
                     break;
-                case BuildingName.library:
-                    name = "Bibliothèque";
                     break;
                 case BuildingName.magicField:
                     name = "Champ de magie";
@@ -159,13 +159,22 @@ namespace ITI.SkyLord
                     name = "Tour de Mage";
                     break;
                 case BuildingName.woodField:
-                    name = "Camp de bucherons";
+                    name = "Camp de bûcherons";
+                    break;
+                case BuildingName.forge:
+                    name = "Forge";
                     break;
                 default:
                     name = "Error";
                     break;
             }
             return name;
+        }
+
+
+        private string BuildingNameToName( BuildingName buildingName )
+        {
+            return BuildingManager.StaticBuildingNameToName(buildingName);
         }
 
         private bool IsBuildingUnique( BuildingName buildingName )
@@ -189,21 +198,15 @@ namespace ITI.SkyLord
 
         public List<Building> GetBuildingsOnCurrentIsland( long currentIslandId, long playerId )
         {
+            // Search Capital if islandId is not set
             if ( currentIslandId == 0 )
             {
                 currentIslandId = CurrentContext.Islands.Include( i => i.Owner ).Single( i => i.IsCapital && i.Owner.PlayerId == playerId ).IslandId;
             }
 
+
             if ( _lastCurrentIsland != currentIslandId )
             {
-                Island testIsland = CurrentContext.Islands.First( i => i.IslandId == currentIslandId );
-                Island testIsland2 = CurrentContext.Islands.Include( i => i.Buildings )
-                    .First( i => i.IslandId == currentIslandId );
-                Island testIsland3 = CurrentContext.Islands
-                    .Include( i => i.Buildings )
-                        .ThenInclude( b=> b.Level )
-                    .First( i => i.IslandId == currentIslandId );
-
                 _buildingsOnIlsand = CurrentContext.Islands
                     .Include( i => i.Buildings )
                     .ThenInclude( b => b.Level )
@@ -216,18 +219,34 @@ namespace ITI.SkyLord
                     buiding.Level.Cost = CurrentContext.Buildings.Include( b => b.Level ).ThenInclude( l => l.Cost )
                         .First( b => b.BuildingId == buiding.BuildingId ).Level.Cost;
                 }
+
             }
             return _buildingsOnIlsand;
         }
 
-        private bool LevelUpBuilding( Building buildingToLevelUp, long currentIslandId )
+        public List<Building> RemoveAlreadyBuiltBuilding (List<Building> availibleBuilding, List<Building> buildingBuilt)
         {
-            if ( LevelManager.IsNextLevelAvailable( buildingToLevelUp.Level, currentIslandId ) )
+            var listBuildingToRemove = new List<Building>();
+
+            // On fait la liste des buildings que l'on a déjà crée
+            foreach (Building b in availibleBuilding)
             {
-                return LevelManager.LevelUp( buildingToLevelUp );
+                if ( IsBuildingUnique(b.BuildingName) && buildingBuilt.Where(c => c.BuildingName == b.BuildingName).FirstOrDefault() != null)
+                {
+                    listBuildingToRemove.Add(b);
+                }
             }
-            return false;
+
+            // On efface ceux qui sont déjà crée
+            foreach(var b in listBuildingToRemove)
+            {
+                availibleBuilding.Remove(b);
+
+            }
+             
+            return availibleBuilding;
         }
+
 
     }
 }

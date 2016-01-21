@@ -2,38 +2,47 @@
 
 <h2>Portail d'invocation</h2>
 
-@if(Model.CurrentArmy == null)
-{
-    <p>Pas encore d'unité pour le moment</p>
+@{
+    Write(Html.Partial("~/Views/Partial/LevelUpBuilding.cshtml", Model)); 
 }
-else
-{
+
+
+
     <h3>Armée actuelle sur place :</h3>
     <table>
 
-    @foreach (var unit in Model.AllUnits)
-    {
-        <form asp-controller="Army" asp-action="AddUnit" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId">
-            <input type="hidden" asp-for="UnitTarget" value="@unit.Name" />
-            <tr>
-                <td>@unit.Name</td>
-                @{
+@foreach (var unit in Model.AvailableUnit)
+{
+    <form asp-controller="Army" asp-action="AddUnit" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId">
+        <input type="hidden" asp-for="UnitTarget" value="@unit.Name" />
+        <div class="row" style="margin-bottom: 20px;">
+            <div class="col-lg-2">@unit.Name</div>
+            @{
+                int number = 0;
+                if (Model.CurrentArmy != null)
+                {
                     var regiment = Model.CurrentArmy.Regiments.Where(r => r.Unit.Name == unit.Name).FirstOrDefault();
-                    var number = regiment == null ? 0 : regiment.Number;
+                    number = regiment == null ? 0 : regiment.Number;
                 }
-                <td>@number</td>
-                <td>@unit.UnitCost.Wood Bois</td>
-                <td>@unit.UnitCost.Metal Métal</td>
-                <td>@unit.UnitCost.Magic Magie</td>
-                <td>@unit.UnitCost.Cristal Cristal</td>
-                <td><input type="number" asp-for="UnitAmount" min="0" step="1" value="0" /></td>
-                <td><input type="submit" /></td>
-            </tr>
-        </form>
-                    }
-    </table>
-    
+
+            }
+            <div class="col-lg-1">@number</div>
+            <div class="col-lg-1">@unit.UnitCost.Wood Bois</div>
+            <div class="col-lg-1">@unit.UnitCost.Metal Métal</div>
+            <div class="col-lg-1">@unit.UnitCost.Magic Magie</div>
+            <div class="col-lg-1">@unit.UnitCost.Cristal Cristal</div>
+            @{ 
+                // Calcul du max d'unité que l'on peut faire pour cette unité
+
+            }
+            <div class="col-lg-3"><input style="width: 100%;" type="number" asp-for="UnitAmount" min="0" step="1" value="0" /></div>
+            <div class="col-lg-1"><input type="submit" value="Former"/></div>
+        </div>
+    </form>
 }
+</table>
+    
+
 
 
 
