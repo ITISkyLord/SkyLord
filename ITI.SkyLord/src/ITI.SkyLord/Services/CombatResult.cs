@@ -89,7 +89,7 @@ namespace ITI.SkyLord
                 CoreMessage = coreMessageWinner
             };
         }
-        public CombatResult( Army winningArmy, Army loosingArmy, CombatManager cm, ArmyEvent ae, SetupContext ctx )
+        public CombatResult( Army winningArmy, Army loosingArmy, CombatManager cm, ArmyEvent ae, SetupContext ctx, Army tmpWinArmy )
         {
             if( winningArmy == null ) throw new ArgumentNullException( "Winning Army", "The winning army cannot be null" );
             if( loosingArmy == null ) throw new ArgumentNullException( "Loosing Army", "The loosing army cannot be null" );
@@ -156,8 +156,8 @@ namespace ITI.SkyLord
 
             foreach( KeyValuePair<string, int> kvp in cm.Loss )
             {
-                coreMessageWinner += " \n" + kvp.Value + " " + kvp.Key /*+ " sur " + _winningArmy.Regiments.Where(a => a.Unit.Name == kvp.Key).Select( b => b.Number.ToString()).First()*/;
-                coreMessageLooser += " \n" + kvp.Value + " " + kvp.Key /*+ " sur " + _winningArmy.Regiments.Where(a => a.Unit.Name == kvp.Key).Select( b => b.Number.ToString()).First()*/;
+                coreMessageWinner += " \n" + kvp.Value + " " + kvp.Key + " sur " + tmpWinArmy.Regiments.Where(a => a.Unit.Name == kvp.Key).Select( b => b.Number.ToString()).First();
+                coreMessageLooser += " \n" + kvp.Value + " " + kvp.Key + " sur " + tmpWinArmy.Regiments.Where(a => a.Unit.Name == kvp.Key).Select( b => b.Number.ToString()).First();
 
             }
 
