@@ -14,6 +14,7 @@ namespace ITI.SkyLord
         public int Number { get; set; }
         public Ressource Cost { get; set; }
         public IList<Requirement> Requirements { get; set; }
+        public IList<Bonus> Bonuses { get; set; }
         public int Duration { get; set; }
     }
 }

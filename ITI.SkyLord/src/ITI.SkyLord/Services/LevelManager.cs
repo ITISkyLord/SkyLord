@@ -127,16 +127,16 @@ namespace ITI.SkyLord
         /// <param name="technology"></param>
         /// <param name="currentIslandId"></param>
         /// <returns>A RequirementAvailability object</returns>
-        public RequirementAvailability GetAvailablility( Technology technology, long currentIslandId )
+        public RequirementAvailability GetAvailablility( TechnologyLevel technologyLevel, long currentIslandId )
         {
-            List<Requirement> requirements = (List<Requirement>)technology.Level.Requirements;
+            List<Requirement> requirements = (List<Requirement>)technologyLevel.Requirements;
 
-            if ( technology.Level == null || technology.Level.Requirements == null )
+            if ( technologyLevel == null || technologyLevel.Requirements == null )
             {
-                requirements = (List<Requirement>)CurrentContext.TechnologyLevels.Single( tl => tl.LevelId == technology.Level.LevelId ).Requirements;
+                requirements = (List<Requirement>)CurrentContext.TechnologyLevels.Single( tl => tl.LevelId == technologyLevel.LevelId ).Requirements;
             }
 
-            return CreateAvailability( (List<Requirement>)technology.Level.Requirements, currentIslandId );
+            return CreateAvailability( (List<Requirement>)technologyLevel.Requirements, currentIslandId );
         }
 
         /// <summary>

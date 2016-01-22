@@ -81,14 +81,10 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
         public DbSet<TechnologyLevel> TechnologyLevels { get; set; }
         public DbSet<FieldLevel> FieldLevels { get; set; }
         public DbSet<ShieldLevel> ShieldLevels { get; set; }
-        public DbSet<BonusTechnology> BonusesTechnology { get; set; }
-        public DbSet<BonusTechnologyOnUnit> BonusTechnologyOnUnits { get; set; }
-        public DbSet<BonusTechnologyOnTechnology> BonusTechnologyOnTechnologies { get; set; }
-        public DbSet<BonusTechnologyOnBuilding> BonusTechnologyOnBuildings { get; set; }
-        public DbSet<BonusBuilding> BonusesBuilding { get; set; }
-        public DbSet<BonusBuildingOnUnit> BonusBuildingOnUnits { get; set; }
-        public DbSet<BonusBuildingOnTechnology> BonusBuildingOnTechnologies { get; set; }
-        public DbSet<BonusBuildingOnBuilding> BonusBuildingOnBuildings { get; set; }
+        public DbSet<Bonus> Bonuses { get; set; }
+        public DbSet<BonusOnUnit> BonusesOnUnit { get; set; }
+        public DbSet<BonusOnTechnology> BonusesOnTechnology { get; set; }
+        public DbSet<BonusOnBuilding> BonusesOnBuilding { get; set; }
         #endregion DbSet
 
         #region Enumerations
@@ -129,7 +125,7 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
 
             svm.Layout.AllIslands = Islands.Include(i => i.Owner).Where(i => i.Owner.PlayerId == playerId).ToList();
             svm.Layout.CurrentIsland = GetIsland(islandId, playerId);
-            svm.Layout.CurrentPlayer = Players.Single(p => p.PlayerId == playerId);
+            svm.Layout.CurrentPlayer = Players.Include( p => p.Technologies).ThenInclude( t => t.Level).Single(p => p.PlayerId == playerId);
             svm.Layout.IslandId = islandId;
         }
         /// <summary>

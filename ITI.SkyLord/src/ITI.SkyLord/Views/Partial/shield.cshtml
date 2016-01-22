@@ -13,13 +13,23 @@
     ShieldLevel building = (ShieldLevel)Model.CurrentBuilding.Level;
 }
 
-<h3>Caractéristiques</h3>
-<p>Attaque : @building.Offense</p>
-<p>Défense : @building.Defense</p>
+<div class="buildings-build">
+    <div class="buildings-build-body">
+        <div class="buildings-build-head">
+            <h3>Caractéristiques</h3>
+        </div>
+        <p>Attaque : @building.Offense</p>
+        <p>Défense : @building.Defense</p>
 
-<h3>Next Level</h3>
-@{
-    var nextLevel = (ShieldLevel)Model.NextBuildingLevel;
-}
-<p>Attaque : @nextLevel.Offense</p>
-<p>Défense : @nextLevel.Defense</p>
+
+        <div class="buildings-build-head">
+            <h3>Next Level</h3>
+        </div>
+        @{
+            var nextLevel = (ShieldLevel)Model.NextBuildingLevel;
+        }
+        <p>Attaque : @nextLevel.Offense</p>
+        <p>Défense : @nextLevel.Defense</p>
+
+    </div>
+</div>
