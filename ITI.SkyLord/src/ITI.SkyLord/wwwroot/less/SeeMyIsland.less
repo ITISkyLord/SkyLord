@@ -7,18 +7,17 @@
     color: #825847;
 }
 
-.MainContentSeeMyIsland
-{
+.MainContentSeeMyIsland {
     .Col(12);
-    text-align:center;
+    text-align: center;
 }
 
 // Partie See My Island
 #Test {
     .Col(6);
 }
-#SeeMyIsland { 
 
+#SeeMyIsland {
     border: 1px solid #f4511e;
     border-radius: 0;
     transition: box-shadow 0.5s;
@@ -125,104 +124,21 @@
 
 
 .templatebuilding {
-        border: 1px solid #825847;
-        border-radius: 0;
-        transition: box-shadow 0.5s;
-        width: 580px;
-        height: 580px;
-        .Image(url("../images/Site/site_ressource.png"));
-        background-repeat: no-repeat;
-        background-position: center;
-        display: block;
-        overflow: auto;
+    border: 1px solid #825847;
+    border-radius: 0;
+    transition: box-shadow 0.5s;
+    width: 580px;
+    height: 580px;
+    .Image(url("../images/Site/site_ressource.png"));
+    background-repeat: no-repeat;
+    background-position: center;
+    display: block;
+    overflow: auto;
 
-        .buildings {
-            border: 1px solid white;
+    .buildings {
+        border: 1px solid white;
 
-            .building-head {
-                text-align: center;
-                color: whitesmoke;
-                font-weight: bold;
-                font-size: 17px;
-                background-image: url("../images/Site/site_haut2.png");
-                background-repeat: no-repeat;
-                background-size: 100% 100%;
-                padding: 10px;
-                border-bottom: 1px solid transparent;
-                border-top-left-radius: 0px;
-                border-top-right-radius: 0px;
-                border-bottom-left-radius: 0px;
-                border-bottom-right-radius: 0px;
-            }
-
-            .building-body {
-                color: #825847;
-                font-weight: bold;
-                font-size: 13px;
-                text-align: center;
-            }
-
-            .building-btn {
-                text-align: center;
-
-                .Button();
-
-                .ButtonHover();
-            }
-        }
-        // For the buildings that were already created
-        .head {
-            text-align: center;
-            color: #825847;
-            font-weight: bold;
-            font-size: 17px;
-            background-image: url("../images/Site/site_haut2.png");
-            background-repeat: no-repeat;
-            background-size: 100% 100%;
-            padding: 10px;
-            border-bottom: 1px solid transparent;
-            border-top-left-radius: 0px;
-            border-top-right-radius: 0px;
-            border-bottom-left-radius: 0px;
-            border-bottom-right-radius: 0px;
-        }
-
-        .buildings-build {
-            border: 1px solid white;
-
-            .buildings-build-head {
-                text-align: center;
-                color: whitesmoke;
-                font-weight: bold;
-                font-size: 25px;
-                background-image: url("../images/Site/site_haut2.png");
-                background-repeat: no-repeat;
-                background-size: 100% 100%;
-                padding: 10px;
-                border-bottom: 1px solid transparent;
-                border-top-left-radius: 0px;
-                border-top-right-radius: 0px;
-                border-bottom-left-radius: 0px;
-                border-bottom-right-radius: 0px;
-            }
-
-            .buildings-build-body {
-                color: #825847;
-                font-weight: bold;
-                font-size: 13px;
-                text-align: center;
-
-
-                .buildings-build-body-txt {
-                    padding: 20px;
-                }
-
-                .Button();
-                .ButtonHover();
-            }
-        }
-
-        .buildings-build-foot {
+        .building-head {
             text-align: center;
             color: whitesmoke;
             font-weight: bold;
@@ -237,4 +153,102 @@
             border-bottom-left-radius: 0px;
             border-bottom-right-radius: 0px;
         }
+
+        .building-body {
+            color: #825847;
+            font-weight: bold;
+            font-size: 13px;
+            text-align: center;
+        }
+
+        .building-btn {
+            text-align: center;
+            .Button();
+            .ButtonHover();
+        }
     }
+
+    .invocation-building {
+        .text {
+            color: #825847;
+            font-weight: bold;
+            font-style: italic;
+        }
+
+        .cost {
+            color: #825847;
+            font-weight: bold;
+            font-style: italic;
+        }
+
+        .Button();
+        .ButtonHover();
+    }
+    // For the buildings that were already created
+    .head {
+        text-align: center;
+        color: #825847;
+        font-weight: bold;
+        font-size: 17px;
+        background-image: url("../images/Site/site_haut2.png");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        padding: 10px;
+        border-bottom: 1px solid transparent;
+        border-top-left-radius: 0px;
+        border-top-right-radius: 0px;
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 0px;
+    }
+
+    .buildings-build {
+        border: 1px solid white;
+
+        .buildings-build-head {
+            text-align: center;
+            color: whitesmoke;
+            font-weight: bold;
+            font-size: 25px;
+            background-image: url("../images/Site/site_haut2.png");
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            padding: 10px;
+            border-bottom: 1px solid transparent;
+            border-top-left-radius: 0px;
+            border-top-right-radius: 0px;
+            border-bottom-left-radius: 0px;
+            border-bottom-right-radius: 0px;
+        }
+
+        .buildings-build-body {
+            color: #825847;
+            font-weight: bold;
+            font-size: 13px;
+            text-align: center;
+
+
+            .buildings-build-body-txt {
+                padding: 20px;
+            }
+
+            .Button();
+            .ButtonHover();
+        }
+    }
+
+    .buildings-build-foot {
+        text-align: center;
+        color: whitesmoke;
+        font-weight: bold;
+        font-size: 17px;
+        background-image: url("../images/Site/site_haut2.png");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        padding: 10px;
+        border-bottom: 1px solid transparent;
+        border-top-left-radius: 0px;
+        border-top-right-radius: 0px;
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 0px;
+    }
+}

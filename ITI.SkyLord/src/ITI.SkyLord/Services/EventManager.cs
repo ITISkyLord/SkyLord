@@ -213,6 +213,7 @@ namespace ITI.SkyLord
 
             return queue;
         }
+
         #region Resolve
 
         /// <summary>
@@ -365,11 +366,14 @@ namespace ITI.SkyLord
             //    CombatReportViewModel combatReportViewModel = new CombatReportViewModel { CombatResult = combatResult };
 
         }
+
         public void Resolve( TechnologyEvent te )
         {
             TechnologyManager tm = new TechnologyManager( _context, new LevelManager( _context ), new BonusManager( _context ) );
             TechnologyEvent technoEvent = _context.TechnologyEvents.Single( e => e.EventId == te.EventId );
-            if ( tm.GetPlayersTechnologies( technoEvent.Island.Owner.PlayerId ).Any( t => t.TechnologyName == technoEvent.TechnologyName ) )
+
+            List<Technology> playersTechnologies = tm.GetPlayersTechnologies( technoEvent.Island.Owner.PlayerId );
+            if ( playersTechnologies.Any( t => t.TechnologyName == technoEvent.TechnologyName ) )
             {
                 tm.LevelUpTechnology( technoEvent.TechnologyName, technoEvent.Island.Owner.PlayerId, technoEvent.Island.IslandId );
             }
@@ -382,6 +386,16 @@ namespace ITI.SkyLord
 
             // Update all the units with the newly added bonus
             tm.BonusManager.ResolvePlayersArmies( technoEvent.Island.Owner.PlayerId, technoEvent.Island.IslandId );
+
+            // If the conquest technology has been upgraded, upgrade the max island of the player
+            if( te.TechnologyName == TechnologyName.conquest )
+            {
+                Technology conquest = playersTechnologies.Single( t => t.TechnologyName == TechnologyName.conquest );
+                if( conquest.Level.Number > 1 )
+                {
+                    _context.Players.Single( p => p.PlayerId == technoEvent.Island.Owner.PlayerId ).MaxIsland = 1 + ( conquest.Level.Number / 2 );
+                }
+            }
         }
 
         internal void Resolve( BuildingEvent be )

@@ -6803,12 +6803,6 @@ body {
   border-color: transparent;
   color: #fff;
 }
-.navbar .img-responsive {
-  height: 75px;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-}
 .ui-autocomplete {
   background-image: url("../images/Site/site_ressource.png");
   width: 100%;
