@@ -45,7 +45,7 @@ namespace ITI.SkyLord.Controllers
 
             ProfilViewModel profilViewModel = new ProfilViewModel();
             // Si le joueur existe => On affiche le profil
-            if(ennemi.Owner != null)
+            if(ennemi != null)
             {
                 Player p = ennemi.Owner;
                 ViewData["name"] = p.Name;
