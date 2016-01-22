@@ -1,2 +1,240 @@
-﻿body {
+﻿@import "SkyLordMixin.less";
+
+.island-header {
+    .Col(12);
+    .Image(url("../images/Site/sitecarton.png"));
+    text-align: center;
+    color: #825847;
 }
+
+.MainContentSeeMyIsland
+{
+    .Col(12);
+    text-align:center;
+}
+
+// Partie See My Island
+#Test {
+    .Col(6);
+}
+#SeeMyIsland { 
+
+    border: 1px solid #f4511e;
+    border-radius: 0;
+    transition: box-shadow 0.5s;
+    width: 500px;
+    height: 580px;
+    background-image: url("/images/SeeMyIsland/nuage_fond.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    display: block;
+    border: solid #825847 2px;
+
+    #Island {
+        position: relative;
+        top: 0px;
+        left: 0px;
+        display: block;
+        width: 500px;
+        min-width: 500px;
+        max-width: 500px;
+        height: 600px;
+        min-height: 600px;
+        max-height: 600px;
+        background-image: url("/images/SeeMyIsland/ile.png");
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
+    .Building {
+        position: relative;
+        width: 50px;
+        height: 50px;
+        border: black solid 1px;
+    }
+
+    .Building img {
+        width: 50px;
+        height: 50px;
+    }
+
+    #place_1 {
+        top: 213px;
+        left: 209px;
+    }
+
+    #place_2 {
+        top: 236px;
+        left: 209px;
+    }
+
+    #place_3 {
+        top: 167px;
+        left: 140px;
+    }
+
+    #place_4 {
+        top: 150px;
+        left: 90px;
+    }
+
+    #place_5 {
+        top: 140px;
+        left: 140px;
+    }
+
+    #place_6 {
+        top: 105px;
+        left: 209px;
+    }
+
+    #place_7 {
+        top: 38px;
+        left: 270px;
+    }
+
+    #place_8 {
+        top: -44px;
+        left: 332px;
+    }
+
+    #place_9 {
+        top: -126px;
+        left: 276px;
+    }
+
+    #place_10 {
+        top: -25px;
+        left: 209px;
+    }
+
+    .Building[buildingname="tower"] {
+        height: 100px;
+        min-height: 100px;
+    }
+
+    .Building[buildingname="tower"] img {
+        width: 50px;
+        height: 100px;
+    }
+}
+
+#UI {
+    .Col(6);
+}
+
+
+.templatebuilding {
+        border: 1px solid #825847;
+        border-radius: 0;
+        transition: box-shadow 0.5s;
+        width: 580px;
+        height: 580px;
+        .Image(url("../images/Site/site_ressource.png"));
+        background-repeat: no-repeat;
+        background-position: center;
+        display: block;
+        overflow: auto;
+
+        .buildings {
+            border: 1px solid white;
+
+            .building-head {
+                text-align: center;
+                color: whitesmoke;
+                font-weight: bold;
+                font-size: 17px;
+                background-image: url("../images/Site/site_haut2.png");
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
+                padding: 10px;
+                border-bottom: 1px solid transparent;
+                border-top-left-radius: 0px;
+                border-top-right-radius: 0px;
+                border-bottom-left-radius: 0px;
+                border-bottom-right-radius: 0px;
+            }
+
+            .building-body {
+                color: #825847;
+                font-weight: bold;
+                font-size: 13px;
+                text-align: center;
+            }
+
+            .building-btn {
+                text-align: center;
+
+                .Button();
+
+                .ButtonHover();
+            }
+        }
+        // For the buildings that were already created
+        .head {
+            text-align: center;
+            color: #825847;
+            font-weight: bold;
+            font-size: 17px;
+            background-image: url("../images/Site/site_haut2.png");
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            padding: 10px;
+            border-bottom: 1px solid transparent;
+            border-top-left-radius: 0px;
+            border-top-right-radius: 0px;
+            border-bottom-left-radius: 0px;
+            border-bottom-right-radius: 0px;
+        }
+
+        .buildings-build {
+            border: 1px solid white;
+
+            .buildings-build-head {
+                text-align: center;
+                color: whitesmoke;
+                font-weight: bold;
+                font-size: 25px;
+                background-image: url("../images/Site/site_haut2.png");
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
+                padding: 10px;
+                border-bottom: 1px solid transparent;
+                border-top-left-radius: 0px;
+                border-top-right-radius: 0px;
+                border-bottom-left-radius: 0px;
+                border-bottom-right-radius: 0px;
+            }
+
+            .buildings-build-body {
+                color: #825847;
+                font-weight: bold;
+                font-size: 13px;
+                text-align: center;
+
+
+                .buildings-build-body-txt {
+                    padding: 20px;
+                }
+
+                .Button();
+                .ButtonHover();
+            }
+        }
+
+        .buildings-build-foot {
+            text-align: center;
+            color: whitesmoke;
+            font-weight: bold;
+            font-size: 17px;
+            background-image: url("../images/Site/site_haut2.png");
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            padding: 10px;
+            border-bottom: 1px solid transparent;
+            border-top-left-radius: 0px;
+            border-top-right-radius: 0px;
+            border-bottom-left-radius: 0px;
+            border-bottom-right-radius: 0px;
+        }
+    }

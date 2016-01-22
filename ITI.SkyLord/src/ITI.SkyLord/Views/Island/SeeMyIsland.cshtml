@@ -17,18 +17,48 @@
 }
 
 <div class="island-header">
-    <h2>@Model.CurrentIsland.Name (@Model.CurrentIsland.Coordinates.X, @Model.CurrentIsland.Coordinates.Y)</h2>
+    <h3>@Model.CurrentIsland.Name (@Model.CurrentIsland.Coordinates.X, @Model.CurrentIsland.Coordinates.Y)</h3>
 </div>
 
 
-<div class="row">
-    <div id="SeeMyIsland" class="col-sm-6 col-md-6">
-        <div id="Island">
+<div class="MainContentSeeMyIsland">
+    <div class="row">
+
+        <div id="Test">
+            <div id="SeeMyIsland">
+
+                <div id="Island">
+                    @for (var i = 1; i != 11; i++)
+                    {
+                        Building myBuilding;
+                        string name;
+
+
+                        @if (Model.DicoBuildings.TryGetValue(i.ToString(), out myBuilding))
+                {
+                    name = myBuilding.BuildingName.ToString();
+                }
+                else
+                {
+                    name = "empty";
+                }
+
+                        <div class="Building" buildingname="@name" id="place_@i" templateid="@i">
+                            @{
+                                name += ".png";
+                            }
+                            <img src="~/images/SeeMyIsland/@name" alt=@name />
+                        </div>
+                                }
+                </div>
+            </div>
+        </div>
+        <div id="UI">
+
             @for (var i = 1; i != 11; i++)
             {
                 Building myBuilding;
                 string name;
-             
 
                 @if (Model.DicoBuildings.TryGetValue(i.ToString(), out myBuilding))
                 {
@@ -39,63 +69,38 @@
                     name = "empty";
                 }
 
-                <div class="Building" buildingname="@name" id="place_@i" templateid="@i">
+                <div class="templatebuilding" id="ui_@i" buildingname="@name" style="display:none;">
                     @{
-                        name += ".png";
-                    }
-                    <img src="~/images/SeeMyIsland/@name" alt=@name />
-                </div>
-                        }
-        </div>
-    </div>
+                        // On cherche le next s'il existe
+                        Level nextLevel = null;
+                        Model.NextLevel.TryGetValue(i, out nextLevel);
 
-    <div id="UI" class="col-sm-6 col-md-6">
+                        // On cherche les buildings event s'ils existent
+                        List<BuildingEvent> buildingEvent = new List<BuildingEvent>();
+                        Model.AllBuildingEventOnIsland.TryGetValue(i, out buildingEvent);
 
-        @for (var i = 1; i != 11; i++)
-            {
-                Building myBuilding;
-                string name;
-
-            @if (Model.DicoBuildings.TryGetValue(i.ToString(), out myBuilding))
-            {
-                name = myBuilding.BuildingName.ToString();
-            }
-            else
-            {
-                name = "empty";
-            }
-
-            <div class="templatebuilding" id="ui_@i" buildingname="@name" style="display:none;">
-                @{
-                    // On cherche le next s'il existe
-                    Level nextLevel = null;
-                    Model.NextLevel.TryGetValue(i, out nextLevel);
-
-                    // On cherche les buildings event s'ils existent
-                    List<BuildingEvent> buildingEvent = new List<BuildingEvent>();
-                    Model.AllBuildingEventOnIsland.TryGetValue(i, out buildingEvent);
-
-                    // On balance le view model à notre partial
-                    BuildingPartialViewModel partialModel = new BuildingPartialViewModel()
-                    {
-                        CurrentBuilding = myBuilding,
-                        Position = i,
-                        AvailableBuildings = Model.AvailableBuildings,
-                        Layout = Model.Layout,
-                        CurrentArmy = Model.CurrentArmy,
-                        AvailableUnit = Model.AvailableUnit,
-                        AllUnits = Model.AllUnits,
-                        NextBuildingLevel = nextLevel,
-                        EventsOnBuilding = buildingEvent,
+                        // On balance le view model à notre partial
+                        BuildingPartialViewModel partialModel = new BuildingPartialViewModel()
+                        {
+                            CurrentBuilding = myBuilding,
+                            Position = i,
+                            AvailableBuildings = Model.AvailableBuildings,
+                            Layout = Model.Layout,
+                            CurrentArmy = Model.CurrentArmy,
+                            AvailableUnit = Model.AvailableUnit,
+                            AllUnits = Model.AllUnits,
+                            NextBuildingLevel = nextLevel,
+                            EventsOnBuilding = buildingEvent
 
                         TechnologyDisplays = Model.TechnologyDisplays,
                         TargetTechnology = Model.TargetTechnology,
                         TechnologyManager = Model.TechnologyManager
-                    };
-                    Write(Html.Partial("~/Views/Partial/" + name + ".cshtml", partialModel));
-                }
-            </div>
+                        };
+                        Write(Html.Partial("~/Views/Partial/" + name + ".cshtml", partialModel));
                     }
+                </div>
+                        }
+        </div>
     </div>
 </div>
 
