@@ -91,7 +91,7 @@ html, body {
 }
 
 .SkyLordContainer {
-    margin-top:49px;
+    margin-top: 49px;
     .container-fluid;
     .Section();
     height: 100%;
@@ -130,30 +130,36 @@ html, body {
                 background-color: whitesmoke;
                 color: #825847;
             }
+
+            .img-responsive {
+                height: 75px;
+                position: absolute;
+                top: 0px;
+                left: 0px;
+            }
         }
 
         .PageContent {
-
             .Col(11);
+
             .RessourceLine {
                 background-image: url("../images/Site/site_ressource.png");
                 background-size: 100% 100%;
                 background-repeat: no-repeat;
-                padding:5px;
+                /*padding: 50px;*/
                 margin: 5px;
 
                 form {
                     text-align: center;
                 }
             }
-            .TroopMovement {
 
+            .TroopMovement {
             }
+
             .ViewContentRow {
                 .row;
-
             }
-
         }
     }
     // Part Profil
@@ -180,47 +186,29 @@ html, body {
         color: #825847;
         background-color: whitesmoke;
     }
+}
 
-        }
+// Part View Players
+.playerContainer {
+    .container-fluid;
+    .Section();
+    height: 100%;
+    .Image(url("../images/Site/sitecarton.png"));
+    overflow: auto;
 
-        .invocation-building {
-            .text {
-                color: #825847;
-                font-weight: bold;
-                font-style: italic;
-            }
+    .seePlayers {
+        color: white;
+        font-weight: bold;
+        font-size: 20px;
 
-            .cost {
-                color: #825847;
-                font-weight: bold;
-                font-style: italic;
-            }
-
-            .Button();
-            .ButtonHover();
-    
-    // Part View Players
-    .playerContainer {
-        .container-fluid;
-        .Section();
-        height: 100%;
-        .Image(url("../images/Site/sitecarton.png"));
-        overflow: auto;
-
-        .seePlayers {
+        .table th {
             color: white;
             font-weight: bold;
-            font-size: 20px;
+        }
 
-            .table th {
-                color: white;
-                font-weight: bold;
-            }
-
-            .table td {
-                color: #825847;
-                font-weight: bold;
-            }
+        .table td {
+            color: #825847;
+            font-weight: bold;
         }
     }
 }
