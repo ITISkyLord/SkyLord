@@ -3,7 +3,7 @@
 @using ITI.SkyLord
 
 @{
-    ViewData["Title"] = "Armées";
+    ViewData["Title"] = "Envoyer des ressources";
     Layout = "_Layout";
 }
 
@@ -53,7 +53,7 @@
 
 
 <h2>Planification d'un envoi de ressources</h2>
-@if (Model.CurrentTransportorArmy != null)
+@if (Model.NumberOfTransportorToSend > 0 )
 {
     <form asp-controller="Army" asp-action="SendRessources" asp-route-islandId="@Model.Layout.IslandId" method="post" role="form">
 
@@ -70,12 +70,29 @@
                 <td>Transporteur</td>
                 <td>@Model.NumberOfTransportorToSend</td>
                 @*Doute sur le max*@
-                <td><input type="number" min="0" max="@Model.CurrentTransportorArmy.Regiments.First().Number" step="1" asp-for="NumberOfTransportorToSend" value="0" /></td>
+                <td><input type="number" min="0" max="@Model.NumberOfTransportorToSend" step="1" asp-for="NumberOfTransportorToSend" value="0" /></td>
+            
             </tr>
             }
         </table>
+        <table>
+            <tr>
+                <td>Bois</td>
+                <td>Métal</td>
+                <td>Cristal</td>
+                <td>Magie</td>
+            </tr>
+            <tr>
+                <td><input type="number" min="0" max="@Model.SenderIsland.AllRessources.Wood" step="1"  asp-for="Wood" value="0" /></td>
+                <td><input type="number" min="0" max="@Model.SenderIsland.AllRessources.Metal" step="1" asp-for="Metal" value="0" /></td>
+                <td><input type="number" min="0" max="@Model.SenderIsland.AllRessources.Cristal" step="1" asp-for="Cristal" value="0" /></td>
+                <td><input type="number" min="0" max="@Model.SenderIsland.AllRessources.Magic" step="1" asp-for="Magic" value="0" /></td>
+            </tr>
+        </table>
 
         <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
+
+        @*Envoi de ressources*@
 
         @* Petit moyen pour chercher l'île en fonction des coordonnées *@
         <label for="pos-x"></label><input type="number" name="pos-x" value="@Model.SendableIslands.First().Coordinates.X" />
@@ -103,12 +120,12 @@
             }
         </select>
 
-        <input type="submit" value="Envoyer les unités" />
+        <input type="submit" value="Envoyer les ressources" />
 
     </form>
     <script src="/js/AttackManager.js"></script>
 }
 else
 {
-    <p>Vous n'avez pas encore d'armée, allez au portail d'invocation pour vous préparer à la guerre</p>
+    <p>Vous n'avez pas de transporteur ! Allez au portail d'invocation pour ravitailler les îles amies ! </p>
 }

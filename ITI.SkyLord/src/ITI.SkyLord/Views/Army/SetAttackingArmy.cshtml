@@ -16,6 +16,7 @@
 </style>
 
 <h1>Armées</h1>
+<a asp-controller="Army" asp-action="SetSendRessources" asp-route-islandId="@Model.Layout.IslandId">Envoyer des ressources</a>
 
 <h2>Armées en cours de mouvement</h2>
 @{
@@ -28,9 +29,11 @@
             {
                 <p>
                     @{
+// Si c'est bien une attaque et non un approvisionnement.
+// Gérer le retour, c'est pas toujours une attaque.
                         if (@army.Destination.Owner != null)
                         {
-                            <div>Attaque vers @army.Destination.Owner.Name [@army.Destination.Coordinates.X, @army.Destination.Coordinates.Y] chez @army.Destination.Owner.Name</div>
+                            <div>Attaque vers @army.Destination.Name [@army.Destination.Coordinates.X, @army.Destination.Coordinates.Y] chez @army.Destination.Owner.Name</div>
                         }
                         else
                         {

@@ -16,10 +16,10 @@
 
 <table>
 
-    @foreach (var unit in Model.AvailableUnit)
+    @foreach( var unit in Model.AvailableUnit )
     {
         <form asp-controller="Army" asp-action="AddUnit" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId">
-            <input type="hidden" asp-for="UnitTarget" value="@unit.Name" />
+            <input type="hidden" asp-for="UnitTarget" value="@{Write((int)unit.UnitName ); } " />
             <div class="row" style="margin-bottom: 20px;">
                 <div class="col-lg-2">@unit.Name</div>
                 @{

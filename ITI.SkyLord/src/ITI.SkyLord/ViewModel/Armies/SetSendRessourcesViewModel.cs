@@ -16,9 +16,13 @@ namespace ITI.SkyLord.ViewModel.Armies
 
 
         public Island SenderIsland { get; set; }
-        public Army CurrentTransportorArmy { get; set; }
+     //   public Army CurrentTransportorArmy { get; set; }
         public int NumberOfTransportorToSend { get; set; }
-
+        public int CapacityOfCarrier { get; set; }
+        public int Wood { get; set; }
+        public int Metal { get; set; }
+        public int Cristal { get; set; }
+        public int Magic { get; set; }
         /// <summary>
         /// Îles qui sont habitées et sur lesquelles on peut envoyer des ressources.
         /// </summary>

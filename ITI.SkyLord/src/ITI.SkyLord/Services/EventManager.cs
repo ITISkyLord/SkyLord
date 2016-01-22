@@ -28,7 +28,7 @@ namespace ITI.SkyLord
             // Récupérer les évènements liés à une position
             events = _context.BuildingEvents
                 .Include( e => e.Island ).ThenInclude( e => e.Buildings )
-                .Where( i => i.Island.IslandId == islandId && i.PositionToBuild == position && i.Done == false)
+                .Where( i => i.Island.IslandId == islandId && i.PositionToBuild == position && i.Done == false )
                 .ToList();
 
             return events;
@@ -65,7 +65,7 @@ namespace ITI.SkyLord
             long pillagedRessourceId;
             if( pillagedRessources == null ) pillagedRessourceId = 0;
             else pillagedRessourceId = pillagedRessources.RessourceId;
-             
+
             ctx.ArmyEvents.Add( new ArmyEvent()
             {
                 EventType = EventDiscrimator.ArmyEvent,
@@ -103,7 +103,7 @@ namespace ITI.SkyLord
                 EventType = EventDiscrimator.BuildingEvent,
                 BuildingToBuild = building,
                 BegginningDate = begginningDate,
-                EndingDate = DateTime.Now.AddSeconds(duration),
+                EndingDate = DateTime.Now.AddSeconds( duration ),
                 Done = false,
                 Island = island,
                 PositionToBuild = position
@@ -250,6 +250,7 @@ namespace ITI.SkyLord
                                         .Where( u => u.ArmyId == armyEvent.ArmyIdd )
                                         .Single();
 
+
             if( armyEvent.ArmyMovement == ArmyMovement.attacking )
             {
                 Island destination = _context.Islands
@@ -264,7 +265,6 @@ namespace ITI.SkyLord
 
                 ResolveAllForIsland( destination.IslandId, false );
                 Army defendingArmy = destination.Armies.Where( a => a.ArmyState == ArmyState.defense ).SingleOrDefault();
-                //   defendingArmy.Island = destination;
                 if( defendingArmy == null )
                     defendingArmy = new Army { Island = destination, Regiments = new List<Regiment>(), ArmyState = ArmyState.defense };
 
@@ -272,21 +272,53 @@ namespace ITI.SkyLord
                 _context.Messages.Add( combatResult.CombatReportWinner );
                 _context.Messages.Add( combatResult.CombatReportLooser );
                 _context.SaveChanges();
-                this.AddArmyEvent( _context, attackingArmy, attackingArmy.Island, ArmyMovement.returning, destination, combatResult.PillagedRessources );
+                if( combatResult.CombatReportWinner.Receiver == attackingArmy.Island.Owner )// S'il n'y a plus de troupes dans l'armées attaquante, il n'y a pas de retour.
+                    this.AddArmyEvent( _context, attackingArmy, attackingArmy.Island, ArmyMovement.returning, destination, combatResult.PillagedRessources );
+            }
+            else if( armyEvent.ArmyMovement == ArmyMovement.sendingRessources )
+            {
+                Army sendingArmy = attackingArmy;
+
+                Island destination = _context.Islands
+                                    .Include( c => c.Coordinates )
+                                    .Include( p => p.Owner )
+                                    .Include( i => i.Armies )
+                                    .ThenInclude( r => r.Regiments)
+                                    .ThenInclude( r => r.Unit).ThenInclude( r=> r.UnitStatistics )
+                                    .Include(i => i.AllRessources )
+                                    .Where( i => i.IslandId == armyEvent.DestinationIdd )
+                                    .Single();
+                armyEvent.Destination = destination;
+                Ressource pillagedRessource = _context.Ressources.Where(r => r.RessourceId == armyEvent.PillagedRessourcesIdd).SingleOrDefault();
+                armyEvent.PillagedRessources = pillagedRessource;
+                CombatResult combatResult = armyManager.ResolveSendingRessources( sendingArmy, armyEvent, _context );
+                _context.Messages.Add( combatResult.CombatReportWinner );
+                _context.SaveChanges();
+                this.AddArmyEvent( _context, sendingArmy, sendingArmy.Island, ArmyMovement.returning, destination );
             }
             else if( armyEvent.ArmyMovement == ArmyMovement.returning )
             {
                 if( attackingArmy != null )
                 {
                     Ressource pillagedRessource = _context.Ressources.Where(r => r.RessourceId == armyEvent.PillagedRessourcesIdd).SingleOrDefault();
+                    if( pillagedRessource != null )
+                        RessourceManager.AddRessource( attackingArmy.Island.AllRessources, pillagedRessource );
 
-                    RessourceManager.AddRessource( attackingArmy.Island.AllRessources, pillagedRessource );
-                    // L'armée est déjà présente à l'aller
-                    //attackingArmy.Island.AllRessources.ChangeRessources( pillagedRessources );
-                    attackingArmy = armyManager.JoinArmies( armyEvent.Island.Armies.SingleOrDefault( a => a.ArmyState == ArmyState.defense ), attackingArmy );
+
+
+                    armyEvent.Island.Armies.SingleOrDefault( a => a.ArmyState == ArmyState.defense );
+                    Army islandArmy = _context.Armies
+                                    .Include( a => a.Island )
+                                    .Include( a => a.Regiments )
+                                    .ThenInclude( r => r.Unit )
+                                    .Where( a => a.Island.IslandId == armyEvent.Island.IslandId && a.ArmyState == ArmyState.defense )
+                                    .Single();
+                    attackingArmy = armyManager.JoinArmies( islandArmy, attackingArmy );
                     _context.SaveChanges();
                 }
+
             }
+
 
 
             //    CombatReportViewModel combatReportViewModel = new CombatReportViewModel { CombatResult = combatResult };
@@ -304,7 +336,7 @@ namespace ITI.SkyLord
 
         internal void Resolve( BuildingEvent be )
         {
-            _allManager.BuildingManager.AddBuildingToIsland(be.BuildingToBuild, be.Island.IslandId, be.PositionToBuild);
+            _allManager.BuildingManager.AddBuildingToIsland( be.BuildingToBuild, be.Island.IslandId, be.PositionToBuild );
         }
 
         internal void Resolve( UpgradeEvent ue )
