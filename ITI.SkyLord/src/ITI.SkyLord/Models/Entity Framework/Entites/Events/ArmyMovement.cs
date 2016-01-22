@@ -9,6 +9,7 @@ namespace ITI.SkyLord.Models.Entity_Framework.Entites.Events
     {
         attacking,
         supporting,
+        sendingRessources,
         returning
     }
 }

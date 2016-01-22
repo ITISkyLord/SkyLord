@@ -60,6 +60,12 @@ namespace ITI.SkyLord
             return new CombatResult( _winningArmy, _loosingArmy, this, ae, ctx);
         }
 
+        internal CombatResult ResolveSendingRessources( Army sendingArmy, ArmyEvent ae, SetupContext ctx )
+        {
+            if( sendingArmy == null ) throw new ArgumentNullException( "sendingArmy is null" );
+            return new CombatResult( sendingArmy, ae, ctx );
+        }
+
         /// <summary>
         /// Return the physic resist of an army.
         /// </summary>

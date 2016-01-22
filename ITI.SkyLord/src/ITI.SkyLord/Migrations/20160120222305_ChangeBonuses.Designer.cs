@@ -8,9 +8,10 @@ using ITI.SkyLord.Models.Entity_Framework.Contexts;
 namespace ITI.SkyLord.Migrations
 {
     [DbContext(typeof(SetupContext))]
-    partial class SetupContextModelSnapshot : ModelSnapshot
+    [Migration("20160120222305_ChangeBonuses")]
+    partial class ChangeBonuses
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.0-rc1-16348")
@@ -668,7 +669,7 @@ namespace ITI.SkyLord.Migrations
                 {
                     b.HasBaseType("ITI.SkyLord.Models.Entity_Framework.Entites.Events.Event");
 
-                    b.Property<int>("BuildingToBuild");
+                    b.Property<int?>("BuildingToBuildBuildingId");
 
                     b.Property<int>("PositionToBuild");
 
@@ -679,9 +680,7 @@ namespace ITI.SkyLord.Migrations
                 {
                     b.HasBaseType("ITI.SkyLord.Models.Entity_Framework.Entites.Events.Event");
 
-                    b.Property<int>("Duration");
-
-                    b.Property<int>("TechnologyName");
+                    b.Property<long?>("TechnologyTechnologyId");
 
                     b.HasAnnotation("Relational:DiscriminatorValue", "TechnologyEvent");
                 });
@@ -981,10 +980,16 @@ namespace ITI.SkyLord.Migrations
 
             modelBuilder.Entity("ITI.SkyLord.Models.Entity_Framework.Entites.Events.BuildingEvent", b =>
                 {
+                    b.HasOne("ITI.SkyLord.Building")
+                        .WithMany()
+                        .HasForeignKey("BuildingToBuildBuildingId");
                 });
 
             modelBuilder.Entity("ITI.SkyLord.Models.Entity_Framework.Entites.Events.TechnologyEvent", b =>
                 {
+                    b.HasOne("ITI.SkyLord.Technology")
+                        .WithMany()
+                        .HasForeignKey("TechnologyTechnologyId");
                 });
 
             modelBuilder.Entity("ITI.SkyLord.Models.Entity_Framework.Entites.Events.UnitEvent", b =>
