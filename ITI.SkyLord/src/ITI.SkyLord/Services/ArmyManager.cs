@@ -272,6 +272,13 @@ namespace ITI.SkyLord
             }
         }
 
+        public List<Unit> GetExistingUnits()
+        {
+            // CHANGE TO GET THE MODIFIED UNIT IF FOUND (TO GET THE REAL STATS)
+            return CurrentContext.Units.Include( u => u.Requirements).Include( u => u.UnitStatistics).Include( u => u.UnitCost)
+                .Where( u => u.IsModel ).ToList();
+        }
+
         /// <summary>
         /// Count the number of unit in a army.
         /// </summary>

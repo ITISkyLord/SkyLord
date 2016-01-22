@@ -21,18 +21,6 @@ namespace ITI.SkyLord.Controllers
     {
         public IActionResult Index( long islandId = 0 )
         {
-            //long playerId = SetupContext.GetPlayer( User.GetUserId() ).PlayerId;
-
-            //BonusManager bonusManager = new BonusManager( SetupContext );
-            //if ( SetupContext.Armies.Where( a => a.Island.IslandId == islandId ).Any() )
-            //{
-            //    Unit testUnit = SetupContext.Armies.Include( a => a.Island ).Include( a => a.Regiments ).ThenInclude( r => r.Unit ).ThenInclude( u => u.UnitStatistics )
-            //    .Single( a => a.Island.IslandId == islandId ).Regiments.First().Unit;
-
-            //    Unit modifiedUnit = bonusManager.ResolveAllUnitBonuses( testUnit, playerId, islandId );
-            //    int modifiedUnitDuration = bonusManager.GetModifiedDuration( testUnit, playerId, islandId );
-            //}
-            //ModelState.AddModelError( string.Empty, "Vous n'avez pas d'armées." );
             return View( CreateArmyViewModel( islandId ) );
         }
 
@@ -216,7 +204,9 @@ namespace ITI.SkyLord.Controllers
 
         private SetAttackingArmyViewModel CreateSetAttackingArmyViewModel( SetAttackingArmyViewModel model, long islandId )
         {
-            Island currentIsland =SetupContext.GetIsland( islandId, model.Layout.CurrentPlayer.PlayerId );
+            long activePlayerId = SetupContext.GetPlayer( User.GetUserId() ).PlayerId;
+
+            Island currentIsland = SetupContext.GetIsland( islandId, activePlayerId );
 
             model.CurrentDefenseArmy = SetupContext.Armies
                                     .Include( a => a.Island )
@@ -225,8 +215,6 @@ namespace ITI.SkyLord.Controllers
                                     .ThenInclude( r => r.UnitStatistics )
                                     .Where( a => a.Island.IslandId == currentIsland.IslandId && a.ArmyState == ArmyState.defense )
                                     .SingleOrDefault();
-
-            long activePlayerId = SetupContext.GetPlayer( User.GetUserId() ).PlayerId;
 
             model.EnnemyIslands = 
                 SetupContext.Islands

@@ -180,7 +180,39 @@ namespace ITI.SkyLord
             else return lastEndingDate;
         }
 
+        public List<UnitQueue> GetCurrentUnitQueue( long currentIslandId )
+        {
+            // Get all the unitEvents from the island that are no done yet
+            List<UnitEvent> unitEventsOnCurrentIsland = _context.UnitEvents.Include( ue => ue.Island ).Include( ue => ue.Unit )
+                .Where( ue => !ue.Done && ue.Island.IslandId == currentIslandId ).ToList();
 
+            // Create a KeyValPair list from the events to separate the key to filter from
+            List<KeyValPair> listKvP = new List<KeyValPair>();
+            foreach ( UnitEvent unitEvent in unitEventsOnCurrentIsland )
+            {
+                if ( !unitEvent.Done )
+                {
+                    listKvP.Add( new KeyValPair { Key = unitEvent.Unit.UnitName, Value = unitEvent } );
+                }
+            }
+
+            // Create a collection of groups with the ChunkBy class
+            IEnumerable<IGrouping<UnitName, KeyValPair>> groups = listKvP.ChunkBy( p => p.Key );
+
+            // Create the UnitQueue list from the groups
+            List<UnitQueue> queue = new List<UnitQueue>();
+            foreach ( IGrouping<UnitName, KeyValPair> group in groups )
+            {
+                queue.Add( new UnitQueue
+                {
+                    Number = group.Count(),
+                    EndingDate = group.Last().Value.EndingDate,
+                    Unit = group.First().Value.Unit
+                } );
+            }
+
+            return queue;
+        }
         #region Resolve
 
         /// <summary>
@@ -333,5 +365,11 @@ namespace ITI.SkyLord
 
 
         #endregion
+    }
+
+    internal class KeyValPair
+    {
+        public UnitName Key { get; set; }
+        public UnitEvent Value { get; set; }
     }
 }
