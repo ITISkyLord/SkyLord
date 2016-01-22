@@ -7030,6 +7030,8 @@ body {
   text-align: center;
   font-weight: bold;
   font-style: italic;
+  color: #825847;
+  background-color: whitesmoke;
 }
 .SkyLordContainer .island-header {
   height: 100%;
@@ -7039,7 +7041,6 @@ body {
   text-align: center;
   color: #825847;
   letter-spacing: 3px;
-  /*line-height:20px;*/
 }
 .SkyLordContainer #SeeMyIsland {
   border: 1px solid #f4511e;
@@ -7170,21 +7171,21 @@ body {
   color: #825847;
   font-size: 14px;
   font-weight: bold;
-  letter-spacing: 3px;
+  letter-spacing: 1px;
   text-decoration: none;
   text-align: center;
 }
 .SkyLordContainer .templatebuilding .buildings .building-btn .btn-link:hover {
   color: #825847;
   font-weight: bold;
-  letter-spacing: 3px;
+  letter-spacing: 1px;
   background-color: whitesmoke;
 }
 .SkyLordContainer .templatebuilding .head {
   text-align: center;
   color: #825847;
   font-weight: bold;
-  font-size: 17px;
+  font-size: 25px;
   background-image: url("../images/Site/site_haut2.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
@@ -7194,6 +7195,30 @@ body {
   border-top-right-radius: 0px;
   border-bottom-left-radius: 0px;
   border-bottom-right-radius: 0px;
+}
+.SkyLordContainer .templatebuilding .invocation-building .text {
+  color: #825847;
+  font-weight: bold;
+  font-style: italic;
+}
+.SkyLordContainer .templatebuilding .invocation-building .cost {
+  color: #825847;
+  font-weight: bold;
+  font-style: italic;
+}
+.SkyLordContainer .templatebuilding .invocation-building .btn-link {
+  color: #825847;
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-decoration: none;
+  text-align: center;
+}
+.SkyLordContainer .templatebuilding .invocation-building .btn-link:hover {
+  color: #825847;
+  font-weight: bold;
+  letter-spacing: 1px;
+  background-color: whitesmoke;
 }
 .SkyLordContainer .templatebuilding .buildings-build {
   border: 1px solid white;
@@ -7226,14 +7251,14 @@ body {
   color: #825847;
   font-size: 14px;
   font-weight: bold;
-  letter-spacing: 3px;
+  letter-spacing: 1px;
   text-decoration: none;
   text-align: center;
 }
 .SkyLordContainer .templatebuilding .buildings-build .buildings-build-body .btn-link:hover {
   color: #825847;
   font-weight: bold;
-  letter-spacing: 3px;
+  letter-spacing: 1px;
   background-color: whitesmoke;
 }
 .SkyLordContainer .templatebuilding .buildings-build-foot {

@@ -11,7 +11,7 @@
 
 
 <div class="head">
-    <h3>Armée actuelle sur place :</h3>
+    Armée actuelle sur place :
 </div>
 
 <table>
@@ -21,28 +21,40 @@
         <form asp-controller="Army" asp-action="AddUnit" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId">
             <input type="hidden" asp-for="UnitTarget" value="@unit.Name" />
             <div class="row" style="margin-bottom: 20px;">
-                <div class="col-lg-2">@unit.Name</div>
-                @{
-                    int number = 0;
-                    if (Model.CurrentArmy != null)
-                    {
-                        var regiment = Model.CurrentArmy.Regiments.Where(r => r.Unit.Name == unit.Name).FirstOrDefault();
-                        number = regiment == null ? 0 : regiment.Number;
-                    }
+                <div class="invocation-building">
+                    <div class="col-lg-2">
+                        <div class="text">
+                            @unit.Name
+                        </div>
+                    </div>
+                    @{
+                        int number = 0;
+                        if (Model.CurrentArmy != null)
+                        {
+                            var regiment = Model.CurrentArmy.Regiments.Where(r => r.Unit.Name == unit.Name).FirstOrDefault();
+                            number = regiment == null ? 0 : regiment.Number;
+                        }
 
-                }
-                <div class="col-lg-1">@number</div>
-                <div class="col-lg-1">@unit.UnitCost.Wood Bois</div>
-                <div class="col-lg-1">@unit.UnitCost.Metal Métal</div>
-                <div class="col-lg-1">@unit.UnitCost.Magic Magie</div>
-                <div class="col-lg-1">@unit.UnitCost.Cristal Cristal</div>
-                @{
+                    }
+                    <div class="cost">
+                        <div class="col col-lg-1 col-sm-1">@number</div>
+                        <div class="col col-lg-1 col-sm-1">Bois @unit.UnitCost.Wood</div>
+                        <div class="col col-lg-1 col-sm-1">Métal @unit.UnitCost.Metal</div>
+                        <div class="col col-lg-1 col-sm-1">Magie @unit.UnitCost.Magic</div>
+                        <div class="col col-lg-1 col-sm-1">Cristal @unit.UnitCost.Cristal</div>
+                    </div>
+
+                    @{
 // Calcul du max d'unité que l'on peut faire pour cette unité
 
-                }
-                <div class="col-lg-3"><input style="width: 100%;" type="number" asp-for="UnitAmount" min="0" step="1" value="0" /></div>
-                <div class="col-lg-1"><input type="submit" value="Former" /></div>
-            </div>
-        </form>
                     }
+                    <div class="col-lg-3"><input class="form-control" style="width: 100%;" type="number" asp-for="UnitAmount" min="0" step="1" value="0" /></div>
+                    <div class="col-lg-1">
+                        <input type="submit" class="btn btn-link" value="Former" />
+                    </div>
+                </div>
+            </div>
+
+        </form>
+                        }
 </table>
