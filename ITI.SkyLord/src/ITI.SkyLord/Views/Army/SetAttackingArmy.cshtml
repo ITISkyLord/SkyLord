@@ -29,11 +29,22 @@
             {
                 <p>
                     @{
-// Si c'est bien une attaque et non un approvisionnement.
-// Gérer le retour, c'est pas toujours une attaque.
-                        if (@army.Destination.Owner != null)
+                        // Si c'est bien une attaque et non un approvisionnement.
+                        // Gérer le retour, c'est pas toujours une attaque.
+                        if( @army.Destination.Owner != null )
                         {
-                            <div>Attaque vers @army.Destination.Name [@army.Destination.Coordinates.X, @army.Destination.Coordinates.Y] chez @army.Destination.Owner.Name</div>
+                            if( army.ArmyMovement == ITI.SkyLord.Models.Entity_Framework.Entites.Events.ArmyMovement.attacking )
+                            {
+                                <div>Attaque vers @army.Destination.Name [@army.Destination.Coordinates.X, @army.Destination.Coordinates.Y] chez @army.Destination.Owner.Name</div>
+                            }
+                            else if( army.ArmyMovement == ITI.SkyLord.Models.Entity_Framework.Entites.Events.ArmyMovement.sendingRessources )
+                            {
+                                <div>Envoi de ressources vers @army.Destination.Name [@army.Destination.Coordinates.X, @army.Destination.Coordinates.Y] chez @army.Destination.Owner.Name</div>
+                            }
+                            else if( army.ArmyMovement == ITI.SkyLord.Models.Entity_Framework.Entites.Events.ArmyMovement.returning )
+                            {
+                                <div>Vos unités sont en train de revenir de @army.Destination.Name [@army.Destination.Coordinates.X, @army.Destination.Coordinates.Y] chez @army.Destination.Owner.Name</div>
+                            }
                         }
                         else
                         {
@@ -41,7 +52,7 @@
                         }
                     }
                     <br />
-                    Arrivée à @army.EndingDate.Hour h @army.EndingDate.Minute min @army.EndingDate.Second
+                    Arrivée à @army.EndingDate.Hour:@army.EndingDate.Minute:@army.EndingDate.Second
                 </p>
             }
             <hr />
