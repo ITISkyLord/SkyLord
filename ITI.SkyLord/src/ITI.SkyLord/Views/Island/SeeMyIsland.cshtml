@@ -88,6 +88,9 @@
                         NextBuildingLevel = nextLevel,
                         EventsOnBuilding = buildingEvent
 
+                        TechnologyDisplays = Model.TechnologyDisplays,
+                        TargetTechnology = Model.TargetTechnology,
+                        TechnologyManager = Model.TechnologyManager
                     };
                     Write(Html.Partial("~/Views/Partial/" + name + ".cshtml", partialModel));
                 }

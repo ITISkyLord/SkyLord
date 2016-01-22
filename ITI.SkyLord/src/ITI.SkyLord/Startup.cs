@@ -147,7 +147,7 @@ namespace ITI.SkyLord
                     {
                         for ( int i = 0; i < 100; i++ )
                         {
-                            Ressource ressource = new Ressource { Wood = 1000, Metal = 1000, Cristal = 1000, Magic = 1000 };
+                            Ressource ressource = new Ressource { Wood = 1000000, Metal = 1000000, Cristal = 1000000, Magic = 1000000 };
                             Coordinate coord = new Coordinate();
                             coord.X = i;
                             coord.Y = i;

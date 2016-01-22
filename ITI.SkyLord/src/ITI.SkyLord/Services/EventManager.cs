@@ -36,7 +36,7 @@ namespace ITI.SkyLord
         public void AddUnitEvent( IUnitEventContext ctx, Unit unit, int number, Island island )
         {
 
-            for( int j = 0; j < number; j++ )
+            for ( int j = 0; j < number; j++ )
             {
                 DateTime begginningDate = FindLastEndingDateInQueue( EventDiscrimator.UnitEvent, island );
                 _unitEvents.Add( new UnitEvent()
@@ -51,7 +51,7 @@ namespace ITI.SkyLord
                 } );
 
             }
-            foreach( UnitEvent ue in _unitEvents )
+            foreach ( UnitEvent ue in _unitEvents )
             {
                 ctx.UnitEvents.Add( ue );
             }
@@ -60,12 +60,12 @@ namespace ITI.SkyLord
         public void AddArmyEvent( IArmyEventContext ctx, Army army, Island island, ArmyMovement am, Island destination, Ressource pillagedRessources = null )
         {
             // NE PAS OUBLIER D'AJOUTER L'ÉVÈNEMENT DE RETOUR
-            int secondsToGo = TimeToGoHereFromHere( island, destination, army);
+            int secondsToGo = TimeToGoHereFromHere( island, destination, army );
             DateTime begginningDate = FindLastEndingDateInQueue( EventDiscrimator.ArmyEvent, island );
             long pillagedRessourceId;
-            if( pillagedRessources == null ) pillagedRessourceId = 0;
+            if ( pillagedRessources == null ) pillagedRessourceId = 0;
             else pillagedRessourceId = pillagedRessources.RessourceId;
-             
+
             ctx.ArmyEvents.Add( new ArmyEvent()
             {
                 EventType = EventDiscrimator.ArmyEvent,
@@ -117,10 +117,18 @@ namespace ITI.SkyLord
             ctx.UpgradeEvents.Add( new UpgradeEvent() { EventType = EventDiscrimator.UpgradeEvent, BuildingToUpgrade = building, BegginningDate = begginningDate, EndingDate = DateTime.Now.AddSeconds(/*TIME TO BUILD BUILDING */ 100 ), Done = false, Island = island } );
         }
 
-        public void AddTechnologyEvent( ITechnologyEventContext ctx, Technology technology, Island island )
+        public void AddTechnologyEvent( ITechnologyEventContext ctx, TechnologyName technologyName, int duration, Island island )
         {
             DateTime begginningDate = FindLastEndingDateInQueue( EventDiscrimator.TechnologyEvent, island );
-            ctx.TechnologyEvents.Add( new TechnologyEvent() { EventType = EventDiscrimator.TechnologyEvent, Technology = technology, BegginningDate = begginningDate, EndingDate = DateTime.Now.AddSeconds( 100 /* PAREIL QUE AU DESSUS */), Done = false, Island = island } );
+            ctx.TechnologyEvents.Add( new TechnologyEvent()
+            {
+                EventType = EventDiscrimator.TechnologyEvent,
+                TechnologyName = technologyName,
+                BegginningDate = begginningDate,
+                EndingDate = DateTime.Now.AddSeconds( duration ),
+                Done = false,
+                Island = island
+            } );
         }
 
         public List<Event> Get( EventType et, IEventContext ctx, int islandId )
@@ -131,9 +139,9 @@ namespace ITI.SkyLord
         private DateTime FindLastEndingDateInQueue( string eventType, Island island )
         {
             DateTime lastEndingDate = DateTime.Now;
-            if( eventType == EventDiscrimator.UnitEvent )
+            if ( eventType == EventDiscrimator.UnitEvent )
             {
-                if( _unitEvents.Count == 0 )
+                if ( _unitEvents.Count == 0 )
                 {
                     lastEndingDate = _context.UnitEvents.Where( u => u.Island.Equals( island ) && u.Done == false )
                                 .OrderByDescending( d => d.EndingDate ).Select( d => d.EndingDate )
@@ -146,20 +154,21 @@ namespace ITI.SkyLord
                                                 .FirstOrDefault();
                 }
             }
-            else if( eventType == EventDiscrimator.ArmyEvent )
+            else if ( eventType == EventDiscrimator.ArmyEvent )
             {
                 lastEndingDate = _context.ArmyEvents.Where( u => u.Island.Equals( island ) && u.Done == false ).OrderByDescending( d => d.EndingDate ).Select( d => d.EndingDate ).FirstOrDefault();
             }
-            else if( eventType == EventDiscrimator.BuildingEvent )
+            else if ( eventType == EventDiscrimator.BuildingEvent )
             {
                 lastEndingDate = _context.BuildingEvents.Where( u => u.Island.Equals( island ) && u.Done == false ).OrderByDescending( d => d.EndingDate ).Select( d => d.EndingDate ).FirstOrDefault();
             }
-            else if( eventType == EventDiscrimator.UpgradeEvent )
+            else if ( eventType == EventDiscrimator.UpgradeEvent )
             {
                 lastEndingDate = _context.UpgradeEvents.Where( u => u.Island.Equals( island ) && u.Done == false ).OrderByDescending( d => d.EndingDate ).Select( d => d.EndingDate ).FirstOrDefault();
             }
-            else if( eventType == EventDiscrimator.TechnologyEvent )
+            else if ( eventType == EventDiscrimator.TechnologyEvent )
             {
+                // Sur le player plut^to que sur l'ile? 
                 lastEndingDate = _context.TechnologyEvents.Where( u => u.Island.Equals( island ) && u.Done == false ).OrderByDescending( d => d.EndingDate ).Select( d => d.EndingDate ).FirstOrDefault();
             }
             else
@@ -167,7 +176,7 @@ namespace ITI.SkyLord
                 throw new ArgumentException( "Le Event Discrimator n'est pas valide." );
             }
 
-            if( lastEndingDate == null || lastEndingDate == new DateTime( 01, 01, 01 ) ) return DateTime.Now;
+            if ( lastEndingDate == null || lastEndingDate == new DateTime( 01, 01, 01 ) ) return DateTime.Now;
             else return lastEndingDate;
         }
 
@@ -181,19 +190,19 @@ namespace ITI.SkyLord
         private void ResolveAllForIsland( long islandId, bool useEventsWhereTarget = true )
         {
             // All events of the player
-            List<Event> allEvent = _context.Events.Where( e => e.Done == false && e.EndingDate < DateTime.Now && e.Island.IslandId==islandId).ToList();
+            List<Event> allEvent = _context.Events.Where( e => e.Done == false && e.EndingDate < DateTime.Now && e.Island.IslandId == islandId ).ToList();
 
             // All army movements where player is the target
-            if( useEventsWhereTarget )
+            if ( useEventsWhereTarget )
             {
-                List<ArmyEvent> eventsWhereTarget = _context.ArmyEvents.Include(u => u.Army).ThenInclude( j => j.Regiments).Where(e => e.Done == false && e.EndingDate < DateTime.Now && e.DestinationIdd == islandId).ToList();
+                List<ArmyEvent> eventsWhereTarget = _context.ArmyEvents.Include( u => u.Army ).ThenInclude( j => j.Regiments ).Where( e => e.Done == false && e.EndingDate < DateTime.Now && e.DestinationIdd == islandId ).ToList();
                 allEvent = allEvent.Union( eventsWhereTarget ).OrderBy( e => e.EndingDate ).ToList();
             }
 
             // Merge the two lists order them by date of attack
 
             // So, we execute all events ( with a super visitor pattern OTFD )
-            foreach( Event @event in allEvent )
+            foreach ( Event @event in allEvent )
             {
                 @event.Accept( this );
                 @event.Done = true;
@@ -207,8 +216,8 @@ namespace ITI.SkyLord
         /// <param name="playerId"></param>
         public void ResolveAllForPlayer( long playerId )
         {
-            List<Island> islands = _context.Islands.Include(i => i.Owner ).Where( i => i.Owner.PlayerId == playerId ).ToList();
-            foreach( Island island in islands )
+            List<Island> islands = _context.Islands.Include( i => i.Owner ).Where( i => i.Owner.PlayerId == playerId ).ToList();
+            foreach ( Island island in islands )
             {
                 ResolveAllForIsland( island.IslandId );
             }
@@ -222,7 +231,7 @@ namespace ITI.SkyLord
             //  /!\ HERE IS THE PROBLEM with Include. /!\
             // UnitEvent unitEvent = _context.UnitEvents.Include(a=>a.Unit).ThenInclude( b => b.UnitStatistics ).Where( e => e.EventId == ue.EventId ).First();
 
-            Unit unit = _context.Units.Include( u => u.Requirements).Include( u => u.UnitCost).Include( u => u.UnitStatistics )
+            Unit unit = _context.Units.Include( u => u.Requirements ).Include( u => u.UnitCost ).Include( u => u.UnitStatistics )
                 .Single( u => u.UnitId == ue.UnitIdd );
             ArmyManager am = _allManager.ArmyManager;
             am.AddUnit( unit, 1, ue.Island );
@@ -241,8 +250,8 @@ namespace ITI.SkyLord
             ArmyManager armyManager = _allManager.ArmyManager;
             Army attackingArmy = _context.Armies
                                         .Include( i => i.Island ).ThenInclude( i => i.Coordinates )
-                                        .Include( i => i.Island)
-                                        .ThenInclude( i => i.Armies).ThenInclude( i => i.Regiments)
+                                        .Include( i => i.Island )
+                                        .ThenInclude( i => i.Armies ).ThenInclude( i => i.Regiments )
                                         .Include( y => y.Regiments )
                                         .ThenInclude( z => z.Unit )
                                         .ThenInclude( z => z.UnitStatistics )
@@ -250,22 +259,22 @@ namespace ITI.SkyLord
                                         .Where( u => u.ArmyId == armyEvent.ArmyIdd )
                                         .Single();
 
-            if( armyEvent.ArmyMovement == ArmyMovement.attacking )
+            if ( armyEvent.ArmyMovement == ArmyMovement.attacking )
             {
                 Island destination = _context.Islands
                                     .Include( c => c.Coordinates )
                                     .Include( p => p.Owner )
                                     .Include( i => i.Armies )
-                                    .ThenInclude( r => r.Regiments)
-                                    .ThenInclude( r => r.Unit).ThenInclude( r=> r.UnitStatistics )
-                                    .Include(i => i.AllRessources )
+                                    .ThenInclude( r => r.Regiments )
+                                    .ThenInclude( r => r.Unit ).ThenInclude( r => r.UnitStatistics )
+                                    .Include( i => i.AllRessources )
                                     .Where( i => i.IslandId == armyEvent.DestinationIdd )
                                     .Single();
 
                 ResolveAllForIsland( destination.IslandId, false );
                 Army defendingArmy = destination.Armies.Where( a => a.ArmyState == ArmyState.defense ).SingleOrDefault();
                 //   defendingArmy.Island = destination;
-                if( defendingArmy == null )
+                if ( defendingArmy == null )
                     defendingArmy = new Army { Island = destination, Regiments = new List<Regiment>(), ArmyState = ArmyState.defense };
 
                 CombatResult combatResult = armyManager.ResolveCombat( attackingArmy, defendingArmy, armyEvent, _context );
@@ -274,11 +283,11 @@ namespace ITI.SkyLord
                 _context.SaveChanges();
                 this.AddArmyEvent( _context, attackingArmy, attackingArmy.Island, ArmyMovement.returning, destination, combatResult.PillagedRessources );
             }
-            else if( armyEvent.ArmyMovement == ArmyMovement.returning )
+            else if ( armyEvent.ArmyMovement == ArmyMovement.returning )
             {
-                if( attackingArmy != null )
+                if ( attackingArmy != null )
                 {
-                    Ressource pillagedRessource = _context.Ressources.Where(r => r.RessourceId == armyEvent.PillagedRessourcesIdd).SingleOrDefault();
+                    Ressource pillagedRessource = _context.Ressources.Where( r => r.RessourceId == armyEvent.PillagedRessourcesIdd ).SingleOrDefault();
 
                     RessourceManager.AddRessource( attackingArmy.Island.AllRessources, pillagedRessource );
                     // L'armée est déjà présente à l'aller
@@ -294,12 +303,21 @@ namespace ITI.SkyLord
         }
         public void Resolve( TechnologyEvent te )
         {
-            TechnologyManager tm = new TechnologyManager( _context, new LevelManager(_context) , new BonusManager( _context ));
-            TechnologyEvent technoEvent = _context.TechnologyEvents
-                                                  .Include( e => e.Island )
-                                                  .Include( e => e.Technology )
-                                                  .Where( e => e.EventId == te.EventId).Single();
-            tm.AddTechnology( technoEvent.Technology.TechnologyName, technoEvent.Island.Owner.PlayerId, technoEvent.Island.IslandId );
+            TechnologyManager tm = new TechnologyManager( _context, new LevelManager( _context ), new BonusManager( _context ) );
+            TechnologyEvent technoEvent = _context.TechnologyEvents.Single( e => e.EventId == te.EventId );
+            if ( tm.GetPlayersTechnologies( technoEvent.Island.Owner.PlayerId ).Any( t => t.TechnologyName == technoEvent.TechnologyName ) )
+            {
+                tm.LevelUpTechnology( technoEvent.TechnologyName, technoEvent.Island.Owner.PlayerId, technoEvent.Island.IslandId );
+            }
+            else
+            {
+                tm.AddTechnology( technoEvent.TechnologyName, technoEvent.Island.Owner.PlayerId, technoEvent.Island.IslandId );
+            }
+
+            _context.SaveChanges();
+
+            // Update all the units with the newly added bonus
+            tm.BonusManager.ResolvePlayersArmies( technoEvent.Island.Owner.PlayerId, technoEvent.Island.IslandId );
         }
 
         internal void Resolve( BuildingEvent be )
