@@ -25,6 +25,7 @@
         ironGolem,
         prismaticGolem,
         canoe,
-        carrier
+        carrier,
+        apprentice
     }
 }
