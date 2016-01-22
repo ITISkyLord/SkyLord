@@ -104,7 +104,9 @@ namespace ITI.SkyLord.Controllers
                                                     .ThenInclude( r => r.Unit ).ThenInclude( r => r.UnitStatistics )
                                                     .Where( i => i.IslandId == model.Target ).FirstOrDefault();
                 ArmyManager am = new ArmyManager( SetupContext, new BonusManager( SetupContext ) );
-                Island attackingIsland = SetupContext.GetIsland( islandId, model.Layout.CurrentPlayer.PlayerId );
+                long activePlayerId = SetupContext.GetPlayer( User.GetUserId() ).PlayerId;
+
+                Island attackingIsland = SetupContext.GetIsland( islandId, activePlayerId );
                 Army attackingArmy = am.CreateArmy( model.UnitsToSend, attackingIsland );
                 SetupContext.Armies.Add( attackingArmy );
                 SetupContext.SaveChanges();
@@ -143,7 +145,11 @@ namespace ITI.SkyLord.Controllers
             return RedirectToAction( "Index", new { islandId = islandId } );
         }
 
-        [Obsolete]
+        /// <summary>
+        /// À utiliser lorsqu'on ne dispose pas du Layout du StandartViewModel
+        /// </summary>
+        /// <param name="islandId"></param>
+        /// <returns></returns>
         private Island GetIsland( long islandId )
         {
             if( islandId == 0 )

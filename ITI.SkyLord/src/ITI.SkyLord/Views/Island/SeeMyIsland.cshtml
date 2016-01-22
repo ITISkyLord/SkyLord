@@ -28,20 +28,20 @@
             <div id="SeeMyIsland">
 
                 <div id="Island">
-                    @for (var i = 1; i != 11; i++)
+                    @for( var i = 1; i != 11; i++ )
                     {
                         Building myBuilding;
                         string name;
 
 
-                        @if (Model.DicoBuildings.TryGetValue(i.ToString(), out myBuilding))
-                {
-                    name = myBuilding.BuildingName.ToString();
-                }
-                else
-                {
-                    name = "empty";
-                }
+                        @if( Model.DicoBuildings.TryGetValue( i.ToString(), out myBuilding ) )
+                        {
+                            name = myBuilding.BuildingName.ToString();
+                        }
+                        else
+                        {
+                            name = "empty";
+                        }
 
                         <div class="Building" buildingname="@name" id="place_@i" templateid="@i">
                             @{
@@ -55,12 +55,12 @@
         </div>
         <div id="UI">
 
-            @for (var i = 1; i != 11; i++)
+            @for( var i = 1; i != 11; i++ )
             {
                 Building myBuilding;
                 string name;
 
-                @if (Model.DicoBuildings.TryGetValue(i.ToString(), out myBuilding))
+                @if( Model.DicoBuildings.TryGetValue( i.ToString(), out myBuilding ) )
                 {
                     name = myBuilding.BuildingName.ToString();
                 }
@@ -73,11 +73,11 @@
                     @{
                         // On cherche le next s'il existe
                         Level nextLevel = null;
-                        Model.NextLevel.TryGetValue(i, out nextLevel);
+                        Model.NextLevel.TryGetValue( i, out nextLevel );
 
                         // On cherche les buildings event s'ils existent
                         List<BuildingEvent> buildingEvent = new List<BuildingEvent>();
-                        Model.AllBuildingEventOnIsland.TryGetValue(i, out buildingEvent);
+                        Model.AllBuildingEventOnIsland.TryGetValue( i, out buildingEvent );
 
                         // On balance le view model à notre partial
                         BuildingPartialViewModel partialModel = new BuildingPartialViewModel()
@@ -90,13 +90,12 @@
                             AvailableUnit = Model.AvailableUnit,
                             AllUnits = Model.AllUnits,
                             NextBuildingLevel = nextLevel,
-                            EventsOnBuilding = buildingEvent
-
-                        TechnologyDisplays = Model.TechnologyDisplays,
-                        TargetTechnology = Model.TargetTechnology,
-                        TechnologyManager = Model.TechnologyManager
+                            EventsOnBuilding = buildingEvent,
+                            TechnologyDisplays = Model.TechnologyDisplays,
+                            TargetTechnology = Model.TargetTechnology,
+                            TechnologyManager = Model.TechnologyManager
                         };
-                        Write(Html.Partial("~/Views/Partial/" + name + ".cshtml", partialModel));
+                        Write( Html.Partial( "~/Views/Partial/" + name + ".cshtml", partialModel ) );
                     }
                 </div>
                         }
