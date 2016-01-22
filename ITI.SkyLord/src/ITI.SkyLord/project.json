@@ -26,7 +26,8 @@
         "Microsoft.Extensions.DependencyInjection.Abstractions": "1.0.0-rc1-final",
         "Microsoft.Extensions.Logging.Debug": "1.0.0-rc1-final",
         "Microsoft.Extensions.PlatformAbstractions": "1.0.0-rc1-final",
-        "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0-rc1-final"
+        "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0-rc1-final",
+        "Microsoft.Dnx.Watcher" : "1.0.0-rc1-final"
     },
 
     "urlForConfiguration": "http://docs.asp.net/en/latest/dnx/projects.html#dnx-projects-compiliationsettings",
