@@ -9,7 +9,16 @@
 }
 
 <h1>Boite de réception</h1>
+<table>
+    <tr>
+        @foreach( Message m in Model.AllMessages.Where( u => u.isCombatReport == false) )
+        {
+            <td><a>@m.MessageObject</a></td>
 
+        }
+    </tr>
+</table>
+Problème pour générer les messages depuis que l'on peut attaquer n'importe quelle île. Un message doit toujours avoir un destinaire et un receiver.
 @foreach (Message m in Model.AllMessages)
 {
     <span>Auteur: </span>

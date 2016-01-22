@@ -10,6 +10,7 @@ namespace ITI.SkyLord
         defense,
         movement,
         supporting,
+        sendingRessources,
         obsolete
     }
 }

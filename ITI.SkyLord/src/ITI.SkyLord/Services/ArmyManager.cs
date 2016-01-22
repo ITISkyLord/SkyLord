@@ -25,6 +25,10 @@ namespace ITI.SkyLord
         {
             return new CombatManager( this ).Resolve( attackingArmy, defendingArmy, ae, ctx );
         }
+        public CombatResult ResolveSendingRessources( Army sendingArmy, ArmyEvent ae, SetupContext ctx )
+        {
+            return new CombatManager( this ).ResolveSendingRessources( sendingArmy, ae, ctx );
+        }
 
         public Army GetArmy( long id )
         {
