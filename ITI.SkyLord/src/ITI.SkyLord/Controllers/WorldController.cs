@@ -16,7 +16,7 @@ namespace ITI.SkyLord.Controllers
         {
             WorldMapViewModel wmvm = new WorldMapViewModel();
 
-            var listOfIsland = SetupContext.Islands.Include(i => i.Coordinates).ToList();
+            var listOfIsland = SetupContext.Islands.Include(i => i.Owner).Include(i => i.Coordinates).ToList();
             wmvm.Map = new Dictionary<string, Island>();
 
             foreach(var island in listOfIsland)

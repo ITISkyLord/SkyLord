@@ -9,6 +9,5 @@ namespace ITI.SkyLord
     public class TechnologyLevel : Level
     {
         public TechnologyName TechnologyName { get; set; }
-        public IList<BonusTechnology> TechnologyBonuses { get; set; }
     }
 }

@@ -21,9 +21,9 @@ namespace ITI.SkyLord
             BonusManager = bonusManager;
         }
 
-        public CombatResult ResolveCombat( Army attackingArmy, Army defendingArmy, ArmyEvent ae, SetupContext ctx  )
+        public CombatResult ResolveCombat( Army attackingArmy, Army defendingArmy, ArmyEvent ae, SetupContext ctx )
         {
-            return new CombatManager(this).Resolve( attackingArmy, defendingArmy, ae, ctx );
+            return new CombatManager( this ).Resolve( attackingArmy, defendingArmy, ae, ctx );
         }
         public CombatResult ResolveSendingRessources( Army sendingArmy, ArmyEvent ae, SetupContext ctx )
         {
@@ -66,19 +66,21 @@ namespace ITI.SkyLord
             }
 
             // Look for a regiment containing the same unitName
-            Regiment regimentFound = CurrentContext.Regiments.FirstOrDefault( r => r.ArmyId == armyFound.ArmyId && r.Unit.UnitId == unit.UnitId );
+            Regiment regimentFound = CurrentContext.Regiments.FirstOrDefault( r => r.ArmyId == armyFound.ArmyId && r.Unit.UnitName == unit.UnitName );
             if ( regimentFound == null )
             {
                 // If the regiment with this specific unit was not found, resolve bonuses on the unit and add it (and its stats) to the DB
                 // The already present units normally have been updated each time a new bonus was added by a technology
-                Unit modifiedUnit = BonusManager.ResolveAllUnitBonuses( unit, island.Owner.PlayerId, island.IslandId );
+                Unit modifiedUnit = BonusManager.ResolveBonuses( unit, island.Owner.PlayerId, island.IslandId );
                 CurrentContext.Add( modifiedUnit.UnitStatistics );
+                CurrentContext.AddRange( modifiedUnit.Requirements );
+
                 CurrentContext.Add( modifiedUnit );
 
                 Regiment newRegiment = new Regiment
                 {
                     //Unit = CurrentContext.Units.SingleOrDefault( u => u.UnitId == unit.UnitId ),
-                    Unit = unit,
+                    Unit = modifiedUnit,
                     Number = number,
                     ArmyId = armyFound.ArmyId
                 };
@@ -124,19 +126,19 @@ namespace ITI.SkyLord
 
             army.ArmyState = ArmyState.movement;
             army.Island = currentIsland;
-            army.Island.AllRessources = currentIsland.AllRessources; 
+            army.Island.AllRessources = currentIsland.AllRessources;
             CurrentContext.Armies.Add( army );
 
             foreach ( KeyValuePair<string, int> kvp in unitsToSend )
             {
-                if( kvp.Value > 0 )
+                if ( kvp.Value > 0 )
                 {
                     UnitName uN = (UnitName)Enum.Parse( typeof( UnitName ), kvp.Key, true );
                     Unit unit = CurrentContext.Units.Include( u => u.UnitStatistics ).Where( u => u.UnitName == uN ).FirstOrDefault();
                     regiments.Add( new Regiment { Unit = unit, Number = kvp.Value } );
                 }
             }
-            foreach( Regiment r in regiments ) 
+            foreach ( Regiment r in regiments )
             {
                 CurrentContext.Add( r );
             }
@@ -153,7 +155,7 @@ namespace ITI.SkyLord
         public Army GetCurrentDefenseArmy( long IslandId )
         {
             return CurrentContext.Armies.Include( a => a.Island ).ThenInclude( a => a.AllRessources )
-                .Include( a => a.Regiments ).ThenInclude( r => r.Unit)
+                .Include( a => a.Regiments ).ThenInclude( r => r.Unit )
                 .SingleOrDefault( a => a.ArmyState == ArmyState.defense && a.Island.IslandId == IslandId );
         }
 
@@ -169,17 +171,18 @@ namespace ITI.SkyLord
 
         internal Army CopyArmy( Army originalArmy )
         {
-            return new Army {
+            return new Army
+            {
                 Island = originalArmy.Island,
-                Regiments = new List<Regiment>(originalArmy.Regiments),
+                Regiments = new List<Regiment>( originalArmy.Regiments ),
                 ArmyState = originalArmy.ArmyState
             };
         }
 
-        public Army JoinArmies ( Army armyOnIsland, Army armyOnMovement )
+        public Army JoinArmies( Army armyOnIsland, Army armyOnMovement )
         {
             Army joinedArmy = armyOnIsland;
-            if( armyOnIsland == null || armyOnIsland.Regiments == null)
+            if ( armyOnIsland == null || armyOnIsland.Regiments == null )
             {
                 armyOnMovement.ArmyState = ArmyState.defense;
                 // CurrentContext.SaveChanges();
@@ -187,10 +190,10 @@ namespace ITI.SkyLord
             }
             else
             {
-                foreach( Regiment reg in armyOnMovement.Regiments )
+                foreach ( Regiment reg in armyOnMovement.Regiments )
                 {
                     Regiment regimentFound = armyOnIsland.Regiments.Where( r => r.Unit.UnitName == reg.Unit.UnitName ).SingleOrDefault();
-                    if( regimentFound == null )
+                    if ( regimentFound == null )
                     {
                         armyOnIsland.Regiments.Add( reg );
                     }
@@ -227,10 +230,10 @@ namespace ITI.SkyLord
                 throw new ArgumentException( " A regiment cannot have a negative value." );
         }
 
-        internal Dictionary<string,int> SubstractFromArmy( Army army, double ratio )
+        internal Dictionary<string, int> SubstractFromArmy( Army army, double ratio )
         {
             Army tmpArmy = this.CopyArmy( army );
-            Dictionary<string,int> loss = new Dictionary<string, int>();
+            Dictionary<string, int> loss = new Dictionary<string, int>();
 
             foreach ( Regiment r in tmpArmy.Regiments )
             {
@@ -238,7 +241,7 @@ namespace ITI.SkyLord
                 loss.Add( r.Unit.Name, number );
                 Console.WriteLine( "number in the unit :  = " + r.Number );
                 Console.WriteLine( "loss = " + number );
-                this.SubstractFromRegiment( army, r.Unit, number);
+                this.SubstractFromRegiment( army, r.Unit, number );
             }
             return loss;
         }
@@ -259,12 +262,12 @@ namespace ITI.SkyLord
         /// <param name="army"></param>
         internal void RemoveArmy( Army army )
         {
-            if( army.Regiments == null )
+            if ( army.Regiments == null )
                 army.ArmyState = ArmyState.obsolete;
             // Remplace la suppression.
             else
             {
-                foreach( Regiment r in army.Regiments )
+                foreach ( Regiment r in army.Regiments )
                 {
                     CurrentContext.Remove( r );
                 }
@@ -273,11 +276,18 @@ namespace ITI.SkyLord
             }
         }
 
+        public List<Unit> GetExistingUnits()
+        {
+            // CHANGE TO GET THE MODIFIED UNIT IF FOUND (TO GET THE REAL STATS)
+            return CurrentContext.Units.Include( u => u.Requirements).Include( u => u.UnitStatistics).Include( u => u.UnitCost)
+                .Where( u => u.IsModel ).ToList();
+        }
+
         /// <summary>
         /// Count the number of unit in a army.
         /// </summary>
         /// <returns></returns>
-        internal double ArmyCount( Army army)
+        internal double ArmyCount( Army army )
         {
             double number = 0;
 

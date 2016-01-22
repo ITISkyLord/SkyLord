@@ -35,17 +35,17 @@ namespace ITI.SkyLord.Controllers
             }
             else
             {
+                long playerId = SetupContext.GetPlayer( User.GetUserId() ).PlayerId;
+
                 Unit unit = SetupContext.Units.Include( u => u.UnitCost ).Include( u => u.UnitStatistics )
                     .Single( u => u.UnitName == model.UnitTarget && u.IsModel );
-                Island island = GetIsland( islandId );
+                Island island = SetupContext.GetIsland( islandId, playerId );
                 if( unit.UnitCost.Wood * model.UnitAmount > island.AllRessources.Wood || unit.UnitCost.Metal * model.UnitAmount > island.AllRessources.Metal * model.UnitAmount || unit.UnitCost.Cristal * model.UnitAmount > island.AllRessources.Cristal || unit.UnitCost.Magic * model.UnitAmount > island.AllRessources.Magic )
                 {
                     ModelState.AddModelError( "UnitsToAdd", "Vous n'avez pas assez de ressources." );
                 }
                 else
                 {
-                    long playerId = SetupContext.GetPlayer( User.GetUserId() ).PlayerId;
-
                     BonusManager bonusManager = new BonusManager( SetupContext );
                     RessourceManager.RemoveRessource( island.AllRessources, unit.UnitCost.Wood * model.UnitAmount, unit.UnitCost.Metal * model.UnitAmount, unit.UnitCost.Cristal * model.UnitAmount, unit.UnitCost.Magic * model.UnitAmount );
                     em.AddUnitEvent( SetupContext, unit, model.UnitAmount, island );
@@ -104,7 +104,7 @@ namespace ITI.SkyLord.Controllers
                                                     .ThenInclude( r => r.Unit ).ThenInclude( r => r.UnitStatistics )
                                                     .Where( i => i.IslandId == model.Target ).FirstOrDefault();
                 ArmyManager am = new ArmyManager( SetupContext, new BonusManager( SetupContext ) );
-                Island attackingIsland = GetIsland( islandId );
+                Island attackingIsland = SetupContext.GetIsland( islandId, model.Layout.CurrentPlayer.PlayerId );
                 Army attackingArmy = am.CreateArmy( model.UnitsToSend, attackingIsland );
                 SetupContext.Armies.Add( attackingArmy );
                 SetupContext.SaveChanges();
@@ -143,17 +143,7 @@ namespace ITI.SkyLord.Controllers
             return RedirectToAction( "Index", new { islandId = islandId } );
         }
 
-        public IActionResult UpgradeUnit( ArmyViewModel model, long islandId )
-        {
-            BonusTechnology bonusToAdd = new BonusTechnology
-            {
-                Modifier = 10,
-                BonusType = BonusType.army_attack
-            };
-
-            return View();
-        }
-
+        [Obsolete]
         private Island GetIsland( long islandId )
         {
             if( islandId == 0 )
@@ -184,7 +174,9 @@ namespace ITI.SkyLord.Controllers
 
         private SetAttackingArmyViewModel CreateSetAttackingArmyViewModel( SetAttackingArmyViewModel model, long islandId )
         {
-            Island currentIsland = GetIsland( islandId );
+            long activePlayerId = SetupContext.GetPlayer( User.GetUserId() ).PlayerId;
+
+            Island currentIsland = SetupContext.GetIsland( islandId, activePlayerId );
 
             model.CurrentDefenseArmy = SetupContext.Armies
                                     .Include( a => a.Island )
@@ -193,8 +185,6 @@ namespace ITI.SkyLord.Controllers
                                     .ThenInclude( r => r.UnitStatistics )
                                     .Where( a => a.Island.IslandId == currentIsland.IslandId && a.ArmyState == ArmyState.defense )
                                     .SingleOrDefault();
-
-            long activePlayerId = SetupContext.GetPlayer( User.GetUserId() ).PlayerId;
 
             model.EnnemyIslands =
                 SetupContext.Islands
