@@ -14,6 +14,7 @@ namespace ITI.SkyLord
             SeedMonsters();
             SeedMagical();
             SeedMecanical();
+            SeedUtility();
         }
 
         public void SeedSoldiers()
