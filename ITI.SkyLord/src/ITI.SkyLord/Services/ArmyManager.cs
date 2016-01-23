@@ -165,10 +165,13 @@ namespace ITI.SkyLord
                 .Include( a => a.Regiments ).ThenInclude( r => r.Unit )
                 .SingleOrDefault( a => a.ArmyState == ArmyState.defense && a.Island.IslandId == IslandId );
 
-            foreach( Regiment r in currentDefenseArmy.Regiments )
+            if( currentDefenseArmy != null )
             {
-                long unitId = r.Unit.UnitId;
-                r.Unit = CurrentContext.Units.Include( u => u.UnitStatistics ).Include( u => u.UnitCost ).Include( u => u.Requirements ).Single( u => u.UnitId == unitId );
+                foreach ( Regiment r in currentDefenseArmy.Regiments )
+                {
+                    long unitId = r.Unit.UnitId;
+                    r.Unit = CurrentContext.Units.Include( u => u.UnitStatistics ).Include( u => u.UnitCost ).Include( u => u.Requirements ).Single( u => u.UnitId == unitId );
+                }
             }
 
             return currentDefenseArmy;
