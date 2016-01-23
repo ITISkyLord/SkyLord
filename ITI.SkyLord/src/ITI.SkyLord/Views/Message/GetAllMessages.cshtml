@@ -4,26 +4,32 @@
 @using ITI.SkyLord
 
 @{
-    ViewData["Title"] = "Message(s)";
+    ViewData["Title"] = "Messages";
     Layout = "_Layout";
 }
 
 <h1>Boite de réception</h1>
 <table>
     <tr>
+        <td>Objet du message</td>
+        <td>Heure d'envoi</td>
+    </tr>
+
         @foreach( Message m in Model.AllMessages.Where( u => u.isCombatReport == false) )
         {
-            <td><a>@m.MessageObject</a></td>
+            <tr>
+                @if( m.Read )
+                { 
+                    <td><a asp-controller="Message" asp-action="SeeThisMessage" asp-route-messageId="@m.MessageId" asp-route-islandId="@Model.Layout.IslandId">@m.MessageObject</a></td>
+                }
+                else
+                {
+                    <td><a asp-controller="Message" asp-action="SeeThisMessage" asp-route-messageId="@m.MessageId" asp-route-islandId="@Model.Layout.IslandId"><strong>@m.MessageObject</strong></a></td>
+                }
 
+
+                <td>@m.DateSent</td>
+            </tr>
         }
-    </tr>
+ 
 </table>
-Problème pour générer les messages depuis que l'on peut attaquer n'importe quelle île. Un message doit toujours avoir un destinaire et un receiver.
-@foreach (Message m in Model.AllMessages)
-{
-    <span>Auteur: </span>
-    @m.Sender.Name;
-    <br />
-    @m.CoreMessage;
-    <hr />
-}

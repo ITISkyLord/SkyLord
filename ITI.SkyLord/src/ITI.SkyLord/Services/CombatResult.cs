@@ -86,7 +86,8 @@ namespace ITI.SkyLord
                 isCombatReport = true,
                 Sender = ae.Island.Owner,
                 Receiver = ae.Island.Owner,
-                CoreMessage = coreMessageWinner
+                CoreMessage = coreMessageWinner,
+                DateSent = DateTime.Now
             };
         }
         public CombatResult( Army winningArmy, Army loosingArmy, CombatManager cm, ArmyEvent ae, SetupContext ctx, Army tmpWinArmy )
@@ -169,7 +170,8 @@ namespace ITI.SkyLord
                 isCombatReport = true,
                 Sender = _winningArmy.Island.Owner,
                 Receiver = _winningArmy.Island.Owner,
-                CoreMessage = coreMessageWinner
+                CoreMessage = coreMessageWinner,
+                DateSent = DateTime.Now
             };
             coreMessageLooser += ".";
             _combatReportLooser = new Message()
@@ -179,7 +181,8 @@ namespace ITI.SkyLord
                 isCombatReport = true,
                 Sender = _loosingArmy.Island.Owner,
                 Receiver = _loosingArmy.Island.Owner,
-                CoreMessage = coreMessageLooser
+                CoreMessage = coreMessageLooser,
+                DateSent = DateTime.Now
             };
             #endregion
         }

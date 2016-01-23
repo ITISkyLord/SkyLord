@@ -42,6 +42,11 @@ namespace ITI.SkyLord
             return listMessages;
         }
 
+        internal Message ReadThisMessage( long messageId )
+        {
+            return messageContext.Messages.Include( m => m.Sender ).Where( m => m.MessageId == messageId ).Single();
+        }
+
         public IList<Message> GetAllMessageSent(Player player)
         {
             List<Message> listMessagesSend = messageContext.Messages.Where(m => m.Sender.PlayerId == player.PlayerId).ToList();
