@@ -165,7 +165,7 @@ namespace ITI.SkyLord
             coreMessageWinner += ".";
             _combatReportWinner = new Message()
             {
-                MessageObject = _winningArmy.Island.Name + "a gagné contre " + _loosingArmy.Island.Name + ".",
+                MessageObject = _winningArmy.Island.Name + " a gagné contre " + _loosingArmy.Island.Name + ".",
                 Read = false,
                 isCombatReport = true,
                 Sender = _winningArmy.Island.Owner,
