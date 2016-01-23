@@ -25,7 +25,7 @@ namespace ITI.SkyLord
         internal List<BuildingEvent> GetBuildingEventsOnThisBuildingPosition( long islandId, int position )
         {
             List<BuildingEvent> events = new List<BuildingEvent>();
-            // Récupérer les évènements liés à une position
+            // Get the buildingEvent on this position
             events = _context.BuildingEvents
                 .Include( e => e.Island ).ThenInclude( e => e.Buildings )
                 .Where( i => i.Island.IslandId == islandId && i.PositionToBuild == position && i.Done == false )

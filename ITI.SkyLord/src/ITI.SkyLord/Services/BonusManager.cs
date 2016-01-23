@@ -69,6 +69,7 @@ namespace ITI.SkyLord.Services
                 }
             }
 
+            // Update all the player's units in all his regiments with a new modified unit
             foreach ( Regiment regiment in allPlayersRegiments )
             {
                 Unit resolvedUnit = ResolveBonuses( regiment.Unit, playerId, islandId );

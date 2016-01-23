@@ -120,22 +120,31 @@ namespace ITI.SkyLord
 
         internal Army CreateArmy( Dictionary<string, int> unitsToSend, Island currentIsland )
         {
-            Army army = new Army();
+            Army newArmy = new Army();
+            Army defenseArmy = GetCurrentDefenseArmy( currentIsland.IslandId );
 
             List<Regiment> regiments = new List<Regiment>();
 
-            army.ArmyState = ArmyState.movement;
-            army.Island = currentIsland;
-            army.Island.AllRessources = currentIsland.AllRessources;
-            CurrentContext.Armies.Add( army );
+            newArmy.ArmyState = ArmyState.movement;
+            newArmy.Island = currentIsland;
+            newArmy.Island.AllRessources = currentIsland.AllRessources;
+            CurrentContext.Armies.Add( newArmy );
 
             foreach ( KeyValuePair<string, int> kvp in unitsToSend )
             {
                 if ( kvp.Value > 0 )
                 {
-                    UnitName uN = (UnitName)Enum.Parse( typeof( UnitName ), kvp.Key, true );
-                    Unit unit = CurrentContext.Units.Include( u => u.UnitStatistics ).Where( u => u.UnitName == uN ).FirstOrDefault();
-                    regiments.Add( new Regiment { Unit = unit, Number = kvp.Value } );
+                    UnitName unitName= (UnitName)Enum.Parse( typeof( UnitName ), kvp.Key, true );
+                    Unit unitToAdd = defenseArmy.Regiments.Single( r => r.Unit.UnitName == unitName ).Unit;
+
+                    Regiment regimentToAdd = new Regiment
+                    {
+                        Unit = unitToAdd,
+                        Number = kvp.Value
+                    };
+
+                    // Create and add the new regiment that inludes references to the UnitStatisitcsn, Requiremens and UnitCost
+                    regiments.Add( regimentToAdd );
                 }
             }
             foreach ( Regiment r in regiments )
@@ -143,20 +152,29 @@ namespace ITI.SkyLord
                 CurrentContext.Add( r );
             }
 
-            army.Regiments = regiments;
+            newArmy.Regiments = regiments;
 
-            Army defenseArmy = GetCurrentDefenseArmy( currentIsland.IslandId );
-
-            SubstractFromArmy( defenseArmy, army );
-            army.Island.AllRessources = currentIsland.AllRessources;
-            return army;
+            SubstractFromArmy( defenseArmy, newArmy );
+            newArmy.Island.AllRessources = currentIsland.AllRessources;
+            return newArmy;
         }
 
         public Army GetCurrentDefenseArmy( long IslandId )
         {
-            return CurrentContext.Armies.Include( a => a.Island ).ThenInclude( a => a.AllRessources )
+            Army currentDefenseArmy =  CurrentContext.Armies.Include( a => a.Island ).ThenInclude( a => a.AllRessources )
                 .Include( a => a.Regiments ).ThenInclude( r => r.Unit )
                 .SingleOrDefault( a => a.ArmyState == ArmyState.defense && a.Island.IslandId == IslandId );
+
+            if( currentDefenseArmy != null )
+            {
+                foreach ( Regiment r in currentDefenseArmy.Regiments )
+                {
+                    long unitId = r.Unit.UnitId;
+                    r.Unit = CurrentContext.Units.Include( u => u.UnitStatistics ).Include( u => u.UnitCost ).Include( u => u.Requirements ).Single( u => u.UnitId == unitId );
+                }
+            }
+
+            return currentDefenseArmy;
         }
 
         /// <summary>
