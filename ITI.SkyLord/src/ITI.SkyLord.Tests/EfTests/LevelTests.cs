@@ -1004,7 +1004,7 @@ namespace ITI.SkyLord.Tests.EfTests
         #region Seed
 
         [Test]
-        public void SeedAllTheThings()
+        public void AaSeedAllTheThings()
         {
             LevelSeed levelSeed = new LevelSeed();
             UnitSeed unitSeed = new UnitSeed();
@@ -1012,130 +1012,130 @@ namespace ITI.SkyLord.Tests.EfTests
             unitSeed.SeedUnits();
         }
 
-        [Test]
-        public void AvailabilityTest()
-        {
-            using ( var context = new SetupContext() )
-            {
-                #region Seed
-                Unit unit1 = context.Units.First( u => u.UnitId == 1 );
-                Unit unit2 = context.Units.First( u => u.UnitId == 2 );
-                Unit unit3 = context.Units.First( u => u.UnitId == 3 );
+        //    [Test]
+        //    public void AvailabilityTest()
+        //    {
+        //        using ( var context = new SetupContext() )
+        //        {
+        //            #region Seed
+        //            Unit unit1 = context.Units.First( u => u.UnitId == 1 );
+        //            Unit unit2 = context.Units.First( u => u.UnitId == 2 );
+        //            Unit unit3 = context.Units.First( u => u.UnitId == 3 );
 
-                UnitEvent unitEvent1 = new UnitEvent
-                {
-                    Unit = unit1,
-                    Island = context.Islands.First(),
-                    BegginningDate = DateTime.Now,
-                    EndingDate = DateTime.Now.AddSeconds( unit1.Duration ),
-                    EventType = EventDiscrimator.UnitEvent,
-                    Done = false,
-                    UnitIdd = unit1.UnitId
-                };
+        //            UnitEvent unitEvent1 = new UnitEvent
+        //            {
+        //                Unit = unit1,
+        //                Island = context.Islands.First(),
+        //                BegginningDate = DateTime.Now,
+        //                EndingDate = DateTime.Now.AddSeconds( unit1.Duration ),
+        //                EventType = EventDiscrimator.UnitEvent,
+        //                Done = false,
+        //                UnitIdd = unit1.UnitId
+        //            };
 
-                DateTime unitEvent1Ending = unitEvent1.EndingDate;
-                UnitEvent unitEvent2 = new UnitEvent
-                {
-                    Unit = unit1,
-                    Island = context.Islands.First(),
-                    BegginningDate = unitEvent1Ending,
-                    EndingDate = unitEvent1Ending.AddSeconds( unit1.Duration ),
-                    EventType = EventDiscrimator.UnitEvent,
-                    Done = false,
-                    UnitIdd = unit1.UnitId
-                };
+        //            DateTime unitEvent1Ending = unitEvent1.EndingDate;
+        //            UnitEvent unitEvent2 = new UnitEvent
+        //            {
+        //                Unit = unit1,
+        //                Island = context.Islands.First(),
+        //                BegginningDate = unitEvent1Ending,
+        //                EndingDate = unitEvent1Ending.AddSeconds( unit1.Duration ),
+        //                EventType = EventDiscrimator.UnitEvent,
+        //                Done = false,
+        //                UnitIdd = unit1.UnitId
+        //            };
 
-                DateTime unitEvent2Ending = unitEvent2.EndingDate;
-                UnitEvent unitEvent3 = new UnitEvent
-                {
-                    Unit = unit2,
-                    Island = context.Islands.First(),
-                    BegginningDate = unitEvent1Ending,
-                    EndingDate = unitEvent1Ending.AddSeconds( unit2.Duration ),
-                    EventType = EventDiscrimator.UnitEvent,
-                    Done = false,
-                    UnitIdd = unit2.UnitId
-                };
+        //            DateTime unitEvent2Ending = unitEvent2.EndingDate;
+        //            UnitEvent unitEvent3 = new UnitEvent
+        //            {
+        //                Unit = unit2,
+        //                Island = context.Islands.First(),
+        //                BegginningDate = unitEvent1Ending,
+        //                EndingDate = unitEvent1Ending.AddSeconds( unit2.Duration ),
+        //                EventType = EventDiscrimator.UnitEvent,
+        //                Done = false,
+        //                UnitIdd = unit2.UnitId
+        //            };
 
-                DateTime unitEvent3Ending = unitEvent3.EndingDate;
-                UnitEvent unitEvent4 = new UnitEvent
-                {
-                    Unit = unit1,
-                    Island = context.Islands.First(),
-                    BegginningDate = unitEvent3Ending,
-                    EndingDate = unitEvent3Ending.AddSeconds( unit1.Duration ),
-                    EventType = EventDiscrimator.UnitEvent,
-                    Done = false,
-                    UnitIdd = unit1.UnitId
-                };
+        //            DateTime unitEvent3Ending = unitEvent3.EndingDate;
+        //            UnitEvent unitEvent4 = new UnitEvent
+        //            {
+        //                Unit = unit1,
+        //                Island = context.Islands.First(),
+        //                BegginningDate = unitEvent3Ending,
+        //                EndingDate = unitEvent3Ending.AddSeconds( unit1.Duration ),
+        //                EventType = EventDiscrimator.UnitEvent,
+        //                Done = false,
+        //                UnitIdd = unit1.UnitId
+        //            };
 
-                DateTime unitEvent4Ending = unitEvent4.EndingDate;
-                UnitEvent unitEvent5 = new UnitEvent
-                {
-                    Unit = unit3,
-                    Island = context.Islands.First(),
-                    BegginningDate = unitEvent4Ending,
-                    EndingDate = unitEvent4Ending.AddSeconds( unit3.Duration ),
-                    EventType = EventDiscrimator.UnitEvent,
-                    Done = false,
-                    UnitIdd = unit3.UnitId
-                };
-                #endregion
+        //            DateTime unitEvent4Ending = unitEvent4.EndingDate;
+        //            UnitEvent unitEvent5 = new UnitEvent
+        //            {
+        //                Unit = unit3,
+        //                Island = context.Islands.First(),
+        //                BegginningDate = unitEvent4Ending,
+        //                EndingDate = unitEvent4Ending.AddSeconds( unit3.Duration ),
+        //                EventType = EventDiscrimator.UnitEvent,
+        //                Done = false,
+        //                UnitIdd = unit3.UnitId
+        //            };
+        //            #endregion
 
-                List<UnitEvent> listEvents = new List<UnitEvent>
-                {
-                    unitEvent1, unitEvent2, unitEvent3, unitEvent4, unitEvent5
-                };
+        //            List<UnitEvent> listEvents = new List<UnitEvent>
+        //            {
+        //                unitEvent1, unitEvent2, unitEvent3, unitEvent4, unitEvent5
+        //            };
 
-                List<KeyValPair> list = new List<KeyValPair>();
+        //            List<KeyValPair> list = new List<KeyValPair>();
 
-                foreach ( UnitEvent e in listEvents )
-                {
-                    if ( !e.Done )
-                    {
-                        list.Add( new KeyValPair { Key = e.Unit.UnitName, Value = e } );
-                    }
-                }
+        //            foreach ( UnitEvent e in listEvents )
+        //            {
+        //                if ( !e.Done )
+        //                {
+        //                    list.Add( new KeyValPair { Key = e.Unit.UnitName, Value = e } );
+        //                }
+        //            }
 
-                // Create the query by using our user-defined query operator.
-                IEnumerable<IGrouping<UnitName, KeyValPair>> groups = list.ChunkBy( p => p.Key );
+        //            // Create the query by using our user-defined query operator.
+        //            IEnumerable<IGrouping<UnitName, KeyValPair>> groups = list.ChunkBy( p => p.Key );
 
-                List<UnitQueue> queue = new List<UnitQueue>();
+        //            List<UnitQueue> queue = new List<UnitQueue>();
 
-                foreach ( var group in groups )
-                {
-                    queue.Add( new UnitQueue
-                    {
-                        Number = group.Count(),
-                        EndingDate = group.Last().Value.EndingDate,
-                        Unit = group.First().Value.Unit
-                    } );
-                }
-            }
-        }
+        //            foreach ( var group in groups )
+        //            {
+        //                queue.Add( new UnitQueue
+        //                {
+        //                    Number = group.Count(),
+        //                    EndingDate = group.Last().Value.EndingDate,
+        //                    Unit = group.First().Value.Unit
+        //                } );
+        //            }
+        //        }
+        //    }
 
-        private UnitEvent CloneUnitEvent( UnitEvent source )
-        {
-            return new UnitEvent
-            {
-                BegginningDate = source.BegginningDate,
-                EndingDate = source.EndingDate,
-                Done = source.Done,
-                EventType = source.EventType,
-                Island = source.Island,
-                Unit = source.Unit,
-                UnitIdd = source.UnitIdd
+        //    private UnitEvent CloneUnitEvent( UnitEvent source )
+        //    {
+        //        return new UnitEvent
+        //        {
+        //            BegginningDate = source.BegginningDate,
+        //            EndingDate = source.EndingDate,
+        //            Done = source.Done,
+        //            EventType = source.EventType,
+        //            Island = source.Island,
+        //            Unit = source.Unit,
+        //            UnitIdd = source.UnitIdd
 
-            };
-        }
-        #endregion
-    }
+        //        };
+        //    }
+            #endregion
+        //}
 
-    public class KeyValPair
-    {
-        public UnitName Key { get; set; }
-        public UnitEvent Value { get; set; }
-    }
+        //public class KeyValPair
+        //{
+        //    public UnitName Key { get; set; }
+        //    public UnitEvent Value { get; set; }
+        //}
 
-}
+    } }
 

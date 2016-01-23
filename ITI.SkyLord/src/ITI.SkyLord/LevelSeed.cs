@@ -44,6 +44,7 @@ namespace ITI.SkyLord
             SeedShellLevels();
             SeedWeaponsLevels();
             SeedWingsLevels();
+            SeedConquestLevels();
         }
 
 

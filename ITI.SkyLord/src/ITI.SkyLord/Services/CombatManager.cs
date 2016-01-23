@@ -14,6 +14,8 @@ namespace ITI.SkyLord
     {
         private Army _winningArmy;
         private Army _loosingArmy;
+        private Army _tmpWin;
+
 
         internal Dictionary<string, int> Loss { get; set; }
 
@@ -41,8 +43,7 @@ namespace ITI.SkyLord
             double attackTotal;
             double attackPointsPhysic = 0;
             double attackPointsMagic = 0;
-            ArmyManager am = new ArmyManager(ctx, new Services.BonusManager(ctx));
-            Army tmpWin = am.CopyArmy( _winningArmy );
+            
             foreach( Regiment r in attackingArmy.Regiments )
             {
                 if( r.Unit.UnitDamageType == UnitDamageType.physical )
@@ -58,7 +59,7 @@ namespace ITI.SkyLord
             magicResist = GetMagicResist( defendingArmy );
             Fight( attackingArmy, defendingArmy, attackPointsPhysic, physicResist, attackPointsMagic, magicResist, ratioPhysicAttack, ratioMagicAttack );
 
-            return new CombatResult( _winningArmy, _loosingArmy, this, ae, ctx, tmpWin );
+            return new CombatResult( _winningArmy, _loosingArmy, this, ae, ctx, _tmpWin );
         }
 
         internal CombatResult ResolveSendingRessources( Army sendingArmy, ArmyEvent ae, SetupContext ctx )
@@ -127,6 +128,7 @@ namespace ITI.SkyLord
 
             if( totalAttack > totalDefense )
             {
+                _tmpWin = _armyManager.CopyArmy( attackingArmy );
                 _winningArmy = attackingArmy;
                 _loosingArmy = defendingArmy;
                 totalWinner = totalAttack;
@@ -134,6 +136,7 @@ namespace ITI.SkyLord
             }
             else
             {
+                _tmpWin = _armyManager.CopyArmy( defendingArmy );
                 _winningArmy = defendingArmy;
                 _loosingArmy = attackingArmy;
                 totalWinner = totalDefense;
