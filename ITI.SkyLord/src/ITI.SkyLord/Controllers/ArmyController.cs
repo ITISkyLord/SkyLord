@@ -89,7 +89,7 @@ namespace ITI.SkyLord.Controllers
                                     .Where( a => a.Island.IslandId == islandId && a.ArmyState == ArmyState.defense )
                                     .SingleOrDefault();
 
-            if ( model.UnitsToSend.Count( kvp => kvp.Value == 0 ) != model.UnitsToSend.Count() && !model.UnitsToSend.Any( kvp => kvp.Value < 0 ) )
+            if ( model.UnitsToSend.Count( kvp => kvp.Value == 0 ) == model.UnitsToSend.Count() || model.UnitsToSend.Any( kvp => kvp.Value < 0 ) )
             {
                 if ( model.UnitsToSend.Any( kvp => kvp.Value < 0 ) )
                 {
@@ -132,19 +132,6 @@ namespace ITI.SkyLord.Controllers
             SetupContext.SaveChanges();
 
             return RedirectToAction( "SetAttackingArmy", new { islandId = islandId } );
-        }
-
-        public IActionResult RejoinArmies( long id, long islandId = 0 )
-        {
-            ArmyManager am = new ArmyManager( SetupContext, new BonusManager( SetupContext ) );
-            Army attackingArmy = am.GetArmy( id );
-
-            if ( attackingArmy != null )
-            {
-                am.JoinArmies( attackingArmy.Island.Armies.SingleOrDefault( a => a.ArmyState == ArmyState.defense ), attackingArmy );
-                SetupContext.SaveChanges();
-            }
-            return RedirectToAction( "Index", new { islandId = islandId } );
         }
 
         /// <summary>
@@ -326,6 +313,48 @@ namespace ITI.SkyLord.Controllers
         {
             return View( CreateSetSendRessourceViewModel( islandId ) );
         }
+
+        public IActionResult SetMovement( long islandId )
+        {
+            long playerId = SetupContext.GetPlayer( User );
+            SetMovementArmyViewModel movementViewModel = new SetMovementArmyViewModel();
+
+            SetupContext.FillStandardVM( movementViewModel, playerId, islandId );
+            movementViewModel.CurrentDefenseArmy = new ArmyManager( SetupContext, new BonusManager( SetupContext ) ).GetCurrentDefenseArmy( islandId );
+
+            return View( movementViewModel );
+
+        }
+
+        public IActionResult MoveArmy( SetMovementArmyViewModel model, long islandId )
+        {
+            Island senderIsland = GetIsland( islandId );
+
+            if ( model.UnitsToSend.Count( kvp => kvp.Value == 0 ) != model.UnitsToSend.Count() || model.UnitsToSend.Any( kvp => kvp.Value < 0 ) )
+            {
+                EventManager eventManager = new EventManager( SetupContext, new EventPackManager( SetupContext ) );
+
+                Island islandTarget = SetupContext.Islands.Include( i => i.Owner )
+                                                    .Include( i => i.Coordinates )
+                                                    .Where( i => i.IslandId == model.TargetIslandId ).FirstOrDefault();
+
+                ArmyManager am = new ArmyManager( SetupContext, new BonusManager( SetupContext ) );
+
+                Army MovingArmy = am.CreateArmy( model.UnitsToSend, senderIsland );
+                SetupContext.Armies.Add( MovingArmy );
+                SetupContext.SaveChanges();
+
+                eventManager.AddArmyEvent( SetupContext, MovingArmy, senderIsland, ArmyMovement.moving, islandTarget );
+                SetupContext.SaveChanges();
+
+                return RedirectToAction( "SetMovement", new { islandId = islandId } );
+            }
+            else
+            {
+                return RedirectToAction( "SetMovement", new { islandId = islandId } );
+            }
+        }
+
         public abstract class ModelStateTempDataTransfer : ActionFilterAttribute
         {
             protected static readonly string Key = typeof( ModelStateTempDataTransfer ).FullName;

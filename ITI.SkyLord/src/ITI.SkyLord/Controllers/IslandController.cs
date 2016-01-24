@@ -130,6 +130,9 @@ namespace ITI.SkyLord.Controllers
             model.AllUnits = SetupContext.Units.Include( u => u.UnitCost ).ToList();
             model.AvailableUnit = armyManager.GetExistingUnits().Where( u => levelManager.GetAvailablility( u, islandId ).IsItemAvailable ).ToList();
 
+            // La queue de contruction des unités
+            model.UnitsQueue = eventManager.GetCurrentUnitQueue( islandId );
+
             // Toutes les technologies possibles
             TechnologyManager techManager = new TechnologyManager( SetupContext, levelManager, new BonusManager( SetupContext ));
             model = CreateTechnologyItems( model, islandId, playerId );

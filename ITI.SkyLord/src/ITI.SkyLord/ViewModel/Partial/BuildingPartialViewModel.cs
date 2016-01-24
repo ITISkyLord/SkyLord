@@ -28,6 +28,7 @@ namespace ITI.SkyLord.ViewModel.Partial
         public List<Unit> AvailableUnit { get; set; }
         public int UnitAmount { get; set; }
         public UnitName UnitTarget { get; set; }
+        public List<UnitQueue> UnitsQueue { get; set; }
 
         // Technologies
         public List<TechnologyDisplay> TechnologyDisplays { get; set; }

@@ -292,10 +292,7 @@ namespace ITI.SkyLord
                                         .Where( u => u.ArmyId == armyEvent.ArmyIdd )
                                         .Single();
 
-
-            if ( armyEvent.ArmyMovement == ArmyMovement.attacking )
-            {
-                Island destination = _context.Islands
+            Island destination = _context.Islands
                                     .Include( c => c.Coordinates )
                                     .Include( p => p.Owner )
                                     .Include( i => i.Armies )
@@ -305,6 +302,8 @@ namespace ITI.SkyLord
                                     .Where( i => i.IslandId == armyEvent.DestinationIdd )
                                     .Single();
 
+            if ( armyEvent.ArmyMovement == ArmyMovement.attacking )
+            {
                 ResolveAllForIsland( destination.IslandId, false );
                 Army defendingArmy = destination.Armies.Where( a => a.ArmyState == ArmyState.defense ).SingleOrDefault();
                 if ( defendingArmy == null )
@@ -321,15 +320,6 @@ namespace ITI.SkyLord
             {
                 Army sendingArmy = attackingArmy;
 
-                Island destination = _context.Islands
-                                    .Include( c => c.Coordinates )
-                                    .Include( p => p.Owner )
-                                    .Include( i => i.Armies )
-                                    .ThenInclude( r => r.Regiments)
-                                    .ThenInclude( r => r.Unit).ThenInclude( r=> r.UnitStatistics )
-                                    .Include(i => i.AllRessources )
-                                    .Where( i => i.IslandId == armyEvent.DestinationIdd )
-                                    .Single();
                 armyEvent.Destination = destination;
                 Ressource pillagedRessource = _context.Ressources.Where(r => r.RessourceId == armyEvent.PillagedRessourcesIdd).SingleOrDefault();
                 armyEvent.PillagedRessources = pillagedRessource;
@@ -355,10 +345,14 @@ namespace ITI.SkyLord
                                     .ThenInclude( r => r.Unit )
                                     .Where( a => a.Island.IslandId == armyEvent.Island.IslandId && a.ArmyState == ArmyState.defense )
                                     .Single();
-                    attackingArmy = armyManager.JoinArmies( islandArmy, attackingArmy );
+                    attackingArmy = armyManager.JoinArmies( islandArmy, attackingArmy, armyEvent.Destination.IslandId );
                     _context.SaveChanges();
                 }
-
+            }
+            else if( armyEvent.ArmyMovement == ArmyMovement.moving )
+            {
+                Army defendingArmy = destination.Armies.SingleOrDefault( a => a.ArmyState == ArmyState.defense );
+                armyManager.JoinArmies( defendingArmy, attackingArmy, destination.IslandId );
             }
 
 
