@@ -9,18 +9,24 @@ namespace ITI.SkyLord
     {
         public static double DistanceFromCenter( Island island )
         {
-            if( Math.Sqrt( Math.Pow( island.Coordinates.X, 2 ) + Math.Pow( island.Coordinates.Y, 2 ) ) == 0 )
-                return 0.01;
-            else
-                return Math.Sqrt( Math.Pow( island.Coordinates.X, 2 ) + Math.Pow( island.Coordinates.Y, 2 ) );
-            // Formule : RACINE(coord.X² + coord.Y²)
+            Coordinate center = new Coordinate() { X = 50, Y = 50 };
+            var distance = DistanceBeetweenTwoCoordinates(island.Coordinates, center);
+
+            return (distance == 0 ? 0.01 : distance);
         }
 
         public static double DistanceBeetweenTwoIslands( Island island1, Island island2 )
         {
-            // Formule : RACINE [ (Xb - Xa)² + (Yb - Ya)² ]
             if( island1 == island2 ) throw new ArgumentException( "Island 1 et island 2 c'est la même île !" );
-            return Math.Sqrt( (Math.Pow( island2.Coordinates.X - island1.Coordinates.X, 2 ) + Math.Pow( island2.Coordinates.Y - island1.Coordinates.Y, 2 )) );
+            if( island1.IslandId == island2.IslandId ) throw new ArgumentException( "Island 1 et island 2 c'est la même île !" );
+
+            return DistanceBeetweenTwoCoordinates(island1.Coordinates, island2.Coordinates);
+        }
+
+        private static double DistanceBeetweenTwoCoordinates(Coordinate c1, Coordinate c2)
+        {
+            // Formule : Distance = RACINE [ (Xb - Xa)² + (Yb - Ya)² ]
+            return Math.Sqrt((Math.Pow(c2.X - c1.X, 2) + Math.Pow(c2.Y - c1.Y, 2)));
         }
     }
 }
