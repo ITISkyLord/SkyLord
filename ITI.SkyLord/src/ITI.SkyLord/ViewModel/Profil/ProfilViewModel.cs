@@ -16,7 +16,10 @@ namespace ITI.SkyLord.ViewModels.Profil
         public string Description { get; set; }
         public string Mail { get; set; }
         public string SiteWeb { get; set; }
+        public string Name { get; set; }
+        public long PlayerId { get; set; }
+        public long CurrentPlayerId { get; set; }
 
-       
+
     }
 }
