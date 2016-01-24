@@ -76,16 +76,16 @@ namespace CodeCake
                              return false;
                          } );
 
-                  Cake.CleanDirectories( "*/wwwroot" + configuration,
-                         ( d ) =>
-                         {
-                             foreach( DNXProjectFile projet in dnxSolution.Projects )
-                             {
-                                 if( d.Path.Segments.Contains( projet.ProjectName ) )
-                                     return true;
-                             }
-                             return false;
-                         } );
+              //    Cake.CleanDirectories( "*/wwwroot" + configuration,
+              //           ( d ) =>
+              //           {
+              //               foreach( DNXProjectFile projet in dnxSolution.Projects )
+              //               {
+              //                   if( d.Path.Segments.Contains( projet.ProjectName ) )
+              //                       return true;
+              //               }
+              //               return false;
+              //           } );
               } );
 
             Task( "Check-Repository" )
