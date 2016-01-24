@@ -16,6 +16,9 @@
 </style>
 
 <h1>Armées</h1>
+<a asp-controller="Army" asp-action="SetSendRessources" asp-route-islandId="@Model.Layout.IslandId">Envoyer des ressources</a> <br />
+<a asp-controller="Army" asp-action="SetColonisation" asp-route-islandId="@Model.Layout.IslandId">Colonisation</a> <br />
+<a asp-controller="Army" asp-action="SetMovement" asp-route-islandId="@Model.Layout.IslandId">Transporter des troupes</a>
 
 <h2>Armées en cours de mouvement</h2>
 @{
@@ -28,9 +31,26 @@
             {
                 <p>
                     @{
-                        if (@army.Destination.Owner != null)
+                        // Si c'est bien une attaque et non un approvisionnement.
+                        // Gérer le retour, c'est pas toujours une attaque.
+                        if( @army.Destination.Owner != null )
                         {
-                            <div>Attaque vers @army.Destination.Owner.Name [@army.Destination.Coordinates.X, @army.Destination.Coordinates.Y]</div>
+                            if( army.ArmyMovement == ITI.SkyLord.Models.Entity_Framework.Entites.Events.ArmyMovement.attacking )
+                            {
+                                <div>Attaque vers @army.Destination.Name [@army.Destination.Coordinates.X, @army.Destination.Coordinates.Y] chez @army.Destination.Owner.Name</div>
+                            }
+                            else if( army.ArmyMovement == ITI.SkyLord.Models.Entity_Framework.Entites.Events.ArmyMovement.sendingRessources )
+                            {
+                                <div>Envoi de ressources vers @army.Destination.Name [@army.Destination.Coordinates.X, @army.Destination.Coordinates.Y] chez @army.Destination.Owner.Name</div>
+                            }
+                            else if( army.ArmyMovement == ITI.SkyLord.Models.Entity_Framework.Entites.Events.ArmyMovement.returning )
+                            {
+                                <div>Vos unités sont en train de revenir de @army.Destination.Name [@army.Destination.Coordinates.X, @army.Destination.Coordinates.Y] chez @army.Destination.Owner.Name</div>
+                            }
+                            else if( army.ArmyMovement == ITI.SkyLord.Models.Entity_Framework.Entites.Events.ArmyMovement.colonising )
+                            {
+                                <div>Colonisation vers @army.Destination.Name [@army.Destination.Coordinates.X, @army.Destination.Coordinates.Y] chez @army.Destination.Owner.Name. Impact à @army.EndingDate.Hour:@army.EndingDate.Minute:@army.EndingDate.Second</div>
+                            }
                         }
                         else
                         {
@@ -38,7 +58,7 @@
                         }
                     }
                     <br />
-                    Arrivé à @army.EndingDate.Hour heure @army.EndingDate.Minute minutes @army.EndingDate.Second secondes
+                    Arrivée à @army.EndingDate.Hour:@army.EndingDate.Minute:@army.EndingDate.Second
                 </p>
             }
             <hr />
@@ -114,5 +134,5 @@
 }
 else
 {
-    <p>Vous n'avez pas encore d'armée, allez au portail d'invocation pour vous préparer à la guerre</p>
+    <p>Vous n'avez pas encore d'armée, allez au portail d'invocation pour vous préparer à la guerre.</p>
 }

@@ -1,0 +1,16 @@
+﻿@model ITI.SkyLord.ViewModel.Partial.BuildingPartialViewModel
+
+@if ( Model.UnitsQueue != null )
+{
+    <div>
+        <h3> Queue </h3>
+
+        @foreach( UnitQueue queueElement in Model.UnitsQueue )
+        {
+            Write( "Unité : " + @queueElement.Unit.UnitName ); <br />
+            Write( "Nombre : " + @queueElement.Number ); <br />
+            Write( "Fini dans: " + ( @queueElement.EndingDate - DateTime.Now ).ToString( @"hh\hmm\mss\s" ) ); <br />
+            <br />
+        }
+    </div>
+}

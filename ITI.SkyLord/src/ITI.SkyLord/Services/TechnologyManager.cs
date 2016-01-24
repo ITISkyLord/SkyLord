@@ -39,9 +39,6 @@ namespace ITI.SkyLord.Services
             };
             currentPlayer.Technologies.Add( technologyToAdd );
 
-            // Update all the units with the newly added bonus
-            BonusManager.ResolvePlayersArmies( playerId );
-
             return true;
         }
 
@@ -51,8 +48,6 @@ namespace ITI.SkyLord.Services
 
             if ( LevelManager.GetNextLevelAvailablility( technologyToLevelUp, currentIslandId ).IsItemAvailable )
             {
-                Level nextLevel = LevelManager.FindNextLevel( technologyToLevelUp.Level );
-
                 return LevelManager.LevelUp( technologyToLevelUp );
             }
             return false;
@@ -72,13 +67,13 @@ namespace ITI.SkyLord.Services
 
         public bool IsEnoughForFirstLevel( TechnologyName technologyNameToLevelUp, long islandId, long playerId )
         {
-            Technology technologyToLevelUp = CurrentContext.Technologies.Include( t => t.Level ).ThenInclude( tl => tl.Cost )
-                .Single( t => t.TechnologyName == technologyNameToLevelUp && t.Level.Number == 1 );
+            TechnologyLevel technologyLevel = CurrentContext.TechnologyLevels.Include( tl => tl.Cost )
+                .Single( tl => tl.TechnologyName == technologyNameToLevelUp && tl.Number == 1 );
 
-            return RessourceManager.IsEnough( CurrentContext.GetIsland( islandId, playerId ).AllRessources, technologyToLevelUp.Level.Cost );
+            return RessourceManager.IsEnough( CurrentContext.GetIsland( islandId, playerId ).AllRessources, technologyLevel.Cost );
         }
 
-        private string TechnologyNameToName( TechnologyName technologyName )
+        public string TechnologyNameToName( TechnologyName technologyName )
         {
             string name;
             switch ( technologyName )
@@ -140,9 +135,9 @@ namespace ITI.SkyLord.Services
             return technologyList;
         }
 
-        public List<Technology> GetAvailableTechnologies()
+        public List<TechnologyLevel> GetAvailableTechnologies()
         {
-            List<Technology> availableTechnologies = new List<Technology>();
+            List<TechnologyLevel> availableTechnologies = new List<TechnologyLevel>();
             foreach ( TechnologyName technologyName in Enum.GetValues( typeof( TechnologyName ) ) )
             {
                 if ( technologyName != TechnologyName.none )
@@ -150,7 +145,7 @@ namespace ITI.SkyLord.Services
                     TechnologyLevel firstLevel = CurrentContext.TechnologyLevels.Include( l => l.Cost ).Include( l => l.Requirements)
                         .Where( l => l.TechnologyName == technologyName && l.Number == 1 ).Single();
 
-                    availableTechnologies.Add( new Technology { TechnologyName = technologyName, Name = TechnologyNameToName( technologyName ), Level = firstLevel } );
+                    availableTechnologies.Add( firstLevel );
                 }
             }
             return availableTechnologies;

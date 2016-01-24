@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ITI.SkyLord.Services;
 
 namespace ITI.SkyLord.ViewModel.Partial
 {
@@ -27,10 +28,11 @@ namespace ITI.SkyLord.ViewModel.Partial
         public List<Unit> AvailableUnit { get; set; }
         public int UnitAmount { get; set; }
         public UnitName UnitTarget { get; set; }
+        public List<UnitQueue> UnitsQueue { get; set; }
 
         // Technologies
-        public List<Technology> AvailableTechnologies { get; set; }
-        public Technology CurrentTechnology { get; set; }
+        public List<TechnologyDisplay> TechnologyDisplays { get; set; }
+        public TechnologyManager TechnologyManager { get; set; }
         public TechnologyName TargetTechnology { get; set; }
 
     }

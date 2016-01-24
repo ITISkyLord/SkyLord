@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 
 namespace ITI.SkyLord
 {
-    public class BonusBuildingOnUnit : BonusBuilding
+    public class BonusOnTechnology : Bonus
     {
-        public UnitType TargetUnit { get; set; }
+        public TechnologyName TargetTechnology { get; set; }
+
     }
 }

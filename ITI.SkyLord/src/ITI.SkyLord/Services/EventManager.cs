@@ -25,10 +25,10 @@ namespace ITI.SkyLord
         internal List<BuildingEvent> GetBuildingEventsOnThisBuildingPosition( long islandId, int position )
         {
             List<BuildingEvent> events = new List<BuildingEvent>();
-            // Récupérer les évènements liés à une position
+            // Get the buildingEvent on this position
             events = _context.BuildingEvents
                 .Include( e => e.Island ).ThenInclude( e => e.Buildings )
-                .Where( i => i.Island.IslandId == islandId && i.PositionToBuild == position && i.Done == false)
+                .Where( i => i.Island.IslandId == islandId && i.PositionToBuild == position && i.Done == false )
                 .ToList();
 
             return events;
@@ -60,12 +60,12 @@ namespace ITI.SkyLord
         public void AddArmyEvent( IArmyEventContext ctx, Army army, Island island, ArmyMovement am, Island destination, Ressource pillagedRessources = null )
         {
             // NE PAS OUBLIER D'AJOUTER L'ÉVÈNEMENT DE RETOUR
-            int secondsToGo = TimeToGoHereFromHere( island, destination, army);
+            int secondsToGo = TimeToGoHereFromHere( island, destination, army );
             DateTime begginningDate = FindLastEndingDateInQueue( EventDiscrimator.ArmyEvent, island );
             long pillagedRessourceId;
             if( pillagedRessources == null ) pillagedRessourceId = 0;
             else pillagedRessourceId = pillagedRessources.RessourceId;
-             
+
             ctx.ArmyEvents.Add( new ArmyEvent()
             {
                 EventType = EventDiscrimator.ArmyEvent,
@@ -96,14 +96,14 @@ namespace ITI.SkyLord
         {
             DateTime begginningDate = FindLastEndingDateInQueue( EventDiscrimator.BuildingEvent, island );
 
-            int duration = _allManager.BuildingManager.GetAvailableBuildings().Where(b => b.BuildingName == building).First().Level.Duration;
+            int duration = _allManager.BuildingManager.GetAvailableBuildings().Where( b => b.BuildingName == building ).First().Level.Duration;
 
             ctx.BuildingEvents.Add( new BuildingEvent()
             {
                 EventType = EventDiscrimator.BuildingEvent,
                 BuildingToBuild = building,
                 BegginningDate = begginningDate,
-                EndingDate = DateTime.Now.AddSeconds(duration),
+                EndingDate = DateTime.Now.AddSeconds( duration ),
                 Done = false,
                 Island = island,
                 PositionToBuild = position
@@ -117,10 +117,18 @@ namespace ITI.SkyLord
             ctx.UpgradeEvents.Add( new UpgradeEvent() { EventType = EventDiscrimator.UpgradeEvent, BuildingToUpgrade = building, BegginningDate = begginningDate, EndingDate = DateTime.Now.AddSeconds(/*TIME TO BUILD BUILDING */ 100 ), Done = false, Island = island } );
         }
 
-        public void AddTechnologyEvent( ITechnologyEventContext ctx, Technology technology, Island island )
+        public void AddTechnologyEvent( ITechnologyEventContext ctx, TechnologyName technologyName, int duration, Island island )
         {
             DateTime begginningDate = FindLastEndingDateInQueue( EventDiscrimator.TechnologyEvent, island );
-            ctx.TechnologyEvents.Add( new TechnologyEvent() { EventType = EventDiscrimator.TechnologyEvent, Technology = technology, BegginningDate = begginningDate, EndingDate = DateTime.Now.AddSeconds( 100 /* PAREIL QUE AU DESSUS */), Done = false, Island = island } );
+            ctx.TechnologyEvents.Add( new TechnologyEvent()
+            {
+                EventType = EventDiscrimator.TechnologyEvent,
+                TechnologyName = technologyName,
+                BegginningDate = begginningDate,
+                EndingDate = DateTime.Now.AddSeconds( duration ),
+                Done = false,
+                Island = island
+            } );
         }
 
         public List<Event> Get( EventType et, IEventContext ctx, int islandId )
@@ -160,6 +168,7 @@ namespace ITI.SkyLord
             }
             else if( eventType == EventDiscrimator.TechnologyEvent )
             {
+                // Sur le player plut^to que sur l'ile? 
                 lastEndingDate = _context.TechnologyEvents.Where( u => u.Island.Equals( island ) && u.Done == false ).OrderByDescending( d => d.EndingDate ).Select( d => d.EndingDate ).FirstOrDefault();
             }
             else
@@ -171,6 +180,39 @@ namespace ITI.SkyLord
             else return lastEndingDate;
         }
 
+        public List<UnitQueue> GetCurrentUnitQueue( long currentIslandId )
+        {
+            // Get all the unitEvents from the island that are no done yet
+            List<UnitEvent> unitEventsOnCurrentIsland = _context.UnitEvents.Include( ue => ue.Island ).Include( ue => ue.Unit )
+                .Where( ue => !ue.Done && ue.Island.IslandId == currentIslandId ).ToList();
+
+            // Create a KeyValPair list from the events to separate the key to filter from
+            List<KeyValPair> listKvP = new List<KeyValPair>();
+            foreach( UnitEvent unitEvent in unitEventsOnCurrentIsland )
+            {
+                if( !unitEvent.Done )
+                {
+                    listKvP.Add( new KeyValPair { Key = unitEvent.Unit.UnitName, Value = unitEvent } );
+                }
+            }
+
+            // Create a collection of groups with the ChunkBy class
+            IEnumerable<IGrouping<UnitName, KeyValPair>> groups = listKvP.ChunkBy( p => p.Key );
+
+            // Create the UnitQueue list from the groups
+            List<UnitQueue> queue = new List<UnitQueue>();
+            foreach( IGrouping<UnitName, KeyValPair> group in groups )
+            {
+                queue.Add( new UnitQueue
+                {
+                    Number = group.Count(),
+                    EndingDate = group.Last().Value.EndingDate,
+                    Unit = group.First().Value.Unit
+                } );
+            }
+
+            return queue;
+        }
 
         #region Resolve
 
@@ -181,12 +223,12 @@ namespace ITI.SkyLord
         private void ResolveAllForIsland( long islandId, bool useEventsWhereTarget = true )
         {
             // All events of the player
-            List<Event> allEvent = _context.Events.Where( e => e.Done == false && e.EndingDate < DateTime.Now && e.Island.IslandId==islandId).ToList();
+            List<Event> allEvent = _context.Events.Where( e => e.Done == false && e.EndingDate < DateTime.Now && e.Island.IslandId == islandId ).ToList();
 
             // All army movements where player is the target
             if( useEventsWhereTarget )
             {
-                List<ArmyEvent> eventsWhereTarget = _context.ArmyEvents.Include(u => u.Army).ThenInclude( j => j.Regiments).Where(e => e.Done == false && e.EndingDate < DateTime.Now && e.DestinationIdd == islandId).ToList();
+                List<ArmyEvent> eventsWhereTarget = _context.ArmyEvents.Include( u => u.Army ).ThenInclude( j => j.Regiments ).Where( e => e.Done == false && e.EndingDate < DateTime.Now && e.DestinationIdd == islandId ).ToList();
                 allEvent = allEvent.Union( eventsWhereTarget ).OrderBy( e => e.EndingDate ).ToList();
             }
 
@@ -207,7 +249,7 @@ namespace ITI.SkyLord
         /// <param name="playerId"></param>
         public void ResolveAllForPlayer( long playerId )
         {
-            List<Island> islands = _context.Islands.Include(i => i.Owner ).Where( i => i.Owner.PlayerId == playerId ).ToList();
+            List<Island> islands = _context.Islands.Include( i => i.Owner ).Where( i => i.Owner.PlayerId == playerId ).ToList();
             foreach( Island island in islands )
             {
                 ResolveAllForIsland( island.IslandId );
@@ -222,7 +264,7 @@ namespace ITI.SkyLord
             //  /!\ HERE IS THE PROBLEM with Include. /!\
             // UnitEvent unitEvent = _context.UnitEvents.Include(a=>a.Unit).ThenInclude( b => b.UnitStatistics ).Where( e => e.EventId == ue.EventId ).First();
 
-            Unit unit = _context.Units.Include( u => u.Requirements).Include( u => u.UnitCost).Include( u => u.UnitStatistics )
+            Unit unit = _context.Units.Include( u => u.Requirements ).Include( u => u.UnitCost ).Include( u => u.UnitStatistics )
                 .Single( u => u.UnitId == ue.UnitIdd );
             ArmyManager am = _allManager.ArmyManager;
             am.AddUnit( unit, 1, ue.Island );
@@ -239,10 +281,10 @@ namespace ITI.SkyLord
             //                              .Include( a => a.Destination)
             //                              .Where( e => e.EventId == ae.EventId ).First();
             ArmyManager armyManager = _allManager.ArmyManager;
-            Army attackingArmy = _context.Armies
+            Army armyOnMovement = _context.Armies
                                         .Include( i => i.Island ).ThenInclude( i => i.Coordinates )
-                                        .Include( i => i.Island)
-                                        .ThenInclude( i => i.Armies).ThenInclude( i => i.Regiments)
+                                        .Include( i => i.Island )
+                                        .ThenInclude( i => i.Armies ).ThenInclude( i => i.Regiments )
                                         .Include( y => y.Regiments )
                                         .ThenInclude( z => z.Unit )
                                         .ThenInclude( z => z.UnitStatistics )
@@ -250,61 +292,158 @@ namespace ITI.SkyLord
                                         .Where( u => u.ArmyId == armyEvent.ArmyIdd )
                                         .Single();
 
-            if( armyEvent.ArmyMovement == ArmyMovement.attacking )
-            {
-                Island destination = _context.Islands
+            Island destination = _context.Islands
                                     .Include( c => c.Coordinates )
                                     .Include( p => p.Owner )
                                     .Include( i => i.Armies )
-                                    .ThenInclude( r => r.Regiments)
-                                    .ThenInclude( r => r.Unit).ThenInclude( r=> r.UnitStatistics )
-                                    .Include(i => i.AllRessources )
+                                    .ThenInclude( r => r.Regiments )
+                                    .ThenInclude( r => r.Unit ).ThenInclude( r => r.UnitStatistics )
+                                    .Include( i => i.AllRessources )
                                     .Where( i => i.IslandId == armyEvent.DestinationIdd )
                                     .Single();
 
+            if( armyEvent.ArmyMovement == ArmyMovement.attacking )
+            {
                 ResolveAllForIsland( destination.IslandId, false );
                 Army defendingArmy = destination.Armies.Where( a => a.ArmyState == ArmyState.defense ).SingleOrDefault();
-                //   defendingArmy.Island = destination;
                 if( defendingArmy == null )
                     defendingArmy = new Army { Island = destination, Regiments = new List<Regiment>(), ArmyState = ArmyState.defense };
 
-                CombatResult combatResult = armyManager.ResolveCombat( attackingArmy, defendingArmy, armyEvent, _context );
+                CombatResult combatResult = armyManager.ResolveCombat( armyOnMovement, defendingArmy, armyEvent, _context );
                 _context.Messages.Add( combatResult.CombatReportWinner );
                 _context.Messages.Add( combatResult.CombatReportLooser );
                 _context.SaveChanges();
-                this.AddArmyEvent( _context, attackingArmy, attackingArmy.Island, ArmyMovement.returning, destination, combatResult.PillagedRessources );
+                if( combatResult.CombatReportWinner.Receiver == armyOnMovement.Island.Owner ) // S'il n'y a plus de troupes dans l'armées attaquante, il n'y a pas de retour.
+                    this.AddArmyEvent( _context, armyOnMovement, armyOnMovement.Island, ArmyMovement.returning, destination, combatResult.PillagedRessources );
+            }
+            else if( armyEvent.ArmyMovement == ArmyMovement.sendingRessources )
+            {
+                armyEvent.Destination = destination;
+                Ressource pillagedRessource = _context.Ressources.Where( r => r.RessourceId == armyEvent.PillagedRessourcesIdd ).SingleOrDefault();
+                armyEvent.PillagedRessources = pillagedRessource;
+                CombatResult combatResult = armyManager.ResolveSendingRessources( armyOnMovement, armyEvent, _context );
+                _context.Messages.Add( combatResult.CombatReportWinner );
+                _context.SaveChanges();
+                this.AddArmyEvent( _context, armyOnMovement, armyOnMovement.Island, ArmyMovement.returning, destination );
             }
             else if( armyEvent.ArmyMovement == ArmyMovement.returning )
             {
-                if( attackingArmy != null )
+                if( armyOnMovement != null )
                 {
-                    Ressource pillagedRessource = _context.Ressources.Where(r => r.RessourceId == armyEvent.PillagedRessourcesIdd).SingleOrDefault();
+                    Ressource pillagedRessource = _context.Ressources.Where( r => r.RessourceId == armyEvent.PillagedRessourcesIdd ).SingleOrDefault();
+                    if( pillagedRessource != null )
+                        RessourceManager.AddRessource( armyOnMovement.Island.AllRessources, pillagedRessource );
 
-                    RessourceManager.AddRessource( attackingArmy.Island.AllRessources, pillagedRessource );
-                    // L'armée est déjà présente à l'aller
-                    //attackingArmy.Island.AllRessources.ChangeRessources( pillagedRessources );
-                    attackingArmy = armyManager.JoinArmies( armyEvent.Island.Armies.SingleOrDefault( a => a.ArmyState == ArmyState.defense ), attackingArmy );
+                    armyEvent.Island.Armies.SingleOrDefault( a => a.ArmyState == ArmyState.defense );
+                    Army islandArmy = _context.Armies
+                                    .Include( a => a.Island )
+                                    .Include( a => a.Regiments )
+                                    .ThenInclude( r => r.Unit )
+                                    .Where( a => a.Island.IslandId == armyEvent.Island.IslandId && a.ArmyState == ArmyState.defense )
+                                    .Single();
+                    armyOnMovement = armyManager.JoinArmies( islandArmy, armyOnMovement, destination.IslandId );
                     _context.SaveChanges();
                 }
             }
+            else if( armyEvent.ArmyMovement == ArmyMovement.moving )
+            {
+                Army defendingArmy = destination.Armies.SingleOrDefault( a => a.ArmyState == ArmyState.defense );
+                armyManager.JoinArmies( defendingArmy, armyOnMovement, destination.IslandId );
+            }
+            else if( armyEvent.ArmyMovement == ArmyMovement.colonising )
+            {
+                // Check if the destination is still a free island, if not, program a return
+                Ressource transportedRessource = _context.Ressources.Where( r => r.RessourceId == armyEvent.PillagedRessourcesIdd ).SingleOrDefault();
+                if( destination.Owner != null )
+                {
+                    this.AddArmyEvent( _context, armyOnMovement, armyOnMovement.Island, ArmyMovement.returning, destination, transportedRessource );
+                }
+                else
+                {
+                    // Change the ownership of the island to the player
+                    destination.Owner = armyOnMovement.Island.Owner;
+
+                    // Add a tower, a portal and a shield
+                    Building tower = new Building
+                    {
+                        BuildingName = BuildingName.tower,
+                        Name = "Tour de mage",
+                        Level = _context.BuildingLevels.Single( bl => bl.BuildingName == BuildingName.tower && bl.Number == 1 ),
+                        Position = 1
+                    };
+                    _context.Add( tower );
+
+                    Building invocation = new Building
+                    {
+                        BuildingName = BuildingName.invocation,
+                        Name = "Cercle d'invocation",
+                        Level = _context.BuildingLevels.Single( bl => bl.BuildingName == BuildingName.invocation && bl.Number == 1 ),
+                        Position = 2
+                    };
+                    _context.Add( invocation );
+
+                    Building shield = new Building
+                    {
+                        BuildingName = BuildingName.shield,
+                        Name = "Bouclier",
+                        Level = _context.BuildingLevels.Single( bl => bl.BuildingName == BuildingName.shield && bl.Number == 1 ),
+                        Position = 3
+                    };
+                    _context.Add( shield );
+                    destination.Name = "Nouvelle île";
+                    destination.Buildings = new List<Building>();
+                    destination.Buildings.Add( tower );
+                    destination.Buildings.Add( invocation );
+                    destination.Buildings.Add( shield );
+
+                    // Add the ressources the apprentice brings on the island
+                    if( transportedRessource != null )
+                        destination.AllRessources = transportedRessource;
+
+                    armyManager.RemoveArmy( armyOnMovement );
+                }
+            }
+
 
 
             //    CombatReportViewModel combatReportViewModel = new CombatReportViewModel { CombatResult = combatResult };
 
         }
+
         public void Resolve( TechnologyEvent te )
         {
-            TechnologyManager tm = new TechnologyManager( _context, new LevelManager(_context) , new BonusManager( _context ));
-            TechnologyEvent technoEvent = _context.TechnologyEvents
-                                                  .Include( e => e.Island )
-                                                  .Include( e => e.Technology )
-                                                  .Where( e => e.EventId == te.EventId).Single();
-            tm.AddTechnology( technoEvent.Technology.TechnologyName, technoEvent.Island.Owner.PlayerId, technoEvent.Island.IslandId );
+            TechnologyManager tm = new TechnologyManager( _context, new LevelManager( _context ), new BonusManager( _context ) );
+            TechnologyEvent technoEvent = _context.TechnologyEvents.Single( e => e.EventId == te.EventId );
+
+            List<Technology> playersTechnologies = tm.GetPlayersTechnologies( technoEvent.Island.Owner.PlayerId );
+            if( playersTechnologies.Any( t => t.TechnologyName == technoEvent.TechnologyName ) )
+            {
+                tm.LevelUpTechnology( technoEvent.TechnologyName, technoEvent.Island.Owner.PlayerId, technoEvent.Island.IslandId );
+            }
+            else
+            {
+                tm.AddTechnology( technoEvent.TechnologyName, technoEvent.Island.Owner.PlayerId, technoEvent.Island.IslandId );
+            }
+
+            _context.SaveChanges();
+
+            // Update all the units with the newly added bonus
+            tm.BonusManager.ResolvePlayersArmies( technoEvent.Island.Owner.PlayerId, technoEvent.Island.IslandId );
+
+            // If the conquest technology has been upgraded, upgrade the max island of the player
+            if( te.TechnologyName == TechnologyName.conquest )
+            {
+                Technology conquest = playersTechnologies.Single( t => t.TechnologyName == TechnologyName.conquest );
+                if( conquest.Level.Number > 1 )
+                {
+                    _context.Players.Single( p => p.PlayerId == technoEvent.Island.Owner.PlayerId ).MaxIsland = 1 + (conquest.Level.Number / 2);
+                }
+            }
         }
 
         internal void Resolve( BuildingEvent be )
         {
-            _allManager.BuildingManager.AddBuildingToIsland(be.BuildingToBuild, be.Island.IslandId, be.PositionToBuild);
+            _allManager.BuildingManager.AddBuildingToIsland( be.BuildingToBuild, be.Island.IslandId, be.PositionToBuild );
         }
 
         internal void Resolve( UpgradeEvent ue )
@@ -315,5 +454,11 @@ namespace ITI.SkyLord
 
 
         #endregion
+    }
+
+    internal class KeyValPair
+    {
+        public UnitName Key { get; set; }
+        public UnitEvent Value { get; set; }
     }
 }

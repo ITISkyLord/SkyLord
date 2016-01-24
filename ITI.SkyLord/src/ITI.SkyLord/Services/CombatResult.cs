@@ -72,8 +72,25 @@ namespace ITI.SkyLord
 
         }
         #endregion
-
-        public CombatResult( Army winningArmy, Army loosingArmy, CombatManager cm, ArmyEvent ae, SetupContext ctx )
+        public CombatResult( Army sendingArmy, ArmyEvent ae, SetupContext ctx )
+        {
+            _context = ctx;
+            EventPackManager epm = new EventPackManager(ctx);
+            RessourceManager.AddRessource( ae.Destination.AllRessources, ae.PillagedRessources );
+            string coreMessageWinner = "";
+            coreMessageWinner = ae.Destination.Name + " a reçu les ressources : " + ae.PillagedRessources.Wood + " bois, " + ae.PillagedRessources.Metal + " métal, " + ae.PillagedRessources.Cristal + " cristal et " + ae.PillagedRessources.Wood + " magie depuis l'île : " + sendingArmy.Island.Name;
+            _combatReportWinner = new Message()
+            {
+                MessageObject = ae.Destination.Name + " a reçu les ressources de " + sendingArmy.Island.Name + ".",
+                Read = false,
+                isCombatReport = true,
+                Sender = ae.Island.Owner,
+                Receiver = ae.Island.Owner,
+                CoreMessage = coreMessageWinner,
+                DateSent = DateTime.Now
+            };
+        }
+        public CombatResult( Army winningArmy, Army loosingArmy, CombatManager cm, ArmyEvent ae, SetupContext ctx, Army tmpWinArmy )
         {
             if( winningArmy == null ) throw new ArgumentNullException( "Winning Army", "The winning army cannot be null" );
             if( loosingArmy == null ) throw new ArgumentNullException( "Loosing Army", "The loosing army cannot be null" );
@@ -140,20 +157,21 @@ namespace ITI.SkyLord
 
             foreach( KeyValuePair<string, int> kvp in cm.Loss )
             {
-                coreMessageWinner += " \n" + kvp.Value + " " + kvp.Key /*+ " sur " + _winningArmy.Regiments.Where(a => a.Unit.Name == kvp.Key).Select( b => b.Number.ToString()).First()*/;
-                coreMessageLooser += " \n" + kvp.Value + " " + kvp.Key /*+ " sur " + _winningArmy.Regiments.Where(a => a.Unit.Name == kvp.Key).Select( b => b.Number.ToString()).First()*/;
+                coreMessageWinner += " \n" + kvp.Value + " " + kvp.Key + " sur " + tmpWinArmy.Regiments.Where(a => a.Unit.Name == kvp.Key).Select( b => b.Number.ToString()).First();
+                coreMessageLooser += " \n" + kvp.Value + " " + kvp.Key + " sur " + tmpWinArmy.Regiments.Where(a => a.Unit.Name == kvp.Key).Select( b => b.Number.ToString()).First();
 
             }
 
             coreMessageWinner += ".";
             _combatReportWinner = new Message()
             {
-                MessageObject = _winningArmy.Island.Name + "a gagné contre " + _loosingArmy.Island.Name + ".",
+                MessageObject = _winningArmy.Island.Name + " a gagné contre " + _loosingArmy.Island.Name + ".",
                 Read = false,
                 isCombatReport = true,
-                Sender = _loosingArmy.Island.Owner,
+                Sender = _winningArmy.Island.Owner,
                 Receiver = _winningArmy.Island.Owner,
-                CoreMessage = coreMessageWinner
+                CoreMessage = coreMessageWinner,
+                DateSent = DateTime.Now
             };
             coreMessageLooser += ".";
             _combatReportLooser = new Message()
@@ -161,12 +179,16 @@ namespace ITI.SkyLord
                 MessageObject = _loosingArmy.Island.Name + "a perdu contre " + _winningArmy.Island.Name + ".",
                 Read = false,
                 isCombatReport = true,
-                Sender = _winningArmy.Island.Owner,
+                Sender = _loosingArmy.Island.Owner,
                 Receiver = _loosingArmy.Island.Owner,
-                CoreMessage = coreMessageLooser
+                CoreMessage = coreMessageLooser,
+                DateSent = DateTime.Now
             };
             #endregion
         }
+
+
+
         private Ressource CalculatePillagedResult()
         {
             int eachCapacityPillaged = 0;
