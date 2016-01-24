@@ -1,0 +1,19 @@
+branches:
+  only:
+  - YoloGitOTD
+
+environment:
+  password:
+    secure: cP2Y38dqqK4GfySbblU1Fg==
+  passphrase:
+    secure: RKPq17ndwy0ryql05TmGrw==
+  login:
+    secure: rrEeb2iAwLD0Qe3CqcL1dw==
+install:
+- ps: src/CodeCakeBuilder/Bootstrap.ps1
+- dnvm use -p -r clr 1.0.0-rc1-final
+- dnu commands install SimpleGitVersion.DNXCommands
+- dnu restore
+build_script:
+- dnx -p src/CodeCakeBuilder CodeCakeBuilder -nointeraction
+test: off
