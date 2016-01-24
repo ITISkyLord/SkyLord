@@ -197,13 +197,13 @@ namespace ITI.SkyLord
             };
         }
 
-        public Army JoinArmies( Army armyOnIsland, Army armyOnMovement )
+        public Army JoinArmies( Army armyOnIsland, Army armyOnMovement, long islandId )
         {
             Army joinedArmy = armyOnIsland;
             if ( armyOnIsland == null || armyOnIsland.Regiments == null )
             {
                 armyOnMovement.ArmyState = ArmyState.defense;
-                // CurrentContext.SaveChanges();
+                armyOnMovement.Island = CurrentContext.Islands.Single( i => i.IslandId == islandId );
                 return armyOnMovement;
             }
             else
@@ -221,7 +221,7 @@ namespace ITI.SkyLord
                     }
                 }
                 armyOnMovement.ArmyState = ArmyState.obsolete;
-                return armyOnMovement;
+                return armyOnIsland;
             }
         }
 

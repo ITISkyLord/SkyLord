@@ -87,7 +87,8 @@
                             EventsOnBuilding = buildingEvent,
                             TechnologyDisplays = Model.TechnologyDisplays,
                             TargetTechnology = Model.TargetTechnology,
-                            TechnologyManager = Model.TechnologyManager
+                            TechnologyManager = Model.TechnologyManager,
+                            UnitsQueue = Model.UnitsQueue
                         };
                         Write( Html.Partial( "~/Views/Partial/" + name + ".cshtml", partialModel ) );
                     }
