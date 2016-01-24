@@ -9,14 +9,8 @@
 }
 
 <h1>Boite de réception</h1>
-<table>
-    <tr>
-        <td>Objet du message </td>
-        <td>Heure d'envoi</td>
-    </tr>
-    <tr>
-        <td>@Model.Message.MessageObject</td>
-        <td>@Model.Message.DateSent</td>
-    </tr>
-</table>
-    <p>@Model.Message</p>
+<h3>@Model.Message.MessageObject</h3>
+<h4>@Model.Message.DateSent</h4>
+
+<p>@Model.Message.CoreMessage</p>
+<a asp-controller="Message" asp-action="GetAllMessages" asp-route-islandId="@Model.Layout.IslandId">Boite de réception</a>

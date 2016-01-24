@@ -15,7 +15,7 @@
         <td>Heure d'envoi</td>
     </tr>
 
-        @foreach( Message m in Model.AllMessages.Where( u => u.isCombatReport == false) )
+        @foreach( Message m in Model.AllMessages.Where( u => u.isCombatReport == true) )
         {
             <tr>
                 @if( m.Read )
