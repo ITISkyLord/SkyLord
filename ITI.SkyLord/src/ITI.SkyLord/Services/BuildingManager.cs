@@ -57,9 +57,6 @@ namespace ITI.SkyLord
             };
             currentIsland.Buildings.Add( buildingToAdd );
 
-            // Substract the ressource DO THIS WHEN BuildingEvent is fired !!
-            RessourceManager.RemoveRessource( CurrentContext.GetIsland( currentIslandId, playerId ).AllRessources, buildingToAdd.Level.Cost );
-
             return true;
         }
 

@@ -108,6 +108,12 @@ namespace ITI.SkyLord
                 Island = island,
                 PositionToBuild = position
             } );
+
+            Ressource firstLevelCost = _context.BuildingLevels.Include( bl => bl.Cost ).First( bl => bl.BuildingName == building && bl.Number == 1 ).Cost;
+
+            // Substract the ressource DO THIS WHEN BuildingEvent is fired !!
+            RessourceManager.RemoveRessource( island.AllRessources, firstLevelCost );
+
             ctx.SaveChanges();
         }
 
