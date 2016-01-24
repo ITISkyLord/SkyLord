@@ -371,7 +371,7 @@ namespace ITI.SkyLord.Controllers
                 SetupContext.Ressources.Add( sendingRessource );
                 RessourceManager.RemoveRessource( senderIsland.AllRessources, sendingRessource );
                 SetupContext.SaveChanges();
-                eventManager.AddArmyEvent( SetupContext, SenderApprenticeArmy, senderIsland, ArmyMovement.sendingRessources, island, sendingRessource );
+                eventManager.AddArmyEvent( SetupContext, SenderApprenticeArmy, senderIsland, ArmyMovement.colonising, island, sendingRessource );
                 SetupContext.SaveChanges();
 
                 return RedirectToAction( "SetAttackingArmy", new { islandId = islandId } );

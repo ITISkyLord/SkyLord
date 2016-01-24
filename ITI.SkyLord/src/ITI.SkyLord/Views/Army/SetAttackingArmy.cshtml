@@ -47,6 +47,10 @@
                             {
                                 <div>Vos unités sont en train de revenir de @army.Destination.Name [@army.Destination.Coordinates.X, @army.Destination.Coordinates.Y] chez @army.Destination.Owner.Name</div>
                             }
+                            else if( army.ArmyMovement == ITI.SkyLord.Models.Entity_Framework.Entites.Events.ArmyMovement.colonising )
+                            {
+                                <div>Colonisation vers @army.Destination.Name [@army.Destination.Coordinates.X, @army.Destination.Coordinates.Y] chez @army.Destination.Owner.Name. Impact à @army.EndingDate.Hour:@army.EndingDate.Minute:@army.EndingDate.Second</div>
+                            }
                         }
                         else
                         {
