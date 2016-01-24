@@ -17,6 +17,7 @@
 
 <h1>Armées</h1>
 <a asp-controller="Army" asp-action="SetSendRessources" asp-route-islandId="@Model.Layout.IslandId">Envoyer des ressources</a> <br />
+<a asp-controller="Army" asp-action="SetColonisation" asp-route-islandId="@Model.Layout.IslandId">Colonisation</a> <br />
 <a asp-controller="Army" asp-action="SetMovement" asp-route-islandId="@Model.Layout.IslandId">Transporter des troupes</a>
 
 <h2>Armées en cours de mouvement</h2>
@@ -45,6 +46,10 @@
                             else if( army.ArmyMovement == ITI.SkyLord.Models.Entity_Framework.Entites.Events.ArmyMovement.returning )
                             {
                                 <div>Vos unités sont en train de revenir de @army.Destination.Name [@army.Destination.Coordinates.X, @army.Destination.Coordinates.Y] chez @army.Destination.Owner.Name</div>
+                            }
+                            else if( army.ArmyMovement == ITI.SkyLord.Models.Entity_Framework.Entites.Events.ArmyMovement.colonising )
+                            {
+                                <div>Colonisation vers @army.Destination.Name [@army.Destination.Coordinates.X, @army.Destination.Coordinates.Y] chez @army.Destination.Owner.Name. Impact à @army.EndingDate.Hour:@army.EndingDate.Minute:@army.EndingDate.Second</div>
                             }
                         }
                         else

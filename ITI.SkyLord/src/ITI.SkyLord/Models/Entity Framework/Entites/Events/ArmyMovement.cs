@@ -10,6 +10,7 @@ namespace ITI.SkyLord.Models.Entity_Framework.Entites.Events
         attacking,
         moving,
         sendingRessources,
-        returning
+        returning,
+        colonising
     }
 }
