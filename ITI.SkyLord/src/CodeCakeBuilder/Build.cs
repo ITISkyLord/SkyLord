@@ -206,8 +206,6 @@ namespace CodeCake
 
                    ConnectionInfo connection = new ConnectionInfo(ip, port, login, authentification);
 
-                   string script = File.ReadAllText("CIInstallServer.bash");
-
                    using( SshClient mySSH = new SshClient( connection ) )
                    {
                        mySSH.Connect();

@@ -999,27 +999,27 @@ namespace ITI.SkyLord.Tests.EfTests
         //}
 
 
-        //#region Seed
+        #region Seed
 
-        ////[Test]
-        ////public void SeedAllTheThings()
-        ////{
-        ////    LevelSeed levelSeed = new LevelSeed();
-        ////    UnitSeed unitSeed = new UnitSeed();
-        ////    levelSeed.SeedLevels();
-        ////    unitSeed.SeedUnits();
-        ////}
+        [Test]
+        public void SeedAllTheThings()
+        {
+            LevelSeed levelSeed = new LevelSeed();
+            UnitSeed unitSeed = new UnitSeed();
+            levelSeed.SeedLevels();
+            unitSeed.SeedUnits();
+        }
 
-        //[Test]
-        //public void AvailabilityTest()
-        //{
-        //    RequirementAvailability ra = new RequirementAvailability();
-        //    //ra.Availabilities.Add( new Availability { Available = true, Requirement = null } );
-        //    //ra.Availabilities.Add( new Availability { Available = true, Requirement = null } );
+        [Test]
+        public void AvailabilityTest()
+        {
+            RequirementAvailability ra = new RequirementAvailability();
+            ra.Availabilities.Add( new Availability { Available = true, Requirement = null } );
+            ra.Availabilities.Add( new Availability { Available = true, Requirement = null } );
 
-        //    Assert.IsTrue( ra.IsItemAvailable );
-        //}
-        //#endregion
+            Assert.IsTrue( ra.IsItemAvailable );
+        }
+        #endregion
 
         private Ressource Multiplyressource( Ressource initialRessource, int factor )
         {
