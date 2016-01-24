@@ -1190,7 +1190,8 @@ namespace ITI.SkyLord
                 context.Add( apprenticeStatistics );
 
                 // Set up Requirements
-                Requirement apprenticeRequirement = AddTechnologyRequirement( context, TechnologyName.conquest, 2 );
+                // /!\ POUR LES TESTS
+               // Requirement apprenticeRequirement = AddTechnologyRequirement( context, TechnologyName.conquest, 2 );
 
                 // Add Unit
                 Unit apprentice = new Unit
@@ -1201,8 +1202,9 @@ namespace ITI.SkyLord
                     UnitDamageType = UnitDamageType.physical,
                     UnitCost = apprenticeCost,
                     UnitStatistics = apprenticeStatistics,
-                    Requirements = CreateRequirementList( apprenticeRequirement ),
-                    Duration = 600,
+                   // Requirements = CreateRequirementList( apprenticeRequirement ),
+                    //Duration = 600,
+                    Duration = 10,
                     IsModel = true
                 };
                 context.Add( apprentice );

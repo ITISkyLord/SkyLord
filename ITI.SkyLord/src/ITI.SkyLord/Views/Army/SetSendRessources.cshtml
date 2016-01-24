@@ -17,54 +17,19 @@
 
 <h1>Transporteurs</h1>
 
-@*<h2>Armées en cours de mouvement</h2>
-@{
-    var allAttackingArmies = Model.AllPlayerArmiesEvent.Where(a => a.Army.ArmyState == ArmyState.movement).OrderBy(a => a.EndingDate).ToList();
-    if (allAttackingArmies.Count != 0)
-    {
-        foreach (var army in allAttackingArmies)
-        {
-            if (army.Army.ArmyState == ArmyState.movement)
-            {
-                <p>
-                    @{
-                        if (@army.Destination.Owner != null)
-                        {
-                            <div>Attaque vers @army.Destination.Owner.Name [@army.Destination.Coordinates.X, @army.Destination.Coordinates.Y]</div>
-                        }
-                        else
-                        {
-                            <div>Attaque vers une île barbare [@army.Destination.Coordinates.X, @army.Destination.Coordinates.Y]</div>
-                        }
-                    }
-                    <br />
-                    Arrivé à @army.EndingDate.Hour heure @army.EndingDate.Minute minutes @army.EndingDate.Second secondes
-                </p>
-            }
-            <hr />
-
-        }
-    }
-    else
-    {
-        <p>Aucune attaque planifiée</p>
-    }
-}*@
-
-
 <h2>Planification d'un envoi de ressources</h2>
 @if (Model.NumberOfTransportorToSend > 0 )
 {
     <form asp-controller="Army" asp-action="SendRessources" asp-route-islandId="@Model.Layout.IslandId" method="post" role="form">
 
         <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
-
+        @*<p>Chacun de vos transporteurs peut transporter @Model.CapacityOfCarrier ressources.</p>*@
         @* Tableau pour voir nos unité et voir qui l'on envoi *@
         <table class="ListArmy">
             <tr>
                 <td>Unité</td>
                 <td>Disponible</td>
-                <td>A envoyer</td>
+                <td>À envoyer</td>
             </tr>
             <tr>
                 <td>Transporteur</td>
@@ -73,8 +38,8 @@
                 <td><input type="number" min="0" max="@Model.NumberOfTransportorToSend" step="1" asp-for="NumberOfTransportorToSend" value="0" /></td>
             
             </tr>
-            }
         </table>
+        }
         <table>
             <tr>
                 <td>Bois</td>
@@ -89,6 +54,7 @@
                 <td><input type="number" min="0" max="@Model.SenderIsland.AllRessources.Magic" step="1" asp-for="Magic" value="0" /></td>
             </tr>
         </table>
+        <input type="hidden" asp-for="@Model.CapacityOfCarrier" value="@Model.CapacityOfCarrier" />
 
         <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
 
