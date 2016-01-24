@@ -49,7 +49,7 @@
     "commands": {
         "web": "Microsoft.AspNet.Server.Kestrel",
         "ef": "EntityFramework.Commands",
-        "ef database update": "EntityFramework.Commands database update",
+        "edu": "EntityFramework.Commands database update",
         "watch-web": " Microsoft.Dnx.Watcher web --configuration Debug"
     },
 
