@@ -1,0 +1,27 @@
+﻿@addTagHelper "*, Microsoft.AspNet.Mvc.TagHelpers"
+
+@model ITI.SkyLord.ViewModel.MessageViewModel
+@using ITI.SkyLord
+
+@{
+    ViewData["Title"] = "Message";
+    Layout = "_Layout";
+}
+
+<h1>Boite de réception</h1>
+<h3>Objet : @Model.Message.MessageObject</h3>
+<h4>Date d'envoi : @Model.Message.DateSent</h4>
+
+<p>@Model.Message.CoreMessage</p>
+<a asp-controller="Message" asp-action="GetAllMessages" asp-route-islandId="@Model.Layout.IslandId">Boite de réception</a>
+<br />
+@if( !Model.Message.isCombatReport )
+{
+    <form asp-controller="Message" asp-action="Answer" asp-route-islandId="@Model.Layout.IslandId" asp-route-messageId="@Model.Message.MessageId" role="form" method="post">
+        <input type="hidden" asp-for="@Model.FromId" value="@Model.FromId" />
+        <label for="object">Objet du message : </label><input type="text" asp-for="ObjectOfSender" id="object" value="RE : @Model.Message.MessageObject" />
+        <br />
+        <label for="core">Corps du message</label><textarea asp-for="Answer" id="core" ></textarea><br />
+        <input type="submit" value="Répondre"/>
+    </form>
+}

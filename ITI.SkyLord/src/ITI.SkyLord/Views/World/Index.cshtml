@@ -1,5 +1,10 @@
 ﻿@model ITI.SkyLord.ViewModel.World.WorldMapViewModel
 
+@{ 
+    Random random = new Random();
+}
+
+
 <style>
     #draggable {
         position: relative;
@@ -11,7 +16,6 @@
         background-image: url("/images/WorldMap/Nuage.jpg");
         background-repeat: repeat;
         background-size: 500px 500px;
-
     }
     .map {
         background-image: url("/images/WorldMap/Nuage.jpg");
@@ -23,7 +27,7 @@
         border: black solid 2px;
         overflow: hidden;
     }
-    .map td {
+    .map td {   
         width: 64px;
         height: 64px;
         background-color: rgba(0,0,0,0);
@@ -31,22 +35,29 @@
         min-height: 64px;
         max-width: 64px;
         max-height: 64px;
-        overflow: hidden;
+        overflow: visible;
     }
     #MyIsland {
         background-color: pink;
     }
-    
     .Island:hover {
         cursor: pointer;
-        border: solid black 5px;
+        border: solid black 1px;
     }
-    
     td.Island {
         background-image: url("/images/WorldMap/villagechibi.png");
         background-size: contain;
         background-repeat: no-repeat;
         background-position: center;
+    }
+
+    .Island > div {
+        overflow: visible;
+        position:relative;
+        text-align: center;
+        top: 40px;
+        margin-right: auto;
+        margin-left: auto;
     }
     td.Empty {
         background-color: rgba(0,0,0,0);
@@ -66,6 +77,48 @@
     {
         list-style-type: none;
     }
+    .IslandEnnemy {
+        background-image: url("/images/WorldMap/villagechibiennemi.png") !important;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
+    .EmptyMonster {
+        background-image: url("/images/WorldMap/monstre.gif") !important;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
+    .EmptyHotAirBalloon {
+        background-image: url("/images/WorldMap/montgolfière.gif") !important;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
+    .EmptyHotAirBalloon {
+        background-image: url("/images/WorldMap/montgolfière.gif") !important;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
+    .EmptySnake {
+        background-image: url("/images/WorldMap/serpent.gif") !important;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
+    .IslandBarBare {
+        background-image: url("/images/WorldMap/villagechibibarbare.png") !important;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
 </style>
 
 <!-- World Map -->
@@ -79,6 +132,7 @@
         @for (var j = 0; j < 100; j++)
         {
             string key = i + "_" + j;
+            int selectedrandom = random.Next(1,500);
             Island island = null;
             if(Model.Layout.CurrentIsland.Coordinates.X == j && Model.Layout.CurrentIsland.Coordinates.Y == i)
             {
@@ -86,7 +140,27 @@
             }
             else if (Model.Map.TryGetValue(key, out island))
             {
-                <td class="Island" x="@j" y="@i" islandid="@island.IslandId"></td>
+                if (island.Owner == null)
+                {
+                    <td class="Island IslandBarBare" x="@j" y="@i" islandid="@island.IslandId"></td>
+                }
+                else
+                {
+                    <td class="Island IslandEnnemy" x="@j" y="@i" islandid="@island.IslandId"><div>@island.Owner.Name</div>    </td>
+                }
+            }
+
+            else if (selectedrandom == 2)
+            {
+                <td class="EmptyMonster"></td>
+            }
+            else if (selectedrandom == 1)
+            {
+                <td class="EmptyHotAirBalloon"></td>
+            }
+            else if (selectedrandom == 3)
+            {
+                <td class="EmptySnake"></td>
             }
             else
             {
@@ -102,11 +176,17 @@
 <!-- Petit Menu OTD-->
 <div id="Menu" style="display:none;">
     <ul>
-        <li><a id="Attaquer" href="/Fight?islandId={{islandId}}">Attaquer</a></li>
-        <li><a id="Supporter" href="/Supporter?islandId={{islandId}}">Supporter</a></li>
-        <li><a id="Espionner" href="/Espionner?islandId={{islandId}}">Espionner</a></li>
-        <li><a id="Voir" href="/See?islandId={{islandId}}">Voir</a></li>
-        <li><a id="Message" href="/Message?islandId={{islandId}}">Message</a></li>
+        <li>
+        <form asp-controller="Army" asp-action="SetAttackingArmy" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId">
+            <input type="hidden" name="EnnemyIslandId" value="0" />
+            <input type="submit" value="Attaquer"/>
+        </form>
+        <li>
+            <form asp-controller="Profil" asp-action="ProfilOfOtherPlayer" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId">
+                <input type="hidden" name="EnnemyIslandId" value="0" />
+                <input type="submit" value="Voir profil"/>
+            </form>
+        </li>
     </ul>
 </div>
 

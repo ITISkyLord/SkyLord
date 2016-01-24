@@ -18,5 +18,9 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts.Interface
         DbSet<Army> Armies { get; set; }
         DbSet<Regiment> Regiments { get; set; }
         DbSet<Unit> Units { get; set; }
+        DbSet<Bonus> Bonuses { get; set; }
+        DbSet<BonusOnBuilding> BonusesOnBuilding { get; set; }
+        DbSet<BonusOnTechnology> BonusesOnTechnology { get; set; }
+        DbSet<BonusOnUnit> BonusesOnUnit { get; set; }
     }
 }

@@ -7,18 +7,14 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-
     <title>Skylord</title>
 
     <environment names="Development">
         <link rel="stylesheet" type="text/css" href="~/css/SkyLord.css" />
-        <link rel="stylesheet" type="text/css" href="~/css/SeeMyIsland.css" />
     </environment>
 
     <environment names="Staging,Production">
         <link rel="stylesheet" type="text/css" href="~/css/SkyLord.css" />
-        <link rel="stylesheet" type="text/css" href="~/css/SeeMyIsland.css" />     
     </environment>
 
     <environment names="Development">
@@ -54,63 +50,47 @@
     </environment>
 </head>
 <body>
-    <div class="jumbotron text-center">
-        <nav class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a asp-controller="Home" asp-action="Index" asp-route-islandId="@Model.Layout.IslandId">
-                        <img src="~/images/SkyLord.png" class="img-responsive" />
-                    </a>
-                </div>
-                <div class="collapse navbar-collapse" id="myNavbar">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a asp-controller="Army" asp-action="SetAttackingArmy" asp-route-islandId="@Model.Layout.IslandId">Armées</a></li>
-                        <li><a asp-controller="Player" asp-action="SeePlayers" asp-route-islandId="@Model.Layout.IslandId">Joueurs</a></li>
-                        <li><a asp-controller="Message" asp-action="GetAllMessages" asp-route-islandId="@Model.Layout.IslandId">Messages</a></li>
-                        <li><a asp-controller="Home" asp-action="Index">Classement</a></li>
-                        <li><a asp-controller="Profil" asp-action="Index" asp-route-islandId="@Model.Layout.IslandId">Profil</a></li>
-                        <li>
-                            <form asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm">
-                                <button type="submit" class="btn btn-link">Déconnexion</button>
-                            </form>
-                        </li>
-                        <li>
-                            <form asp-controller="Player" asp-action="SeeInformationOfAnPlayerString" asp-route-islandId="@Model.Layout.IslandId" method="post" role="form">
-                                <center>
-                                    <input type="text" placeholder="Recherche ..." name="namePlayer" id="searchPlayer" size="15" style="color:black" />
-                                    <button class="btn btn-danger">Go</button>
-                                </center>
-                            </form>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
 
-        @*<h4>Points</h4>
-            <form class="form-inline">
-                <input type="text" id="points" class="form-control" size="5" placeholder="0" readonly />
-            </form>*@
+    <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
-            <h4>Ressources</h4>
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
 
-            <form class="form-inline">
-                Bois : <input type="text" class="form-control" size="5" placeholder=@Model.Layout.CurrentIsland.AllRessources.Wood readonly>
-                Magie : <input type="text" class="form-control" size="5" placeholder=@Model.Layout.CurrentIsland.AllRessources.Magic readonly>
-                Métal : <input type="text" class="form-control" size="5" placeholder=@Model.Layout.CurrentIsland.AllRessources.Metal readonly>
-                Cristal : <input type="text" class="form-control" size="5" placeholder=@Model.Layout.CurrentIsland.AllRessources.Cristal readonly>
-            </form>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a asp-controller="Army" asp-action="SetAttackingArmy" asp-route-islandId="@Model.Layout.IslandId">Armées</a></li>
+                    <li><a asp-controller="Player" asp-action="SeePlayers" asp-route-islandId="@Model.Layout.IslandId">Joueurs</a></li>
+                    <li><a asp-controller="Message" asp-action="Index" asp-route-islandId="@Model.Layout.IslandId">Messages</a></li>
+                    <li><a asp-controller="Home" asp-action="Index">Classement</a></li>
+                    <li><a asp-controller="Profil" asp-action="Index" asp-route-islandId="@Model.Layout.IslandId">Profil</a></li>
+                    <li>
+                        <form asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm">
+                            <button type="submit" class="btn btn-link">Déconnexion</button>
+                        </form>
+                    </li>
+                    <li>
+                        <form asp-controller="Player" asp-action="SeeInformationOfAnPlayerString" asp-route-islandId="@Model.Layout.IslandId" method="post" role="form">
+                            <center>
+                                <input type="text" placeholder="Recherche ..." name="namePlayer" id="searchPlayer" size="15" style="color:black" />
+                                <button class="btn btn-danger">Go</button>
+                            </center>
+                        </form>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
+    </nav>
 
     <div class="SkyLordContainer">
         <div class="SkyLordMainRow">
             <div class="SkylordSideBar">
+                <img src="~/images/SkyLord.png" class="img-responsive" />
+
                 <a asp-controller="Island" asp-action="OverView" asp-route-islandId="@Model.Layout.IslandId">Vue d'ensemble</a>
                 <a asp-controller="World" asp-action="Index" asp-route-islandId="@Model.Layout.IslandId">Carte du monde</a>
                 <ul>
@@ -127,7 +107,18 @@
                     }
                 </ul>
             </div>
+
             <div class="PageContent">
+
+                <div class="RessourceLine">
+                    <form class="form-inline">
+                        Bois : <input type="text" class="form-control" size="5" placeholder=@Model.Layout.CurrentIsland.AllRessources.Wood readonly>
+                        Magie : <input type="text" class="form-control" size="5" placeholder=@Model.Layout.CurrentIsland.AllRessources.Magic readonly>
+                        Métal : <input type="text" class="form-control" size="5" placeholder=@Model.Layout.CurrentIsland.AllRessources.Metal readonly>
+                        Cristal : <input type="text" class="form-control" size="5" placeholder=@Model.Layout.CurrentIsland.AllRessources.Cristal readonly>
+                    </form>
+                </div>
+
                 <div class="ViewContentRow">
                     @RenderBody()
                 </div>
@@ -135,7 +126,6 @@
             </div>
         </div>
     </div>
-
 
     <footer class="container-fluid text-center">
         <ul class="nav nav-pills nav-justified">

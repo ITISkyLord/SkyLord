@@ -7,7 +7,7 @@ html, body {
 
 .navbar {
     margin-bottom: 0;
-    background-image: url("../images/site_haut2.png");
+    background-image: url("../images/Site/site_haut2.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
     z-index: 9999;
@@ -80,7 +80,7 @@ html, body {
 }
 
 .ui-autocomplete {
-    background-image: url("../images/site_ressource.png");
+    background-image: url("../images/Site/site_ressource.png");
     width: 100%;
     height: 10px;
     background-repeat: no-repeat;
@@ -90,16 +90,8 @@ html, body {
     font-weight: bold;
 }
 
-.jumbotron {
-    margin: 0;
-    margin-top: 29px;
-    background-image: url("../images/site_ressource.png");
-    background-size: cover;
-    background-repeat: no-repeat;
-    padding: 74px;
-}
-
 .SkyLordContainer {
+    margin-top: 49px;
     .container-fluid;
     .Section();
     height: 100%;
@@ -118,7 +110,7 @@ html, body {
             width: auto;
             padding: 0;
             margin: 0;
-            background-image: url("../images/site_side.png");
+            background-image: url("../images/Site/site_side.png");
             background-size: 100% 100%;
 
             a {
@@ -138,67 +130,36 @@ html, body {
                 background-color: whitesmoke;
                 color: #825847;
             }
+
+            .img-responsive {
+                height: 75px;
+                position: absolute;
+                top: 0px;
+                left: 0px;
+            }
         }
 
         .PageContent {
             .Col(11);
-            .Section2();
-            /*.MenuRow {
-                .row;
-                .Section(red);
 
-                .PointCounter,
-                .Friends,
-                .Armies,
-                .Ranking,
-                .Forum,
-                .Logout,
-                .Players,
-                .Guild,
-                .Messages,
-                .Profile {
-                    .Col(1);
-                    .Section(grey);
-                }
+            .RessourceLine {
+                background-image: url("../images/Site/site_ressource.png");
+                background-size: 100% 100%;
+                background-repeat: no-repeat;
+                /*padding: 50px;*/
+                margin: 5px;
 
-                .Search {
-                    .Col(2);
+                form {
+                    text-align: center;
                 }
             }
 
-            .RessourcesRow {
-                .row;
-                .Section(red);
-
-                .RessourceElement {
-                    .Col(3);
-                }
-            }
-
-            .TroopMovementRow {
-                .row;
-                .Section(red);
-
-                .TroopLine {
-                    .Col(12);
-                }
+            .TroopMovement {
             }
 
             .ViewContentRow {
                 .row;
-                .Section(red);
             }
-
-            .FooterRow {
-                .row;
-                .Section(red);
-
-                .FooterElement {
-                    .Col(2);
-                    .Section(green);
-                }
-            }
-        }*/
         }
     }
     // Part Profil
@@ -206,7 +167,8 @@ html, body {
         .container-fluid;
         .Section();
         height: 100%;
-        .Image(url("../images/sitecarton.png"));
+        .Image(url("../images/Site/sitecarton.png"));
+        overflow: auto;
 
         #pp {
             padding: 5px;
@@ -221,168 +183,18 @@ html, body {
         text-align: center;
         font-weight: bold;
         font-style: italic;
+        color: #825847;
+        background-color: whitesmoke;
     }
-    // Partie See My Island
-    #SeeMyIsland {
-        border: 1px solid #f4511e;
-        border-radius: 0;
-        transition: box-shadow 0.5s;
-        width: 500px;
-        height: 580px;
-        background-image: url("/images/SeeMyIsland/nuage_fond.jpg");
-        background-repeat: no-repeat;
-        background-position: center;
-        display: block;
-        border: solid #825847 2px;
+}
 
-        #Island {
-            position: relative;
-            top: 0px;
-            left: 0px;
-            display: block;
-            width: 500px;
-            min-width: 500px;
-            max-width: 500px;
-            height: 600px;
-            min-height: 600px;
-            max-height: 600px;
-            background-image: url("/images/SeeMyIsland/ile.png");
-            background-repeat: no-repeat;
-            background-position: center;
-        }
-
-        .Building {
-            position: relative;
-            width: 50px;
-            height: 50px;
-            border: black solid 1px;
-        }
-
-        .Building img {
-            width: 50px;
-            height: 50px;
-        }
-
-        #place_1 {
-            top: 213px;
-            left: 209px;
-        }
-
-        #place_2 {
-            top: 236px;
-            left: 209px;
-        }
-
-        #place_3 {
-            top: 167px;
-            left: 140px;
-        }
-
-        #place_4 {
-            top: 150px;
-            left: 90px;
-        }
-
-        #place_5 {
-            top: 140px;
-            left: 140px;
-        }
-
-        #place_6 {
-            top: 105px;
-            left: 209px;
-        }
-
-        #place_7 {
-            top: 38px;
-            left: 270px;
-        }
-
-        #place_8 {
-            top: -44px;
-            left: 332px;
-        }
-
-        #place_9 {
-            top: -126px;
-            left: 276px;
-        }
-
-        #place_10 {
-            top: -25px;
-            left: 209px;
-        }
-
-        .Building[buildingname="tower"] {
-            height: 100px;
-            min-height: 100px;
-        }
-
-        .Building[buildingname="tower"] img {
-            width: 50px;
-            height: 100px;
-        }
-    }
-
-    .templatebuilding {
-        border: 1px solid #825847;
-        border-radius: 0;
-        transition: box-shadow 0.5s;
-        width: 580px;
-        height: 580px;
-        .Image(url("../images/site_ressource.png"));
-        background-repeat: no-repeat;
-        background-position: center;
-        display: block;
-        overflow: auto;
-
-        .buildings {
-            border: 1px solid white;
-
-            .building-head {
-                text-align: center;
-                color: whitesmoke;
-                font-weight: bold;
-                font-size: 17px;
-                background-image: url("../images/site_haut2.png");
-                background-repeat: no-repeat;
-                background-size: 100% 100%;
-                padding: 10px;
-                border-bottom: 1px solid transparent;
-                border-top-left-radius: 0px;
-                border-top-right-radius: 0px;
-                border-bottom-left-radius: 0px;
-                border-bottom-right-radius: 0px;
-            }
-
-            .building-body {
-                color: #825847;
-                font-weight: bold;
-                font-size: 13px;
-                text-align: center;
-            }
-
-            .building-btn {
-                text-align: center;
-
-                .btn-link {
-                    color: #825847;
-                    font-size: 14px;
-                    font-weight: bold;
-                    letter-spacing: 3px;
-                    text-decoration: none;
-                    text-align: center;
-                }
-
-                .btn-link:hover {
-                    color: #825847;
-                    font-weight: bold;
-                    letter-spacing: 3px;
-                    background-color: whitesmoke;
-                }
-            }
-        }
-    }
+// Part View Players
+.playerContainer {
+    .container-fluid;
+    .Section();
+    height: 100%;
+    .Image(url("../images/Site/sitecarton.png"));
+    overflow: auto;
 
     .seePlayers {
         color: white;
@@ -390,22 +202,21 @@ html, body {
         font-size: 20px;
 
         .table th {
-            color:white;
+            color: white;
             font-weight: bold;
         }
 
         .table td {
-            color:#825847;
+            color: #825847;
             font-weight: bold;
         }
-
     }
 }
 
 footer {
     font-size: 17px;
     margin-bottom: 1px;
-    background-image: url("../images/site_haut3.png");
+    background-image: url("../images/Site/site_haut3.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
 

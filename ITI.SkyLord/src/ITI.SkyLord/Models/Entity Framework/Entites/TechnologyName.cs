@@ -19,6 +19,7 @@ namespace ITI.SkyLord
         wings,
         plating,
         hold,
-        propulsion
+        propulsion,
+        conquest
     }
 }

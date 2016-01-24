@@ -22,36 +22,6 @@ $(document).ready(function () {
             return TestConstraint($(this));
         }
     });
-    function TestConstraint(node) {
-        var pos_x = parseInt($(node).css("top"));
-        var pos_y = parseInt($(node).css("left"));
-        if (pos_x >= 0 && pos_y >= 0) {
-            $(node).css("top", "-1px");
-            $(node).css("left", "-1px");
-            return false;
-        }
-        else if (pos_x < -5900 || pos_y < -5900) {
-            $(node).css("top", "-5899px");
-            $(node).css("left", "-5899px");
-            return false;
-        }
-        else if (pos_x < -5900) {
-            $(node).css("top", "-5899px");
-            return false;
-        }
-        else if (pos_y < -5900) {
-            $(node).css("left", "-5899px");
-            return false;
-        }
-        else if (pos_x >= 0) {
-            $(node).css("top", "-1px");
-            return false;
-        }
-        else if (pos_y >= 0) {
-            $(node).css("left", "-1px");
-            return false;
-        }
-    }
     // Récupère le node du menu quand on clique sur une island
     var menu = $("#Menu");
     // Charge l'island dans le menu et place le menu et l'affiche avec petite animation
@@ -59,11 +29,12 @@ $(document).ready(function () {
         // Met la bonne information dans le lien
         var islandId = +$(this).attr("islandid");
         $("#Menu").attr("islandid", islandId);
+        $("input[name=EnnemyIslandId]").val(islandId);
         // Met l'affichage
         if ($(menu).css("display") == "none") {
             var click_x = event.clientX;
             var click_y = event.clientY;
-            menu.css("top", click_y + "px");
+            menu.css("top", click_y - 100 + "px");
             menu.css("left", click_x - 100 + "px");
             menu.fadeIn();
         }
@@ -97,4 +68,34 @@ function GetCoordinate(islandNode) {
     var pos_x = -1 * x * taillecase - taillecase + (taillemap / 2) - (taillecase / 2);
     var pos_y = -1 * y * taillecase - taillecase + (taillemap / 2) - (taillecase / 2);
     return new Coordinate(pos_x, pos_y);
+}
+function TestConstraint(node) {
+    var pos_x = parseInt($(node).css("top"));
+    var pos_y = parseInt($(node).css("left"));
+    if (pos_x >= 0 && pos_y >= 0) {
+        $(node).css("top", "-1px");
+        $(node).css("left", "-1px");
+        return false;
+    }
+    else if (pos_x < -5900 || pos_y < -5900) {
+        $(node).css("top", "-5899px");
+        $(node).css("left", "-5899px");
+        return false;
+    }
+    else if (pos_x < -5900) {
+        $(node).css("top", "-5899px");
+        return false;
+    }
+    else if (pos_y < -5900) {
+        $(node).css("left", "-5899px");
+        return false;
+    }
+    else if (pos_x >= 0) {
+        $(node).css("top", "-1px");
+        return false;
+    }
+    else if (pos_y >= 0) {
+        $(node).css("left", "-1px");
+        return false;
+    }
 }

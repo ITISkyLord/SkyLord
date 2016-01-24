@@ -13,7 +13,6 @@ namespace ITI.SkyLord
         monster,
         magic,
         mecanical,
-        spy,
         utility
     }
 }

@@ -4,17 +4,63 @@
 @using ITI.SkyLord
 
 @{
-    ViewData["Title"] = "Message(s)";
+    ViewData["Title"] = "Messages";
     Layout = "_Layout";
 }
 
 <h1>Boite de réception</h1>
+<h2>Rapports de combat</h2>
+<table>
+    <tr>
+        <td>Objet du message</td>
+        <td>Heure d'envoi</td>
+    </tr>
 
-@foreach (Message m in Model.AllMessages)
-{
-    <span>Auteur: </span>
-    @m.Sender.Name;
-    <br />
-    @m.CoreMessage;
-    <hr />
-}
+        @foreach( Message m in Model.AllMessages.Where( u => u.isCombatReport) )
+        {
+            <tr>
+                @if( m.Read )
+                { 
+                    <td><a asp-controller="Message" asp-action="SeeThisMessage" asp-route-messageId="@m.MessageId" asp-route-islandId="@Model.Layout.IslandId">@m.MessageObject</a></td>
+                }
+                else
+                {
+                    <td><a asp-controller="Message" asp-action="SeeThisMessage" asp-route-messageId="@m.MessageId" asp-route-islandId="@Model.Layout.IslandId"><strong>@m.MessageObject</strong></a></td>
+                }
+
+
+                <td>@m.DateSent</td>
+            </tr>
+        }
+ 
+</table>
+<hr />
+<h2>Messages personnels</h2>
+<table>
+    <tr>
+        <td>Auteur</td>
+        <td>Objet du message</td>
+        <td>Heure d'envoi</td>
+    </tr>
+
+    @foreach( Message m in Model.AllMessages.Where( u => !u.isCombatReport  ) )
+    {
+        <tr>
+            <td><a asp-controller="Profil" asp-action="ProfilOfAPlayer" asp-route-messageId="@m.Sender.PlayerId" >@m.Sender.Name</a></td>
+
+
+            @if( m.Read )
+            {
+                <td><a asp-controller="Message" asp-action="SeeThisMessage" asp-route-messageId="@m.MessageId" asp-route-islandId="@Model.Layout.IslandId">@m.MessageObject</a></td>
+            }
+            else
+            {
+                <td><a asp-controller="Message" asp-action="SeeThisMessage" asp-route-messageId="@m.MessageId" asp-route-islandId="@Model.Layout.IslandId"><strong>@m.MessageObject</strong></a></td>
+            }
+
+
+            <td>@m.DateSent</td>
+        </tr>
+    }
+
+</table>

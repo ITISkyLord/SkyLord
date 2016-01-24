@@ -8,10 +8,10 @@
 <h3> Technologies actuelles</h3>
 <ul>
     
-    @foreach( Technology tech in Model.Technologies)
+    @foreach( Technology tech in Model.OwnTechnologies)
     {
         <form asp-route-islandId="@Model.Layout.CurrentIsland.IslandId" asp-controller="Technology" asp-action="AddTechnology">
-            @Html.DropDownListFor( m => m.TargetTechnology, Model.AvailableSearchingTechnologies, "-- Rechercher --", new { onchange = "this.form.submit()" } )
+            @*@Html.DropDownListFor( m => m.TargetTechnology, Model.AvailableSearchingTechnologies, "-- Rechercher --", new { onchange = "this.form.submit()" } )*@
 
 
         </form>

@@ -69,10 +69,10 @@ namespace ITI.SkyLord
 
             if ( LevelManager.GetNextLevelAvailablility( buildingToLevelUp, currentIslandId ).IsItemAvailable )
             {
-                Level nextLevel = LevelManager.FindNextLevel( buildingToLevelUp.Level );
+                bool isLeveledUp = LevelManager.LevelUp( buildingToLevelUp );
 
-                RessourceManager.RemoveRessource( CurrentContext.GetIsland( currentIslandId, playerId ).AllRessources, nextLevel.Cost );
-                return LevelManager.LevelUp( buildingToLevelUp );
+                RessourceManager.RemoveRessource( CurrentContext.GetIsland( currentIslandId, playerId ).AllRessources, buildingToLevelUp.Level.Cost );
+                return isLeveledUp;
             }
             return false;
         }
@@ -144,7 +144,6 @@ namespace ITI.SkyLord
                     break;
                 case BuildingName.laboratory:
                     name = "Laboratoire";
-                    break;
                     break;
                 case BuildingName.magicField:
                     name = "Champ de magie";

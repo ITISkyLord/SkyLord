@@ -6464,8 +6464,12 @@ button.close {
 .SkyLordContainer:after,
 .SkyLordContainer .SkyLordMainRow:before,
 .SkyLordContainer .SkyLordMainRow:after,
+.SkyLordContainer .SkyLordMainRow .PageContent .ViewContentRow:before,
+.SkyLordContainer .SkyLordMainRow .PageContent .ViewContentRow:after,
 .SkyLordContainer .profilContainer:before,
-.SkyLordContainer .profilContainer:after {
+.SkyLordContainer .profilContainer:after,
+.invocation-building .playerContainer:before,
+.invocation-building .playerContainer:after {
   content: " ";
   display: table;
 }
@@ -6487,7 +6491,9 @@ button.close {
 .modal-footer:after,
 .SkyLordContainer:after,
 .SkyLordContainer .SkyLordMainRow:after,
-.SkyLordContainer .profilContainer:after {
+.SkyLordContainer .SkyLordMainRow .PageContent .ViewContentRow:after,
+.SkyLordContainer .profilContainer:after,
+.invocation-building .playerContainer:after {
   clear: both;
 }
 .center-block {
@@ -6739,7 +6745,7 @@ body {
 }
 .navbar {
   margin-bottom: 0;
-  background-image: url("../images/site_haut2.png");
+  background-image: url("../images/Site/site_haut2.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   z-index: 9999;
@@ -6797,14 +6803,8 @@ body {
   border-color: transparent;
   color: #fff;
 }
-.navbar .img-responsive {
-  height: 75px;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-}
 .ui-autocomplete {
-  background-image: url("../images/site_ressource.png");
+  background-image: url("../images/Site/site_ressource.png");
   width: 100%;
   height: 10px;
   background-repeat: no-repeat;
@@ -6813,15 +6813,8 @@ body {
   font-size: 17px;
   font-weight: bold;
 }
-.jumbotron {
-  margin: 0;
-  margin-top: 29px;
-  background-image: url("../images/site_ressource.png");
-  background-size: cover;
-  background-repeat: no-repeat;
-  padding: 74px;
-}
 .SkyLordContainer {
+  margin-top: 49px;
   margin-right: auto;
   margin-left: auto;
   padding-left: 15px;
@@ -6831,7 +6824,7 @@ body {
   height: auto;
   width: 100%;
   height: 100%;
-  background-image: url("../images/site_fond.png");
+  background-image: url("../images/Site/site_fond.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }
@@ -6869,7 +6862,7 @@ body {
   width: auto;
   padding: 0;
   margin: 0;
-  background-image: url("../images/site_side.png");
+  background-image: url("../images/Site/site_side.png");
   background-size: 100% 100%;
 }
 @media (min-width: 1200px) {
@@ -6912,65 +6905,6 @@ body {
   min-height: 1px;
   padding-left: 15px;
   padding-right: 15px;
-  background-color: "white";
-  height: auto;
-  width: auto;
-  /*.MenuRow {
-                .row;
-                .Section(red);
-
-                .PointCounter,
-                .Friends,
-                .Armies,
-                .Ranking,
-                .Forum,
-                .Logout,
-                .Players,
-                .Guild,
-                .Messages,
-                .Profile {
-                    .Col(1);
-                    .Section(grey);
-                }
-
-                .Search {
-                    .Col(2);
-                }
-            }
-
-            .RessourcesRow {
-                .row;
-                .Section(red);
-
-                .RessourceElement {
-                    .Col(3);
-                }
-            }
-
-            .TroopMovementRow {
-                .row;
-                .Section(red);
-
-                .TroopLine {
-                    .Col(12);
-                }
-            }
-
-            .ViewContentRow {
-                .row;
-                .Section(red);
-            }
-
-            .FooterRow {
-                .row;
-                .Section(red);
-
-                .FooterElement {
-                    .Col(2);
-                    .Section(green);
-                }
-            }
-        }*/
 }
 @media (min-width: 1200px) {
   .SkyLordContainer .SkyLordMainRow .PageContent {
@@ -6990,6 +6924,20 @@ body {
     width: 91.66666667%;
   }
 }
+.SkyLordContainer .SkyLordMainRow .PageContent .RessourceLine {
+  background-image: url("../images/Site/site_ressource.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  padding: 5px;
+  margin: 5px;
+}
+.SkyLordContainer .SkyLordMainRow .PageContent .RessourceLine form {
+  text-align: center;
+}
+.SkyLordContainer .SkyLordMainRow .PageContent .ViewContentRow {
+  margin-left: -15px;
+  margin-right: -15px;
+}
 .SkyLordContainer .profilContainer {
   margin-right: auto;
   margin-left: auto;
@@ -7000,9 +6948,10 @@ body {
   height: auto;
   width: 100%;
   height: 100%;
-  background-image: url("../images/sitecarton.png");
+  background-image: url("../images/Site/sitecarton.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
+  overflow: auto;
 }
 .SkyLordContainer .profilContainer > .navbar-header,
 .SkyLordContainer .profilContainer > .navbar-collapse {
@@ -7026,163 +6975,77 @@ body {
   text-align: center;
   font-weight: bold;
   font-style: italic;
+  color: #825847;
+  background-color: whitesmoke;
 }
-.SkyLordContainer #SeeMyIsland {
-  border: 1px solid #f4511e;
-  border-radius: 0;
-  transition: box-shadow 0.5s;
-  width: 500px;
-  height: 580px;
-  background-image: url("/images/SeeMyIsland/nuage_fond.jpg");
-  background-repeat: no-repeat;
-  background-position: center;
-  display: block;
-  border: solid #825847 2px;
-}
-.SkyLordContainer #SeeMyIsland #Island {
-  position: relative;
-  top: 0px;
-  left: 0px;
-  display: block;
-  width: 500px;
-  min-width: 500px;
-  max-width: 500px;
-  height: 600px;
-  min-height: 600px;
-  max-height: 600px;
-  background-image: url("/images/SeeMyIsland/ile.png");
-  background-repeat: no-repeat;
-  background-position: center;
-}
-.SkyLordContainer #SeeMyIsland .Building {
-  position: relative;
-  width: 50px;
-  height: 50px;
-  border: black solid 1px;
-}
-.SkyLordContainer #SeeMyIsland .Building img {
-  width: 50px;
-  height: 50px;
-}
-.SkyLordContainer #SeeMyIsland #place_1 {
-  top: 213px;
-  left: 209px;
-}
-.SkyLordContainer #SeeMyIsland #place_2 {
-  top: 236px;
-  left: 209px;
-}
-.SkyLordContainer #SeeMyIsland #place_3 {
-  top: 167px;
-  left: 140px;
-}
-.SkyLordContainer #SeeMyIsland #place_4 {
-  top: 150px;
-  left: 90px;
-}
-.SkyLordContainer #SeeMyIsland #place_5 {
-  top: 140px;
-  left: 140px;
-}
-.SkyLordContainer #SeeMyIsland #place_6 {
-  top: 105px;
-  left: 209px;
-}
-.SkyLordContainer #SeeMyIsland #place_7 {
-  top: 38px;
-  left: 270px;
-}
-.SkyLordContainer #SeeMyIsland #place_8 {
-  top: -44px;
-  left: 332px;
-}
-.SkyLordContainer #SeeMyIsland #place_9 {
-  top: -126px;
-  left: 276px;
-}
-.SkyLordContainer #SeeMyIsland #place_10 {
-  top: -25px;
-  left: 209px;
-}
-.SkyLordContainer #SeeMyIsland .Building[buildingname="tower"] {
-  height: 100px;
-  min-height: 100px;
-}
-.SkyLordContainer #SeeMyIsland .Building[buildingname="tower"] img {
-  width: 50px;
-  height: 100px;
-}
-.SkyLordContainer .templatebuilding {
-  border: 1px solid #825847;
-  border-radius: 0;
-  transition: box-shadow 0.5s;
-  width: 580px;
-  height: 580px;
-  background-image: url("../images/site_ressource.png");
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  background-position: center;
-  display: block;
-  overflow: auto;
-}
-.SkyLordContainer .templatebuilding .buildings {
-  border: 1px solid white;
-}
-.SkyLordContainer .templatebuilding .buildings .building-head {
-  text-align: center;
-  color: whitesmoke;
-  font-weight: bold;
-  font-size: 17px;
-  background-image: url("../images/site_haut2.png");
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  padding: 10px;
-  border-bottom: 1px solid transparent;
-  border-top-left-radius: 0px;
-  border-top-right-radius: 0px;
-  border-bottom-left-radius: 0px;
-  border-bottom-right-radius: 0px;
-}
-.SkyLordContainer .templatebuilding .buildings .building-body {
+.invocation-building .text {
   color: #825847;
   font-weight: bold;
-  font-size: 13px;
-  text-align: center;
+  font-style: italic;
 }
-.SkyLordContainer .templatebuilding .buildings .building-btn {
-  text-align: center;
+.invocation-building .cost {
+  color: #825847;
+  font-weight: bold;
+  font-style: italic;
 }
-.SkyLordContainer .templatebuilding .buildings .building-btn .btn-link {
+.invocation-building .btn-link {
   color: #825847;
   font-size: 14px;
   font-weight: bold;
-  letter-spacing: 3px;
+  letter-spacing: 1px;
   text-decoration: none;
   text-align: center;
 }
-.SkyLordContainer .templatebuilding .buildings .building-btn .btn-link:hover {
+.invocation-building .btn-link:hover {
   color: #825847;
   font-weight: bold;
-  letter-spacing: 3px;
+  letter-spacing: 1px;
   background-color: whitesmoke;
 }
-.SkyLordContainer .seePlayers {
+.invocation-building .playerContainer {
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 1px;
+  background-color: "white";
+  height: auto;
+  width: 100%;
+  height: 100%;
+  background-image: url("../images/Site/sitecarton.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  overflow: auto;
+}
+.invocation-building .playerContainer > .navbar-header,
+.invocation-building .playerContainer > .navbar-collapse {
+  margin-right: -15px;
+  margin-left: -15px;
+}
+@media (min-width: 768px) {
+  .invocation-building .playerContainer > .navbar-header,
+  .invocation-building .playerContainer > .navbar-collapse {
+    margin-right: 0;
+    margin-left: 0;
+  }
+}
+.invocation-building .playerContainer .seePlayers {
   color: white;
   font-weight: bold;
   font-size: 20px;
 }
-.SkyLordContainer .seePlayers .table th {
+.invocation-building .playerContainer .seePlayers .table th {
   color: white;
   font-weight: bold;
 }
-.SkyLordContainer .seePlayers .table td {
+.invocation-building .playerContainer .seePlayers .table td {
   color: #825847;
   font-weight: bold;
 }
 footer {
   font-size: 17px;
   margin-bottom: 1px;
-  background-image: url("../images/site_haut3.png");
+  background-image: url("../images/Site/site_haut3.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }

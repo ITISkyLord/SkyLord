@@ -11,20 +11,15 @@ namespace ITI.SkyLord.Controllers
 {
     public class MessageController : GenericController
     {
-        
-        [HttpGet]
-        public IActionResult Index()
-        {
-
-            return View();
-        }
 
         [HttpGet]
-        public IActionResult GetMessage( int id )
+        public IActionResult Index( long islandId = 0 )
         {
-            return View();
-        }
+            MessageViewModel mvm = new MessageViewModel();
+            SetupContext.FillStandardVM( mvm, SetupContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
 
+            return View( "Messages", mvm );
+        }
         [HttpGet]
         public IActionResult GetAllMessages( long islandId = 0 )
         {
@@ -35,27 +30,61 @@ namespace ITI.SkyLord.Controllers
             mvm.AllMessages = messageManager.GetAllMessage( currentPlayer ).ToList();
 
             SetupContext.FillStandardVM( mvm, SetupContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
-            return View(mvm);
+            return View( mvm );
+        }
+        public IActionResult SeeThisMessage( long messageId, long islandId = 0 )
+        {
+            MessageManager messageManager = new MessageManager( SetupContext );
+            Player currentPlayer = SetupContext.GetPlayer( User.GetUserId() );
+            MessageViewModel mvm = new MessageViewModel();
+
+            mvm.Message = messageManager.GetThisMessage( messageId );
+            mvm.Message.Read = true;
+            mvm.FromId = mvm.Message.Sender.PlayerId;
+            SetupContext.FillStandardVM( mvm, SetupContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
+            return View( mvm );
+        }
+        public IActionResult Answer( MessageViewModel model, long islandId = 0 )
+        {
+            MessageManager messageManager = new MessageManager( SetupContext );
+            Player currentPlayer = SetupContext.GetPlayer( User.GetUserId() );
+            model.AllMessages = messageManager.GetAllMessage( currentPlayer ).ToList();
+            Player from = SetupContext.Players.Single( p => p.PlayerId == model.FromId );
+            messageManager.SendMessage( currentPlayer, from, model.Answer, model.ObjectOfSender, false );
+            SetupContext.SaveChanges();
+            ModelState.AddModelError( "message", "Le message a été bien envoyé." );
+            SetupContext.FillStandardVM( model, SetupContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
+            return View( "Messages", model );
+
+        }
+        public IActionResult SendMessage( MessageViewModel model, long islandId = 0 )
+        {
+            MessageManager messageManager = new MessageManager( SetupContext );
+            Player currentPlayer = SetupContext.GetPlayer( User.GetUserId() );
+            Player playerTo = SetupContext.Players.SingleOrDefault( p => p.Name == model.To );
+            if( playerTo == null )
+            {
+                ModelState.AddModelError( "sender", "L'utilisateur sous ce nom : " + model.To + " n'existe pas" );
+            }
+            else
+            {
+                messageManager.SendMessage( currentPlayer, playerTo, model.Answer, model.ObjectOfSender, false );
+                SetupContext.SaveChanges();
+                ModelState.AddModelError( "message", "Le message a été bien envoyé." );
+            }
+            SetupContext.FillStandardVM( model, SetupContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
+
+            return View( "Messages", model );
+
         }
 
-        [HttpPost]
-        public IActionResult SendMessage(Player sender, Player receiver, string CoreMessage, string ObjectMessage, bool read)
+        public IActionResult DeleteMessage( long id )
         {
             return View();
         }
 
-        public IActionResult DeleteMessage(long id)
-        {
-            return View();
-        }
         [HttpGet]
-        public IActionResult ReadMessage(long id)
-        {
-            return View();
-        }
-
-        [HttpGet]
-        public IActionResult GetAllMessageUnread(long playerId)
+        public IActionResult GetAllMessageUnread( long playerId )
         {
             return View();
         }

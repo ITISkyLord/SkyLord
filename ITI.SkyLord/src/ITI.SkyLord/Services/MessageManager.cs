@@ -29,7 +29,7 @@ namespace ITI.SkyLord
             }
             else
             {
-                Message message = new Message { Receiver = receiver, Sender = sender, CoreMessage = CoreMessage, MessageObject = ObjectMessage, Read = read };
+                Message message = new Message { Receiver = receiver, Sender = sender, CoreMessage = CoreMessage, MessageObject = ObjectMessage, Read = read, DateSent = DateTime.Now };
                 messageContext.Add(message);
                 success = true;
             }
@@ -40,6 +40,11 @@ namespace ITI.SkyLord
         {
             List<Message> listMessages = messageContext.Messages.Include( m => m.Sender ).Where(m => m.Receiver.PlayerId == player.PlayerId).ToList();
             return listMessages;
+        }
+
+        internal Message GetThisMessage( long messageId )
+        {
+            return messageContext.Messages.Include( m => m.Sender ).Where( m => m.MessageId == messageId ).Single();
         }
 
         public IList<Message> GetAllMessageSent(Player player)
@@ -90,12 +95,6 @@ namespace ITI.SkyLord
         {
             List<Message> listMessagesRead = messageContext.Messages.Where(m => m.Receiver.PlayerId == player.PlayerId).Where(m => m.Read == value).ToList();
             return listMessagesRead;
-        }
-
-        public Message ReadAMessage(long messageId)
-        {
-            Message message = messageContext.Messages.FirstOrDefault(m => m.MessageId == messageId);
-            return message;
         }
 
     }

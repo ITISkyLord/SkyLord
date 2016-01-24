@@ -3,7 +3,7 @@
 @using ITI.SkyLord
 
 @{
-    ViewData[ "Title" ] = "Armées";
+    ViewData["Title"] = "Armées";
     Layout = "_Layout";
 }
 
@@ -16,7 +16,64 @@
 </style>
 
 <h1>Armées</h1>
-@if( Model.CurrentDefenseArmy != null )
+<a asp-controller="Army" asp-action="SetSendRessources" asp-route-islandId="@Model.Layout.IslandId">Envoyer des ressources</a> <br />
+<a asp-controller="Army" asp-action="SetColonisation" asp-route-islandId="@Model.Layout.IslandId">Colonisation</a> <br />
+<a asp-controller="Army" asp-action="SetMovement" asp-route-islandId="@Model.Layout.IslandId">Transporter des troupes</a>
+
+<h2>Armées en cours de mouvement</h2>
+@{
+    var allAttackingArmies = Model.AllPlayerArmiesEvent.Where(a => a.Army.ArmyState == ArmyState.movement).OrderBy(a => a.EndingDate).ToList();
+    if (allAttackingArmies.Count != 0)
+    {
+        foreach (var army in allAttackingArmies)
+        {
+            if (army.Army.ArmyState == ArmyState.movement)
+            {
+                <p>
+                    @{
+                        // Si c'est bien une attaque et non un approvisionnement.
+                        // Gérer le retour, c'est pas toujours une attaque.
+                        if( @army.Destination.Owner != null )
+                        {
+                            if( army.ArmyMovement == ITI.SkyLord.Models.Entity_Framework.Entites.Events.ArmyMovement.attacking )
+                            {
+                                <div>Attaque vers @army.Destination.Name [@army.Destination.Coordinates.X, @army.Destination.Coordinates.Y] chez @army.Destination.Owner.Name</div>
+                            }
+                            else if( army.ArmyMovement == ITI.SkyLord.Models.Entity_Framework.Entites.Events.ArmyMovement.sendingRessources )
+                            {
+                                <div>Envoi de ressources vers @army.Destination.Name [@army.Destination.Coordinates.X, @army.Destination.Coordinates.Y] chez @army.Destination.Owner.Name</div>
+                            }
+                            else if( army.ArmyMovement == ITI.SkyLord.Models.Entity_Framework.Entites.Events.ArmyMovement.returning )
+                            {
+                                <div>Vos unités sont en train de revenir de @army.Destination.Name [@army.Destination.Coordinates.X, @army.Destination.Coordinates.Y] chez @army.Destination.Owner.Name</div>
+                            }
+                            else if( army.ArmyMovement == ITI.SkyLord.Models.Entity_Framework.Entites.Events.ArmyMovement.colonising )
+                            {
+                                <div>Colonisation vers @army.Destination.Name [@army.Destination.Coordinates.X, @army.Destination.Coordinates.Y] chez @army.Destination.Owner.Name. Impact à @army.EndingDate.Hour:@army.EndingDate.Minute:@army.EndingDate.Second</div>
+                            }
+                        }
+                        else
+                        {
+                            <div>Attaque vers une île barbare [@army.Destination.Coordinates.X, @army.Destination.Coordinates.Y]</div>
+                        }
+                    }
+                    <br />
+                    Arrivée à @army.EndingDate.Hour:@army.EndingDate.Minute:@army.EndingDate.Second
+                </p>
+            }
+            <hr />
+
+        }
+    }
+    else
+    {
+        <p>Aucune attaque planifiée</p>
+    }
+}
+
+
+<h2>Planification d'une attaque</h2>
+@if (Model.CurrentDefenseArmy != null)
 {
     <form asp-controller="Army" asp-action="Fight" asp-route-islandId="@Model.Layout.IslandId" method="post" role="form">
 
@@ -32,27 +89,41 @@
 
             @foreach ( Regiment r in Model.CurrentDefenseArmy.Regiments )
             {
-                <tr>
-                    <td>@r.Unit.Name</td>
-                    <td>@r.Number</td>
-                    <td><input type="number" min="0" max="@r.Number" step="1" asp-for="UnitsToSend[r.Unit.UnitName.ToString()]" value="0"/></td>
-                </tr>
+            <tr>
+                <td>@r.Unit.Name</td>
+                <td>@r.Number</td>
+                <td><input type="number" min="0" max="@r.Number" step="1" asp-for="UnitsToSend[r.Unit.UnitName.ToString()]" value="0" /></td>
+            </tr>
             }
         </table>
 
         <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
 
         @* Petit moyen pour chercher l'île en fonction des coordonnées *@
-        <label for="pos-x"></label><input type="number" name="pos-x" value="@Model.EnnemyIslands.First().Coordinates.X"/>
-        <label for="pos-y"></label><input type="number" name="pos-y" value="@Model.EnnemyIslands.First().Coordinates.Y"/>
+        <label for="pos-x"></label><input type="number" name="pos-x" value="@Model.EnnemyIslands.First().Coordinates.X" />
+        <label for="pos-y"></label><input type="number" name="pos-y" value="@Model.EnnemyIslands.First().Coordinates.Y" />
 
         @* Choix de la cible *@
         <select asp-for="@Model.Target" id="EnnemyToAttack">
             @foreach( Island i in Model.EnnemyIslands )
             {
-                <option value="@i.IslandId" pos-x="@i.Coordinates.X" pos-y="@i.Coordinates.Y" nameOwner="@i.Owner.Name">
-                    @i.Name , @i.Owner.Name , [@i.Coordinates.X, @i.Coordinates.Y] 
-                </option>
+                string name = "";
+                if (i.Owner == null) { name = "Île sauvage"; }
+                else { name = i.Owner.Name; }
+
+                string selected = "";
+                if (Model.EnnemyIslandId == i.IslandId)
+                {
+            <option value="@i.IslandId" pos-x="@i.Coordinates.X" pos-y="@i.Coordinates.Y" nameOwner="@name" selected="selected">
+                @name [@i.Coordinates.X, @i.Coordinates.Y]
+            </option>
+                }
+                else
+                {
+            <option value="@i.IslandId" pos-x="@i.Coordinates.X" pos-y="@i.Coordinates.Y" nameOwner="@name">
+                @name [@i.Coordinates.X, @i.Coordinates.Y]
+            </option>
+                }
             }
         </select>
 
@@ -63,5 +134,5 @@
 }
 else
 {
-    <p>Vous n'avez pas encore d'armée, allez au portail d'invocation pour vous préparer à la guerre</p>
+    <p>Vous n'avez pas encore d'armée, allez au portail d'invocation pour vous préparer à la guerre.</p>
 }
