@@ -1,13 +1,46 @@
 ﻿@model ITI.SkyLord.ViewModel.OverViewViewModel
 @{
 }
-<ul>
-    @foreach(var island in Model.Layout.AllIslands)
+<h2>Attaque vers nos îles.</h2>
+@foreach( ArmyEvent ae in Model.AttacksTowardThisPlayer )
+{
+    if( ae.ArmyMovement == ArmyMovement.attacking )
     {
-        <li>
-            <h2>@island.Name</h2>
-            <a asp-controller="Island" asp-action="SeeMyIsland" asp-route-islandId="@island.IslandId">Voir l'île</a>
-        </li>
+        <div>Nous sommes en danger, une attaque arrive depuis l'île @ae.Island.Name qui appartient à <a asp-controller="Profil" asp-action="ProfilOfOtherPlayer" asp-route-playerId=@ae.Island.Owner.PlayerId>@ae.Island.Owner.Name</a>. Impact à @ae.EndingDate.Hour:@ae.EndingDate.Minute:@ae.EndingDate.Second</div>
+    }
+    else if( ae.ArmyMovement == ArmyMovement.sendingRessources )
+    {
+        <div>Hourra ! Des transporteurs alliés se dirigent vers notre île. Ils transportent avec eux @ae.PillagedRessources.Wood bois, @ae.PillagedRessources.Metal métal, @ae.PillagedRessources.Cristal cristal et @ae.PillagedRessources.Magic magie. Impact à @ae.EndingDate.Hour:@ae.EndingDate.Minute:@ae.EndingDate.Second</div>
+    }
+    else if( ae.ArmyMovement == ArmyMovement.moving )
+    {
+        <div>Des troupes alliés se dirigent vers notre île. Impact à @ae.EndingDate.Hour:@ae.EndingDate.Minute:@ae.EndingDate.Second </div>
     }
 
-</ul>
+
+}
+<h2>Nos attaques</h2>
+@foreach( ArmyEvent ae in Model.AttacksFromThisPlayer )
+{
+    if( ae.Destination.Owner != null )
+    {
+        if( ae.ArmyMovement == ITI.SkyLord.Models.Entity_Framework.Entites.Events.ArmyMovement.attacking )
+        {
+            <div>Attaque vers @ae.Destination.Name [@ae.Destination.Coordinates.X, @ae.Destination.Coordinates.Y] chez @ae.Destination.Owner.Name. Impact à @ae.EndingDate.Hour:@ae.EndingDate.Minute:@ae.EndingDate.Second</div>
+        }
+        else if( ae.ArmyMovement == ITI.SkyLord.Models.Entity_Framework.Entites.Events.ArmyMovement.sendingRessources )
+        {
+            <div>Envoi de ressources vers @ae.Destination.Name [@ae.Destination.Coordinates.X, @ae.Destination.Coordinates.Y] chez @ae.Destination.Owner.Name. Elles arriveront à @ae.EndingDate.Hour:@ae.EndingDate.Minute:@ae.EndingDate.Second</div>
+        }
+        else if( ae.ArmyMovement == ITI.SkyLord.Models.Entity_Framework.Entites.Events.ArmyMovement.returning )
+        {
+            <div>Vos unités sont en train de revenir de @ae.Destination.Name [@ae.Destination.Coordinates.X, @ae.Destination.Coordinates.Y] chez @ae.Destination.Owner.Name. Elles arriveront à @ae.EndingDate.Hour:@ae.EndingDate.Minute:@ae.EndingDate.Second</div>
+        }
+    }
+    else
+    {
+        <div>Attaque vers une île barbare [@ae.Destination.Coordinates.X, @ae.Destination.Coordinates.Y]</div>
+    }
+
+}
+<a asp-controller="Island" asp-action="SeeMyIsland" asp-route-islandId="@Model.Layout.IslandId">Voir l'île</a>

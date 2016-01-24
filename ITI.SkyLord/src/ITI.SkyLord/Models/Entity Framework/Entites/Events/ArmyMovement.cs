@@ -8,7 +8,7 @@ namespace ITI.SkyLord.Models.Entity_Framework.Entites.Events
     public enum ArmyMovement
     {
         attacking,
-        supporting,
+        moving,
         sendingRessources,
         returning
     }

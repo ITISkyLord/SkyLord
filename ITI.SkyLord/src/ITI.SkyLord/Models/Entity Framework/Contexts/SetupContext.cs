@@ -24,12 +24,12 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
             // Add your customizations after calling base.OnModelCreating(builder);
 
             builder.Entity<Event>()
-                .HasDiscriminator<string>("EventType")
-                    .HasValue<ArmyEvent>(EventDiscrimator.ArmyEvent)
-                    .HasValue<UnitEvent>(EventDiscrimator.UnitEvent)
-                    .HasValue<BuildingEvent>(EventDiscrimator.BuildingEvent)
-                    .HasValue<UpgradeEvent>(EventDiscrimator.UpgradeEvent)
-                    .HasValue<TechnologyEvent>(EventDiscrimator.TechnologyEvent);
+                .HasDiscriminator<string>( "EventType" )
+                    .HasValue<ArmyEvent>( EventDiscrimator.ArmyEvent )
+                    .HasValue<UnitEvent>( EventDiscrimator.UnitEvent )
+                    .HasValue<BuildingEvent>( EventDiscrimator.BuildingEvent )
+                    .HasValue<UpgradeEvent>( EventDiscrimator.UpgradeEvent )
+                    .HasValue<TechnologyEvent>( EventDiscrimator.TechnologyEvent );
         }
 
         public IConfigurationRoot Configuration { get; set; }
@@ -42,7 +42,7 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
             Configuration = builder.Build();
             var appEnv = CallContextServiceLocator.Locator.ServiceProvider
                             .GetRequiredService<IApplicationEnvironment>();
-            optionsBuilder.UseSqlServer( Configuration[ "Data:DefaultConnection:ConnectionString" ] );
+            optionsBuilder.UseSqlServer( Configuration["Data:DefaultConnection:ConnectionString"] );
         }
 
         #region DbSet
@@ -57,7 +57,7 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
         public DbSet<Apprentice> Apprentices { get; set; }
         public DbSet<Army> Armies { get; set; }
         public DbSet<Building> Buildings { get; set; }
-     //   public DbSet<CombatReport> CombatReports { get; set; }
+        //   public DbSet<CombatReport> CombatReports { get; set; }
         public DbSet<GuildMember> GuildMembers { get; set; }
         public DbSet<GuildRole> GuildRoles { get; set; }
         public DbSet<Regiment> Regiments { get; set; }
@@ -88,7 +88,7 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
         #endregion DbSet
 
         #region Enumerations
-        public UnitDamageType UnitDamageTypes { get;set;}
+        public UnitDamageType UnitDamageTypes { get; set; }
         public UnitName UnitName { get; set; }
         public UnitType UnitType { get; set; }
         public ArmyMovement ArmyMovements { get; set; }
@@ -99,33 +99,50 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
         #endregion Enumerations
 
         #region Helpers
-        public long GetPlayer(ClaimsPrincipal user)
+        public long GetPlayer( ClaimsPrincipal user )
         {
-            return GetPlayer(user.GetUserId()).PlayerId;
+            return GetPlayer( user.GetUserId() ).PlayerId;
         }
-        public Player GetPlayer(string userId)
+        public Player GetPlayer( string userId )
         {
-            return Players.Where(pl => pl.UserPlayer.User.Id == userId).First();
+            return Players.Where( pl => pl.UserPlayer.User.Id == userId ).First();
         }
         public World GetWorld()
         {
             return this.Worlds.FirstOrDefault();
         }
-        public Player FindPlayer(long playerId)
+        public Player FindPlayer( long playerId )
         {
-            return Players.Include( p => p.Profil).FirstOrDefault( p => p.PlayerId == playerId );
+            return Players.Include( p => p.Profil ).FirstOrDefault( p => p.PlayerId == playerId );
         }
-        public Player FindPlayer(string playerMail)
+        public Player FindPlayer( string playerMail )
         {
             return Players.FirstOrDefault( p => p.Mail == playerMail );
         }
-        public void FillStandardVM(StandardViewModel svm, long playerId, long islandId)
+        public void FillStandardVM( StandardViewModel svm, long playerId, long islandId )
         {
             svm.Layout = new LayoutViewModel();
 
-            svm.Layout.AllIslands = Islands.Include(i => i.Owner).Where(i => i.Owner.PlayerId == playerId).ToList();
-            svm.Layout.CurrentIsland = GetIsland(islandId, playerId);
-            svm.Layout.CurrentPlayer = Players.Include( p => p.Technologies).ThenInclude( t => t.Level).Single(p => p.PlayerId == playerId);
+            svm.Layout.AllIslands = Islands.Include( i => i.Owner ).Where( i => i.Owner.PlayerId == playerId ).ToList();
+            svm.Layout.CurrentIsland = GetIsland( islandId, playerId );
+            svm.Layout.CurrentPlayer = Players.Include( p => p.Technologies ).ThenInclude( t => t.Level ).Single( p => p.PlayerId == playerId );
+
+            svm.AttacksTowardThisPlayer = ArmyEvents
+                                         .Include( a => a.Destination ).ThenInclude( a => a.Owner )
+                                         .Include( a => a.Destination.Coordinates )
+                                         .Include( a => a.Island ).ThenInclude( a => a.Owner )
+                                         .Include( a => a.Island.Coordinates )
+                                         .Include( a => a.PillagedRessources )
+                                         .Where( e => e.DestinationIdd == svm.Layout.CurrentIsland.IslandId && !e.Done )
+                                         .ToList();
+
+            svm.AttacksFromThisPlayer = ArmyEvents
+                                        .Include( a => a.Destination ).ThenInclude( a => a.Owner )
+                                        .Include( a => a.Destination.Coordinates )
+                                        .Include( a => a.Island ).ThenInclude( a => a.Owner)
+                                        .Include( a => a.Island.Coordinates)
+                                        .Where( e => e.Island.IslandId == svm.Layout.CurrentIsland.IslandId && !e.Done )
+                                        .ToList();
             svm.Layout.IslandId = islandId;
         }
         /// <summary>
@@ -135,6 +152,23 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
         /// <returns></returns>
         public List<Island> GetAllIslands( long playerId )
         {
+            return Islands
+                .Include( i => i.Armies )
+                .ThenInclude( a => a.Regiments )
+                .ThenInclude( r => r.Unit )
+                .Include( i => i.AllRessources )
+                .Include( i => i.Owner )
+                .Include( i => i.Coordinates )
+                .Include( i => i.Buildings )
+                .ThenInclude( b => b.Level )
+                .Where( i => i.Owner.PlayerId == playerId ).ToList();
+        }
+
+        public Island GetIsland( long islandId, long playerId )
+        {
+            if( islandId == 0 )
+            {
+                long activePlayerId = playerId;
                 return Islands
                     .Include( i => i.Armies )
                     .ThenInclude( a => a.Regiments )
@@ -142,43 +176,26 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
                     .Include( i => i.AllRessources )
                     .Include( i => i.Owner )
                     .Include( i => i.Coordinates )
-                    .Include( i => i.Buildings)
-                    .ThenInclude( b => b.Level)
-                    .Where( i => i.Owner.PlayerId == playerId ).ToList();
-        }
-
-        public Island GetIsland(long islandId, long playerId)
-        {
-            if (islandId == 0)
-            {
-                long activePlayerId = playerId;
-                return Islands
-                    .Include(i => i.Armies)
-                    .ThenInclude(a => a.Regiments)
-                    .ThenInclude(r => r.Unit)
-                    .Include(i => i.AllRessources)
-                    .Include(i => i.Owner)
-                    .Include(i => i.Coordinates)
-                    .SingleOrDefault(i => i.IsCapital && i.Owner.PlayerId == activePlayerId);
+                    .SingleOrDefault( i => i.IsCapital && i.Owner.PlayerId == activePlayerId );
             }
             else
             {
                 long activePlayerId = playerId;
                 return Islands
-                    .Include(i => i.Armies)
-                    .ThenInclude(a => a.Regiments)
-                    .ThenInclude(r => r.Unit)
-                    .Include(i => i.AllRessources)
-                    .Include(i => i.Owner)
-                    .Include(i => i.Coordinates)
-                    .SingleOrDefault(i => i.IslandId == islandId && i.Owner.PlayerId == activePlayerId);
+                    .Include( i => i.Armies )
+                    .ThenInclude( a => a.Regiments )
+                    .ThenInclude( r => r.Unit )
+                    .Include( i => i.AllRessources )
+                    .Include( i => i.Owner )
+                    .Include( i => i.Coordinates )
+                    .SingleOrDefault( i => i.IslandId == islandId && i.Owner.PlayerId == activePlayerId );
             }
         }
 
         public void ValidateIsland( long islandId, long playerId )
         {
             bool islandIsFound = false;
-            if ( islandId == 0 )
+            if( islandId == 0 )
             {
                 islandIsFound = Islands.Any( i => i.IsCapital && i.Owner.PlayerId == playerId );
             }
@@ -187,18 +204,18 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
                 islandIsFound = Islands.Any( i => i.IslandId == islandId && i.Owner.PlayerId == playerId );
             }
 
-            if ( !islandIsFound )
+            if( !islandIsFound )
             {
                 throw new ArgumentException( "The islandId does not belong to the connected player !" );
             }
         }
-        void IDbContext.OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        void IDbContext.OnConfiguring( DbContextOptionsBuilder optionsBuilder )
         {
-            OnConfiguring(optionsBuilder);
+            OnConfiguring( optionsBuilder );
         }
-        void IDbContext.OnModelCreating(ModelBuilder modelBuilder)
+        void IDbContext.OnModelCreating( ModelBuilder modelBuilder )
         {
-            OnModelCreating(modelBuilder);
+            OnModelCreating( modelBuilder );
         }
 
         #endregion Helper

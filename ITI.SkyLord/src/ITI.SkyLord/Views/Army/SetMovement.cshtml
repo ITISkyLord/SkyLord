@@ -1,0 +1,62 @@
+﻿@addTagHelper "*, Microsoft.AspNet.Mvc.TagHelpers"
+@model ITI.SkyLord.ViewModel.Armies.SetMovementArmyViewModel
+@using ITI.SkyLord
+
+@{
+    ViewData[ "Title" ] = "Transport de troupes";
+    Layout = "_Layout";
+}
+
+<style>
+    .ListArmy td {
+        border: 2px solid black;
+        padding-right: 5px;
+        padding-left: 5px;
+    }
+</style>
+
+<h2>Planification d'un mouvement de troupes</h2>
+@if ( Model.CurrentDefenseArmy != null )
+{
+    <form asp-controller="Army" asp-action="MoveArmy" asp-route-islandId="@Model.Layout.IslandId" method="post" role="form">
+
+        <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
+
+        @* Tableau pour voir nos unité et voir qui l'on envoi *@
+        <table class="ListArmy">
+            <tr>
+                <td>Unité</td>
+                <td>Disponible</td>
+                <td>A envoyer</td>
+            </tr>
+
+            @foreach ( Regiment r in Model.CurrentDefenseArmy.Regiments )
+            {
+                <tr>
+                    <td>@r.Unit.Name</td>
+                    <td>@r.Number</td>
+                    <td><input type="number" min="0" max="@r.Number" step="1" asp-for="UnitsToSend[r.Unit.UnitName.ToString()]" value="0" /></td>
+                </tr>
+            }
+        </table>
+
+        <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
+
+        @* Choix de la cible *@
+        <select asp-for="@Model.TargetIslandId" id="EnnemyToAttack">
+            @foreach ( Island i in Model.Layout.AllIslands.Where( i => i.IslandId != Model.Layout.IslandId ) )
+            {
+                <option value="@i.IslandId" pos-x="@i.Coordinates.X" pos-y="@i.Coordinates.Y" selected="selected">
+                    [@i.Coordinates.X, @i.Coordinates.Y]
+                </option>
+            }
+        </select>
+
+        <input type="submit" value="Envoyer les unités" />
+
+    </form>
+}
+else
+{
+    <p>Vous n'avez pas encore d'armée, allez au portail d'invocation pour vous préparer à la guerre.</p>
+}

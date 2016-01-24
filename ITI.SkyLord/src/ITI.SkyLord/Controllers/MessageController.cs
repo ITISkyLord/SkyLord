@@ -18,13 +18,6 @@ namespace ITI.SkyLord.Controllers
 
             return View();
         }
-
-        [HttpGet]
-        public IActionResult GetMessage( int id )
-        {
-            return View();
-        }
-
         [HttpGet]
         public IActionResult GetAllMessages( long islandId = 0 )
         {
@@ -36,6 +29,18 @@ namespace ITI.SkyLord.Controllers
 
             SetupContext.FillStandardVM( mvm, SetupContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
             return View(mvm);
+        }
+        public IActionResult SeeThisMessage( long messageId, long islandId = 0 )
+        {
+            MessageManager messageManager = new MessageManager( SetupContext );
+            Player currentPlayer = SetupContext.GetPlayer( User.GetUserId() );
+            MessageViewModel mvm = new MessageViewModel();
+
+            mvm.Message = messageManager.ReadThisMessage( messageId );
+            mvm.Message.Read = true;
+            SetupContext.SaveChanges();
+            SetupContext.FillStandardVM( mvm, SetupContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
+            return View( mvm );
         }
 
         [HttpPost]

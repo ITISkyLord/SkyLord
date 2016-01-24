@@ -44,6 +44,7 @@ namespace ITI.SkyLord
             SeedShellLevels();
             SeedWeaponsLevels();
             SeedWingsLevels();
+            SeedConquestLevels();
         }
 
 
@@ -1767,6 +1768,71 @@ namespace ITI.SkyLord
                 TechnologyLevel propulsionLevel10 = AddTechnologyLevel( context, TechnologyName.propulsion, 10, propulsionLevel10Cost, (int)( propulsionLevel9.Duration * 3.25 ),
                     CreateRequirementList( propulsionLevel10Requirement ),
                     CreateBonusList( propulsionBonusLevel10 ) );
+
+                context.SaveChanges();
+            }
+        }
+
+        public void SeedConquestLevels()
+        {
+            using ( SetupContext context = new SetupContext() )
+            {
+                // Add conquestCosts
+                Ressource conquestLevel1Cost = AddRessource( context, 1000, 1000, 500, 250 );
+                Ressource conquestLevel2Cost = AddMiltipliedRessource( context, conquestLevel1Cost, 2.5 );
+                Ressource conquestLevel3Cost = AddMiltipliedRessource( context, conquestLevel2Cost, 2.5 );
+                Ressource conquestLevel4Cost = AddMiltipliedRessource( context, conquestLevel3Cost, 2.75 );
+                Ressource conquestLevel5Cost = AddMiltipliedRessource( context, conquestLevel4Cost, 2.75 );
+                Ressource conquestLevel6Cost = AddMiltipliedRessource( context, conquestLevel5Cost, 2.75 );
+                Ressource conquestLevel7Cost = AddMiltipliedRessource( context, conquestLevel6Cost, 3 );
+                Ressource conquestLevel8Cost = AddMiltipliedRessource( context, conquestLevel7Cost, 3 );
+                Ressource conquestLevel9Cost = AddMiltipliedRessource( context, conquestLevel8Cost, 3.25 );
+                Ressource conquestLevel10Cost = AddMiltipliedRessource( context, conquestLevel9Cost, 3.5 );
+
+                // Add conquestRequirements
+                Requirement conquestLevel1Requirement = AddBuildingRequirement( context, BuildingName.laboratory, 2 );
+                Requirement conquestLevel1Requirement2 = AddBuildingRequirement( context, BuildingName.tower, 4 );
+                Requirement conquestLevel2Requirement = AddTechnologyRequirement( context, TechnologyName.conquest, 1 );
+                Requirement conquestLevel3Requirement = AddTechnologyRequirement( context, TechnologyName.conquest, 2 );
+                Requirement conquestLevel4Requirement = AddTechnologyRequirement( context, TechnologyName.conquest, 3 );
+                Requirement conquestLevel5Requirement = AddTechnologyRequirement( context, TechnologyName.conquest, 4 );
+                Requirement conquestLevel6Requirement = AddTechnologyRequirement( context, TechnologyName.conquest, 5 );
+                Requirement conquestLevel7Requirement = AddTechnologyRequirement( context, TechnologyName.conquest, 6 );
+                Requirement conquestLevel8Requirement = AddTechnologyRequirement( context, TechnologyName.conquest, 7 );
+                Requirement conquestLevel9Requirement = AddTechnologyRequirement( context, TechnologyName.conquest, 8 );
+                Requirement conquestLevel10Requirement = AddTechnologyRequirement( context, TechnologyName.conquest, 9 );
+
+                // Set up Levels
+                TechnologyLevel conquestLevel1 = AddTechnologyLevel( context, TechnologyName.conquest, 1, conquestLevel1Cost, 100,
+                    CreateRequirementList( conquestLevel1Requirement, conquestLevel1Requirement2 ),
+                    null );
+                TechnologyLevel conquestLevel2 = AddTechnologyLevel( context, TechnologyName.conquest, 2, conquestLevel2Cost, (int)( conquestLevel1.Duration * 2.5 ),
+                    CreateRequirementList( conquestLevel2Requirement ),
+                    null );
+                TechnologyLevel conquestLevel3 = AddTechnologyLevel( context, TechnologyName.conquest, 3, conquestLevel3Cost, (int)( conquestLevel2.Duration * 2.5 ),
+                    CreateRequirementList( conquestLevel3Requirement ),
+                    null );
+                TechnologyLevel conquestLevel4 = AddTechnologyLevel( context, TechnologyName.conquest, 4, conquestLevel3Cost, (int)( conquestLevel3.Duration * 2.75 ),
+                    CreateRequirementList( conquestLevel4Requirement ),
+                    null );
+                TechnologyLevel conquestLevel5 = AddTechnologyLevel( context, TechnologyName.conquest, 5, conquestLevel5Cost, (int)( conquestLevel4.Duration * 2.75 ),
+                    CreateRequirementList( conquestLevel5Requirement ),
+                    null );
+                TechnologyLevel conquestLevel6 = AddTechnologyLevel( context, TechnologyName.conquest, 6, conquestLevel6Cost, (int)( conquestLevel5.Duration * 2.75 ),
+                    CreateRequirementList( conquestLevel6Requirement ),
+                    null );
+                TechnologyLevel conquestLevel7 = AddTechnologyLevel( context, TechnologyName.conquest, 7, conquestLevel7Cost, (int)( conquestLevel6.Duration * 3.0 ),
+                    CreateRequirementList( conquestLevel7Requirement ),
+                    null );
+                TechnologyLevel conquestLevel8 = AddTechnologyLevel( context, TechnologyName.conquest, 8, conquestLevel8Cost, (int)( conquestLevel7.Duration * 3.0 ),
+                    CreateRequirementList( conquestLevel8Requirement ),
+                    null );
+                TechnologyLevel conquestLevel9 = AddTechnologyLevel( context, TechnologyName.conquest, 9, conquestLevel9Cost, (int)( conquestLevel8.Duration * 3.0 ),
+                    CreateRequirementList( conquestLevel9Requirement ),
+                    null );
+                TechnologyLevel conquestLevel10 = AddTechnologyLevel( context, TechnologyName.conquest, 10, conquestLevel10Cost, (int)( conquestLevel9.Duration * 3.25 ),
+                    CreateRequirementList( conquestLevel10Requirement ),
+                    null );
 
                 context.SaveChanges();
             }

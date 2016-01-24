@@ -1,0 +1,16 @@
+﻿@addTagHelper "*, Microsoft.AspNet.Mvc.TagHelpers"
+
+@model ITI.SkyLord.ViewModel.MessageViewModel
+@using ITI.SkyLord
+
+@{
+    ViewData["Title"] = "Message";
+    Layout = "_Layout";
+}
+
+<h1>Boite de réception</h1>
+<h3>@Model.Message.MessageObject</h3>
+<h4>@Model.Message.DateSent</h4>
+
+<p>@Model.Message.CoreMessage</p>
+<a asp-controller="Message" asp-action="GetAllMessages" asp-route-islandId="@Model.Layout.IslandId">Boite de réception</a>

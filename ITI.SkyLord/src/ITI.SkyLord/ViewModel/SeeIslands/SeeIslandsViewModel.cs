@@ -36,6 +36,7 @@ namespace ITI.SkyLord.ViewModel.SeeIslands
         public List<TechnologyDisplay> TechnologyDisplays { get; set; }
         public TechnologyName TargetTechnology { get; set; }
 
+        public List<UnitQueue> UnitsQueue { get; set; }
         //public Technology CurrentTechnology { get; set; }
         //public TechnologyName TargetTechnology { get; set; }
 

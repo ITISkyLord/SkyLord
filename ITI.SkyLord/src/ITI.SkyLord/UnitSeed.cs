@@ -14,6 +14,7 @@ namespace ITI.SkyLord
             SeedMonsters();
             SeedMagical();
             SeedMecanical();
+            SeedUtility();
         }
 
         public void SeedSoldiers()
@@ -55,7 +56,10 @@ namespace ITI.SkyLord
             SeedSaboteur();
             SeedScorpion();
         }
-
+        public void SeedUtility()
+        {
+            SeedApprentice();
+        }
         #region Soldiers
 
         public void SeedSoldier()
@@ -1162,6 +1166,54 @@ namespace ITI.SkyLord
 
         #endregion
 
+        #region Utility
+
+        public void SeedApprentice()
+        {
+            using ( SetupContext context = new SetupContext() )
+            {
+                // Set up Cost
+
+                Ressource apprenticeCost = new Ressource { Wood = 2000, Metal = 2000, Cristal = 2000, Magic = 500 };
+                context.Add( apprenticeCost );
+
+                // Set up Statistics
+                UnitStatistics apprenticeStatistics = new UnitStatistics
+                {
+                    Attack = 0,
+                    PhysicResist = 0,
+                    MagicResist = 0,
+                    Speed = 25,
+                    Capacity = 5000,
+                    Consumption = 50
+                };
+                context.Add( apprenticeStatistics );
+
+                // Set up Requirements
+                Requirement apprenticeRequirement = AddTechnologyRequirement( context, TechnologyName.conquest, 2 );
+
+                // Add Unit
+                Unit apprentice = new Unit
+                {
+                    Name = "Apprenti",
+                    UnitName = UnitName.apprentice,
+                    UnitType = UnitType.utility,
+                    UnitDamageType = UnitDamageType.physical,
+                    UnitCost = apprenticeCost,
+                    UnitStatistics = apprenticeStatistics,
+                    Requirements = CreateRequirementList( apprenticeRequirement ),
+                    Duration = 600,
+                    IsModel = true
+                };
+                context.Add( apprentice );
+
+                context.SaveChanges();
+            }
+        }
+
+        #endregion
+
+        #region Methods
         Requirement AddBuildingRequirement( SetupContext context, BuildingName buildingName, int number )
         {
             Requirement requirement = new Requirement
@@ -1192,6 +1244,7 @@ namespace ITI.SkyLord
                 requirements.Add( r );
             }
             return requirements;
-        }
+        } 
+        #endregion
     }
 }
