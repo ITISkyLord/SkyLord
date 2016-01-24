@@ -96,7 +96,7 @@ namespace ITI.SkyLord
         {
             DateTime begginningDate = FindLastEndingDateInQueue( EventDiscrimator.BuildingEvent, island );
 
-            int duration = _allManager.BuildingManager.GetAvailableBuildings().Where(b => b.BuildingName == building).First().Level.Duration;
+            int duration = _allManager.BuildingManager.GetAvailableBuildings().Where( b => b.BuildingName == building ).First().Level.Duration;
 
             ctx.BuildingEvents.Add( new BuildingEvent()
             {
@@ -281,7 +281,7 @@ namespace ITI.SkyLord
             //                              .Include( a => a.Destination)
             //                              .Where( e => e.EventId == ae.EventId ).First();
             ArmyManager armyManager = _allManager.ArmyManager;
-            Army attackingArmy = _context.Armies
+            Army armyOnMovement = _context.Armies
                                         .Include( i => i.Island ).ThenInclude( i => i.Coordinates )
                                         .Include( i => i.Island )
                                         .ThenInclude( i => i.Armies ).ThenInclude( i => i.Regiments )
@@ -309,34 +309,30 @@ namespace ITI.SkyLord
                 if ( defendingArmy == null )
                     defendingArmy = new Army { Island = destination, Regiments = new List<Regiment>(), ArmyState = ArmyState.defense };
 
-                CombatResult combatResult = armyManager.ResolveCombat( attackingArmy, defendingArmy, armyEvent, _context );
+                CombatResult combatResult = armyManager.ResolveCombat( armyOnMovement, defendingArmy, armyEvent, _context );
                 _context.Messages.Add( combatResult.CombatReportWinner );
                 _context.Messages.Add( combatResult.CombatReportLooser );
                 _context.SaveChanges();
-                if( combatResult.CombatReportWinner.Receiver == attackingArmy.Island.Owner )// S'il n'y a plus de troupes dans l'armées attaquante, il n'y a pas de retour.
-                    this.AddArmyEvent( _context, attackingArmy, attackingArmy.Island, ArmyMovement.returning, destination, combatResult.PillagedRessources );
+                if ( combatResult.CombatReportWinner.Receiver == armyOnMovement.Island.Owner ) // S'il n'y a plus de troupes dans l'armées attaquante, il n'y a pas de retour.
+                    this.AddArmyEvent( _context, armyOnMovement, armyOnMovement.Island, ArmyMovement.returning, destination, combatResult.PillagedRessources );
             }
-            else if( armyEvent.ArmyMovement == ArmyMovement.sendingRessources )
+            else if ( armyEvent.ArmyMovement == ArmyMovement.sendingRessources )
             {
-                Army sendingArmy = attackingArmy;
-
                 armyEvent.Destination = destination;
-                Ressource pillagedRessource = _context.Ressources.Where(r => r.RessourceId == armyEvent.PillagedRessourcesIdd).SingleOrDefault();
+                Ressource pillagedRessource = _context.Ressources.Where( r => r.RessourceId == armyEvent.PillagedRessourcesIdd ).SingleOrDefault();
                 armyEvent.PillagedRessources = pillagedRessource;
-                CombatResult combatResult = armyManager.ResolveSendingRessources( sendingArmy, armyEvent, _context );
+                CombatResult combatResult = armyManager.ResolveSendingRessources( armyOnMovement, armyEvent, _context );
                 _context.Messages.Add( combatResult.CombatReportWinner );
                 _context.SaveChanges();
-                this.AddArmyEvent( _context, sendingArmy, sendingArmy.Island, ArmyMovement.returning, destination );
+                this.AddArmyEvent( _context, armyOnMovement, armyOnMovement.Island, ArmyMovement.returning, destination );
             }
             else if ( armyEvent.ArmyMovement == ArmyMovement.returning )
             {
-                if ( attackingArmy != null )
+                if ( armyOnMovement != null )
                 {
                     Ressource pillagedRessource = _context.Ressources.Where( r => r.RessourceId == armyEvent.PillagedRessourcesIdd ).SingleOrDefault();
-                    if( pillagedRessource != null )
-                        RessourceManager.AddRessource( attackingArmy.Island.AllRessources, pillagedRessource );
-
-
+                    if ( pillagedRessource != null )
+                        RessourceManager.AddRessource( armyOnMovement.Island.AllRessources, pillagedRessource );
 
                     armyEvent.Island.Armies.SingleOrDefault( a => a.ArmyState == ArmyState.defense );
                     Army islandArmy = _context.Armies
@@ -345,14 +341,62 @@ namespace ITI.SkyLord
                                     .ThenInclude( r => r.Unit )
                                     .Where( a => a.Island.IslandId == armyEvent.Island.IslandId && a.ArmyState == ArmyState.defense )
                                     .Single();
-                    attackingArmy = armyManager.JoinArmies( islandArmy, attackingArmy, armyEvent.Destination.IslandId );
+                    armyOnMovement = armyManager.JoinArmies( islandArmy, armyOnMovement, armyEvent.Destination.IslandId );
                     _context.SaveChanges();
                 }
             }
-            else if( armyEvent.ArmyMovement == ArmyMovement.moving )
+            else if ( armyEvent.ArmyMovement == ArmyMovement.moving )
             {
                 Army defendingArmy = destination.Armies.SingleOrDefault( a => a.ArmyState == ArmyState.defense );
-                armyManager.JoinArmies( defendingArmy, attackingArmy, destination.IslandId );
+                armyManager.JoinArmies( defendingArmy, armyOnMovement, destination.IslandId );
+            }
+            else if ( armyEvent.ArmyMovement == ArmyMovement.colonising )
+            {
+                // Check if the destination is still a free island, if not, program a return
+                if ( destination.Owner == null )
+                {
+                    this.AddArmyEvent( _context, armyOnMovement, armyOnMovement.Island, ArmyMovement.returning, destination );
+                }
+                else
+                {
+                    // Change the ownership of the island to the player
+                    destination.Owner = armyOnMovement.Island.Owner;
+
+                    // Add a tower, a portal and a shield
+                    Building tower = new Building
+                    {
+                        BuildingName = BuildingName.tower,
+                        Name = "Tour de mage",
+                        Level = _context.BuildingLevels.Single( bl => bl.BuildingName == BuildingName.tower && bl.Number == 1 ),
+                        Position = 1
+                    };
+                    _context.Add( tower );
+
+                    Building invocation = new Building
+                    {
+                        BuildingName = BuildingName.invocation,
+                        Name = "Cercle d'invocation",
+                        Level = _context.BuildingLevels.Single( bl => bl.BuildingName == BuildingName.invocation && bl.Number == 1 ),
+                        Position = 2
+                    };
+                    _context.Add( invocation );
+
+                    Building shield = new Building
+                    {
+                        BuildingName = BuildingName.shield,
+                        Name = "Bouclier",
+                        Level = _context.BuildingLevels.Single( bl => bl.BuildingName == BuildingName.shield && bl.Number == 1 ),
+                        Position = 3
+                    };
+                    _context.Add( shield );
+
+                    // Add the ressources the apprentice brings on the island
+                    Ressource transportedRessource = _context.Ressources.Where( r => r.RessourceId == armyEvent.PillagedRessourcesIdd ).SingleOrDefault();
+                    if ( transportedRessource != null )
+                        destination.AllRessources = transportedRessource;
+
+                    armyManager.RemoveArmy( armyOnMovement );
+                }
             }
 
 
@@ -382,10 +426,10 @@ namespace ITI.SkyLord
             tm.BonusManager.ResolvePlayersArmies( technoEvent.Island.Owner.PlayerId, technoEvent.Island.IslandId );
 
             // If the conquest technology has been upgraded, upgrade the max island of the player
-            if( te.TechnologyName == TechnologyName.conquest )
+            if ( te.TechnologyName == TechnologyName.conquest )
             {
                 Technology conquest = playersTechnologies.Single( t => t.TechnologyName == TechnologyName.conquest );
-                if( conquest.Level.Number > 1 )
+                if ( conquest.Level.Number > 1 )
                 {
                     _context.Players.Single( p => p.PlayerId == technoEvent.Island.Owner.PlayerId ).MaxIsland = 1 + ( conquest.Level.Number / 2 );
                 }

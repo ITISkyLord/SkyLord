@@ -47,8 +47,7 @@ namespace ITI.SkyLord
 
         public void SeedMecanical()
         {
-            SeedCanoe();
-            SeedCarrier();
+            //SeedCanoe();
             SeedFlameThrower();
             SeedIronGolem();
             SeedLivingArmor();
@@ -59,7 +58,9 @@ namespace ITI.SkyLord
         public void SeedUtility()
         {
             SeedApprentice();
+            SeedCarrier();
         }
+
         #region Soldiers
 
         public void SeedSoldier()
@@ -1076,49 +1077,53 @@ namespace ITI.SkyLord
             }
         }
 
-        public void SeedCanoe()
-        {
-            using ( SetupContext context = new SetupContext() )
-            {
-                // Set up Cost
+        //public void SeedCanoe()
+        //{
+        //    using ( SetupContext context = new SetupContext() )
+        //    {
+        //        // Set up Cost
 
-                Ressource canoeCost = new Ressource { Wood = 500, Metal = 250, Cristal = 0, Magic = 0 };
-                context.Add( canoeCost );
+        //        Ressource canoeCost = new Ressource { Wood = 500, Metal = 250, Cristal = 0, Magic = 0 };
+        //        context.Add( canoeCost );
 
-                // Set up Statistics
-                UnitStatistics canoeStatistics = new UnitStatistics
-                {
-                    Attack = 5,
-                    PhysicResist = 100,
-                    MagicResist = 100,
-                    Speed = 125,
-                    Capacity = 5000,
-                    Consumption = 25
-                };
-                context.Add( canoeStatistics );
+        //        // Set up Statistics
+        //        UnitStatistics canoeStatistics = new UnitStatistics
+        //        {
+        //            Attack = 5,
+        //            PhysicResist = 100,
+        //            MagicResist = 100,
+        //            Speed = 125,
+        //            Capacity = 5000,
+        //            Consumption = 25
+        //        };
+        //        context.Add( canoeStatistics );
 
-                // Set up Requirements
-                Requirement canoeRequirement = AddBuildingRequirement( context, BuildingName.tower, 2 );
-                Requirement canoeRequirement2 = AddBuildingRequirement( context, BuildingName.invocation, 1 );
+        //        // Set up Requirements
+        //        Requirement canoeRequirement = AddBuildingRequirement( context, BuildingName.tower, 2 );
+        //        Requirement canoeRequirement2 = AddBuildingRequirement( context, BuildingName.invocation, 1 );
 
-                // Add Unit
-                Unit canoe = new Unit
-                {
-                    Name = "Pirogue",
-                    UnitName = UnitName.canoe,
-                    UnitType = UnitType.mecanical,
-                    UnitDamageType = UnitDamageType.physical,
-                    UnitCost = canoeCost,
-                    UnitStatistics = canoeStatistics,
-                    Requirements = CreateRequirementList( canoeRequirement, canoeRequirement2 ),
-                    Duration = 120,
-                    IsModel = true
-                };
-                context.Add( canoe );
+        //        // Add Unit
+        //        Unit canoe = new Unit
+        //        {
+        //            Name = "Pirogue",
+        //            UnitName = UnitName.canoe,
+        //            UnitType = UnitType.mecanical,
+        //            UnitDamageType = UnitDamageType.physical,
+        //            UnitCost = canoeCost,
+        //            UnitStatistics = canoeStatistics,
+        //            Requirements = CreateRequirementList( canoeRequirement, canoeRequirement2 ),
+        //            Duration = 120,
+        //            IsModel = true
+        //        };
+        //        context.Add( canoe );
 
-                context.SaveChanges();
-            }
-        }
+        //        context.SaveChanges();
+        //    }
+        //}
+
+        #endregion
+
+        #region Utility
 
         public void SeedCarrier()
         {
@@ -1150,7 +1155,7 @@ namespace ITI.SkyLord
                 {
                     Name = "Transporteur",
                     UnitName = UnitName.carrier,
-                    UnitType = UnitType.mecanical,
+                    UnitType = UnitType.utility,
                     UnitDamageType = UnitDamageType.physical,
                     UnitCost = carrierCost,
                     UnitStatistics = carrierStatistics,
@@ -1163,11 +1168,6 @@ namespace ITI.SkyLord
                 context.SaveChanges();
             }
         }
-
-        #endregion
-
-        #region Utility
-
         public void SeedApprentice()
         {
             using ( SetupContext context = new SetupContext() )
