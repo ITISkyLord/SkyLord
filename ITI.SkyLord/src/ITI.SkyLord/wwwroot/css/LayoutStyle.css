@@ -6465,7 +6465,11 @@ button.close {
 .SkyLordContainer .SkyLordMainRow:before,
 .SkyLordContainer .SkyLordMainRow:after,
 .SkyLordContainer .SkyLordMainRow .PageContent .ViewContentRow:before,
-.SkyLordContainer .SkyLordMainRow .PageContent .ViewContentRow:after {
+.SkyLordContainer .SkyLordMainRow .PageContent .ViewContentRow:after,
+.SkyLordContainer .profilContainer:before,
+.SkyLordContainer .profilContainer:after,
+.playerContainer:before,
+.playerContainer:after {
   content: " ";
   display: table;
 }
@@ -6487,7 +6491,9 @@ button.close {
 .modal-footer:after,
 .SkyLordContainer:after,
 .SkyLordContainer .SkyLordMainRow:after,
-.SkyLordContainer .SkyLordMainRow .PageContent .ViewContentRow:after {
+.SkyLordContainer .SkyLordMainRow .PageContent .ViewContentRow:after,
+.SkyLordContainer .profilContainer:after,
+.playerContainer:after {
   clear: both;
 }
 .center-block {
@@ -6900,9 +6906,10 @@ body {
 }
 .SkyLordContainer .SkyLordMainRow .SkylordSideBar .img-responsive {
   height: 75px;
-  position: absolute;
-  top: 0px;
-  left: 0px;
+  position: relative;
+  margin-top: 10px;
+  margin-right: auto;
+  margin-left: auto;
 }
 .SkyLordContainer .SkyLordMainRow .PageContent {
   position: relative;
@@ -6944,12 +6951,85 @@ body {
   margin-left: -15px;
   margin-right: -15px;
 }
+.SkyLordContainer .profilContainer {
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 1px;
+  background-color: "white";
+  height: auto;
+  width: 100%;
+  height: 100%;
+  background-image: url("../images/Site/sitecarton.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  overflow: auto;
+}
+.SkyLordContainer .profilContainer > .navbar-header,
+.SkyLordContainer .profilContainer > .navbar-collapse {
+  margin-right: -15px;
+  margin-left: -15px;
+}
+@media (min-width: 768px) {
+  .SkyLordContainer .profilContainer > .navbar-header,
+  .SkyLordContainer .profilContainer > .navbar-collapse {
+    margin-right: 0;
+    margin-left: 0;
+  }
+}
+.SkyLordContainer .profilContainer #pp {
+  padding: 5px;
+}
+.SkyLordContainer .profilContainer blockquote {
+  border-left: none;
+}
 .SkyLordContainer .form-control {
   text-align: center;
   font-weight: bold;
   font-style: italic;
   color: #825847;
   background-color: whitesmoke;
+}
+.playerContainer {
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 1px;
+  background-color: "white";
+  height: auto;
+  width: 100%;
+  height: 100%;
+  background-image: url("../images/Site/sitecarton.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  overflow: auto;
+}
+.playerContainer > .navbar-header,
+.playerContainer > .navbar-collapse {
+  margin-right: -15px;
+  margin-left: -15px;
+}
+@media (min-width: 768px) {
+  .playerContainer > .navbar-header,
+  .playerContainer > .navbar-collapse {
+    margin-right: 0;
+    margin-left: 0;
+  }
+}
+.playerContainer .seePlayers {
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+}
+.playerContainer .seePlayers .table th {
+  color: white;
+  font-weight: bold;
+}
+.playerContainer .seePlayers .table td {
+  color: #825847;
+  font-weight: bold;
 }
 footer {
   font-size: 17px;

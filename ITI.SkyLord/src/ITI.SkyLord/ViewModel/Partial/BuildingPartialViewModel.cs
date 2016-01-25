@@ -14,6 +14,7 @@ namespace ITI.SkyLord.ViewModel.Partial
 
         // Next Level of Current Building
         public Level NextBuildingLevel { get; set; }
+        public bool IsInConstruction { get; set; }
 
         // Empty
         public List<Building> AvailableBuildings { get; set; }

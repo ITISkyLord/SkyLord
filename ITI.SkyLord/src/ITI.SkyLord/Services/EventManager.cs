@@ -434,7 +434,7 @@ namespace ITI.SkyLord
         internal void Resolve( BuildingEvent be )
         {
             List<Building> buildingsOnIsland = _allManager.BuildingManager.GetBuildingsOnCurrentIsland( be.Island.IslandId, be.Island.Owner.PlayerId );
-            if ( buildingsOnIsland.Any( b => b.BuildingName == be.BuildingToBuild ) )
+            if ( buildingsOnIsland.Any( b => b.BuildingName == be.BuildingToBuild && b.Position== be.PositionToBuild) )
             {
                 _allManager.BuildingManager.LevelUpBuilding( be.BuildingToBuild, be.Island.IslandId, be.Island.Owner.PlayerId, be.PositionToBuild );
             }
