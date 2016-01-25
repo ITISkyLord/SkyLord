@@ -6459,9 +6459,7 @@ button.close {
 .modal-header:before,
 .modal-header:after,
 .modal-footer:before,
-.modal-footer:after,
-.armyContainer:before,
-.armyContainer:after {
+.modal-footer:after {
   content: " ";
   display: table;
 }
@@ -6480,8 +6478,7 @@ button.close {
 .pager:after,
 .panel-body:after,
 .modal-header:after,
-.modal-footer:after,
-.armyContainer:after {
+.modal-footer:after {
   clear: both;
 }
 .center-block {
@@ -6728,29 +6725,41 @@ button.close {
   }
 }
 .armyContainer {
-  margin-right: auto;
-  margin-left: auto;
-  padding-left: 15px;
-  padding-right: 15px;
-  border-radius: 1px;
-  background-color: "white";
-  height: auto;
-  width: 100%;
-  height: 100%;
-  background-image: url("../images/Site/sitecarton.png") !important;
-  background-repeat: no-repeat !important;
-  background-size: 100% 100% !important;
+  /*.container-fluid;
+    .Section();
+    height: 100%;
+    .Image(url("../images/Site/sitecarton.png")) !important;
+    overflow: auto;*/
+  border: 1px solid #825847;
+  border-radius: 0;
+  transition: box-shadow 0.5s;
+  width: 580px;
+  height: 580px;
+  background-image: url("../images/Site/site_ressource.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: block;
   overflow: auto;
 }
-.armyContainer > .navbar-header,
-.armyContainer > .navbar-collapse {
-  margin-right: -15px;
-  margin-left: -15px;
+.armyContainer .army .army-head {
+  text-align: center;
+  color: whitesmoke;
+  font-weight: bold;
+  font-size: 25px;
+  background-image: url("../images/Site/site_haut2.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  padding: 5px;
+  border-bottom: 1px solid transparent;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
 }
-@media (min-width: 768px) {
-  .armyContainer > .navbar-header,
-  .armyContainer > .navbar-collapse {
-    margin-right: 0;
-    margin-left: 0;
-  }
+.armyContainer .army .army-body {
+  color: #825847;
+  font-weight: bold;
+  font-size: 13px;
+  text-align: center;
 }

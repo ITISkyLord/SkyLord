@@ -2,9 +2,46 @@
 
 // Part Profil
 .armyContainer {
-    .container-fluid;
+
+    /*.container-fluid;
     .Section();
     height: 100%;
     .Image(url("../images/Site/sitecarton.png")) !important;
+    overflow: auto;*/
+
+    border: 1px solid #825847;
+    border-radius: 0;
+    transition: box-shadow 0.5s;
+    width: 580px;
+    height: 580px;
+    .Image(url("../images/Site/site_ressource.png"));
+    background-repeat: no-repeat;
+    background-position: center;
+    display: block;
     overflow: auto;
+
+    .army {
+        .army-head {
+            text-align: center;
+            color: whitesmoke;
+            font-weight: bold;
+            font-size: 25px;
+            background-image: url("../images/Site/site_haut2.png");
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            padding: 5px;
+            border-bottom: 1px solid transparent;
+            border-top-left-radius: 0px;
+            border-top-right-radius: 0px;
+            border-bottom-left-radius: 0px;
+            border-bottom-right-radius: 0px;
+        }
+
+        .army-body {
+            color: #825847;
+            font-weight: bold;
+            font-size: 13px;
+            text-align: center;
+        }
+    }
 }
