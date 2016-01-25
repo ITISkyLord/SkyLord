@@ -7,10 +7,14 @@ Gère la world map pour la vue /World
 
 */
 // Variables à définir en cas de changement de tailles des elements
-var taillecase = 64;
-var taillemap = 500;
+var taillecase;
+var taillemap_x;
+var taillemap_y;
 // Main
 $(document).ready(function () {
+    taillecase = parseInt($(".map td").css("width"));
+    taillemap_x = parseInt($(".map").css("width"));
+    taillemap_y = parseInt($(".map").css("height"));
     // Centre la map sur l'island de la personne
     CenterIsland();
     $("#CenterIsland").click(function () {
@@ -65,8 +69,8 @@ var Coordinate = (function () {
 function GetCoordinate(islandNode) {
     var x = +$(islandNode).attr("x");
     var y = +$(islandNode).attr("y");
-    var pos_x = -1 * x * taillecase - taillecase + (taillemap / 4) + (taillecase / 2) - taillemap;
-    var pos_y = -1 * y * taillecase - taillecase + (taillemap / 4) + (taillecase / 2) + taillemap;
+    var pos_x = -1 * x * taillecase - (taillemap_y / 4);
+    var pos_y = -1 * y * taillecase + (taillemap_x / 1.5);
     return new Coordinate(pos_x, pos_y);
 }
 function TestConstraint(node) {
