@@ -119,16 +119,17 @@
                     <label for="pos-y"></label><input type="number" name="pos-y" value="@Model.EnnemyIslands.First().Coordinates.Y" />
 
                     @* Choix de la cible *@
+
                     <select asp-for="@Model.Target" id="EnnemyToAttack">
                         @foreach (Island i in Model.EnnemyIslands)
-                {
-                    string name = "";
-                    if (i.Owner == null) { name = "Île sauvage"; }
-                    else { name = i.Owner.Name; }
+                        {
+                            string name = "";
+                            if (i.Owner == null) { name = "Île sauvage"; }
+                            else { name = i.Owner.Name; }
 
-                    string selected = "";
-                    if (Model.EnnemyIslandId == i.IslandId)
-                    {
+                            string selected = "";
+                            if (Model.EnnemyIslandId == i.IslandId)
+                            {
                                 <option value="@i.IslandId" pos-x="@i.Coordinates.X" pos-y="@i.Coordinates.Y" nameOwner="@name" selected="selected">
                                     @name [@i.Coordinates.X, @i.Coordinates.Y]
                                 </option>
@@ -142,7 +143,7 @@
                         }
                     </select>
 
-                    <input type="submit" class="btn-link" value="Envoyer les unités" />
+                    <div id="btn-perso"><input type="submit" class="btn-link" value="Envoyer les unités" /></div>
 
                 </form>
                 <script src="/js/AttackManager.js"></script>
