@@ -55,6 +55,12 @@
     .invocation-building  {
         height: 100px;
     }
+
+    .MisEnAvant {
+        z-index: 100001;
+        color:white !important;
+    }
+
 </style>
 
 <div class="head">
@@ -78,7 +84,7 @@
 
                 <div class="invocation-building">
 
-                    @if (Model.AvailableUnit.Where(u => u.UnitId == unit.UnitId).FirstOrDefault() == null)
+                    @if (Model.AvailableUnit.Where(u => u.UnitName == unit.UnitName).FirstOrDefault() == null)
                     {
                         <div class="UnitNonAvailable"> </div>
                     }
@@ -88,7 +94,7 @@
 
                     }
 
-                    <div class="col-lg-2 ">
+                    <div class="col-lg-2  MisEnAvant">
                         <div class="text">
                             @unit.Name<br />
                             <div class="UnitInfo" id="@unit.UnitName.ToString()">Voir</div>
@@ -115,7 +121,7 @@
                     @{
 // TODO : Calcul du max d'unité que l'on peut faire pour cette unité afin de ne pas lui proposer de faire plus d'unité qu'il ne peut
                     }
-                    <div class="col-lg-3"><input class="form-control" style="width: 100%;" type="number" asp-for="UnitAmount" min="0" step="1" value="0" /></div>
+                    <div class="col-lg-2"><input class="form-control" style="width: 100%;" type="number" asp-for="UnitAmount" min="0" step="1" value="0" /></div>
                     <div class="col-lg-1">
                         <input type="submit" class="btn btn-link" value="Former" />
                     </div>

@@ -6725,16 +6725,9 @@ button.close {
   }
 }
 .armyContainer {
-  /*.container-fluid;
-    .Section();
-    height: 100%;
-    .Image(url("../images/Site/sitecarton.png")) !important;
-    overflow: auto;*/
   border: 1px solid #825847;
   border-radius: 0;
   transition: box-shadow 0.5s;
-  width: 580px;
-  height: 580px;
   background-image: url("../images/Site/site_ressource.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
@@ -6777,6 +6770,9 @@ button.close {
   letter-spacing: 1px;
   background-color: whitesmoke;
 }
+.armyContainer .army .army-body #btn-perso {
+  padding: 10px;
+}
 .armyContainer .army .army-body a:hover {
   color: whitesmoke;
   text-decoration: none;
@@ -6794,13 +6790,10 @@ button.close {
   outline: none;
 }
 .armyContainer .army .army-body input[type=number] {
-  /*font-size: 1em;
-                    width: 2.5em;
-                    padding: 3px;
-                    margin: 0;*/
   border: 1px solid #ddd;
   border-radius: 5px;
   text-align: center;
+  width: 100px;
 }
 .armyContainer .army .army-body input[type=number]:focus {
   outline: none;

@@ -2,16 +2,9 @@
 
 // Part Profil
 .armyContainer {
-    /*.container-fluid;
-    .Section();
-    height: 100%;
-    .Image(url("../images/Site/sitecarton.png")) !important;
-    overflow: auto;*/
     border: 1px solid #825847;
     border-radius: 0;
     transition: box-shadow 0.5s;
-    width: 580px;
-    height: 580px;
     .Image(url("../images/Site/site_ressource.png"));
     background-repeat: no-repeat;
     background-position: center;
@@ -43,6 +36,10 @@
             .Button();
             .ButtonHover();
 
+            #btn-perso {
+                padding: 10px;
+            }
+
             a:hover {
                 color: whitesmoke;
                 text-decoration: none;
@@ -65,13 +62,10 @@
             }
 
             input[type=number] {
-                /*font-size: 1em;
-                    width: 2.5em;
-                    padding: 3px;
-                    margin: 0;*/
                 border: 1px solid #ddd;
                 border-radius: 5px;
                 text-align: center;
+                width: 100px;
             }
 
             input[type=number]:focus {
