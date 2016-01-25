@@ -24,29 +24,26 @@
 {
     if( ae.Destination.Owner != null )
     {
-        if( ae.ArmyMovement == ITI.SkyLord.Models.Entity_Framework.Entites.Events.ArmyMovement.attacking )
+        if( ae.ArmyMovement == ArmyMovement.attacking )
         {
             <div>Attaque vers @ae.Destination.Name [@ae.Destination.Coordinates.X, @ae.Destination.Coordinates.Y] chez @ae.Destination.Owner.Name. Impact à @ae.EndingDate.Hour:@ae.EndingDate.Minute:@ae.EndingDate.Second</div>
         }
-        else if( ae.ArmyMovement == ITI.SkyLord.Models.Entity_Framework.Entites.Events.ArmyMovement.sendingRessources )
+        else if( ae.ArmyMovement == ArmyMovement.sendingRessources )
         {
             <div>Envoi de ressources vers @ae.Destination.Name [@ae.Destination.Coordinates.X, @ae.Destination.Coordinates.Y] chez @ae.Destination.Owner.Name. Elles arriveront à @ae.EndingDate.Hour:@ae.EndingDate.Minute:@ae.EndingDate.Second</div>
         }
-        else if( ae.ArmyMovement == ITI.SkyLord.Models.Entity_Framework.Entites.Events.ArmyMovement.returning )
-        {
-            <div>Vos unités sont en train de revenir de @ae.Destination.Name [@ae.Destination.Coordinates.X, @ae.Destination.Coordinates.Y] chez @ae.Destination.Owner.Name. Elles arriveront à @ae.EndingDate.Hour:@ae.EndingDate.Minute:@ae.EndingDate.Second</div>
-        }        else if( ae.ArmyMovement == ITI.SkyLord.Models.Entity_Framework.Entites.Events.ArmyMovement.returning )
+        else if( ae.ArmyMovement == ArmyMovement.returning )
         {
             <div>Vos unités sont en train de revenir de @ae.Destination.Name [@ae.Destination.Coordinates.X, @ae.Destination.Coordinates.Y] chez @ae.Destination.Owner.Name. Elles arriveront à @ae.EndingDate.Hour:@ae.EndingDate.Minute:@ae.EndingDate.Second</div>
         }
-        else if( ae.ArmyMovement == ITI.SkyLord.Models.Entity_Framework.Entites.Events.ArmyMovement.colonising )
+        else if( ae.ArmyMovement == ArmyMovement.colonising )
         {
             <div>Colonisation vers @ae.Destination.Name [@ae.Destination.Coordinates.X, @ae.Destination.Coordinates.Y] chez @ae.Destination.Owner.Name. Impact à @ae.EndingDate.Hour:@ae.EndingDate.Minute:@ae.EndingDate.Second</div>
         }
     }
     else
     {
-        <div>Attaque vers une île barbare [@ae.Destination.Coordinates.X, @ae.Destination.Coordinates.Y]</div>
+        <div>Attaque vers une île barbare [@ae.Destination.Coordinates.X, @ae.Destination.Coordinates.Y]. Impact à @ae.EndingDate.Hour:@ae.EndingDate.Minute:@ae.EndingDate.Second</div>
     }
 
 }

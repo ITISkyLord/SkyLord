@@ -171,14 +171,15 @@ namespace ITI.SkyLord.Controllers
             long activePlayerId = SetupContext.GetPlayer( User.GetUserId() ).PlayerId;
 
             Island currentIsland = SetupContext.GetIsland( islandId, activePlayerId );
+            ArmyManager am = new ArmyManager(SetupContext, new BonusManager(SetupContext));
 
-            model.CurrentDefenseArmy = SetupContext.Armies
-                                    .Include( a => a.Island )
-                                    .Include( a => a.Regiments )
-                                    .ThenInclude( r => r.Unit )
-                                    .ThenInclude( r => r.UnitStatistics )
-                                    .Where( a => a.Island.IslandId == currentIsland.IslandId && a.ArmyState == ArmyState.defense )
-                                    .SingleOrDefault();
+            Army defenseArmy  = am.GetCurrentDefenseArmy(islandId);
+            
+
+            if( defenseArmy.Regiments.Any( u => u.Unit.UnitName == UnitName.carrier || u.Unit.UnitName == UnitName.apprentice ) )
+                defenseArmy.Regiments = defenseArmy.Regiments.Where( u => u.Unit.UnitName != UnitName.carrier && u.Unit.UnitName != UnitName.apprentice ).ToList();
+
+            model.CurrentDefenseArmy = am.CopyArmy( defenseArmy );
 
             model.EnnemyIslands =
                 SetupContext.Islands
@@ -200,7 +201,6 @@ namespace ITI.SkyLord.Controllers
         {
             return CreateArmyViewModel( islandId, new ArmyViewModel() );
         }
-
         private ArmyViewModel CreateArmyViewModel( long islandId, ArmyViewModel model )
         {
             List<Army> currentIslandArmies = SetupContext.Islands.Include( i => i.Armies ).ThenInclude( a => a.Regiments )
@@ -280,7 +280,7 @@ namespace ITI.SkyLord.Controllers
         }
         private SetSendRessourcesViewModel CreateSetSendRessourceViewModel( long islandId, SetSendRessourcesViewModel model )
         {
-            model.SendableIslands = SetupContext.Islands.Include( i => i.Coordinates ).Include( i => i.Owner ).Where( i => i.Owner != null ).ToList();
+            model.SendableIslands = SetupContext.Islands.Include( i => i.Coordinates ).Include( i => i.Owner ).Where( i => i.Owner != null && i.IslandId != islandId ).ToList();
 
             //model.CurrentTransportorArmy = SetupContext.Islands.Include( i => i.Armies ).ThenInclude( a => a.Regiments )
             //    .ThenInclude( r => r.Unit ).ThenInclude( u => u.UnitStatistics )

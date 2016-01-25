@@ -139,8 +139,8 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
             svm.AttacksFromThisPlayer = ArmyEvents
                                         .Include( a => a.Destination ).ThenInclude( a => a.Owner )
                                         .Include( a => a.Destination.Coordinates )
-                                        .Include( a => a.Island ).ThenInclude( a => a.Owner)
-                                        .Include( a => a.Island.Coordinates)
+                                        .Include( a => a.Island ).ThenInclude( a => a.Owner )
+                                        .Include( a => a.Island.Coordinates )
                                         .Where( e => e.Island.IslandId == svm.Layout.CurrentIsland.IslandId && !e.Done )
                                         .ToList();
             svm.Layout.IslandId = islandId;
@@ -166,30 +166,17 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
 
         public Island GetIsland( long islandId, long playerId )
         {
-            if( islandId == 0 )
-            {
-                long activePlayerId = playerId;
-                return Islands
-                    .Include( i => i.Armies )
-                    .ThenInclude( a => a.Regiments )
-                    .ThenInclude( r => r.Unit )
-                    .Include( i => i.AllRessources )
-                    .Include( i => i.Owner )
-                    .Include( i => i.Coordinates )
-                    .SingleOrDefault( i => i.IsCapital && i.Owner.PlayerId == activePlayerId );
-            }
-            else
-            {
-                long activePlayerId = playerId;
-                return Islands
-                    .Include( i => i.Armies )
-                    .ThenInclude( a => a.Regiments )
-                    .ThenInclude( r => r.Unit )
-                    .Include( i => i.AllRessources )
-                    .Include( i => i.Owner )
-                    .Include( i => i.Coordinates )
-                    .SingleOrDefault( i => i.IslandId == islandId && i.Owner.PlayerId == activePlayerId );
-            }
+
+            long activePlayerId = playerId;
+            return Islands
+                .Include( i => i.Armies )
+                .ThenInclude( a => a.Regiments )
+                .ThenInclude( r => r.Unit )
+                .Include( i => i.AllRessources )
+                .Include( i => i.Owner )
+                .Include( i => i.Coordinates )
+                .SingleOrDefault( i => i.IslandId == islandId && i.Owner.PlayerId == activePlayerId );
+
         }
 
         public void ValidateIsland( long islandId, long playerId )

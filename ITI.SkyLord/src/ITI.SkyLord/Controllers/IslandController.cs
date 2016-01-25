@@ -22,7 +22,7 @@ namespace ITI.SkyLord.Controllers
             SetupContext.GetIsland( islandId, SetupContext.GetPlayer( User ) );
             SetupContext.ValidateIsland( islandId, SetupContext.GetPlayer( User ) );
 
-            SetupContext.FillStandardVM( ovvm, SetupContext.GetPlayer( User.GetUserId() ).PlayerId, SetupContext.GetPlayer( User ) );
+            SetupContext.FillStandardVM( ovvm, SetupContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
             return View( ovvm );
         }
 
