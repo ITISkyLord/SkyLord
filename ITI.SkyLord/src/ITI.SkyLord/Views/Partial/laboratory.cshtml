@@ -1,5 +1,5 @@
 ﻿@model ITI.SkyLord.ViewModel.Partial.BuildingPartialViewModel
-
+@using ITI.SkyLord.Services
 <h2>Laboratoire</h2>
 
 @{
@@ -11,41 +11,81 @@
     if ( technologyDisplay.IsAvailable && technologyDisplay.IsResearched )
     {
         <form asp-controller="Technology" asp-action="LevelUpTechnology" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId">
-            <input type="hidden" asp-for="TargetTechnology" value="@technologyDisplay.TechnologyLevel.TechnologyName" />
+            <input type="hidden" asp-for="TargetTechnology" value="@technologyDisplay.CurrentLevel.TechnologyName" />
             <div class="row" style="margin-bottom: 20px;">
-                <div class="col-lg-2"> @{ Write( Model.TechnologyManager.TechnologyNameToName( technologyDisplay.TechnologyLevel.TechnologyName ) + " Niveau actuel : " + technologyDisplay.TechnologyLevel.Number ); } </div>
+                <div class="col-lg-2"> @{ Write( Model.TechnologyManager.TechnologyNameToName( technologyDisplay.CurrentLevel.TechnologyName ) + " Niveau actuel : " + technologyDisplay.CurrentLevel.Number ); } </div>
 
-                <div class="col-lg-1">@technologyDisplay.Cost.Wood Bois</div>
-                <div class="col-lg-1">@technologyDisplay.Cost.Metal Métal</div>
-                <div class="col-lg-1">@technologyDisplay.Cost.Cristal Cristal</div>
-                <div class="col-lg-1">@technologyDisplay.Cost.Magic Magie</div>
-                <div class="col-lg-1"><input type="submit" value="Level up !" /></div>
+                <div class="col-lg-1">@technologyDisplay.NextLevel.Cost.Wood Bois</div>
+                <div class="col-lg-1">@technologyDisplay.NextLevel.Cost.Metal Métal</div>
+                <div class="col-lg-1">@technologyDisplay.NextLevel.Cost.Cristal Cristal</div>
+                <div class="col-lg-1">@technologyDisplay.NextLevel.Cost.Magic Magie</div>
+                <div class="col-lg-1">@technologyDisplay.NextLevel.Duration Temps de recherche</div>
+
+                <div class="col-lg-1"><input type="submit" value="Niveau supérieur" /></div>
             </div>
         </form>
+
+        <p>Bonus apportés </p>
+        @foreach ( Bonus bonus in technologyDisplay.CurrentLevel.Bonuses )
+        {
+            @BonusManager.StaticBonusToString( bonus )
+        }
+
+        <p>Bonus apportés au niveau suivant </p>
+        @foreach ( Bonus bonus in technologyDisplay.NextLevel.Bonuses )
+        {
+            @BonusManager.StaticBonusToString( bonus )
+        }
     }
-    else if( technologyDisplay.IsAvailable && !technologyDisplay.IsResearched )
+    else if ( technologyDisplay.IsAvailable && !technologyDisplay.IsResearched )
     {
         <form asp-controller="Technology" asp-action="AddTechnology" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId">
-            <input type="hidden" asp-for="TargetTechnology" value="@technologyDisplay.TechnologyLevel.TechnologyName" />
+            <input type="hidden" asp-for="TargetTechnology" value="@technologyDisplay.CurrentLevel.TechnologyName" />
             <div class="row" style="margin-bottom: 20px;">
-                <div class="col-lg-2">@Model.TechnologyManager.TechnologyNameToName( @technologyDisplay.TechnologyLevel.TechnologyName )</div>
+                <div class="col-lg-2">@Model.TechnologyManager.TechnologyNameToName( @technologyDisplay.CurrentLevel.TechnologyName )</div>
 
-                <div class="col-lg-1">@technologyDisplay.Cost.Wood Bois</div>
-                <div class="col-lg-1">@technologyDisplay.Cost.Metal Métal</div>
-                <div class="col-lg-1">@technologyDisplay.Cost.Cristal Cristal</div>
-                <div class="col-lg-1">@technologyDisplay.Cost.Magic Magie</div>
+                <div class="col-lg-1">@technologyDisplay.CurrentLevel.Cost.Wood Bois</div>
+                <div class="col-lg-1">@technologyDisplay.CurrentLevel.Cost.Metal Métal</div>
+                <div class="col-lg-1">@technologyDisplay.CurrentLevel.Cost.Cristal Cristal</div>
+                <div class="col-lg-1">@technologyDisplay.CurrentLevel.Cost.Magic Magie</div>
+                <div class="col-lg-1">@technologyDisplay.CurrentLevel.Duration Temps de recherche</div>
                 <div class="col-lg-1"><input type="submit" value="Rechercher" /></div>
             </div>
         </form>
+
+        <p>Bonus apportés </p>
+        @foreach ( Bonus bonus in technologyDisplay.CurrentLevel.Bonuses )
+        {
+            @BonusManager.StaticBonusToString( bonus )
+        }
+    }
+    else if ( technologyDisplay.IsResearched && !technologyDisplay.IsAvailable )
+    {
+        @Model.TechnologyManager.TechnologyNameToName( @technologyDisplay.CurrentLevel.TechnologyName )
+        <br />
+            <p> Cette technologie est au niveau maximum </p>
+        <br />
+
+        <p>Bonus apportés </p>
+
+        @foreach ( Bonus bonus in technologyDisplay.CurrentLevel.Bonuses )
+        {
+            @BonusManager.StaticBonusToString( bonus )
+        }
     }
     else
     {
-        @Model.TechnologyManager.TechnologyNameToName( @technologyDisplay.TechnologyLevel.TechnologyName )
+        @Model.TechnologyManager.TechnologyNameToName( @technologyDisplay.CurrentLevel.TechnologyName )
         <br />
-            Write( "Cette technologie n'est pas encore disponible" );
+        <p> Cette technologie n'est pas encore disponible </p>
         <br />
-    }
-                        <hr />
+
+        <p> Prérequis pour rechercher </p>
+        @foreach ( Requirement requirement in technologyDisplay.CurrentLevel.Requirements )
+        {
+            @LevelManager.StaticRequirementToString( requirement )
+        }
+    }                    <hr />
 }
 
 

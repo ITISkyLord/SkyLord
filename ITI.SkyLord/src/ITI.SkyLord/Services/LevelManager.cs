@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ITI.SkyLord.Models.Entity_Framework.Contexts.Interface;
+using ITI.SkyLord.Services;
 
 namespace ITI.SkyLord
 {
@@ -164,14 +165,14 @@ namespace ITI.SkyLord
             if ( currentLevel is BuildingLevel )
             {
                 BuildingLevel buildingLevel = (BuildingLevel)currentLevel;
-                levelFound = CurrentContext.BuildingLevels.Include( bl => bl.Requirements ).Include( bl => bl.Cost )
+                levelFound = CurrentContext.BuildingLevels.Include( bl => bl.Requirements ).Include( bl => bl.Cost ).Include( bl => bl.Bonuses)
                     .SingleOrDefault( bl => bl.BuildingName == buildingLevel.BuildingName && bl.Number == buildingLevel.Number + 1 );
             }
             // Recherche si Technology
             else if ( currentLevel is TechnologyLevel )
             {
                 TechnologyLevel technoLevel = (TechnologyLevel)currentLevel;
-                levelFound = CurrentContext.TechnologyLevels.Include( bl => bl.Requirements ).Include( bl => bl.Cost )
+                levelFound = CurrentContext.TechnologyLevels.Include( tl => tl.Requirements ).Include( tl => tl.Cost ).Include( tl => tl.Bonuses )
                     .SingleOrDefault( bl => bl.TechnologyName == technoLevel.TechnologyName && bl.Number == technoLevel.Number + 1 );
             }
             return levelFound;
@@ -245,6 +246,15 @@ namespace ITI.SkyLord
             return CurrentContext.Islands
                     .Include( i => i.Buildings ).ThenInclude( b => b.Level )
                     .Where( i => i.IslandId == currentIslandId ).SingleOrDefault().Buildings.ToList();
+        }
+
+        public static string StaticRequirementToString( Requirement requirement )
+        {
+            string requirementType = requirement.BuildingName == BuildingName.none ? "Technologie " : "Bâtiment ";
+            string requirementName = requirement.BuildingName == BuildingName.none ? 
+                TechnologyManager.StaticTechnologyNameToName( requirement.TechnologyName)  : BuildingManager.StaticBuildingNameToName( requirement.BuildingName );
+
+            return requirementType + requirementName + " de niveau " + requirement.Number.ToString();
         }
     }
 }

@@ -128,14 +128,9 @@ namespace ITI.SkyLord.Controllers
             model.CurrentArmy = armyManager.GetCurrentDefenseArmy( islandId );
 
             // Toutes les unités possibles  
-            model.AllUnits = armyManager.GetExistingUnits();
+            model.AllUnits = bonusManager.GetResolvedUnits( armyManager.GetExistingUnits(), playerId, islandId );
 
-            List<Unit> availableUnits = model.AllUnits.Where( u => levelManager.GetAvailablility( u, islandId ).IsItemAvailable ).ToList();
-            model.AvailableUnit = new List<Unit>();
-            foreach( Unit unit in availableUnits )
-            {
-                model.AvailableUnit.Add( bonusManager.ResolveBonuses( unit, playerId, islandId ) );
-            }
+            model.AvailableUnit = model.AllUnits.Where( u => levelManager.GetAvailablility( u, islandId ).IsItemAvailable ).ToList();
 
             // La queue de création des unités
             model.UnitsQueue = eventManager.GetCurrentUnitQueue( islandId );
@@ -162,39 +157,61 @@ namespace ITI.SkyLord.Controllers
             BonusManager bonusManager = new BonusManager( SetupContext );
             model.TechnologyManager = new TechnologyManager( SetupContext, levelManager, new BonusManager( SetupContext ) );
 
-            List<TechnologyLevel> availableTechnologies = model.TechnologyManager.GetAvailableTechnologies();
-            List<TechnologyLevel> playersTechnologies = model.TechnologyManager.GetPlayersTechnologies( playerId ).Select( t => t.Level ).ToList();
+            // Get the existing technologies
+            List<TechnologyLevel> existingTechnologies = model.TechnologyManager.GetExistingTechnologies();
+            // Get the player's current technologies
+            List<Technology> playersTechnologies = model.TechnologyManager.GetPlayersTechnologies( playerId ).ToList();
+
+            // Resolve bonuses on the player's technologies
+            //playersTechnologies = bonusManager.GetResolvedTechnologies( playersTechnologies, playerId, islandId )
+
             model.TechnologyDisplays = new List<TechnologyDisplay>();
-            foreach ( TechnologyLevel technologyLevel in availableTechnologies )
+            foreach ( TechnologyLevel technologyLevel in existingTechnologies )
             {
                 // Look for the technology in the player's technology list
-                TechnologyLevel technologyFound = playersTechnologies.SingleOrDefault( tl => tl.TechnologyName == technologyLevel.TechnologyName );
+                Technology technologyFound = playersTechnologies.SingleOrDefault( t => t.Level.TechnologyName == technologyLevel.TechnologyName );
 
                 bool isResearched = false;
                 bool isAvailable = false;
                 TechnologyLevel levelToAdd = technologyLevel;
-                Ressource CostToDisplay = technologyLevel.Cost;
+                Ressource costToDisplay = technologyLevel.Cost;
+                int durationToDisplay = technologyLevel.Duration;
+                TechnologyLevel nextLevelToAdd = null;
 
-                // If a technology was found, the player already has it, so we add the current level and the next level cost
+                // If a technology was found, the player already has it, so we add the current level and the next level cost or make it unavailable if there is no next level
                 if ( technologyFound != null )
                 {
-                    isResearched = true;
-                    isAvailable = true;
-                    levelToAdd = technologyFound;
-                    CostToDisplay = levelManager.FindNextLevel( technologyFound ).Cost;
+                    // Get the next level of the technology
+                    nextLevelToAdd = (TechnologyLevel)levelManager.FindNextLevel( technologyFound.Level );
+                    if ( nextLevelToAdd != null )
+                    {
+                        isResearched = true;
+                        isAvailable = true;
+                        // Get the next level with resolved bonuses
+                        nextLevelToAdd = bonusManager.ResolveBonuses( nextLevelToAdd, playerId, islandId );
+                    }
+                    else
+                    {
+                        isResearched = true;
+                        isAvailable = false;
+                    }
+                    // Get the current level with resolved bonuses
+                    levelToAdd = bonusManager.ResolveBonuses( technologyFound.Level, playerId, islandId );
                 }
                 // If no technology was found, we check if the technology is available to the player
                 else if ( levelManager.GetAvailablility( technologyLevel, islandId ).IsItemAvailable )
                 {
                     isAvailable = true;
+                    levelToAdd = bonusManager.ResolveBonuses( levelToAdd, playerId, islandId );
+                    durationToDisplay = levelToAdd.Duration;
                 }
 
                 model.TechnologyDisplays.Add( new TechnologyDisplay
                 {
                     IsResearched = isResearched,
                     IsAvailable = isAvailable,
-                    TechnologyLevel = levelToAdd,
-                    Cost = CostToDisplay
+                    CurrentLevel = levelToAdd,
+                    NextLevel = nextLevelToAdd
                 } );
             }
 

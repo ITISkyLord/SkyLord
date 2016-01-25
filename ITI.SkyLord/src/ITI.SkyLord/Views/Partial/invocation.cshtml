@@ -168,10 +168,18 @@
                 </tr>
             </table>
 
-            Prérequis pour construire @unit.UnitName.ToString()<br />
-            /!\ /!\ /!\ <br />
-            C'EST ICI QU'IL FAUT METTRE LES REQUIREMENTS POUR TRISTAN<br />
-            /!\ /!\ /!\
+            Prérequis pour construire @unit.Name<br />
+            @if ( unit.Requirements != null )
+            {
+                foreach ( Requirement requirement in unit.Requirements )
+                {
+                    <p>@LevelManager.StaticRequirementToString( requirement )</p>
+                }
+            }
+            else
+            {
+                <p>Aucun prérequis !</p>
+            }
 
         </div>
     }

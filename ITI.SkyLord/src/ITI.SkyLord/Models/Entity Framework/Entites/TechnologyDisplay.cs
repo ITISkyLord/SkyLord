@@ -9,7 +9,7 @@ namespace ITI.SkyLord
     {
         public bool IsAvailable { get; set; }
         public bool IsResearched { get; set; }
-        public TechnologyLevel TechnologyLevel { get; set; }
-        public Ressource Cost { get; set; }
+        public TechnologyLevel CurrentLevel { get; set; }
+        public TechnologyLevel NextLevel { get; set; }
     }
 }
