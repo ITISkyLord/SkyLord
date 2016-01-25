@@ -218,6 +218,13 @@ namespace ITI.SkyLord.Services
             return ResolveBonuses( buildingLevel, playerId, islandId ).Duration;
         }
 
+        /// <summary>
+        /// Resolves the bonuses of a list of buildings (DOES NOT CHANGE DB !)
+        /// </summary>
+        /// <param name="buildings">The buildings to resolve</param>
+        /// <param name="playerId"></param>
+        /// <param name="islandId"></param>
+        /// <returns> A list of cloned buildings with their bonuses ressolved</returns>
         public List<Building> GetResolvedBuildings( List<Building> buildings, long playerId, long islandId )
         {
             List<Bonus> bonusesOnCurrentIsland = GetAllBonusesOnCurrentIsland( playerId, islandId );
@@ -361,6 +368,25 @@ namespace ITI.SkyLord.Services
             return ResolveBonuses( technologyLevel, playerId, islandId ).Duration;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="buildings"></param>
+        /// <param name="playerId"></param>
+        /// <param name="islandId"></param>
+        /// <returns></returns>
+        public List<Technology> GetResolvedTechnologies( List<Technology> technologies, long playerId, long islandId )
+        {
+            List<Bonus> bonusesOnCurrentIsland = GetAllBonusesOnCurrentIsland( playerId, islandId );
+
+            List<Technology> resolvedBuildings = new List<Technology>();
+            foreach ( Technology technology in technologies )
+            {
+                TechnologyLevel resolvedLevel = ResolveBonuses( technology.Level, bonusesOnCurrentIsland, playerId, islandId );
+                resolvedBuildings.Add( CloneTechnology( technology, resolvedLevel ) );
+            }
+            return resolvedBuildings;
+        }
 
         /// <summary>
         /// Creates a TechnologyLevel wich has resolved all its bonuses (does not add it to the DB !)
@@ -372,6 +398,25 @@ namespace ITI.SkyLord.Services
         public TechnologyLevel ResolveBonuses( TechnologyLevel technologyLevel, long playerId, long islandId )
         {
             List<Bonus> bonusesOnCurrentIsland = GetAllBonusesOnCurrentIsland( playerId, islandId );
+            TechnologyLevel resolvedTechnologyLevel = CloneTechnologyLevel( technologyLevel );
+            foreach ( BonusOnTechnology bonus in GetBonusesOnTechnology( technologyLevel, bonusesOnCurrentIsland ) )
+            {
+                ResolveTechnologyBonus( resolvedTechnologyLevel, bonus );
+            }
+
+            return resolvedTechnologyLevel;
+        }
+
+        /// <summary>
+        /// Creates a TechnologyLevel wich has resolved all its bonuses (does not add it to the DB !)
+        /// </summary>
+        /// <param name="unit">The TechnologyLevel to resolve</param>
+        /// <param name="playerId">The Id of the player</param>
+        /// <param name="islandId">The Id of the island</param>
+        /// <returns>A cloned TechnologyLevel with all its bonuses applied</returns>
+        public TechnologyLevel ResolveBonuses( TechnologyLevel technologyLevel, List<Bonus> bonusesOnCurrentIsland, long playerId, long islandId )
+        {
+            bonusesOnCurrentIsland = GetAllBonusesOnCurrentIsland( playerId, islandId );
             TechnologyLevel resolvedTechnologyLevel = CloneTechnologyLevel( technologyLevel );
             foreach ( BonusOnTechnology bonus in GetBonusesOnTechnology( technologyLevel, bonusesOnCurrentIsland ) )
             {
@@ -431,7 +476,106 @@ namespace ITI.SkyLord.Services
             };
         }
 
+        public Technology CloneTechnology( Technology technology, TechnologyLevel technologyLevel )
+        {
+            return new Technology
+            {
+                Name = TechnologyManager.StaticTechnologyNameToName( technology.TechnologyName),
+                TechnologyName = technology.TechnologyName,
+                Level = technologyLevel
+            };
+        }
+
         #endregion
+
+        public static string StaticBonusToString( Bonus bonus )
+        {
+            return "Bonus de " + bonus.Modifier.ToString() + "% sur" + BonusTypeToString( bonus.BonusType ) + BonusTargetToString( bonus );
+        }
+
+        private static string BonusTargetToString( Bonus bonus )
+        {
+            string result = "";
+            if( bonus is BonusOnBuilding )
+            {
+                BonusOnBuilding bonusOnBuilding = (BonusOnBuilding)bonus;
+                switch ( bonusOnBuilding.TargetBuilding )
+                {
+                    case BuildingName.none:
+                        result = " tous les bâtiments";
+                        break;
+                    default:
+                        result = " tous les bâtiments";
+                        break;
+                }
+            }
+            if( bonus is BonusOnTechnology )
+            {
+                BonusOnTechnology bonusOnTechnology = (BonusOnTechnology)bonus;
+                switch ( bonusOnTechnology.TargetTechnology )
+                {
+                    case TechnologyName.none:
+                        result = " toutes les technologies";
+                        break;
+                    default:
+                        result = " toutes les technologies";
+                        break;
+                }
+            }
+            if ( bonus is BonusOnUnit )
+            {
+                BonusOnUnit bonusOnUnit = (BonusOnUnit)bonus;
+                switch ( bonusOnUnit.TargetUnit )
+                {
+                    case UnitType.soldier:
+                        result = " les unités de type soldat";
+                        break;
+                    case UnitType.monster:
+                        result = " les unités de type monstre";
+                        break;
+                    case UnitType.mecanical:
+                        result = " les unités de type mécanique";
+                        break;
+                    case UnitType.magic:
+                        result = " les unités de type mage";
+                        break;
+                    case UnitType.utility:
+                        result = " les unités de type utilitaire";
+                        break;
+                    case UnitType.all:
+                        result = " toutes les unités";
+                        break;
+                    default:
+                        result = " toutes les unités";
+                        break;
+                }
+            }
+
+            return result;
+        }
+
+        private static string BonusTypeToString( BonusType bonusType )
+        {
+            switch ( bonusType )
+            {
+                case BonusType.army_attack:
+                    return " l'attaque ";
+                case BonusType.army_magicalDefense:
+                    return " la défense magique ";
+                case BonusType.army_physicalDefense:
+                    return " la défense physique ";
+                case BonusType.army_speed:
+                    return " la vitesse ";
+                case BonusType.army_capacity:
+                    return " la capacité de transport ";
+                case BonusType.duration:
+                    return " le temps de construction/production ";
+                case BonusType.cacheSize:
+                    return " la taille de la cache ";
+                default:
+                    throw new NotImplementedException( "You are trying to handle a not existing type of bonus !" );
+            }
+        }
 
         private List<Bonus> GetAllBonusesOnCurrentIsland( long playerId, long islandId )
         {
