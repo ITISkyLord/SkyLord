@@ -68,8 +68,20 @@ namespace ITI.SkyLord.Services
                 regiment.Unit.UnitName = resolvedUnit.UnitName;
                 regiment.Unit.UnitStatistics = resolvedUnit.UnitStatistics;
                 regiment.Unit.UnitType = resolvedUnit.UnitType;
-                
+
             }
+        }
+
+        public List<Unit> GetResolvedUnits( List<Unit> units, long playerId, long islandId )
+        {
+            List<Bonus> bonusesOnCurrentIsland = GetAllBonusesOnCurrentIsland( playerId, islandId );
+
+            List<Unit> resolvedUnits = new List<Unit>();
+            foreach ( Unit unit in units )
+            {
+                resolvedUnits.Add( ResolveBonuses( unit, bonusesOnCurrentIsland, playerId, islandId ) );
+            }
+            return resolvedUnits;
         }
 
         /// <summary>
@@ -85,6 +97,28 @@ namespace ITI.SkyLord.Services
                 .Single( u => u.UnitName == unit.UnitName && u.IsModel );
 
             List<Bonus> bonusesOnCurrentIsland = GetAllBonusesOnCurrentIsland( playerId, islandId );
+
+            resolvedUnit = CloneUnit( resolvedUnit );
+            foreach ( BonusOnUnit bonus in GetBonusesOnUnit( unit, bonusesOnCurrentIsland ) )
+            {
+                resolvedUnit = ResolveUnitBonus( resolvedUnit, bonus );
+            }
+
+            return resolvedUnit;
+        }
+
+        /// <summary>
+        /// Creates  a unit that have resolved their bonuses, with a bonusList already defined
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <param name="bonusesOnCurrentIsland"></param>
+        /// <param name="playerId"></param>
+        /// <param name="islandId"></param>
+        /// <returns></returns>
+        public Unit ResolveBonuses( Unit unit, List<Bonus> bonusesOnCurrentIsland, long playerId, long islandId )
+        {
+            Unit resolvedUnit = CurrentContext.Units.Include( u => u.UnitStatistics ).Include( u => u.Requirements ).Include( u => u.UnitCost )
+                .Single( u => u.UnitName == unit.UnitName && u.IsModel );
 
             resolvedUnit = CloneUnit( resolvedUnit );
             foreach ( BonusOnUnit bonus in GetBonusesOnUnit( unit, bonusesOnCurrentIsland ) )
@@ -230,7 +264,7 @@ namespace ITI.SkyLord.Services
             List<Bonus> bonusesOnCurrentIsland = GetAllBonusesOnCurrentIsland( playerId, islandId );
 
             List<Building> resolvedBuildings = new List<Building>();
-            foreach( Building building in buildings )
+            foreach ( Building building in buildings )
             {
                 BuildingLevel resolvedLevel = ResolveBonuses( building.Level, bonusesOnCurrentIsland, playerId, islandId );
                 resolvedBuildings.Add( CloneBuilding( building, resolvedLevel ) );
@@ -309,7 +343,7 @@ namespace ITI.SkyLord.Services
         /// <returns>The cloned BuildingLevel</returns>
         BuildingLevel CloneBuildingLevel( BuildingLevel buildingLevel )
         {
-            if( buildingLevel is ShieldLevel )
+            if ( buildingLevel is ShieldLevel )
             {
                 ShieldLevel shieldLevel = (ShieldLevel)buildingLevel;
                 return new ShieldLevel
@@ -323,7 +357,7 @@ namespace ITI.SkyLord.Services
                     Defense = shieldLevel.Defense
                 };
             }
-            else if( buildingLevel is FieldLevel )
+            else if ( buildingLevel is FieldLevel )
             {
                 FieldLevel fieldLevel = (FieldLevel)buildingLevel;
                 return new FieldLevel
@@ -480,7 +514,7 @@ namespace ITI.SkyLord.Services
         {
             return new Technology
             {
-                Name = TechnologyManager.StaticTechnologyNameToName( technology.TechnologyName),
+                Name = TechnologyManager.StaticTechnologyNameToName( technology.TechnologyName ),
                 TechnologyName = technology.TechnologyName,
                 Level = technologyLevel
             };
@@ -496,7 +530,7 @@ namespace ITI.SkyLord.Services
         private static string BonusTargetToString( Bonus bonus )
         {
             string result = "";
-            if( bonus is BonusOnBuilding )
+            if ( bonus is BonusOnBuilding )
             {
                 BonusOnBuilding bonusOnBuilding = (BonusOnBuilding)bonus;
                 switch ( bonusOnBuilding.TargetBuilding )
@@ -509,7 +543,7 @@ namespace ITI.SkyLord.Services
                         break;
                 }
             }
-            if( bonus is BonusOnTechnology )
+            if ( bonus is BonusOnTechnology )
             {
                 BonusOnTechnology bonusOnTechnology = (BonusOnTechnology)bonus;
                 switch ( bonusOnTechnology.TargetTechnology )

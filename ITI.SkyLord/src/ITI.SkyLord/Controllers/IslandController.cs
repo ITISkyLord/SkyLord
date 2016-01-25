@@ -128,14 +128,9 @@ namespace ITI.SkyLord.Controllers
             model.CurrentArmy = armyManager.GetCurrentDefenseArmy( islandId );
 
             // Toutes les unités possibles  
-            model.AllUnits = armyManager.GetExistingUnits();
+            model.AllUnits = bonusManager.GetResolvedUnits( armyManager.GetExistingUnits(), playerId, islandId );
 
-            List<Unit> availableUnits = model.AllUnits.Where( u => levelManager.GetAvailablility( u, islandId ).IsItemAvailable ).ToList();
-            model.AvailableUnit = new List<Unit>();
-            foreach( Unit unit in availableUnits )
-            {
-                model.AvailableUnit.Add( bonusManager.ResolveBonuses( unit, playerId, islandId ) );
-            }
+            model.AvailableUnit = model.AllUnits.Where( u => levelManager.GetAvailablility( u, islandId ).IsItemAvailable ).ToList();
 
             // La queue de création des unités
             model.UnitsQueue = eventManager.GetCurrentUnitQueue( islandId );
