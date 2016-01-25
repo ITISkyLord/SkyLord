@@ -6763,3 +6763,21 @@ button.close {
   font-size: 13px;
   text-align: center;
 }
+.armyContainer .army .army-body .btn-link {
+  color: #825847;
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-decoration: none;
+  text-align: center;
+}
+.armyContainer .army .army-body .btn-link:hover {
+  color: #825847;
+  font-weight: bold;
+  letter-spacing: 1px;
+  background-color: whitesmoke;
+}
+.armyContainer .army a:hover {
+  color: whitesmoke;
+  text-decoration: none;
+}
