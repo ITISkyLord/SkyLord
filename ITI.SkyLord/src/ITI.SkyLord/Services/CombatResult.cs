@@ -124,7 +124,8 @@ namespace ITI.SkyLord
             #region CombatReport
             string coreMessageWinner = "";
             string coreMessageLooser = "";
-
+            if( String.IsNullOrEmpty( _loosingArmy.Island.Name ) )
+                _loosingArmy.Island.Name = "Île barbare";
             if( _pillagedRessources == null && winningArmy.ArmyState == ArmyState.movement )
             {
                 coreMessageWinner = _winningArmy.Island.Name + " (vous) a gagné contre " + _loosingArmy.Island.Name + ".\n "

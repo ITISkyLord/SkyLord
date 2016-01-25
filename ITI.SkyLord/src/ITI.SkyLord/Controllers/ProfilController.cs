@@ -41,7 +41,7 @@ namespace ITI.SkyLord.Controllers
         {
             //Récupérer la description dans la BDD
             Player currentPlayer = SetupContext.GetPlayer(User.GetUserId());
-            Island ennemyIsland = SetupContext.Islands.Include(i => i.Owner).Where(i => i.IslandId == EnnemyIslandId).FirstOrDefault();
+            Island ennemyIsland = SetupContext.Islands.Include(i => i.Owner).ThenInclude( pl => pl.Profil ).Where(i => i.IslandId == EnnemyIslandId).FirstOrDefault();
 
             ProfilViewModel model = new ProfilViewModel();
             // Si le joueur existe => On affiche le profil

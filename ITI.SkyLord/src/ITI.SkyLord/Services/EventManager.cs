@@ -301,6 +301,7 @@ namespace ITI.SkyLord
                                         .ThenInclude( z => z.Unit )
                                         .ThenInclude( z => z.UnitStatistics )
                                         .Include( i => i.Island ).ThenInclude( i => i.AllRessources )
+                                        .Include( i => i.Island.Buildings )
                                         .Where( u => u.ArmyId == armyEvent.ArmyIdd )
                                         .Single();
 
@@ -311,6 +312,7 @@ namespace ITI.SkyLord
                                     .ThenInclude( r => r.Regiments )
                                     .ThenInclude( r => r.Unit ).ThenInclude( r => r.UnitStatistics )
                                     .Include( i => i.AllRessources )
+                                    .Include( i => i.Buildings ).ThenInclude( i => i.Level )
                                     .Where( i => i.IslandId == armyEvent.DestinationIdd )
                                     .Single();
 
