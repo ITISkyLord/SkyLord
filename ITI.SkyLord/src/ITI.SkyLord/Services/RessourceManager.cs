@@ -11,7 +11,6 @@ namespace ITI.SkyLord.Services
 {
     public static class RessourceManager
     {
-
         /// <summary>
         /// Resolve ressources accumulated in the given island
         /// </summary>
@@ -28,20 +27,27 @@ namespace ITI.SkyLord.Services
                 int gap = (int)(DateTime.Now - checkTime).TotalSeconds;
 
                 // Get all fields
-                List<Building> cristalFields = ressourcesBuildings.Where( b => b.BuildingName == BuildingName.cristalField ).ToList();
                 List<Building>  woodFields = ressourcesBuildings.Where( b => b.BuildingName == BuildingName.woodField ).ToList();
                 List<Building>  metalFields = ressourcesBuildings.Where( b => b.BuildingName == BuildingName.metalField ).ToList();
+                List<Building> cristalFields = ressourcesBuildings.Where( b => b.BuildingName == BuildingName.cristalField ).ToList();
                 List<Building>  magicFields = ressourcesBuildings.Where( b => b.BuildingName == BuildingName.magicField ).ToList();
 
                 // Create an object Ressource that contain the amount earned since last check
-                foreach( Building cristalField in cristalFields )
-                    ressourcesGathered.Cristal += (int)(gap * GetProductionEachSecond( (FieldLevel)cristalField.Level ));
                 foreach( Building woodField in woodFields )
                     ressourcesGathered.Wood += (int)(gap * GetProductionEachSecond( (FieldLevel)woodField.Level ));
                 foreach( Building metalField in metalFields )
                     ressourcesGathered.Metal += (int)(gap * GetProductionEachSecond( (FieldLevel)metalField.Level ));
+                foreach( Building cristalField in cristalFields )
+                    ressourcesGathered.Cristal += (int)(gap * GetProductionEachSecond( (FieldLevel)cristalField.Level ));
                 foreach( Building magicField in magicFields )
                     ressourcesGathered.Magic += (int)(gap * GetProductionEachSecond( (FieldLevel)magicField.Level ));
+
+                // Base resources production
+                double baseProduction = 0.002; // 10 each hour
+                ressourcesGathered.Wood += (int)(gap * baseProduction);
+                ressourcesGathered.Metal += (int)(gap * baseProduction);
+                ressourcesGathered.Cristal += (int)(gap * baseProduction);
+                ressourcesGathered.Magic += (int)(gap * baseProduction);
 
                 // Add ressources only if all ressources that exist are able to be added
                 if( (ressourcesGathered.Metal >= 1 || metalFields.Count < 1) && (ressourcesGathered.Magic >= 1 || magicFields.Count < 1) && (ressourcesGathered.Wood >= 1 || woodFields.Count < 1) && (ressourcesGathered.Cristal >= 1 || cristalFields.Count < 1) )

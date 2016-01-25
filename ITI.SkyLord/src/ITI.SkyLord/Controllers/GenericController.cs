@@ -32,6 +32,13 @@ namespace ITI.SkyLord.Controllers
             {
                 RessourceManager.ResolveResources( island, SetupContext );
             }
+
+            // Resolve Loyalty
+            LoyaltyManager loyaltyManager = new LoyaltyManager(SetupContext);
+            foreach( Island island in SetupContext.GetAllIslands( player.PlayerId ) )
+            {
+                loyaltyManager.ResolveLoyalty( island );
+            }
         }
 
 

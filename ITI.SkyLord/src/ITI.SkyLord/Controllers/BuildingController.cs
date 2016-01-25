@@ -10,6 +10,7 @@ using Microsoft.AspNet.Mvc.Filters;
 using Microsoft.AspNet.Http;
 using Microsoft.AspNet.Mvc.Rendering;
 using ITI.SkyLord.ViewModel.Partial;
+using Microsoft.Data.Entity;
 
 namespace ITI.SkyLord.Controllers
 {
@@ -63,15 +64,15 @@ namespace ITI.SkyLord.Controllers
         /// <returns>Redirects to SeeBuildings</returns>
         [HttpPost]
         public IActionResult AddBuilding( BuildingPartialViewModel model, long islandId = 0 )
-        { 
+        {
 
             BuildingViewModel buildingViewModel = new BuildingViewModel();
 
             long playerId = SetupContext.GetPlayer( User.GetUserId() ).PlayerId;
-            Island island = SetupContext.GetIsland(islandId, playerId);
+            Island island = SetupContext.GetIsland( islandId, playerId );
 
-            BuildingManager buildingManager = new BuildingManager( SetupContext, new LevelManager( SetupContext ));
-            EventManager eventManager = new EventManager(SetupContext, new EventPackManager(SetupContext));
+            BuildingManager buildingManager = new BuildingManager( SetupContext, new LevelManager( SetupContext ) );
+            EventManager eventManager = new EventManager( SetupContext, new EventPackManager( SetupContext ) );
 
             // Test assez de ressource
             if ( !buildingManager.IsEnoughForFirstLevel( model.TargetBuilding, islandId, playerId ) )
@@ -79,32 +80,49 @@ namespace ITI.SkyLord.Controllers
                 return RedirectToAction( "SeeBuildings", new { islandId = islandId } );
             }
 
+            BuildingLevel firstLevel = SetupContext.BuildingLevels.Include( bl => bl.Cost ).Single( bl => bl.BuildingName == model.TargetBuilding && bl.Number == 1 );
+            RessourceManager.RemoveRessource( island.AllRessources, firstLevel.Cost );
+
             // Maintenant création de l'event pour la construction du building
-            eventManager.AddBuildingEvent(SetupContext, model.TargetBuilding, island, model.Position);
+            eventManager.AddBuildingEvent( SetupContext, model.TargetBuilding, island, model.Position, firstLevel );
 
             return RedirectToAction( "SeeMyIsland", "Island", new { islandId = islandId } );
         }
 
-        public IActionResult LevelUpBuilding( int buildingPosition, long islandId = 0  )
+        public IActionResult LevelUpBuilding( int buildingPosition, long islandId = 0 )
         {
             long playerId = SetupContext.GetPlayer( User.GetUserId() ).PlayerId;
             BuildingViewModel buildingViewModel = new BuildingViewModel();
-            BuildingManager buildingManager = new BuildingManager( SetupContext, new LevelManager( SetupContext ));
+            LevelManager levelManager = new LevelManager( SetupContext );
+            BuildingManager buildingManager = new BuildingManager( SetupContext, levelManager );
+            Island island = SetupContext.GetIsland( islandId, playerId );
+            EventManager eventManager = new EventManager( SetupContext, new EventPackManager( SetupContext ) );
 
             // Récupère le building ciblé
-            Building buildingTarget = buildingManager.GetBuildingOnPosition(islandId, buildingPosition);
+            Building buildingTarget = buildingManager.GetBuildingOnPosition( islandId, buildingPosition );
 
             // Si pas assez de ressource
-            if ( !buildingManager.IsEnoughForNextLevel(buildingTarget.BuildingName, islandId, playerId, buildingTarget.Position ) )
+            if ( !buildingManager.IsEnoughForNextLevel( buildingTarget, islandId, playerId, buildingTarget.Position ) )
             {
                 return RedirectToAction( "SeeMyIsland", "Island", new { islandId = islandId } );
             }
 
-            // Si tout est bon => LevelUp
-            else if ( buildingManager.LevelUpBuilding(buildingTarget.BuildingName, islandId, playerId, buildingTarget.Position ) )
+            RessourceManager.RemoveRessource( island.AllRessources, levelManager.FindNextLevel( buildingTarget.Level ).Cost );
+
+            BuildingLevel nextLevel = ( BuildingLevel )levelManager.FindNextLevel( buildingTarget.Level );
+
+            if( nextLevel == null )
             {
-                SetupContext.SaveChanges();
+                throw new InvalidOperationException( " The next level does not exist !" );
             }
+            // Maintenant création de l'event pour la construction du building
+            eventManager.AddBuildingEvent( SetupContext, buildingTarget.BuildingName, island, buildingPosition, nextLevel );
+
+            // Si tout est bon => LevelUp
+            //else if ( buildingManager.LevelUpBuilding( buildingTarget.BuildingName, islandId, playerId, buildingTarget.Position ) )
+            //{
+            //    SetupContext.SaveChanges();
+            //}
 
             return RedirectToAction( "SeeMyIsland", "Island", new { islandId = islandId } );
         }
