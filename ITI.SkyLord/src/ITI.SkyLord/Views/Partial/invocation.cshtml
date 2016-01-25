@@ -95,14 +95,43 @@
 <div id="StatisticModale">
     <div id="BlackBackground"></div>
 
-    @foreach(var unit in Model.AllUnits)
+    @foreach(Unit unit in Model.AllUnits)
     {
         <div class="Stat" id="@unit.UnitName.ToString()"> 
             @* Cette div pour close est importante*@
-            <div class="CloseModale">close</div>
+            <div class="CloseModale">Fermer</div>
             
             @* On peut mettre les stats dedans *@
-            Je suis un test : @unit.UnitName.ToString()  
+            Description : @unit.UnitName.ToString()
+            <table>
+                <tr>
+                    <td>Attaque</td>
+                    <td>Résistance physique</td>
+                    <td>Résistance magique</td>
+                    <td>Capacité</td>
+                    <td>Vitesse</td>
+                    <td>Bois</td>
+                    <td>Métal</td>
+                    <td>Cristal</td>
+                    <td>Magie</td>
+                </tr>
+                <tr>
+                    <td>@unit.UnitStatistics.Attack</td>
+                    <td>@unit.UnitStatistics.PhysicResist</td>
+                    <td>@unit.UnitStatistics.MagicResist</td>
+                    <td>@unit.UnitStatistics.Capacity</td>
+                    <td>@unit.UnitStatistics.Speed</td>
+                    <td>@unit.UnitCost.Wood</td>
+                    <td>@unit.UnitCost.Metal</td>
+                    <td>@unit.UnitCost.Cristal</td>
+                    <td>@unit.UnitCost.Magic</td>
+                </tr>
+            </table>
+
+            Prérequis pour construire @unit.UnitName.ToString()<br />
+            /!\ /!\ /!\ <br />
+            C'EST ICI QU'IL FAUT METTRE LES REQUIREMENTS POUR TRISTAN<br />
+            /!\ /!\ /!\
         
         </div>
     }
