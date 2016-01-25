@@ -17,14 +17,14 @@ namespace ITI.SkyLord.Controllers
     {
         public override void OnActionExecuting( ActionExecutingContext context )
         {
-            if( User.IsSignedIn() )
+            if ( User.IsSignedIn() )
             {
                 // On executing any controller check if the query holds the islandId
-                if( Request.Query.ContainsKey( "islandId" ) )
+                if ( Request.Query.ContainsKey( "islandId" ) )
                 {
                     // If islandId is present, check it with ValidateIsland method
                     long activePlayerId = SetupContext.GetPlayer( User.GetUserId() ).PlayerId;
-                    SetupContext.ValidateIsland( long.Parse( Request.Query["islandId"] ), activePlayerId );
+                    SetupContext.ValidateIsland( long.Parse( Request.Query[ "islandId" ] ), activePlayerId );
                 }
                 //else
                 //{
@@ -68,7 +68,7 @@ namespace ITI.SkyLord.Controllers
                 TechnologyLevel technologyLevel = SetupContext.TechnologyLevels.Single( t => t.TechnologyName == model.TargetTechnology && t.Number == 1 );
                 RessourceManager.RemoveRessource( island.AllRessources, technologyLevel.Cost );
 
-                em.AddTechnologyEvent( SetupContext, model.TargetTechnology, technologyLevel.Duration, island );
+                em.AddTechnologyEvent( SetupContext, model.TargetTechnology, technologyLevel.Duration, island, technologyLevel );
                 //SetupContext.Ressources.Update( island.AllRessources );
                 SetupContext.SaveChanges();
             }
@@ -83,7 +83,8 @@ namespace ITI.SkyLord.Controllers
 
             EventManager em = new EventManager( SetupContext, new EventPackManager( SetupContext ) );
             BonusManager bonusManager = new BonusManager( SetupContext );
-            TechnologyManager techManager = new TechnologyManager( SetupContext, new LevelManager( SetupContext ), bonusManager );
+            LevelManager levelManager = new LevelManager( SetupContext );
+            TechnologyManager techManager = new TechnologyManager( SetupContext, levelManager, bonusManager );
 
             long playerId = SetupContext.GetPlayer( User );
             Island island = SetupContext.GetIsland( islandId, playerId );
@@ -97,8 +98,14 @@ namespace ITI.SkyLord.Controllers
                 TechnologyLevel technologyLevel = techManager.GetPlayersTechnologies( playerId ).Single( tl => tl.TechnologyName == model.TargetTechnology ).Level;
                 RessourceManager.RemoveRessource( island.AllRessources, technologyLevel.Cost );
 
-                em.AddTechnologyEvent( SetupContext, model.TargetTechnology, technologyLevel.Duration, island );
-                
+                TechnologyLevel nextLevel = (TechnologyLevel)levelManager.FindNextLevel( technologyLevel );
+                if ( nextLevel == null )
+                {
+                    throw new InvalidOperationException( " The next level does not exist !" );
+                }
+
+                em.AddTechnologyEvent( SetupContext, model.TargetTechnology, technologyLevel.Duration, island, nextLevel );
+
                 SetupContext.SaveChanges();
             }
             return RedirectToAction( "SeeMyIsland", "Island", new
@@ -119,8 +126,8 @@ namespace ITI.SkyLord.Controllers
             TechnologyManager technologyManager = new TechnologyManager( SetupContext, levelManager, new BonusManager( SetupContext ) );
 
             List<TechnologyLevel> availableTechnologies = technologyManager.GetAvailableTechnologies();
-            List<TechnologyLevel> playersTechnologies = technologyManager.GetPlayersTechnologies( playerId ).Select( t => t.Level).ToList();
-            foreach( TechnologyLevel technologyLevel in availableTechnologies )
+            List<TechnologyLevel> playersTechnologies = technologyManager.GetPlayersTechnologies( playerId ).Select( t => t.Level ).ToList();
+            foreach ( TechnologyLevel technologyLevel in availableTechnologies )
             {
                 // Look for the technology in the player's technology list
                 TechnologyLevel technologyFound = playersTechnologies.SingleOrDefault( tl => tl.TechnologyName == technologyLevel.TechnologyName );
@@ -139,7 +146,7 @@ namespace ITI.SkyLord.Controllers
                     CostToDisplay = levelManager.FindNextLevel( technologyFound ).Cost;
                 }
                 // If no technology was found, we check if the technology is available to the player
-                else if( levelManager.GetAvailablility( technologyFound, islandId ).IsItemAvailable )
+                else if ( levelManager.GetAvailablility( technologyFound, islandId ).IsItemAvailable )
                 {
                     isAvailable = true;
                 }

@@ -79,8 +79,9 @@ namespace ITI.SkyLord.Controllers
         {
             LevelManager levelManager = new LevelManager( SetupContext );
             BuildingManager buildingManager = new BuildingManager( SetupContext, levelManager );
-            ArmyManager armyManager = new ArmyManager( SetupContext, new BonusManager( SetupContext ) );
-            EventManager eventManager = new EventManager(SetupContext, new EventPackManager(SetupContext));
+            BonusManager bonusManager = new BonusManager( SetupContext );
+            ArmyManager armyManager = new ArmyManager( SetupContext, bonusManager );
+            EventManager eventManager = new EventManager( SetupContext, new EventPackManager( SetupContext ) );
 
             // Fill Standard
             SetupContext.FillStandardVM( model, SetupContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
@@ -90,8 +91,8 @@ namespace ITI.SkyLord.Controllers
             Island currentIsland = SetupContext.GetIsland( islandId, model.Layout.CurrentPlayer.PlayerId );
             model.CurrentIsland = currentIsland;
 
-            // Tous les buildings sur l'island
-            model.Buildings = buildingManager.GetBuildingsOnCurrentIsland( islandId, playerId );
+            // Tous les buildings sur l'island (modifés par leurs bonus)
+            model.Buildings = bonusManager.GetResolvedBuildings( buildingManager.GetBuildingsOnCurrentIsland( islandId, playerId ), playerId, islandId) ;
             model.DicoBuildings = new Dictionary<string, Building>();
             foreach ( var building in model.Buildings )
             {
@@ -100,9 +101,9 @@ namespace ITI.SkyLord.Controllers
 
             // Récupère tout les events de tout les batiments (de 0 à 10 donc)
             model.AllBuildingEventOnIsland = new Dictionary<int, List<BuildingEvent>>();
-            for(var i=0; i<=10; i++)
+            for ( var i = 0; i <= 10; i++ )
             {
-                model.AllBuildingEventOnIsland.Add(i, eventManager.GetBuildingEventsOnThisBuildingPosition(islandId, i));
+                model.AllBuildingEventOnIsland.Add( i, eventManager.GetBuildingEventsOnThisBuildingPosition( islandId, i ) );
             }
 
             // Tout les nexts level de chaque batiments
@@ -113,7 +114,7 @@ namespace ITI.SkyLord.Controllers
                 var nextLevel = levelManager.FindNextLevel( building.Level );
                 if ( nextLevel != null )
                 {
-                    model.NextLevel.Add( building.Position, nextLevel );
+                    model.NextLevel.Add( building.Position, bonusManager.ResolveBonuses( (BuildingLevel)nextLevel, playerId, islandId ) );
                 }
             }
 
@@ -130,11 +131,11 @@ namespace ITI.SkyLord.Controllers
             model.AllUnits = SetupContext.Units.Include( u => u.UnitCost ).ToList();
             model.AvailableUnit = armyManager.GetExistingUnits().Where( u => levelManager.GetAvailablility( u, islandId ).IsItemAvailable ).ToList();
 
-            // La queue de contruction des unités
+            // La queue de création des unités
             model.UnitsQueue = eventManager.GetCurrentUnitQueue( islandId );
 
             // Toutes les technologies possibles
-            TechnologyManager techManager = new TechnologyManager( SetupContext, levelManager, new BonusManager( SetupContext ));
+            TechnologyManager techManager = new TechnologyManager( SetupContext, levelManager, new BonusManager( SetupContext ) );
             model = CreateTechnologyItems( model, islandId, playerId );
             return model;
         }

@@ -227,7 +227,7 @@ namespace ITI.SkyLord
         private bool IsBuildingRequirementMet( Requirement buildingRequirement, IList<Building> buildingsOnIsland )
         {
             bool met = false;
-            if ( buildingsOnIsland.Any( b => b.BuildingName == buildingRequirement.BuildingName && b.Level.Number == buildingRequirement.Number ) )
+            if ( buildingsOnIsland.Any( b => b.BuildingName == buildingRequirement.BuildingName && b.Level.Number >= buildingRequirement.Number ) )
                 met = true;
             return met;
         }
@@ -235,7 +235,7 @@ namespace ITI.SkyLord
         private bool IsTechnologyRequirementMet( Requirement technologyRequirement, IList<Technology> playersTechnologies )
         {
             bool met = false;
-            if ( playersTechnologies.Any( b => b.TechnologyName == technologyRequirement.TechnologyName && b.Level.Number == technologyRequirement.Number ) )
+            if ( playersTechnologies.Any( b => b.TechnologyName == technologyRequirement.TechnologyName && b.Level.Number >= technologyRequirement.Number ) )
                 met = true;
             return met;
         }
