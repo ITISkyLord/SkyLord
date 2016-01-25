@@ -11,7 +11,6 @@ namespace ITI.SkyLord
         {
             Coordinate center = new Coordinate() { X = 50, Y = 50 };
             var distance = DistanceBeetweenTwoCoordinates(island.Coordinates, center);
-
             return (distance == 0 ? 0.01 : distance);
         }
 
