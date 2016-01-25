@@ -26,7 +26,9 @@ namespace ITI.SkyLord.Controllers
 
         public IActionResult AddUnit( BuildingPartialViewModel model, long islandId = 0 )
         {
-            ArmyManager am = new ArmyManager( SetupContext, new BonusManager( SetupContext ) );
+            BonusManager bonusManager = new BonusManager( SetupContext );
+
+            ArmyManager am = new ArmyManager( SetupContext, bonusManager );
             EventManager em = new EventManager( SetupContext, new EventPackManager( SetupContext ) );
 
             if( model.UnitAmount <= 0 )
@@ -46,10 +48,8 @@ namespace ITI.SkyLord.Controllers
                 }
                 else
                 {
-                    BonusManager bonusManager = new BonusManager( SetupContext );
                     RessourceManager.RemoveRessource( island.AllRessources, unit.UnitCost.Wood * model.UnitAmount, unit.UnitCost.Metal * model.UnitAmount, unit.UnitCost.Cristal * model.UnitAmount, unit.UnitCost.Magic * model.UnitAmount );
                     em.AddUnitEvent( SetupContext, unit, model.UnitAmount, island );
-
                     SetupContext.SaveChanges();
                 }
             }
@@ -59,6 +59,7 @@ namespace ITI.SkyLord.Controllers
             {
                 islandId = islandId
             } );
+
 
         }
         public IActionResult SetAttackingArmy( SetAttackingArmyViewModel model, long islandId = 0, long EnnemyIslandId = 0 )
@@ -174,19 +175,24 @@ namespace ITI.SkyLord.Controllers
             ArmyManager am = new ArmyManager(SetupContext, new BonusManager(SetupContext));
 
             Army defenseArmy  = am.GetCurrentDefenseArmy(islandId);
-            
 
-            if( defenseArmy.Regiments.Any( u => u.Unit.UnitName == UnitName.carrier || u.Unit.UnitName == UnitName.apprentice ) )
-                defenseArmy.Regiments = defenseArmy.Regiments.Where( u => u.Unit.UnitName != UnitName.carrier && u.Unit.UnitName != UnitName.apprentice ).ToList();
+            if( defenseArmy.Regiments.Count > 0 )
+            {
+                if( defenseArmy.Regiments.Any( u => u.Unit.UnitName == UnitName.carrier || u.Unit.UnitName == UnitName.apprentice ) )
+                    defenseArmy.Regiments = defenseArmy.Regiments.Where( u => u.Unit.UnitName != UnitName.carrier && u.Unit.UnitName != UnitName.apprentice ).ToList();
 
-            model.CurrentDefenseArmy = am.CopyArmy( defenseArmy );
+                model.CurrentDefenseArmy = am.CopyArmy( defenseArmy );
 
-            model.EnnemyIslands =
-                SetupContext.Islands
-                    .Include( i => i.Owner )
-                    .Include( i => i.Coordinates )
-                .Where( i => i.Owner.PlayerId != activePlayerId )
-                .ToList();
+                model.EnnemyIslands =
+                    SetupContext.Islands
+                        .Include( i => i.Owner )
+                        .Include( i => i.Coordinates )
+                    .Where( i => i.Owner.PlayerId != activePlayerId )
+                    .ToList();
+
+            }
+            else
+                defenseArmy = null;
 
             SetupContext.FillStandardVM( model, activePlayerId, islandId );
             return model;
@@ -416,7 +422,6 @@ namespace ITI.SkyLord.Controllers
             return View( movementViewModel );
 
         }
-
         public IActionResult MoveArmy( SetMovementArmyViewModel model, long islandId )
         {
             Island senderIsland = GetIsland( islandId );
