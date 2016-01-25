@@ -124,6 +124,56 @@ namespace ITI.SkyLord.Services
             return name;
         }
 
+        public static string StaticTechnologyNameToName( TechnologyName technologyName )
+        {
+            string name;
+            switch ( technologyName )
+            {
+                case TechnologyName.armor:
+                    name = "Armure";
+                    break;
+                case TechnologyName.claws:
+                    name = "Griffes";
+                    break;
+                case TechnologyName.hold:
+                    name = "Cale";
+                    break;
+                case TechnologyName.levitation:
+                    name = "Lévitation";
+                    break;
+                case TechnologyName.magicalProtection:
+                    name = "Robe de mage";
+                    break;
+                case TechnologyName.magicalStaff:
+                    name = "Bâton de mage";
+                    break;
+                case TechnologyName.magicBoots:
+                    name = "Bottes magiques";
+                    break;
+                case TechnologyName.plating:
+                    name = "Blindage";
+                    break;
+                case TechnologyName.propulsion:
+                    name = "Propulsion";
+                    break;
+                case TechnologyName.shell:
+                    name = "Carapace";
+                    break;
+                case TechnologyName.weapons:
+                    name = "Armes";
+                    break;
+                case TechnologyName.wings:
+                    name = "Ailes";
+                    break;
+                case TechnologyName.conquest:
+                    name = "Conquête";
+                    break;
+                default:
+                    name = "Error";
+                    break;
+            }
+            return name;
+        }
 
         internal List<Technology> GetPlayersTechnologies( long playerId )
         {
@@ -133,25 +183,27 @@ namespace ITI.SkyLord.Services
             {
                 technology.Level.Cost = CurrentContext.Technologies.Include( t => t.Level ).ThenInclude( tl => tl.Cost )
                     .Single( t => t.TechnologyId == technology.TechnologyId ).Level.Cost;
+                technology.Level.Bonuses = CurrentContext.Technologies.Include( t => t.Level ).ThenInclude( tl => tl.Bonuses )
+                    .Single( t => t.TechnologyId == technology.TechnologyId ).Level.Bonuses;
             }
 
             return technologyList;
         }
 
-        public List<TechnologyLevel> GetAvailableTechnologies()
+        public List<TechnologyLevel> GetExistingTechnologies()
         {
-            List<TechnologyLevel> availableTechnologies = new List<TechnologyLevel>();
+            List<TechnologyLevel> existingTechnologies = new List<TechnologyLevel>();
             foreach ( TechnologyName technologyName in Enum.GetValues( typeof( TechnologyName ) ) )
             {
                 if ( technologyName != TechnologyName.none )
                 {
-                    TechnologyLevel firstLevel = CurrentContext.TechnologyLevels.Include( l => l.Cost ).Include( l => l.Requirements)
+                    TechnologyLevel firstLevel = CurrentContext.TechnologyLevels.Include( l => l.Cost ).Include( l => l.Requirements).Include( l => l.Bonuses)
                         .Where( l => l.TechnologyName == technologyName && l.Number == 1 ).Single();
 
-                    availableTechnologies.Add( firstLevel );
+                    existingTechnologies.Add( firstLevel );
                 }
             }
-            return availableTechnologies;
+            return existingTechnologies;
         }
     }
 }

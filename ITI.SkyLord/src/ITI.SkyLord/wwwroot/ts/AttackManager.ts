@@ -2,6 +2,14 @@
 
 $(document).ready(function () {
 
+    SelectGoodCoordinates();
+
+    $(".SelectAll").click(function () {
+        var valMax = $(this).parent().prev().prev().text();
+
+        $(this).parent().prev().children().val(valMax);
+    });
+
     // Dès que l'on a un changement sur les coordonnées => on change l'island cible
     $("input[name=pos-x], input[name=pos-y]").change(function () {
         UpdateSelection();
