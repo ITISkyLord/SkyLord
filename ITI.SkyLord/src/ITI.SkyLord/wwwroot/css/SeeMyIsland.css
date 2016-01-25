@@ -6973,6 +6973,30 @@ button.close {
   letter-spacing: 1px;
   background-color: whitesmoke;
 }
+.templatebuilding .invocation-building .text {
+  color: #825847;
+  font-weight: bold;
+  font-style: italic;
+}
+.templatebuilding .invocation-building .cost {
+  color: #825847;
+  font-weight: bold;
+  font-style: italic;
+}
+.templatebuilding .invocation-building .btn-link {
+  color: #825847;
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-decoration: none;
+  text-align: center;
+}
+.templatebuilding .invocation-building .btn-link:hover {
+  color: #825847;
+  font-weight: bold;
+  letter-spacing: 1px;
+  background-color: whitesmoke;
+}
 .templatebuilding .head {
   text-align: center;
   color: #825847;

@@ -6468,8 +6468,8 @@ button.close {
 .SkyLordContainer .SkyLordMainRow .PageContent .ViewContentRow:after,
 .SkyLordContainer .profilContainer:before,
 .SkyLordContainer .profilContainer:after,
-.invocation-building .playerContainer:before,
-.invocation-building .playerContainer:after {
+.playerContainer:before,
+.playerContainer:after {
   content: " ";
   display: table;
 }
@@ -6493,7 +6493,7 @@ button.close {
 .SkyLordContainer .SkyLordMainRow:after,
 .SkyLordContainer .SkyLordMainRow .PageContent .ViewContentRow:after,
 .SkyLordContainer .profilContainer:after,
-.invocation-building .playerContainer:after {
+.playerContainer:after {
   clear: both;
 }
 .center-block {
@@ -6803,6 +6803,12 @@ body {
   border-color: transparent;
   color: #fff;
 }
+.navbar .img-responsive {
+  height: 75px;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
 .ui-autocomplete {
   background-image: url("../images/Site/site_ressource.png");
   width: 100%;
@@ -6898,6 +6904,12 @@ body {
   background-color: whitesmoke;
   color: #825847;
 }
+.SkyLordContainer .SkyLordMainRow .SkylordSideBar .img-responsive {
+  height: 75px;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
 .SkyLordContainer .SkyLordMainRow .PageContent {
   position: relative;
   float: left;
@@ -6928,7 +6940,7 @@ body {
   background-image: url("../images/Site/site_ressource.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
-  padding: 5px;
+  /*padding: 50px;*/
   margin: 5px;
 }
 .SkyLordContainer .SkyLordMainRow .PageContent .RessourceLine form {
@@ -6978,31 +6990,7 @@ body {
   color: #825847;
   background-color: whitesmoke;
 }
-.invocation-building .text {
-  color: #825847;
-  font-weight: bold;
-  font-style: italic;
-}
-.invocation-building .cost {
-  color: #825847;
-  font-weight: bold;
-  font-style: italic;
-}
-.invocation-building .btn-link {
-  color: #825847;
-  font-size: 14px;
-  font-weight: bold;
-  letter-spacing: 1px;
-  text-decoration: none;
-  text-align: center;
-}
-.invocation-building .btn-link:hover {
-  color: #825847;
-  font-weight: bold;
-  letter-spacing: 1px;
-  background-color: whitesmoke;
-}
-.invocation-building .playerContainer {
+.playerContainer {
   margin-right: auto;
   margin-left: auto;
   padding-left: 15px;
@@ -7017,28 +7005,28 @@ body {
   background-size: 100% 100%;
   overflow: auto;
 }
-.invocation-building .playerContainer > .navbar-header,
-.invocation-building .playerContainer > .navbar-collapse {
+.playerContainer > .navbar-header,
+.playerContainer > .navbar-collapse {
   margin-right: -15px;
   margin-left: -15px;
 }
 @media (min-width: 768px) {
-  .invocation-building .playerContainer > .navbar-header,
-  .invocation-building .playerContainer > .navbar-collapse {
+  .playerContainer > .navbar-header,
+  .playerContainer > .navbar-collapse {
     margin-right: 0;
     margin-left: 0;
   }
 }
-.invocation-building .playerContainer .seePlayers {
+.playerContainer .seePlayers {
   color: white;
   font-weight: bold;
   font-size: 20px;
 }
-.invocation-building .playerContainer .seePlayers .table th {
+.playerContainer .seePlayers .table th {
   color: white;
   font-weight: bold;
 }
-.invocation-building .playerContainer .seePlayers .table td {
+.playerContainer .seePlayers .table td {
   color: #825847;
   font-weight: bold;
 }
