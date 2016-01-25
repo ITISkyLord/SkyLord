@@ -49,7 +49,7 @@ namespace ITI.SkyLord.Controllers
                     BonusManager bonusManager = new BonusManager( SetupContext );
                     RessourceManager.RemoveRessource( island.AllRessources, unit.UnitCost.Wood * model.UnitAmount, unit.UnitCost.Metal * model.UnitAmount, unit.UnitCost.Cristal * model.UnitAmount, unit.UnitCost.Magic * model.UnitAmount );
                     em.AddUnitEvent( SetupContext, unit, model.UnitAmount, island );
-                    //SetupContext.Ressources.Update( island.AllRessources );
+
                     SetupContext.SaveChanges();
                 }
             }
