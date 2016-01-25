@@ -6725,16 +6725,9 @@ button.close {
   }
 }
 .armyContainer {
-  /*.container-fluid;
-    .Section();
-    height: 100%;
-    .Image(url("../images/Site/sitecarton.png")) !important;
-    overflow: auto;*/
   border: 1px solid #825847;
   border-radius: 0;
   transition: box-shadow 0.5s;
-  width: 580px;
-  height: 580px;
   background-image: url("../images/Site/site_ressource.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
