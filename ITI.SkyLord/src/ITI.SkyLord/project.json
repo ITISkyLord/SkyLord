@@ -48,7 +48,7 @@
 
   "commands": {
     "ef": "EntityFramework.Commands",
-    "ef database update": "EntityFramework.Commands database update -c setupcontext",
+        "edu": "EntityFramework.Commands database update",
     "prod": "Microsoft.AspNet.Hosting --server Microsoft.AspNet.Server.Kestrel --server.urls http://192.168.0.155:5000",
     "watch-web": " Microsoft.Dnx.Watcher web --configuration Debug",
     "web": "Microsoft.AspNet.Server.Kestrel"

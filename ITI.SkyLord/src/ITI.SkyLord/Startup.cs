@@ -123,52 +123,7 @@ namespace ITI.SkyLord
                      template: "{controller=Home}/{action=Index}/{id?}" );
              } );
 
-            #region Seeding
-            World defaultWorld = null;
-
-            if ( env.IsDevelopment() )
-            {
-                // Add defaultWorld
-                using (SetupContext context = new SetupContext() )
-                {
-                    defaultWorld = context.Worlds.FirstOrDefault();
-                    if ( defaultWorld == null )
-                    {
-                        defaultWorld = new World();
-                        context.Add( defaultWorld );
-                        context.SaveChanges();
-                    }
-                }
-
-                // Add Islands
-                using (SetupContext context = new SetupContext() )
-                {
-                    if ( context.Islands.Count() < 99 )
-                    {
-                        for ( int i = 0; i < 100; i++ )
-                        {
-                            Ressource ressource = new Ressource { Wood = 1000000, Metal = 1000000, Cristal = 1000000, Magic = 1000000 };
-                            Coordinate coord = new Coordinate();
-                            coord.X = i;
-                            coord.Y = i;
-                            context.Ressources.Add( ressource );
-                            context.Coordinates.Add( coord );
-                            context.SaveChanges();
-
-                            Island island = new Island();
-                            island.Loyalty = 100;
-                            island.Coordinates = coord;
-                            island.AllRessources = ressource;
-                            island.PossiblePositions = 15;
-
-                            context.Islands.Add( island );
-                            context.SaveChanges();
-                        }
-                    }
-                }
-            }
         }
-        #endregion
 
         private Ressource Multiplyressource( Ressource initialRessource, int factor )
         {

@@ -139,16 +139,7 @@ namespace ITI.SkyLord.Models.Entity_Framework.Controllers
                     //p.Password = model.Password;
                     p.Profil = new Profil();
                     p.Profil.Description = "";
-
-                    Random random = new Random();
-                    List<Island> allFreeIslands = SetupContext.Islands.Include( i => i.Coordinates ).Include( i => i.Owner ).Where( i => i.Owner == null ).ToList();
-
-                    long lowestId = allFreeIslands.Min( i => i.IslandId );
-                    long highestId = allFreeIslands.Max( i => i.IslandId );
-
-                    island = SetupContext.Islands.Include( i => i.Coordinates ).Single( i => i.IslandId == random.Next( (int)lowestId, (int)highestId ) );
-                    //island = SetupContext.Islands.Include( i => i.Coordinates ).Where( i => i.Owner == null ).OrderBy( i => IslandManager.DistanceFromCenter( i ) ).First();
-
+                    island = SetupContext.Islands.Include(i => i.Coordinates).Where(i => i.Owner == null).OrderBy(i => IslandManager.DistanceFromCenter(i)).First();
                     p.Islands = new List<Island>();
                     island.IsCapital = true;
                     island.Name = "Île de " + p.Name;
