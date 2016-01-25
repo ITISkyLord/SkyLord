@@ -316,6 +316,20 @@ namespace ITI.SkyLord.Services
                     Defense = shieldLevel.Defense
                 };
             }
+            else if( buildingLevel is FieldLevel )
+            {
+                FieldLevel fieldLevel = (FieldLevel)buildingLevel;
+                return new FieldLevel
+                {
+                    BuildingName = fieldLevel.BuildingName,
+                    Number = fieldLevel.Number,
+                    Cost = fieldLevel.Cost,
+                    Requirements = fieldLevel.Requirements,
+                    Duration = fieldLevel.Duration,
+                    Bonuses = fieldLevel.Bonuses,
+                    Production = fieldLevel.Production
+                };
+            }
             return new BuildingLevel
             {
                 BuildingName = buildingLevel.BuildingName,

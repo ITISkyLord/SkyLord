@@ -35,7 +35,6 @@ namespace ITI.SkyLord
         }
         public void AddUnitEvent( IUnitEventContext ctx, Unit unit, int number, Island island )
         {
-
             for ( int j = 0; j < number; j++ )
             {
                 DateTime begginningDate = FindLastEndingDateInQueue( EventDiscrimator.UnitEvent, island );
