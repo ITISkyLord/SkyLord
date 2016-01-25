@@ -6906,9 +6906,10 @@ body {
 }
 .SkyLordContainer .SkyLordMainRow .SkylordSideBar .img-responsive {
   height: 75px;
-  position: absolute;
-  top: 0px;
-  left: 0px;
+  position: relative;
+  margin-top: 10px;
+  margin-right: auto;
+  margin-left: auto;
 }
 .SkyLordContainer .SkyLordMainRow .PageContent {
   position: relative;

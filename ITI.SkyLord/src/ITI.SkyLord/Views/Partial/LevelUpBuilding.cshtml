@@ -31,7 +31,11 @@
 
 
                     <form asp-controller="Building" asp-action="LevelUpBuilding" asp-route-buildingPosition="@Model.Position" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId">
-                        @if (RessourceManager.IsEnough(Model.Layout.CurrentIsland.AllRessources, Model.NextBuildingLevel.Cost))
+                        @if(Model.EventsOnBuilding.Count() != 0)
+                        {
+                            <div>Upgrade en cours ...</div>
+                        }
+                        else if (RessourceManager.IsEnough(Model.Layout.CurrentIsland.AllRessources, Model.NextBuildingLevel.Cost))
                         {
                             <input type="submit" class="btn btn-link" value="Upgrade" />
                         }
