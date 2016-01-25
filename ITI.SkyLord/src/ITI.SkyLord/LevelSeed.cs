@@ -10,9 +10,52 @@ namespace ITI.SkyLord
     {
         public void SeedLevels()
         {
+            SeedIslands();
             SeedBuildingLevels();
             SeedTechnologyLevels();
         }
+
+        #region Island
+        public void SeedIslands()
+        {
+            using (SetupContext context = new SetupContext())
+            {
+                Random random = new Random();
+                if (context.Islands.Count() < 99)
+                {
+                    for (int i = 0; i < 100; i++)
+                    {
+                        for(int j=0; j < 100; j++)
+                        {
+                            if(random.Next(1,6) == 1)
+                            {
+                                AddIsland(i, j, context);
+                            }
+                        }
+                    }
+                }
+                context.SaveChanges();
+            }
+        }
+
+        public void AddIsland(int x, int y, SetupContext context)
+        {
+            Ressource ressource = new Ressource { Wood = 1000, Metal = 1000, Cristal = 1000, Magic = 1000 };
+            Coordinate coord = new Coordinate();
+            coord.X = x;
+            coord.Y = y;
+            context.Ressources.Add(ressource);
+            context.Coordinates.Add(coord);
+
+            Island island = new Island();
+            island.Loyalty = 100;
+            island.Coordinates = coord;
+            island.AllRessources = ressource;
+            island.PossiblePositions = 10;
+
+            context.Islands.Add(island);
+        }
+        #endregion Island
 
         public void SeedBuildingLevels()
         {
