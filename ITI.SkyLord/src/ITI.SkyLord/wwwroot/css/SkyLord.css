@@ -7442,9 +7442,33 @@ footer li a:hover {
   letter-spacing: 1px;
   background-color: whitesmoke;
 }
-.armyContainer .army a:hover {
+.armyContainer .army .army-body a:hover {
   color: whitesmoke;
   text-decoration: none;
+}
+.armyContainer .army .army-body .numberArmy input[type=number] {
+  font-size: 1em;
+  width: 2.5em;
+  padding: 3px;
+  margin: 0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  text-align: center;
+}
+.armyContainer .army .army-body .numberArmy input[type=number]:focus {
+  outline: none;
+}
+.armyContainer .army .army-body input[type=number] {
+  /*font-size: 1em;
+                    width: 2.5em;
+                    padding: 3px;
+                    margin: 0;*/
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  text-align: center;
+}
+.armyContainer .army .army-body input[type=number]:focus {
+  outline: none;
 }
 /*.SkyLordNavBar {
     .Col(12);

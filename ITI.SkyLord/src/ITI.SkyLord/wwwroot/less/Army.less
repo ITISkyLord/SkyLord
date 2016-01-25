@@ -42,11 +42,41 @@
             text-align: center;
             .Button();
             .ButtonHover();
-        }
 
-        a:hover {
-            color: whitesmoke;
-            text-decoration: none;
+            a:hover {
+                color: whitesmoke;
+                text-decoration: none;
+            }
+
+            .numberArmy {
+                input[type=number] {
+                    font-size: 1em;
+                    width: 2.5em;
+                    padding: 3px;
+                    margin: 0;
+                    border: 1px solid #ddd;
+                    border-radius: 5px;
+                    text-align: center;
+                }
+
+                input[type=number]:focus {
+                    outline: none;
+                }
+            }
+
+            input[type=number] {
+                /*font-size: 1em;
+                    width: 2.5em;
+                    padding: 3px;
+                    margin: 0;*/
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                text-align: center;
+            }
+
+            input[type=number]:focus {
+                outline: none;
+            }
         }
     }
 }
