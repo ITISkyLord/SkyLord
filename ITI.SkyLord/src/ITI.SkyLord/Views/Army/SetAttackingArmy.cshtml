@@ -110,6 +110,7 @@
                                         <td>@r.Unit.Name</td>
                                         <td>@r.Number</td>
                                         <td><input type="number" min="0" max="@r.Number" step="1" asp-for="UnitsToSend[r.Unit.UnitName.ToString()]" value="0" /></td>
+                                        <td><div class="SelectAll">Mettre tous</div></td>
                                     </tr>
                                 }
                             </tbody>
