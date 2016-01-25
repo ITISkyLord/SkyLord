@@ -35,7 +35,6 @@ namespace ITI.SkyLord
         }
         public void AddUnitEvent( IUnitEventContext ctx, Unit unit, int number, Island island )
         {
-
             for ( int j = 0; j < number; j++ )
             {
                 DateTime begginningDate = FindLastEndingDateInQueue( EventDiscrimator.UnitEvent, island );
@@ -416,6 +415,8 @@ namespace ITI.SkyLord
 
             _context.SaveChanges();
 
+            playersTechnologies = tm.GetPlayersTechnologies( technoEvent.Island.Owner.PlayerId );
+
             // Update all the units with the newly added bonus
             tm.BonusManager.ResolvePlayersArmies( technoEvent.Island.Owner.PlayerId, technoEvent.Island.IslandId );
 
@@ -423,7 +424,7 @@ namespace ITI.SkyLord
             if ( te.TechnologyName == TechnologyName.conquest )
             {
                 Technology conquest = playersTechnologies.Single( t => t.TechnologyName == TechnologyName.conquest );
-                if ( conquest.Level.Number > 1 )
+                if ( conquest.Level.Number >= 2 )
                 {
                     _context.Players.Single( p => p.PlayerId == technoEvent.Island.Owner.PlayerId ).MaxIsland = 1 + ( conquest.Level.Number / 2 );
                 }

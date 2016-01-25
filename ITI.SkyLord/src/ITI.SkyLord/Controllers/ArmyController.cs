@@ -49,7 +49,7 @@ namespace ITI.SkyLord.Controllers
                     BonusManager bonusManager = new BonusManager( SetupContext );
                     RessourceManager.RemoveRessource( island.AllRessources, unit.UnitCost.Wood * model.UnitAmount, unit.UnitCost.Metal * model.UnitAmount, unit.UnitCost.Cristal * model.UnitAmount, unit.UnitCost.Magic * model.UnitAmount );
                     em.AddUnitEvent( SetupContext, unit, model.UnitAmount, island );
-                    //SetupContext.Ressources.Update( island.AllRessources );
+
                     SetupContext.SaveChanges();
                 }
             }
@@ -325,10 +325,20 @@ namespace ITI.SkyLord.Controllers
         public IActionResult SetColonisation( long islandId = 0 )
         {
             SetColonisationViewModel model = new SetColonisationViewModel();
+            long playerId = SetupContext.GetPlayer( User.GetUserId() ).PlayerId;
+
             model.PossibleColonisableIslands = SetupContext.Islands.Include( i => i.Coordinates ).Include( i => i.Owner ).Where( i => i.Owner == null ).ToList();
-            SetupContext.FillStandardVM( model, SetupContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
+            SetupContext.FillStandardVM( model, playerId, islandId );
             ArmyManager am = new ArmyManager( SetupContext, new BonusManager( SetupContext ) );
+
             Army defenseArmy = am.GetCurrentDefenseArmy( islandId );
+            Player currentPlayer = SetupContext.Players.Include( p => p.Islands ).Single( p => p.PlayerId == playerId );
+
+            if ( currentPlayer.Islands.Count() == currentPlayer.MaxIsland )
+            {
+                model.IsMaxIslandReached = true;
+            }
+
             if( defenseArmy == null )
             {
                 model.HasApprentice = false;
