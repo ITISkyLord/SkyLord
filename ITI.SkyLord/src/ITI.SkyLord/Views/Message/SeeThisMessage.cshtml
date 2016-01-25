@@ -25,3 +25,5 @@
         <input type="submit" value="Répondre"/>
     </form>
 }
+<a asp-controller="Message" asp-action="UnReadMessage" asp-route-messageId="@Model.Message.MessageId" asp-route-islandId="@Model.Layout.IslandId">Mettre le message en non lu</a>
+
