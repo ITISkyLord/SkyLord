@@ -18,13 +18,21 @@
 <h1>Apprentis</h1>
 
 <h2>Planification de la colonisation</h2>
-@if (Model.HasApprentice )
+@if ( !Model.HasApprentice )
+{
+    <p>Vous n'avez pas d'apprenti ! Allez au portail d'invocation pour en créer ! </p>
+}
+else if ( Model.IsMaxIslandReached )
+{
+    <p> Vous avez atteint le maximum d'îles que vous pouvez contrôller </p>
+}
+else
 {
     <form asp-controller="Army" asp-action="SendColonisation" asp-route-islandId="@Model.Layout.IslandId" method="post" role="form">
 
         <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
         <p>Votre apprenti peut transporter @Model.CapacityOfCarrier ressources.</p>
-        @* Tableau pour voir nos unité et voir qui l'on envoi *@  
+        @* Tableau pour voir nos unité et voir qui l'on envoi *@
         <table>
             <tr>
                 <td>Bois</td>
@@ -33,7 +41,7 @@
                 <td>Magie</td>
             </tr>
             <tr>
-                <td><input type="number" min="0" max="@Model.SenderIsland.AllRessources.Wood" step="1"  asp-for="Wood" value="0" /></td>
+                <td><input type="number" min="0" max="@Model.SenderIsland.AllRessources.Wood" step="1" asp-for="Wood" value="0" /></td>
                 <td><input type="number" min="0" max="@Model.SenderIsland.AllRessources.Metal" step="1" asp-for="Metal" value="0" /></td>
                 <td><input type="number" min="0" max="@Model.SenderIsland.AllRessources.Cristal" step="1" asp-for="Cristal" value="0" /></td>
                 <td><input type="number" min="0" max="@Model.SenderIsland.AllRessources.Magic" step="1" asp-for="Magic" value="0" /></td>
@@ -50,20 +58,20 @@
 
         @* Choix de la cible *@
         <select asp-for="@Model.Target" id="EnnemyToAttack">
-            @foreach( Island i in Model.PossibleColonisableIslands )
+            @foreach ( Island i in Model.PossibleColonisableIslands )
             {
                 string selected = "";
-                if (Model.BarbarianIslandId == i.IslandId)
+                if ( Model.BarbarianIslandId == i.IslandId )
                 {
-            <option value="@i.IslandId" pos-x="@i.Coordinates.X" pos-y="@i.Coordinates.Y" selected="selected">
-                Île barbare [@i.Coordinates.X, @i.Coordinates.Y]
-            </option>
+                    <option value="@i.IslandId" pos-x="@i.Coordinates.X" pos-y="@i.Coordinates.Y" selected="selected">
+                        Île barbare [@i.Coordinates.X, @i.Coordinates.Y]
+                    </option>
                 }
                 else
                 {
-            <option value="@i.IslandId" pos-x="@i.Coordinates.X" pos-y="@i.Coordinates.Y" >
-                Île barbare [@i.Coordinates.X, @i.Coordinates.Y]
-            </option>
+                    <option value="@i.IslandId" pos-x="@i.Coordinates.X" pos-y="@i.Coordinates.Y">
+                        Île barbare [@i.Coordinates.X, @i.Coordinates.Y]
+                    </option>
                 }
             }
         </select>
@@ -72,8 +80,4 @@
 
     </form>
     <script src="/js/AttackManager.js"></script>
-}
-else
-{
-    <p>Vous n'avez pas d'apprenti ! Allez au portail d'invocation pour en créer ! </p>
 }

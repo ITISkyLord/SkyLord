@@ -1833,8 +1833,8 @@ namespace ITI.SkyLord
                 Ressource conquestLevel10Cost = AddMiltipliedRessource( context, conquestLevel9Cost, 3.5 );
 
                 // Add conquestRequirements
-                Requirement conquestLevel1Requirement = AddBuildingRequirement( context, BuildingName.laboratory, 2 );
-                Requirement conquestLevel1Requirement2 = AddBuildingRequirement( context, BuildingName.tower, 4 );
+                //Requirement conquestLevel1Requirement = AddBuildingRequirement( context, BuildingName.laboratory, 2 );
+                //Requirement conquestLevel1Requirement2 = AddBuildingRequirement( context, BuildingName.tower, 4 );
                 Requirement conquestLevel2Requirement = AddTechnologyRequirement( context, TechnologyName.conquest, 1 );
                 Requirement conquestLevel3Requirement = AddTechnologyRequirement( context, TechnologyName.conquest, 2 );
                 Requirement conquestLevel4Requirement = AddTechnologyRequirement( context, TechnologyName.conquest, 3 );
@@ -1847,7 +1847,7 @@ namespace ITI.SkyLord
 
                 // Set up Levels
                 TechnologyLevel conquestLevel1 = AddTechnologyLevel( context, TechnologyName.conquest, 1, conquestLevel1Cost, 100,
-                    CreateRequirementList( conquestLevel1Requirement, conquestLevel1Requirement2 ),
+                    /*CreateRequirementList( conquestLevel1Requirement, conquestLevel1Requirement2 )*/ null,
                     null );
                 TechnologyLevel conquestLevel2 = AddTechnologyLevel( context, TechnologyName.conquest, 2, conquestLevel2Cost, (int)( conquestLevel1.Duration * 2.5 ),
                     CreateRequirementList( conquestLevel2Requirement ),

@@ -325,20 +325,27 @@ namespace ITI.SkyLord.Controllers
         public IActionResult SetColonisation( long islandId = 0 )
         {
             SetColonisationViewModel model = new SetColonisationViewModel();
+            long playerId = SetupContext.GetPlayer( User.GetUserId() ).PlayerId;
+
             model.PossibleColonisableIslands = SetupContext.Islands.Include( i => i.Coordinates ).Include( i => i.Owner ).Where( i => i.Owner == null ).ToList();
-            SetupContext.FillStandardVM( model, SetupContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
+            SetupContext.FillStandardVM( model, playerId, islandId );
             ArmyManager am = new ArmyManager( SetupContext, new BonusManager( SetupContext ) );
+
             Army defenseArmy = am.GetCurrentDefenseArmy( islandId );
+            Player currentPlayer = SetupContext.Players.Include( p => p.Islands ).Single( p => p.PlayerId == playerId );
+
+            if ( currentPlayer.Islands.Count() == currentPlayer.MaxIsland )
+            {
+                model.IsMaxIslandReached = true;
+            }
+
             if( defenseArmy == null )
             {
                 model.HasApprentice = false;
             }
             else
             {
-                model.HasApprentice = SetupContext.Islands
-                                    .Single( i => i.IslandId == islandId )
-                                    .Armies.Single( a => a.ArmyState == ArmyState.defense )
-                                    .Regiments.Any( r => r.Unit.UnitName == UnitName.apprentice );
+                model.HasApprentice = defenseArmy.Regiments.Any( r => r.Unit.UnitName == UnitName.apprentice );
 
                 model.CapacityOfCarrier = SetupContext.Islands.Include( i => i.Armies ).ThenInclude( i => i.Regiments ).ThenInclude( i => i.Unit ).ThenInclude( i => i.UnitStatistics )
                   .Single( i => i.IslandId == islandId )

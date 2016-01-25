@@ -21,6 +21,7 @@ namespace ITI.SkyLord.ViewModel.Armies
         public int Cristal { get; set; }
         public int Magic { get; set; }
         public bool HasApprentice { get; set; }
+        public bool IsMaxIslandReached { get; set; }
         public List<Island> PossibleColonisableIslands { get; set; }
         public int CapacityOfCarrier { get; set; }
         public long Target { get; set; }
