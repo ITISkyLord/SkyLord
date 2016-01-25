@@ -67,6 +67,7 @@
 <div class="head">
     Armée actuelle sur place :
 </div>
+
 <table>
     @foreach (var unit in Model.AllUnits.OrderBy( u => u.UnitType ).ThenBy(u => u.Duration))
     {
