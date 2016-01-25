@@ -84,7 +84,7 @@
 
                 <div class="invocation-building">
 
-                    @if (Model.AvailableUnit.Where(u => u.UnitId == unit.UnitId).FirstOrDefault() == null)
+                    @if (Model.AvailableUnit.Where(u => u.UnitName == unit.UnitName).FirstOrDefault() == null)
                     {
                         <div class="UnitNonAvailable"> </div>
                     }
@@ -94,7 +94,7 @@
 
                     }
 
-                    <div class="col-lg-2     MisEnAvant">
+                    <div class="col-lg-2  MisEnAvant">
                         <div class="text">
                             @unit.Name<br />
                             <div class="UnitInfo" id="@unit.UnitName.ToString()">Voir</div>
