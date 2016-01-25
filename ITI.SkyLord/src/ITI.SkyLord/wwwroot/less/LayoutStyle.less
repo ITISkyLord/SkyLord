@@ -133,10 +133,11 @@ html, body {
 
             .img-responsive {
                 height: 75px;
-                position: absolute;
-                top: 0px;
-                left: 0px;
-            }
+                position: relative;
+                margin-top: 10px;
+                margin-right: auto;
+                margin-left: auto;
+            }   
         }
 
         .PageContent {
@@ -162,22 +163,6 @@ html, body {
             }
         }
     }
-    // Part Profil
-    .profilContainer {
-        .container-fluid;
-        .Section();
-        height: 100%;
-        .Image(url("../images/Site/sitecarton.png"));
-        overflow: auto;
-
-        #pp {
-            padding: 5px;
-        }
-
-        blockquote {
-            border-left: none;
-        }
-    }
 
     .form-control {
         text-align: center;
@@ -185,31 +170,6 @@ html, body {
         font-style: italic;
         color: #825847;
         background-color: whitesmoke;
-    }
-}
-
-// Part View Players
-.playerContainer {
-    .container-fluid;
-    .Section();
-    height: 100%;
-    .Image(url("../images/Site/sitecarton.png"));
-    overflow: auto;
-
-    .seePlayers {
-        color: white;
-        font-weight: bold;
-        font-size: 20px;
-
-        .table th {
-            color: white;
-            font-weight: bold;
-        }
-
-        .table td {
-            color: #825847;
-            font-weight: bold;
-        }
     }
 }
 

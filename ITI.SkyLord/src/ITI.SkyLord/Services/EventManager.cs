@@ -300,6 +300,7 @@ namespace ITI.SkyLord
                                         .ThenInclude( z => z.Unit )
                                         .ThenInclude( z => z.UnitStatistics )
                                         .Include( i => i.Island ).ThenInclude( i => i.AllRessources )
+                                        .Include( i => i.Island.Buildings )
                                         .Where( u => u.ArmyId == armyEvent.ArmyIdd )
                                         .Single();
 
@@ -310,6 +311,7 @@ namespace ITI.SkyLord
                                     .ThenInclude( r => r.Regiments )
                                     .ThenInclude( r => r.Unit ).ThenInclude( r => r.UnitStatistics )
                                     .Include( i => i.AllRessources )
+                                    .Include( i => i.Buildings ).ThenInclude( i => i.Level )
                                     .Where( i => i.IslandId == armyEvent.DestinationIdd )
                                     .Single();
 
@@ -432,7 +434,7 @@ namespace ITI.SkyLord
         internal void Resolve( BuildingEvent be )
         {
             List<Building> buildingsOnIsland = _allManager.BuildingManager.GetBuildingsOnCurrentIsland( be.Island.IslandId, be.Island.Owner.PlayerId );
-            if ( buildingsOnIsland.Any( b => b.BuildingName == be.BuildingToBuild ) )
+            if ( buildingsOnIsland.Any( b => b.BuildingName == be.BuildingToBuild && b.Position== be.PositionToBuild) )
             {
                 _allManager.BuildingManager.LevelUpBuilding( be.BuildingToBuild, be.Island.IslandId, be.Island.Owner.PlayerId, be.PositionToBuild );
             }

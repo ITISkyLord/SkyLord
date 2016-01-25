@@ -1,8 +1,7 @@
 ﻿@model ITI.SkyLord.ViewModel.Partial.BuildingPartialViewModel
 <style>
-    #StatisticModale 
-    {
-        display:none;
+    #StatisticModale {
+        display: none;
     }
 
     #BlackBackground {
@@ -16,50 +15,86 @@
     }
 
     .Stat {
-        display:none;
+        display: none;
         position: fixed;
-
         top: 100px;
         left: 0px;
-
         width: 80%;
         height: 500px;
-
         margin-right: 10%;
         margin-left: 10%;
-
         background-color: white;
         z-index: 100001;
-
         border-radius: 20px;
     }
 
+    .UnitNonAvailable {
+        position: relative;
+        display: block;
+        top: 62px;
+        left: 0px;
+        width: 100%;
+        height: 75px;
+        background-color: rgba(0,0,0,0.5);
+        float: left;
+        z-index: 100000;
+        padding: 0px;
+    }
 
+    .UnitAvailable {
+        position: relative;
+        display: block;
+        top: 62px;
+        left: 0px;
+        width: 100%;
+        height: 100px;
+        z-index: 0;
+        padding: 0px;
+    }
+
+    .invocation-building  {
+        height: 100px;
+    }
 </style>
 
 <div class="head">
     <h2>@BuildingManager.StaticBuildingNameToName(Model.CurrentBuilding.BuildingName)</h2>
 </div>
 @{
-    Write( Html.Partial( "~/Views/Partial/LevelUpBuilding.cshtml", Model ) );
-    Write( Html.Partial("~/Views/Partial/UnitsQueue.cshtml", Model));
+    Write(Html.Partial("~/Views/Partial/LevelUpBuilding.cshtml", Model));
+    Write(Html.Partial("~/Views/Partial/UnitsQueue.cshtml", Model));
 }
 <div class="head">
     Armée actuelle sur place :
 </div>
+
 <table>
-    @foreach( var unit in Model.AvailableUnit )
+    @foreach (var unit in Model.AllUnits.OrderBy( u => u.UnitType ).ThenBy(u => u.Duration))
     {
         <form asp-controller="Army" asp-action="AddUnit" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId">
-        <input type="hidden" asp-for="UnitTarget" value=@{ Write( (int)unit.UnitName ); } />
-            <div class="row" style="margin-bottom: 20px;">
+            <input type="hidden" asp-for="UnitTarget" value=@{ Write( (int)unit.UnitName ); } />
+
+            <div class="row">
+
                 <div class="invocation-building">
-                    <div class="col-lg-2">
+
+                    @if (Model.AvailableUnit.Where(u => u.UnitId == unit.UnitId).FirstOrDefault() == null)
+                    {
+                        <div class="UnitNonAvailable"> </div>
+                    }
+                    else
+                    {
+                        <div class="UnitAvailable"></div>
+
+                    }
+
+                    <div class="col-lg-2 ">
                         <div class="text">
                             @unit.Name<br />
                             <div class="UnitInfo" id="@unit.UnitName.ToString()">Voir</div>
                         </div>
                     </div>
+
                     @{
                         int number = 0;
                         if (Model.CurrentArmy != null)
@@ -67,7 +102,6 @@
                             var regiment = Model.CurrentArmy.Regiments.Where(r => r.Unit.Name == unit.Name).FirstOrDefault();
                             number = regiment == null ? 0 : regiment.Number;
                         }
-
                     }
                     <div class="cost">
                         <div class="col col-lg-1 col-sm-1">@number</div>
@@ -75,10 +109,11 @@
                         <div class="col col-lg-1 col-sm-1">Métal @unit.UnitCost.Metal</div>
                         <div class="col col-lg-1 col-sm-1">Magie @unit.UnitCost.Magic</div>
                         <div class="col col-lg-1 col-sm-1">Cristal @unit.UnitCost.Cristal</div>
+                        <div class="col col-lg-1 col-sm-1">Durée @unit.Duration secondes</div>
                     </div>
 
                     @{
-                    // TODO : Calcul du max d'unité que l'on peut faire pour cette unité
+// TODO : Calcul du max d'unité que l'on peut faire pour cette unité afin de ne pas lui proposer de faire plus d'unité qu'il ne peut
                     }
                     <div class="col-lg-3"><input class="form-control" style="width: 100%;" type="number" asp-for="UnitAmount" min="0" step="1" value="0" /></div>
                     <div class="col-lg-1">
@@ -86,24 +121,52 @@
                     </div>
                 </div>
             </div>
-
         </form>
-    }
+                        }
 
 </table>
 
 <div id="StatisticModale">
     <div id="BlackBackground"></div>
 
-    @foreach(var unit in Model.AllUnits)
-    {
-        <div class="Stat" id="@unit.UnitName.ToString()"> 
+    @foreach(Unit unit in Model.AllUnits)
+            {
+        <div class="Stat" id="@unit.UnitName.ToString()">
             @* Cette div pour close est importante*@
-            <div class="CloseModale">close</div>
-            
+            <div class="CloseModale">Fermer</div>
+
             @* On peut mettre les stats dedans *@
-            Je suis un test : @unit.UnitName.ToString()  
-        
+            Description : @unit.UnitName.ToString()
+            <table>
+                <tr>
+                    <td>Attaque</td>
+                    <td>Résistance physique</td>
+                    <td>Résistance magique</td>
+                    <td>Capacité</td>
+                    <td>Vitesse</td>
+                    <td>Bois</td>
+                    <td>Métal</td>
+                    <td>Cristal</td>
+                    <td>Magie</td>
+                </tr>
+                <tr>
+                    <td>@unit.UnitStatistics.Attack</td>
+                    <td>@unit.UnitStatistics.PhysicResist</td>
+                    <td>@unit.UnitStatistics.MagicResist</td>
+                    <td>@unit.UnitStatistics.Capacity</td>
+                    <td>@unit.UnitStatistics.Speed</td>
+                    <td>@unit.UnitCost.Wood</td>
+                    <td>@unit.UnitCost.Metal</td>
+                    <td>@unit.UnitCost.Cristal</td>
+                    <td>@unit.UnitCost.Magic</td>
+                </tr>
+            </table>
+
+            Prérequis pour construire @unit.UnitName.ToString()<br />
+            /!\ /!\ /!\ <br />
+            C'EST ICI QU'IL FAUT METTRE LES REQUIREMENTS POUR TRISTAN<br />
+            /!\ /!\ /!\
+
         </div>
     }
 

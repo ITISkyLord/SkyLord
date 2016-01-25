@@ -80,9 +80,12 @@ namespace ITI.SkyLord
             {
                 physicResist += r.Number * r.Unit.UnitStatistics.PhysicResist;
             }
+            if( army.Island.Owner != null )
+            {
+                ShieldLevel currentShieldLevel = (ShieldLevel)army.Island.Buildings.Single( b => b.BuildingName == BuildingName.shield ).Level;
+                physicResist += currentShieldLevel.Defense;
+            }
 
-            ShieldLevel currentShieldLevel = (ShieldLevel)army.Island.Buildings.Single( b => b.BuildingName == BuildingName.shield ).Level;
-            physicResist += currentShieldLevel.Defense;
             return physicResist;
         }
         /// <summary>
@@ -97,8 +100,12 @@ namespace ITI.SkyLord
             {
                 magicResist += (r.Number * r.Unit.UnitStatistics.MagicResist);
             }
-            ShieldLevel currentShieldLevel = (ShieldLevel)army.Island.Buildings.Single( b => b.BuildingName == BuildingName.shield ).Level;
-            magicResist += currentShieldLevel.Defense;
+            if( army.Island.Owner != null )
+            {
+                ShieldLevel currentShieldLevel = (ShieldLevel)army.Island.Buildings.Single( b => b.BuildingName == BuildingName.shield ).Level;
+                magicResist += currentShieldLevel.Defense;
+            }
+
 
             return magicResist;
         }

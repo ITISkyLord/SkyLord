@@ -17,16 +17,13 @@
 
 <div class="MainContentSeeMyIsland">
     <div class="row">
-
         <div id="Test">
             <div id="SeeMyIsland">
-
                 <div id="Island">
                     @for( var i = 1; i != 11; i++ )
                     {
                         Building myBuilding;
                         string name;
-
 
                         @if( Model.DicoBuildings.TryGetValue( i.ToString(), out myBuilding ) )
                         {
@@ -73,6 +70,8 @@
                         List<BuildingEvent> buildingEvent = new List<BuildingEvent>();
                         Model.AllBuildingEventOnIsland.TryGetValue( i, out buildingEvent );
 
+                        bool isInConstruction = Model.AllBuildingEventOnIsland.Where(kvp => kvp.Value.Count != 0).Count() != 0;
+
                         // On balance le view model à notre partial
                         BuildingPartialViewModel partialModel = new BuildingPartialViewModel()
                         {
@@ -88,7 +87,9 @@
                             TechnologyDisplays = Model.TechnologyDisplays,
                             TargetTechnology = Model.TargetTechnology,
                             TechnologyManager = Model.TechnologyManager,
-                            UnitsQueue = Model.UnitsQueue
+                            UnitsQueue = Model.UnitsQueue,
+                            IsInConstruction =  isInConstruction
+
                         };
                         Write( Html.Partial( "~/Views/Partial/" + name + ".cshtml", partialModel ) );
                     }

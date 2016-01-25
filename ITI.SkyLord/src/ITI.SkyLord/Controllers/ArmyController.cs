@@ -26,7 +26,9 @@ namespace ITI.SkyLord.Controllers
 
         public IActionResult AddUnit( BuildingPartialViewModel model, long islandId = 0 )
         {
-            ArmyManager am = new ArmyManager( SetupContext, new BonusManager( SetupContext ) );
+            BonusManager bonusManager = new BonusManager( SetupContext );
+
+            ArmyManager am = new ArmyManager( SetupContext, bonusManager );
             EventManager em = new EventManager( SetupContext, new EventPackManager( SetupContext ) );
 
             if( model.UnitAmount <= 0 )
@@ -46,10 +48,8 @@ namespace ITI.SkyLord.Controllers
                 }
                 else
                 {
-                    BonusManager bonusManager = new BonusManager( SetupContext );
                     RessourceManager.RemoveRessource( island.AllRessources, unit.UnitCost.Wood * model.UnitAmount, unit.UnitCost.Metal * model.UnitAmount, unit.UnitCost.Cristal * model.UnitAmount, unit.UnitCost.Magic * model.UnitAmount );
                     em.AddUnitEvent( SetupContext, unit, model.UnitAmount, island );
-
                     SetupContext.SaveChanges();
                 }
             }
@@ -59,6 +59,7 @@ namespace ITI.SkyLord.Controllers
             {
                 islandId = islandId
             } );
+
 
         }
         public IActionResult SetAttackingArmy( SetAttackingArmyViewModel model, long islandId = 0, long EnnemyIslandId = 0 )
@@ -171,21 +172,27 @@ namespace ITI.SkyLord.Controllers
             long activePlayerId = SetupContext.GetPlayer( User.GetUserId() ).PlayerId;
 
             Island currentIsland = SetupContext.GetIsland( islandId, activePlayerId );
+            ArmyManager am = new ArmyManager(SetupContext, new BonusManager(SetupContext));
 
-            model.CurrentDefenseArmy = SetupContext.Armies
-                                    .Include( a => a.Island )
-                                    .Include( a => a.Regiments )
-                                    .ThenInclude( r => r.Unit )
-                                    .ThenInclude( r => r.UnitStatistics )
-                                    .Where( a => a.Island.IslandId == currentIsland.IslandId && a.ArmyState == ArmyState.defense )
-                                    .SingleOrDefault();
+            Army defenseArmy  = am.GetCurrentDefenseArmy(islandId);
 
-            model.EnnemyIslands =
-                SetupContext.Islands
-                    .Include( i => i.Owner )
-                    .Include( i => i.Coordinates )
-                .Where( i => i.Owner.PlayerId != activePlayerId )
-                .ToList();
+            if( defenseArmy.Regiments.Count > 0 )
+            {
+                if( defenseArmy.Regiments.Any( u => u.Unit.UnitName == UnitName.carrier || u.Unit.UnitName == UnitName.apprentice ) )
+                    defenseArmy.Regiments = defenseArmy.Regiments.Where( u => u.Unit.UnitName != UnitName.carrier && u.Unit.UnitName != UnitName.apprentice ).ToList();
+
+                model.CurrentDefenseArmy = am.CopyArmy( defenseArmy );
+
+                model.EnnemyIslands =
+                    SetupContext.Islands
+                        .Include( i => i.Owner )
+                        .Include( i => i.Coordinates )
+                    .Where( i => i.Owner.PlayerId != activePlayerId )
+                    .ToList();
+
+            }
+            else
+                defenseArmy = null;
 
             SetupContext.FillStandardVM( model, activePlayerId, islandId );
             return model;
@@ -200,7 +207,6 @@ namespace ITI.SkyLord.Controllers
         {
             return CreateArmyViewModel( islandId, new ArmyViewModel() );
         }
-
         private ArmyViewModel CreateArmyViewModel( long islandId, ArmyViewModel model )
         {
             List<Army> currentIslandArmies = SetupContext.Islands.Include( i => i.Armies ).ThenInclude( a => a.Regiments )
@@ -280,7 +286,7 @@ namespace ITI.SkyLord.Controllers
         }
         private SetSendRessourcesViewModel CreateSetSendRessourceViewModel( long islandId, SetSendRessourcesViewModel model )
         {
-            model.SendableIslands = SetupContext.Islands.Include( i => i.Coordinates ).Include( i => i.Owner ).Where( i => i.Owner != null ).ToList();
+            model.SendableIslands = SetupContext.Islands.Include( i => i.Coordinates ).Include( i => i.Owner ).Where( i => i.Owner != null && i.IslandId != islandId ).ToList();
 
             //model.CurrentTransportorArmy = SetupContext.Islands.Include( i => i.Armies ).ThenInclude( a => a.Regiments )
             //    .ThenInclude( r => r.Unit ).ThenInclude( u => u.UnitStatistics )
@@ -334,16 +340,17 @@ namespace ITI.SkyLord.Controllers
             Army defenseArmy = am.GetCurrentDefenseArmy( islandId );
             Player currentPlayer = SetupContext.Players.Include( p => p.Islands ).Single( p => p.PlayerId == playerId );
 
-            if ( currentPlayer.Islands.Count() == currentPlayer.MaxIsland )
+
+            if( currentPlayer.Islands.Count() == currentPlayer.MaxIsland )
             {
                 model.IsMaxIslandReached = true;
             }
 
-            if( defenseArmy == null )
+            if( defenseArmy == null || defenseArmy.Regiments.Count > 0 )
             {
                 model.HasApprentice = false;
             }
-            else
+            else if( defenseArmy.Regiments.Any( u => u.Unit.UnitName == UnitName.carrier || u.Unit.UnitName == UnitName.apprentice ) )
             {
                 model.HasApprentice = defenseArmy.Regiments.Any( r => r.Unit.UnitName == UnitName.apprentice );
 
@@ -353,6 +360,8 @@ namespace ITI.SkyLord.Controllers
                   .Regiments.Where( r => r.Unit.UnitName == UnitName.apprentice )
                   .Select( r => r.Unit.UnitStatistics.Capacity ).First();
             }
+            else
+                model.HasApprentice = false;
 
             model.SenderIsland = GetIsland( islandId );
             return View( model );
@@ -416,7 +425,6 @@ namespace ITI.SkyLord.Controllers
             return View( movementViewModel );
 
         }
-
         public IActionResult MoveArmy( SetMovementArmyViewModel model, long islandId )
         {
             Island senderIsland = GetIsland( islandId );
