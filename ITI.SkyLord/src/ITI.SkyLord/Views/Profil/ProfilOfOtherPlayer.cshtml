@@ -11,14 +11,14 @@
                 </div>
                 <div class="col-sm-8 col-md-8">
                     <blockquote>
-                        <cite title="Source Title">@ViewData["name"]</cite>
+                        <cite title="Source Title">@Model.Name</cite>
                     </blockquote>
 
-                    <hr /><label for="mail"> <i class="glyphicon glyphicon-envelope"></i> @ViewData["mail"]</label>
+                    <hr /><label for="mail"> <i class="glyphicon glyphicon-envelope"></i> @Model.Mail</label>
                     <div class="form-group">
                         <hr /><br /><textarea class="form-control" rows="5" id="description" readonly>@Model.Description</textarea><hr />
                     </div>
-                    @if (ViewData["currentPlayerId"] != ViewData["id"])
+                    @if (Model.PlayerId != Model.CurrentPlayerId)
                     {
                         Write("");
                     }
