@@ -12,10 +12,10 @@ var taillemap = 500;
 // Main
 $(document).ready(function () {
     // Centre la map sur l'island de la personne
-    var pos = GetCoordinate($("#MyIsland"));
-    $("#draggable").css("top", pos.X + "px");
-    $("#draggable").css("left", pos.Y + "px");
-    TestConstraint($("#draggable"));
+    CenterIsland();
+    $("#CenterIsland").click(function () {
+        CenterIsland();
+    });
     // On rend l'élément draggable
     $("#draggable").draggable({
         drag: function (event) {
@@ -65,8 +65,8 @@ var Coordinate = (function () {
 function GetCoordinate(islandNode) {
     var x = +$(islandNode).attr("x");
     var y = +$(islandNode).attr("y");
-    var pos_x = -1 * x * taillecase - taillecase + (taillemap / 2) - (taillecase / 2);
-    var pos_y = -1 * y * taillecase - taillecase + (taillemap / 2) - (taillecase / 2);
+    var pos_x = -1 * x * taillecase - taillecase + (taillemap / 4) + (taillecase / 2) - taillemap;
+    var pos_y = -1 * y * taillecase - taillecase + (taillemap / 4) + (taillecase / 2) + taillemap;
     return new Coordinate(pos_x, pos_y);
 }
 function TestConstraint(node) {
@@ -98,4 +98,10 @@ function TestConstraint(node) {
         $(node).css("left", "-1px");
         return false;
     }
+}
+function CenterIsland() {
+    var pos = GetCoordinate($("#MyIsland"));
+    $("#draggable").css("top", pos.X + "px");
+    $("#draggable").css("left", pos.Y + "px");
+    TestConstraint($("#draggable"));
 }

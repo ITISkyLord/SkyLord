@@ -3,8 +3,6 @@
 @{ 
     Random random = new Random();
 }
-
-
 <style>
     #draggable {
         position: relative;
@@ -121,6 +119,8 @@
 
 </style>
 
+<button id="CenterIsland">Centrer sur mon île</button>
+
 <!-- World Map -->
 <div class="map">
 <div id="draggable">
@@ -132,8 +132,9 @@
         @for (var j = 0; j < 100; j++)
         {
             string key = i + "_" + j;
-            int selectedrandom = random.Next(1,500);
+            int selectedrandom = random.Next(1,300);
             Island island = null;
+
             if(Model.Layout.CurrentIsland.Coordinates.X == j && Model.Layout.CurrentIsland.Coordinates.Y == i)
             {
                 <td class="Island" id="MyIsland" x="@j" y="@i" islandid="@Model.Layout.CurrentIsland.IslandId"></td>
