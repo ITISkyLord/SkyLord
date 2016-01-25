@@ -300,6 +300,7 @@ namespace ITI.SkyLord
                                         .ThenInclude( z => z.Unit )
                                         .ThenInclude( z => z.UnitStatistics )
                                         .Include( i => i.Island ).ThenInclude( i => i.AllRessources )
+                                        .Include( i => i.Island.Buildings )
                                         .Where( u => u.ArmyId == armyEvent.ArmyIdd )
                                         .Single();
 
@@ -310,6 +311,7 @@ namespace ITI.SkyLord
                                     .ThenInclude( r => r.Regiments )
                                     .ThenInclude( r => r.Unit ).ThenInclude( r => r.UnitStatistics )
                                     .Include( i => i.AllRessources )
+                                    .Include( i => i.Buildings ).ThenInclude( i => i.Level )
                                     .Where( i => i.IslandId == armyEvent.DestinationIdd )
                                     .Single();
 
@@ -413,6 +415,8 @@ namespace ITI.SkyLord
 
             _context.SaveChanges();
 
+            playersTechnologies = tm.GetPlayersTechnologies( technoEvent.Island.Owner.PlayerId );
+
             // Update all the units with the newly added bonus
             tm.BonusManager.ResolvePlayersArmies( technoEvent.Island.Owner.PlayerId, technoEvent.Island.IslandId );
 
@@ -420,7 +424,7 @@ namespace ITI.SkyLord
             if ( te.TechnologyName == TechnologyName.conquest )
             {
                 Technology conquest = playersTechnologies.Single( t => t.TechnologyName == TechnologyName.conquest );
-                if ( conquest.Level.Number > 1 )
+                if ( conquest.Level.Number >= 2 )
                 {
                     _context.Players.Single( p => p.PlayerId == technoEvent.Island.Owner.PlayerId ).MaxIsland = 1 + ( conquest.Level.Number / 2 );
                 }
