@@ -96,8 +96,8 @@ function GetCoordinate(islandNode: JQuery): Coordinate {
     var x: number = + $(islandNode).attr("x");
     var y: number = + $(islandNode).attr("y");
 
-    var pos_x: number = -1 * x * taillecase - (taillemap_y / 4);
-    var pos_y: number = -1 * y * taillecase + (taillemap_x/1.5);
+    var pos_x: number = -1 * x * taillecase + (taillemap_y / 2);
+    var pos_y: number = -1 * y * taillecase + (taillemap_x / 2);
 
     return new Coordinate(pos_x, pos_y);
 }
