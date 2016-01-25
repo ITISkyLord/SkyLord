@@ -15,7 +15,7 @@
 
                 @if (Model.NextBuildingLevel == null)
                 {
-                    <p class="col-lg-12">Level maximum atteint</p>
+                    <p class="col-lg-12">Niveau maximum atteint</p>
                 }
                 else
                 {
@@ -25,19 +25,19 @@
                     <div class="buildings-build-body-txt">
                         @{Write("Bois : " + Model.NextBuildingLevel.Cost.Wood + " " +
                  "Métal : " + Model.NextBuildingLevel.Cost.Metal + " " +
-                "Magie : " + Model.NextBuildingLevel.Cost.Magic + " " +
-                  "Cristal : " + Model.NextBuildingLevel.Cost.Cristal);}
+                "Cristal : " + Model.NextBuildingLevel.Cost.Cristal + " " +
+                  "Magie : " + Model.NextBuildingLevel.Cost.Magic);}
                     </div>
 
 
                     <form asp-controller="Building" asp-action="LevelUpBuilding" asp-route-buildingPosition="@Model.Position" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId">
                         @if (Model.EventsOnBuilding.Count() != 0)
                         {
-                            <div>Upgrade en cours ...</div>
+                            <div>Amélioration en cours ...</div>
                         }
                         else if (Model.IsInConstruction)
                         {
-                            <div>Un autre batiment est en train d'être construit ou amélioré</div>
+                            <div>Un autre bâtiment est en train d'être construit ou amélioré</div>
                         }
 
                         else if (RessourceManager.IsEnough(Model.Layout.CurrentIsland.AllRessources, Model.NextBuildingLevel.Cost))
@@ -46,7 +46,7 @@
                         }
                         else
                         {
-                            <div>Vous n'avez pas assez de ressource pour passer au niveau suivant.</div>
+                            <div>Vous n'avez pas assez de ressources pour passer au niveau suivant.</div>
                         }
                     </form>
                             }
