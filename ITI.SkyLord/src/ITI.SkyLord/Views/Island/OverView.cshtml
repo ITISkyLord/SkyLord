@@ -26,24 +26,29 @@
     {
         if( ae.ArmyMovement == ArmyMovement.attacking )
         {
-            <div>Attaque vers @ae.Destination.Name [@ae.Destination.Coordinates.X, @ae.Destination.Coordinates.Y] chez @ae.Destination.Owner.Name. Impact à @ae.EndingDate.Hour:@ae.EndingDate.Minute:@ae.EndingDate.Second</div>
+            <div>Attaque vers @ae.Destination.Name [@ae.Destination.Coordinates.X, @ae.Destination.Coordinates.Y] chez @ae.Destination.Owner.Name. Impact à @ae.EndingDate.ToString( @"HH\hmm\mss\s" )</div>
         }
         else if( ae.ArmyMovement == ArmyMovement.sendingRessources )
         {
-            <div>Envoi de ressources vers @ae.Destination.Name [@ae.Destination.Coordinates.X, @ae.Destination.Coordinates.Y] chez @ae.Destination.Owner.Name. Elles arriveront à @ae.EndingDate.Hour:@ae.EndingDate.Minute:@ae.EndingDate.Second</div>
+            <div>Envoi de ressources vers @ae.Destination.Name [@ae.Destination.Coordinates.X, @ae.Destination.Coordinates.Y] chez @ae.Destination.Owner.Name. Elles arriveront à @ae.EndingDate.ToString( @"HH\hmm\mss\s" )</div>
         }
         else if( ae.ArmyMovement == ArmyMovement.returning )
         {
-            <div>Vos unités sont en train de revenir de @ae.Destination.Name [@ae.Destination.Coordinates.X, @ae.Destination.Coordinates.Y] chez @ae.Destination.Owner.Name. Elles arriveront à @ae.EndingDate.Hour:@ae.EndingDate.Minute:@ae.EndingDate.Second</div>
+            <div>Vos unités sont en train de revenir de @ae.Destination.Name [@ae.Destination.Coordinates.X, @ae.Destination.Coordinates.Y] chez @ae.Destination.Owner.Name. Elles arriveront à @ae.EndingDate.ToString( @"HH\hmm\mss\s" )</div>
         }
         else if( ae.ArmyMovement == ArmyMovement.colonising )
         {
-            <div>Colonisation vers @ae.Destination.Name [@ae.Destination.Coordinates.X, @ae.Destination.Coordinates.Y] chez @ae.Destination.Owner.Name. Impact à @ae.EndingDate.Hour:@ae.EndingDate.Minute:@ae.EndingDate.Second</div>
+            <div>Colonisation vers @ae.Destination.Name [@ae.Destination.Coordinates.X, @ae.Destination.Coordinates.Y] chez @ae.Destination.Owner.Name. Impact à @ae.EndingDate.ToString( @"HH\hmm\mss\s" )</div>
         }
     }
-    else
+    else if( ae.ArmyMovement == ArmyMovement.attacking )
     {
-        <div>Attaque vers une île barbare [@ae.Destination.Coordinates.X, @ae.Destination.Coordinates.Y]. Impact à @ae.EndingDate.Hour:@ae.EndingDate.Minute:@ae.EndingDate.Second</div>
+        <div>Attaque vers une île barbare [@ae.Destination.Coordinates.X, @ae.Destination.Coordinates.Y]. Impact à @ae.EndingDate.ToString( @"HH\hmm\mss\s" )</div>
+    }
+    else if( ae.ArmyMovement == ArmyMovement.returning )
+    {
+        <div>Vos unités sont en train de revenir de @ae.Destination.Name [@ae.Destination.Coordinates.X, @ae.Destination.Coordinates.Y]. Elles arriveront à @ae.EndingDate.ToString( @"HH\hmm\mss\s" )</div>
+
     }
 
 }

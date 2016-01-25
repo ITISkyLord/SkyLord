@@ -60,6 +60,7 @@ namespace ITI.SkyLord.Controllers
                 islandId = islandId
             } );
 
+
         }
         public IActionResult SetAttackingArmy( SetAttackingArmyViewModel model, long islandId = 0, long EnnemyIslandId = 0 )
         {
@@ -174,8 +175,9 @@ namespace ITI.SkyLord.Controllers
             ArmyManager am = new ArmyManager(SetupContext, new BonusManager(SetupContext));
 
             Army defenseArmy  = am.GetCurrentDefenseArmy(islandId);
-            
 
+            if( defenseArmy != null )
+            {
             if( defenseArmy.Regiments.Any( u => u.Unit.UnitName == UnitName.carrier || u.Unit.UnitName == UnitName.apprentice ) )
                 defenseArmy.Regiments = defenseArmy.Regiments.Where( u => u.Unit.UnitName != UnitName.carrier && u.Unit.UnitName != UnitName.apprentice ).ToList();
 
@@ -187,6 +189,8 @@ namespace ITI.SkyLord.Controllers
                     .Include( i => i.Coordinates )
                 .Where( i => i.Owner.PlayerId != activePlayerId )
                 .ToList();
+
+            }
 
             SetupContext.FillStandardVM( model, activePlayerId, islandId );
             return model;
@@ -416,7 +420,6 @@ namespace ITI.SkyLord.Controllers
             return View( movementViewModel );
 
         }
-
         public IActionResult MoveArmy( SetMovementArmyViewModel model, long islandId )
         {
             Island senderIsland = GetIsland( islandId );
