@@ -8,6 +8,5 @@ namespace ITI.SkyLord
     public class ShieldLevel : BuildingLevel
     {
         public int Defense { get; set; }
-        public int Offense { get; set; }
     }
 }

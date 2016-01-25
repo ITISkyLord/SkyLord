@@ -41,24 +41,6 @@ namespace ITI.SkyLord.Services
                 .ThenInclude( a => a.Regiments ).ThenInclude( r => r.Unit ).ThenInclude( u => u.UnitStatistics )
                 .Where( i => i.Owner.PlayerId == playerId ).ToList();
 
-            //List<Regiment> playersRegiments = CurrentContext.Regiments.Include( r => r.Army ).ThenInclude( a => a.Island ).ThenInclude( i => i.Owner)
-            //    //.Include( r => r.Unit ).ThenInclude( u => u.UnitStatistics )
-            //    //.Include( r => r.Unit).ThenInclude( u => u.UnitCost)
-            //    .Include( r => r.Unit ).ThenInclude( u => u.Requirements )
-            //    .Where( r => r.Army.Island.Owner.PlayerId == playerId ).ToList();
-
-            //foreach( Island island in playersIslands )
-            //{
-            //    foreach ( Army army in island.Armies )
-            //    {
-            //        foreach ( Regiment regiment in army.Regiments )
-            //        {
-            //            regiment.Unit.UnitStatistics = CurrentContext.Units.Include( u => u.UnitStatistics ).Single( u => u.UnitId == regiment.Unit.UnitId ).UnitStatistics;
-            //            regiment.Unit.UnitCost = CurrentContext.Units.Include( u => u.UnitCost ).Single( u => u.UnitId == regiment.Unit.UnitId ).UnitCost;
-            //        }
-            //    }
-            //}
-
             List<Regiment> allPlayersRegiments = new List<Regiment>();
 
             foreach ( Island island in playersIslands )
@@ -102,8 +84,10 @@ namespace ITI.SkyLord.Services
             Unit resolvedUnit = CurrentContext.Units.Include( u => u.UnitStatistics ).Include( u => u.Requirements ).Include( u => u.UnitCost )
                 .Single( u => u.UnitName == unit.UnitName && u.IsModel );
 
+            List<Bonus> bonusesOnCurrentIsland = GetAllBonusesOnCurrentIsland( playerId, islandId );
+
             resolvedUnit = CloneUnit( resolvedUnit );
-            foreach ( BonusOnUnit bonus in GetBonusesOnUnit( unit, islandId, playerId ) )
+            foreach ( BonusOnUnit bonus in GetBonusesOnUnit( unit, bonusesOnCurrentIsland ) )
             {
                 resolvedUnit = ResolveUnitBonus( resolvedUnit, bonus );
             }
@@ -111,11 +95,11 @@ namespace ITI.SkyLord.Services
             return resolvedUnit;
         }
 
-        private List<BonusOnUnit> GetBonusesOnUnit( Unit unit, long islandId, long playerId )
+        private List<BonusOnUnit> GetBonusesOnUnit( Unit unit, List<Bonus> bonusesOnCurrentIsland )
         {
             List<BonusOnUnit> allBonusOnUnit = new List<BonusOnUnit>();
 
-            foreach ( Bonus bonus in GetAllBonusesOnCurrentIsland( playerId, islandId ) )
+            foreach ( Bonus bonus in bonusesOnCurrentIsland )
             {
                 if ( bonus is BonusOnUnit )
                 {
@@ -234,6 +218,19 @@ namespace ITI.SkyLord.Services
             return ResolveBonuses( buildingLevel, playerId, islandId ).Duration;
         }
 
+        public List<Building> GetResolvedBuildings( List<Building> buildings, long playerId, long islandId )
+        {
+            List<Bonus> bonusesOnCurrentIsland = GetAllBonusesOnCurrentIsland( playerId, islandId );
+
+            List<Building> resolvedBuildings = new List<Building>();
+            foreach( Building building in buildings )
+            {
+                BuildingLevel resolvedLevel = ResolveBonuses( building.Level, bonusesOnCurrentIsland, playerId, islandId );
+                resolvedBuildings.Add( CloneBuilding( building, resolvedLevel ) );
+            }
+            return resolvedBuildings;
+        }
+
         /// <summary>
         /// Creates a BuildingLevel wich has resolved all its bonuses (does not add it to the DB !)
         /// </summary>
@@ -243,8 +240,9 @@ namespace ITI.SkyLord.Services
         /// <returns>A cloned BuildingLevel with all its bonuses applied</returns>
         public BuildingLevel ResolveBonuses( BuildingLevel buildingLevel, long playerId, long islandId )
         {
+            List<Bonus> bonusesOnCurrentIsland = GetAllBonusesOnCurrentIsland( playerId, islandId );
             BuildingLevel resolvedBuildingLevel = CloneBuildingLevel( buildingLevel );
-            foreach ( BonusOnBuilding bonus in GetBonusesOnBuilding( buildingLevel, islandId, playerId ) )
+            foreach ( BonusOnBuilding bonus in GetBonusesOnBuilding( buildingLevel, bonusesOnCurrentIsland ) )
             {
                 ResolveBuildingBonus( resolvedBuildingLevel, bonus );
             }
@@ -252,10 +250,21 @@ namespace ITI.SkyLord.Services
             return resolvedBuildingLevel;
         }
 
-        public List<BonusOnBuilding> GetBonusesOnBuilding( BuildingLevel buildingLevel, long islandId, long playerId )
+        public BuildingLevel ResolveBonuses( BuildingLevel buildingLevel, List<Bonus> bonusesOnCurrentIsland, long playerId, long islandId )
+        {
+            BuildingLevel resolvedBuildingLevel = CloneBuildingLevel( buildingLevel );
+            foreach ( BonusOnBuilding bonus in GetBonusesOnBuilding( buildingLevel, bonusesOnCurrentIsland ) )
+            {
+                ResolveBuildingBonus( resolvedBuildingLevel, bonus );
+            }
+
+            return resolvedBuildingLevel;
+        }
+
+        public List<BonusOnBuilding> GetBonusesOnBuilding( BuildingLevel buildingLevel, List<Bonus> bonusesOnCurrentIsland )
         {
             List<BonusOnBuilding> allBonusesOnBuilding = new List<BonusOnBuilding>();
-            foreach ( Bonus bonus in GetAllBonusesOnCurrentIsland( playerId, islandId ) )
+            foreach ( Bonus bonus in bonusesOnCurrentIsland )
             {
                 if ( bonus is BonusOnBuilding )
                 {
@@ -293,6 +302,20 @@ namespace ITI.SkyLord.Services
         /// <returns>The cloned BuildingLevel</returns>
         BuildingLevel CloneBuildingLevel( BuildingLevel buildingLevel )
         {
+            if( buildingLevel is ShieldLevel )
+            {
+                ShieldLevel shieldLevel = (ShieldLevel)buildingLevel;
+                return new ShieldLevel
+                {
+                    BuildingName = shieldLevel.BuildingName,
+                    Number = shieldLevel.Number,
+                    Cost = shieldLevel.Cost,
+                    Requirements = shieldLevel.Requirements,
+                    Duration = shieldLevel.Duration,
+                    Bonuses = shieldLevel.Bonuses,
+                    Defense = shieldLevel.Defense
+                };
+            }
             return new BuildingLevel
             {
                 BuildingName = buildingLevel.BuildingName,
@@ -301,6 +324,17 @@ namespace ITI.SkyLord.Services
                 Requirements = buildingLevel.Requirements,
                 Duration = buildingLevel.Duration,
                 Bonuses = buildingLevel.Bonuses
+            };
+        }
+
+        Building CloneBuilding( Building building, BuildingLevel buildingLevel )
+        {
+            return new Building
+            {
+                Name = BuildingManager.StaticBuildingNameToName( building.BuildingName ),
+                BuildingName = building.BuildingName,
+                Level = buildingLevel,
+                Position = building.Position
             };
         }
 
@@ -313,6 +347,7 @@ namespace ITI.SkyLord.Services
             return ResolveBonuses( technologyLevel, playerId, islandId ).Duration;
         }
 
+
         /// <summary>
         /// Creates a TechnologyLevel wich has resolved all its bonuses (does not add it to the DB !)
         /// </summary>
@@ -322,8 +357,9 @@ namespace ITI.SkyLord.Services
         /// <returns>A cloned TechnologyLevel with all its bonuses applied</returns>
         public TechnologyLevel ResolveBonuses( TechnologyLevel technologyLevel, long playerId, long islandId )
         {
+            List<Bonus> bonusesOnCurrentIsland = GetAllBonusesOnCurrentIsland( playerId, islandId );
             TechnologyLevel resolvedTechnologyLevel = CloneTechnologyLevel( technologyLevel );
-            foreach ( BonusOnTechnology bonus in GetBonusesOnTechnology( technologyLevel, islandId, playerId ) )
+            foreach ( BonusOnTechnology bonus in GetBonusesOnTechnology( technologyLevel, bonusesOnCurrentIsland ) )
             {
                 ResolveTechnologyBonus( resolvedTechnologyLevel, bonus );
             }
@@ -331,11 +367,11 @@ namespace ITI.SkyLord.Services
             return resolvedTechnologyLevel;
         }
 
-        public List<BonusOnTechnology> GetBonusesOnTechnology( TechnologyLevel technologyLevel, long playerId, long islandId )
+        public List<BonusOnTechnology> GetBonusesOnTechnology( TechnologyLevel technologyLevel, List<Bonus> bonusesOnCurrentIsland )
         {
             List<BonusOnTechnology> allTechnologyBonusesOnBuildng = new List<BonusOnTechnology>();
 
-            foreach ( Bonus bonus in GetAllBonusesOnCurrentIsland( playerId, islandId ) )
+            foreach ( Bonus bonus in bonusesOnCurrentIsland )
             {
                 if ( bonus is BonusOnTechnology )
                 {

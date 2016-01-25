@@ -114,6 +114,9 @@ namespace ITI.SkyLord.Services
                 case TechnologyName.wings:
                     name = "Ailes";
                     break;
+                case TechnologyName.conquest:
+                    name = "Conquête";
+                    break;
                 default:
                     name = "Error";
                     break;

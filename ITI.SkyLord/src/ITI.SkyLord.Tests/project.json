@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0-*",
+  "version": "0.0.0-Absolutely-Invalid",
   "description": "ITI.SkyLord.Tests Class Library",
   "authors": [ "SkyLord" ],
   "tags": [ "" ],
@@ -12,7 +12,7 @@
         }
     },
     "dependencies": {
-        "ITI.SkyLord": "1.0.0-*",
+        "ITI.SkyLord": "0.0.0-Absolutely-Invalid",
         "NUnitLite": "3.0.0"
     },
     "commands": {

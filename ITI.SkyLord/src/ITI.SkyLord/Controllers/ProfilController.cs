@@ -19,91 +19,124 @@ namespace ITI.SkyLord.Controllers
         public SetupContext SetupContext { get; set; }
 
         // GET: /<controller>/
-        public IActionResult Index(long islandId = 0)
+        public IActionResult Index( long islandId = 0 )
         {
             //Récupérer la description dans la BDD
 
             Player p = SetupContext.GetPlayer(User.GetUserId());
-            p = SetupContext.Players.Include(z => z.Profil).Where(x => x.PlayerId == p.PlayerId).First();
+            p = SetupContext.Players.Include( z => z.Profil ).Where( x => x.PlayerId == p.PlayerId ).First();
             ViewData["name"] = p.Name;
 
             ProfilViewModel profilViewModel = new ProfilViewModel();
-            if (!String.IsNullOrEmpty(p.Profil.Description))
+            if( !String.IsNullOrEmpty( p.Profil.Description ) )
                 profilViewModel.Description = p.Profil.Description;
             else
                 profilViewModel.Description = "Aucune description";
 
-            SetupContext.FillStandardVM(profilViewModel, SetupContext.GetPlayer(User.GetUserId()).PlayerId, islandId);
-            return View(profilViewModel);
+            SetupContext.FillStandardVM( profilViewModel, SetupContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
+            return View( profilViewModel );
         }
 
-        public IActionResult ProfilOfOtherPlayer(long islandId, long EnnemyIslandId)
+        public IActionResult ProfilOfOtherPlayer( long islandId, long EnnemyIslandId )
         {
             //Récupérer la description dans la BDD
             Player currentPlayer = SetupContext.GetPlayer(User.GetUserId());
-            Island ennemi = SetupContext.Islands.Include(i => i.Owner).Where(i => i.IslandId == EnnemyIslandId).FirstOrDefault();
+            Island ennemyIsland = SetupContext.Islands.Include(i => i.Owner).Where(i => i.IslandId == EnnemyIslandId).FirstOrDefault();
 
-            ProfilViewModel profilViewModel = new ProfilViewModel();
+            ProfilViewModel model = new ProfilViewModel();
             // Si le joueur existe => On affiche le profil
-            if(ennemi != null)
+            if( ennemyIsland != null )
             {
-                Player p = ennemi.Owner;
-                ViewData["name"] = p.Name;
-                ViewData["mail"] = p.Mail;
-                ViewData["id"] = p.PlayerId;
-                ViewData["currentPlayerId"] = currentPlayer.PlayerId;
+                Player p = ennemyIsland.Owner;
+                model.Name = p.Name;
+                model.Mail = p.Mail;
+                model.PlayerId = p.PlayerId;
+                model.CurrentPlayerId = currentPlayer.PlayerId;
+                //ViewData["name"] = p.Name;
+                //ViewData["mail"] = p.Mail;
+                //ViewData["id"] = p.PlayerId;
+                //ViewData["currentPlayerId"] = currentPlayer.PlayerId;
 
-                if (!String.IsNullOrEmpty(p.Profil.Description))
-                    profilViewModel.Description = p.Profil.Description;
+                if( !String.IsNullOrEmpty( p.Profil.Description ) )
+                    model.Description = p.Profil.Description;
                 else
-                    profilViewModel.Description = "Aucune description";
+                    model.Description = "Aucune description.";
             }
-            // Sinon on dit que c'est un barbare et puis voilà :-)
+            // Sinon on dit que c'est un barbare et puis voilà :-) (Loïc)
             else
             {
-                ViewData["name"] = "Barbare";
-                ViewData["mail"] = "barbare@skylord.fr";
-                ViewData["id"] = 0;
-                ViewData["currentPlayerId"] = 0;
-                profilViewModel.Description = "Cette île est inconnu";
+                model.Name = "Barbare";
+                model.Mail = "barbare@skylord.fr";
+                model.PlayerId = 0;
+                model.CurrentPlayerId = 0;
+                //ViewData["name"] = "Barbare";
+                //ViewData["mail"] = "barbare@skylord.fr";
+                //ViewData["id"] = 0;
+                //ViewData["currentPlayerId"] = 0;
+                model.Description = "Cette île est inconnue";
             }
 
-            SetupContext.FillStandardVM(profilViewModel, SetupContext.GetPlayer(User.GetUserId()).PlayerId, islandId);
-            return View(profilViewModel);
+            SetupContext.FillStandardVM( model, SetupContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
+            return View( model );
+        }
+        public IActionResult ProfilOfAPlayer( long islandId, long playerId )
+        {
+            //Récupérer la description dans la BDD
+            Player currentPlayer = SetupContext.GetPlayer(User.GetUserId());
+            Player p = SetupContext.Players.Single( pe=> pe.PlayerId == playerId);
+            ProfilViewModel model = new ProfilViewModel();
+            // Si le joueur existe => On affiche le profil
+            model.Name = p.Name;
+            model.Mail = p.Mail;
+            model.PlayerId = p.PlayerId;
+            model.CurrentPlayerId = currentPlayer.PlayerId;
+            //ViewData["name"] = p.Name;
+            //ViewData["mail"] = p.Mail;
+            //ViewData["id"] = p.PlayerId;
+            //ViewData["currentPlayerId"] = currentPlayer.PlayerId;
+
+            if( !String.IsNullOrEmpty( p.Profil.Description ) )
+                model.Description = p.Profil.Description;
+            else
+                model.Description = "Aucune description.";
+
+
+            SetupContext.FillStandardVM( model, SetupContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
+            return View( model );
         }
 
-        public IActionResult ChangeProfil(long islandId = 0)
+        public IActionResult ChangeProfil( long islandId = 0 )
         {
             Player p = SetupContext.GetPlayer(User.GetUserId());
-            p = SetupContext.Players.Include(z => z.Profil).Where(x => x.PlayerId == p.PlayerId).First();
+            p = SetupContext.Players.Include( z => z.Profil ).Where( x => x.PlayerId == p.PlayerId ).First();
             ViewData["name"] = p.Name;
 
-            ProfilViewModel profilViewModel = new ProfilViewModel();
+            ProfilViewModel model = new ProfilViewModel();
+            model.Name = p.Name;
+            model.Description = (!String.IsNullOrEmpty( p.Profil.Description )) ? p.Profil.Description : "Aucune description.";
+            model.Mail = p.Mail;
 
-            profilViewModel.Description = (!String.IsNullOrEmpty(p.Profil.Description)) ? p.Profil.Description : "Aucune description";
-            profilViewModel.Mail = p.Mail;
-
-            SetupContext.FillStandardVM(profilViewModel, SetupContext.GetPlayer(User.GetUserId()).PlayerId, islandId);
-            return View(profilViewModel);
+            SetupContext.FillStandardVM( model, SetupContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
+            return View( model );
         }
 
         [HttpPost]
-        public IActionResult changeDescription(string description, long islandId = 0)
+        public IActionResult changeDescription( string description, long islandId = 0 )
         {
             // Ajouter la description dans la BDD
 
             Player p = SetupContext.GetPlayer(User.GetUserId());
-            p = SetupContext.Players.Include(z => z.Profil).Where(x => x.PlayerId == p.PlayerId).First();
+            p = SetupContext.Players.Include( z => z.Profil ).Where( x => x.PlayerId == p.PlayerId ).First();
             Profil oldProfil = p.Profil;
             oldProfil.Description = description;
             SetupContext.SaveChanges();
 
             ViewData["name"] = p.Name;
             ProfilViewModel profilViewModel = new ProfilViewModel();
-            profilViewModel.Description = (!String.IsNullOrEmpty(p.Profil.Description)) ? p.Profil.Description : "Aucune description";
+            profilViewModel.Description = (!String.IsNullOrEmpty( p.Profil.Description )) ? p.Profil.Description : "Aucune description";
 
-            SetupContext.FillStandardVM(profilViewModel, SetupContext.GetPlayer(User.GetUserId()).PlayerId, islandId);
-            return View("Index", profilViewModel);
+            SetupContext.FillStandardVM( profilViewModel, SetupContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
+            return View( "Index", profilViewModel );
         }
     }
 }

@@ -8,9 +8,10 @@ using ITI.SkyLord.Models.Entity_Framework.Contexts;
 namespace ITI.SkyLord.Migrations
 {
     [DbContext(typeof(SetupContext))]
-    partial class SetupContextModelSnapshot : ModelSnapshot
+    [Migration("20160125002058_LoyaltyCheckTime")]
+    partial class LoyaltyCheckTime
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.0-rc1-16348")
@@ -172,6 +173,8 @@ namespace ITI.SkyLord.Migrations
                     b.Property<bool>("IsCapital");
 
                     b.Property<int>("Loyalty");
+
+                    b.Property<DateTime>("LoyaltyCheckTime");
 
                     b.Property<string>("Name");
 
@@ -635,6 +638,8 @@ namespace ITI.SkyLord.Migrations
                     b.HasBaseType("ITI.SkyLord.BuildingLevel");
 
                     b.Property<int>("Defense");
+
+                    b.Property<int>("Offense");
 
                     b.HasAnnotation("Relational:DiscriminatorValue", "ShieldLevel");
                 });
