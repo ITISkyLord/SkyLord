@@ -6459,7 +6459,9 @@ button.close {
 .modal-header:before,
 .modal-header:after,
 .modal-footer:before,
-.modal-footer:after {
+.modal-footer:after,
+.playerContainer:before,
+.playerContainer:after {
   content: " ";
   display: table;
 }
@@ -6478,7 +6480,8 @@ button.close {
 .pager:after,
 .panel-body:after,
 .modal-header:after,
-.modal-footer:after {
+.modal-footer:after,
+.playerContainer:after {
   clear: both;
 }
 .center-block {
@@ -6724,347 +6727,43 @@ button.close {
     display: none !important;
   }
 }
-.island-header {
-  position: relative;
-  float: left;
+.playerContainer {
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 1px;
+  background-color: "white";
+  height: auto;
   width: 100%;
-  min-height: 1px;
-  padding-left: 15px;
-  padding-right: 15px;
-  background-image: url("../images/Site/sitecarton.png");
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  text-align: center;
-  color: #825847;
-}
-@media (min-width: 1200px) {
-  .island-header {
-    float: left;
-    width: 100%;
-  }
-}
-@media (min-width: 992px) {
-  .island-header {
-    float: left;
-    width: 100%;
-  }
-}
-@media (min-width: 768px) {
-  .island-header {
-    float: left;
-    width: 100%;
-  }
-}
-.MainContentSeeMyIsland {
-  position: relative;
-  float: left;
-  width: 100%;
-  min-height: 1px;
-  padding-left: 15px;
-  padding-right: 15px;
-  text-align: center;
-}
-@media (min-width: 1200px) {
-  .MainContentSeeMyIsland {
-    float: left;
-    width: 100%;
-  }
-}
-@media (min-width: 992px) {
-  .MainContentSeeMyIsland {
-    float: left;
-    width: 100%;
-  }
-}
-@media (min-width: 768px) {
-  .MainContentSeeMyIsland {
-    float: left;
-    width: 100%;
-  }
-}
-#Test {
-  position: relative;
-  float: left;
-  width: 50%;
-  min-height: 1px;
-  padding-left: 15px;
-  padding-right: 15px;
-}
-@media (min-width: 1200px) {
-  #Test {
-    float: left;
-    width: 50%;
-  }
-}
-@media (min-width: 992px) {
-  #Test {
-    float: left;
-    width: 50%;
-  }
-}
-@media (min-width: 768px) {
-  #Test {
-    float: left;
-    width: 50%;
-  }
-}
-#SeeMyIsland {
-  border: 1px solid #f4511e;
-  border-radius: 0;
-  transition: box-shadow 0.5s;
-  width: 500px;
-  height: 580px;
-  background-image: url("/images/SeeMyIsland/nuage_fond.jpg");
-  background-repeat: no-repeat;
-  background-position: center;
-  display: block;
-  border: solid #825847 2px;
-}
-#SeeMyIsland #Island {
-  position: relative;
-  top: 0px;
-  left: 0px;
-  display: block;
-  width: 500px;
-  min-width: 500px;
-  max-width: 500px;
-  height: 600px;
-  min-height: 600px;
-  max-height: 600px;
-  background-image: url("/images/SeeMyIsland/ile.png");
-  background-repeat: no-repeat;
-  background-position: center;
-}
-#SeeMyIsland .Building {
-  position: relative;
-  width: 50px;
-  height: 50px;
-  border: black solid 1px;
-}
-#SeeMyIsland .Building img {
-  width: 50px;
-  height: 50px;
-}
-#SeeMyIsland #place_1 {
-  top: 213px;
-  left: 209px;
-}
-#SeeMyIsland #place_2 {
-  top: 236px;
-  left: 209px;
-}
-#SeeMyIsland #place_3 {
-  top: 167px;
-  left: 140px;
-}
-#SeeMyIsland #place_4 {
-  top: 150px;
-  left: 90px;
-}
-#SeeMyIsland #place_5 {
-  top: 140px;
-  left: 140px;
-}
-#SeeMyIsland #place_6 {
-  top: 105px;
-  left: 209px;
-}
-#SeeMyIsland #place_7 {
-  top: 38px;
-  left: 270px;
-}
-#SeeMyIsland #place_8 {
-  top: -44px;
-  left: 332px;
-}
-#SeeMyIsland #place_9 {
-  top: -126px;
-  left: 276px;
-}
-#SeeMyIsland #place_10 {
-  top: -25px;
-  left: 209px;
-}
-#SeeMyIsland .Building[buildingname="tower"] {
-  height: 100px;
-  min-height: 100px;
-}
-#SeeMyIsland .Building[buildingname="tower"] img {
-  width: 50px;
-  height: 100px;
-}
-#UI {
-  position: relative;
-  float: left;
-  width: 50%;
-  min-height: 1px;
-  padding-left: 15px;
-  padding-right: 15px;
-}
-@media (min-width: 1200px) {
-  #UI {
-    float: left;
-    width: 50%;
-  }
-}
-@media (min-width: 992px) {
-  #UI {
-    float: left;
-    width: 50%;
-  }
-}
-@media (min-width: 768px) {
-  #UI {
-    float: left;
-    width: 50%;
-  }
-}
-.templatebuilding {
-  border: 1px solid #825847;
-  border-radius: 0;
-  transition: box-shadow 0.5s;
-  width: 580px;
-  height: 580px;
-  background-image: url("../images/Site/site_ressource.png");
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  background-position: center;
-  display: block;
+  height: 100%;
+  background-image: url("../images/Site/sitecarton.png") !important;
+  background-repeat: no-repeat !important;
+  background-size: 100% 100% !important;
   overflow: auto;
 }
-.templatebuilding .buildings {
-  border: 1px solid white;
+.playerContainer > .navbar-header,
+.playerContainer > .navbar-collapse {
+  margin-right: -15px;
+  margin-left: -15px;
 }
-.templatebuilding .buildings .building-head {
-  text-align: center;
-  color: whitesmoke;
+@media (min-width: 768px) {
+  .playerContainer > .navbar-header,
+  .playerContainer > .navbar-collapse {
+    margin-right: 0;
+    margin-left: 0;
+  }
+}
+.playerContainer .seePlayers {
+  color: white;
   font-weight: bold;
-  font-size: 17px;
-  background-image: url("../images/Site/site_haut2.png");
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  padding: 5px;
-  border-bottom: 1px solid transparent;
-  border-top-left-radius: 0px;
-  border-top-right-radius: 0px;
-  border-bottom-left-radius: 0px;
-  border-bottom-right-radius: 0px;
+  font-size: 20px;
 }
-.templatebuilding .buildings .building-body {
+.playerContainer .seePlayers .table th {
+  color: white;
+  font-weight: bold;
+}
+.playerContainer .seePlayers .table td {
   color: #825847;
   font-weight: bold;
-  font-size: 13px;
-  text-align: center;
-}
-.templatebuilding .buildings .building-btn {
-  text-align: center;
-}
-.templatebuilding .buildings .building-btn .btn-link {
-  color: #825847;
-  font-size: 14px;
-  font-weight: bold;
-  letter-spacing: 1px;
-  text-decoration: none;
-  text-align: center;
-}
-.templatebuilding .buildings .building-btn .btn-link:hover {
-  color: #825847;
-  font-weight: bold;
-  letter-spacing: 1px;
-  background-color: whitesmoke;
-}
-.templatebuilding .invocation-building .text {
-  color: #825847;
-  font-weight: bold;
-  font-style: italic;
-}
-.templatebuilding .invocation-building .cost {
-  color: #825847;
-  font-weight: bold;
-  font-style: italic;
-}
-.templatebuilding .invocation-building .btn-link {
-  color: #825847;
-  font-size: 14px;
-  font-weight: bold;
-  letter-spacing: 1px;
-  text-decoration: none;
-  text-align: center;
-}
-.templatebuilding .invocation-building .btn-link:hover {
-  color: #825847;
-  font-weight: bold;
-  letter-spacing: 1px;
-  background-color: whitesmoke;
-}
-.templatebuilding .head {
-  text-align: center;
-  color: #825847;
-  font-weight: bold;
-  font-size: 17px;
-  background-image: url("../images/Site/site_haut2.png");
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  padding: 5px;
-  border-bottom: 1px solid transparent;
-  border-top-left-radius: 0px;
-  border-top-right-radius: 0px;
-  border-bottom-left-radius: 0px;
-  border-bottom-right-radius: 0px;
-}
-.templatebuilding .buildings-build {
-  border: 1px solid white;
-}
-.templatebuilding .buildings-build .buildings-build-head {
-  text-align: center;
-  color: whitesmoke;
-  font-weight: bold;
-  font-size: 25px;
-  background-image: url("../images/Site/site_haut2.png");
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  padding: 10px;
-  border-bottom: 1px solid transparent;
-  border-top-left-radius: 0px;
-  border-top-right-radius: 0px;
-  border-bottom-left-radius: 0px;
-  border-bottom-right-radius: 0px;
-}
-.templatebuilding .buildings-build .buildings-build-body {
-  color: #825847;
-  font-weight: bold;
-  font-size: 13px;
-  text-align: center;
-}
-.templatebuilding .buildings-build .buildings-build-body .buildings-build-body-txt {
-  padding: 20px;
-}
-.templatebuilding .buildings-build .buildings-build-body .btn-link {
-  color: #825847;
-  font-size: 14px;
-  font-weight: bold;
-  letter-spacing: 1px;
-  text-decoration: none;
-  text-align: center;
-}
-.templatebuilding .buildings-build .buildings-build-body .btn-link:hover {
-  color: #825847;
-  font-weight: bold;
-  letter-spacing: 1px;
-  background-color: whitesmoke;
-}
-.templatebuilding .buildings-build-foot {
-  text-align: center;
-  color: whitesmoke;
-  font-weight: bold;
-  font-size: 17px;
-  background-image: url("../images/Site/site_haut2.png");
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  padding: 5px;
-  border-bottom: 1px solid transparent;
-  border-top-left-radius: 0px;
-  border-top-right-radius: 0px;
-  border-bottom-left-radius: 0px;
-  border-bottom-right-radius: 0px;
 }
