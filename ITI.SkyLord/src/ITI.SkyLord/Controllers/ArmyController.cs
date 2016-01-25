@@ -340,16 +340,17 @@ namespace ITI.SkyLord.Controllers
             Army defenseArmy = am.GetCurrentDefenseArmy( islandId );
             Player currentPlayer = SetupContext.Players.Include( p => p.Islands ).Single( p => p.PlayerId == playerId );
 
-            if ( currentPlayer.Islands.Count() == currentPlayer.MaxIsland )
+
+            if( currentPlayer.Islands.Count() == currentPlayer.MaxIsland )
             {
                 model.IsMaxIslandReached = true;
             }
 
-            if( defenseArmy == null )
+            if( defenseArmy == null || defenseArmy.Regiments.Count > 0 )
             {
                 model.HasApprentice = false;
             }
-            else
+            else if( defenseArmy.Regiments.Any( u => u.Unit.UnitName == UnitName.carrier || u.Unit.UnitName == UnitName.apprentice ) )
             {
                 model.HasApprentice = defenseArmy.Regiments.Any( r => r.Unit.UnitName == UnitName.apprentice );
 
@@ -359,6 +360,8 @@ namespace ITI.SkyLord.Controllers
                   .Regiments.Where( r => r.Unit.UnitName == UnitName.apprentice )
                   .Select( r => r.Unit.UnitStatistics.Capacity ).First();
             }
+            else
+                model.HasApprentice = false;
 
             model.SenderIsland = GetIsland( islandId );
             return View( model );

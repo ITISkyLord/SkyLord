@@ -41,6 +41,7 @@ namespace ITI.SkyLord.Controllers
             mvm.Message = messageManager.GetThisMessage( messageId );
             mvm.Message.Read = true;
             mvm.FromId = mvm.Message.Sender.PlayerId;
+            SetupContext.SaveChanges();
             SetupContext.FillStandardVM( mvm, SetupContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
             return View( mvm );
         }
@@ -75,6 +76,19 @@ namespace ITI.SkyLord.Controllers
             SetupContext.FillStandardVM( model, SetupContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
 
             return View( "Messages", model );
+
+        }
+
+        public IActionResult UnReadMessage( long messageId, long islandId )
+        {
+            MessageManager messageManager = new MessageManager( SetupContext );
+            MessageViewModel mvm = new MessageViewModel();
+            mvm.Message = messageManager.GetThisMessage( messageId );
+            mvm.Message.Read = false;
+            SetupContext.SaveChanges();
+            SetupContext.FillStandardVM( mvm, SetupContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
+
+            return View( "Messages", mvm );
 
         }
 
