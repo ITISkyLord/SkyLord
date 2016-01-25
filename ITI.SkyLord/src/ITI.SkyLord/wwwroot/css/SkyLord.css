@@ -6911,6 +6911,9 @@ body {
   margin-right: auto;
   margin-left: auto;
 }
+.SkyLordContainer .SkyLordMainRow .SkylordSideBar .CurrentIsland {
+  background-color: white;
+}
 .SkyLordContainer .SkyLordMainRow .PageContent {
   position: relative;
   float: left;

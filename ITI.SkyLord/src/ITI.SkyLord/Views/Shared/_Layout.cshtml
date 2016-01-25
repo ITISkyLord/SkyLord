@@ -93,19 +93,14 @@
 
                 <a asp-controller="Island" asp-action="OverView" asp-route-islandId="@Model.Layout.IslandId">Vue d'ensemble</a>
                 <a asp-controller="World" asp-action="Index" asp-route-islandId="@Model.Layout.IslandId">Carte du monde</a>
-                <ul>
-                    <li><a asp-controller="Island" asp-action="SeeMyIsland">Capitale</a></li>
+                <p>Mes ïles :</p>
                     @foreach (Island island in Model.Layout.AllIslands)
                     {
-                        @if (!island.IsCapital)
-                        {
-                            <li><a asp-controller="Island" asp-action="SeeMyIsland" asp-route-islandId="@island.IslandId">@island.Name</a></li>
-                        }
-                        @if (Model.Layout.CurrentIsland != null)
-                {
-                }
+                        string selector = island.IslandId == Model.Layout.IslandId ? "CurrentIsland" : "OtherIsland";
+                        string islandName = island.IsCapital ? "Capitale" : island.Name;
+
+                        <div class="@selector"><a asp-controller="Island" asp-action="SeeMyIsland" asp-route-islandId="@island.IslandId"> @islandName [@island.Coordinates.X, @island.Coordinates.Y]</a></div>
                     }
-                </ul>
             </div>
 
             <div class="PageContent">
