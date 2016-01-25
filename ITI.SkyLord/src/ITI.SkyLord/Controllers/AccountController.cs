@@ -22,7 +22,7 @@ namespace ITI.SkyLord.Models.Entity_Framework.Controllers
     {
         [FromServices]
         public SetupContext SetupContext { get; set; }
-        
+
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
@@ -34,7 +34,7 @@ namespace ITI.SkyLord.Models.Entity_Framework.Controllers
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
             ISmsSender smsSender,
-            ILoggerFactory loggerFactory)
+            ILoggerFactory loggerFactory )
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -48,7 +48,7 @@ namespace ITI.SkyLord.Models.Entity_Framework.Controllers
         [AllowAnonymous]
         public IActionResult Login( string returnUrl = null )
         {
-            ViewData["ReturnUrl"] = returnUrl;
+            ViewData[ "ReturnUrl" ] = returnUrl;
             return View();
         }
         //
@@ -56,35 +56,35 @@ namespace ITI.SkyLord.Models.Entity_Framework.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(AccountViewModel model, string returnUrl = null)
+        public async Task<IActionResult> Login( AccountViewModel model, string returnUrl = null )
         {
-            ViewData["ReturnUrl"] = returnUrl;
-            if (ModelState.IsValid)
+            ViewData[ "ReturnUrl" ] = returnUrl;
+            if ( ModelState.IsValid )
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(model.loginViewModel.Email, model.loginViewModel.Password, model.loginViewModel.RememberMe, lockoutOnFailure: false);
-                if (result.Succeeded)
+                var result = await _signInManager.PasswordSignInAsync( model.loginViewModel.Email, model.loginViewModel.Password, model.loginViewModel.RememberMe, lockoutOnFailure: false );
+                if ( result.Succeeded )
                 {
                     //StandardViewModel svm = new StandardViewModel();
                     //PlayerContext.FillStandardVM( svm, PlayerContext.GetPlayer( User.GetUserId() ).PlayerId, 0 );
 
-                    _logger.LogInformation(1, "User logged in.");
-                    return RedirectToLocal(returnUrl);
+                    _logger.LogInformation( 1, "User logged in." );
+                    return RedirectToLocal( returnUrl );
                 }
-                if (result.RequiresTwoFactor)
+                if ( result.RequiresTwoFactor )
                 {
-                    return RedirectToAction(nameof(SendCode), new { ReturnUrl = returnUrl, RememberMe = model.loginViewModel.RememberMe });
+                    return RedirectToAction( nameof( SendCode ), new { ReturnUrl = returnUrl, RememberMe = model.loginViewModel.RememberMe } );
                 }
-                if (result.IsLockedOut)
+                if ( result.IsLockedOut )
                 {
-                    _logger.LogWarning(2, "User account locked out.");
+                    _logger.LogWarning( 2, "User account locked out." );
                     //    return RedirectToAction("Index", "Home");
                     return View( "Lockout" );
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ModelState.AddModelError( string.Empty, "Invalid login attempt." );
                     return View( model );
                     //return RedirectToAction("Index", "Home");
                 }
@@ -108,15 +108,15 @@ namespace ITI.SkyLord.Models.Entity_Framework.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(AccountViewModel model)
+        public async Task<IActionResult> Register( AccountViewModel model )
         {
-            if (ModelState.IsValid)
+            if ( ModelState.IsValid )
             {
                 var user = new ApplicationUser { UserName = model.registerViewModel.Email, Email = model.registerViewModel.Email };
-                var result = await _userManager.CreateAsync(user, model.registerViewModel.Password);
+                var result = await _userManager.CreateAsync( user, model.registerViewModel.Password );
                 //var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 //var result = await _userManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
+                if ( result.Succeeded )
                 {
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=532713
                     // Send an email with this link
@@ -124,55 +124,58 @@ namespace ITI.SkyLord.Models.Entity_Framework.Controllers
                     //var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
                     //await _emailSender.SendEmailAsync(model.Email, "Confirm your account",
                     //    "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    _logger.LogInformation(3, "User created a new account with password.");
+                    await _signInManager.SignInAsync( user, isPersistent: false );
+                    _logger.LogInformation( 3, "User created a new account with password." );
 
                     Island island = null;
+                    //    Player p = new Player( SetupContext.GetWorld(), model.Pseudo, model.Email, model.Password );
+                    Player p = new Player();
+                    p.World = SetupContext.GetWorld();
+                    p.Name = model.registerViewModel.Pseudo;
+                    p.Mail = model.registerViewModel.Email;
+                    p.Password = model.registerViewModel.Password;
+                    //p.Name = model.Pseudo;
+                    //p.Mail = model.Email;
+                    //p.Password = model.Password;
+                    p.Profil = new Profil();
+                    p.Profil.Description = "";
 
-                    using (SetupContext context = new SetupContext())
-                    {
-                        //    Player p = new Player( context.GetWorld(), model.Pseudo, model.Email, model.Password );
-                        Player p = new Player();
-                        p.World = context.GetWorld();
-                        p.Name = model.registerViewModel.Pseudo;
-                        p.Mail = model.registerViewModel.Email;
-                        p.Password = model.registerViewModel.Password;
-                        //p.Name = model.Pseudo;
-                        //p.Mail = model.Email;
-                        //p.Password = model.Password;
-                        p.Profil = new Profil();
-                        p.Profil.Description = "";
-                        island = context.Islands.Include(i => i.Coordinates).Where(i => i.Owner == null ).OrderBy(i => IslandManager.DistanceFromCenter(i)).First();
-                        p.Islands = new List<Island>();
-                        island.IsCapital = true;
-                        island.Name = "Île de " + p.Name;
-                        p.Islands.Add(island);
-                        island.Owner = p;
-                        context.Players.Add(p);
-                        context.Profils.Add(p.Profil);
-                        context.User_Players.Add(new User_Player(p, user));
+                    Random random = new Random();
+                    List<Island> allFreeIslands = SetupContext.Islands.Include( i => i.Coordinates ).Include( i => i.Owner ).Where( i => i.Owner == null ).ToList();
 
-                        context.SaveChanges();
-                    }
+                    long lowestId = allFreeIslands.Min( i => i.IslandId );
+                    long highestId = allFreeIslands.Max( i => i.IslandId );
 
-                    Building mageTower = new Building
-                    {
-                        BuildingName = BuildingName.tower,
-                        Name = "Tour de mage"
-                    };
-                    SetupContext.Add( mageTower );
+                    island = SetupContext.Islands.Include( i => i.Coordinates ).Single( i => i.IslandId == random.Next( (int)lowestId, (int)highestId ) );
+                    //island = SetupContext.Islands.Include( i => i.Coordinates ).Where( i => i.Owner == null ).OrderBy( i => IslandManager.DistanceFromCenter( i ) ).First();
 
-                    island.Buildings = new List<Building> { mageTower };
+                    p.Islands = new List<Island>();
+                    island.IsCapital = true;
+                    island.Name = "Île de " + p.Name;
+                    p.Islands.Add( island );
+                    island.Owner = p;
+                    SetupContext.Players.Add( p );
+                    SetupContext.Profils.Add( p.Profil );
+                    SetupContext.User_Players.Add( new User_Player( p, user ) );
+
                     SetupContext.SaveChanges();
 
-                    return RedirectToAction("SeeMyIsland", "Island");
+                    BuildingManager buildingManager = new BuildingManager( SetupContext, new LevelManager( SetupContext ) );
+
+                    buildingManager.AddBuildingToIsland( BuildingName.tower, island.IslandId, 1 );
+                    buildingManager.AddBuildingToIsland( BuildingName.invocation, island.IslandId, 2 );
+                    buildingManager.AddBuildingToIsland( BuildingName.shield, island.IslandId, 10 );
+
+                    SetupContext.SaveChanges();
+
+                    return RedirectToAction( "SeeMyIsland", "Island" );
                 }
 
-                AddErrors(result);
+                AddErrors( result );
             }
 
             // If we got this far, something failed, redisplay form
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction( "Index", "Home" );
             //return View( model );
         }
 
@@ -181,8 +184,8 @@ namespace ITI.SkyLord.Models.Entity_Framework.Controllers
         public async Task<IActionResult> LogOff()
         {
             await _signInManager.SignOutAsync();
-            _logger.LogInformation(4, "User logged out.");
-            return RedirectToAction(nameof(HomeController.Index), "Home");
+            _logger.LogInformation( 4, "User logged out." );
+            return RedirectToAction( nameof( HomeController.Index ), "Home" );
         }
 
         ////
@@ -197,7 +200,7 @@ namespace ITI.SkyLord.Models.Entity_Framework.Controllers
         //    var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
         //    return new ChallengeResult(provider, properties);
         //}
-        
+
 
         ////
         //// GET: /Account/ExternalLoginCallback
@@ -278,19 +281,19 @@ namespace ITI.SkyLord.Models.Entity_Framework.Controllers
         // GET: /Account/ConfirmEmail
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> ConfirmEmail(string userId, string code)
+        public async Task<IActionResult> ConfirmEmail( string userId, string code )
         {
-            if (userId == null || code == null)
+            if ( userId == null || code == null )
             {
-                return View("Error");
+                return View( "Error" );
             }
-            var user = await _userManager.FindByIdAsync(userId);
-            if (user == null)
+            var user = await _userManager.FindByIdAsync( userId );
+            if ( user == null )
             {
-                return View("Error");
+                return View( "Error" );
             }
-            var result = await _userManager.ConfirmEmailAsync(user, code);
-            return View(result.Succeeded ? "ConfirmEmail" : "Error");
+            var result = await _userManager.ConfirmEmailAsync( user, code );
+            return View( result.Succeeded ? "ConfirmEmail" : "Error" );
         }
 
         //
@@ -307,15 +310,15 @@ namespace ITI.SkyLord.Models.Entity_Framework.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
+        public async Task<IActionResult> ForgotPassword( ForgotPasswordViewModel model )
         {
-            if (ModelState.IsValid)
+            if ( ModelState.IsValid )
             {
-                var user = await _userManager.FindByNameAsync(model.Email);
-                if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
+                var user = await _userManager.FindByNameAsync( model.Email );
+                if ( user == null || !( await _userManager.IsEmailConfirmedAsync( user ) ) )
                 {
                     // Don't reveal that the user does not exist or is not confirmed
-                    return View("ForgotPasswordConfirmation");
+                    return View( "ForgotPasswordConfirmation" );
                 }
 
                 // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=532713
@@ -328,7 +331,7 @@ namespace ITI.SkyLord.Models.Entity_Framework.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            return View(model);
+            return View( model );
         }
 
         //
@@ -344,9 +347,9 @@ namespace ITI.SkyLord.Models.Entity_Framework.Controllers
         // GET: /Account/ResetPassword
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult ResetPassword(string code = null)
+        public IActionResult ResetPassword( string code = null )
         {
-            return code == null ? View("Error") : View();
+            return code == null ? View( "Error" ) : View();
         }
 
         //
@@ -354,24 +357,24 @@ namespace ITI.SkyLord.Models.Entity_Framework.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
+        public async Task<IActionResult> ResetPassword( ResetPasswordViewModel model )
         {
-            if (!ModelState.IsValid)
+            if ( !ModelState.IsValid )
             {
-                return View(model);
+                return View( model );
             }
-            var user = await _userManager.FindByNameAsync(model.Email);
-            if (user == null)
+            var user = await _userManager.FindByNameAsync( model.Email );
+            if ( user == null )
             {
                 // Don't reveal that the user does not exist
-                return RedirectToAction(nameof(AccountController.ResetPasswordConfirmation), "Account");
+                return RedirectToAction( nameof( AccountController.ResetPasswordConfirmation ), "Account" );
             }
-            var result = await _userManager.ResetPasswordAsync(user, model.Code, model.Password);
-            if (result.Succeeded)
+            var result = await _userManager.ResetPasswordAsync( user, model.Code, model.Password );
+            if ( result.Succeeded )
             {
-                return RedirectToAction(nameof(AccountController.ResetPasswordConfirmation), "Account");
+                return RedirectToAction( nameof( AccountController.ResetPasswordConfirmation ), "Account" );
             }
-            AddErrors(result);
+            AddErrors( result );
             return View();
         }
 
@@ -388,16 +391,16 @@ namespace ITI.SkyLord.Models.Entity_Framework.Controllers
         // GET: /Account/SendCode
         [HttpGet]
         [AllowAnonymous]
-        public async Task<ActionResult> SendCode(string returnUrl = null, bool rememberMe = false)
+        public async Task<ActionResult> SendCode( string returnUrl = null, bool rememberMe = false )
         {
             var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
-            if (user == null)
+            if ( user == null )
             {
-                return View("Error");
+                return View( "Error" );
             }
-            var userFactors = await _userManager.GetValidTwoFactorProvidersAsync(user);
-            var factorOptions = userFactors.Select(purpose => new SelectListItem { Text = purpose, Value = purpose }).ToList();
-            return View(new SendCodeViewModel { Providers = factorOptions, ReturnUrl = returnUrl, RememberMe = rememberMe });
+            var userFactors = await _userManager.GetValidTwoFactorProvidersAsync( user );
+            var factorOptions = userFactors.Select( purpose => new SelectListItem { Text = purpose, Value = purpose } ).ToList();
+            return View( new SendCodeViewModel { Providers = factorOptions, ReturnUrl = returnUrl, RememberMe = rememberMe } );
         }
 
         //
@@ -405,52 +408,52 @@ namespace ITI.SkyLord.Models.Entity_Framework.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SendCode(SendCodeViewModel model)
+        public async Task<IActionResult> SendCode( SendCodeViewModel model )
         {
-            if (!ModelState.IsValid)
+            if ( !ModelState.IsValid )
             {
                 return View();
             }
 
             var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
-            if (user == null)
+            if ( user == null )
             {
-                return View("Error");
+                return View( "Error" );
             }
 
             // Generate the token and send it
-            var code = await _userManager.GenerateTwoFactorTokenAsync(user, model.SelectedProvider);
-            if (string.IsNullOrWhiteSpace(code))
+            var code = await _userManager.GenerateTwoFactorTokenAsync( user, model.SelectedProvider );
+            if ( string.IsNullOrWhiteSpace( code ) )
             {
-                return View("Error");
+                return View( "Error" );
             }
 
             var message = "Your security code is: " + code;
-            if (model.SelectedProvider == "Email")
+            if ( model.SelectedProvider == "Email" )
             {
-                await _emailSender.SendEmailAsync(await _userManager.GetEmailAsync(user), "Security Code", message);
+                await _emailSender.SendEmailAsync( await _userManager.GetEmailAsync( user ), "Security Code", message );
             }
-            else if (model.SelectedProvider == "Phone")
+            else if ( model.SelectedProvider == "Phone" )
             {
-                await _smsSender.SendSmsAsync(await _userManager.GetPhoneNumberAsync(user), message);
+                await _smsSender.SendSmsAsync( await _userManager.GetPhoneNumberAsync( user ), message );
             }
 
-            return RedirectToAction(nameof(VerifyCode), new { Provider = model.SelectedProvider, ReturnUrl = model.ReturnUrl, RememberMe = model.RememberMe });
+            return RedirectToAction( nameof( VerifyCode ), new { Provider = model.SelectedProvider, ReturnUrl = model.ReturnUrl, RememberMe = model.RememberMe } );
         }
 
         //
         // GET: /Account/VerifyCode
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> VerifyCode(string provider, bool rememberMe, string returnUrl = null)
+        public async Task<IActionResult> VerifyCode( string provider, bool rememberMe, string returnUrl = null )
         {
             // Require that the user has already logged in via username/password or external login
             var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
-            if (user == null)
+            if ( user == null )
             {
-                return View("Error");
+                return View( "Error" );
             }
-            return View(new VerifyCodeViewModel { Provider = provider, ReturnUrl = returnUrl, RememberMe = rememberMe });
+            return View( new VerifyCodeViewModel { Provider = provider, ReturnUrl = returnUrl, RememberMe = rememberMe } );
         }
 
         //
@@ -458,57 +461,57 @@ namespace ITI.SkyLord.Models.Entity_Framework.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> VerifyCode(VerifyCodeViewModel model)
+        public async Task<IActionResult> VerifyCode( VerifyCodeViewModel model )
         {
-            if (!ModelState.IsValid)
+            if ( !ModelState.IsValid )
             {
-                return View(model);
+                return View( model );
             }
 
             // The following code protects for brute force attacks against the two factor codes.
             // If a user enters incorrect codes for a specified amount of time then the user account
             // will be locked out for a specified amount of time.
-            var result = await _signInManager.TwoFactorSignInAsync(model.Provider, model.Code, model.RememberMe, model.RememberBrowser);
-            if (result.Succeeded)
+            var result = await _signInManager.TwoFactorSignInAsync( model.Provider, model.Code, model.RememberMe, model.RememberBrowser );
+            if ( result.Succeeded )
             {
-                return RedirectToLocal(model.ReturnUrl);
+                return RedirectToLocal( model.ReturnUrl );
             }
-            if (result.IsLockedOut)
+            if ( result.IsLockedOut )
             {
-                _logger.LogWarning(7, "User account locked out.");
-                return View("Lockout");
+                _logger.LogWarning( 7, "User account locked out." );
+                return View( "Lockout" );
             }
             else
             {
-                ModelState.AddModelError("", "Invalid code.");
-                return View(model);
+                ModelState.AddModelError( "", "Invalid code." );
+                return View( model );
             }
         }
 
         #region Helpers
 
-        private void AddErrors(IdentityResult result)
+        private void AddErrors( IdentityResult result )
         {
-            foreach (var error in result.Errors)
+            foreach ( var error in result.Errors )
             {
-                ModelState.AddModelError(string.Empty, error.Description);
+                ModelState.AddModelError( string.Empty, error.Description );
             }
         }
 
         private async Task<ApplicationUser> GetCurrentUserAsync()
         {
-            return await _userManager.FindByIdAsync(HttpContext.User.GetUserId());
+            return await _userManager.FindByIdAsync( HttpContext.User.GetUserId() );
         }
 
-        private IActionResult RedirectToLocal(string returnUrl)
+        private IActionResult RedirectToLocal( string returnUrl )
         {
-            if (Url.IsLocalUrl(returnUrl))
+            if ( Url.IsLocalUrl( returnUrl ) )
             {
-                return Redirect(returnUrl);
+                return Redirect( returnUrl );
             }
             else
             {
-                return RedirectToAction("SeeMyIsland", "Island");
+                return RedirectToAction( "SeeMyIsland", "Island" );
             }
         }
 

@@ -57,9 +57,6 @@ namespace ITI.SkyLord
             };
             currentIsland.Buildings.Add( buildingToAdd );
 
-            // Substract the ressource DO THIS WHEN BuildingEvent is fired !!
-            RessourceManager.RemoveRessource( CurrentContext.GetIsland( currentIslandId, playerId ).AllRessources, buildingToAdd.Level.Cost );
-
             return true;
         }
 
@@ -71,7 +68,6 @@ namespace ITI.SkyLord
             {
                 bool isLeveledUp = LevelManager.LevelUp( buildingToLevelUp );
 
-                RessourceManager.RemoveRessource( CurrentContext.GetIsland( currentIslandId, playerId ).AllRessources, buildingToLevelUp.Level.Cost );
                 return isLeveledUp;
             }
             return false;
@@ -100,13 +96,12 @@ namespace ITI.SkyLord
 
         public Building GetBuildingOnPosition(long islandId, int position)
         {
-            return CurrentContext.Islands.Include(i => i.Buildings).Where(i => i.IslandId == islandId).Single().Buildings.Where(b => b.Position == position).FirstOrDefault();
+            return CurrentContext.Islands.Include(i => i.Buildings).ThenInclude( b => b.Level ).ThenInclude( bl => bl.Cost )
+                .Where(i => i.IslandId == islandId).Single().Buildings.Where(b => b.Position == position).FirstOrDefault();
         }
 
-        public bool IsEnoughForNextLevel( BuildingName buildingName, long islandId, long playerId, int position )
+        public bool IsEnoughForNextLevel( Building buildingToLevelUp, long islandId, long playerId, int position )
         {
-            Building buildingToLevelUp = GetBuildingsOnCurrentIsland( islandId, playerId ).Single( b => b.BuildingName == buildingName && b.Position == position );
-
             Level nextLevel = LevelManager.FindNextLevel( buildingToLevelUp.Level );
             if ( nextLevel != null )
             {

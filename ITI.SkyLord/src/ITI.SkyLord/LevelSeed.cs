@@ -811,25 +811,25 @@ namespace ITI.SkyLord
 
                 // Set up Levels
                 ShieldLevel shieldLevel1 = AddShieldLevel( context, BuildingName.shield, 1, shieldLevel1Cost, 30,
-                    null, 25, 0 );
+                    null, 25 );
                 ShieldLevel shieldLevel2 = AddShieldLevel( context, BuildingName.shield, 2, shieldLevel2Cost, 60,
-                    CreateRequirementList( shieldLevel2Requirement ), 50, 0 );
+                    CreateRequirementList( shieldLevel2Requirement ), 50 );
                 ShieldLevel shieldLevel3 = AddShieldLevel( context, BuildingName.shield, 3, shieldLevel3Cost, (int)( shieldLevel2.Duration * 2.5 ),
-                    CreateRequirementList( shieldLevel3Requirement ), 100, 50 );
+                    CreateRequirementList( shieldLevel3Requirement ), 100 );
                 ShieldLevel shieldLevel4 = AddShieldLevel( context, BuildingName.shield, 4, shieldLevel3Cost, (int)( shieldLevel3.Duration * 2.5 ),
-                    CreateRequirementList( shieldLevel4Requirement ), 200, 100 );
+                    CreateRequirementList( shieldLevel4Requirement ), 200);
                 ShieldLevel shieldLevel5 = AddShieldLevel( context, BuildingName.shield, 5, shieldLevel5Cost, (int)( shieldLevel4.Duration * 2.75 ),
-                    CreateRequirementList( shieldLevel5Requirement ), 400, 150 );
+                    CreateRequirementList( shieldLevel5Requirement ), 400);
                 ShieldLevel shieldLevel6 = AddShieldLevel( context, BuildingName.shield, 6, shieldLevel6Cost, (int)( shieldLevel5.Duration * 2.75 ),
-                    CreateRequirementList( shieldLevel6Requirement ), 650, 200 );
+                    CreateRequirementList( shieldLevel6Requirement ), 650);
                 ShieldLevel shieldLevel7 = AddShieldLevel( context, BuildingName.shield, 7, shieldLevel7Cost, (int)( shieldLevel6.Duration * 2.75 ),
-                    CreateRequirementList( shieldLevel7Requirement ), 1200, 300 );
+                    CreateRequirementList( shieldLevel7Requirement ), 1200);
                 ShieldLevel shieldLevel8 = AddShieldLevel( context, BuildingName.shield, 8, shieldLevel8Cost, (int)( shieldLevel7.Duration * 3.0 ),
-                    CreateRequirementList( shieldLevel8Requirement ), 2350, 600 );
+                    CreateRequirementList( shieldLevel8Requirement ), 2350);
                 ShieldLevel shieldLevel9 = AddShieldLevel( context, BuildingName.shield, 9, shieldLevel9Cost, (int)( shieldLevel8.Duration * 3.0 ),
-                    CreateRequirementList( shieldLevel9Requirement ), 5000, 1200 );
+                    CreateRequirementList( shieldLevel9Requirement ), 5000);
                 ShieldLevel shieldLevel10 = AddShieldLevel( context, BuildingName.shield, 10, shieldLevel10Cost, (int)( shieldLevel9.Duration * 3.25 ),
-                    CreateRequirementList( shieldLevel10Requirement ), 7500, 1500 );
+                    CreateRequirementList( shieldLevel10Requirement ), 7500);
 
                 context.SaveChanges();
             }
@@ -1924,7 +1924,7 @@ namespace ITI.SkyLord
 
         }
 
-        ShieldLevel AddShieldLevel( SetupContext context, BuildingName buildingName, int number, Ressource cost, int duration, List<Requirement> requirements, int defense, int offence )
+        ShieldLevel AddShieldLevel( SetupContext context, BuildingName buildingName, int number, Ressource cost, int duration, List<Requirement> requirements, int defense )
         {
             ShieldLevel fieldLevel = new ShieldLevel
             {
@@ -1932,8 +1932,7 @@ namespace ITI.SkyLord
                 BuildingName = buildingName,
                 Cost = cost,
                 Requirements = requirements,
-                Defense = defense,
-                Offense = offence
+                Defense = defense
             };
             context.Add( fieldLevel );
             return fieldLevel;

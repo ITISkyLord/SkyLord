@@ -10,13 +10,16 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
     {
         public ArmyManager ArmyManager { get; }
         public BuildingManager BuildingManager { get; }
+        public BonusManager BonusManager { get; }
+        public LevelManager LevelManager { get; }
         // public LevelManager LevelManager { get; }
         // public TechnologyManager Technology { get; }
 
         public EventPackManager(SetupContext ctx)
         {
-            ArmyManager = new ArmyManager(ctx, new BonusManager( ctx ) );
-            var LevelManager = new LevelManager(ctx);
+            BonusManager = new BonusManager( ctx );
+            ArmyManager = new ArmyManager(ctx, BonusManager );
+            LevelManager = new LevelManager(ctx);
             BuildingManager = new BuildingManager(ctx,LevelManager );
 
             //LevelManager = new LevelManager(ctx);

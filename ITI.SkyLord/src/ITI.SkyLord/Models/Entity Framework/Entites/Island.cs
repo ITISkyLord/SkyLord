@@ -33,6 +33,10 @@ namespace ITI.SkyLord
         /// Last time resources production was checked
         /// </summary>
         public DateTime CheckTime { get; set; }
+        /// <summary>
+        /// Last time loyalty production was checked
+        /// </summary>
+        public DateTime LoyaltyCheckTime { get; set; }
 
         #endregion
     }
