@@ -19,7 +19,7 @@ namespace ITI.SkyLord.Controllers
         public SetupContext SetupContext { get; set; }
 
         // GET: /<controller>/
-        public IActionResult Index( long islandId = 0 )
+        public IActionResult Index( long islandId )
         {
             //Récupérer la description dans la BDD
 

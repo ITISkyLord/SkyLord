@@ -22,7 +22,7 @@
                     @foreach( Island island in Model.OtherIslands )
                     {
                         <p>
-                           <a asp-action="SeeOtherIsland" asp-controller="Island" asp-route-islandId="@island.IslandId"> @island.Name [@island.Coordinates.X, @island.Coordinates.Y] </a>
+                           <a asp-action="SeeOtherIsland" asp-controller="Island" asp-route-islandId="@Model.Layout.IslandId" asp-route-islandIdOfOtherPlayer="@island.IslandId"> @island.Name [@island.Coordinates.X, @island.Coordinates.Y] </a>
                         </p>
                     }
 
