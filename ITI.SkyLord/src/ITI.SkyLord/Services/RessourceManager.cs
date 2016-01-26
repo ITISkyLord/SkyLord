@@ -187,60 +187,38 @@ namespace ITI.SkyLord.Services
             };
         }
 
-        //public static int GetCoefficient( Ressource source, Ressource cost )
-        //{
-        //    if ( source.Wood < cost.Wood || source.Metal < cost.Metal || source.Cristal < cost.Cristal || source.Magic < cost.Magic )
-        //    {
-        //        return 0;
-        //    }
-        //    else
-        //    {
-        //        int[ ] sourceValues = RessourceToArray( source );
-        //        int[ ] costValues = RessourceToArray( cost );
-        //        int[ ] coeff = new int[ 4 ];
+        public static int GetCoefficient( Ressource source, Ressource cost )
+        {
+            if ( source.Wood < cost.Wood || source.Metal < cost.Metal || source.Cristal < cost.Cristal || source.Magic < cost.Magic )
+            {
+                return 0;
+            }
+            else
+            {
+                int[ ] sourceValues = RessourceToArray( source );
+                int[ ] costValues = RessourceToArray( cost );
+                int coeff = 0;
+                for ( int i = 0; i < sourceValues.Count(); i++ )
+                {
+                    int tempCoeff = 0;
+                    if ( costValues[i] == 0 )
+                    {
+                        tempCoeff = int.MaxValue;
+                    }
+                    else
+                    {
+                        tempCoeff = sourceValues[ i ] / costValues[ i ];
+                    }
 
-        //        for ( int i = 0; i < sourceValues.Count(); i++ )
-        //        {
-        //            if ()
-        //        }
+                    if( i == 0 || tempCoeff < coeff )
+                    {
+                        coeff = tempCoeff;
+                    }
+                }
 
-        //        if ( cost.Wood == 0 )
-        //        {
-        //            coeff[ 0 ] = int.MaxValue;
-        //        }
-        //        else
-        //        {
-        //            coeff[ 0 ] = ( source.Wood / cost.Wood );
-        //        }
-
-        //        if ( cost.Metal == 0 )
-        //        {
-        //            coeff[ 1 ] = int.MaxValue;
-        //        }
-        //        else
-        //        {
-        //            coeff[ 1 ] = ( source.Metal / cost.Metal );
-        //        }
-
-        //        if ( cost.Cristal == 0 )
-        //        {
-        //            coeff[ 2 ] = int.MaxValue;
-        //        }
-        //        else
-        //        {
-        //            coeff[ 2 ] = ( source.Cristal / cost.Cristal );
-        //        }
-
-        //        if ( cost.Magic == 0 )
-        //        {
-        //            coeff[ 3 ] = int.MaxValue;
-        //        }
-        //        else
-        //        {
-        //            coeff[ 3 ] = ( source.Magic / cost.Magic );
-        //        }
-        //    }
-        //}
+                return coeff;
+            }
+        }
 
         private static int[] RessourceToArray( Ressource ressource )
         {
