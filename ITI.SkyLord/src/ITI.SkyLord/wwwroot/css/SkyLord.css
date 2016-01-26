@@ -7164,6 +7164,9 @@ footer li a:hover {
   width: 100% !important
         height: 100% !important;
 }
+#degage {
+  position: relative;
+}
 #UI {
   position: relative;
   float: left;
@@ -7191,6 +7194,8 @@ footer li a:hover {
   }
 }
 .templatebuilding {
+  position: absolute!important;
+  top: 0px!important;
   border: 1px solid #825847;
   border-radius: 0;
   transition: box-shadow 0.5s;
