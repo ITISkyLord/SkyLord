@@ -6,9 +6,14 @@
     <h2>@BuildingManager.StaticBuildingNameToName(Model.CurrentBuilding.BuildingName)</h2>
 </div>
 
+@*Choisis toujours le gif qui est équivalent à l'avatar du player*@
 
 @{
-    Write(Html.Partial("~/Views/Partial/DescriptionPartial.cshtml", new DescriptionPartial { Description = "Je suis un woodField", FullNameOfImage = "tower.gif" }));
+    string gifImg = "~/images/Avatar/Gif/sorcier" + Model.Layout.CurrentIsland.IslandId % 4 + ".gif";
+}
+
+@{
+    Write(Html.Partial("~/Views/Partial/DescriptionPartial.cshtml", new DescriptionPartial { Description = "Je suis la tour de", FullNameOfImage = "tower.gif", NameOfGif = gifImg }));
 
     Write(Html.Partial("~/Views/Partial/LevelUpBuilding.cshtml", Model));
 }
