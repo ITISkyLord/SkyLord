@@ -7478,6 +7478,9 @@ footer li a:hover {
   display: block;
   overflow: auto;
 }
+.messageContainer button {
+  margin-top: 175px;
+}
 .messageContainer #bt-reception a {
   font-size: 13px;
 }

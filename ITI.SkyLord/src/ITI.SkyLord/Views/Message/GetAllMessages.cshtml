@@ -13,7 +13,54 @@
         <div class="row">
 
             <div class="col-sm-2 col-md-2">
-                <input type="button" class="btn btn-danger" value="Nouveau message" />
+
+                <input type="button" class="btn btn-danger" id="sendMessage" value="Nouveau message" />
+                <!-- Modal -->
+                <div class="modal fade" id="ModalLogin" role="dialog">
+                    <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header" style="padding:35px 50px;">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4><span class="glyphicon glyphicon-envelope"></span> Nouveau Message</h4>
+                            </div>
+                            <div class="modal-body" style="padding:40px 50px;">
+                                <form asp-controller="Message" asp-action="SendMessage" asp-route-islandId="@Model.Layout.IslandId" method="post" class="form-horizontal" role="form">
+                                    <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
+                                    <div class="form-group">
+                                        <label for="to"><span class="glyphicon glyphicon-user"></span> A : </label>
+                                        <input asp-for="To" class="form-control" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="object"><span class="glyphicon glyphicon-comment"></span> Objet du message : </label>
+                                        <input asp-for="ObjectOfSender" class="form-control" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="core"><span class="glyphicon glyphicon-comment"></span> Corps du message</label>
+                                        <textarea asp-for="Answer" class="form-control"></textarea>
+                                    </div>
+
+                                    <input type="submit" class="btn-link" value="Envoyer le message" />
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Annuler</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <script>
+                    $(document).ready(function () {
+                        $("#sendMessage").click(function () {
+                            $("#ModalLogin").modal();
+                        });
+                    });
+                </script>
+
+
+
                 <ul class="nav nav-pills nav-stacked" id="bt-reception" data-spy="affix" data-offset-top="205">
                     <li><a asp-controller="Message" asp-action="GetAllMessages" asp-route-islandId="@Model.Layout.IslandId">Boite de réception</a></li>
                 </ul>
@@ -67,7 +114,7 @@
                                 @foreach (Message message in Model.AllMessages.Where(u => !u.isCombatReport))
                                 {
                                     <tr>
-                                        <td><a asp-controller="Profil"  id="coreMessage" asp-action="ProfilOfAPlayer" asp-route-playerId="@message.Sender.PlayerId" asp-route-islandId="@Model.Layout.IslandId">@message.Sender.Name</a></td>
+                                        <td><a asp-controller="Profil" id="coreMessage" asp-action="ProfilOfAPlayer" asp-route-playerId="@message.Sender.PlayerId" asp-route-islandId="@Model.Layout.IslandId">@message.Sender.Name</a></td>
 
                                         @if (message.Read)
                                         {
@@ -75,7 +122,7 @@
                                         }
                                         else
                                         {
-                                            <td><a asp-controller="Message" asp-action="SeeThisMessage"id="coreMessage2" asp-route-messageId="@message.MessageId" asp-route-islandId="@Model.Layout.IslandId"><strong>@message.MessageObject</strong></a></td>
+                                            <td><a asp-controller="Message" asp-action="SeeThisMessage" id="coreMessage2" asp-route-messageId="@message.MessageId" asp-route-islandId="@Model.Layout.IslandId"><strong>@message.MessageObject</strong></a></td>
                                         }
 
                                         <td>@message.DateSent</td>
