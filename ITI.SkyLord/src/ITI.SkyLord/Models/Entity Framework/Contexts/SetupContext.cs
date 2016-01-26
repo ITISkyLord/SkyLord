@@ -123,7 +123,7 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
         {
             svm.Layout = new LayoutViewModel();
 
-            svm.Layout.AllIslands = Islands.Include( i => i.Owner ).Where( i => i.Owner.PlayerId == playerId ).ToList();
+            svm.Layout.AllIslands = Islands.Include( i => i.Coordinates ).Include( i => i.Owner ).Where( i => i.Owner.PlayerId == playerId ).ToList();
             svm.Layout.CurrentIsland = GetIsland( islandId, playerId );
             svm.Layout.CurrentPlayer = Players.Include( p => p.Technologies ).ThenInclude( t => t.Level ).Single( p => p.PlayerId == playerId );
             List<ArmyEvent> attacksTowardsthiPlayer = new List<ArmyEvent>();
@@ -186,8 +186,7 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
                 .Include( i => i.Coordinates )
                 .SingleOrDefault( i => i.IslandId == islandId && i.Owner.PlayerId == activePlayerId );
 
-        }
-
+        } 
         public void ValidateIsland( long islandId, long playerId )
         {
             bool islandIsFound = false;

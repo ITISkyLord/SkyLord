@@ -62,9 +62,13 @@ namespace ITI.SkyLord.Controllers
 
 
         }
-        public IActionResult SetAttackingArmy( SetAttackingArmyViewModel model, long islandId = 0, long EnnemyIslandId = 0 )
+        public IActionResult SetAttackingArmy( SetAttackingArmyViewModel model, long islandId = 0, long ennemyIslandId = 0 )
         {
-            if( EnnemyIslandId != 0 ) model.EnnemyIslandId = EnnemyIslandId;
+            if( ennemyIslandId != 0 )
+            {
+                model.EnnemyIslandId = ennemyIslandId;
+                model.Target = ennemyIslandId;
+            }
 
             // Tout les mouvements d'armée de l'ile qui ne sont pas encore fait et qui ne sont pas obsolètes
             model.AllPlayerArmiesEvent = SetupContext
@@ -79,7 +83,6 @@ namespace ITI.SkyLord.Controllers
 
             return View( CreateSetAttackingArmyViewModel( model, islandId ) );
         }
-
         public IActionResult Fight( SetAttackingArmyViewModel model, long islandId = 0 )
         {
             Army defendingArmyFromAttacker = SetupContext.Armies
@@ -281,14 +284,14 @@ namespace ITI.SkyLord.Controllers
                 return RedirectToAction( "SetAttackingArmy", new { islandId = islandId } );
             }
         }
-        private SetSendRessourcesViewModel CreateSetSendRessourceViewModel( long islandId )
+        private SetSendRessourcesViewModel CreateSetSendRessourceViewModel( long islandId, long targetId )
         {
-            return CreateSetSendRessourceViewModel( islandId, new SetSendRessourcesViewModel() );
+            return CreateSetSendRessourceViewModel( islandId, targetId, new SetSendRessourcesViewModel() );
         }
-        private SetSendRessourcesViewModel CreateSetSendRessourceViewModel( long islandId, SetSendRessourcesViewModel model )
+        private SetSendRessourcesViewModel CreateSetSendRessourceViewModel( long islandId, long targetId, SetSendRessourcesViewModel model )
         {
             model.SendableIslands = SetupContext.Islands.Include( i => i.Coordinates ).Include( i => i.Owner ).Where( i => i.Owner != null && i.IslandId != islandId ).ToList();
-
+            if( targetId == 0 ) model.TargetIslandId = targetId; 
             //model.CurrentTransportorArmy = SetupContext.Islands.Include( i => i.Armies ).ThenInclude( a => a.Regiments )
             //    .ThenInclude( r => r.Unit ).ThenInclude( u => u.UnitStatistics )
             //    .Single( i => i.IslandId == islandId ).Armies.Single( a => a.ArmyState != ArmyState.obsolete );
@@ -325,13 +328,14 @@ namespace ITI.SkyLord.Controllers
             SetupContext.FillStandardVM( model, SetupContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
             return model;
         }
-        public IActionResult SetSendRessources( long islandId )
+        public IActionResult SetSendRessources( long islandId, long targetId = 0 )
         {
-            return View( CreateSetSendRessourceViewModel( islandId ) );
+            return View( CreateSetSendRessourceViewModel( islandId, targetId ) );
         }
-        public IActionResult SetColonisation( long islandId = 0 )
+        public IActionResult SetColonisation( long islandId, long target = 0 )
         {
             SetColonisationViewModel model = new SetColonisationViewModel();
+            if( target != 0 ) model.TargetIslandId = target;
             long playerId = SetupContext.GetPlayer( User.GetUserId() ).PlayerId;
 
             model.PossibleColonisableIslands = SetupContext.Islands.Include( i => i.Coordinates ).Include( i => i.Owner ).Where( i => i.Owner == null ).ToList();
@@ -416,15 +420,16 @@ namespace ITI.SkyLord.Controllers
                 return RedirectToAction( "SetAttackingArmy", new { islandId = islandId } );
             }
         }
-        public IActionResult SetMovement( long islandId )
+        public IActionResult SetMovement( long islandId, long target = 0 )
         {
             long playerId = SetupContext.GetPlayer( User );
-            SetMovementArmyViewModel movementViewModel = new SetMovementArmyViewModel();
+            SetMovementArmyViewModel model = new SetMovementArmyViewModel();
+            if( target != 0 ) model.TargetIslandId = target;
+            
+            SetupContext.FillStandardVM( model, playerId, islandId );
+            model.CurrentDefenseArmy = new ArmyManager( SetupContext, new BonusManager( SetupContext ) ).GetCurrentDefenseArmy( islandId );
 
-            SetupContext.FillStandardVM( movementViewModel, playerId, islandId );
-            movementViewModel.CurrentDefenseArmy = new ArmyManager( SetupContext, new BonusManager( SetupContext ) ).GetCurrentDefenseArmy( islandId );
-
-            return View( movementViewModel );
+            return View( model );
 
         }
         public IActionResult MoveArmy( SetMovementArmyViewModel model, long islandId )
