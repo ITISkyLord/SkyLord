@@ -73,8 +73,10 @@
 
                 @Model.Message.DateSent<hr />
 
-
-                <p>@Model.Message.CoreMessage</p><hr />
+                <div id="msgCore">
+                    @Model.Message.CoreMessage<hr />
+                </div>
+                
 
                 <div class="form-group">
                     <textarea class="form-control" rows="2" id="comment" data-toggle="collapse" data-target="#demo">Cliquez ici pour répondre...</textarea>
@@ -86,7 +88,7 @@
                         <form asp-controller="Message" asp-action="Answer" asp-route-islandId="@Model.Layout.IslandId" asp-route-messageId="@Model.Message.MessageId" role="form" method="post">
                             <input type="hidden" asp-for="@Model.FromId" value="@Model.FromId" />
                             <div class="form-group">
-                                <span class="glyphicon glyphicon-inbox"></span><input type="text" class="form-control" asp-for="ObjectOfSender" id="object" value="RE : @Model.Message.MessageObject" />
+                                <span class="glyphicon glyphicon-user"></span><input type="text" class="form-control" asp-for="ObjectOfSender" id="object" value="A  @Model.Message.Sender.Mail" />
                             </div>
 
                             <br />
@@ -101,8 +103,8 @@
 
             <div class="col-sm-3 col-md-3">
                 <div class="btn-group">
-                    <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-share-alt"></span></button>
-                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                    <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-share-alt"></span></button>
+                    <button type="button" class="btn btn-danger" dropdown-toggle" data-toggle="dropdown">
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu">

@@ -7505,12 +7505,19 @@ footer li a:hover {
 .messageContainer #sendMessage {
   margin-top: 3px;
 }
+.messageContainer #answerMessage {
+  margin-bottom: 10px;
+}
 .messageContainer #msgObject {
   font-weight: bold;
   font-size: 20px;
 }
 .messageContainer #bt-reception a {
   font-size: 13px;
+}
+.messageContainer #msgCore {
+  font-style: italic;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .messageContainer #bt-reception a:hover {
   background: none;
