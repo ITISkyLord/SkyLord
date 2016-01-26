@@ -83,7 +83,7 @@ namespace ITI.SkyLord.Controllers
         {
             //Récupérer la description dans la BDD
             Player currentPlayer = SetupContext.GetPlayer(User.GetUserId());
-            Player p = SetupContext.Players.Single( pe=> pe.PlayerId == playerId);
+            Player p = SetupContext.Players.Include( pro => pro.Profil ).Single( pe => pe.PlayerId == playerId);
             ProfilViewModel model = new ProfilViewModel();
             // Si le joueur existe => On affiche le profil
             model.Name = p.Name;
@@ -102,7 +102,7 @@ namespace ITI.SkyLord.Controllers
 
 
             SetupContext.FillStandardVM( model, SetupContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
-            return View( model );
+            return View( "ProfilOfOtherPlayer", model );
         }
 
         public IActionResult ChangeProfil( long islandId = 0 )

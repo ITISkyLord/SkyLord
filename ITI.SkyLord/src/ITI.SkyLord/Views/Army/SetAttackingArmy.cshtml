@@ -113,8 +113,8 @@
                     <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
 
                     @* Petit moyen pour chercher l'île en fonction des coordonnées *@
-                    <label for="pos-x"></label><input type="number" name="pos-x" value="@Model.EnnemyIslands.First().Coordinates.X" />
-                    <label for="pos-y"></label><input type="number" name="pos-y" value="@Model.EnnemyIslands.First().Coordinates.Y" />
+                    <label for="pos-x">[X]</label><input type="number" name="pos-x" value="@Model.EnnemyIslands.First().Coordinates.X" />
+                    <label for="pos-y">[Y]</label><input type="number" name="pos-y" value="@Model.EnnemyIslands.First().Coordinates.Y" />
 
                     @* Choix de la cible *@
 

@@ -6911,6 +6911,9 @@ body {
   margin-right: auto;
   margin-left: auto;
 }
+.SkyLordContainer .SkyLordMainRow .SkylordSideBar .CurrentIsland {
+  background-color: white;
+}
 .SkyLordContainer .SkyLordMainRow .PageContent {
   position: relative;
   float: left;
@@ -7034,7 +7037,7 @@ footer li a:hover {
 #Test {
   position: relative;
   float: left;
-  width: 50%;
+  width: 41.66666667%;
   min-height: 1px;
   padding-left: 15px;
   padding-right: 15px;
@@ -7042,19 +7045,19 @@ footer li a:hover {
 @media (min-width: 1200px) {
   #Test {
     float: left;
-    width: 50%;
+    width: 41.66666667%;
   }
 }
 @media (min-width: 992px) {
   #Test {
     float: left;
-    width: 50%;
+    width: 41.66666667%;
   }
 }
 @media (min-width: 768px) {
   #Test {
     float: left;
-    width: 50%;
+    width: 41.66666667%;
   }
 }
 #SeeMyIsland {
@@ -7145,7 +7148,7 @@ footer li a:hover {
 #UI {
   position: relative;
   float: left;
-  width: 50%;
+  width: 58.33333333%;
   min-height: 1px;
   padding-left: 15px;
   padding-right: 15px;
@@ -7153,26 +7156,26 @@ footer li a:hover {
 @media (min-width: 1200px) {
   #UI {
     float: left;
-    width: 50%;
+    width: 58.33333333%;
   }
 }
 @media (min-width: 992px) {
   #UI {
     float: left;
-    width: 50%;
+    width: 58.33333333%;
   }
 }
 @media (min-width: 768px) {
   #UI {
     float: left;
-    width: 50%;
+    width: 58.33333333%;
   }
 }
 .templatebuilding {
   border: 1px solid #825847;
   border-radius: 0;
   transition: box-shadow 0.5s;
-  width: 580px;
+  width: 100%;
   height: 580px;
   background-image: url("../images/Site/site_ressource.png");
   background-size: 100% 100%;

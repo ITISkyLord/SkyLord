@@ -1,4 +1,13 @@
-﻿
+﻿@model ITI.SkyLord.ViewModel.Partial.BuildingPartialViewModel
+
 <div class="head">
     <h2>@BuildingManager.StaticBuildingNameToName(Model.CurrentBuilding.BuildingName)</h2>
 </div>
+
+<div>
+    [Description du building]
+</div>
+
+@{
+    Write(Html.Partial("~/Views/Partial/LevelUpBuilding.cshtml", Model));
+}

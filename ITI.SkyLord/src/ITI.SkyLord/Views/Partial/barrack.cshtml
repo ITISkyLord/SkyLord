@@ -4,11 +4,9 @@
     <h2>@BuildingManager.StaticBuildingNameToName(Model.CurrentBuilding.BuildingName)</h2>
 </div>
 
-<ul>
-    <li>Niveau Actuel</li>
-    <li>Description</li>
-    <li>Bonus actuels</li>
-    <li>Pouvoir LevelUp</li>
-    <li>Bonus gagné au level up</li>
-</ul>
+<div>[Description]</div>
+
+@{ 
+    Write(Html.Partial("~/Views/Partial/LevelUpBuilding.cshtml", Model));
+}
 

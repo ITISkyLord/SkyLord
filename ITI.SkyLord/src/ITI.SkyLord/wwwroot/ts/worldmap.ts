@@ -9,17 +9,23 @@ Gère la world map pour la vue /World
 */
 
 // Variables à définir en cas de changement de tailles des elements
-var taillecase: number = 64;
-var taillemap: number = 500;
+var taillecase: number;
+var taillemap_x: number;
+var taillemap_y: number;
 
 // Main
 $(document).ready(function () {
-    
+
+    taillecase = parseInt($(".map td").css("width"));
+    taillemap_x = parseInt($(".map").css("width"));
+    taillemap_y = parseInt($(".map").css("height"));
+
     // Centre la map sur l'island de la personne
-    var pos = GetCoordinate($("#MyIsland"));
-    $("#draggable").css("top", pos.X + "px");
-    $("#draggable").css("left", pos.Y + "px");
-    TestConstraint($("#draggable"));
+    CenterIsland();
+
+    $("#CenterIsland").click(function () {
+        CenterIsland();
+    });
 
     // On rend l'élément draggable
     $("#draggable").draggable(
@@ -90,12 +96,12 @@ function GetCoordinate(islandNode: JQuery): Coordinate {
     var x: number = + $(islandNode).attr("x");
     var y: number = + $(islandNode).attr("y");
 
-    var pos_x: number = -1 * x * taillecase - taillecase + (taillemap / 2) - (taillecase / 2);
-    var pos_y: number = -1 * y * taillecase - taillecase + (taillemap / 2) - (taillecase / 2);
+    var pos_x: number = -1 * x * taillecase + (taillemap_y / 2);
+    var pos_y: number = -1 * y * taillecase + (taillemap_x / 2);
 
     return new Coordinate(pos_x, pos_y);
 }
-    function TestConstraint(node: JQuery) {
+function TestConstraint(node: JQuery) {
         var pos_x: number = parseInt($(node).css("top"));
         var pos_y: number = parseInt($(node).css("left"));
 
@@ -128,3 +134,12 @@ function GetCoordinate(islandNode: JQuery): Coordinate {
 
     }
  
+function CenterIsland() {
+
+    var pos = GetCoordinate($("#MyIsland"));
+    $("#draggable").css("top", pos.X + "px");
+    $("#draggable").css("left", pos.Y + "px");
+    TestConstraint($("#draggable"));
+}
+
+
