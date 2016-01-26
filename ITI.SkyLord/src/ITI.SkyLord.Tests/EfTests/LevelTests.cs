@@ -1010,14 +1010,6 @@ namespace ITI.SkyLord.Tests.EfTests
         //    unitSeed.SeedUnits();
         //}
 
-        [Test]
-        public void RessourceTest()
-        {
-            Ressource source = new Ressource { Wood = 100, Metal = 50, Cristal = 50, Magic = 100 };
-            Ressource cost = new Ressource { Wood = 25, Metal = 50, Cristal = 10, Magic = 0 };
-
-            RessourceManager.GetCoefficient( source, cost );
-        }
         #endregion
 
         private Ressource Multiplyressource( Ressource initialRessource, int factor )

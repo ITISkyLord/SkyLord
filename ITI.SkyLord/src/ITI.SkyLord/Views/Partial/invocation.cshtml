@@ -1,4 +1,5 @@
 ﻿@model ITI.SkyLord.ViewModel.Partial.BuildingPartialViewModel
+@using ITI.SkyLord.Services
 <style>
     #StatisticModale {
         display: none;
@@ -97,7 +98,6 @@
                     else
                     {
                         <div class="UnitAvailable"></div>
-
                     }
 
                     <div class="col-lg-2  MisEnAvant">
@@ -109,11 +109,13 @@
 
                     @{
                         int number = 0;
-                        if( Model.CurrentArmy != null )
+                        if ( Model.CurrentArmy != null )
                         {
-                            var regiment = Model.CurrentArmy.Regiments.Where(r => r.Unit.Name == unit.Name).FirstOrDefault();
+                            var regiment = Model.CurrentArmy.Regiments.Where( r => r.Unit.Name == unit.Name ).FirstOrDefault();
                             number = regiment == null ? 0 : regiment.Number;
                         }
+
+                        int maxUnit = RessourceManager.GetCoefficient( Model.Layout.CurrentIsland.AllRessources, unit.UnitCost );
                     }
                     <div class="cost">
                         <div class="col col-lg-1 col-sm-1">@number</div>
@@ -122,12 +124,10 @@
                         <div class="col col-lg-1 col-sm-1">Cristal @unit.UnitCost.Cristal</div>
                         <div class="col col-lg-1 col-sm-1">Magie @unit.UnitCost.Magic</div>
                         <div class="col col-lg-1 col-sm-1">@unit.Duration s</div>
+                        <div class="col col-lg-1 col-sm-1">Nombre maximum @maxUnit</div>
                     </div>
 
-                    @{
-// TODO : Calcul du max d'unité que l'on peut faire pour cette unité afin de ne pas lui proposer de faire plus d'unité qu'il ne peut
-                    }
-                    <div class="col-lg-2"><input class="form-control" style="width: 100%;" type="number" asp-for="UnitAmount" min="0" step="1" value="0" /></div>
+                    <div class="col-lg-2"><input class="form-control" style="width: 100%;" type="number" asp-for="UnitAmount" min="0" max="@maxUnit" step="1" value="0" /></div>
                     <div class="col-lg-1">
                         <input type="submit" class="btn btn-link" value="Former" />
                     </div>
