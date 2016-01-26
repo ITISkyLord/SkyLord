@@ -6812,6 +6812,7 @@ body {
   color: #825847;
   font-size: 17px;
   font-weight: bold;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .SkyLordContainer {
   margin-top: 49px;
@@ -6966,7 +6967,9 @@ footer li,
 footer a {
   color: #825847;
   font-weight: bold;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 footer li a:hover {
   color: #825847;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }

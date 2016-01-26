@@ -6818,6 +6818,7 @@ body {
   color: #825847;
   font-size: 17px;
   font-weight: bold;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .SkyLordContainer {
   margin-top: 49px;
@@ -6972,9 +6973,11 @@ footer li,
 footer a {
   color: #825847;
   font-weight: bold;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 footer li a:hover {
   color: #825847;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .island-header {
   position: relative;
@@ -7511,18 +7514,19 @@ footer li a:hover {
 .messageContainer #msgObject {
   font-weight: bold;
   font-size: 20px;
+  font-family: Century;
 }
 .messageContainer #bt-reception a {
   font-size: 13px;
 }
 .messageContainer #msgCore {
-  font-style: italic;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .messageContainer #bt-reception a:hover {
   background: none;
   font-size: 13px;
   color: #825847;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .messageContainer .readMessage {
   font-weight: bold;
@@ -7532,20 +7536,25 @@ footer li a:hover {
   color: dimgrey;
   font-weight: bold;
   text-align: center;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .messageContainer .readMessage .table td #coreMessage {
   color: black;
   text-decoration: none;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .messageContainer .readMessage .table td #coreMessage:hover {
   color: whitesmoke;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .messageContainer .readMessage .table td #coreMessage2 {
   color: darkred;
   text-decoration: none;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .messageContainer .readMessage .table td #coreMessage2:hover {
   color: whitesmoke;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 /*.SkyLordNavBar {
     .Col(12);
