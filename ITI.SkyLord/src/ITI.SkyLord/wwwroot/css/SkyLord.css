@@ -7480,16 +7480,21 @@ footer li a:hover {
 }
 .messageContainer .readMessage {
   font-weight: bold;
-  font-size: 20px;
+  font-size: 15px;
 }
 .messageContainer .readMessage .table th {
-  color: white;
+  color: dimgrey;
   font-weight: bold;
   text-align: center;
 }
-.messageContainer .readMessage .table td {
-  color: #825847;
+.messageContainer .readMessage .table td #coreMessage {
+  color: black;
+  text-decoration: none;
+}
+.messageContainer .readMessage .table td #coreMessage2 {
+  color: black;
   font-weight: bold;
+  text-decoration: none;
 }
 /*.SkyLordNavBar {
     .Col(12);

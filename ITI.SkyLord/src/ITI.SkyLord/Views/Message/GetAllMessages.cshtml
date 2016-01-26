@@ -12,24 +12,22 @@
     <div class="container text-center">
         <div class="row">
 
-            <div class="col-sm-3 col-md-3">
+            <div class="col-sm-2 col-md-2">
                 <input type="button" class="btn btn-danger" value="Nouveau message" />
                 <ul class="nav nav-pills nav-stacked" data-spy="affix" data-offset-top="205">
                     <li><a href="#section1">Boite de réception</a></li>
                 </ul>
             </div>
 
-            <div class="col-sm-9 col-md-9">
+            <div class="col-sm-10 col-md-10">
                 <ul class="nav nav-tabs">
                     <li class="active"><a data-toggle="tab" href="#home">Rappors de combat</a></li>
                     <li><a data-toggle="tab" href="#msgPerso">Messages personnels</a></li>
                 </ul>
 
-                <div class="tab-content">
-                    <div class="readMessage">
+                <div class="readMessage">
+                    <div class="tab-content">
                         <div id="home" class="tab-pane fade in active">
-
-
                             <table class="table">
                                 <thead>
                                     <tr>
@@ -38,26 +36,24 @@
                                     </tr>
                                 </thead>
 
-
                                 @foreach (Message m in Model.AllMessages.Where(u => u.isCombatReport))
                                 {
                                     <tr>
                                         @if (m.Read)
                                         {
-                                            <td><a asp-controller="Message" asp-action="SeeThisMessage" asp-route-messageId="@m.MessageId" asp-route-islandId="@Model.Layout.IslandId">@m.MessageObject</a></td>
+                                            <td><a asp-controller="Message" asp-action="SeeThisMessage" id="coreMessage" asp-route-messageId="@m.MessageId" asp-route-islandId="@Model.Layout.IslandId">@m.MessageObject</a></td>
                                         }
                                         else
                                         {
-                                            <td><a asp-controller="Message" asp-action="SeeThisMessage" asp-route-messageId="@m.MessageId" asp-route-islandId="@Model.Layout.IslandId"><strong>@m.MessageObject</strong></a></td>
+                                            <td><a asp-controller="Message" asp-action="SeeThisMessage" id="coreMessage2" asp-route-messageId="@m.MessageId" asp-route-islandId="@Model.Layout.IslandId"><strong>@m.MessageObject</strong></a></td>
                                         }
-
-
                                         <td>@m.DateSent</td>
                                     </tr>
                                 }
 
                             </table>
                         </div>
+
                         <div id="msgPerso" class="tab-pane fade">
                             <table class="table">
                                 <thead>
@@ -68,27 +64,23 @@
                                     </tr>
                                 </thead>
 
-
                                 @foreach (Message message in Model.AllMessages.Where(u => !u.isCombatReport))
                                 {
                                     <tr>
-                                        <td><a asp-controller="Profil" asp-action="ProfilOfAPlayer" asp-route-playerId="@message.Sender.PlayerId" asp-route-islandId="@Model.Layout.IslandId">@message.Sender.Name</a></td>
-
+                                        <td><a asp-controller="Profil"  id="coreMessage" asp-action="ProfilOfAPlayer" asp-route-playerId="@message.Sender.PlayerId" asp-route-islandId="@Model.Layout.IslandId">@message.Sender.Name</a></td>
 
                                         @if (message.Read)
                                         {
-                                            <td><a asp-controller="Message" asp-action="SeeThisMessage" asp-route-messageId="@message.MessageId" asp-route-islandId="@Model.Layout.IslandId">@message.MessageObject</a></td>
+                                            <td><a asp-controller="Message" id="coreMessage" asp-action="SeeThisMessage" asp-route-messageId="@message.MessageId" asp-route-islandId="@Model.Layout.IslandId">@message.MessageObject</a></td>
                                         }
                                         else
                                         {
-                                            <td><a asp-controller="Message" asp-action="SeeThisMessage" asp-route-messageId="@message.MessageId" asp-route-islandId="@Model.Layout.IslandId"><strong>@message.MessageObject</strong></a></td>
+                                            <td><a asp-controller="Message" asp-action="SeeThisMessage"id="coreMessage2" asp-route-messageId="@message.MessageId" asp-route-islandId="@Model.Layout.IslandId"><strong>@message.MessageObject</strong></a></td>
                                         }
-
 
                                         <td>@message.DateSent</td>
                                     </tr>
                                 }
-
                             </table>
                         </div>
                     </div>
