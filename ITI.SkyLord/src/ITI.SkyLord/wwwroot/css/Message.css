@@ -6748,8 +6748,13 @@ button.close {
   color: black;
   text-decoration: none;
 }
+.messageContainer .readMessage .table td #coreMessage:hover {
+  color: whitesmoke;
+}
 .messageContainer .readMessage .table td #coreMessage2 {
-  color: black;
-  font-weight: bold;
+  color: darkred;
   text-decoration: none;
+}
+.messageContainer .readMessage .table td #coreMessage2:hover {
+  color: whitesmoke;
 }
