@@ -84,10 +84,10 @@ namespace ITI.SkyLord.Controllers
             EventManager eventManager = new EventManager( SetupContext, new EventPackManager( SetupContext ) );
 
             // Fill Standard
-            SetupContext.FillStandardVM( model, SetupContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
+            SetupContext.FillStandardVM( model, playerId, islandId );
 
             // Current Player & Island
-            model.Layout.CurrentPlayer = SetupContext.GetPlayer( User.GetUserId() );
+            model.Layout.CurrentPlayer = SetupContext.Players.Include( p => p.Islands).Single( p => p.PlayerId == playerId);
             Island currentIsland = SetupContext.GetIsland( islandId, model.Layout.CurrentPlayer.PlayerId );
             model.CurrentIsland = currentIsland;
 
@@ -137,18 +137,18 @@ namespace ITI.SkyLord.Controllers
 
             // Toutes les technologies possibles
             TechnologyManager techManager = new TechnologyManager( SetupContext, levelManager, new BonusManager( SetupContext ) );
-            model = CreateTechnologyItems( model, islandId, playerId );
+            model = CreateTechnologyItems( model, eventManager, islandId, playerId );
             return model;
         }
         private SeeIslandViewModel CreateBuildingViewModel( long islandId, long playerId )
         {
             SeeIslandViewModel model = new SeeIslandViewModel();
-            SetupContext.FillStandardVM( model, SetupContext.GetPlayer( User ), islandId );
+            SetupContext.FillStandardVM( model, playerId, islandId );
 
             return CreateBuildingViewModel( model, islandId, playerId );
         }
 
-        private SeeIslandViewModel CreateTechnologyItems( SeeIslandViewModel model, long islandId, long playerId )
+        private SeeIslandViewModel CreateTechnologyItems( SeeIslandViewModel model, EventManager eventManager, long islandId, long playerId )
         {
             //model.Layout.CurrentPlayer = SetupContext.GetPlayer( User.GetUserId() );
             Island currentIsland = SetupContext.GetIsland( islandId, model.Layout.CurrentPlayer.PlayerId );
@@ -162,8 +162,8 @@ namespace ITI.SkyLord.Controllers
             // Get the player's current technologies
             List<Technology> playersTechnologies = model.TechnologyManager.GetPlayersTechnologies( playerId ).ToList();
 
-            // Resolve bonuses on the player's technologies
-            //playersTechnologies = bonusManager.GetResolvedTechnologies( playersTechnologies, playerId, islandId )
+            // Check if the player is currently researching a technology
+            model.CurrentResearch = eventManager.GetCurrentResearch( playerId );
 
             model.TechnologyDisplays = new List<TechnologyDisplay>();
             foreach ( TechnologyLevel technologyLevel in existingTechnologies )
@@ -178,7 +178,7 @@ namespace ITI.SkyLord.Controllers
                 int durationToDisplay = technologyLevel.Duration;
                 TechnologyLevel nextLevelToAdd = null;
 
-                // If a technology was found, the player already has it, so we add the current level and the next level cost or make it unavailable if there is no next level
+                // If a technology was found, the player already has it, so we add the current level and the next level ( or make it unavailable if there is no next level )
                 if ( technologyFound != null )
                 {
                     // Get the next level of the technology

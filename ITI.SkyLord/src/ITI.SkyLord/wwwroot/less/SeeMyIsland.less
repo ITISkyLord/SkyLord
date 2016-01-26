@@ -23,7 +23,7 @@
     transition: box-shadow 0.5s;
     width: 500px;
     height: 580px;
-    background-image: url("/images/SeeMyIsland/nuage_fond.jpg");
+    background-image: url("/images/SeeMyIsland/ile.gif");
     background-repeat: no-repeat;
     background-position: center;
     display: block;
@@ -49,7 +49,20 @@
         position: relative;
         width: 50px;
         height: 50px;
-        border: black solid 1px;
+
+        img {
+            display:block !important;
+            width:100% !important;
+            height: 100% !important;
+            position: relative !important;
+            top: 0px !important;
+            left:0px !important;
+        }
+
+        &:hover {
+            border: 2px rgba(64, 35, 27, 0.69) solid;
+            border-radius: 15px !important;
+        }
     }
 
     .Building img {
@@ -58,63 +71,75 @@
     }
 
     #place_1 {
-        top: 213px;
-        left: 209px;
+        top: 117px;
+        left: 193px;
     }
 
     #place_2 {
-        top: 236px;
-        left: 209px;
+        top: 147px;
+        left: 229px;
     }
 
     #place_3 {
-        top: 167px;
+        top: 76px;
         left: 140px;
     }
 
     #place_4 {
-        top: 150px;
-        left: 90px;
+        top: 53px;
+        left: 102px;
     }
 
     #place_5 {
-        top: 140px;
-        left: 140px;
+        top: 34px;
+        left: 144px;
     }
 
     #place_6 {
-        top: 105px;
-        left: 209px;
+        top: -1px;
+        left: 230px;
     }
 
     #place_7 {
-        top: 38px;
-        left: 270px;
+        top: -69px;
+        left: 314px;
     }
 
     #place_8 {
-        top: -44px;
-        left: 332px;
+        top: -149px;
+        left: 355px;
     }
 
     #place_9 {
-        top: -126px;
-        left: 276px;
+        top: -227px;
+        left: 314px;
     }
 
     #place_10 {
-        top: -25px;
-        left: 209px;
+        top: -139px;
+        left: 141px;
+    }
+
+    .Building[buildingname="shield"]
+    {
+        width: 216px !important;
+        height: 91px !important;
+    }
+    .Building[buildingname="shield"] img
+    {
+        width: 216px !important;
+        height: 91px !important;
     }
 
     .Building[buildingname="tower"] {
-        height: 100px;
-        min-height: 100px;
+        
+        width: 350px/3 !important;
+        height: 525px/3 !important;
     }
 
     .Building[buildingname="tower"] img {
-        width: 50px;
-        height: 100px;
+        width: 100% !important
+        height: 100% !important;
     }
 }
 

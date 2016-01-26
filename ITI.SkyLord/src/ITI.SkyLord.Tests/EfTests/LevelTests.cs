@@ -1001,27 +1001,27 @@ namespace ITI.SkyLord.Tests.EfTests
 
         #region Seed
 
-        //[Test]
-        //public void SeedAllTheThings()
-        //{
-        //    LevelSeed levelSeed = new LevelSeed();
-        //    UnitSeed unitSeed = new UnitSeed();
-        //    levelSeed.SeedLevels();
-        //    unitSeed.SeedUnits();
-        //}
+        [Test]
+        public void SeedAllTheThings()
+        {
+            LevelSeed levelSeed = new LevelSeed();
+            UnitSeed unitSeed = new UnitSeed();
+            levelSeed.SeedLevels();
+            unitSeed.SeedUnits();
+        }
 
         #endregion
 
-        private Ressource Multiplyressource( Ressource initialRessource, int factor )
-        {
-            return new Ressource
-            {
-                Wood = initialRessource.Wood * factor,
-                Metal = initialRessource.Metal * factor,
-                Cristal = initialRessource.Cristal * factor,
-                Magic = initialRessource.Magic * factor
-            };
-        }
+        //private Ressource Multiplyressource( Ressource initialRessource, int factor )
+        //{
+        //    return new Ressource
+        //    {
+        //        Wood = initialRessource.Wood * factor,
+        //        Metal = initialRessource.Metal * factor,
+        //        Cristal = initialRessource.Cristal * factor,
+        //        Magic = initialRessource.Magic * factor
+        //    };
+        //}
 
         void AddPlayerAndUser( Player p, SetupContext context )
         {
