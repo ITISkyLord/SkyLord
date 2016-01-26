@@ -67,9 +67,9 @@
             </div>
 
             <div class="col-sm-7 col-md-7">
-
-                @Model.Message.MessageObject<hr />
-
+                <div id="msgObject">
+                    @Model.Message.MessageObject<hr />
+                </div>
 
                 @Model.Message.DateSent<hr />
 
@@ -87,7 +87,10 @@
                             <input type="hidden" asp-for="@Model.FromId" value="@Model.FromId" />
                             <label for="object">Objet du message : </label><input type="text" asp-for="ObjectOfSender" id="object" value="RE : @Model.Message.MessageObject" />
                             <br />
-                            <label for="core">Corps du message</label><textarea asp-for="Answer" id="core"></textarea><br />
+                            <div class="form-group">
+                                <label for="core">Corps du message</label><textarea asp-for="Answer" class="form-control" id="core"></textarea><br />
+                            </div>
+                            
                             <input type="submit" value="Répondre" />
                         </form>
                     }

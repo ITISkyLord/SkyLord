@@ -7500,6 +7500,10 @@ footer li a:hover {
 .messageContainer #sendMessage {
   margin-top: 3px;
 }
+.messageContainer #msgObject {
+  font-weight: bold;
+  font-size: 20px;
+}
 .messageContainer #bt-reception a {
   font-size: 13px;
 }
