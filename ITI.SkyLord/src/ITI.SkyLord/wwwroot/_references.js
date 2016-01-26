@@ -15,5 +15,6 @@
 /// <reference path="svg/Tour.js" />
 /// <reference path="ts/attackmanager.js" />
 /// <reference path="ts/seeisland.js" />
+/// <reference path="ts/timemanager.js" />
 /// <reference path="ts/unitmodale.js" />
 /// <reference path="ts/worldmap.js" />
