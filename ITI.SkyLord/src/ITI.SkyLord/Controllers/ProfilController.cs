@@ -37,21 +37,22 @@ namespace ITI.SkyLord.Controllers
             return View( profilViewModel );
         }
 
-        public IActionResult ProfilOfOtherPlayer( long islandId, long playerId )
+        public IActionResult ProfilOfOtherPlayer( long islandId, long otherPlayerId )
         {
             //Récupérer la description dans la BDD
             Player currentPlayer = SetupContext.GetPlayer(User.GetUserId());
-            //      Island ennemyIsland = SetupContext.Islands.Include(i => i.Owner).ThenInclude( pl => pl.Profil ).Where(i => i.IslandId == ennemyIslandId).FirstOrDefault();
-            Player otherPlayer = SetupContext.Players.Include( pl => pl.Profil ).Single( pl => pl.PlayerId == playerId);
+            //  Island ennemyIsland = SetupContext.Islands.Include(i => i.Owner).ThenInclude( pl => pl.Profil ).Where(i => i.IslandId == ennemyIslandId).FirstOrDefault();
+            Player otherPlayer = SetupContext.Players.Include( pl => pl.Profil ).Include( pl => pl.Islands).ThenInclude( i => i.Coordinates)
+                .First( pl => pl.PlayerId == otherPlayerId );
             ProfilViewModel model = new ProfilViewModel();
             // Si le joueur existe => On affiche le profil
             if( otherPlayer != null )
             {
-                
                 model.Name = otherPlayer.Name;
                 model.Mail = otherPlayer.Mail;
                 model.PlayerId = otherPlayer.PlayerId;
                 model.CurrentPlayerId = currentPlayer.PlayerId;
+                model.OtherIslands = otherPlayer.Islands.ToList();
                 //ViewData["name"] = p.Name;
                 //ViewData["mail"] = p.Mail;
                 //ViewData["id"] = p.PlayerId;
@@ -76,9 +77,10 @@ namespace ITI.SkyLord.Controllers
                 model.Description = "Cette île est inconnue";
             }
 
-            SetupContext.FillStandardVM( model, SetupContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
+            SetupContext.FillStandardVM( model, currentPlayer.PlayerId, islandId );
             return View( model );
         }
+
         public IActionResult ProfilOfAPlayer( long islandId, long playerId )
         {
             //Récupérer la description dans la BDD

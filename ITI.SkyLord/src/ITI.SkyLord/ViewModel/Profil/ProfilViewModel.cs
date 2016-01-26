@@ -19,7 +19,7 @@ namespace ITI.SkyLord.ViewModels.Profil
         public string Name { get; set; }
         public long PlayerId { get; set; }
         public long CurrentPlayerId { get; set; }
-
+        public List<Island> OtherIslands { get; set; }
 
     }
 }
