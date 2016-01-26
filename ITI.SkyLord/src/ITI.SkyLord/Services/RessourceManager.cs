@@ -114,10 +114,10 @@ namespace ITI.SkyLord.Services
             foreach( Building magicField in magicFields )
                 ressourceToRetourned.Magic += ((FieldLevel)magicField.Level).Production;
 
-            ressourceToRetourned.Wood = 10;
-            ressourceToRetourned.Metal = 10;
-            ressourceToRetourned.Cristal = 10;
-            ressourceToRetourned.Magic = 10;
+            ressourceToRetourned.Wood += 10;
+            ressourceToRetourned.Metal += 10;
+            ressourceToRetourned.Cristal += 10;
+            ressourceToRetourned.Magic += 10;
 
 
             return ressourceToRetourned;

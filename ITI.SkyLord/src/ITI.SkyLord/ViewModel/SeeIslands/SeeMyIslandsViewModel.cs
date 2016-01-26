@@ -43,7 +43,6 @@ namespace ITI.SkyLord.ViewModel.SeeIslands
         //See details Island
         //public Island CurrentIsland { get; set; }
        // public List<UnitQueue> UnitsQueue { get; set; }
-        public TechnologyEvent TechnologyDeveloping { get; set; }
         public BuildingEvent BuildingDeveloping { get; set; }
         public List<ArmyEvent> MovementTowardThisIsland { get; set; }
         public List<ArmyEvent> MovementFromThisIsland { get; set; }

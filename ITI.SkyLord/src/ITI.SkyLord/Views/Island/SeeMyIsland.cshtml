@@ -6,6 +6,7 @@
 @using ITI.SkyLord
 @using ITI.SkyLord.ViewModel.Partial
 @using ITI.SkyLord.Models.Entity_Framework.Entites.Events
+@using ITI.SkyLord.Services
 
 @{
     ViewData["Title"] = "View My Island";
@@ -17,41 +18,41 @@
     <div class="row">
         <div id="Test">
             <div id="SeeMyIsland">
-                    @for( var i = 1; i != 11; i++ )
+                @for( var i = 1; i != 11; i++ )
+                {
+                    Building myBuilding;
+                    string name;
+
+                    @if( Model.DicoBuildings.TryGetValue( i.ToString(), out myBuilding ) )
                     {
-                        Building myBuilding;
-                        string name;
+                        name = myBuilding.BuildingName.ToString();
+                    }
+                    else
+                    {
+                        name = "empty";
+                    }
 
-                        @if( Model.DicoBuildings.TryGetValue( i.ToString(), out myBuilding ) )
-                        {
-                            name = myBuilding.BuildingName.ToString();
-                        }
-                        else
-                        {
-                            name = "empty";
-                        }
-
-                        <div class="Building" buildingname="@name" id="place_@i" templateid="@i">
-                            @{
-                                if(myBuilding != null)
+                    <div class="Building" buildingname="@name" id="place_@i" templateid="@i">
+                        @{
+                            if( myBuilding != null )
+                            {
+                                switch( myBuilding.BuildingName )
                                 {
-                                    switch(myBuilding.BuildingName)
-                                    {
-                                        case BuildingName.woodField:
-                                        case BuildingName.academy:
-                                        case BuildingName.barrack :
-                                            name += ".png";
-                                            break;
+                                    case BuildingName.woodField:
+                                    case BuildingName.academy:
+                                    case BuildingName.barrack:
+                                        name += ".png";
+                                        break;
 
-                                        default :
-                                            name += ".gif";
-                                            break;
-                                    }
+                                    default:
+                                        name += ".gif";
+                                        break;
                                 }
                             }
-                            <img src="~/images/SeeMyIsland/@name" alt=""/>
-                        </div>
-                      }
+                        }
+                        <img src="~/images/SeeMyIsland/@name" alt="" />
+                    </div>
+                            }
             </div>
         </div>
 
@@ -84,10 +85,10 @@
                     <h2>Nos attaques</h2>
                     @foreach( ArmyEvent ae in Model.MovementFromThisIsland )
                     {
-                    if( ae.Destination.Owner != null )
-                    {
-                        if( ae.ArmyMovement == ArmyMovement.attacking )
+                        if( ae.Destination.Owner != null )
                         {
+                            if( ae.ArmyMovement == ArmyMovement.attacking )
+                            {
                                 <div>Attaque vers @ae.Destination.Name [@ae.Destination.Coordinates.X, @ae.Destination.Coordinates.Y] chez @ae.Destination.Owner.Name. Impact à @ae.EndingDate.ToString( @"HH\hmm\mss\s" )</div>
                             }
                             else if( ae.ArmyMovement == ArmyMovement.sendingRessources )
@@ -144,6 +145,23 @@
                     Magie : @Model.Production.Magic par heure<br />
 
                 </div>
+
+                @if( Model.BuildingDeveloping != null )
+                {
+                    TimeSpan timetoEnd = Model.BuildingDeveloping.EndingDate - DateTime.Now;
+
+                    <div>
+                        @BuildingManager.StaticBuildingNameToName(Model.BuildingDeveloping.BuildingToBuild) est en construction et finira dans <span class="time" hours="@timetoEnd.Hours" minutes="@timetoEnd.Minutes" secondes="@timetoEnd.Seconds"> à @Model.BuildingDeveloping.EndingDate.ToString( @"HH\hmm\mss\s" ) </span> 
+                    </div>
+                }
+                @if( Model.CurrentResearch != null )
+                {
+                    TimeSpan timetoEnd = Model.CurrentResearch.EndingDate - DateTime.Now;
+
+                    <div>
+                        @TechnologyManager.StaticTechnologyNameToName(Model.CurrentResearch.TechnologyName) est en recherche et finira dans <span class="time" hours="@timetoEnd.Hours" minutes="@timetoEnd.Minutes" secondes="@timetoEnd.Seconds"> à @Model.CurrentResearch.EndingDate.ToString( @"HH\hmm\mss\s" ) </span>
+                    </div>
+                }
 
             </div>
             @for( var i = 1; i != 11; i++ )

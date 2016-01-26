@@ -143,8 +143,7 @@ namespace ITI.SkyLord.Controllers
 
             model.Production = RessourceManager.GetProductionByHour( islandId, model.Buildings );
             //model.BuildingDeveloping
-
-
+            model.BuildingDeveloping = eventManager.GetCurrentConstruction( islandId );
             // Toutes les technologies possibles
             TechnologyManager techManager = new TechnologyManager( SetupContext, levelManager, new BonusManager( SetupContext ) );
             model = CreateTechnologyItems( model, eventManager, islandId, playerId );
@@ -158,7 +157,7 @@ namespace ITI.SkyLord.Controllers
             return CreateBuildingViewModel( model, islandId, playerId );
         }
 
-        private SeeIslandViewModel CreateTechnologyItems( SeeIslandViewModel model, EventManager eventManager, long islandId, long playerId )
+        private SeeMyIslandViewModel CreateTechnologyItems( SeeMyIslandViewModel model, EventManager eventManager, long islandId, long playerId )
         {
             //model.Layout.CurrentPlayer = SetupContext.GetPlayer( User.GetUserId() );
             Island currentIsland = SetupContext.GetIsland( islandId, model.Layout.CurrentPlayer.PlayerId );

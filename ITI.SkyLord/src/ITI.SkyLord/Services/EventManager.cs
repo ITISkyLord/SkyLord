@@ -235,7 +235,7 @@ namespace ITI.SkyLord
         {
             return _context.BuildingEvents
                .Include( e => e.Island ).ThenInclude( e => e.Buildings )
-               .Where( i => i.Done == false && i.Island.IslandId == islandId ).First();
+               .Where( i => i.Done == false && i.Island.IslandId == islandId ).FirstOrDefault();
         }
 
         #region Resolve
