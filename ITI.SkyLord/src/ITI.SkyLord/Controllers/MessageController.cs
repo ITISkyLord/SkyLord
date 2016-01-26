@@ -56,7 +56,7 @@ namespace ITI.SkyLord.Controllers
             SetupContext.SaveChanges();
             ModelState.AddModelError("message", "Le message a été bien envoyé.");
             SetupContext.FillStandardVM(model, SetupContext.GetPlayer(User.GetUserId()).PlayerId, islandId);
-            return View(" GetAllMessages", model);
+            return RedirectToAction("GetAllMessages", "Message", new { islandId = islandId });
 
         }
         public IActionResult SendMessage(MessageViewModel model, long islandId = 0)
@@ -89,7 +89,7 @@ namespace ITI.SkyLord.Controllers
             SetupContext.SaveChanges();
             SetupContext.FillStandardVM(mvm, SetupContext.GetPlayer(User.GetUserId()).PlayerId, islandId);
 
-            return RedirectToAction("GetAllMessages", "Message", new { islandId=islandId});
+            return RedirectToAction("GetAllMessages", "Message", new { islandId = islandId });
 
         }
 
