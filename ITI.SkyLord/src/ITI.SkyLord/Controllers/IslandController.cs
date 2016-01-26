@@ -25,13 +25,10 @@ namespace ITI.SkyLord.Controllers
             SetupContext.FillStandardVM( ovvm, SetupContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
             return View( ovvm );
         }
-
         public IActionResult Index()
         {
             return View();
         }
-
-
         /// <summary>
         /// See the island(s) of the current player
         /// </summary>
@@ -45,10 +42,9 @@ namespace ITI.SkyLord.Controllers
 
             return View( islandViewModel );
         }
-
         private Island GetIsland( long islandId )
         {
-            if ( islandId == 0 )
+            if( islandId == 0 )
             {
                 long activePlayerId = SetupContext.GetPlayer( User );
                 return SetupContext.Islands
@@ -74,7 +70,6 @@ namespace ITI.SkyLord.Controllers
                     .SingleOrDefault( i => i.IslandId == islandId && i.Owner.PlayerId == activePlayerId );
             }
         }
-
         private SeeMyIslandViewModel CreateBuildingViewModel( SeeMyIslandViewModel model, long islandId, long playerId )
         {
             LevelManager levelManager = new LevelManager( SetupContext );
@@ -87,32 +82,32 @@ namespace ITI.SkyLord.Controllers
             SetupContext.FillStandardVM( model, playerId, islandId );
 
             // Current Player & Island
-            model.Layout.CurrentPlayer = SetupContext.Players.Include( p => p.Islands).Single( p => p.PlayerId == playerId);
+            model.Layout.CurrentPlayer = SetupContext.Players.Include( p => p.Islands ).Single( p => p.PlayerId == playerId );
             Island currentIsland = SetupContext.GetIsland( islandId, model.Layout.CurrentPlayer.PlayerId );
             model.CurrentIsland = currentIsland;
 
             // Tous les buildings sur l'island (modifés par leurs bonus)
-            model.Buildings = bonusManager.GetResolvedBuildings( buildingManager.GetBuildingsOnCurrentIsland( islandId, playerId ), playerId, islandId) ;
+            model.Buildings = bonusManager.GetResolvedBuildings( buildingManager.GetBuildingsOnCurrentIsland( islandId, playerId ), playerId, islandId );
             model.DicoBuildings = new Dictionary<string, Building>();
-            foreach ( var building in model.Buildings )
+            foreach( var building in model.Buildings )
             {
                 model.DicoBuildings.Add( building.Position.ToString(), building );
             }
 
             // Récupère tout les events de tout les batiments (de 0 à 10 donc)
             model.AllBuildingEventOnIsland = new Dictionary<int, List<BuildingEvent>>();
-            for ( var i = 0; i <= 10; i++ )
+            for( var i = 0; i <= 10; i++ )
             {
                 model.AllBuildingEventOnIsland.Add( i, eventManager.GetBuildingEventsOnThisBuildingPosition( islandId, i ) );
             }
 
             // Tout les nexts level de chaque batiments
             model.NextLevel = new Dictionary<int, Level>();
-            foreach ( Building building in model.Buildings )
+            foreach( Building building in model.Buildings )
             {
                 // Si le next level existe => on l'ajoute au dico OTD
                 var nextLevel = levelManager.FindNextLevel( building.Level );
-                if ( nextLevel != null )
+                if( nextLevel != null )
                 {
                     model.NextLevel.Add( building.Position, bonusManager.ResolveBonuses( (BuildingLevel)nextLevel, playerId, islandId ) );
                 }
@@ -156,7 +151,6 @@ namespace ITI.SkyLord.Controllers
 
             return CreateBuildingViewModel( model, islandId, playerId );
         }
-
         private SeeMyIslandViewModel CreateTechnologyItems( SeeMyIslandViewModel model, EventManager eventManager, long islandId, long playerId )
         {
             //model.Layout.CurrentPlayer = SetupContext.GetPlayer( User.GetUserId() );
@@ -175,7 +169,7 @@ namespace ITI.SkyLord.Controllers
             model.CurrentResearch = eventManager.GetCurrentResearch( playerId );
 
             model.TechnologyDisplays = new List<TechnologyDisplay>();
-            foreach ( TechnologyLevel technologyLevel in existingTechnologies )
+            foreach( TechnologyLevel technologyLevel in existingTechnologies )
             {
                 // Look for the technology in the player's technology list
                 Technology technologyFound = playersTechnologies.SingleOrDefault( t => t.Level.TechnologyName == technologyLevel.TechnologyName );
@@ -188,11 +182,11 @@ namespace ITI.SkyLord.Controllers
                 TechnologyLevel nextLevelToAdd = null;
 
                 // If a technology was found, the player already has it, so we add the current level and the next level ( or make it unavailable if there is no next level )
-                if ( technologyFound != null )
+                if( technologyFound != null )
                 {
                     // Get the next level of the technology
                     nextLevelToAdd = (TechnologyLevel)levelManager.FindNextLevel( technologyFound.Level );
-                    if ( nextLevelToAdd != null )
+                    if( nextLevelToAdd != null )
                     {
                         isResearched = true;
                         isAvailable = true;
@@ -208,7 +202,7 @@ namespace ITI.SkyLord.Controllers
                     levelToAdd = bonusManager.ResolveBonuses( technologyFound.Level, playerId, islandId );
                 }
                 // If no technology was found, we check if the technology is available to the player
-                else if ( levelManager.GetAvailablility( technologyLevel, islandId ).IsItemAvailable )
+                else if( levelManager.GetAvailablility( technologyLevel, islandId ).IsItemAvailable )
                 {
                     isAvailable = true;
                     levelToAdd = bonusManager.ResolveBonuses( levelToAdd, playerId, islandId );
@@ -227,5 +221,18 @@ namespace ITI.SkyLord.Controllers
             return model;
         }
 
+        public IActionResult SeeOtherIsland( long islandIdOfOtherPlayer, long islandId )
+        {
+            SeeOtherIslandViewModel model = new SeeOtherIslandViewModel();
+            model.IslandIdOfOther = islandIdOfOtherPlayer;
+            model.targetIsland = SetupContext.Islands.Include( i => i.Coordinates ).Single( i => i.IslandId == islandIdOfOtherPlayer );
+            if( model.targetIsland.Owner == null )
+                model.HasOwner = false;
+            else
+                model.HasOwner = true;
+            SetupContext.FillStandardVM( model, SetupContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
+
+            return View( model );
+        }
     }
 }

@@ -7,8 +7,8 @@ namespace ITI.SkyLord.ViewModel.SeeIslands
 {
     public class SeeOtherIslandViewModel : StandardViewModel
     {
-        List<Army> AttacksOnThisIslands { get; set; }
-        List<Army> AttacksFromThisIslands { get; set; }
-        Ressource RessourceProduction { get; set; }
+        public long IslandIdOfOther { get; set; }
+        public bool HasOwner { get; set; }
+        public Island targetIsland { get; set; }
     }
 }
