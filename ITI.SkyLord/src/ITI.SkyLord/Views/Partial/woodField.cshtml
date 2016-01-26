@@ -7,6 +7,7 @@
 
 
 @{
+    Write(Html.Partial("~/Views/Partial/DescriptionPartial.cshtml", new DescriptionPartial { Description = "Je suis un woodField", FullNameOfImage = "woodField.png" }));
     Write(Html.Partial("~/Views/Partial/LevelUpBuilding.cshtml", Model));
     Write(Html.Partial("~/Views/Partial/GenericField.cshtml", new GenericFieldViewModel { BuildingPartial = Model, NameOfRessource = "Bois" }));
 }

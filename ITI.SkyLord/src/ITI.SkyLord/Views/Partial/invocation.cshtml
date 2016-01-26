@@ -1,5 +1,7 @@
 ﻿@model ITI.SkyLord.ViewModel.Partial.BuildingPartialViewModel
 @using ITI.SkyLord.Services
+@using ITI.SkyLord.ViewModel.Partial;
+
 <style>
     #StatisticModale {
         display: none;
@@ -67,6 +69,7 @@
     <h2>@BuildingManager.StaticBuildingNameToName(Model.CurrentBuilding.BuildingName)</h2>
 </div>
 @{
+    Write(Html.Partial("~/Views/Partial/DescriptionPartial.cshtml", new DescriptionPartial { Description = "Je suis un woodField", FullNameOfImage = "invocation.gif" }));
     Write(Html.Partial("~/Views/Partial/LevelUpBuilding.cshtml", Model));
     Write(Html.Partial("~/Views/Partial/UnitsQueue.cshtml", Model));
 }
