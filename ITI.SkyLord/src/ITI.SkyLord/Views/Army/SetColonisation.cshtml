@@ -7,77 +7,81 @@
     Layout = "_Layout";
 }
 
-<style>
-    .ListArmy td {
-        border: 2px solid black;
-        padding-right: 5px;
-        padding-left: 5px;
-    }
-</style>
+<div class="armyContainer">
+    <div class="army">
+        <div class="army-body">
 
-<h1>Apprentis</h1>
+            <div class="army-head">
+                Apprentis
+            </div>
 
-<h2>Planification de la colonisation</h2>
-@if ( !Model.HasApprentice )
-{
-    <p>Vous n'avez pas d'apprenti ! Allez au portail d'invocation pour en créer ! </p>
-}
-else if ( Model.IsMaxIslandReached )
-{
-    <p> Vous avez atteint le maximum d'îles que vous pouvez contrôller </p>
-}
-else
-{
-    <form asp-controller="Army" asp-action="SendColonisation" asp-route-islandId="@Model.Layout.IslandId" method="post" role="form">
+            <div class="army-head">
+                Planification de la colonisation
+            </div>
 
-        <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
-        <p>Votre apprenti peut transporter @Model.CapacityOfCarrier ressources.</p>
-        @* Tableau pour voir nos unité et voir qui l'on envoi *@
-        <table>
-            <tr>
-                <td>Bois</td>
-                <td>Métal</td>
-                <td>Cristal</td>
-                <td>Magie</td>
-            </tr>
-            <tr>
-                <td><input type="number" min="0" max="@Model.SenderIsland.AllRessources.Wood" step="1" asp-for="Wood" value="0" /></td>
-                <td><input type="number" min="0" max="@Model.SenderIsland.AllRessources.Metal" step="1" asp-for="Metal" value="0" /></td>
-                <td><input type="number" min="0" max="@Model.SenderIsland.AllRessources.Cristal" step="1" asp-for="Cristal" value="0" /></td>
-                <td><input type="number" min="0" max="@Model.SenderIsland.AllRessources.Magic" step="1" asp-for="Magic" value="0" /></td>
-            </tr>
-        </table>
-        <input type="hidden" asp-for="@Model.CapacityOfCarrier" value="@Model.CapacityOfCarrier" />
-        <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
-
-        @*Envoi de ressources*@
-
-        @* Petit moyen pour chercher l'île en fonction des coordonnées *@
-        <label for="pos-x"></label><input type="number" name="pos-x" value="@Model.PossibleColonisableIslands.First().Coordinates.X" />
-        <label for="pos-y"></label><input type="number" name="pos-y" value="@Model.PossibleColonisableIslands.First().Coordinates.Y" />
-
-        @* Choix de la cible *@
-        <select asp-for="@Model.Target" id="EnnemyToAttack">
-            @foreach ( Island i in Model.PossibleColonisableIslands )
+            @if (!Model.HasApprentice)
             {
-                string selected = "";
-                if ( Model.BarbarianIslandId == i.IslandId )
-                {
-                    <option value="@i.IslandId" pos-x="@i.Coordinates.X" pos-y="@i.Coordinates.Y" selected="selected">
-                        Île barbare [@i.Coordinates.X, @i.Coordinates.Y]
-                    </option>
-                }
-                else
-                {
-                    <option value="@i.IslandId" pos-x="@i.Coordinates.X" pos-y="@i.Coordinates.Y">
-                        Île barbare [@i.Coordinates.X, @i.Coordinates.Y]
-                    </option>
-                }
+                <p>Vous n'avez pas d'apprenti ! Allez au portail d'invocation pour en créer ! </p>
             }
-        </select>
+            else if (Model.IsMaxIslandReached)
+            {
+                <p> Vous avez atteint le maximum d'îles que vous pouvez contrôller </p>
+            }
+            else
+            {
+                <form asp-controller="Army" asp-action="SendColonisation" asp-route-islandId="@Model.Layout.IslandId" method="post" role="form">
 
-        <input type="submit" value="Envoyer l'apprenti" />
+                    <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
+                    <p>Votre apprenti peut transporter @Model.CapacityOfCarrier ressources.</p>
+                    @* Tableau pour voir nos unité et voir qui l'on envoi *@
+                    <table>
+                        <tr>
+                            <td>Bois</td>
+                            <td>Métal</td>
+                            <td>Cristal</td>
+                            <td>Magie</td>
+                        </tr>
+                        <tr>
+                            <td><input type="number" min="0" max="@Model.SenderIsland.AllRessources.Wood" step="1" asp-for="Wood" value="0" /></td>
+                            <td><input type="number" min="0" max="@Model.SenderIsland.AllRessources.Metal" step="1" asp-for="Metal" value="0" /></td>
+                            <td><input type="number" min="0" max="@Model.SenderIsland.AllRessources.Cristal" step="1" asp-for="Cristal" value="0" /></td>
+                            <td><input type="number" min="0" max="@Model.SenderIsland.AllRessources.Magic" step="1" asp-for="Magic" value="0" /></td>
+                        </tr>
+                    </table>
+                    <input type="hidden" asp-for="@Model.CapacityOfCarrier" value="@Model.CapacityOfCarrier" />
+                    <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
 
-    </form>
-    <script src="/js/AttackManager.js"></script>
-}
+                    @*Envoi de ressources*@
+
+                    @* Petit moyen pour chercher l'île en fonction des coordonnées *@
+                    <label for="pos-x"></label><input type="number" name="pos-x" value="@Model.PossibleColonisableIslands.First().Coordinates.X" />
+                    <label for="pos-y"></label><input type="number" name="pos-y" value="@Model.PossibleColonisableIslands.First().Coordinates.Y" />
+
+                    @* Choix de la cible *@
+                    <select asp-for="@Model.Target" id="EnnemyToAttack">
+                        @foreach (Island i in Model.PossibleColonisableIslands)
+                        {
+                            string selected = "";
+                            if (Model.BarbarianIslandId == i.IslandId)
+                            {
+                                <option value="@i.IslandId" pos-x="@i.Coordinates.X" pos-y="@i.Coordinates.Y" selected="selected">
+                                    Île barbare [@i.Coordinates.X, @i.Coordinates.Y]
+                                </option>
+                            }
+                            else
+                            {
+                                <option value="@i.IslandId" pos-x="@i.Coordinates.X" pos-y="@i.Coordinates.Y">
+                                    Île barbare [@i.Coordinates.X, @i.Coordinates.Y]
+                                </option>
+                            }
+                        }
+                    </select>
+
+                    <input type="submit" value="Envoyer l'apprenti" />
+
+                </form>
+                <script src="/js/AttackManager.js"></script>
+            }
+        </div>
+    </div>
+</div>
