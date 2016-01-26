@@ -65,12 +65,7 @@
                         </form>
                     </li>
                     <li>
-                        <form asp-controller="Profil" asp-action="ProfilOfOtherPlayer" asp-route-id="@Model.Layout.CurrentPlayer.PlayerId" asp-route-islandId="@Model.Layout.IslandId" method="post" role="form">
-                            <center>
-                                <input type="text" placeholder="Recherche ..." name="namePlayer" id="searchPlayer" size="15" style="color:black" />
-                                <button class="btn btn-danger">Go</button>
-                            </center>
-                        </form>
+                    <li><a>Heure : @DateTime.Now.ToString( @"hh\hmm\mss\s" )</a></li>
                     </li>
                 </ul>
             </div>
