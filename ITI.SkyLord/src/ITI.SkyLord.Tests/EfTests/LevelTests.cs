@@ -1011,13 +1011,12 @@ namespace ITI.SkyLord.Tests.EfTests
         }
 
         //[Test]
-        //public void AvailabilityTest()
+        //public void RessourceTest()
         //{
-        //    RequirementAvailability ra = new RequirementAvailability();
-        //    ra.Availabilities.Add( new Availability { Available = true, Requirement = null } );
-        //    ra.Availabilities.Add( new Availability { Available = true, Requirement = null } );
+        //    Ressource source = new Ressource { Wood = 100, Metal = 50, Cristal = 50, Magic = 100 };
+        //    Ressource cost = new Ressource { Wood = 25, Metal = 50, Cristal = 10, Magic = 0 };
 
-        //    Assert.IsTrue( ra.IsItemAvailable );
+        //    //RessourceManager.GetCoefficient( source, cost );
         //}
         #endregion
 

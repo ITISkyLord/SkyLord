@@ -6,15 +6,15 @@
 {
     if( ae.ArmyMovement == ArmyMovement.attacking )
     {
-        <div>Nous sommes en danger, une attaque arrive depuis l'île @ae.Island.Name qui appartient à <a asp-controller="Profil" asp-action="ProfilOfOtherPlayer" asp-route-playerId=@ae.Island.Owner.PlayerId>@ae.Island.Owner.Name</a>. Impact à @ae.EndingDate.Hour:@ae.EndingDate.Minute:@ae.EndingDate.Second</div>
+        <div>Nous sommes en danger, une attaque arrive depuis l'île @ae.Island.Name qui appartient à <a asp-controller="Profil" asp-action="ProfilOfOtherPlayer" asp-route-playerId=@ae.Island.Owner.PlayerId asp-route-islandId=@Model.Layout.IslandId>@ae.Island.Owner.Name</a>. Impact à @ae.EndingDate.ToString( @"HH\hmm\mss\s" )</div>
     }
     else if( ae.ArmyMovement == ArmyMovement.sendingRessources )
     {
-        <div>Hourra ! Des transporteurs alliés se dirigent vers notre île. Ils transportent avec eux @ae.PillagedRessources.Wood bois, @ae.PillagedRessources.Metal métal, @ae.PillagedRessources.Cristal cristal et @ae.PillagedRessources.Magic magie. Impact à @ae.EndingDate.Hour:@ae.EndingDate.Minute:@ae.EndingDate.Second</div>
+        <div>Hourra ! Des transporteurs alliés se dirigent vers notre île. Ils transportent avec eux @ae.PillagedRessources.Wood bois, @ae.PillagedRessources.Metal métal, @ae.PillagedRessources.Cristal cristal et @ae.PillagedRessources.Magic magie. Impact à @ae.EndingDate.ToString( @"HH\hmm\mss\s" )</div>
     }
     else if( ae.ArmyMovement == ArmyMovement.moving )
     {
-        <div>Des troupes alliés se dirigent vers notre île. Impact à @ae.EndingDate.Hour:@ae.EndingDate.Minute:@ae.EndingDate.Second </div>
+        <div>Des troupes alliés se dirigent vers notre île. Impact à @ae.EndingDate.ToString( @"HH\hmm\mss\s" ) </div>
     }
 
 

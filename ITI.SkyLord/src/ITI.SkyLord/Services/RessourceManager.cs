@@ -18,39 +18,39 @@ namespace ITI.SkyLord.Services
         public static void ResolveResources( Island island, SetupContext context )
         {
             Ressource ressourcesGathered = new Ressource();
-            List<Building> ressourcesBuildings = GetRessourcesBuildings(island.Buildings.ToList());
-            DateTime checkTime = GetLastCheckTime(island);
+            List<Building> ressourcesBuildings = GetRessourcesBuildings( island.Buildings.ToList() );
+            DateTime checkTime = GetLastCheckTime( island );
 
-            if( !checkTime.Equals( new DateTime() ) && ressourcesBuildings != null ) // If null, checkTime will be set after the if{} anyway for initialisation
+            if ( !checkTime.Equals( new DateTime() ) && ressourcesBuildings != null ) // If null, checkTime will be set after the if{} anyway for initialisation
             {
                 // Calculate gap between last time and now
-                int gap = (int)(DateTime.Now - checkTime).TotalSeconds;
+                int gap = (int)( DateTime.Now - checkTime ).TotalSeconds;
 
                 // Get all fields
-                List<Building>  woodFields = ressourcesBuildings.Where( b => b.BuildingName == BuildingName.woodField ).ToList();
-                List<Building>  metalFields = ressourcesBuildings.Where( b => b.BuildingName == BuildingName.metalField ).ToList();
+                List<Building> woodFields = ressourcesBuildings.Where( b => b.BuildingName == BuildingName.woodField ).ToList();
+                List<Building> metalFields = ressourcesBuildings.Where( b => b.BuildingName == BuildingName.metalField ).ToList();
                 List<Building> cristalFields = ressourcesBuildings.Where( b => b.BuildingName == BuildingName.cristalField ).ToList();
-                List<Building>  magicFields = ressourcesBuildings.Where( b => b.BuildingName == BuildingName.magicField ).ToList();
+                List<Building> magicFields = ressourcesBuildings.Where( b => b.BuildingName == BuildingName.magicField ).ToList();
 
                 // Create an object Ressource that contain the amount earned since last check
-                foreach( Building woodField in woodFields )
-                    ressourcesGathered.Wood += (int)(gap * GetProductionEachSecond( (FieldLevel)woodField.Level ));
-                foreach( Building metalField in metalFields )
-                    ressourcesGathered.Metal += (int)(gap * GetProductionEachSecond( (FieldLevel)metalField.Level ));
-                foreach( Building cristalField in cristalFields )
-                    ressourcesGathered.Cristal += (int)(gap * GetProductionEachSecond( (FieldLevel)cristalField.Level ));
-                foreach( Building magicField in magicFields )
-                    ressourcesGathered.Magic += (int)(gap * GetProductionEachSecond( (FieldLevel)magicField.Level ));
+                foreach ( Building woodField in woodFields )
+                    ressourcesGathered.Wood += (int)( gap * GetProductionEachSecond( (FieldLevel)woodField.Level ) );
+                foreach ( Building metalField in metalFields )
+                    ressourcesGathered.Metal += (int)( gap * GetProductionEachSecond( (FieldLevel)metalField.Level ) );
+                foreach ( Building cristalField in cristalFields )
+                    ressourcesGathered.Cristal += (int)( gap * GetProductionEachSecond( (FieldLevel)cristalField.Level ) );
+                foreach ( Building magicField in magicFields )
+                    ressourcesGathered.Magic += (int)( gap * GetProductionEachSecond( (FieldLevel)magicField.Level ) );
 
                 // Base resources production
                 double baseProduction = 0.002; // 10 each hour
-                ressourcesGathered.Wood += (int)(gap * baseProduction);
-                ressourcesGathered.Metal += (int)(gap * baseProduction);
-                ressourcesGathered.Cristal += (int)(gap * baseProduction);
-                ressourcesGathered.Magic += (int)(gap * baseProduction);
+                ressourcesGathered.Wood += (int)( gap * baseProduction );
+                ressourcesGathered.Metal += (int)( gap * baseProduction );
+                ressourcesGathered.Cristal += (int)( gap * baseProduction );
+                ressourcesGathered.Magic += (int)( gap * baseProduction );
 
                 // Add ressources only if all ressources that exist are able to be added
-                if( (ressourcesGathered.Metal >= 1 || metalFields.Count < 1) && (ressourcesGathered.Magic >= 1 || magicFields.Count < 1) && (ressourcesGathered.Wood >= 1 || woodFields.Count < 1) && (ressourcesGathered.Cristal >= 1 || cristalFields.Count < 1) )
+                if ( ( ressourcesGathered.Metal >= 1 || metalFields.Count < 1 ) && ( ressourcesGathered.Magic >= 1 || magicFields.Count < 1 ) && ( ressourcesGathered.Wood >= 1 || woodFields.Count < 1 ) && ( ressourcesGathered.Cristal >= 1 || cristalFields.Count < 1 ) )
                 {
                     AddRessource( island.AllRessources, ressourcesGathered );
                     SetLastCheckTime( island );
@@ -59,7 +59,7 @@ namespace ITI.SkyLord.Services
             }
 
             // set checktime for initialisation
-            if( checkTime.Equals( new DateTime() ) && ressourcesBuildings != null )
+            if ( checkTime.Equals( new DateTime() ) && ressourcesBuildings != null )
             {
                 SetLastCheckTime( island );
             }
@@ -78,7 +78,7 @@ namespace ITI.SkyLord.Services
         }
         private static DateTime GetLastCheckTime( Island island )
         {
-            if( island.CheckTime != null )
+            if ( island.CheckTime != null )
             {
                 return island.CheckTime;
             }
@@ -86,7 +86,7 @@ namespace ITI.SkyLord.Services
         }
         private static List<Building> GetRessourcesBuildings( List<Building> buildings )
         {
-            if( buildings == null )
+            if ( buildings == null )
                 return null;
             return buildings
                 .Where( b => b.BuildingName == BuildingName.cristalField ||
@@ -113,10 +113,10 @@ namespace ITI.SkyLord.Services
         {
             Ressource clone = CloneRessource( ressourceToCheck );
 
-            if( (clone.Wood - wood) < 0 ) return false;
-            if( (clone.Metal - metal) < 0 ) return false;
-            if( (clone.Cristal - cristal) < 0 ) return false;
-            if( (clone.Magic - magic) < 0 ) return false;
+            if ( ( clone.Wood - wood ) < 0 ) return false;
+            if ( ( clone.Metal - metal ) < 0 ) return false;
+            if ( ( clone.Cristal - cristal ) < 0 ) return false;
+            if ( ( clone.Magic - magic ) < 0 ) return false;
 
             return true;
         }
@@ -147,8 +147,8 @@ namespace ITI.SkyLord.Services
 
         public static bool AddRessource( Ressource ressourceToChange, int wood, int metal, int cristal, int magic )
         {
-            if( wood < 0 || metal < 0 || cristal < 0 || magic < 0 ) throw new ArgumentException( "The parameters must me positive" );
-            if( ressourceToChange == null ) throw new ArgumentException( "The ressource to change cannot be null" );
+            if ( wood < 0 || metal < 0 || cristal < 0 || magic < 0 ) throw new ArgumentException( "The parameters must me positive" );
+            if ( ressourceToChange == null ) throw new ArgumentException( "The ressource to change cannot be null" );
 
             ressourceToChange.Wood += wood;
             ressourceToChange.Metal += metal;
@@ -160,10 +160,10 @@ namespace ITI.SkyLord.Services
 
         public static bool RemoveRessource( Ressource ressourceToChange, int wood, int metal, int cristal, int magic )
         {
-            if( wood < 0 || metal < 0 || cristal < 0 || magic < 0 ) throw new ArgumentException( "The parameters must me positive" );
-            if( ressourceToChange == null ) throw new ArgumentException( "The ressource to change cannot be null" );
+            if ( wood < 0 || metal < 0 || cristal < 0 || magic < 0 ) throw new ArgumentException( "The parameters must me positive" );
+            if ( ressourceToChange == null ) throw new ArgumentException( "The ressource to change cannot be null" );
 
-            if( !IsEnough( ressourceToChange, wood, metal, cristal, magic ) )
+            if ( !IsEnough( ressourceToChange, wood, metal, cristal, magic ) )
             {
                 return false;
             }
@@ -177,10 +177,6 @@ namespace ITI.SkyLord.Services
         }
 
         public static Ressource CloneRessource( Ressource source )
-        //
-        // Créer une méthode qui rend le nombre max de Cost payable avec les fonds courants de l'ile
-        //
-
         {
             return new Ressource
             {
@@ -189,6 +185,73 @@ namespace ITI.SkyLord.Services
                 Cristal = source.Cristal,
                 Magic = source.Magic
             };
+        }
+
+        //public static int GetCoefficient( Ressource source, Ressource cost )
+        //{
+        //    if ( source.Wood < cost.Wood || source.Metal < cost.Metal || source.Cristal < cost.Cristal || source.Magic < cost.Magic )
+        //    {
+        //        return 0;
+        //    }
+        //    else
+        //    {
+        //        int[ ] sourceValues = RessourceToArray( source );
+        //        int[ ] costValues = RessourceToArray( cost );
+        //        int[ ] coeff = new int[ 4 ];
+
+        //        for ( int i = 0; i < sourceValues.Count(); i++ )
+        //        {
+        //            if ()
+        //        }
+
+        //        if ( cost.Wood == 0 )
+        //        {
+        //            coeff[ 0 ] = int.MaxValue;
+        //        }
+        //        else
+        //        {
+        //            coeff[ 0 ] = ( source.Wood / cost.Wood );
+        //        }
+
+        //        if ( cost.Metal == 0 )
+        //        {
+        //            coeff[ 1 ] = int.MaxValue;
+        //        }
+        //        else
+        //        {
+        //            coeff[ 1 ] = ( source.Metal / cost.Metal );
+        //        }
+
+        //        if ( cost.Cristal == 0 )
+        //        {
+        //            coeff[ 2 ] = int.MaxValue;
+        //        }
+        //        else
+        //        {
+        //            coeff[ 2 ] = ( source.Cristal / cost.Cristal );
+        //        }
+
+        //        if ( cost.Magic == 0 )
+        //        {
+        //            coeff[ 3 ] = int.MaxValue;
+        //        }
+        //        else
+        //        {
+        //            coeff[ 3 ] = ( source.Magic / cost.Magic );
+        //        }
+        //    }
+        //}
+
+        private static int[] RessourceToArray( Ressource ressource )
+        {
+            int[ ] values = new int[ 4 ];
+
+            values[ 0 ] = ressource.Wood;
+            values[ 1 ] = ressource.Metal;
+            values[ 2 ] = ressource.Cristal;
+            values[ 3 ] = ressource.Magic;
+
+            return values;
         }
     }
 }
