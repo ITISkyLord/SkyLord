@@ -37,7 +37,7 @@
                                     {
                                         if( army.ArmyMovement == ArmyMovement.attacking )
                                         {
-                                            <div>Attaque vers @army.Destination.Name de coordonées :  [@army.Destination.Coordinates.X, @army.Destination.Coordinates.Y] chez le joueur @army.Destination.Owner.Name</div>
+                                            <div>Attaque vers @army.Destination.Name de coordonnées :  [@army.Destination.Coordinates.X, @army.Destination.Coordinates.Y] chez le joueur @army.Destination.Owner.Name</div>
                                         }
                                         else if( army.ArmyMovement == ArmyMovement.sendingRessources )
                                         {
@@ -47,7 +47,6 @@
                                         {
                                             <div>Vos unités sont en train de revenir de @army.Destination.Name [@army.Destination.Coordinates.X, @army.Destination.Coordinates.Y] chez @army.Destination.Owner.Name</div>
                                         }
-                                        else if (army.ArmyMovement == ArmyMovement.colonising)
                                     }
                                     else if( army.ArmyMovement == ArmyMovement.attacking )
                                     {
@@ -108,7 +107,7 @@
                                             <div class="SelectAll">
                                                 <input type="button" class="btn-link" value="Tout envoyer" />
                                             </div>
-                                        </td>
+
                                                         </tr>
                                                     }
                                                 </tbody>
