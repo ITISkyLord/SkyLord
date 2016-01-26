@@ -6735,3 +6735,16 @@ button.close {
   display: block;
   overflow: auto;
 }
+.messageContainer .readMessage {
+  font-weight: bold;
+  font-size: 20px;
+}
+.messageContainer .readMessage .table th {
+  color: white;
+  font-weight: bold;
+  text-align: center;
+}
+.messageContainer .readMessage .table td {
+  color: #825847;
+  font-weight: bold;
+}
