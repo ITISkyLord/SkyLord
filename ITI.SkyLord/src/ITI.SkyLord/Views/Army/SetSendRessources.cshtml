@@ -7,7 +7,6 @@
     Layout = "_Layout";
 }
 
-
 <div class="armyContainer">
     <div class="army">
         <div class="army-body">
@@ -21,7 +20,6 @@
             @if (Model.NumberOfTransportorToSend > 0)
             {
                 <form asp-controller="Army" asp-action="SendRessources" asp-route-islandId="@Model.Layout.IslandId" method="post" role="form">
-
                     <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
                     @*<p>Chacun de vos transporteurs peut transporter @Model.CapacityOfCarrier ressources.</p>*@
                     @* Tableau pour voir nos unité et voir qui l'on envoi *@
@@ -60,7 +58,6 @@
                         </tr>
                     </table>
                     <input type="hidden" asp-for="@Model.CapacityOfCarrier" value="@Model.CapacityOfCarrier" />
-
                     <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
 
                     @*Envoi de ressources*@

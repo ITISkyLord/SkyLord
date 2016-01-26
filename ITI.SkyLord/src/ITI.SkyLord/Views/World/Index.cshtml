@@ -70,14 +70,35 @@
         color: white;
         border-radius: 20px;
         border: solid rgba(39, 36, 36, 1.00) 1px;
-        width: 150px;
-        max-width: 150px;
-        min-width: 150px;
+        width: 250px;
+        max-width: 250px;
+        min-width: 250px;
     }
     #Menu ul 
     {
+        margin-top:10px;
+        margin-bottom: 10px;
+        text-align: center;
         list-style-type: none;
+        margin-left: auto;
+        margin-right: auto;
+        padding-left:0px;
     }
+
+    #Menu ul li 
+    {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    #Menu ul li input[type=submit]
+    {
+        border: none;
+        background: transparent;
+        outline: none;
+        color: #d01e1e;
+    }
+
     .IslandEnnemy {
         background-image: url("/images/WorldMap/villagechibiennemi.png") !important;
         background-size: contain;
@@ -119,6 +140,9 @@
         background-repeat: no-repeat;
         background-position: center;
     }
+
+
+
 
 </style>
 
@@ -189,6 +213,24 @@
             <form asp-controller="Profil" asp-action="ProfilOfOtherPlayer" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId">
                 <input type="hidden" name="EnnemyIslandId" value="0" />
                 <input type="submit" value="Voir profil"/>
+            </form>
+        </li>
+        <li>
+            <form asp-controller="Profil" asp-action="ProfilOfOtherPlayer" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId">
+                <input type="hidden" name="EnnemyIslandId" value="0" />
+                <input type="submit" value="Envoyer Ressource [a brancher]" />
+            </form>
+        </li>
+        <li>
+            <form asp-controller="Profil" asp-action="ProfilOfOtherPlayer" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId">
+                <input type="hidden" name="EnnemyIslandId" value="0" />
+                <input type="submit" value="Coloniser [a brancher]" />
+            </form>
+        </li>
+        <li>
+            <form asp-controller="Profil" asp-action="ProfilOfOtherPlayer" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId">
+                <input type="hidden" name="EnnemyIslandId" value="0" />
+                <input type="submit" value="Transporter troupes [a brancher]" />
             </form>
         </li>
     </ul>
