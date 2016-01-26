@@ -27,11 +27,14 @@
 
                 <div class="tab-content">
                     <div id="home" class="tab-pane fade in active">
-                        <table>
-                            <tr>
-                                <td>Objet du message</td>
-                                <td>Heure d'envoi</td>
-                            </tr>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Objet du message</th>
+                                    <th>Heure d'envoi</th>
+                                </tr>
+                            </thead>
+
 
                             @foreach (Message m in Model.AllMessages.Where(u => u.isCombatReport))
                             {
@@ -53,12 +56,15 @@
                         </table>
                     </div>
                     <div id="msgPerso" class="tab-pane fade">
-                        <table>
-                            <tr>
-                                <td>Auteur</td>
-                                <td>Objet du message</td>
-                                <td>Heure d'envoi</td>
-                            </tr>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Auteur</th>
+                                    <th>Objet du message</th>
+                                    <th>Heure d'envoi</th>
+                                </tr>
+                            </thead>
+
 
                             @foreach (Message message in Model.AllMessages.Where(u => !u.isCombatReport))
                             {
