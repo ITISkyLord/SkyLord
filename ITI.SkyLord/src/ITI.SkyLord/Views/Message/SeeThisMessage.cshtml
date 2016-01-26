@@ -8,22 +8,82 @@
     Layout = "_Layout";
 }
 
-<h1>Boite de réception</h1>
-<h3>Objet : @Model.Message.MessageObject</h3>
-<h4>Date d'envoi : @Model.Message.DateSent</h4>
+<div class="messageContainer">
+    <div class="container text-center">
+        <div class="row">
 
-<p>@Model.Message.CoreMessage</p>
-<a asp-controller="Message" asp-action="GetAllMessages" asp-route-islandId="@Model.Layout.IslandId">Boite de réception</a>
-<br />
-@if( !Model.Message.isCombatReport )
-{
-    <form asp-controller="Message" asp-action="Answer" asp-route-islandId="@Model.Layout.IslandId" asp-route-messageId="@Model.Message.MessageId" role="form" method="post">
-        <input type="hidden" asp-for="@Model.FromId" value="@Model.FromId" />
-        <label for="object">Objet du message : </label><input type="text" asp-for="ObjectOfSender" id="object" value="RE : @Model.Message.MessageObject" />
-        <br />
-        <label for="core">Corps du message</label><textarea asp-for="Answer" id="core" ></textarea><br />
-        <input type="submit" value="Répondre"/>
-    </form>
-}
-<a asp-controller="Message" asp-action="UnReadMessage" asp-route-messageId="@Model.Message.MessageId" asp-route-islandId="@Model.Layout.IslandId">Mettre le message en non lu</a>
+            <div class="col-sm-2 col-md-2">
 
+                <input type="button" class="btn btn-danger" id="sendMessage" value="Nouveau message" />
+                <!-- Modal -->
+                <div class="modal fade" id="ModalLogin" role="dialog">
+                    <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header" style="padding:35px 50px;">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4><span class="glyphicon glyphicon-envelope"></span> Nouveau Message</h4>
+                            </div>
+                            <div class="modal-body" style="padding:40px 50px;">
+                                <form asp-controller="Message" asp-action="SendMessage" asp-route-islandId="@Model.Layout.IslandId" method="post" class="form-horizontal" role="form">
+                                    <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
+                                    <div class="form-group">
+                                        <label for="to"><span class="glyphicon glyphicon-user"></span> A : </label>
+                                        <input asp-for="To" class="form-control" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="object"><span class="glyphicon glyphicon-comment"></span> Objet du message : </label>
+                                        <input asp-for="ObjectOfSender" class="form-control" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="core"><span class="glyphicon glyphicon-comment"></span> Corps du message</label>
+                                        <textarea asp-for="Answer" class="form-control"></textarea>
+                                    </div>
+
+                                    <input type="submit" class="btn-link" value="Envoyer le message" />
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Annuler</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <script>
+                    $(document).ready(function () {
+                        $("#sendMessage").click(function () {
+                            $("#ModalLogin").modal();
+                        });
+                    });
+                </script>
+
+
+
+                <ul class="nav nav-pills nav-stacked" id="bt-reception" data-spy="affix" data-offset-top="205">
+                    <li><a asp-controller="Message" asp-action="GetAllMessages" asp-route-islandId="@Model.Layout.IslandId">Boite de réception</a></li>
+                </ul>
+            </div>
+
+            <div class="col-sm-10 col-md-10">
+                <h3>Objet : @Model.Message.MessageObject</h3>
+                <h4>Date d'envoi : @Model.Message.DateSent</h4>
+
+                <p>@Model.Message.CoreMessage</p>
+
+                @if (!Model.Message.isCombatReport)
+                {
+                    <form asp-controller="Message" asp-action="Answer" asp-route-islandId="@Model.Layout.IslandId" asp-route-messageId="@Model.Message.MessageId" role="form" method="post">
+                        <input type="hidden" asp-for="@Model.FromId" value="@Model.FromId" />
+                        <label for="object">Objet du message : </label><input type="text" asp-for="ObjectOfSender" id="object" value="RE : @Model.Message.MessageObject" />
+                        <br />
+                        <label for="core">Corps du message</label><textarea asp-for="Answer" id="core"></textarea><br />
+                        <input type="submit" value="Répondre" />
+                    </form>
+                }
+                <a asp-controller="Message" asp-action="UnReadMessage" asp-route-messageId="@Model.Message.MessageId" asp-route-islandId="@Model.Layout.IslandId">Mettre le message en non lu</a>
+            </div>
+        </div>
+    </div>
+</div>
