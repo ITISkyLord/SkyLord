@@ -66,23 +66,44 @@
                 </ul>
             </div>
 
-            <div class="col-sm-10 col-md-10">
-                <h3>Objet : @Model.Message.MessageObject</h3>
-                <h4>Date d'envoi : @Model.Message.DateSent</h4>
+            <div class="col-sm-7 col-md-7">
 
-                <p>@Model.Message.CoreMessage</p>
+                @Model.Message.MessageObject<hr />
 
-                @if (!Model.Message.isCombatReport)
-                {
-                    <form asp-controller="Message" asp-action="Answer" asp-route-islandId="@Model.Layout.IslandId" asp-route-messageId="@Model.Message.MessageId" role="form" method="post">
-                        <input type="hidden" asp-for="@Model.FromId" value="@Model.FromId" />
-                        <label for="object">Objet du message : </label><input type="text" asp-for="ObjectOfSender" id="object" value="RE : @Model.Message.MessageObject" />
-                        <br />
-                        <label for="core">Corps du message</label><textarea asp-for="Answer" id="core"></textarea><br />
-                        <input type="submit" value="Répondre" />
-                    </form>
-                }
-                <a asp-controller="Message" asp-action="UnReadMessage" asp-route-messageId="@Model.Message.MessageId" asp-route-islandId="@Model.Layout.IslandId">Mettre le message en non lu</a>
+
+                @Model.Message.DateSent<hr />
+
+
+                <p>@Model.Message.CoreMessage</p><hr />
+
+                <div class="form-group">
+                    <textarea class="form-control" rows="2" id="comment" data-toggle="collapse" data-target="#demo">Cliquez ici pour répondre...</textarea>
+                </div>
+
+                <div id="demo" class="collapse">
+                    @if (!Model.Message.isCombatReport)
+                    {
+                        <form asp-controller="Message" asp-action="Answer" asp-route-islandId="@Model.Layout.IslandId" asp-route-messageId="@Model.Message.MessageId" role="form" method="post">
+                            <input type="hidden" asp-for="@Model.FromId" value="@Model.FromId" />
+                            <label for="object">Objet du message : </label><input type="text" asp-for="ObjectOfSender" id="object" value="RE : @Model.Message.MessageObject" />
+                            <br />
+                            <label for="core">Corps du message</label><textarea asp-for="Answer" id="core"></textarea><br />
+                            <input type="submit" value="Répondre" />
+                        </form>
+                    }
+                </div>
+            </div>
+
+            <div class="col-sm-3 col-md-3">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-share-alt"></span></button>
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a asp-controller="Message" asp-action="UnReadMessage" asp-route-messageId="@Model.Message.MessageId" asp-route-islandId="@Model.Layout.IslandId">Marquer comme non lu</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
