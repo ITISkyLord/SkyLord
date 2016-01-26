@@ -28,6 +28,15 @@ namespace ITI.SkyLord.Controllers
                 SetupContext.ValidateIsland( long.Parse( Request.Query[ "islandId" ] ), player.PlayerId );
             }
 
+            // Validation de l'island (sécurité)
+            if (Request.Query.ContainsKey("islandId"))
+            {
+                // If islandId is present, check it with ValidateIsland method
+                long activePlayerId = SetupContext.GetPlayer(User.GetUserId()).PlayerId;
+                SetupContext.ValidateIsland(long.Parse(Request.Query["islandId"]), activePlayerId);
+            }
+
+
             // Resolve all events from curent player
             EventManager em = new EventManager(SetupContext, new EventPackManager(SetupContext));
             em.ResolveAllForPlayer( player.PlayerId );

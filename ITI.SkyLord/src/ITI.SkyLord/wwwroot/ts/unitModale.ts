@@ -3,6 +3,11 @@
 
 $(document).ready(function () {
 
+    $("#BlackBackground").click(function () {
+        CloseModale();
+    });
+
+
     $(".UnitInfo").click(function (e) {
         $("#StatisticModale").fadeIn();
         var unit = $(this).attr("id");
@@ -11,10 +16,14 @@ $(document).ready(function () {
 
 
     $(".CloseModale").click(function (e) {
-        $("#StatisticModale").fadeOut(function () {
-            $("#StatisticModale .Stat").hide();
-        });
+        CloseModale();
     });
 
 
 });
+
+function CloseModale() {
+    $("#StatisticModale").fadeOut(function () {
+        $("#StatisticModale .Stat").hide();
+    });
+}

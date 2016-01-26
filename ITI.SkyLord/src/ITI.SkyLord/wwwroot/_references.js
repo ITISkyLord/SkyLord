@@ -4,6 +4,7 @@
 /// <reference path="js/less.js" />
 /// <reference path="js/searchplayer.js" />
 /// <reference path="js/seeisland.js" />
+/// <reference path="js/timemanager.js" />
 /// <reference path="js/unitModale.js" />
 /// <reference path="js/worldmap.js" />
 /// <reference path="lib/bootstrap/dist/js/bootstrap.js" />
