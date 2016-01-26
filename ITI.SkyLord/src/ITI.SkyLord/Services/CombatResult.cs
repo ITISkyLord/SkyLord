@@ -138,12 +138,12 @@ namespace ITI.SkyLord
             }
             else if( winningArmy.ArmyState == ArmyState.movement )
             {
-                coreMessageWinner = _winningArmy.Island.Name + " a gagné contre " + _loosingArmy.Island.Name + ".\n"
+                coreMessageWinner = _winningArmy.Island.Name + " a gagné contre " + _loosingArmy.Island.Name + ".\n "
                 + _winningArmy.Island.Name + " a pillé " + _pillagedRessources.Wood + " bois, " + _pillagedRessources.Metal + " métaux, " + _pillagedRessources.Cristal + " cristaux et " + _pillagedRessources.Wood + " magie."
                 + _loosingArmy.Island.Name + " a perdu toutes ses troupes en défense et " + _winningArmy.Island.Name + " a perdu : ";
 
-                coreMessageLooser = _loosingArmy.Island.Name + " a perdu contre " + _winningArmy.Island.Name + ".\n"
-                + _winningArmy.Island.Name + " a pillé " + _pillagedRessources.Wood + " bois, " + _pillagedRessources.Metal + " métaux, " + _pillagedRessources.Cristal + " cristaux et " + _pillagedRessources.Wood + " magie."
+                coreMessageLooser = _loosingArmy.Island.Name + " a perdu contre " + _winningArmy.Island.Name + ".\n "
+                + _winningArmy.Island.Name + " a pillé " + _pillagedRessources.Wood + " bois, " + _pillagedRessources.Metal + " métaux, " + _pillagedRessources.Cristal + " cristaux et " + _pillagedRessources.Wood + " magie. "
                 + _loosingArmy.Island.Name + " a perdu toutes ses troupes en défense et " + _winningArmy.Island.Name + " a perdu : ";
             }
             else

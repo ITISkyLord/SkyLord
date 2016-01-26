@@ -139,6 +139,7 @@ namespace ITI.SkyLord.Models.Entity_Framework.Controllers
                     //p.Password = model.Password;
                     p.Profil = new Profil();
                     p.Profil.Description = "";
+                    p.MaxIsland = 1;
                     island = SetupContext.Islands.Include(i => i.Coordinates).Where(i => i.Owner == null).OrderBy(i => IslandManager.DistanceFromCenter(i)).First();
                     p.Islands = new List<Island>();
                     island.IsCapital = true;

@@ -1001,23 +1001,15 @@ namespace ITI.SkyLord.Tests.EfTests
 
         #region Seed
 
-        [Test]
-        public void SeedAllTheThings()
-        {
-            LevelSeed levelSeed = new LevelSeed();
-            UnitSeed unitSeed = new UnitSeed();
-            levelSeed.SeedLevels();
-            unitSeed.SeedUnits();
-        }
-
         //[Test]
-        //public void RessourceTest()
+        //public void SeedAllTheThings()
         //{
-        //    Ressource source = new Ressource { Wood = 100, Metal = 50, Cristal = 50, Magic = 100 };
-        //    Ressource cost = new Ressource { Wood = 25, Metal = 50, Cristal = 10, Magic = 0 };
-
-        //    //RessourceManager.GetCoefficient( source, cost );
+        //    LevelSeed levelSeed = new LevelSeed();
+        //    UnitSeed unitSeed = new UnitSeed();
+        //    levelSeed.SeedLevels();
+        //    unitSeed.SeedUnits();
         //}
+
         #endregion
 
         private Ressource Multiplyressource( Ressource initialRessource, int factor )

@@ -56,7 +56,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li><a asp-controller="Army" asp-action="SetAttackingArmy" asp-route-islandId="@Model.Layout.IslandId">Armées</a></li>
                     <li><a asp-controller="Player" asp-action="SeePlayers" asp-route-islandId="@Model.Layout.IslandId">Joueurs</a></li>
-                    <li><a asp-controller="Message" asp-action="Index" asp-route-islandId="@Model.Layout.IslandId">Messages</a></li>
+                    <li><a asp-controller="Message" asp-action="GetAllMessages" asp-route-islandId="@Model.Layout.IslandId">Messages</a></li>
                     <li><a asp-controller="Home" asp-action="Index">Classement</a></li>
                     <li><a asp-controller="Profil" asp-action="Index" asp-route-islandId="@Model.Layout.IslandId">Profil</a></li>
                     <li>
@@ -65,12 +65,7 @@
                         </form>
                     </li>
                     <li>
-                        <form asp-controller="Player" asp-action="SeeInformationOfAnPlayerString" asp-route-islandId="@Model.Layout.IslandId" method="post" role="form">
-                            <center>
-                                <input type="text" placeholder="Recherche ..." name="namePlayer" id="searchPlayer" size="15" style="color:black" />
-                                <button class="btn btn-danger">Go</button>
-                            </center>
-                        </form>
+                    <li><a>Heure : @DateTime.Now.ToString( @"hh\hmm\mss\s" )</a></li>
                     </li>
                 </ul>
             </div>
@@ -85,13 +80,13 @@
                 <a asp-controller="Island" asp-action="OverView" asp-route-islandId="@Model.Layout.IslandId">Vue d'ensemble</a>
                 <a asp-controller="World" asp-action="Index" asp-route-islandId="@Model.Layout.IslandId">Carte du monde</a>
                 <p>Mes ïles :</p>
-                    @foreach (Island island in Model.Layout.AllIslands)
-                    {
-                        string selector = island.IslandId == Model.Layout.IslandId ? "CurrentIsland" : "OtherIsland";
-                        string islandName = island.IsCapital ? "Capitale" : island.Name;
+                @foreach (Island island in Model.Layout.AllIslands)
+                {
+                    string selector = island.IslandId == Model.Layout.IslandId ? "CurrentIsland" : "OtherIsland";
+                    string islandName = island.IsCapital ? "Capitale" : island.Name;
 
-                        <div class="@selector"><a asp-controller="Island" asp-action="SeeMyIsland" asp-route-islandId="@island.IslandId"> @islandName [@island.Coordinates.X, @island.Coordinates.Y]</a></div>
-                    }
+                    <div class="@selector"><a asp-controller="Island" asp-action="SeeMyIsland" asp-route-islandId="@island.IslandId"> @islandName [@island.Coordinates.X, @island.Coordinates.Y]</a></div>
+                }
             </div>
 
             <div class="PageContent">

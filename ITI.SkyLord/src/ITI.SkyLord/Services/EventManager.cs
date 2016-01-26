@@ -375,7 +375,7 @@ namespace ITI.SkyLord
                 {
                     // Change the ownership of the island to the player
                     destination.Owner = armyOnMovement.Island.Owner;
-
+                    _context.SaveChanges();
                     // Add a tower, a portal and a shield
 
                     _allManager.BuildingManager.AddBuildingToIsland( BuildingName.tower, destination.IslandId, 1 );
