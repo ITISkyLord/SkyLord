@@ -7,8 +7,8 @@
 
         @foreach (UnitQueue queueElement in Model.UnitsQueue)
         {
-            <div>Unité : @queueElement.Unit.UnitName )</div> <br />
-            <div>Nombre : @queueElement.Number) <br /></div>
+            <div>Unité : @queueElement.Unit.UnitName</div> <br />
+            <div>Nombre : @queueElement.Number <br /></div>
 
             var dureeFin = queueElement.EndingDate - DateTime.Now;
 
