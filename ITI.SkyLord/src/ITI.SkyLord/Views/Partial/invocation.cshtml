@@ -63,6 +63,10 @@
         z-index: 100001;
         color: white !important;
     }
+
+    .disabledInput {
+
+    }
 </style>
 
 <div class="head">
@@ -84,6 +88,7 @@
     }
 
 }
+
 <table>
     @foreach (var unit in Model.AllUnits.OrderBy(u => u.UnitType).ThenBy(u => u.Duration))
     {
@@ -129,15 +134,24 @@
                         <div class="col col-lg-1 col-sm-1">@unit.Duration s</div>
                         @*<div class="col col-lg-1 col-sm-1">Nombre maximum @maxUnit</div>*@
                     </div>
-
-                    <div class="col-lg-2"><input class="form-control" style="width: 100%;" type="number" asp-for="UnitAmount" min="0" max="@maxUnit" step="1" value="0" /></div>
-                    <div class="col-lg-1">
+                    @if ( Model.EventsOnBuilding.Count() != 0 )
+                    {
+                        <div class="col-lg-2"><input disabled="disabled" class="form-control" style="width: 100%;" type="number" asp-for="UnitAmount" min="0" max="@maxUnit" step="1" value="0" /></div>
+                        <div class="col-lg-1">
+                            <input disabled="disabled" type="submit" class="btn btn-link" value="Former" />
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-lg-2"><input class="form-control" style="width: 100%;" type="number" asp-for="UnitAmount" min="0" max="@maxUnit" step="1" value="0" /></div>
+                        <div class="col-lg-1">
                         <input type="submit" class="btn btn-link" value="Former" />
                     </div>
+                    }
                 </div>
             </div>
         </form>
-                        }
+        }
 
 </table>
 

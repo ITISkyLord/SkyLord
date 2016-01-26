@@ -225,6 +225,19 @@ namespace ITI.SkyLord
             return queue;
         }
 
+        public TechnologyEvent GetCurrentResearch( long playerId )
+        {
+            Player currentPlayer = _context.Players.Include( p => p.Islands ).First( p => p.PlayerId == playerId );
+            return _context.TechnologyEvents.SingleOrDefault( e => !e.Done && currentPlayer.Islands.Any( i => i.IslandId == e.Island.IslandId ) );
+        }
+
+        public BuildingEvent GetCurrentConstruction( long islandId )
+        {
+            return _context.BuildingEvents
+               .Include( e => e.Island ).ThenInclude( e => e.Buildings )
+               .Where( i => i.Done == false && i.Island.IslandId == islandId ).FirstOrDefault();
+        }
+
         #region Resolve
 
         /// <summary>

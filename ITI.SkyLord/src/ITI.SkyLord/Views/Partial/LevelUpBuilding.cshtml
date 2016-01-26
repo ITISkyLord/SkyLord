@@ -7,10 +7,22 @@
             <div class="buildings-build-head">
                 Niveau : @Model.CurrentBuilding.Level.Number
             </div>
+            <p>Bonus apportés </p>
+            @foreach ( Bonus bonus in @Model.CurrentBuilding.Level.Bonuses )
+            {
+                @BonusManager.StaticBonusToString( bonus ) <br />
+            }
+
             <div class="buildings-build-body">
                 <div class="buildings-build-head">
                     Niveau suivant
                 </div>
+
+                <p>Bonus apportés au niveau suivant </p>
+                @foreach ( Bonus bonus in Model.NextBuildingLevel.Bonuses )
+                {
+                    @BonusManager.StaticBonusToString( bonus ) <br />
+                }
 
                 @if (Model.NextBuildingLevel == null)
                 {
@@ -18,9 +30,6 @@
                 }
                 else
                 {
-                    // TODO :
-                    // Ajouter le fait de dire quel bonus on gagne en plus
-
                     <div class="buildings-build-body-txt">
                         @{Write("Bois : " + Model.NextBuildingLevel.Cost.Wood + " " +
                  "Métal : " + Model.NextBuildingLevel.Cost.Metal + " " +
@@ -32,23 +41,37 @@
                     <form asp-controller="Building" asp-action="LevelUpBuilding" asp-route-buildingPosition="@Model.Position" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId">
                         @if (Model.EventsOnBuilding.Count() != 0)
                         {
-                            <div>Amélioration en cours ...</div>
-                        }
-                        else if (Model.IsInConstruction)
-                        {
-                            <div>Un autre bâtiment est en train d'être construit ou amélioré</div>
-                        }
+                            var dureeFin = Model.EventsOnBuilding.First().EndingDate - DateTime.Now;
 
-                        else if (RessourceManager.IsEnough(Model.Layout.CurrentIsland.AllRessources, Model.NextBuildingLevel.Cost))
-                        {
-                            <input type="submit" class="btn btn-link" value="Upgrade" />
+                            <div>Amélioration en cours ...</div>
+                            <div class="time" hours="@dureeFin.Hours" minutes="@dureeFin.Minutes" secondes="@dureeFin.Seconds">Time </div>
                         }
                         else
                         {
-                            <div>Vous n'avez pas assez de ressources pour passer au niveau suivant.</div>
+                            if ( Model.CurrentBuilding.BuildingName == BuildingName.laboratory && Model.CurrentResearch != null )
+                            {
+                                <div>Vous ne pouvez pas faire de travaux sur votre laboratoire si vous êtes en recherche.</div>
+                            }
+                            else if ( Model.CurrentBuilding.BuildingName == BuildingName.invocation && Model.UnitsQueue.Count() != 0 )
+                            {
+                                <div>Vous ne pouvez pas faire de travaux sur votre cercle d'invocation si vous produisez des unités.</div>
+                            }
+                            else if ( Model.IsInConstruction )
+                            {
+                                <div>Un autre bâtiment est en train d'être construit ou amélioré</div>
+                            }
+                            else if ( RessourceManager.IsEnough( Model.Layout.CurrentIsland.AllRessources, Model.NextBuildingLevel.Cost ) )
+                            {
+                                <input type="submit" class="btn btn-link" value="Upgrade" />
+                            }
+                            else
+                            {
+                                <div>Vous n'avez pas assez de ressources pour passer au niveau suivant.</div>
+                            }
+
                         }
                     </form>
-                            }
+                    }
             </div>
         </div>
     </div>
