@@ -23,12 +23,12 @@ namespace ITI.SkyLord.Controllers
         {
             //Récupérer la description dans la BDD
 
-            Player p = SetupContext.GetPlayer(User.GetUserId());
+            Player p = SetupContext.GetPlayer( User.GetUserId() );
             p = SetupContext.Players.Include( z => z.Profil ).Where( x => x.PlayerId == p.PlayerId ).First();
-            ViewData["name"] = p.Name;
+            ViewData[ "name" ] = p.Name;
 
             ProfilViewModel profilViewModel = new ProfilViewModel();
-            if( !String.IsNullOrEmpty( p.Profil.Description ) )
+            if ( !String.IsNullOrEmpty( p.Profil.Description ) )
                 profilViewModel.Description = p.Profil.Description;
             else
                 profilViewModel.Description = "Aucune description";
@@ -37,28 +37,34 @@ namespace ITI.SkyLord.Controllers
             return View( profilViewModel );
         }
 
-        public IActionResult ProfilOfOtherPlayer( long islandId, long otherPlayerId )
+        public IActionResult ProfilOfOtherPlayer( ProfilViewModel model, long islandId, long otherPlayerId )
         {
+            Player otherPlayer = null;
+
+            if ( otherPlayerId == 0 )
+            {
+                otherPlayer = SetupContext.Islands.Include( i => i.Owner ).ThenInclude( p => p.Profil ).Include( i => i.Coordinates )
+                    .First( i => i.IslandId == model.EnnemyIslandId ).Owner;
+            }
+            else
+            {
+                otherPlayer = SetupContext.Players.Include( pl => pl.Profil ).Include( pl => pl.Islands ).ThenInclude( i => i.Coordinates )
+                .FirstOrDefault( pl => pl.PlayerId == otherPlayerId );
+            }
+
             //Récupérer la description dans la BDD
-            Player currentPlayer = SetupContext.GetPlayer(User.GetUserId());
-            //  Island ennemyIsland = SetupContext.Islands.Include(i => i.Owner).ThenInclude( pl => pl.Profil ).Where(i => i.IslandId == ennemyIslandId).FirstOrDefault();
-            Player otherPlayer = SetupContext.Players.Include( pl => pl.Profil ).Include( pl => pl.Islands).ThenInclude( i => i.Coordinates)
-                .First( pl => pl.PlayerId == otherPlayerId );
-            ProfilViewModel model = new ProfilViewModel();
+            Player currentPlayer = SetupContext.GetPlayer( User.GetUserId() );
+
             // Si le joueur existe => On affiche le profil
-            if( otherPlayer != null )
+            if ( otherPlayer != null )
             {
                 model.Name = otherPlayer.Name;
                 model.Mail = otherPlayer.Mail;
                 model.PlayerId = otherPlayer.PlayerId;
                 model.CurrentPlayerId = currentPlayer.PlayerId;
                 model.OtherIslands = otherPlayer.Islands.ToList();
-                //ViewData["name"] = p.Name;
-                //ViewData["mail"] = p.Mail;
-                //ViewData["id"] = p.PlayerId;
-                //ViewData["currentPlayerId"] = currentPlayer.PlayerId;
 
-                if( !String.IsNullOrEmpty( otherPlayer.Profil.Description ) )
+                if ( !String.IsNullOrEmpty( otherPlayer.Profil.Description ) )
                     model.Description = otherPlayer.Profil.Description;
                 else
                     model.Description = "Aucune description.";
@@ -84,8 +90,8 @@ namespace ITI.SkyLord.Controllers
         public IActionResult ProfilOfAPlayer( long islandId, long playerId )
         {
             //Récupérer la description dans la BDD
-            Player currentPlayer = SetupContext.GetPlayer(User.GetUserId());
-            Player p = SetupContext.Players.Include( pro => pro.Profil ).Single( pe => pe.PlayerId == playerId);
+            Player currentPlayer = SetupContext.GetPlayer( User.GetUserId() );
+            Player p = SetupContext.Players.Include( pro => pro.Profil ).Single( pe => pe.PlayerId == playerId );
             ProfilViewModel model = new ProfilViewModel();
             // Si le joueur existe => On affiche le profil
             model.Name = p.Name;
@@ -97,7 +103,7 @@ namespace ITI.SkyLord.Controllers
             //ViewData["id"] = p.PlayerId;
             //ViewData["currentPlayerId"] = currentPlayer.PlayerId;
 
-            if( !String.IsNullOrEmpty( p.Profil.Description ) )
+            if ( !String.IsNullOrEmpty( p.Profil.Description ) )
                 model.Description = p.Profil.Description;
             else
                 model.Description = "Aucune description.";
@@ -109,13 +115,13 @@ namespace ITI.SkyLord.Controllers
 
         public IActionResult ChangeProfil( long islandId = 0 )
         {
-            Player p = SetupContext.GetPlayer(User.GetUserId());
+            Player p = SetupContext.GetPlayer( User.GetUserId() );
             p = SetupContext.Players.Include( z => z.Profil ).Where( x => x.PlayerId == p.PlayerId ).First();
-            ViewData["name"] = p.Name;
+            ViewData[ "name" ] = p.Name;
 
             ProfilViewModel model = new ProfilViewModel();
             model.Name = p.Name;
-            model.Description = (!String.IsNullOrEmpty( p.Profil.Description )) ? p.Profil.Description : "Aucune description.";
+            model.Description = ( !String.IsNullOrEmpty( p.Profil.Description ) ) ? p.Profil.Description : "Aucune description.";
             model.Mail = p.Mail;
 
             SetupContext.FillStandardVM( model, SetupContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
@@ -127,15 +133,15 @@ namespace ITI.SkyLord.Controllers
         {
             // Ajouter la description dans la BDD
 
-            Player p = SetupContext.GetPlayer(User.GetUserId());
+            Player p = SetupContext.GetPlayer( User.GetUserId() );
             p = SetupContext.Players.Include( z => z.Profil ).Where( x => x.PlayerId == p.PlayerId ).First();
             Profil oldProfil = p.Profil;
             oldProfil.Description = description;
             SetupContext.SaveChanges();
 
-            ViewData["name"] = p.Name;
+            ViewData[ "name" ] = p.Name;
             ProfilViewModel profilViewModel = new ProfilViewModel();
-            profilViewModel.Description = (!String.IsNullOrEmpty( p.Profil.Description )) ? p.Profil.Description : "Aucune description";
+            profilViewModel.Description = ( !String.IsNullOrEmpty( p.Profil.Description ) ) ? p.Profil.Description : "Aucune description";
 
             SetupContext.FillStandardVM( profilViewModel, SetupContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
             return View( "Index", profilViewModel );
