@@ -1,5 +1,10 @@
 /// <reference path="jquery.d.ts" />
 $(document).ready(function () {
+    $(".time").each(function () {
+        if (+$(this).attr("secondes") == 0 && +$(this).attr("minutes") == 0 && +$(this).attr("hours") == 0) {
+            $(this).removeClass(".time");
+        }
+    });
     setInterval(function () {
         $(".time").each(function (key, value) {
             console.log("update");
