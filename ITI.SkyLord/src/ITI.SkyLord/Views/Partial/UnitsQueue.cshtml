@@ -7,7 +7,7 @@
 
         @foreach( UnitQueue queueElement in Model.UnitsQueue )
         {
-            Write( "Unité : " + @queueElement.Unit.UnitName ); <br />
+            Write( "Unité : " + @queueElement.Unit.Name ); <br />
             Write( "Nombre : " + @queueElement.Number ); <br />
             Write( "Fini dans: " + ( @queueElement.EndingDate - DateTime.Now ).ToString( @"hh\hmm\mss\s" ) ); <br />
             <br />

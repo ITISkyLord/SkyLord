@@ -252,8 +252,8 @@ namespace ITI.SkyLord.Controllers
                 SetupContext.SaveChanges();
                 eventManager.AddArmyEvent( SetupContext, SenderRessourceArmy, senderIsland, ArmyMovement.sendingRessources, island, sendingRessource );
                 SetupContext.SaveChanges();
-
-                return RedirectToAction( "SetSendRessources", new { islandId = islandId } );
+                ModelState.AddModelError( "success", "Les transporteurs ont bien été envoyé." );
+                return RedirectToAction( "SetAttackingArmy", new { islandId = islandId } );
             }
             else
             {
@@ -278,7 +278,7 @@ namespace ITI.SkyLord.Controllers
                 else
                     ModelState.AddModelError( "UnitsToSend", "Vous ne pouvez pas envoyer plus d'unités que vous n'en possédez." );
 
-                return RedirectToAction( "SetSendRessources", new { islandId = islandId } );
+                return RedirectToAction( "SetAttackingArmy", new { islandId = islandId } );
             }
         }
         private SetSendRessourcesViewModel CreateSetSendRessourceViewModel( long islandId )
@@ -294,7 +294,7 @@ namespace ITI.SkyLord.Controllers
             //    .Single( i => i.IslandId == islandId ).Armies.Single( a => a.ArmyState != ArmyState.obsolete );
             ArmyManager am = new ArmyManager( SetupContext, new BonusManager( SetupContext ) );
             Army defenseArmy = am.GetCurrentDefenseArmy( islandId );
-            if( defenseArmy == null )
+            if( defenseArmy == null && defenseArmy.Regiments.Count < 1)
             {
                 model.NumberOfTransportorToSend = 0;
             }
@@ -347,7 +347,7 @@ namespace ITI.SkyLord.Controllers
                 model.IsMaxIslandReached = true;
             }
 
-            if( defenseArmy == null || defenseArmy.Regiments.Count > 0 )
+            if( defenseArmy == null || defenseArmy.Regiments.Count < 1 )
             {
                 model.HasApprentice = false;
             }
@@ -365,7 +365,7 @@ namespace ITI.SkyLord.Controllers
                 model.HasApprentice = false;
 
             model.SenderIsland = GetIsland( islandId );
-            return View( model );
+            return RedirectToAction( "SetAttackingArmy", new { islandId = islandId } );
         }
         public IActionResult SendColonisation( SetColonisationViewModel model, long islandId = 0 )
         {
@@ -388,6 +388,7 @@ namespace ITI.SkyLord.Controllers
                 SetupContext.Ressources.Add( sendingRessource );
                 RessourceManager.RemoveRessource( senderIsland.AllRessources, sendingRessource );
                 SetupContext.SaveChanges();
+                
                 eventManager.AddArmyEvent( SetupContext, SenderApprenticeArmy, senderIsland, ArmyMovement.colonising, island, sendingRessource );
                 SetupContext.SaveChanges();
 
