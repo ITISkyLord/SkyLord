@@ -14,8 +14,8 @@
 
             <div class="col-sm-2 col-md-2">
                 <input type="button" class="btn btn-danger" value="Nouveau message" />
-                <ul class="nav nav-pills nav-stacked" data-spy="affix" data-offset-top="205">
-                    <li><a href="#section1">Boite de réception</a></li>
+                <ul class="nav nav-pills nav-stacked" id="bt-reception" data-spy="affix" data-offset-top="205">
+                    <li><a asp-controller="Message" asp-action="GetAllMessages" asp-route-islandId="@Model.Layout.IslandId">Boite de réception</a></li>
                 </ul>
             </div>
 

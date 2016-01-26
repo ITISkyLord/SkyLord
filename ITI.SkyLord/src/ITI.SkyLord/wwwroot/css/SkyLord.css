@@ -7478,6 +7478,14 @@ footer li a:hover {
   display: block;
   overflow: auto;
 }
+.messageContainer #bt-reception a {
+  font-size: 13px;
+}
+.messageContainer #bt-reception a:hover {
+  background: none;
+  font-size: 13px;
+  color: #825847;
+}
 .messageContainer .readMessage {
   font-weight: bold;
   font-size: 15px;
