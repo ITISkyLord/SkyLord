@@ -35,34 +35,34 @@
                                     // Gérer le retour, c'est pas toujours une attaque.
                                     if (@army.Destination.Owner != null)
                                     {
-                            if( army.ArmyMovement == ArmyMovement.attacking )
+                                        if (army.ArmyMovement == ArmyMovement.attacking)
                                         {
                                             <div>Attaque vers @army.Destination.Name de coordonées :  [@army.Destination.Coordinates.X, @army.Destination.Coordinates.Y] chez le joueur @army.Destination.Owner.Name</div>
                                         }
-                            else if( army.ArmyMovement == ArmyMovement.sendingRessources )
+                                        else if (army.ArmyMovement == ArmyMovement.sendingRessources)
                                         {
                                             <div>Envoi de ressources vers @army.Destination.Name [@army.Destination.Coordinates.X, @army.Destination.Coordinates.Y] chez @army.Destination.Owner.Name</div>
                                         }
-                            else if( army.ArmyMovement == ArmyMovement.returning )
+                                        else if (army.ArmyMovement == ArmyMovement.returning)
                                         {
                                             <div>Vos unités sont en train de revenir de @army.Destination.Name [@army.Destination.Coordinates.X, @army.Destination.Coordinates.Y] chez @army.Destination.Owner.Name</div>
                                         }
-                            else if( army.ArmyMovement == ArmyMovement.colonising )
+                                        else if (army.ArmyMovement == ArmyMovement.colonising)
                                         {
                                             <div>Colonisation vers @army.Destination.Name [@army.Destination.Coordinates.X, @army.Destination.Coordinates.Y] chez @army.Destination.Owner.Name. Impact à @army.EndingDate.Hour:@army.EndingDate.Minute:@army.EndingDate.Second</div>
                                         }
                                     }
-                        else if( army.ArmyMovement == ArmyMovement.attacking )
+                                    else if (army.ArmyMovement == ArmyMovement.attacking)
                                     {
-                            <div>Attaque vers une île barbare [@army.Destination.Coordinates.X, @army.Destination.Coordinates.Y]. Impact à @army.EndingDate.ToString( @"HH\hmm\mss\s" )</div>
-                        }
-                        else if( army.ArmyMovement == ArmyMovement.returning )
-                        {
-                            <div>Vos unités sont en train de revenir de @army.Destination.Name [@army.Destination.Coordinates.X, @army.Destination.Coordinates.Y]</div>
+                                        <div>Attaque vers une île barbare [@army.Destination.Coordinates.X, @army.Destination.Coordinates.Y]. Impact à @army.EndingDate.ToString(@"HH\hmm\mss\s")</div>
+                                    }
+                                    else if (army.ArmyMovement == ArmyMovement.returning)
+                                    {
+                                        <div>Vos unités sont en train de revenir de @army.Destination.Name [@army.Destination.Coordinates.X, @army.Destination.Coordinates.Y]</div>
 
                                     }
                                 }
-                    Arrivée à @army.EndingDate.ToString( @"HH\hmm\mss\s" )
+                                Arrivée à @army.EndingDate.ToString(@"HH\hmm\mss\s")
                             </p>
                                     }
                                     <hr />
@@ -103,7 +103,11 @@
                                         <td>@r.Unit.Name</td>
                                         <td>@r.Number</td>
                                         <td><input type="number" min="0" max="@r.Number" step="1" asp-for="UnitsToSend[r.Unit.UnitName.ToString()]" value="0" /></td>
-                                        <td><div class="SelectAll">Mettre tous</div></td>
+                                        <td>
+                                            <div class="SelectAll">
+                                                <input type="button" class="btn-link" value="Tout envoyer" />
+                                            </div>
+                                        </td>
                                     </tr>
                                 }
                             </tbody>
