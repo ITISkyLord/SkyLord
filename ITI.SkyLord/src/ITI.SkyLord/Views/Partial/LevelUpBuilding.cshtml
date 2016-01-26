@@ -48,15 +48,15 @@
                         }
                         else
                         {
-                            @*if ( Model.CurrentBuilding.BuildingName == BuildingName.laboratory && Model.CurrentResearch != null )
+                            if ( Model.CurrentBuilding.BuildingName == BuildingName.laboratory && Model.CurrentResearch != null )
                             {
                                 <div>Vous ne pouvez pas faire de travaux sur votre laboratoire si vous êtes en recherche.</div>
                             }
-                            else if ( Model.CurrentBuilding.BuildingName == BuildingName.invocation && Model.EventsOnBuilding.Count() != 0 )
+                            else if ( Model.CurrentBuilding.BuildingName == BuildingName.invocation && Model.UnitsQueue.Count() != 0 )
                             {
                                 <div>Vous ne pouvez pas faire de travaux sur votre cercle d'invocation si vous produisez des unités.</div>
                             }
-                            else*@ if ( Model.IsInConstruction )
+                            else if ( Model.IsInConstruction )
                             {
                                 <div>Un autre bâtiment est en train d'être construit ou amélioré</div>
                             }
