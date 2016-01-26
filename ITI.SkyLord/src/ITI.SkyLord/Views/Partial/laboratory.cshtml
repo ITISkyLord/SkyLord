@@ -16,8 +16,6 @@
 
 @foreach ( TechnologyDisplay technologyDisplay in Model.TechnologyDisplays )
 {
-    //Disable the level up and add buttons if the player is already researching
-    string disabled = Model.CurrentResearch != null ? "disabled='disabled' style = 'display:none'" : "";
 
     if ( technologyDisplay.IsAvailable && technologyDisplay.IsResearched )
     {
@@ -32,7 +30,14 @@
                 <div class="col-lg-1">@technologyDisplay.NextLevel.Cost.Magic Magie</div>
                 <div class="col-lg-1">@technologyDisplay.NextLevel.Duration Temps de recherche</div>
 
-                <div class="col-lg-1"><input @disabled type="submit" value="Niveau supérieur" /></div>
+                @if ( Model.CurrentResearch != null || Model.IsInConstruction )
+                {
+                    <div class="col-lg-1"><input disabled="disabled" type="submit" value="Niveau supérieur" /></div>
+                }
+                else
+                {
+                    <div class="col-lg-1"><input type="submit" value="Niveau supérieur" /></div>
+                }
             </div>
         </form>
 
@@ -60,7 +65,15 @@
                 <div class="col-lg-1">@technologyDisplay.CurrentLevel.Cost.Cristal Cristal</div>
                 <div class="col-lg-1">@technologyDisplay.CurrentLevel.Cost.Magic Magie</div>
                 <div class="col-lg-1">@technologyDisplay.CurrentLevel.Duration Temps de recherche</div>
-                <div class="col-lg-1"><input @disabled type="submit" value="Rechercher" /></div>
+                
+                @if ( Model.CurrentResearch != null || Model.IsInConstruction )
+                {
+                    <div class="col-lg-1"><input disabled="disabled" type="submit" value="Rechercher" /></div>
+                }
+                else
+                {
+                    <div class="col-lg-1"><input type="submit" value="Rechercher" /></div>
+                }
             </div>
         </form>
 
