@@ -37,28 +37,28 @@ namespace ITI.SkyLord.Controllers
             return View( profilViewModel );
         }
 
-        public IActionResult ProfilOfOtherPlayer( long islandId, long EnnemyIslandId )
+        public IActionResult ProfilOfOtherPlayer( long islandId, long playerId )
         {
             //Récupérer la description dans la BDD
             Player currentPlayer = SetupContext.GetPlayer(User.GetUserId());
-            Island ennemyIsland = SetupContext.Islands.Include(i => i.Owner).ThenInclude( pl => pl.Profil ).Where(i => i.IslandId == EnnemyIslandId).FirstOrDefault();
-
+            //      Island ennemyIsland = SetupContext.Islands.Include(i => i.Owner).ThenInclude( pl => pl.Profil ).Where(i => i.IslandId == ennemyIslandId).FirstOrDefault();
+            Player otherPlayer = SetupContext.Players.Include( pl => pl.Profil ).Single( pl => pl.PlayerId == playerId);
             ProfilViewModel model = new ProfilViewModel();
             // Si le joueur existe => On affiche le profil
-            if( ennemyIsland != null )
+            if( otherPlayer != null )
             {
-                Player p = ennemyIsland.Owner;
-                model.Name = p.Name;
-                model.Mail = p.Mail;
-                model.PlayerId = p.PlayerId;
+                
+                model.Name = otherPlayer.Name;
+                model.Mail = otherPlayer.Mail;
+                model.PlayerId = otherPlayer.PlayerId;
                 model.CurrentPlayerId = currentPlayer.PlayerId;
                 //ViewData["name"] = p.Name;
                 //ViewData["mail"] = p.Mail;
                 //ViewData["id"] = p.PlayerId;
                 //ViewData["currentPlayerId"] = currentPlayer.PlayerId;
 
-                if( !String.IsNullOrEmpty( p.Profil.Description ) )
-                    model.Description = p.Profil.Description;
+                if( !String.IsNullOrEmpty( otherPlayer.Profil.Description ) )
+                    model.Description = otherPlayer.Profil.Description;
                 else
                     model.Description = "Aucune description.";
             }

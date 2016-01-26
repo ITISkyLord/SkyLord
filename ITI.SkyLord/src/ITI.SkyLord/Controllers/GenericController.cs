@@ -20,7 +20,13 @@ namespace ITI.SkyLord.Controllers
         {
             base.OnActionExecuting( context );
 
-            var player = SetupContext.GetPlayer(User.GetUserId());
+            Player player = SetupContext.GetPlayer(User.GetUserId());
+
+            if ( Request.Query.ContainsKey( "islandId" ) )
+            {
+                // If islandId is present, check it with ValidateIsland method
+                SetupContext.ValidateIsland( long.Parse( Request.Query[ "islandId" ] ), player.PlayerId );
+            }
 
             // Validation de l'island (sécurité)
             if (Request.Query.ContainsKey("islandId"))
@@ -34,7 +40,6 @@ namespace ITI.SkyLord.Controllers
             // Resolve all events from curent player
             EventManager em = new EventManager(SetupContext, new EventPackManager(SetupContext));
             em.ResolveAllForPlayer( player.PlayerId );
-
 
             // resolve ressources
             foreach( Island island in SetupContext.GetAllIslands( player.PlayerId ) )
