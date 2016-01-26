@@ -55,7 +55,7 @@ namespace ITI.SkyLord.Controllers
             SetupContext.SaveChanges();
             ModelState.AddModelError( "message", "Le message a été bien envoyé." );
             SetupContext.FillStandardVM( model, SetupContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
-            return View( "Messages", model );
+            return View(" GetAllMessages", model );
 
         }
         public IActionResult SendMessage( MessageViewModel model, long islandId = 0 )

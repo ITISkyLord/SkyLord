@@ -23,137 +23,139 @@
             </div>
             @{
                 var allAttackingArmies = Model.AllPlayerArmiesEvent.Where(a => a.Army.ArmyState == ArmyState.movement).OrderBy(a => a.EndingDate).ToList();
-                if( allAttackingArmies.Count != 0 )
+                if (allAttackingArmies.Count != 0)
                 {
-                    foreach( var army in allAttackingArmies )
+                    foreach (var army in allAttackingArmies)
                     {
-                        if( army.Army.ArmyState == ArmyState.movement )
+                        if (army.Army.ArmyState == ArmyState.movement)
                         {
                             <p>
                                 @{
                                     // Si c'est bien une attaque et non un approvisionnement.
                                     // Gérer le retour, c'est pas toujours une attaque.
-                                    if( @army.Destination.Owner != null )
+                                    if (@army.Destination.Owner != null)
                                     {
-                                        if( army.ArmyMovement == ArmyMovement.attacking )
+                                        if (army.ArmyMovement == ArmyMovement.attacking)
                                         {
                                             <div>Attaque vers @army.Destination.Name de coordonnées :  [@army.Destination.Coordinates.X, @army.Destination.Coordinates.Y] chez le joueur @army.Destination.Owner.Name</div>
                                         }
-                                        else if( army.ArmyMovement == ArmyMovement.sendingRessources )
+                                        else if (army.ArmyMovement == ArmyMovement.sendingRessources)
                                         {
                                             <div>Envoi de ressources vers @army.Destination.Name [@army.Destination.Coordinates.X, @army.Destination.Coordinates.Y] chez @army.Destination.Owner.Name</div>
                                         }
-                                        else if( army.ArmyMovement == ArmyMovement.returning )
+                                        else if (army.ArmyMovement == ArmyMovement.returning)
                                         {
                                             <div>Vos unités sont en train de revenir de @army.Destination.Name [@army.Destination.Coordinates.X, @army.Destination.Coordinates.Y] chez @army.Destination.Owner.Name</div>
                                         }
                                     }
-                                    else if( army.ArmyMovement == ArmyMovement.attacking )
+                                    else if (army.ArmyMovement == ArmyMovement.attacking)
                                     {
                                         <div>Attaque vers une île barbare [@army.Destination.Coordinates.X, @army.Destination.Coordinates.Y]. Impact à @army.EndingDate.ToString(@"HH\hmm\mss\s")</div>
                                     }
-                                    else if( army.ArmyMovement == ArmyMovement.returning )
+                                    else if (army.ArmyMovement == ArmyMovement.returning)
                                     {
                                         <div>Vos unités sont en train de revenir de @army.Destination.Name [@army.Destination.Coordinates.X, @army.Destination.Coordinates.Y]</div>
 
                                     }
-                                    else if( army.ArmyMovement == ArmyMovement.colonising )
+                                    else if (army.ArmyMovement == ArmyMovement.colonising)
                                     {
-                                            <div>Colonisation vers une île barbare en [@army.Destination.Coordinates.X, @army.Destination.Coordinates.Y]. Arrivée à @army.EndingDate.ToString( @"HH\hmm\mss\s" )</div>
+                                        <div>Colonisation vers une île barbare en [@army.Destination.Coordinates.X, @army.Destination.Coordinates.Y]. Arrivée à @army.EndingDate.ToString(@"HH\hmm\mss\s")</div>
+                                    }
+                                }
+                                Arrivée à @army.EndingDate.ToString(@"HH\hmm\mss\s")
+                            </p>
+                                    }
+                                    <hr />
+
                                         }
                                     }
-                                Arrivée à @army.EndingDate.ToString(@"HH\hmm\mss\s")
-                        </p>
-                                }
-                                <hr />
+                                    else
+                                    {
+                                        <p>Aucune attaque planifiée</p>
+                                    }
+            }
 
-                                }
-                                }
-                                else
+
+            <div class="army-head">
+                Planification d'une attaque
+            </div>
+            @if (Model.CurrentDefenseArmy != null)
+            {
+                <form asp-controller="Army" asp-action="Fight" asp-route-islandId="@Model.Layout.IslandId" method="post" role="form">
+
+                    <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
+
+                    @* Tableau pour voir nos unité et voir qui l'on envoi *@
+                    <div class="numberArmy">
+
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <td>Unité</td>
+                                    <td>Disponible</td>
+                                    <td>Envoyer</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (Regiment r in Model.CurrentDefenseArmy.Regiments)
                                 {
-                                <p>Aucune attaque planifiée</p>
-                                }
-                                }
-
-
-                                <div class="army-head">
-                                    Planification d'une attaque
-                                </div>
-                                @if( Model.CurrentDefenseArmy != null )
-                                {
-                                    <form asp-controller="Army" asp-action="Fight" asp-route-islandId="@Model.Layout.IslandId" method="post" role="form">
-
-                                        <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
-
-                                        @* Tableau pour voir nos unité et voir qui l'on envoi *@
-                                        <div class="numberArmy">
-
-                                            <table class="table table-hover">
-                                                <thead>
-                                                    <tr>
-                                                        <td>Unité</td>
-                                                        <td>Disponible</td>
-                                                        <td>Envoyer</td>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach( Regiment r in Model.CurrentDefenseArmy.Regiments )
-                                                    {
-                                                        <tr>
-                                                            <td>@r.Unit.Name</td>
-                                                            <td>@r.Number</td>
-                                                            <td><input type="number" min="0" max="@r.Number" step="1" asp-for="UnitsToSend[r.Unit.UnitName.ToString()]" value="0" /></td>
-                                                            <td><div class="SelectAll">Mettre tous</div></td>
+                                    <tr>
+                                        <td>@r.Unit.Name</td>
+                                        <td>@r.Number</td>
+                                        <td><input type="number" min="0" max="@r.Number" step="1" asp-for="UnitsToSend[r.Unit.UnitName.ToString()]" value="0" /></td>
+                                        <td>
                                             <div class="SelectAll">
                                                 <input type="button" class="btn-link" value="Tout envoyer" />
                                             </div>
+                                        </td>
+                                    </tr>
 
-                                                        </tr>
-                                                    }
-                                                </tbody>
-                                            </table>
-                                        </div>
-
-                                        <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
-
-                                        @* Petit moyen pour chercher l'île en fonction des coordonnées *@
-                                        <label for="pos-x">[X]</label><input type="number" name="pos-x" value="@Model.EnnemyIslands.First().Coordinates.X" />
-                                        <label for="pos-y">[Y]</label><input type="number" name="pos-y" value="@Model.EnnemyIslands.First().Coordinates.Y" />
-
-                                        @* Choix de la cible *@
-
-                                        <select asp-for="@Model.Target" id="EnnemyToAttack">
-                                            @foreach( Island i in Model.EnnemyIslands )
-                                            {
-                                                string name = "";
-                                                if( i.Owner == null ) { name = "Île sauvage"; }
-                                                else { name = i.Owner.Name; }
-
-                                                string selected = "";
-                                                if( Model.EnnemyIslandId == i.IslandId )
-                                                {
-                                                    <option value="@i.IslandId" pos-x="@i.Coordinates.X" pos-y="@i.Coordinates.Y" nameOwner="@name" selected="selected">
-                                                        @name [@i.Coordinates.X, @i.Coordinates.Y]
-                                                    </option>
-                                                }
-                                                else
-                                                {
-                                                    <option value="@i.IslandId" pos-x="@i.Coordinates.X" pos-y="@i.Coordinates.Y" nameOwner="@name">
-                                                        @name [@i.Coordinates.X, @i.Coordinates.Y]
-                                                    </option>
-                                                }
-                                            }
-                                        </select>
-
-                                        <div id="btn-perso"><input type="submit" class="btn-link" value="Envoyer les unités" /></div>
-
-                                    </form>
-                                    <script src="/js/AttackManager.js"></script>
                                 }
-                                else
-                                {
-                                    <p>Vous n'avez pas d'armée à envoyer sur cette île, allez au portail d'invocation pour vous préparer à la guerre.</p>
-                                }
-                            </div>
-                        </div>
+                            </tbody>
+
+                        </table>
                     </div>
+
+                    <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
+
+                    @* Petit moyen pour chercher l'île en fonction des coordonnées *@
+                    <label for="pos-x">[X]</label><input type="number" name="pos-x" value="@Model.EnnemyIslands.First().Coordinates.X" />
+                    <label for="pos-y">[Y]</label><input type="number" name="pos-y" value="@Model.EnnemyIslands.First().Coordinates.Y" />
+
+                    @* Choix de la cible *@
+
+                    <select asp-for="@Model.Target" id="EnnemyToAttack">
+                        @foreach (Island i in Model.EnnemyIslands)
+                        {
+                            string name = "";
+                            if (i.Owner == null) { name = "Île sauvage"; }
+                            else { name = i.Owner.Name; }
+
+                            string selected = "";
+                            if (Model.EnnemyIslandId == i.IslandId)
+                            {
+                                <option value="@i.IslandId" pos-x="@i.Coordinates.X" pos-y="@i.Coordinates.Y" nameOwner="@name" selected="selected">
+                                    @name [@i.Coordinates.X, @i.Coordinates.Y]
+                                </option>
+                            }
+                            else
+                            {
+                                <option value="@i.IslandId" pos-x="@i.Coordinates.X" pos-y="@i.Coordinates.Y" nameOwner="@name">
+                                    @name [@i.Coordinates.X, @i.Coordinates.Y]
+                                </option>
+                            }
+                        }
+                    </select>
+
+                    <div id="btn-perso"><input type="submit" class="btn-link" value="Envoyer les unités" /></div>
+
+                </form>
+                <script src="/js/AttackManager.js"></script>
+            }
+            else
+            {
+                <p>Vous n'avez pas d'armée à envoyer sur cette île, allez au portail d'invocation pour vous préparer à la guerre.</p>
+            }
+        </div>
+    </div>
+</div>
