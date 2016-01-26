@@ -1002,13 +1002,13 @@ namespace ITI.SkyLord.Tests.EfTests
         #region Seed
 
         [Test]
-        public void SeedAllTheThings()
-        {
-            LevelSeed levelSeed = new LevelSeed();
-            UnitSeed unitSeed = new UnitSeed();
-            levelSeed.SeedLevels();
-            unitSeed.SeedUnits();
-        }
+        //public void SeedAllTheThings()
+        //{
+        //    LevelSeed levelSeed = new LevelSeed();
+        //    UnitSeed unitSeed = new UnitSeed();
+        //    levelSeed.SeedLevels();
+        //    unitSeed.SeedUnits();
+        //}
 
         //[Test]
         //public void AvailabilityTest()
