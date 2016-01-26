@@ -1,13 +1,11 @@
 ﻿@model ITI.SkyLord.ViewModel.Partial.BuildingPartialViewModel
+@using ITI.SkyLord.ViewModel.Partial;
 
 <div class="head">
     <h2>@BuildingManager.StaticBuildingNameToName(Model.CurrentBuilding.BuildingName)</h2>
 </div>
 
-<div>
-    [Description du building]
-</div>
-
 @{
+    Write(Html.Partial("~/Views/Partial/DescriptionPartial.cshtml", new DescriptionPartial { Description = "Je suis un woodField", FullNameOfImage = "forge.gif" }));
     Write(Html.Partial("~/Views/Partial/LevelUpBuilding.cshtml", Model));
 }
