@@ -86,6 +86,7 @@ namespace ITI.SkyLord
             // Add the following to the request pipeline only in development environment.
             if ( env.IsDevelopment() )
             {
+                // Ces lignes sont les bonnes, mais je décommente pour un test
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
             }
@@ -93,14 +94,8 @@ namespace ITI.SkyLord
             {
                 // Add Error handling middleware which catches all application specific errors and
                 // sends the request to the following path or controller action.
-
-                // TODO : Enlever cette ligne après hein :D
-                app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
-
-                app.UseExceptionHandler( "/Home/Error" );
+                app.UseExceptionHandler("/Home/Index");
             }
-
 
             // If you want sessions to expire 30 minutes after the last activity, you would do so like this:
             //  app.UseInMemorySession( configure: s => s.IdleTimeout = TimeSpan.FromMinutes( 30 ) );
