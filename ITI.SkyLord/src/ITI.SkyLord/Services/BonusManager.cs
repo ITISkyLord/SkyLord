@@ -524,7 +524,7 @@ namespace ITI.SkyLord.Services
 
         public static string StaticBonusToString( Bonus bonus )
         {
-            return "Bonus de " + bonus.Modifier.ToString() + "% sur" + BonusTypeToString( bonus.BonusType ) + BonusTargetToString( bonus );
+            return "Bonus de " + bonus.Modifier.ToString() + "% sur" + BonusTypeToString( bonus.BonusType ) + "de" + BonusTargetToString( bonus );
         }
 
         private static string BonusTargetToString( Bonus bonus )
@@ -603,7 +603,7 @@ namespace ITI.SkyLord.Services
                 case BonusType.army_capacity:
                     return " la capacité de transport ";
                 case BonusType.duration:
-                    return " le temps de construction/production ";
+                    return " le temps de production ";
                 case BonusType.cacheSize:
                     return " la taille de la cache ";
                 default:

@@ -61,6 +61,10 @@
         z-index: 100001;
         color: white !important;
     }
+
+    .disabledInput {
+
+    }
 </style>
 
 <div class="head">
@@ -115,6 +119,8 @@
                             number = regiment == null ? 0 : regiment.Number;
                         }
 
+                        string disableClass = Model.EventsOnBuilding.Count() != 0 ? "disabled='disabled'" : "";
+
                         int maxUnit = RessourceManager.GetCoefficient(Model.Layout.CurrentIsland.AllRessources, unit.UnitCost);
                     }
                     <div class="cost">
@@ -127,9 +133,9 @@
                         @*<div class="col col-lg-1 col-sm-1">Nombre maximum @maxUnit</div>*@
                     </div>
 
-                    <div class="col-lg-2"><input class="form-control" style="width: 100%;" type="number" asp-for="UnitAmount" min="0" max="@maxUnit" step="1" value="0" /></div>
+                    <div class="col-lg-2"><input @disableClass class="form-control" style="width: 100%;" type="number" asp-for="UnitAmount" min="0" max="@maxUnit" step="1" value="0" /></div>
                     <div class="col-lg-1">
-                        <input type="submit" class="btn btn-link" value="Former" />
+                        <input type="submit" class="btn btn-link" @disableClass value="Former" />
                     </div>
                 </div>
             </div>

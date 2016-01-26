@@ -17,7 +17,6 @@
     <div class="row">
         <div id="Test">
             <div id="SeeMyIsland">
-                <div id="Island">
                     @for( var i = 1; i != 11; i++ )
                     {
                         Building myBuilding;
@@ -34,12 +33,25 @@
 
                         <div class="Building" buildingname="@name" id="place_@i" templateid="@i">
                             @{
-                                name += ".png";
-                            }
-                            <img src="~/images/SeeMyIsland/@name" alt=@name />
-                        </div>
+                                if(myBuilding != null)
+                                {
+                                    switch(myBuilding.BuildingName)
+                                    {
+                                        case BuildingName.woodField:
+                                        case BuildingName.academy:
+                                        case BuildingName.barrack :
+                                            name += ".png";
+                                            break;
+
+                                        default :
+                                            name += ".gif";
+                                            break;
+                                    }
                                 }
-                </div>
+                            }
+                            <img src="~/images/SeeMyIsland/@name" alt=""/>
+                        </div>
+                      }
             </div>
         </div>
 
@@ -178,7 +190,8 @@
                             TargetTechnology = Model.TargetTechnology,
                             TechnologyManager = Model.TechnologyManager,
                             UnitsQueue = Model.UnitsQueue,
-                            IsInConstruction =  isInConstruction
+                            IsInConstruction =  isInConstruction,
+                            CurrentResearch = Model.CurrentResearch
 
                         };
                         Write( Html.Partial( "~/Views/Partial/" + name + ".cshtml", partialModel ) );
