@@ -11,7 +11,10 @@ namespace ITI.SkyLord.Controllers
 {
     public class MessageController : GenericController
     {
-
+        public MessageController( [FromServices]SetupContext setupcontext )
+            :base(setupcontext)
+        {
+        }
         [HttpGet]
         public IActionResult Index( long islandId = 0 )
         {

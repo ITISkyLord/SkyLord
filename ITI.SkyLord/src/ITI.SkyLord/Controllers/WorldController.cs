@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
 using ITI.SkyLord.ViewModel.World;
 using Microsoft.Data.Entity;
+using ITI.SkyLord.Models.Entity_Framework.Contexts;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -12,6 +13,10 @@ namespace ITI.SkyLord.Controllers
 {
     public class WorldController : GenericController
     {
+        public WorldController( [FromServices]SetupContext setupcontext )
+            :base(setupcontext)
+        {
+        }
         public IActionResult Index( long islandId )
         {
             WorldMapViewModel wmvm = new WorldMapViewModel();

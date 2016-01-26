@@ -20,7 +20,6 @@ namespace ITI.SkyLord.Models.Entity_Framework.Controllers
     [Authorize]
     public class AccountController : Controller
     {
-        [FromServices]
         public SetupContext SetupContext { get; set; }
 
         private readonly UserManager<ApplicationUser> _userManager;
@@ -30,12 +29,14 @@ namespace ITI.SkyLord.Models.Entity_Framework.Controllers
         private readonly ILogger _logger;
 
         public AccountController(
+            [FromServices] SetupContext setupContext,
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
             ISmsSender smsSender,
             ILoggerFactory loggerFactory )
         {
+            SetupContext = setupContext;
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;

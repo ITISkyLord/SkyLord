@@ -16,6 +16,10 @@ namespace ITI.SkyLord.Controllers
 {
     public class BuildingController : GenericController
     {
+        public BuildingController( [FromServices]SetupContext setupcontext )
+            :base(setupcontext)
+        {
+        }
         public override void OnActionExecuting( ActionExecutingContext context )
         {
             if ( User.IsSignedIn() )

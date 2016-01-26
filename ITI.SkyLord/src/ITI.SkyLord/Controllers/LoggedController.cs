@@ -12,11 +12,12 @@ using System.Security.Claims;
 
 namespace ITI.SkyLord.Controllers
 {
-    public class LoggedController : Controller
+    public class LoggedController : GenericController
     {
-        [FromServices]
-        public SetupContext PlayerContext { get; set; }
-
+        public LoggedController( [FromServices]SetupContext setupcontext )
+            :base(setupcontext)
+        {
+        }
         // GET: /<controller>/
         public IActionResult Index()
         {

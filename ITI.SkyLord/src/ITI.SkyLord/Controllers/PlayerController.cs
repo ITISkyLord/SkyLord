@@ -12,15 +12,17 @@ using ITI.SkyLord.ViewModel;
 
 namespace ITI.SkyLord.Controllers
 {
-    public class PlayerController : Controller
+    public class PlayerController : GenericController
     {
-        [FromServices]
-        public SetupContext PlayerContext { get; set; }
+        public PlayerController( [FromServices]SetupContext setupcontext )
+            :base(setupcontext)
+        {
+        }
 
         public IActionResult Index(long islandId = 0)
         {
             StandardViewModel svm = new StandardViewModel();
-            PlayerContext.FillStandardVM(svm, PlayerContext.GetPlayer(User.GetUserId()).PlayerId, islandId);
+            SetupContext.FillStandardVM(svm, SetupContext.GetPlayer(User.GetUserId()).PlayerId, islandId);
 
             return View();
         }
@@ -31,10 +33,10 @@ namespace ITI.SkyLord.Controllers
         /// <returns></returns>
         public IActionResult SeePlayers(long islandId = 0)
         {
-            Player player = PlayerContext.GetPlayer(User.GetUserId());
+            Player player = SetupContext.GetPlayer(User.GetUserId());
             if (player != null)
             {
-                List<Player> othersPlayer = PlayerContext.Players
+                List<Player> othersPlayer = SetupContext.Players
                     .Include(p => p.Profil)
                     .Include(i => i.Islands)
                     .Where(pl => pl.PlayerId != player.PlayerId).ToList();
@@ -43,7 +45,7 @@ namespace ITI.SkyLord.Controllers
                 sp.Players = othersPlayer;
                 sp.ActivePlayer = player;
 
-                PlayerContext.FillStandardVM(sp, PlayerContext.GetPlayer(User.GetUserId()).PlayerId, islandId);
+                SetupContext.FillStandardVM(sp, SetupContext.GetPlayer(User.GetUserId()).PlayerId, islandId);
 
                 return View(sp);
             }
@@ -55,7 +57,7 @@ namespace ITI.SkyLord.Controllers
 
         public IActionResult SeeInformationOfAnPlayer(int id, long islandId = 0)
         {
-            Player playerChoosen = PlayerContext.Players
+            Player playerChoosen = SetupContext.Players
                 .Include(a => a.Islands).ThenInclude(i => i.Coordinates)
                 .Include(p => p.Profil)
                 .Where(p => p.PlayerId == id)
@@ -64,14 +66,14 @@ namespace ITI.SkyLord.Controllers
             SeePlayersViewModel sp = new SeePlayersViewModel();
             sp.ActivePlayer = playerChoosen;
 
-            PlayerContext.FillStandardVM(sp, PlayerContext.GetPlayer(User.GetUserId()).PlayerId, islandId);
+            SetupContext.FillStandardVM(sp, SetupContext.GetPlayer(User.GetUserId()).PlayerId, islandId);
 
             return View(sp);
         }
 
         public IActionResult SeeInformationOfAnPlayerString(string namePlayer, long islandId = 0)
         {
-            Player playerChoosen = PlayerContext.Players
+            Player playerChoosen = SetupContext.Players
                 .Include(a => a.Islands).ThenInclude(i => i.Coordinates)
                 .Include(p => p.Profil)
                 .Where(p => p.Name == namePlayer)
@@ -80,7 +82,7 @@ namespace ITI.SkyLord.Controllers
             SeePlayersViewModel sp = new SeePlayersViewModel();
             sp.ActivePlayer = playerChoosen;
 
-            PlayerContext.FillStandardVM(sp, PlayerContext.GetPlayer(User.GetUserId()).PlayerId, islandId);
+            SetupContext.FillStandardVM(sp, SetupContext.GetPlayer(User.GetUserId()).PlayerId, islandId);
 
             return View(sp);
         }
@@ -89,8 +91,8 @@ namespace ITI.SkyLord.Controllers
 
         public IActionResult Players(string name)
         {
-            Player player = PlayerContext.GetPlayer(User.GetUserId());
-            var result = PlayerContext.Players.Where(p => p.PlayerId != player.PlayerId).Select(p => p.Name).ToArray();
+            Player player = SetupContext.GetPlayer(User.GetUserId());
+            var result = SetupContext.Players.Where(p => p.PlayerId != player.PlayerId).Select(p => p.Name).ToArray();
 
             if (result.Contains(name)) return Json(result.Where(x => x.StartsWith(name, StringComparison.CurrentCultureIgnoreCase)).ToArray());
 

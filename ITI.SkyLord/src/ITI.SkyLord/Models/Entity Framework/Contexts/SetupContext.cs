@@ -10,6 +10,7 @@ using System;
 using System.Linq;
 using System.Security.Claims;
 using System.Collections.Generic;
+using Microsoft.Extensions.CompilationAbstractions;
 
 namespace ITI.SkyLord.Models.Entity_Framework.Contexts
 {
@@ -40,8 +41,9 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
                 .AddJsonFile( "appsettings.json" );
 
             Configuration = builder.Build();
-            var appEnv = CallContextServiceLocator.Locator.ServiceProvider
-                            .GetRequiredService<IApplicationEnvironment>();
+            // Yolo, ici faut décommenter
+            //var appEnv = CompilationServices.Locator.ServiceProvider
+            //                .GetRequiredService<IApplicationEnvironment>();
             optionsBuilder.UseSqlServer( Configuration["Data:DefaultConnection:ConnectionString"] );
         }
 

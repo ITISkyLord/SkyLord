@@ -12,11 +12,13 @@ namespace ITI.SkyLord.Controllers
     /// <summary>
     /// /!\ Ce controller ne sert qu'a faire des tests. Merci de respecter cette règle.
     /// </summary>
-    public class TestController : Controller
+    public class TestController : GenericController
     {
 
-        [FromServices]
-        public SetupContext SetupContext { get; set; }
+        public TestController( [FromServices]SetupContext setupcontext )
+            :base(setupcontext)
+        {
+        }
 
         // GET: /<controller>/
         public IActionResult Index()

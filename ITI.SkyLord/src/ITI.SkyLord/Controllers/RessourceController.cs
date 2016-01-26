@@ -11,10 +11,12 @@ using System.Threading.Tasks;
 
 namespace ITI.SkyLord.Controllers
 {
-    public class RessourceController : Controller
+    public class RessourceController : GenericController
     {
-        [FromServices]
-        public SetupContext SetupContext { get; set; }
+        public RessourceController( [FromServices]SetupContext setupcontext )
+            :base(setupcontext)
+        {
+        }
 
         public IActionResult Index(/*int id*/)
         {

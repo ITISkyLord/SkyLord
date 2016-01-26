@@ -15,6 +15,10 @@
 //{
 //    public class TechnologyController : GenericController
 //    {
+//public TechnologyController( [FromServices]SetupContext setupcontext )
+//            :base(setupcontext)
+//        {
+//}
 //        public override void OnActionExecuting( ActionExecutingContext context )
 //        {
 //            if ( User.IsSignedIn() )

@@ -2,11 +2,16 @@
 using ITI.SkyLord.ViewModels.Account;
 using Microsoft.AspNet.Mvc;
 using System.Security.Claims;
+using ITI.SkyLord.Models.Entity_Framework.Contexts;
 
 namespace ITI.SkyLord.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : GenericController
     {
+        public HomeController( [FromServices]SetupContext setupcontext )
+            :base(setupcontext)
+        {
+        }
         public IActionResult Index(AccountViewModel avm)
         {
 

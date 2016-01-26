@@ -15,6 +15,10 @@ namespace ITI.SkyLord.Controllers
 {
     public class IslandController : GenericController
     {
+        public IslandController( [FromServices]SetupContext setupcontext )
+            :base(setupcontext)
+        {
+        }
         public IActionResult OverView( long islandId )
         {
             OverViewViewModel ovvm = new OverViewViewModel();

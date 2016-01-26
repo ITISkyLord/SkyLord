@@ -1,77 +1,68 @@
 {
-    "webroot": "wwwroot",
-    "userSecretsId": "Skylord",
-    "version": "0.0.0-Absolutely-Invalid",
-
-  "dependencies": {
-    "EntityFramework.Commands": "7.0.0-rc1-final",
-    "EntityFramework.Core": "7.0.0-rc1-final",
-    "EntityFramework.MicrosoftSqlServer": "7.0.0-rc1-final",
-    "EntityFramework.Relational": "7.0.0-rc1-final",
-    "Microsoft.AspNet.Diagnostics": "1.0.0-rc1-final",
-    "Microsoft.AspNet.Diagnostics.Entity": "7.0.0-rc1-final",
-    "Microsoft.AspNet.Identity": "3.0.0-rc1-final",
-    "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-rc1-final",
-    "Microsoft.AspNet.IISPlatformHandler": "1.0.0-rc1-final",
-    "Microsoft.AspNet.Mvc": "6.0.0-rc1-final",
-    "Microsoft.AspNet.Mvc.Core": "6.0.0-rc1-final",
-    "Microsoft.AspNet.Mvc.Razor": "6.0.0-rc1-final",
-    "Microsoft.AspNet.Mvc.TagHelpers": "6.0.0-rc1-final",
-    "Microsoft.AspNet.Server.Kestrel": "1.0.0-rc1-final",
-    "Microsoft.AspNet.StaticFiles": "1.0.0-rc1-final",
-    "Microsoft.AspNet.Tooling.Razor": "1.0.0-rc1-final",
-    "Microsoft.Dnx.Runtime": "1.0.0-rc1-final",
-    "Microsoft.Extensions.Configuration.Abstractions": "1.0.0-rc1-final",
-    "Microsoft.Extensions.Configuration.UserSecrets": "1.0.0-rc1-final",
-    "Microsoft.Extensions.DependencyInjection.Abstractions": "1.0.0-rc1-final",
-    "Microsoft.Extensions.Logging.Debug": "1.0.0-rc1-final",
-    "Microsoft.Extensions.PlatformAbstractions": "1.0.0-rc1-final",
-    "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0-rc1-final",
-    "System.Net.Security": "4.0.0-beta-23409"
-  },
-
-    "urlForConfiguration": "http://docs.asp.net/en/latest/dnx/projects.html#dnx-projects-compiliationsettings",
-
-    "configurations": {
-        "Debug": {
-            "compilationOptions": {
-                "define": [ "DEBUG", "TRACE" ]
-            }
-        },
-        "Release": {
-            "compilationOptions": {
-                "define": [ "RELEASE", "TRACE" ],
-                "optimize": true
-            }
-        }
-    },
-
   "commands": {
     "ef": "EntityFramework.Commands",
-        "edu": "EntityFramework.Commands database update",
+    "edu": "EntityFramework.Commands database update",
     "prod": "Microsoft.AspNet.Hosting --server Microsoft.AspNet.Server.Kestrel --server.urls http://192.168.0.155:5000",
     "web": "Microsoft.AspNet.Server.Kestrel"
   },
-
-    "frameworks": {
-        "dnx451": { },
-        "dnxcore50": { }
+  "configurations": {
+    "Debug": {
+      "compilationOptions": {
+        "define": [ "DEBUG", "TRACE" ]
+      }
     },
-
-    "exclude": [
-        "wwwroot",
-        "node_modules",
-        "bower_components"
-    ],
-    "publishExclude": [
-        "node_modules",
-        "bower_components",
-        "**.xproj",
-        "**.user",
-        "**.vspscc"
-    ],
-    "scripts": {
-        "prepublish": [ "npm install", "gulp clean", "gulp min" ]
+    "Release": {
+      "compilationOptions": {
+        "define": [ "RELEASE", "TRACE" ],
+        "optimize": true
+      }
     }
-
+  },
+  "dependencies": {
+    "EntityFramework.Commands": "7.0.0-rc2-16649",
+    "EntityFramework.Core": "7.0.0-rc2-16649",
+    "EntityFramework.MicrosoftSqlServer": "7.0.0-rc2-16649",
+    "EntityFramework.Relational": "7.0.0-rc2-16649",
+    "Microsoft.AspNet.Diagnostics": "1.0.0-rc2-16405",
+    "Microsoft.AspNet.Diagnostics.Entity": "7.0.0-rc2-16405",
+    "Microsoft.AspNet.Identity": "3.0.0-rc2-16304",
+    "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-rc2-16304",
+    "Microsoft.AspNet.IISPlatformHandler": "1.0.0-rc2-16069",
+    "Microsoft.AspNet.Mvc": "6.0.0-rc2-16770",
+    "Microsoft.AspNet.Mvc.Core": "6.0.0-rc2-16770",
+    "Microsoft.AspNet.Mvc.Razor": "6.0.0-rc2-16770",
+    "Microsoft.AspNet.Mvc.TagHelpers": "6.0.0-rc2-16770",
+    "Microsoft.AspNet.Server.Kestrel": "1.0.0-rc2-16236",
+    "Microsoft.AspNet.StaticFiles": "1.0.0-rc2-16107",
+    "Microsoft.AspNet.Tooling.Razor": "1.0.0-rc2-16051",
+    "Microsoft.Dnx.Runtime": "1.0.0-rc2-16357",
+    "Microsoft.Extensions.Configuration.Abstractions": "1.0.0-rc2-15952",
+    "Microsoft.Extensions.Configuration.UserSecrets": "1.0.0-rc2-15948",
+    "Microsoft.Extensions.DependencyInjection.Abstractions": "1.0.0-rc2-15921",
+    "Microsoft.Extensions.Logging.Debug": "1.0.0-rc2-15958",
+    "Microsoft.Extensions.PlatformAbstractions": "1.0.0-rc2-16530"
+  },
+  "exclude": [
+    "wwwroot",
+    "node_modules",
+    "bower_components"
+  ],
+  "frameworks": {
+    "dnx451": { },
+    "dnxcore50": { }
+  },
+  "publishExclude": [
+    "node_modules",
+    "bower_components",
+    "**.xproj",
+    "**.user",
+    "**.vspscc"
+  ],
+  "scripts": {
+    "prepublish": [ "npm install", "gulp clean", "gulp min" ]
+  },
+  "urlForConfiguration": "http://docs.asp.net/en/latest/dnx/projects.html#dnx-projects-compiliationsettings",
+  "userSecretsId": "Skylord",
+  "version": "0.0.0-Absolutely-Invalid",
+  "webroot": "wwwroot"
 }

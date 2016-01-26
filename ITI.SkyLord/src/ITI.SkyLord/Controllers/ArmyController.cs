@@ -19,6 +19,10 @@ namespace ITI.SkyLord.Controllers
 {
     public class ArmyController : GenericController
     {
+        public ArmyController( [FromServices]SetupContext setupcontext )
+            :base(setupcontext)
+        {
+        }
         public IActionResult Index( long islandId = 0 )
         {
             return View( CreateArmyViewModel( islandId ) );

@@ -12,11 +12,14 @@ namespace ITI.SkyLord.Controllers
 {
     public class GenericController : Controller
     {
-        [FromServices]
-        public SetupContext SetupContext { get; set; }
+      public SetupContext SetupContext { get; }
 
-
-        public override void OnActionExecuting( ActionExecutingContext context )
+            public GenericController( [FromServices] SetupContext setupContext )
+        {
+            SetupContext = setupContext;
+        }
+        
+        public void OnActionExecuting( ActionExecutingContext context, [FromServices] SetupContext setupContext )
         {
             base.OnActionExecuting( context );
 

@@ -13,10 +13,12 @@ using Microsoft.Data.Entity;
 
 namespace ITI.SkyLord.Controllers
 {
-    public class ProfilController : Controller
+    public class ProfilController : GenericController
     {
-        [FromServices]
-        public SetupContext SetupContext { get; set; }
+        public ProfilController( [FromServices]SetupContext setupcontext )
+            :base(setupcontext)
+        {
+        }
 
         // GET: /<controller>/
         public IActionResult Index( long islandId = 0 )
