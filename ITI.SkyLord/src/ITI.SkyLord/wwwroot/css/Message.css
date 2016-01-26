@@ -6735,6 +6735,21 @@ button.close {
   display: block;
   overflow: auto;
 }
+.messageContainer #sendMessage {
+  margin-top: 3px;
+}
+.messageContainer #msgObject {
+  font-weight: bold;
+  font-size: 20px;
+}
+.messageContainer #bt-reception a {
+  font-size: 13px;
+}
+.messageContainer #bt-reception a:hover {
+  background: none;
+  font-size: 13px;
+  color: #825847;
+}
 .messageContainer .readMessage {
   font-weight: bold;
   font-size: 15px;

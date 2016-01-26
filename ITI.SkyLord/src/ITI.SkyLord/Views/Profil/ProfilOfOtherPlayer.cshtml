@@ -18,7 +18,15 @@
                     <div class="form-group">
                         <hr /><br /><textarea class="form-control" rows="5" id="description" readonly>@Model.Description</textarea><hr />
                     </div>
-                    @if (Model.PlayerId != Model.CurrentPlayerId)
+                    <div> <h3> Mes îles </h3></div>
+                    @foreach( Island island in Model.OtherIslands )
+                    {
+                        <p>
+                           <a asp-action="SeeOtherIsland" asp-controller="Island" asp-route-islandId="@island.IslandId"> @island.Name [@island.Coordinates.X, @island.Coordinates.Y] </a>
+                        </p>
+                    }
+
+                    @if ( Model.PlayerId != Model.CurrentPlayerId )
                     {
                         Write("");
                     }
