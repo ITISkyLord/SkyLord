@@ -35,6 +35,6 @@ namespace ITI.SkyLord.ViewModel.Partial
         public List<TechnologyDisplay> TechnologyDisplays { get; set; }
         public TechnologyManager TechnologyManager { get; set; }
         public TechnologyName TargetTechnology { get; set; }
-
+        public TechnologyEvent CurrentResearch { get; set; }
     }
 }

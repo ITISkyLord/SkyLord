@@ -86,7 +86,8 @@
                             TargetTechnology = Model.TargetTechnology,
                             TechnologyManager = Model.TechnologyManager,
                             UnitsQueue = Model.UnitsQueue,
-                            IsInConstruction =  isInConstruction
+                            IsInConstruction =  isInConstruction,
+                            CurrentResearch = Model.CurrentResearch
 
                         };
                         Write( Html.Partial( "~/Views/Partial/" + name + ".cshtml", partialModel ) );

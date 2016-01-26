@@ -6,8 +6,19 @@
     Write( Html.Partial( "~/Views/Partial/LevelUpBuilding.cshtml", Model ) );
 }
 
+@if ( Model.CurrentResearch != null )
+{
+    var dureeFin = Model.CurrentResearch.EndingDate - DateTime.Now;
+
+    <div>Recherche de la technologie @TechnologyManager.StaticTechnologyNameToName( Model.CurrentResearch.TechnologyName )</div>
+    <div class="time" hours="@dureeFin.Hours" minutes="@dureeFin.Minutes" secondes="@dureeFin.Seconds">Time </div>
+}
+
 @foreach ( TechnologyDisplay technologyDisplay in Model.TechnologyDisplays )
 {
+    //Disable the level up and add buttons if the player is already researching
+    string disabled = Model.CurrentResearch != null ? "disabled='disabled' style = 'display:none'" : "";
+
     if ( technologyDisplay.IsAvailable && technologyDisplay.IsResearched )
     {
         <form asp-controller="Technology" asp-action="LevelUpTechnology" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId">
@@ -21,20 +32,20 @@
                 <div class="col-lg-1">@technologyDisplay.NextLevel.Cost.Magic Magie</div>
                 <div class="col-lg-1">@technologyDisplay.NextLevel.Duration Temps de recherche</div>
 
-                <div class="col-lg-1"><input type="submit" value="Niveau supérieur" /></div>
+                <div class="col-lg-1"><input @disabled type="submit" value="Niveau supérieur" /></div>
             </div>
         </form>
 
         <p>Bonus apportés </p>
         @foreach ( Bonus bonus in technologyDisplay.CurrentLevel.Bonuses )
         {
-            @BonusManager.StaticBonusToString( bonus )
+            @BonusManager.StaticBonusToString( bonus ) <br />
         }
 
         <p>Bonus apportés au niveau suivant </p>
         @foreach ( Bonus bonus in technologyDisplay.NextLevel.Bonuses )
         {
-            @BonusManager.StaticBonusToString( bonus )
+            @BonusManager.StaticBonusToString( bonus ) <br />
         }
     }
     else if ( technologyDisplay.IsAvailable && !technologyDisplay.IsResearched )
@@ -49,7 +60,7 @@
                 <div class="col-lg-1">@technologyDisplay.CurrentLevel.Cost.Cristal Cristal</div>
                 <div class="col-lg-1">@technologyDisplay.CurrentLevel.Cost.Magic Magie</div>
                 <div class="col-lg-1">@technologyDisplay.CurrentLevel.Duration Temps de recherche</div>
-                <div class="col-lg-1"><input type="submit" value="Rechercher" /></div>
+                <div class="col-lg-1"><input @disabled type="submit" value="Rechercher" /></div>
             </div>
         </form>
 
