@@ -41,7 +41,7 @@ namespace ITI.SkyLord.Controllers
         {
             Island currentIsland = GetIsland( islandId );
 
-            SeeIslandViewModel islandViewModel = CreateBuildingViewModel( currentIsland.IslandId, SetupContext.GetPlayer( User.GetUserId() ).PlayerId );
+            SeeMyIslandViewModel islandViewModel = CreateBuildingViewModel( currentIsland.IslandId, SetupContext.GetPlayer( User.GetUserId() ).PlayerId );
 
             return View( islandViewModel );
         }
@@ -75,7 +75,7 @@ namespace ITI.SkyLord.Controllers
             }
         }
 
-        private SeeIslandViewModel CreateBuildingViewModel( SeeIslandViewModel model, long islandId, long playerId )
+        private SeeMyIslandViewModel CreateBuildingViewModel( SeeMyIslandViewModel model, long islandId, long playerId )
         {
             LevelManager levelManager = new LevelManager( SetupContext );
             BuildingManager buildingManager = new BuildingManager( SetupContext, levelManager );
@@ -125,7 +125,7 @@ namespace ITI.SkyLord.Controllers
             model.AvailableBuildings = buildingManager.RemoveAlreadyBuiltBuilding( model.AvailableBuildings, model.Buildings );
 
             // Army sur l'island
-            model.CurrentArmy = armyManager.GetCurrentDefenseArmy( islandId );
+            model.DefenseArmy = armyManager.GetCurrentDefenseArmy( islandId );
 
             // Toutes les unités possibles  
             model.AllUnits = bonusManager.GetResolvedUnits( armyManager.GetExistingUnits(), playerId, islandId );
@@ -135,20 +135,30 @@ namespace ITI.SkyLord.Controllers
             // La queue de création des unités
             model.UnitsQueue = eventManager.GetCurrentUnitQueue( islandId );
 
+
+            // SeeDetailsIslands complétion
+            model.MovementFromThisIsland = model.AttacksFromThisPlayer.Where( ae => ae.Island.IslandId == islandId ).ToList();
+            model.MovementTowardThisIsland = model.AttacksTowardThisPlayer.Where( ae => ae.DestinationIdd == islandId ).ToList();
+
+
+            model.Production = RessourceManager.GetProductionByHour( islandId, model.Buildings );
+            //model.BuildingDeveloping
+
+
             // Toutes les technologies possibles
             TechnologyManager techManager = new TechnologyManager( SetupContext, levelManager, new BonusManager( SetupContext ) );
             model = CreateTechnologyItems( model, islandId, playerId );
             return model;
         }
-        private SeeIslandViewModel CreateBuildingViewModel( long islandId, long playerId )
+        private SeeMyIslandViewModel CreateBuildingViewModel( long islandId, long playerId )
         {
-            SeeIslandViewModel model = new SeeIslandViewModel();
+            SeeMyIslandViewModel model = new SeeMyIslandViewModel();
             SetupContext.FillStandardVM( model, SetupContext.GetPlayer( User ), islandId );
 
             return CreateBuildingViewModel( model, islandId, playerId );
         }
 
-        private SeeIslandViewModel CreateTechnologyItems( SeeIslandViewModel model, long islandId, long playerId )
+        private SeeMyIslandViewModel CreateTechnologyItems( SeeMyIslandViewModel model, long islandId, long playerId )
         {
             //model.Layout.CurrentPlayer = SetupContext.GetPlayer( User.GetUserId() );
             Island currentIsland = SetupContext.GetIsland( islandId, model.Layout.CurrentPlayer.PlayerId );

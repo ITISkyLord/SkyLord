@@ -1,6 +1,6 @@
 ﻿@addTagHelper "*, Microsoft.AspNet.Mvc.TagHelpers"
 
-@model ITI.SkyLord.ViewModel.SeeIslands.SeeIslandViewModel
+@model ITI.SkyLord.ViewModel.SeeIslands.SeeMyIslandViewModel
 
 @using System.Collections.Generic
 @using ITI.SkyLord
@@ -8,7 +8,7 @@
 @using ITI.SkyLord.Models.Entity_Framework.Entites.Events
 
 @{
-    ViewData["Title"] = "View Islands";
+    ViewData["Title"] = "View My Island";
     Layout = "_Layout";
     Model.CurrentIsland = Model.CurrentIsland;
 }
@@ -42,8 +42,98 @@
                 </div>
             </div>
         </div>
-        <div id="UI">
 
+
+
+        <div id="UI">
+            <div id="degage">
+                @if( Model.MovementTowardThisIsland.Count > 0 )
+                {
+
+                    <h4>Attaque vers l'île.</h4>
+                    @foreach( ArmyEvent ae in Model.MovementTowardThisIsland )
+                    {
+                        if( ae.ArmyMovement == ArmyMovement.attacking )
+                        {
+                            <div>Nous sommes en danger, une attaque arrive depuis l'île @ae.Island.Name [@ae.Destination.Coordinates.X, @ae.Destination.Coordinates.Y] qui appartient à <a asp-controller="Profil" asp-action="ProfilOfOtherPlayer" asp-route-playerId=@ae.Island.Owner.PlayerId asp-route-islandId=@Model.Layout.IslandId>@ae.Island.Owner.Name</a>. Impact à @ae.EndingDate.ToString( @"HH\hmm\mss\s" )</div>
+                        }
+                        else if( ae.ArmyMovement == ArmyMovement.sendingRessources )
+                        {
+                            <div>Hourra ! Des transporteurs alliés se dirigent vers @ae.Destination.Name [@ae.Destination.Coordinates.X, @ae.Destination.Coordinates.Y]. Ils transportent avec eux @ae.PillagedRessources.Wood bois, @ae.PillagedRessources.Metal métal, @ae.PillagedRessources.Cristal cristal et @ae.PillagedRessources.Magic magie. Impact à @ae.EndingDate.ToString( @"HH\hmm\mss\s" )</div>
+                        }
+                        else if( ae.ArmyMovement == ArmyMovement.moving )
+                        {
+                            <div>Des troupes alliés se dirigent vers notre île. Impact à @ae.EndingDate.ToString( @"HH\hmm\mss\s" ) </div>
+                        }
+                    }
+                }
+                @if( Model.MovementFromThisIsland.Count > 0 )
+                {
+                    <h2>Nos attaques</h2>
+                    @foreach( ArmyEvent ae in Model.MovementFromThisIsland )
+                    {
+                    if( ae.Destination.Owner != null )
+                    {
+                        if( ae.ArmyMovement == ArmyMovement.attacking )
+                        {
+                                <div>Attaque vers @ae.Destination.Name [@ae.Destination.Coordinates.X, @ae.Destination.Coordinates.Y] chez @ae.Destination.Owner.Name. Impact à @ae.EndingDate.ToString( @"HH\hmm\mss\s" )</div>
+                            }
+                            else if( ae.ArmyMovement == ArmyMovement.sendingRessources )
+                            {
+                                <div>Envoi de ressources vers @ae.Destination.Name [@ae.Destination.Coordinates.X, @ae.Destination.Coordinates.Y] chez @ae.Destination.Owner.Name. Elles arriveront à @ae.EndingDate.ToString( @"HH\hmm\mss\s" )</div>
+                            }
+                            else if( ae.ArmyMovement == ArmyMovement.returning )
+                            {
+                                <div>Vos unités sont en train de revenir de @ae.Destination.Name [@ae.Destination.Coordinates.X, @ae.Destination.Coordinates.Y] chez @ae.Destination.Owner.Name. Elles arriveront à @ae.EndingDate.ToString( @"HH\hmm\mss\s" )</div>
+                            }
+                        }
+                        else if( ae.ArmyMovement == ArmyMovement.attacking )
+                        {
+                            <div>Attaque vers une île barbare [@ae.Destination.Coordinates.X, @ae.Destination.Coordinates.Y]. Impact à @ae.EndingDate.ToString( @"HH\hmm\mss\s" )</div>
+                        }
+                        else if( ae.ArmyMovement == ArmyMovement.returning )
+                        {
+                            <div>Vos unités sont en train de revenir de @ae.Destination.Name [@ae.Destination.Coordinates.X, @ae.Destination.Coordinates.Y]. Elles arriveront à @ae.EndingDate.ToString( @"HH\hmm\mss\s" )</div>
+
+                        }
+                        else if( ae.ArmyMovement == ArmyMovement.colonising )
+                        {
+                            <div>Colonisation vers une île barbare en [@ae.Destination.Coordinates.X, @ae.Destination.Coordinates.Y]. Arrivée à @ae.EndingDate.ToString( @"HH\hmm\mss\s" )</div>
+                        }
+
+                    }
+                    <br />
+                }
+
+                @if( Model.UnitsQueue.Count > 0 )
+                {
+                    <div>
+                        <h4>Troupes en constructions</h4>
+
+                        @foreach( UnitQueue queueElement in Model.UnitsQueue )
+                        {
+                            <div>Unité : @queueElement.Unit.Name</div>
+                            <div>Nombre : @queueElement.Number <br /></div>
+
+                            var dureeFin = queueElement.EndingDate - DateTime.Now;
+
+                            <div class="time" hours="@dureeFin.Hours" minutes="@dureeFin.Minutes" secondes="@dureeFin.Seconds">Time</div>
+                            <br />
+                        }
+                    </div>
+                }
+
+                <div>
+                    <h4>Production</h4>
+
+                    Bois : @Model.Production.Wood par heure<br />
+                    Métal : @Model.Production.Metal par heure<br />
+                    Cristal : @Model.Production.Cristal par heure<br />
+                    Magie : @Model.Production.Magic par heure<br />
+
+                </div>
+
+            </div>
             @for( var i = 1; i != 11; i++ )
             {
                 Building myBuilding;
@@ -57,6 +147,8 @@
                 {
                     name = "empty";
                 }
+
+
 
                 <div class="templatebuilding" id="ui_@i" buildingname="@name" style="display:none;">
                     @{
@@ -77,7 +169,7 @@
                             Position = i,
                             AvailableBuildings = Model.AvailableBuildings,
                             Layout = Model.Layout,
-                            CurrentArmy = Model.CurrentArmy,
+                            CurrentArmy = Model.DefenseArmy,
                             AvailableUnit = Model.AvailableUnit,
                             AllUnits = Model.AllUnits,
                             NextBuildingLevel = nextLevel,
@@ -94,7 +186,7 @@
                 </div>
                         }
         </div>
-    
+
     </div>
 </div>
 
