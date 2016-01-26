@@ -75,9 +75,9 @@ namespace ITI.SkyLord
                 // Set up Statistics
                 UnitStatistics soliderStatistics = new UnitStatistics
                 {
-                    Attack = 50,
-                    PhysicResist = 50,
-                    MagicResist = 25,
+                    Attack = 40,
+                    PhysicResist = 40,
+                    MagicResist = 20,
                     Speed = 100,
                     Capacity = 100,
                     Consumption = 5
@@ -121,12 +121,12 @@ namespace ITI.SkyLord
                 // Set up Statistics
                 UnitStatistics archerStatistics = new UnitStatistics
                 {
-                    Attack = 125,
-                    PhysicResist = 50,
-                    MagicResist = 25,
+                    Attack = 25,
+                    PhysicResist = 125,
+                    MagicResist = 100,
                     Speed = 75,
                     Capacity = 75,
-                    Consumption = 5
+                    Consumption = 10
                 };
                 context.Add( archerStatistics );
 
@@ -167,9 +167,9 @@ namespace ITI.SkyLord
                 UnitStatistics knightStatistics = new UnitStatistics
                 {
                     Attack = 250,
-                    PhysicResist = 250,
+                    PhysicResist = 200,
                     MagicResist = 150,
-                    Speed = 150,
+                    Speed = 175,
                     Capacity = 100,
                     Consumption = 15
                 };
@@ -213,10 +213,10 @@ namespace ITI.SkyLord
                 // Set up Statistics
                 UnitStatistics griffinStatistics = new UnitStatistics
                 {
-                    Attack = 450,
+                    Attack = 425,
                     PhysicResist = 300,
                     MagicResist = 200,
-                    Speed = 200,
+                    Speed = 150,
                     Capacity = 200,
                     Consumption = 30
                 };
@@ -264,7 +264,7 @@ namespace ITI.SkyLord
                     MagicResist = 500,
                     Speed = 100,
                     Capacity = 100,
-                    Consumption = 100
+                    Consumption = 50
                 };
                 context.Add( championStatistics );
 
@@ -310,12 +310,12 @@ namespace ITI.SkyLord
                 // Set up Statistics
                 UnitStatistics gobelinStatistics = new UnitStatistics
                 {
-                    Attack = 40,
+                    Attack = 30,
                     PhysicResist = 25,
-                    MagicResist = 50,
+                    MagicResist = 35,
                     Speed = 125,
                     Capacity = 75,
-                    Consumption = 5
+                    Consumption = 4
                 };
                 context.Add( gobelinStatistics );
 
@@ -358,7 +358,7 @@ namespace ITI.SkyLord
                     PhysicResist = 75,
                     MagicResist = 100,
                     Speed = 175,
-                    Capacity = 125,
+                    Capacity = 150,
                     Consumption = 10
                 };
                 context.Add( harpyStatistics );
@@ -374,7 +374,7 @@ namespace ITI.SkyLord
                     Name = "Harpie",
                     UnitName = UnitName.harpy,
                     UnitType = UnitType.monster,
-                    UnitDamageType = UnitDamageType.physical,
+                    UnitDamageType = UnitDamageType.magical,
                     UnitCost = harpyCost,
                     UnitStatistics = harpyStatistics,
                     Requirements = CreateRequirementList( harpyRequirement, harpyRequirement2, harpyRequirement3 ),
@@ -401,7 +401,7 @@ namespace ITI.SkyLord
                 {
                     Attack = 50,
                     PhysicResist = 200,
-                    MagicResist = 200,
+                    MagicResist = 275,
                     Speed = 25,
                     Capacity = 25,
                     Consumption = 50
@@ -419,7 +419,7 @@ namespace ITI.SkyLord
                     Name = "Golem de terre",
                     UnitName = UnitName.dirtGolem,
                     UnitType = UnitType.monster,
-                    UnitDamageType = UnitDamageType.physical,
+                    UnitDamageType = UnitDamageType.magical,
                     UnitCost = dirtGolemCost,
                     UnitStatistics = dirtGolemStatistics,
                     Requirements = CreateRequirementList( dirtGolemRequirement, dirtGolemRequirement2, dirtGolemRequirement3 ),
@@ -449,7 +449,7 @@ namespace ITI.SkyLord
                     MagicResist = 250,
                     Speed = 125,
                     Capacity = 250,
-                    Consumption = 50
+                    Consumption = 30
                 };
                 context.Add( trollStatistics );
 
@@ -491,11 +491,11 @@ namespace ITI.SkyLord
                 UnitStatistics phenixStatistics = new UnitStatistics
                 {
                     Attack = 850,
-                    PhysicResist = 200,
+                    PhysicResist = 400,
                     MagicResist = 600,
                     Speed = 175,
-                    Capacity = 125,
-                    Consumption = 75
+                    Capacity = 150,
+                    Consumption = 50
                 };
                 context.Add( phenixStatistics );
 
@@ -511,7 +511,7 @@ namespace ITI.SkyLord
                     Name = "Phénix",
                     UnitName = UnitName.phenix,
                     UnitType = UnitType.monster,
-                    UnitDamageType = UnitDamageType.physical,
+                    UnitDamageType = UnitDamageType.magical,
                     UnitCost = phenixCost,
                     UnitStatistics = phenixStatistics,
                     Requirements = CreateRequirementList( phenixRequirement, phenixRequirement2, phenixRequirement3, phenixRequirement4 ),
@@ -536,9 +536,9 @@ namespace ITI.SkyLord
                 // Set up Statistics
                 UnitStatistics juggernautStatistics = new UnitStatistics
                 {
-                    Attack = 1500,
-                    PhysicResist = 1000,
-                    MagicResist = 1500,
+                    Attack = 5000,
+                    PhysicResist = 2500,
+                    MagicResist = 4000,
                     Speed = 75,
                     Capacity = 2000,
                     Consumption = 500
