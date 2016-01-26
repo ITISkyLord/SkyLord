@@ -26,8 +26,8 @@
     "Microsoft.Extensions.DependencyInjection.Abstractions": "1.0.0-rc1-final",
     "Microsoft.Extensions.Logging.Debug": "1.0.0-rc1-final",
     "Microsoft.Extensions.PlatformAbstractions": "1.0.0-rc1-final",
-        "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0-rc1-final",
-        "Microsoft.Dnx.Watcher" : "1.0.0-rc1-final"
+    "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0-rc1-final",
+    "System.Net.Security": "4.0.0-beta-23409"
   },
 
     "urlForConfiguration": "http://docs.asp.net/en/latest/dnx/projects.html#dnx-projects-compiliationsettings",
@@ -50,7 +50,6 @@
     "ef": "EntityFramework.Commands",
         "edu": "EntityFramework.Commands database update",
     "prod": "Microsoft.AspNet.Hosting --server Microsoft.AspNet.Server.Kestrel --server.urls http://192.168.0.155:5000",
-    "watch-web": " Microsoft.Dnx.Watcher web --configuration Debug",
     "web": "Microsoft.AspNet.Server.Kestrel"
   },
 
