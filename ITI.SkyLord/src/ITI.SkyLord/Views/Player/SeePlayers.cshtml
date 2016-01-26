@@ -24,7 +24,7 @@
             {
                         <tr>
                             <td>@p.Name</td>
-                            <td><a asp-action="ProfilOfOtherPlayer" asp-controller="Profil" asp-route-id="@p.PlayerId" asp-route-islandId="@Model.Layout.IslandId">Voir plus d'info</a></td>
+                            <td><a asp-action="ProfilOfOtherPlayer" asp-controller="Profil" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId" asp-route-otherPlayerId="@p.PlayerId" >Voir plus d'info</a></td>
                         </tr>
                     }
                 </tbody>

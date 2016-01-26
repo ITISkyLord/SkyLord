@@ -1,13 +1,14 @@
 ﻿@model ITI.SkyLord.ViewModel.Partial.BuildingPartialViewModel
+@using ITI.SkyLord.ViewModel.Partial;
 
 <div class="head">
     <h2>@BuildingManager.StaticBuildingNameToName(Model.CurrentBuilding.BuildingName)</h2>
 
 </div>
-<p class="BuildingDescription">[Desription à faire]</p>
 
 
 @{
+    Write(Html.Partial("~/Views/Partial/DescriptionPartial.cshtml", new DescriptionPartial { Description = "Je suis un woodField", FullNameOfImage = "shield.gif" }));
     Write(Html.Partial("~/Views/Partial/LevelUpBuilding.cshtml", Model));
 
     ShieldLevel building = (ShieldLevel)Model.CurrentBuilding.Level;
@@ -21,7 +22,7 @@
         <p>Défense : @building.Defense</p>
 
         <div class="buildings-build-head">
-            <h3>Next Level</h3>
+            <h3>Prochain niveau</h3>
         </div>
         @{
             var nextLevel = (ShieldLevel)Model.NextBuildingLevel;

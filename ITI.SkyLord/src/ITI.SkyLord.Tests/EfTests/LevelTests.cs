@@ -1010,27 +1010,18 @@ namespace ITI.SkyLord.Tests.EfTests
             unitSeed.SeedUnits();
         }
 
-        //[Test]
-        //public void AvailabilityTest()
-        //{
-        //    RequirementAvailability ra = new RequirementAvailability();
-        //    ra.Availabilities.Add( new Availability { Available = true, Requirement = null } );
-        //    ra.Availabilities.Add( new Availability { Available = true, Requirement = null } );
-
-        //    Assert.IsTrue( ra.IsItemAvailable );
-        //}
         #endregion
 
-        private Ressource Multiplyressource( Ressource initialRessource, int factor )
-        {
-            return new Ressource
-            {
-                Wood = initialRessource.Wood * factor,
-                Metal = initialRessource.Metal * factor,
-                Cristal = initialRessource.Cristal * factor,
-                Magic = initialRessource.Magic * factor
-            };
-        }
+        //private Ressource Multiplyressource( Ressource initialRessource, int factor )
+        //{
+        //    return new Ressource
+        //    {
+        //        Wood = initialRessource.Wood * factor,
+        //        Metal = initialRessource.Metal * factor,
+        //        Cristal = initialRessource.Cristal * factor,
+        //        Magic = initialRessource.Magic * factor
+        //    };
+        //}
 
         void AddPlayerAndUser( Player p, SetupContext context )
         {

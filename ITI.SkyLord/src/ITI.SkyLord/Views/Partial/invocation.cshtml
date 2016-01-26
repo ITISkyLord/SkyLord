@@ -1,4 +1,7 @@
 ﻿@model ITI.SkyLord.ViewModel.Partial.BuildingPartialViewModel
+@using ITI.SkyLord.Services
+@using ITI.SkyLord.ViewModel.Partial;
+
 <style>
     #StatisticModale {
         display: none;
@@ -60,28 +63,34 @@
         z-index: 100001;
         color: white !important;
     }
+
+    .disabledInput {
+
+    }
 </style>
 
 <div class="head">
-    <h2>@BuildingManager.StaticBuildingNameToName( Model.CurrentBuilding.BuildingName )</h2>
+    <h2>@BuildingManager.StaticBuildingNameToName(Model.CurrentBuilding.BuildingName)</h2>
 </div>
 @{
-    Write( Html.Partial( "~/Views/Partial/LevelUpBuilding.cshtml", Model ) );
-    Write( Html.Partial( "~/Views/Partial/UnitsQueue.cshtml", Model ) );
+    Write(Html.Partial("~/Views/Partial/DescriptionPartial.cshtml", new DescriptionPartial { Description = "Je suis un woodField", FullNameOfImage = "invocation.gif" }));
+    Write(Html.Partial("~/Views/Partial/LevelUpBuilding.cshtml", Model));
+    Write(Html.Partial("~/Views/Partial/UnitsQueue.cshtml", Model));
 }
 <div class="head">
     Armée actuelle sur place :
 </div>
-@if( Model.CurrentArmy != null )
+@if (Model.CurrentArmy != null)
 {
-    foreach (Regiment reg in Model.CurrentArmy.Regiments )
+    foreach (Regiment reg in Model.CurrentArmy.Regiments)
     {
         <div>@reg.Number @reg.Unit.Name</div>
     }
 
 }
+
 <table>
-    @foreach( var unit in Model.AllUnits.OrderBy( u => u.UnitType ).ThenBy( u => u.Duration ) )
+    @foreach (var unit in Model.AllUnits.OrderBy(u => u.UnitType).ThenBy(u => u.Duration))
     {
         <form asp-controller="Army" asp-action="AddUnit" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId">
             <input type="hidden" asp-for="UnitTarget" value=@{ Write( (int)unit.UnitName ); } />
@@ -90,14 +99,13 @@
 
                 <div class="invocation-building">
 
-                    @if( Model.AvailableUnit.Where( u => u.UnitName == unit.UnitName ).FirstOrDefault() == null )
+                    @if (Model.AvailableUnit.Where(u => u.UnitName == unit.UnitName).FirstOrDefault() == null)
                     {
                         <div class="UnitNonAvailable"> </div>
                     }
                     else
                     {
                         <div class="UnitAvailable"></div>
-
                     }
 
                     <div class="col-lg-2  MisEnAvant">
@@ -109,11 +117,13 @@
 
                     @{
                         int number = 0;
-                        if( Model.CurrentArmy != null )
+                        if (Model.CurrentArmy != null)
                         {
                             var regiment = Model.CurrentArmy.Regiments.Where(r => r.Unit.Name == unit.Name).FirstOrDefault();
                             number = regiment == null ? 0 : regiment.Number;
                         }
+
+                        int maxUnit = RessourceManager.GetCoefficient(Model.Layout.CurrentIsland.AllRessources, unit.UnitCost);
                     }
                     <div class="cost">
                         <div class="col col-lg-1 col-sm-1">@number</div>
@@ -122,26 +132,33 @@
                         <div class="col col-lg-1 col-sm-1">Cristal @unit.UnitCost.Cristal</div>
                         <div class="col col-lg-1 col-sm-1">Magie @unit.UnitCost.Magic</div>
                         <div class="col col-lg-1 col-sm-1">@unit.Duration s</div>
+                        @*<div class="col col-lg-1 col-sm-1">Nombre maximum @maxUnit</div>*@
                     </div>
-
-                    @{
-// TODO : Calcul du max d'unité que l'on peut faire pour cette unité afin de ne pas lui proposer de faire plus d'unité qu'il ne peut
+                    @if ( Model.EventsOnBuilding.Count() != 0 )
+                    {
+                        <div class="col-lg-2"><input disabled="disabled" class="form-control" style="width: 100%;" type="number" asp-for="UnitAmount" min="0" max="@maxUnit" step="1" value="0" /></div>
+                        <div class="col-lg-1">
+                            <input disabled="disabled" type="submit" class="btn btn-link" value="Former" />
+                        </div>
                     }
-                    <div class="col-lg-2"><input class="form-control" style="width: 100%;" type="number" asp-for="UnitAmount" min="0" step="1" value="0" /></div>
-                    <div class="col-lg-1">
+                    else
+                    {
+                        <div class="col-lg-2"><input class="form-control" style="width: 100%;" type="number" asp-for="UnitAmount" min="0" max="@maxUnit" step="1" value="0" /></div>
+                        <div class="col-lg-1">
                         <input type="submit" class="btn btn-link" value="Former" />
                     </div>
+                    }
                 </div>
             </div>
         </form>
-                        }
+        }
 
 </table>
 
 <div id="StatisticModale">
     <div id="BlackBackground"></div>
 
-    @foreach( Unit unit in Model.AllUnits )
+    @foreach (Unit unit in Model.AllUnits)
     {
         <div class="Stat" id="@unit.UnitName.ToString()">
             @* Cette div pour close est importante*@
@@ -180,11 +197,11 @@
             </table>
 
             Prérequis pour construire @unit.Name<br />
-            @if( unit.Requirements != null )
+            @if (unit.Requirements != null)
             {
-                foreach( Requirement requirement in unit.Requirements )
+                foreach (Requirement requirement in unit.Requirements)
                 {
-                    <p>@LevelManager.StaticRequirementToString( requirement )</p>
+                    <p>@LevelManager.StaticRequirementToString(requirement)</p>
                 }
             }
             else

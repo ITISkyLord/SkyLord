@@ -18,19 +18,19 @@ namespace ITI.SkyLord.Services
         public static void ResolveResources( Island island, SetupContext context )
         {
             Ressource ressourcesGathered = new Ressource();
-            List<Building> ressourcesBuildings = GetRessourcesBuildings(island.Buildings.ToList());
-            DateTime checkTime = GetLastCheckTime(island);
+            List<Building> ressourcesBuildings = GetRessourcesBuildings( island.Buildings.ToList() );
+            DateTime checkTime = GetLastCheckTime( island );
 
             if( !checkTime.Equals( new DateTime() ) && ressourcesBuildings != null ) // If null, checkTime will be set after the if{} anyway for initialisation
             {
                 // Calculate gap between last time and now
-                int gap = (int)(DateTime.Now - checkTime).TotalSeconds;
+                int gap = (int)( DateTime.Now - checkTime ).TotalSeconds;
 
                 // Get all fields
-                List<Building>  woodFields = ressourcesBuildings.Where( b => b.BuildingName == BuildingName.woodField ).ToList();
-                List<Building>  metalFields = ressourcesBuildings.Where( b => b.BuildingName == BuildingName.metalField ).ToList();
+                List<Building> woodFields = ressourcesBuildings.Where( b => b.BuildingName == BuildingName.woodField ).ToList();
+                List<Building> metalFields = ressourcesBuildings.Where( b => b.BuildingName == BuildingName.metalField ).ToList();
                 List<Building> cristalFields = ressourcesBuildings.Where( b => b.BuildingName == BuildingName.cristalField ).ToList();
-                List<Building>  magicFields = ressourcesBuildings.Where( b => b.BuildingName == BuildingName.magicField ).ToList();
+                List<Building> magicFields = ressourcesBuildings.Where( b => b.BuildingName == BuildingName.magicField ).ToList();
 
                 // Create an object Ressource that contain the amount earned since last check
                 foreach( Building woodField in woodFields )
@@ -44,10 +44,11 @@ namespace ITI.SkyLord.Services
 
                 // Base resources production
                 double baseProduction = 0.002; // 10 each hour
-                ressourcesGathered.Wood += (int)(gap * baseProduction);
-                ressourcesGathered.Metal += (int)(gap * baseProduction);
-                ressourcesGathered.Cristal += (int)(gap * baseProduction);
-                ressourcesGathered.Magic += (int)(gap * baseProduction);
+                int production = (int)(gap * baseProduction);
+                ressourcesGathered.Wood += production;
+                ressourcesGathered.Metal += production;
+                ressourcesGathered.Cristal += production;
+                ressourcesGathered.Magic += production;
 
                 // Add ressources only if all ressources that exist are able to be added
                 if( (ressourcesGathered.Metal >= 1 || metalFields.Count < 1) && (ressourcesGathered.Magic >= 1 || magicFields.Count < 1) && (ressourcesGathered.Wood >= 1 || woodFields.Count < 1) && (ressourcesGathered.Cristal >= 1 || cristalFields.Count < 1) )
@@ -94,6 +95,32 @@ namespace ITI.SkyLord.Services
                                          b.BuildingName == BuildingName.magicField ||
                                          b.BuildingName == BuildingName.metalField
                                          ).ToList();
+        }
+
+        internal static Ressource GetProductionByHour( long islandId, List<Building> buildings )
+        {
+            Ressource ressourceToRetourned = new Ressource();
+            List<Building> woodFields = buildings.Where( b => b.BuildingName == BuildingName.woodField ).ToList();
+            List<Building> metalFields = buildings.Where( b => b.BuildingName == BuildingName.metalField ).ToList();
+            List<Building> cristalFields = buildings.Where( b => b.BuildingName == BuildingName.cristalField ).ToList();
+            List<Building> magicFields = buildings.Where( b => b.BuildingName == BuildingName.magicField ).ToList();
+
+            foreach( Building woodField in woodFields )
+                ressourceToRetourned.Wood += ((FieldLevel)woodField.Level).Production;
+            foreach( Building metalField in metalFields )
+                ressourceToRetourned.Metal += ((FieldLevel)metalField.Level).Production;
+            foreach( Building cristalField in cristalFields )
+                ressourceToRetourned.Cristal += ((FieldLevel)cristalField.Level).Production;
+            foreach( Building magicField in magicFields )
+                ressourceToRetourned.Magic += ((FieldLevel)magicField.Level).Production;
+
+            ressourceToRetourned.Wood += 10;
+            ressourceToRetourned.Metal += 10;
+            ressourceToRetourned.Cristal += 10;
+            ressourceToRetourned.Magic += 10;
+
+
+            return ressourceToRetourned;
         }
         #endregion
 
@@ -177,10 +204,6 @@ namespace ITI.SkyLord.Services
         }
 
         public static Ressource CloneRessource( Ressource source )
-        //
-        // Créer une méthode qui rend le nombre max de Cost payable avec les fonds courants de l'ile
-        //
-
         {
             return new Ressource
             {
@@ -189,6 +212,51 @@ namespace ITI.SkyLord.Services
                 Cristal = source.Cristal,
                 Magic = source.Magic
             };
+        }
+
+        public static int GetCoefficient( Ressource source, Ressource cost )
+        {
+            if( source.Wood < cost.Wood || source.Metal < cost.Metal || source.Cristal < cost.Cristal || source.Magic < cost.Magic )
+            {
+                return 0;
+            }
+            else
+            {
+                int[ ] sourceValues = RessourceToArray( source );
+                int[ ] costValues = RessourceToArray( cost );
+                int coeff = 0;
+                for( int i = 0; i < sourceValues.Count(); i++ )
+                {
+                    int tempCoeff = 0;
+                    if( costValues[i] == 0 )
+                    {
+                        tempCoeff = int.MaxValue;
+                    }
+                    else
+                    {
+                        tempCoeff = sourceValues[i] / costValues[i];
+                    }
+
+                    if( i == 0 || tempCoeff < coeff )
+                    {
+                        coeff = tempCoeff;
+                    }
+                }
+
+                return coeff;
+            }
+        }
+
+        private static int[] RessourceToArray( Ressource ressource )
+        {
+            int[ ] values = new int[ 4 ];
+
+            values[0] = ressource.Wood;
+            values[1] = ressource.Metal;
+            values[2] = ressource.Cristal;
+            values[3] = ressource.Magic;
+
+            return values;
         }
     }
 }

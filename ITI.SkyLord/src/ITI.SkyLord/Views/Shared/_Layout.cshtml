@@ -18,7 +18,6 @@
     </environment>
 
     <environment names="Development">
-        <!-- Quand on est en développement -->
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/jquery-ui/jquery-ui.js"></script>
 
@@ -26,27 +25,19 @@
         <script src="~/lib/hammer.js/hammer.js"></script>
         <script src="~/lib/bootstrap-touch-carousel/dist/js/bootstrap-touch-carousel.js"></script>
         <script src="~/js/searchPlayer.js"></script>
+        <script src="~/js/timeManager.js"></script>
+
     </environment>
 
     <environment names="Staging,Production">
-        <!-- Quand on est en production -->
-        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.8.0.min.js"
-                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                asp-fallback-test="window.jQuery">
-        </script>
+        <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/jquery-ui/jquery-ui.js"></script>
-        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.0.0/bootstrap.min.js"
-                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
-                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal">
-        </script>
-        <script src="https://ajax.aspnetcdn.com/ajax/hammer.js/2.0.4/hammer.min.js"
-                asp-fallback-src="~/lib/hammer.js/hammer.js"
-                asp-fallback-test="window.Hammer">
-        </script>
-        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap-touch-carousel/0.8.0/js/bootstrap-touch-carousel.js"
-                asp-fallback-src="~/lib/bootstrap-touch-carousel/dist/js/bootstrap-touch-carousel.js"
-                asp-fallback-test="window.Hammer && window.Hammer.Instance">
-        </script>
+
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="~/lib/hammer.js/hammer.js"></script>
+        <script src="~/lib/bootstrap-touch-carousel/dist/js/bootstrap-touch-carousel.js"></script>
+        <script src="~/js/searchPlayer.js"></script>
+        <script src="~/js/timeManager.js"></script>
     </environment>
 </head>
 <body>
@@ -65,7 +56,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li><a asp-controller="Army" asp-action="SetAttackingArmy" asp-route-islandId="@Model.Layout.IslandId">Armées</a></li>
                     <li><a asp-controller="Player" asp-action="SeePlayers" asp-route-islandId="@Model.Layout.IslandId">Joueurs</a></li>
-                    <li><a asp-controller="Message" asp-action="Index" asp-route-islandId="@Model.Layout.IslandId">Messages</a></li>
+                    <li><a asp-controller="Message" asp-action="GetAllMessages" asp-route-islandId="@Model.Layout.IslandId">Messages</a></li>
                     <li><a asp-controller="Home" asp-action="Index">Classement</a></li>
                     <li><a asp-controller="Profil" asp-action="Index" asp-route-islandId="@Model.Layout.IslandId">Profil</a></li>
                     <li>
@@ -74,12 +65,7 @@
                         </form>
                     </li>
                     <li>
-                        <form asp-controller="Player" asp-action="SeeInformationOfAnPlayerString" asp-route-islandId="@Model.Layout.IslandId" method="post" role="form">
-                            <center>
-                                <input type="text" placeholder="Recherche ..." name="namePlayer" id="searchPlayer" size="15" style="color:black" />
-                                <button class="btn btn-danger">Go</button>
-                            </center>
-                        </form>
+                    <li><a>Heure : @DateTime.Now.ToString( @"HH\hmm\mss\s" )</a></li>
                     </li>
                 </ul>
             </div>
@@ -94,13 +80,13 @@
                 <a asp-controller="Island" asp-action="OverView" asp-route-islandId="@Model.Layout.IslandId">Vue d'ensemble</a>
                 <a asp-controller="World" asp-action="Index" asp-route-islandId="@Model.Layout.IslandId">Carte du monde</a>
                 <p>Mes ïles :</p>
-                    @foreach (Island island in Model.Layout.AllIslands)
-                    {
-                        string selector = island.IslandId == Model.Layout.IslandId ? "CurrentIsland" : "OtherIsland";
-                        string islandName = island.IsCapital ? "Capitale" : island.Name;
+                @foreach (Island island in Model.Layout.AllIslands)
+                {
+                    string selector = island.IslandId == Model.Layout.IslandId ? "CurrentIsland" : "OtherIsland";
+                    string islandName = island.IsCapital ? "Capitale" : island.Name;
 
-                        <div class="@selector"><a asp-controller="Island" asp-action="SeeMyIsland" asp-route-islandId="@island.IslandId"> @islandName [@island.Coordinates.X, @island.Coordinates.Y]</a></div>
-                    }
+                    <div class="@selector"><a asp-controller="Island" asp-action="SeeMyIsland" asp-route-islandId="@island.IslandId"> @islandName [@island.Coordinates.X, @island.Coordinates.Y]</a></div>
+                }
             </div>
 
             <div class="PageContent">

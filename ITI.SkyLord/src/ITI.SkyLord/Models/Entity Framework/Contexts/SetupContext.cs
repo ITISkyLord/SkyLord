@@ -126,23 +126,32 @@ namespace ITI.SkyLord.Models.Entity_Framework.Contexts
             svm.Layout.AllIslands = Islands.Include( i => i.Owner ).Where( i => i.Owner.PlayerId == playerId ).ToList();
             svm.Layout.CurrentIsland = GetIsland( islandId, playerId );
             svm.Layout.CurrentPlayer = Players.Include( p => p.Technologies ).ThenInclude( t => t.Level ).Single( p => p.PlayerId == playerId );
-
-            svm.AttacksTowardThisPlayer = ArmyEvents
+            List<ArmyEvent> attacksTowardsthiPlayer = new List<ArmyEvent>();
+            foreach( int islandIdTmp in Islands.Where( i => i.Owner.PlayerId == playerId ).Select( i => i.IslandId ).ToList())
+            {
+                attacksTowardsthiPlayer.AddRange( ArmyEvents
                                          .Include( a => a.Destination ).ThenInclude( a => a.Owner )
                                          .Include( a => a.Destination.Coordinates )
                                          .Include( a => a.Island ).ThenInclude( a => a.Owner )
                                          .Include( a => a.Island.Coordinates )
                                          .Include( a => a.PillagedRessources )
-                                         .Where( e => e.DestinationIdd == svm.Layout.CurrentIsland.IslandId && !e.Done )
-                                         .ToList();
-
-            svm.AttacksFromThisPlayer = ArmyEvents
+                                         .Where( e => e.DestinationIdd == islandIdTmp && !e.Done )
+                                         .ToList() );
+            }
+            svm.AttacksTowardThisPlayer = attacksTowardsthiPlayer;
+            svm.AttacksTowardThisPlayer.OrderBy( ae => ae.EndingDate ).ThenBy( ae => ae.Destination);
+            List<ArmyEvent> attacksFromThisPlayer = new List<ArmyEvent>();
+            foreach( int islandIdTmp in Islands.Where( i => i.Owner.PlayerId == playerId ).Select( i => i.IslandId ).ToList() )
+            {
+                attacksFromThisPlayer.AddRange( ArmyEvents
                                         .Include( a => a.Destination ).ThenInclude( a => a.Owner )
                                         .Include( a => a.Destination.Coordinates )
                                         .Include( a => a.Island ).ThenInclude( a => a.Owner )
                                         .Include( a => a.Island.Coordinates )
-                                        .Where( e => e.Island.IslandId == svm.Layout.CurrentIsland.IslandId && !e.Done )
-                                        .ToList();
+                                        .Where( e => e.Island.IslandId == islandIdTmp && !e.Done )
+                                        .ToList() );
+            }
+            svm.AttacksFromThisPlayer = attacksFromThisPlayer;
             svm.Layout.IslandId = islandId;
         }
         /// <summary>

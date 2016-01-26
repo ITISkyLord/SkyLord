@@ -8,7 +8,7 @@ using ITI.SkyLord.Services;
 
 namespace ITI.SkyLord.ViewModel.SeeIslands
 {
-    public class SeeIslandViewModel : StandardViewModel
+    public class SeeMyIslandViewModel : StandardViewModel
     {
         public Island CurrentIsland { get; set; }
         public List<Building> Buildings { get; set; }
@@ -23,7 +23,7 @@ namespace ITI.SkyLord.ViewModel.SeeIslands
         public Dictionary<int, List<BuildingEvent>> AllBuildingEventOnIsland { get; set; } // int is BuildingPosition
 
         // For InvocationBuilding
-        public Army CurrentArmy { get; set; }
+        public Army DefenseArmy { get; set; }
         public List<Unit> AllUnits { get; set; }
         public List<Unit> AvailableUnit { get; set; }
 
@@ -35,10 +35,18 @@ namespace ITI.SkyLord.ViewModel.SeeIslands
 
         public List<TechnologyDisplay> TechnologyDisplays { get; set; }
         public TechnologyName TargetTechnology { get; set; }
+        public TechnologyEvent CurrentResearch { get; set; }
 
         public List<UnitQueue> UnitsQueue { get; set; }
-        //public Technology CurrentTechnology { get; set; }
-        //public TechnologyName TargetTechnology { get; set; }
+
+
+        //See details Island
+        //public Island CurrentIsland { get; set; }
+       // public List<UnitQueue> UnitsQueue { get; set; }
+        public BuildingEvent BuildingDeveloping { get; set; }
+        public List<ArmyEvent> MovementTowardThisIsland { get; set; }
+        public List<ArmyEvent> MovementFromThisIsland { get; set; }
+        public Ressource Production { get; set; }
 
     }
 }
