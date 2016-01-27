@@ -355,7 +355,7 @@ namespace ITI.SkyLord.Controllers
             {
                 model.HasApprentice = false;
             }
-            else if( defenseArmy.Regiments.Any( u => u.Unit.UnitName == UnitName.carrier || u.Unit.UnitName == UnitName.apprentice ) )
+            else if( defenseArmy.Regiments.Any( u => u.Unit.UnitName == UnitName.apprentice ) )
             {
                 model.HasApprentice = defenseArmy.Regiments.Any( r => r.Unit.UnitName == UnitName.apprentice );
 
@@ -369,7 +369,7 @@ namespace ITI.SkyLord.Controllers
                 model.HasApprentice = false;
 
             model.SenderIsland = GetIsland( islandId );
-            return RedirectToAction( "SetAttackingArmy", new { islandId = islandId } );
+            return View( model );
         }
         public IActionResult SendColonisation( SetColonisationViewModel model, long islandId = 0 )
         {
