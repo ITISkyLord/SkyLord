@@ -98,8 +98,7 @@ namespace ITI.SkyLord
                     UnitCost = soliderCost,
                     UnitStatistics = soliderStatistics,
                     Requirements = CreateRequirementList( soldierRequirement, soldierRequirement2 ),
-                    // Valeur temporaire pour les tests !
-                    Duration = 10,
+                    Duration = 60,
                     IsModel = true,
                     Description = "Habillé de son armure toute neuve, il sait par quel bout prendre son épée et obéir aux ordres. Le soldat n'est pas très efficace mais il est peu cher à recruter et à entretenir."
                 };
@@ -194,7 +193,7 @@ namespace ITI.SkyLord
                     Requirements = CreateRequirementList( knightRequirement, knightRequirement2, knightRequirement3, knightRequirement4 ),
                     Duration = 450,
                     IsModel = true,
-                    Description = "Sur son cheval et dans son armure étincelante, le chevalier fait fondre le cœur des dames à la maison et charge impitoyablement l'ennemi sur le champ de bataille. Unité rapide faite pour les assauts percutants."
+                    Description = "Sur son cheval et dans son armure étincelante, le chevalier fait fondre le cœur des dames à la maison et charge impitoyablement l'ennemi sur le champs de bataille. Unité rapide faite pour les assauts percutants."
                 };
                 context.Add( knight );
 
@@ -477,7 +476,7 @@ namespace ITI.SkyLord
                     Requirements = CreateRequirementList( trollRequirement, trollRequirement2, trollRequirement3, trollRequirement4 ),
                     Duration = 490,
                     IsModel = true,
-                    Description = "L'oiseau légendaire, révéré et craint de tous, supposé immortel car renaissant à l'infini de ses cendres selon les légendes. Il est particulièrement efficace en attaque."
+                    Description = "Le troll est une créature repoussante d'une force et d'une résistance incroyable. Tant qu'on peut supporter l'odeur de leurs pieds, ils sont un investissement rentable."
                 };
                 context.Add( troll );
 
@@ -713,7 +712,7 @@ namespace ITI.SkyLord
                     Requirements = CreateRequirementList( necromancerRequirement, necromancerRequirement2, necromancerRequirement3, necromancerRequirement4 ),
                     Duration = 260,
                     IsModel = true,
-                    Description = "Formé dans les arts sombres de la magie, le nécromancien ramnène ceux tombés au combat pour qu'il se battent de son côté. C'est une unité équilibrée puissante, particulièrement forte en défense contre les soldats."
+                    Description = "Formé dans les arts sombres de la magie, le nécromancien ramène ceux tombés au combat pour qu'il se battent de son côté. C'est une unité équilibrée puissante, particulièrement forte en défense contre les soldats."
                 };
                 context.Add( necromancer );
 
@@ -760,7 +759,7 @@ namespace ITI.SkyLord
                     Requirements = CreateRequirementList( summonerRequirement, summonerRequirement2, summonerRequirement3, summonerRequirement4 ),
                     Duration = 800,
                     IsModel = true,
-                    Description = "L'invocateur est un puissant mâitre des arcanes qui invoques des créatures éthérées qui combattent pour lui, il est particulièrement efficace en attaque comme en défense."
+                    Description = "L'invocateur est un puissant maître des arcanes qui invoque des créatures éthérées qui combattent pour lui, il est particulièrement efficace en attaque comme en défense."
                 };
                 context.Add( summoner );
 
@@ -1062,9 +1061,9 @@ namespace ITI.SkyLord
                 // Set up Statistics
                 UnitStatistics prismaticGolemStatistics = new UnitStatistics
                 {
-                    Attack = 1250,
-                    PhysicResist = 1000,
-                    MagicResist = 1000,
+                    Attack = 500,
+                    PhysicResist = 6000,
+                    MagicResist = 5000,
                     Speed = 100,
                     Capacity = 200,
                     Consumption = 250
@@ -1089,7 +1088,7 @@ namespace ITI.SkyLord
                     Requirements = CreateRequirementList( prismaticGolemRequirement, prismaticGolemRequirement2, prismaticGolemRequirement3, prismaticGolemRequirement4 ),
                     Duration = 2600,
                     IsModel = true,
-                    Description = "Seul les plus puissants mage peuvent créer et contrôler cette machine fantastique, faire de lumière solidifiée, il est presque indestructible."
+                    Description = "Seuls les plus puissants mages peuvent créer et contrôler cette machine fantastique, faite de lumière solidifiée, elle est presque indestructible."
                 };
                 context.Add( prismaticGolem );
 

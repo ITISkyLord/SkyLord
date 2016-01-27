@@ -171,7 +171,7 @@ namespace ITI.SkyLord
             switch ( buildingName )
             {
                 case BuildingName.academy:
-                    name = "L'académie est le lieu d'apprentissage des magiciens, il vous servira à développer des unités de type magicien et de les produire plus rapidement.";
+                    name = "L'académie est le lieu d'apprentissage des magiciens, il vous servira à développer des unités de type magique et de les produire plus rapidement.";
                     break;
                 case BuildingName.barrack:
                     name = "Le baraquement est le lieu de vie des soldats et des monstres, il vous permettra de débloquer des unités de type soldat et monstre.";
@@ -192,16 +192,16 @@ namespace ITI.SkyLord
                     name = "Le champ de magie est l'endroit où l'énergie magique ambiante est collectée et stockée dans des orbes, l'améliorer augmentera la production de magie sur l'ile.";
                     break;
                 case BuildingName.metalField:
-                    name = "Cette mine extrait et rafine le métal trouvé dans les profondeurs de la terre, l'améliorer augmentera la production de métal sut l'île";
+                    name = "Cette mine extrait et rafine le métal trouvé dans les profondeurs de la terre, l'améliorer augmentera la production de métal sur l'île";
                     break;
                 case BuildingName.shield:
-                    name = "Ce grand bouclier magique entoure l'île et aide à sa défense contre les ennemis, plus il est avancé, plus la protection qu'il accorde sera grande.";
+                    name = "Ce bouclier magique entoure l'île et aide à sa défense contre les ennemis, plus il est avancé, plus la protection qu'il accorde sera grande.";
                     break;
                 case BuildingName.tower:
                     name = "La tour de mage est le centre de l'île, depuis ses hauteurs le mage dirige son peuple. Plus la tour de mage est développée, plus les constructions avancent vite.";
                     break;
                 case BuildingName.woodField:
-                    name = "Les bûcheron du camp travaillent d'arrache pied pour produire le bois nécéssaire aux activités de l'île, l'améliorer augmentera la production de bois sur l'île.";
+                    name = "Les bûcherons du camp travaillent d'arrache pied pour produire le bois nécéssaire aux activités de l'île, l'améliorer augmentera la production de bois sur l'île.";
                     break;
                 case BuildingName.forge:
                     name = "La forge est le lieu où les métaux et les machines sont construites, ce bâtiment permet de débloquer les unités de type machine.";
