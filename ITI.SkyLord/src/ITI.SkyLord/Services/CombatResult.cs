@@ -109,24 +109,24 @@ namespace ITI.SkyLord
             if( winningArmy.ArmyState == ArmyState.movement )
             {
                 CalculatePillagedResult();
-            }
-            else
-                _pillagedRessources = null;
 
-            //ae.PillagedRessources = new Ressource() { Cristal = 100, Magic = 100, Metal = 100, Wood = 100 };
-            if( _pillagedRessources != null)
-            {
-                ctx.Ressources.Add( _pillagedRessources );
-                ctx.SaveChanges();
-                ae.PillagedRessources = _pillagedRessources;
-                RessourceManager.RemoveRessource( _loosingArmy.Island.AllRessources, _pillagedRessources );
+
+                //ae.PillagedRessources = new Ressource() { Cristal = 100, Magic = 100, Metal = 100, Wood = 100 };
+                if( _pillagedRessources != null )
+                {
+                    ctx.Ressources.Add( _pillagedRessources );
+                    ctx.SaveChanges();
+                    ae.PillagedRessources = _pillagedRessources;
+                    RessourceManager.RemoveRessource( _loosingArmy.Island.AllRessources, _pillagedRessources );
+                }
             }
+            else _pillagedRessources = null;
 
             #region CombatReport
             string coreMessageWinner = "";
             string coreMessageLooser = "";
             if( String.IsNullOrEmpty( _loosingArmy.Island.Name ) )
-                _loosingArmy.Island.Name = "Île barbare";
+                _loosingArmy.Island.Name = "Île sauvage";
             if( _pillagedRessources == null && winningArmy.ArmyState == ArmyState.movement )
             {
                 coreMessageWinner = _winningArmy.Island.Name + " (vous) a gagné contre " + _loosingArmy.Island.Name + ".\n "
@@ -159,8 +159,8 @@ namespace ITI.SkyLord
 
             foreach( KeyValuePair<string, int> kvp in cm.Loss )
             {
-                coreMessageWinner += " \n" + kvp.Value + " " + kvp.Key + " sur " + tmpWinArmy.Regiments.Where(a => a.Unit.Name == kvp.Key).Select( b => b.Number.ToString()).First() + "  " ;
-                coreMessageLooser += " \n" + kvp.Value + " " + kvp.Key + " sur " + tmpWinArmy.Regiments.Where(a => a.Unit.Name == kvp.Key).Select( b => b.Number.ToString()).First();
+                coreMessageWinner += " \n" + kvp.Value + " " + kvp.Key + " sur " + tmpWinArmy.Regiments.Where(a => a.Unit.Name == kvp.Key).Select( b => b.Number.ToString()).First() + "    " ;
+                coreMessageLooser += " \n" + kvp.Value + " " + kvp.Key + " sur " + tmpWinArmy.Regiments.Where(a => a.Unit.Name == kvp.Key).Select( b => b.Number.ToString()).First() + "    ";
 
             }
 
@@ -210,6 +210,7 @@ namespace ITI.SkyLord
                 //   _context.SaveChanges();
                 //   RessourceManager.RemoveRessource( _loosingArmy.Island.AllRessources, _loosingRessource );
                 // _loosingRessource.ChangeRessources( ressources, false );
+                _pillagedRessources = ressources;
                 _loosingArmy.Island.AllRessources = _loosingRessource;
                 _context.SaveChanges();
             }
