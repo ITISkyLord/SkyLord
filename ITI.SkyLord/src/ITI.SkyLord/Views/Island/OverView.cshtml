@@ -6,15 +6,15 @@
 {
     if( ae.ArmyMovement == ArmyMovement.attacking )
     {
-        <div>Nous sommes en danger, une attaque arrive depuis l'île @ae.Island.Name [@ae.Destination.Coordinates.X, @ae.Destination.Coordinates.Y] qui appartient à <a asp-controller="Profil" asp-action="ProfilOfOtherPlayer" asp-route-playerId=@ae.Island.Owner.PlayerId asp-route-islandId=@Model.Layout.IslandId>@ae.Island.Owner.Name</a>. Impact à @ae.EndingDate.ToString( @"HH\hmm\mss\s" )</div>
+        <div>Nous sommes en danger, une attaque arrive sur @ae.Destination.Name [@ae.Destination.Coordinates.X, @ae.Destination.Coordinates.Y] depuis <a asp-action="SeeOtherIsland" asp-controller="Island" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId" asp-route-islandIdOfOtherPlayer="@ae.Island.IslandId"> @ae.Island.Name [@ae.Island.Coordinates.X, @ae.Island.Coordinates.Y]</a> qui appartient à <a asp-controller="Profil" asp-action="ProfilOfOtherPlayer" asp-route-otherPlayerId=@ae.Island.Owner.PlayerId asp-route-islandId=@Model.Layout.IslandId>@ae.Island.Owner.Name</a>. Impact à @ae.EndingDate.ToString( @"HH\hmm\mss\s" )</div>
     }
     else if( ae.ArmyMovement == ArmyMovement.sendingRessources )
     {
-        <div>Hourra ! Des transporteurs alliés se dirigent vers <a asp-action="ProfilOfOtherPlayer" asp-controller="Profil" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId" asp-route-otherPlayerId="@ae.Destination.Owner.PlayerId"> @ae.Destination.Name </a> [@ae.Destination.Coordinates.X, @ae.Destination.Coordinates.Y]. Ils transportent avec eux @ae.PillagedRessources.Wood bois, @ae.PillagedRessources.Metal métal, @ae.PillagedRessources.Cristal cristal et @ae.PillagedRessources.Magic magie. Impact à @ae.EndingDate.ToString( @"HH\hmm\mss\s" )</div>
+        <div>Hourra ! Des transporteurs alliés se dirigent vers @ae.Destination.Name [@ae.Destination.Coordinates.X, @ae.Destination.Coordinates.Y] depuis <a asp-controller="Island" asp-action="SeeOtherIsland" asp-route-islandIdOfOtherPlayer="@ae.Island.Owner.PlayerId" asp-route-islandId="@Model.Layout.IslandId"> @ae.Island.Name [@ae.Island.Coordinates.X, @ae.Island.Coordinates.Y]</a>. Ils transportent avec eux @ae.PillagedRessources.Wood bois, @ae.PillagedRessources.Metal métal, @ae.PillagedRessources.Cristal cristal et @ae.PillagedRessources.Magic magie. Impact à @ae.EndingDate.ToString( @"HH\hmm\mss\s" )</div>
     }
     else if( ae.ArmyMovement == ArmyMovement.moving )
     {
-        <div>Des troupes alliés se dirigent vers notre île. Impact à @ae.EndingDate.ToString( @"HH\hmm\mss\s" ) </div>
+        <div>Des troupes alliés se dirigent vers notre @ae.Destination.Name [@ae.Destination.Coordinates.X, @ae.Destination.Coordinates.Y] depuis <a asp-controller="Island" asp-action="SeeOtherIsland" asp-route-islandIdOfOtherPlayer="@ae.Island.Owner.PlayerId" asp-route-islandId="@Model.Layout.IslandId"> @ae.Island.Name [@ae.Island.Coordinates.X, @ae.Island.Coordinates.Y]</a>. Impact à @ae.EndingDate.ToString( @"HH\hmm\mss\s" ) </div>
     }
 
 
@@ -26,29 +26,29 @@
     {
         if( ae.ArmyMovement == ArmyMovement.attacking )
         {
-            <div>Attaque vers <a asp-action="ProfilOfOtherPlayer" asp-controller="Profil" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId" asp-route-otherPlayerId="@ae.Destination.Owner.PlayerId"> @ae.Destination.Name </a> [@ae.Destination.Coordinates.X, @ae.Destination.Coordinates.Y] chez @ae.Destination.Owner.Name. Impact à @ae.EndingDate.ToString( @"HH\hmm\mss\s" )</div>
+            <div>Attaque vers <a asp-action="SeeOtherIsland" asp-controller="Island" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId" asp-route-islandIdOfOtherPlayer="@ae.Destination.IslandId"> @ae.Destination.Name [@ae.Destination.Coordinates.X, @ae.Destination.Coordinates.Y]</a> chez <a asp-controller="Profil" asp-action="SeeOtherPlayer" asp-route-otherPlayerId="@ae.Destination.Owner.PlayerId">@ae.Destination.Owner.Name</a>. Impact à @ae.EndingDate.ToString( @"HH\hmm\mss\s" )</div>
         }
         else if( ae.ArmyMovement == ArmyMovement.sendingRessources )
         {
-            <div>Envoi de ressources vers <a asp-action="ProfilOfOtherPlayer" asp-controller="Profil" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId" asp-route-otherPlayerId="@ae.Destination.Owner.PlayerId"> @ae.Destination.Name </a> [@ae.Destination.Coordinates.X, @ae.Destination.Coordinates.Y] chez @ae.Destination.Owner.Name. Elles arriveront à @ae.EndingDate.ToString( @"HH\hmm\mss\s" )</div>
+            <div>Envoi de ressources vers <a asp-action="SeeOtherIsland" asp-controller="Island" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId" asp-route-islandIdOfOtherPlayer="@ae.Destination.IslandId"> @ae.Destination.Name [@ae.Destination.Coordinates.X, @ae.Destination.Coordinates.Y]</a> chez <a asp-controller="Profil" asp-action="SeeOtherPlayer" asp-route-otherPlayerId="@ae.Destination.Owner.PlayerId">@ae.Destination.Owner.Name</a>. Elles arriveront à @ae.EndingDate.ToString( @"HH\hmm\mss\s" )</div>
         }
         else if( ae.ArmyMovement == ArmyMovement.returning )
         {
-            <div>Vos unités sont en train de revenir de <a asp-action="ProfilOfOtherPlayer" asp-controller="Profil" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId" asp-route-otherPlayerId="@ae.Destination.Owner.PlayerId"> @ae.Destination.Name </a> [@ae.Destination.Coordinates.X, @ae.Destination.Coordinates.Y] chez @ae.Destination.Owner.Name. Elles arriveront à @ae.EndingDate.ToString( @"HH\hmm\mss\s" )</div>
+            <div>Vos unités sont en train de revenir de <a asp-action="SeeOtherIsland" asp-controller="Island" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId" asp-route-islandIdOfOtherPlayer="@ae.Destination.IslandId"> @ae.Destination.Name [@ae.Destination.Coordinates.X, @ae.Destination.Coordinates.Y]</a> chez <a asp-controller="Profil" asp-action="SeeOtherPlayer" asp-route-otherPlayerId="@ae.Destination.Owner.PlayerId">@ae.Destination.Owner.Name</a>. Elles arriveront à @ae.EndingDate.ToString( @"HH\hmm\mss\s" )</div>
         }
     }
     else if( ae.ArmyMovement == ArmyMovement.attacking )
     {
-        <div>Attaque vers une île barbare [@ae.Destination.Coordinates.X, @ae.Destination.Coordinates.Y]. Impact à @ae.EndingDate.ToString( @"HH\hmm\mss\s" )</div>
+        <div>Attaque vers une <a asp-action="SeeOtherIsland" asp-controller="Island" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId" asp-route-islandIdOfOtherPlayer="@ae.Destination.IslandId"> île sauvage [@ae.Destination.Coordinates.X, @ae.Destination.Coordinates.Y]</a>. Impact à @ae.EndingDate.ToString( @"HH\hmm\mss\s" )</div>
     }
     else if( ae.ArmyMovement == ArmyMovement.returning )
     {
-        <div>Vos unités sont en train de revenir de @ae.Destination.Name [@ae.Destination.Coordinates.X, @ae.Destination.Coordinates.Y]. Elles arriveront à @ae.EndingDate.ToString( @"HH\hmm\mss\s" )</div>
+        <div>Vos unités sont en train de revenir de <a asp-action="SeeOtherIsland" asp-controller="Island" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId" asp-route-islandIdOfOtherPlayer="@ae.Island.IslandId"> @ae.Island.Name [@ae.Island.Coordinates.X, @ae.Island.Coordinates.Y]</a>. Elles arriveront à @ae.EndingDate.ToString( @"HH\hmm\mss\s" )</div>
 
     }
     else if( ae.ArmyMovement == ArmyMovement.colonising )
     {
-        <div>Colonisation vers une île barbare en [@ae.Destination.Coordinates.X, @ae.Destination.Coordinates.Y]. Arrivée à @ae.EndingDate.ToString( @"HH\hmm\mss\s" )</div>
+        <div>Colonisation vers une <a asp-action="SeeOtherIsland" asp-controller="Island" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId" asp-route-islandIdOfOtherPlayer="@ae.Destination.IslandId"> île sauvage en  [@ae.Destination.Coordinates.X, @ae.Destination.Coordinates.Y]</a>. Arrivée à @ae.EndingDate.ToString( @"HH\hmm\mss\s" )</div>
     }
 
 }

@@ -9,6 +9,6 @@ namespace ITI.SkyLord.ViewModel.SeeIslands
     {
         public long IslandIdOfOther { get; set; }
         public bool HasOwner { get; set; }
-        public Island targetIsland { get; set; }
+        public Island TargetIsland { get; set; }
     }
 }
