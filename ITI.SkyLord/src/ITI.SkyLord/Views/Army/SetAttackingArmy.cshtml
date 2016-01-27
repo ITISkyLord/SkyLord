@@ -37,15 +37,15 @@
                                     {
                                         if (army.ArmyMovement == ArmyMovement.attacking)
                                         {
-                                            <div>Attaque vers @army.Destination.Name de coordonnées :  [@army.Destination.Coordinates.X, @army.Destination.Coordinates.Y] chez le joueur @army.Destination.Owner.Name</div>
+                                            <div>Attaque vers @army.Destination.Name de coordonnées :  [@army.Destination.Coordinates.X, @army.Destination.Coordinates.Y] chez le joueur <a asp-action="ProfilOfOtherPlayer" asp-controller="Profil" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId" asp-route-otherPlayerId="@army.Destination.Owner.PlayerId">  @army.Destination.Owner.Name </a></div>
                                         }
                                         else if (army.ArmyMovement == ArmyMovement.sendingRessources)
                                         {
-                                            <div>Envoi de ressources vers @army.Destination.Name [@army.Destination.Coordinates.X, @army.Destination.Coordinates.Y] chez @army.Destination.Owner.Name</div>
+                                            <div>Envoi de ressources vers @army.Destination.Name [@army.Destination.Coordinates.X, @army.Destination.Coordinates.Y] chez <a asp-action="ProfilOfOtherPlayer" asp-controller="Profil" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId" asp-route-otherPlayerId="@army.Destination.Owner.PlayerId"> @army.Destination.Owner.Name </a> </div>
                                         }
                                         else if (army.ArmyMovement == ArmyMovement.returning)
                                         {
-                                            <div>Vos unités sont en train de revenir de @army.Destination.Name [@army.Destination.Coordinates.X, @army.Destination.Coordinates.Y] chez @army.Destination.Owner.Name</div>
+                                            <div>Vos unités sont en train de revenir de @army.Destination.Name [@army.Destination.Coordinates.X, @army.Destination.Coordinates.Y] chez <a asp-action="ProfilOfOtherPlayer" asp-controller="Profil" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId" asp-route-otherPlayerId="@army.Destination.Owner.PlayerId"> @army.Destination.Owner.Name </a></div>
                                         }
                                     }
                                     else if (army.ArmyMovement == ArmyMovement.attacking)

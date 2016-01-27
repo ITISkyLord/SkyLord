@@ -20,6 +20,7 @@ namespace ITI.SkyLord.ViewModels.Profil
         public long PlayerId { get; set; }
         public long CurrentPlayerId { get; set; }
         public List<Island> OtherIslands { get; set; }
+        public long EnnemyIslandId { get; set; }
 
     }
 }
