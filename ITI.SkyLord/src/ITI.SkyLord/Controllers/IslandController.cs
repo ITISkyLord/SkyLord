@@ -42,6 +42,19 @@ namespace ITI.SkyLord.Controllers
 
             return View( islandViewModel );
         }
+        public IActionResult ChangeName( long islandId, string name )
+        {
+            Island currentIsland = GetIsland( islandId );
+            if( !string.IsNullOrWhiteSpace( name ) )
+            {
+                currentIsland.Name = name;
+                SetupContext.SaveChanges();
+            }
+
+            SeeMyIslandViewModel islandViewModel = CreateBuildingViewModel( currentIsland.IslandId, SetupContext.GetPlayer( User.GetUserId() ).PlayerId );
+
+            return View( "SeeMyIsland", islandViewModel );
+        }
         private Island GetIsland( long islandId )
         {
             if( islandId == 0 )

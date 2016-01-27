@@ -7066,6 +7066,12 @@ footer li a:hover {
     width: 41.66666667%;
   }
 }
+#special-form {
+  display: inline-block;
+  font-size: 10px;
+  margin-left: 10px;
+  color: black;
+}
 #SeeMyIsland {
   border: 1px solid #f4511e;
   border-radius: 0;

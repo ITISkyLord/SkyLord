@@ -77,7 +77,7 @@
 
                 <a asp-controller="Island" asp-action="OverView" asp-route-islandId="@Model.Layout.IslandId">Vue d'ensemble</a>
                 <a asp-controller="World" asp-action="Index" asp-route-islandId="@Model.Layout.IslandId">Carte du monde</a>
-                <p>Mes îles :</p>
+                <p>Mes îles : @Model.Layout.CurrentPlayer.Islands.Count() / @Model.Layout.CurrentPlayer.MaxIsland max</p>
                 @foreach (Island island in Model.Layout.AllIslands)
                 {
                     string selector = island.IslandId == Model.Layout.IslandId ? "CurrentIsland" : "OtherIsland";
