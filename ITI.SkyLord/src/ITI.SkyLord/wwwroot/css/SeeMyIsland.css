@@ -6459,7 +6459,9 @@ button.close {
 .modal-header:before,
 .modal-header:after,
 .modal-footer:before,
-.modal-footer:after {
+.modal-footer:after,
+#degage .production:before,
+#degage .production:after {
   content: " ";
   display: table;
 }
@@ -6478,7 +6480,8 @@ button.close {
 .pager:after,
 .panel-body:after,
 .modal-header:after,
-.modal-footer:after {
+.modal-footer:after,
+#degage .production:after {
   clear: both;
 }
 .center-block {
@@ -6909,11 +6912,39 @@ button.close {
   height: 175px !important;
 }
 #SeeMyIsland .Building[buildingname="tower"] img {
-  width: 100% !important
-        height: 100% !important;
+  width: 100% !important;
+  height: 100% !important;
 }
 #degage {
   position: relative;
+}
+#degage .production {
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 1px;
+  background-color: "white";
+  height: auto;
+  width: 100%;
+  height: 100%;
+  background-image: url("../images/Site/sitecartonlow.jpg") !important;
+  background-repeat: no-repeat !important;
+  background-size: 100% 100% !important;
+  overflow: auto;
+  /*margin-top : 200px;*/
+}
+#degage .production > .navbar-header,
+#degage .production > .navbar-collapse {
+  margin-right: -15px;
+  margin-left: -15px;
+}
+@media (min-width: 768px) {
+  #degage .production > .navbar-header,
+  #degage .production > .navbar-collapse {
+    margin-right: 0;
+    margin-left: 0;
+  }
 }
 #UI {
   position: relative;
@@ -6942,8 +6973,8 @@ button.close {
   }
 }
 .templatebuilding {
-  position: absolute!important;
-  top: 0px!important;
+  position: absolute !important;
+  top: 0px !important;
   border: 1px solid #825847;
   border-radius: 0;
   transition: box-shadow 0.5s;

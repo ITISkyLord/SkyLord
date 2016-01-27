@@ -6466,6 +6466,8 @@ button.close {
 .SkyLordContainer .SkyLordMainRow:after,
 .SkyLordContainer .SkyLordMainRow .PageContent .ViewContentRow:before,
 .SkyLordContainer .SkyLordMainRow .PageContent .ViewContentRow:after,
+#degage .production:before,
+#degage .production:after,
 .playerContainer:before,
 .playerContainer:after,
 .profilContainer:before,
@@ -6492,6 +6494,7 @@ button.close {
 .SkyLordContainer:after,
 .SkyLordContainer .SkyLordMainRow:after,
 .SkyLordContainer .SkyLordMainRow .PageContent .ViewContentRow:after,
+#degage .production:after,
 .playerContainer:after,
 .profilContainer:after {
   clear: both;
@@ -7164,11 +7167,39 @@ footer li a:hover {
   height: 175px !important;
 }
 #SeeMyIsland .Building[buildingname="tower"] img {
-  width: 100% !important
-        height: 100% !important;
+  width: 100% !important;
+  height: 100% !important;
 }
 #degage {
   position: relative;
+}
+#degage .production {
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 1px;
+  background-color: "white";
+  height: auto;
+  width: 100%;
+  height: 100%;
+  background-image: url("../images/Site/sitecartonlow.jpg") !important;
+  background-repeat: no-repeat !important;
+  background-size: 100% 100% !important;
+  overflow: auto;
+  /*margin-top : 200px;*/
+}
+#degage .production > .navbar-header,
+#degage .production > .navbar-collapse {
+  margin-right: -15px;
+  margin-left: -15px;
+}
+@media (min-width: 768px) {
+  #degage .production > .navbar-header,
+  #degage .production > .navbar-collapse {
+    margin-right: 0;
+    margin-left: 0;
+  }
 }
 #UI {
   position: relative;
@@ -7197,8 +7228,8 @@ footer li a:hover {
   }
 }
 .templatebuilding {
-  position: absolute!important;
-  top: 0px!important;
+  position: absolute !important;
+  top: 0px !important;
   border: 1px solid #825847;
   border-radius: 0;
   transition: box-shadow 0.5s;
