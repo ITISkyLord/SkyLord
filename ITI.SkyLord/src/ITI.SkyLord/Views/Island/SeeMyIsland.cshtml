@@ -138,41 +138,53 @@
                     }
 
 
-                    <h4>Production</h4>
+                    <div class="head">
+                        <h4>Production</h4>
+                    </div>
+                    <div class="body-prod">
+                        <div class="body-prod-txt">Bois : @Model.Production.Wood par heure<br /></div>
 
-                    Bois : @Model.Production.Wood par heure<br />
-                    Métal : @Model.Production.Metal par heure<br />
-                    Cristal : @Model.Production.Cristal par heure<br />
-                    Magie : @Model.Production.Magic par heure<br />
-
-
-
-                    @if (Model.BuildingDeveloping != null)
-                    {
-                        TimeSpan timetoEnd = Model.BuildingDeveloping.EndingDate - DateTime.Now;
-
-                        <div>
-                            @BuildingManager.StaticBuildingNameToName(Model.BuildingDeveloping.BuildingToBuild) est en construction et finira dans <span class="time" hours="@timetoEnd.Hours" minutes="@timetoEnd.Minutes" secondes="@timetoEnd.Seconds"> à @Model.BuildingDeveloping.EndingDate.ToString(@"HH\hmm\mss\s") </span>
+                        <div class="body-prod-txt">
+                            Métal : @Model.Production.Metal par heure<br />
                         </div>
-                    }
-                    @if (Model.CurrentResearch != null)
-                    {
-                        TimeSpan timetoEnd = Model.CurrentResearch.EndingDate - DateTime.Now;
 
-                        <div>
-                            @TechnologyManager.StaticTechnologyNameToName(Model.CurrentResearch.TechnologyName) est en recherche et finira dans <span class="time" hours="@timetoEnd.Hours" minutes="@timetoEnd.Minutes" secondes="@timetoEnd.Seconds"> à @Model.CurrentResearch.EndingDate.ToString(@"HH\hmm\mss\s") </span>
+                        <div class="body-prod-txt">
+                            Cristal : @Model.Production.Cristal par heure<br />
                         </div>
-                    }
 
+                        <div class="body-prod-txt">
+                            Magie : @Model.Production.Magic par heure<br />
+                        </div>
+
+
+
+
+                        @if (Model.BuildingDeveloping != null)
+                        {
+                            TimeSpan timetoEnd = Model.BuildingDeveloping.EndingDate - DateTime.Now;
+
+                            <div>
+                                @BuildingManager.StaticBuildingNameToName(Model.BuildingDeveloping.BuildingToBuild) est en construction et finira dans <span class="time" hours="@timetoEnd.Hours" minutes="@timetoEnd.Minutes" secondes="@timetoEnd.Seconds"> à @Model.BuildingDeveloping.EndingDate.ToString(@"HH\hmm\mss\s") </span>
+                            </div>
+                        }
+                        @if (Model.CurrentResearch != null)
+                        {
+                            TimeSpan timetoEnd = Model.CurrentResearch.EndingDate - DateTime.Now;
+
+                            <div>
+                                @TechnologyManager.StaticTechnologyNameToName(Model.CurrentResearch.TechnologyName) est en recherche et finira dans <span class="time" hours="@timetoEnd.Hours" minutes="@timetoEnd.Minutes" secondes="@timetoEnd.Seconds"> à @Model.CurrentResearch.EndingDate.ToString(@"HH\hmm\mss\s") </span>
+                            </div>
+                        }
+
+                    </div>
                 </div>
-            </div>
 
-            @for (var i = 1; i != 11; i++)
+                @for (var i = 1; i != 11; i++)
             {
                 Building myBuilding;
                 string name;
 
-                @if (Model.DicoBuildings.TryGetValue(i.ToString(), out myBuilding))
+                    @if (Model.DicoBuildings.TryGetValue(i.ToString(), out myBuilding))
                 {
                     name = myBuilding.BuildingName.ToString();
                 }
@@ -183,45 +195,45 @@
 
 
 
-                <div class="templatebuilding" id="ui_@i" buildingname="@name" style="display:none;">
-                    @{
-                        // On cherche le next s'il existe
-                        Level nextLevel = null;
-                        Model.NextLevel.TryGetValue(i, out nextLevel);
+                    <div class="templatebuilding" id="ui_@i" buildingname="@name" style="display:none;">
+                        @{
+                            // On cherche le next s'il existe
+                            Level nextLevel = null;
+                            Model.NextLevel.TryGetValue(i, out nextLevel);
 
-                        // On cherche les buildings event s'ils existent
-                        List<BuildingEvent> buildingEvent = new List<BuildingEvent>();
-                        Model.AllBuildingEventOnIsland.TryGetValue(i, out buildingEvent);
+                            // On cherche les buildings event s'ils existent
+                            List<BuildingEvent> buildingEvent = new List<BuildingEvent>();
+                            Model.AllBuildingEventOnIsland.TryGetValue(i, out buildingEvent);
 
-                        bool isInConstruction = Model.AllBuildingEventOnIsland.Where(kvp => kvp.Value.Count != 0).Count() != 0;
+                            bool isInConstruction = Model.AllBuildingEventOnIsland.Where(kvp => kvp.Value.Count != 0).Count() != 0;
 
-                        // On balance le view model à notre partial
-                        BuildingPartialViewModel partialModel = new BuildingPartialViewModel()
-                        {
-                            CurrentBuilding = myBuilding,
-                            Position = i,
-                            AvailableBuildings = Model.AvailableBuildings,
-                            Layout = Model.Layout,
-                            CurrentArmy = Model.DefenseArmy,
-                            AvailableUnit = Model.AvailableUnit,
-                            AllUnits = Model.AllUnits,
-                            NextBuildingLevel = nextLevel,
-                            EventsOnBuilding = buildingEvent,
-                            TechnologyDisplays = Model.TechnologyDisplays,
-                            TargetTechnology = Model.TargetTechnology,
-                            TechnologyManager = Model.TechnologyManager,
-                            UnitsQueue = Model.UnitsQueue,
-                            IsInConstruction = isInConstruction,
-                            CurrentResearch = Model.CurrentResearch
+                            // On balance le view model à notre partial
+                            BuildingPartialViewModel partialModel = new BuildingPartialViewModel()
+                            {
+                                CurrentBuilding = myBuilding,
+                                Position = i,
+                                AvailableBuildings = Model.AvailableBuildings,
+                                Layout = Model.Layout,
+                                CurrentArmy = Model.DefenseArmy,
+                                AvailableUnit = Model.AvailableUnit,
+                                AllUnits = Model.AllUnits,
+                                NextBuildingLevel = nextLevel,
+                                EventsOnBuilding = buildingEvent,
+                                TechnologyDisplays = Model.TechnologyDisplays,
+                                TargetTechnology = Model.TargetTechnology,
+                                TechnologyManager = Model.TechnologyManager,
+                                UnitsQueue = Model.UnitsQueue,
+                                IsInConstruction = isInConstruction,
+                                CurrentResearch = Model.CurrentResearch
 
-                        };
-                        Write(Html.Partial("~/Views/Partial/" + name + ".cshtml", partialModel));
-                    }
-                </div>
+                            };
+                            Write(Html.Partial("~/Views/Partial/" + name + ".cshtml", partialModel));
                         }
+                    </div>
+                            }
+            </div>
+
         </div>
-
     </div>
-</div>
 
-<script src="~/js/seeIsland.js"></script>
+    <script src="~/js/seeIsland.js"></script>

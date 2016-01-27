@@ -26,6 +26,29 @@
     .make-xs-column(@nb);
 }
 
+.Header() {
+    text-align: center;
+    color: whitesmoke;
+    font-weight: bold;
+    font-size: 25px;
+    background-image: url("../images/Site/site_haut2low.jpg");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    padding: 10px;
+    border-bottom: 1px solid transparent;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+.Body() {
+    color: #825847;
+    font-weight: bold;
+    font-size: 13px;
+    text-align: center;
+}
+
 .MakeResponsive(@lgcol: 12, @mdcol: 12, @smcol: 12, @xscol: 12) {
     .make-lg-column(@lgcol);
     .make-md-column(@mdcol);
