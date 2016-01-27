@@ -64,10 +64,81 @@
         <div id="UI">
             <div id="degage">
                 <div class="production">
+                    <div class="head">@Model.CurrentIsland.Name
+                        <form asp-controller="Island" asp-action="ChangeName" asp-route-islandId="@Model.CurrentIsland.IslandId" id="special-form">
+                            <input type="text" name="name" />
+                            <button><span style="font-size:1.1em;" id="pencil" class="glyphicon glyphicon-ok"></span></button>
+                        </form>
+                    </div>
+                    
+                    <div class="head">
+                        <h4>Production</h4>
+                    </div>
+                    <div class="body-prod">
+                        <div class="body-prod-txt">Bois : @Model.Production.Wood par heure<br /></div>
+
+                        <div class="body-prod-txt">
+                            Métal : @Model.Production.Metal par heure<br />
+                        </div>
+
+                        <div class="body-prod-txt">
+                            Cristal : @Model.Production.Cristal par heure<br />
+                        </div>
+
+                        <div class="body-prod-txt">
+                            Magie : @Model.Production.Magic par heure<br />
+                        </div>
+
+                        @if( Model.DefenseArmy.Regiments != null && Model.DefenseArmy.Regiments.Count > 0 )
+                        {
+                            <div class="head">
+                                <h4>Armée présente</h4>
+                            </div>
+
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <td>Unité</td>
+                                            <td>Nombre</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach( Regiment r in Model.DefenseArmy.Regiments )
+                                        {
+                                            <tr>
+                                                <td>@r.Unit.Name</td>
+                                                <td>@r.Number</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+
+                                </table>
+
+                        }
+                        @if( Model.BuildingDeveloping != null )
+                        {
+                            <br />
+                            TimeSpan timetoEnd = Model.BuildingDeveloping.EndingDate - DateTime.Now;
+
+                            <div>
+                                @BuildingManager.StaticBuildingNameToName( Model.BuildingDeveloping.BuildingToBuild ) est en construction et finira dans <span class="time" hours="@timetoEnd.Hours" minutes="@timetoEnd.Minutes" secondes="@timetoEnd.Seconds"> à @Model.BuildingDeveloping.EndingDate.ToString( @"HH\hmm\mss\s" ) </span>
+                            </div>
+                        }
+                        @if( Model.CurrentResearch != null )
+                        {
+                            TimeSpan timetoEnd = Model.CurrentResearch.EndingDate - DateTime.Now;
+
+                            <div>
+                                @TechnologyManager.StaticTechnologyNameToName( Model.CurrentResearch.TechnologyName ) est en recherche et finira dans <span class="time" hours="@timetoEnd.Hours" minutes="@timetoEnd.Minutes" secondes="@timetoEnd.Seconds"> à @Model.CurrentResearch.EndingDate.ToString( @"HH\hmm\mss\s" ) </span>
+                            </div>
+                        }
+
+                    </div>
+                    
                     @if (Model.MovementTowardThisIsland.Count > 0)
                     {
                         <div class="head">
-                            <h4>Attaque vers l'île.</h4>
+                            <h4>Mouvements vers l'île.</h4>
                         </div>
 
                         @foreach (ArmyEvent ae in Model.MovementTowardThisIsland)
@@ -91,7 +162,7 @@
                     @if (Model.MovementFromThisIsland.Count > 0)
                     {
                         <div class="head">
-                            <h4>Nos attaques</h4>
+                            <h4>Mouvements depuis cette île</h4>
                         </div>
 
                         @foreach (ArmyEvent ae in Model.MovementFromThisIsland)
@@ -149,43 +220,7 @@
                         </div>
                     }
 
-                    <div class="head">
-                        <h4>Production</h4>
-                    </div>
-                    <div class="body-prod">
-                        <div class="body-prod-txt">Bois : @Model.Production.Wood par heure<br /></div>
 
-                        <div class="body-prod-txt">
-                            Métal : @Model.Production.Metal par heure<br />
-                        </div>
-
-                        <div class="body-prod-txt">
-                            Cristal : @Model.Production.Cristal par heure<br />
-                        </div>
-
-                        <div class="body-prod-txt">
-                            Magie : @Model.Production.Magic par heure<br />
-                        </div>
-
-                        @if (Model.BuildingDeveloping != null)
-                        {
-                            <br />
-                            TimeSpan timetoEnd = Model.BuildingDeveloping.EndingDate - DateTime.Now;
-
-                            <div>
-                                @BuildingManager.StaticBuildingNameToName(Model.BuildingDeveloping.BuildingToBuild) est en construction et finira dans <span class="time" hours="@timetoEnd.Hours" minutes="@timetoEnd.Minutes" secondes="@timetoEnd.Seconds"> à @Model.BuildingDeveloping.EndingDate.ToString(@"HH\hmm\mss\s") </span>
-                            </div>
-                        }
-                        @if (Model.CurrentResearch != null)
-                        {
-                            TimeSpan timetoEnd = Model.CurrentResearch.EndingDate - DateTime.Now;
-
-                            <div>
-                                @TechnologyManager.StaticTechnologyNameToName(Model.CurrentResearch.TechnologyName) est en recherche et finira dans <span class="time" hours="@timetoEnd.Hours" minutes="@timetoEnd.Minutes" secondes="@timetoEnd.Seconds"> à @Model.CurrentResearch.EndingDate.ToString(@"HH\hmm\mss\s") </span>
-                            </div>
-                        }
-
-                    </div>
                 </div>
 
                 @for (var i = 1; i != 11; i++)

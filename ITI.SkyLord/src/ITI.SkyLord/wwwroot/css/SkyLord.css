@@ -7066,6 +7066,12 @@ footer li a:hover {
     width: 41.66666667%;
   }
 }
+#special-form {
+  display: inline-block;
+  font-size: 10px;
+  margin-left: 10px;
+  color: black;
+}
 #SeeMyIsland {
   border: 1px solid #f4511e;
   border-radius: 0;
@@ -7171,7 +7177,7 @@ footer li a:hover {
   height: 100% !important;
 }
 #degage {
-  position: relative;
+  padding-bottom: 100px;
 }
 #degage .production {
   margin-right: auto;
@@ -7183,6 +7189,8 @@ footer li a:hover {
   height: auto;
   width: 100%;
   height: 100%;
+  width: auto;
+  padding-bottom: 100px;
   background-image: url("../images/Site/sitecartonlow.jpg") !important;
   background-repeat: no-repeat !important;
   background-size: 100% 100% !important;
