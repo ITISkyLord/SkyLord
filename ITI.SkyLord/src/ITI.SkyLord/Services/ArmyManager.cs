@@ -189,12 +189,25 @@ namespace ITI.SkyLord
 
         internal Army CopyArmy( Army originalArmy )
         {
-            return new Army
+            Army clone = new Army();
+
+            List<Regiment> regiments = new List<Regiment>();
+
+            foreach(Regiment regiment in originalArmy.Regiments )
             {
-                Island = originalArmy.Island,
-                Regiments = new List<Regiment>( originalArmy.Regiments ),
-                ArmyState = originalArmy.ArmyState
-            };
+                regiments.Add( new Regiment
+                {
+                    Army = clone,
+                    Unit = regiment.Unit,
+                    Number = regiment.Number
+                } );
+            }
+
+            clone.Island = originalArmy.Island;
+            clone.Regiments = regiments;
+            clone.ArmyState = originalArmy.ArmyState;
+
+            return clone;
         }
 
         public Army JoinArmies( Army armyOnIsland, Army armyOnMovement, long islandId )
