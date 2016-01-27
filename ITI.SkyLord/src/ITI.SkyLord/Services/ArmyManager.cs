@@ -296,7 +296,6 @@ namespace ITI.SkyLord
 
         public List<Unit> GetExistingUnits()
         {
-            // CHANGE TO GET THE MODIFIED UNIT IF FOUND (TO GET THE REAL STATS)
             return CurrentContext.Units.Include( u => u.Requirements).Include( u => u.UnitStatistics).Include( u => u.UnitCost)
                 .Where( u => u.IsModel ).ToList();
         }
@@ -315,21 +314,6 @@ namespace ITI.SkyLord
             }
 
             return number;
-        }
-
-        Unit CloneUnit( Unit source )
-        {
-            return new Unit
-            {
-                Name = source.Name,
-                UnitName = source.UnitName,
-                Duration = source.Duration,
-                UnitDamageType = source.UnitDamageType,
-                UnitType = source.UnitType,
-                UnitCost = source.UnitCost,
-                UnitStatistics = source.UnitStatistics,
-                IsModel = false
-            };
         }
     }
 }

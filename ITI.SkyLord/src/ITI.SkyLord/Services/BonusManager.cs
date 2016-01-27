@@ -222,7 +222,8 @@ namespace ITI.SkyLord.Services
                 UnitStatistics = unitStatitics,
                 Requirements = unitRequirements,
                 Duration = unit.Duration,
-                IsModel = false
+                IsModel = false,
+                Description = unit.Description
             };
 
         }

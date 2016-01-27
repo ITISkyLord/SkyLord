@@ -7308,7 +7308,7 @@ footer li a:hover {
   background-color: whitesmoke;
 }
 .templatebuilding .invocation-building .text {
-  color: #825847;
+  color: white;
   font-weight: bold;
   font-style: italic;
 }
@@ -7700,6 +7700,16 @@ button {
   margin-right: auto;
   height: 200px;
   width: 150px;
+}
+.bg-1 {
+  background: #2d2d30;
+  color: #bdbdbd;
+}
+.bg-1 h3 {
+  color: #fff;
+}
+.bg-1 p {
+  font-style: italic;
 }
 .person {
   border: 10px solid transparent;

@@ -4,7 +4,9 @@
 <h2>Laboratoire</h2>
 
 @{
-    Write(Html.Partial("~/Views/Partial/DescriptionPartial.cshtml", new DescriptionPartial { Description = "Je suis un woodField", FullNameOfImage = "laboratory.gif" }));
+    Write(Html.Partial("~/Views/Partial/DescriptionPartial.cshtml", new DescriptionPartial {
+        Description = @BuildingManager.StaticBuildingNameToDescription( Model.CurrentBuilding.BuildingName ),
+        FullNameOfImage = "laboratory.gif" }));
     Write( Html.Partial( "~/Views/Partial/LevelUpBuilding.cshtml", Model ) );
 }
 

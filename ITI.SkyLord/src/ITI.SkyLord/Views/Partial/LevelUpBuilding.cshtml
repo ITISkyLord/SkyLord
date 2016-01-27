@@ -7,7 +7,10 @@
             <div class="buildings-build-head">
                 Niveau : @Model.CurrentBuilding.Level.Number
             </div>
-            <p>Bonus apportés </p>
+            @if ( Model.NextBuildingLevel.Bonuses.Count() != 0 )
+            {
+                <p>Bonus apportés </p>
+            }
             @foreach ( Bonus bonus in @Model.CurrentBuilding.Level.Bonuses )
             {
                 @BonusManager.StaticBonusToString( bonus ) <br />
@@ -18,7 +21,10 @@
                     Niveau suivant
                 </div>
 
-                <p>Bonus apportés au niveau suivant </p>
+                @if ( Model.NextBuildingLevel.Bonuses.Count() != 0 )
+                {
+                    <p>Bonus apportés au niveau suivant </p>
+                }
                 @foreach ( Bonus bonus in Model.NextBuildingLevel.Bonuses )
                 {
                     @BonusManager.StaticBonusToString( bonus ) <br />
