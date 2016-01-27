@@ -50,12 +50,11 @@
                     </table>
                     <input type="hidden" asp-for="@Model.CapacityOfCarrier" value="@Model.CapacityOfCarrier" />
                     <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
-
+                    <label for="pos-x"></label><input type="number" name="pos-x" value="@Model.PossibleColonisableIslands.First().Coordinates.X" />
+                    <label for="pos-y"></label><input type="number" name="pos-y" value="@Model.PossibleColonisableIslands.First().Coordinates.Y" />
                     @*Envoi de ressources*@
 
                     @* Petit moyen pour chercher l'île en fonction des coordonnées *@
-                    <label for="pos-x"></label><input type="number" name="pos-x" value="@Model.PossibleColonisableIslands.First().Coordinates.X" />
-                    <label for="pos-y"></label><input type="number" name="pos-y" value="@Model.PossibleColonisableIslands.First().Coordinates.Y" />
 
                     @* Choix de la cible *@
                     <select asp-for="@Model.Target" id="EnnemyToAttack">
@@ -65,13 +64,13 @@
                             if (Model.BarbarianIslandId == i.IslandId)
                             {
                                 <option value="@i.IslandId" pos-x="@i.Coordinates.X" pos-y="@i.Coordinates.Y" selected="selected">
-                                    Île barbare [@i.Coordinates.X, @i.Coordinates.Y]
+                                    île sauvage [@i.Coordinates.X, @i.Coordinates.Y]
                                 </option>
                             }
                             else
                             {
                                 <option value="@i.IslandId" pos-x="@i.Coordinates.X" pos-y="@i.Coordinates.Y">
-                                    Île barbare [@i.Coordinates.X, @i.Coordinates.Y]
+                                    île sauvage [@i.Coordinates.X, @i.Coordinates.Y]
                                 </option>
                             }
                         }

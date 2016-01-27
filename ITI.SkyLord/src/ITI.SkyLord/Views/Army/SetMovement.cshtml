@@ -20,7 +20,7 @@
                 <form asp-controller="Army" asp-action="MoveArmy" asp-route-islandId="@Model.Layout.IslandId" method="post" role="form">
 
                     <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
-
+                    <p>Vous pouvez transférer vos unités entre vos îles.</p>
                     @* Tableau pour voir nos unité et voir qui l'on envoi *@
                     <div class="numberArmy">
                         <table class="table table-hover">
@@ -28,7 +28,7 @@
                                 <tr>
                                     <td>Unité</td>
                                     <td>Disponible</td>
-                                    <td>A envoyer</td>
+                                    <td>À envoyer</td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -52,7 +52,7 @@
                         @foreach (Island i in Model.Layout.AllIslands.Where(i => i.IslandId != Model.Layout.IslandId))
                         {
                             <option value="@i.IslandId" pos-x="@i.Coordinates.X" pos-y="@i.Coordinates.Y" selected="selected">
-                                [@i.Coordinates.X, @i.Coordinates.Y]
+                               @i.Name [@i.Coordinates.X, @i.Coordinates.Y]
                             </option>
                         }
                     </select>

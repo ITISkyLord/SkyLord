@@ -1,71 +1,74 @@
 ﻿@model ITI.SkyLord.ViewModel.World.WorldMapViewModel
 
-@{ 
+@{
     Random random = new Random();
 }
 <style>
     #draggable {
         position: relative;
         top: -100px;
-        
         width: 10000px;
         height: 10000px;
-
         background-image: url("/images/WorldMap/Nuage.jpg");
         background-repeat: repeat;
         background-size: 500px 500px;
     }
+
     .map {
         background-image: url("/images/WorldMap/Nuage.jpg");
         background-repeat: no-repeat;
         background-size: cover;
-
         width: 1100px;
         height: 550px;
         border: black solid 2px;
         overflow: hidden;
-
         margin-right: auto;
         margin-left: auto;
     }
-    .map td {   
-        width: 64px;
-        height: 64px;
-        background-color: rgba(0,0,0,0);
-        min-width: 64px;
-        min-height: 64px;
-        max-width: 64px;
-        max-height: 64px;
-        overflow: visible;
-    }
+
+        .map td {
+            width: 64px;
+            height: 64px;
+            background-color: rgba(0,0,0,0);
+            min-width: 64px;
+            min-height: 64px;
+            max-width: 64px;
+            max-height: 64px;
+            overflow: visible;
+        }
+
     #MyIsland {
         background-color: rgba(186,218,85,0.5);
         border-radius: 20px;
     }
+
     .Island:hover {
         cursor: pointer;
         border: solid black 1px;
     }
+
     td.Island {
         background-image: url("/images/WorldMap/villagechibi.png");
         background-size: contain;
         background-repeat: no-repeat;
         background-position: center;
     }
+
     .Island > div {
         overflow: visible;
-        position:relative;
+        position: relative;
         text-align: center;
         top: 40px;
         margin-right: auto;
         margin-left: auto;
     }
+
     td.Empty {
         background-color: rgba(0,0,0,0);
     }
+
     #Menu {
         position: absolute;
-
         background-color: rgba(238,216,169,1);
         color: white;
         border-radius: 20px;
@@ -74,59 +77,65 @@
         max-width: 250px;
         min-width: 250px;
     }
-    #Menu ul 
-    {
-        margin-top:10px;
-        margin-bottom: 10px;
-        text-align: center;
-        list-style-type: none;
-        margin-left: auto;
-        margin-right: auto;
-        padding-left:0px;
-    }
-    #Menu ul li 
-    {
-        margin-left: auto;
-        margin-right: auto;
-    }
-    #Menu ul li input[type=submit]
-    {
-        border: none;
-        background: transparent;
-        outline: none;
-        color: rgba(130,88,71,1);
-        font-weight: bold;
-    }
+
+        #Menu ul {
+            margin-top: 10px;
+            margin-bottom: 10px;
+            text-align: center;
+            list-style-type: none;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 0px;
+        }
+
+            #Menu ul li {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+                #Menu ul li input[type=submit] {
+                    border: none;
+                    background: transparent;
+                    outline: none;
+                    color: rgba(130,88,71,1);
+                    font-weight: bold;
+                }
+
     .IslandEnnemy {
         background-image: url("/images/WorldMap/villagechibiennemi.png") !important;
         background-size: contain;
         background-repeat: no-repeat;
         background-position: center;
     }
+
     .EmptyMonster {
         background-image: url("/images/WorldMap/monstre.gif") !important;
         background-size: contain;
         background-repeat: no-repeat;
         background-position: center;
     }
+
     .EmptyHotAirBalloon {
         background-image: url("/images/WorldMap/montgolfière.gif") !important;
         background-size: contain;
         background-repeat: no-repeat;
         background-position: center;
     }
+
     .EmptyHotAirBalloon {
         background-image: url("/images/WorldMap/montgolfière.gif") !important;
         background-size: contain;
         background-repeat: no-repeat;
         background-position: center;
     }
+
     .EmptySnake {
         background-image: url("/images/WorldMap/serpent.gif") !important;
         background-size: contain;
         background-repeat: no-repeat;
         background-position: center;
     }
+
     .IslandBarBare {
         background-image: url("/images/WorldMap/villagechibibarbare.png") !important;
         background-size: contain;
@@ -139,87 +148,87 @@
 
 <!-- World Map -->
 <div class="map">
-<div id="draggable">
-<!-- Map OTD -->
-<table>
-@for (var i = 0; i < 100; i++)
-{
-    <tr>
-        @for (var j = 0; j < 100; j++)
-        {
-            string key = i + "_" + j;
-            int selectedrandom = random.Next(1,300);
-            Island island = null;
+    <div id="draggable">
+        <!-- Map OTD -->
+        <table>
+            @for( var i = 0; i < 100; i++ )
+            {
+                <tr>
+                    @for( var j = 0; j < 100; j++ )
+                    {
+                        string key = i + "_" + j;
+                        int selectedrandom = random.Next(1,300);
+                        Island island = null;
 
-            if(Model.Layout.CurrentIsland.Coordinates.X == j && Model.Layout.CurrentIsland.Coordinates.Y == i)
-            {
-                <td class="Island" id="MyIsland" x="@j" y="@i" islandid="@Model.Layout.CurrentIsland.IslandId"></td>
-            }
-            else if (Model.Map.TryGetValue(key, out island))
-            {
-                if (island.Owner == null)
-                {
-                    <td class="Island IslandBarBare" x="@j" y="@i" islandid="@island.IslandId"></td>
-                }
-                else
-                {
-                    <td class="Island IslandEnnemy" x="@j" y="@i" islandid="@island.IslandId"><div>@island.Owner.Name</div>    </td>
-                }
-            }
+                        if( Model.Layout.CurrentIsland.Coordinates.X == i && Model.Layout.CurrentIsland.Coordinates.Y == j )
+                        {
+                            <td class="Island" id="MyIsland" x="@i" y="@j" islandid="@Model.Layout.CurrentIsland.IslandId"></td>
+                        }
+                        else if( Model.Map.TryGetValue( key, out island ) )
+                        {
+                            if( island.Owner == null )
+                            {
+                                <td class="Island IslandBarBare" x="@i" y="@j" islandid="@island.IslandId"></td>
+                            }
+                            else
+                            {
+                                <td class="Island IslandEnnemy" x="@i" y="@j" islandid="@island.IslandId"><div>@island.Owner.Name</div>    </td>
+                            }
+                        }
 
-            else if (selectedrandom == 2)
-            {
-                <td class="EmptyMonster"></td>
+                        else if( selectedrandom == 2 )
+                        {
+                            <td class="EmptyMonster"></td>
+                        }
+                        else if( selectedrandom == 1 )
+                        {
+                            <td class="EmptyHotAirBalloon"></td>
+                        }
+                        else if( selectedrandom == 3 )
+                        {
+                            <td class="EmptySnake"></td>
+                        }
+                        else
+                        {
+                            <td class="Empty"></td>
+                        }
+                    }
+                </tr>
             }
-            else if (selectedrandom == 1)
-            {
-                <td class="EmptyHotAirBalloon"></td>
-            }
-            else if (selectedrandom == 3)
-            {
-                <td class="EmptySnake"></td>
-            }
-            else
-            {
-                <td class="Empty"></td>
-            }
-        }
-    </tr>
-}
-</table>
-</div>
+        </table>
+    </div>
 </div>
 
 <!-- Petit Menu OTD-->
 <div id="Menu" style="display:none;">
     <ul>
         <li>
-        <form asp-controller="Army" asp-action="SetAttackingArmy" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId">
-            <input type="hidden" name="EnnemyIslandId" value="0" />
-            <input type="submit" value="Attaquer"/>
-        </form>
+            <form asp-controller="Army" asp-action="SetAttackingArmy" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId">
+                <input type="hidden" name="EnnemyIslandId" value="0" />
+                <input type="submit" value="Attaquer" />
+            </form>
         <li>
             <form asp-controller="Profil" asp-action="ProfilOfOtherPlayer" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId">
                 <input type="hidden" name="EnnemyIslandId" value="0" />
-                <input type="submit" value="Voir profil"/>
+                <input type="submit" value="Voir profil" />
             </form>
         </li>
         <li>
-            <form asp-controller="Profil" asp-action="ProfilOfOtherPlayer" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId">
+            <form asp-controller="Army" asp-action="SetMovement" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId">
                 <input type="hidden" name="EnnemyIslandId" value="0" />
-                <input type="submit" value="Envoyer Ressource [a brancher]" />
+                <input type="submit" value="Transporter troupes" />
             </form>
         </li>
         <li>
-            <form asp-controller="Profil" asp-action="ProfilOfOtherPlayer" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId">
+            <form asp-controller="Army" asp-action="SetSendRessources" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId">
                 <input type="hidden" name="EnnemyIslandId" value="0" />
-                <input type="submit" value="Coloniser [a brancher]" />
+                <input type="submit" value="Envoyer des ressources" />
             </form>
         </li>
         <li>
-            <form asp-controller="Profil" asp-action="ProfilOfOtherPlayer" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId">
+            <form asp-controller="Army" asp-action="SetColonisation" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId">
                 <input type="hidden" name="EnnemyIslandId" value="0" />
-                <input type="submit" value="Transporter troupes [a brancher]" />
+                <input type="submit" value="Coloniser" />
             </form>
         </li>
     </ul>
