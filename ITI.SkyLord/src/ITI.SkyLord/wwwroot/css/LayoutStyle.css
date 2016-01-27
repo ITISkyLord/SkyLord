@@ -6739,7 +6739,7 @@ body {
 }
 .navbar {
   margin-bottom: 0;
-  background-image: url("../images/Site/site_haut2.png");
+  background-image: url("../images/Site/site_haut2low.jpg");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   z-index: 9999;
@@ -6804,7 +6804,7 @@ body {
   left: 0px;
 }
 .ui-autocomplete {
-  background-image: url("../images/Site/site_ressource.png");
+  background-image: url("../images/Site/site_ressourcelow.jpg");
   width: 100%;
   height: 10px;
   background-repeat: no-repeat;
@@ -6825,7 +6825,7 @@ body {
   height: auto;
   width: 100%;
   height: 100%;
-  background-image: url("../images/Site/site_fond.png");
+  background-image: url("../images/Site/site_fondlow.jpg");
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }
@@ -6863,7 +6863,7 @@ body {
   width: auto;
   padding: 0;
   margin: 0;
-  background-image: url("../images/Site/site_side.png");
+  background-image: url("../images/Site/site_sidelow.jpg");
   background-size: 100% 100%;
 }
 @media (min-width: 1200px) {
@@ -6936,7 +6936,7 @@ body {
   }
 }
 .SkyLordContainer .SkyLordMainRow .PageContent .RessourceLine {
-  background-image: url("../images/Site/site_ressource.png");
+  background-image: url("../images/Site/site_ressourcelow.jpg");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   /*padding: 50px;*/
@@ -6959,7 +6959,7 @@ body {
 footer {
   font-size: 17px;
   margin-bottom: 1px;
-  background-image: url("../images/Site/site_haut3.png");
+  background-image: url("../images/Site/site_haut3low.jpg");
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }

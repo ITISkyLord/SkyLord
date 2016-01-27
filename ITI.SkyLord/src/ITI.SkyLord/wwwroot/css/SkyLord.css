@@ -6745,7 +6745,7 @@ body {
 }
 .navbar {
   margin-bottom: 0;
-  background-image: url("../images/Site/site_haut2.png");
+  background-image: url("../images/Site/site_haut2low.jpg");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   z-index: 9999;
@@ -6810,7 +6810,7 @@ body {
   left: 0px;
 }
 .ui-autocomplete {
-  background-image: url("../images/Site/site_ressource.png");
+  background-image: url("../images/Site/site_ressourcelow.jpg");
   width: 100%;
   height: 10px;
   background-repeat: no-repeat;
@@ -6831,7 +6831,7 @@ body {
   height: auto;
   width: 100%;
   height: 100%;
-  background-image: url("../images/Site/site_fond.png");
+  background-image: url("../images/Site/site_fondlow.jpg");
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }
@@ -6869,7 +6869,7 @@ body {
   width: auto;
   padding: 0;
   margin: 0;
-  background-image: url("../images/Site/site_side.png");
+  background-image: url("../images/Site/site_sidelow.jpg");
   background-size: 100% 100%;
 }
 @media (min-width: 1200px) {
@@ -6942,7 +6942,7 @@ body {
   }
 }
 .SkyLordContainer .SkyLordMainRow .PageContent .RessourceLine {
-  background-image: url("../images/Site/site_ressource.png");
+  background-image: url("../images/Site/site_ressourcelow.jpg");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   /*padding: 50px;*/
@@ -6965,7 +6965,7 @@ body {
 footer {
   font-size: 17px;
   margin-bottom: 1px;
-  background-image: url("../images/Site/site_haut3.png");
+  background-image: url("../images/Site/site_haut3low.jpg");
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }
@@ -6986,7 +6986,7 @@ footer li a:hover {
   min-height: 1px;
   padding-left: 15px;
   padding-right: 15px;
-  background-image: url("../images/Site/sitecarton.png");
+  background-image: url("../images/Site/sitecartonlow.jpg");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   text-align: center;
@@ -7204,7 +7204,7 @@ footer li a:hover {
   transition: box-shadow 0.5s;
   width: 100%;
   height: 580px;
-  background-image: url("../images/Site/site_ressource.png");
+  background-image: url("../images/Site/site_ressourcelow.jpg");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   background-position: center;
@@ -7219,7 +7219,7 @@ footer li a:hover {
   color: whitesmoke;
   font-weight: bold;
   font-size: 17px;
-  background-image: url("../images/Site/site_haut2.png");
+  background-image: url("../images/Site/site_haut2low.jpg");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   padding: 5px;
@@ -7281,7 +7281,7 @@ footer li a:hover {
   color: #825847;
   font-weight: bold;
   font-size: 17px;
-  background-image: url("../images/Site/site_haut2.png");
+  background-image: url("../images/Site/site_haut2low.jpg");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   padding: 5px;
@@ -7299,7 +7299,7 @@ footer li a:hover {
   color: whitesmoke;
   font-weight: bold;
   font-size: 25px;
-  background-image: url("../images/Site/site_haut2.png");
+  background-image: url("../images/Site/site_haut2low.jpg");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   padding: 10px;
@@ -7337,7 +7337,7 @@ footer li a:hover {
   color: whitesmoke;
   font-weight: bold;
   font-size: 17px;
-  background-image: url("../images/Site/site_haut2.png");
+  background-image: url("../images/Site/site_haut2low.jpg");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   padding: 5px;
@@ -7357,7 +7357,7 @@ footer li a:hover {
   height: auto;
   width: 100%;
   height: 100%;
-  background-image: url("../images/Site/sitecarton.png") !important;
+  background-image: url("../images/Site/sitecartonlow.jpg") !important;
   background-repeat: no-repeat !important;
   background-size: 100% 100% !important;
   overflow: auto;
@@ -7397,7 +7397,7 @@ footer li a:hover {
   height: auto;
   width: 100%;
   height: 100%;
-  background-image: url("../images/Site/sitecarton.png") !important;
+  background-image: url("../images/Site/sitecartonlow.jpg") !important;
   background-repeat: no-repeat !important;
   background-size: 100% 100% !important;
   overflow: auto;
@@ -7424,7 +7424,7 @@ footer li a:hover {
   border: 1px solid #825847;
   border-radius: 0;
   transition: box-shadow 0.5s;
-  background-image: url("../images/Site/site_ressource.png");
+  background-image: url("../images/Site/site_ressourcelow.jpg");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   background-position: center;
@@ -7436,7 +7436,7 @@ footer li a:hover {
   color: whitesmoke;
   font-weight: bold;
   font-size: 25px;
-  background-image: url("../images/Site/site_haut2.png");
+  background-image: url("../images/Site/site_haut2low.jpg");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   padding: 5px;
@@ -7498,7 +7498,7 @@ footer li a:hover {
   border: 1px solid #825847;
   border-radius: 0;
   transition: box-shadow 0.5s;
-  background-image: url("../images/Site/site_ressource.png");
+  background-image: url("../images/Site/site_ressourcelow.jpg");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   background-position: center;
@@ -7622,7 +7622,7 @@ button {
 }
 .carousel-control.right,
 .carousel-control.left {
-  background-image: url("../images/site_fond2.png");
+  background-image: url("../images/site_fond2low.jpg");
   color: red;
 }
 .carousel-indicators li {
