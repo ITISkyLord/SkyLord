@@ -7,7 +7,7 @@ namespace ITI.SkyLord.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index(AccountViewModel avm)
+        public IActionResult Index(AccountViewModel avm, bool error )
         {
 
             if( User.IsSignedIn() )
@@ -15,7 +15,12 @@ namespace ITI.SkyLord.Controllers
                 return RedirectToAction( "SeeMyIsland", "Island" );
             }
 
-            return View(avm);
+            if( error )
+            {
+                ModelState.AddModelError( string.Empty, "Le login ou le mot de passe est incorrect." );
+            }
+
+            return View( avm );
         }
         
 
