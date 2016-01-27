@@ -14,7 +14,6 @@ namespace ITI.SkyLord
         laboratory,
         invocation,
         academy,
-        cache,
         woodField,
         metalField,
         cristalField,

@@ -6,6 +6,8 @@
 </div>
 
 @{
-    Write(Html.Partial("~/Views/Partial/DescriptionPartial.cshtml", new DescriptionPartial { Description = "Je suis un woodField", FullNameOfImage = "forge.gif" }));
+    Write(Html.Partial("~/Views/Partial/DescriptionPartial.cshtml", new DescriptionPartial {
+        Description = @BuildingManager.StaticBuildingNameToDescription( Model.CurrentBuilding.BuildingName ),
+        FullNameOfImage = "forge.gif" }));
     Write(Html.Partial("~/Views/Partial/LevelUpBuilding.cshtml", Model));
 }

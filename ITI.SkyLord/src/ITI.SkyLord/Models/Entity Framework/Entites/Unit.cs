@@ -28,5 +28,7 @@ namespace ITI.SkyLord
         public int Duration { get; set; }
 
         public bool IsModel { get; set; }
+        
+        public string Description { get; set; }
     }
 }

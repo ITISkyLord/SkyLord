@@ -13,7 +13,9 @@
 }
 
 @{
-    Write(Html.Partial("~/Views/Partial/DescriptionPartial.cshtml", new DescriptionPartial { Description = "Je suis la tour de", FullNameOfImage = "tower.gif", NameOfGif = gifImg }));
+    Write(Html.Partial("~/Views/Partial/DescriptionPartial.cshtml", new DescriptionPartial {
+        Description = @BuildingManager.StaticBuildingNameToDescription( Model.CurrentBuilding.BuildingName ),
+        FullNameOfImage = "tower.gif", NameOfGif = gifImg }));
 
     Write(Html.Partial("~/Views/Partial/LevelUpBuilding.cshtml", Model));
 }

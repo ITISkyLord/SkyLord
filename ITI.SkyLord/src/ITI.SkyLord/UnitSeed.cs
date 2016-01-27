@@ -49,7 +49,7 @@ namespace ITI.SkyLord
         {
             //SeedCanoe();
             SeedFlameThrower();
-            SeedIronGolem();
+            //SeedIronGolem();
             SeedLivingArmor();
             SeedPrismaticGolem();
             SeedSaboteur();
@@ -98,16 +98,15 @@ namespace ITI.SkyLord
                     UnitCost = soliderCost,
                     UnitStatistics = soliderStatistics,
                     Requirements = CreateRequirementList( soldierRequirement, soldierRequirement2 ),
-                    // Valeur temporaire pour les tests !
-                    Duration = 10,
-                    IsModel = true
+                    Duration = 60,
+                    IsModel = true,
+                    Description = "Habillé de son armure toute neuve, il sait par quel bout prendre son épée et obéir aux ordres. Le soldat n'est pas très efficace mais il est peu cher à recruter et à entretenir."
                 };
                 context.Add( soldier );
 
                 context.SaveChanges();
             }
         }
-
 
         public void SeedArcher()
         {
@@ -146,7 +145,8 @@ namespace ITI.SkyLord
                     UnitStatistics = archerStatistics,
                     Requirements = CreateRequirementList( archerRequirement, archerRequirement2, archerRequirement3 ),
                     Duration = 120,
-                    IsModel = true
+                    IsModel = true,
+                    Description = "Un soldat à qui on a confié une arbalète chargée et une armure plus légère. Efficace pour tenir à l'abri d'un rempart."
                 };
                 context.Add( archer );
 
@@ -181,7 +181,6 @@ namespace ITI.SkyLord
                 Requirement knightRequirement3 = AddTechnologyRequirement( context, TechnologyName.magicBoots, 2 );
                 Requirement knightRequirement4 = AddBuildingRequirement( context, BuildingName.invocation, 1 );
 
-
                 // Add Unit
                 Unit knight = new Unit
                 {
@@ -193,7 +192,8 @@ namespace ITI.SkyLord
                     UnitStatistics = knightStatistics,
                     Requirements = CreateRequirementList( knightRequirement, knightRequirement2, knightRequirement3, knightRequirement4 ),
                     Duration = 450,
-                    IsModel = true
+                    IsModel = true,
+                    Description = "Sur son cheval et dans son armure étincelante, le chevalier fait fondre le cœur des dames à la maison et charge impitoyablement l'ennemi sur le champs de bataille. Unité rapide faite pour les assauts percutants."
                 };
                 context.Add( knight );
 
@@ -239,7 +239,8 @@ namespace ITI.SkyLord
                     UnitStatistics = griffinStatistics,
                     Requirements = CreateRequirementList( griffinRequirement, griffinRequirement2, griffinRequirement3, griffinRequirement4 ),
                     Duration = 160,
-                    IsModel = true
+                    IsModel = true,
+                    Description = "Seul les cavaliers les plus habiles - qui n'ont pas peur des coups de griffes - peuvent se targuer de monter un griffon au combat. Cela vaut bien quelques plaies car leur efficacité est phénoménale, surtout en attaque."
                 };
                 context.Add( griffin );
 
@@ -286,7 +287,8 @@ namespace ITI.SkyLord
                     UnitStatistics = championStatistics,
                     Requirements = CreateRequirementList( championRequirement, championRequirement2, championRequirement3, championRequirement44, championRequirement5 ),
                     Duration = 1500,
-                    IsModel = true
+                    IsModel = true,
+                    Description = "Le meilleur entraînement, la plus grande expérience, les armes les plus rares, les champions sont les maîtres de guerre qui dirigent tous les soldats à la bataille. Il s'agit d'une unité puissante et équilibrée, le cœur de toute armée qui se respecte."
                 };
                 context.Add( champion );
 
@@ -326,7 +328,7 @@ namespace ITI.SkyLord
                 // Add Unit
                 Unit gobelin = new Unit
                 {
-                    Name = "Gobelin",
+                    Name = "Squelette",
                     UnitName = UnitName.gobelin,
                     UnitType = UnitType.monster,
                     UnitDamageType = UnitDamageType.physical,
@@ -334,7 +336,9 @@ namespace ITI.SkyLord
                     UnitStatistics = gobelinStatistics,
                     Requirements = CreateRequirementList( gobelinRequirement, gobelinRequirement2 ),
                     Duration = 50,
-                    IsModel = true
+                    IsModel = true,
+                    //Description = "Cette petite créature est stupide, méchante et agressive, surtout stupide, ce qui les rend facile à contrôler. Bons marché et rapides, c'est la chair à canon idéale."
+                    Description = "Cette créature animée par magie est stupide, méchante et agressive, surtout stupide, ce qui les rend facile à contrôler. Bons marché et rapides, ce sont des os à canon idéaux."
                 };
                 context.Add( gobelin );
 
@@ -379,7 +383,8 @@ namespace ITI.SkyLord
                     UnitStatistics = harpyStatistics,
                     Requirements = CreateRequirementList( harpyRequirement, harpyRequirement2, harpyRequirement3 ),
                     Duration = 90,
-                    IsModel = true
+                    IsModel = true,
+                    Description = "Entre les hurlements, les griffes et les verrues, les harpies sont terrifiantes, c'est pour cela qu'on les envoie habituellement sur les mages ennemi. Unité d'attaque efficace en quantité."
                 };
                 context.Add( harpy );
 
@@ -424,7 +429,8 @@ namespace ITI.SkyLord
                     UnitStatistics = dirtGolemStatistics,
                     Requirements = CreateRequirementList( dirtGolemRequirement, dirtGolemRequirement2, dirtGolemRequirement3 ),
                     Duration = 180,
-                    IsModel = true
+                    IsModel = true,
+                    Description = "Un gros bonhomme de terre lent et maladroit, mais très résistant. Très efficace en défense, surtout contre les magiciens."
                 };
                 context.Add( dirtGolem );
 
@@ -470,7 +476,8 @@ namespace ITI.SkyLord
                     UnitStatistics = trollStatistics,
                     Requirements = CreateRequirementList( trollRequirement, trollRequirement2, trollRequirement3, trollRequirement4 ),
                     Duration = 490,
-                    IsModel = true
+                    IsModel = true,
+                    Description = "Le troll est une créature repoussante d'une force et d'une résistance incroyable. Tant qu'on peut supporter l'odeur de leurs pieds, ils sont un investissement rentable."
                 };
                 context.Add( troll );
 
@@ -516,7 +523,8 @@ namespace ITI.SkyLord
                     UnitStatistics = phenixStatistics,
                     Requirements = CreateRequirementList( phenixRequirement, phenixRequirement2, phenixRequirement3, phenixRequirement4 ),
                     Duration = 900,
-                    IsModel = true
+                    IsModel = true,
+                    Description = "L'oiseau légendaire, révéré et craint de tous, supposé immortel car renaissant à l'infini de ses cendres selon les légendes. Il est particulièrement efficace en attaque."
                 };
                 context.Add( phenix );
 
@@ -546,11 +554,11 @@ namespace ITI.SkyLord
                 context.Add( juggernautStatistics );
 
                 // Set up Requirements
-                //Requirement juggernautRequirement = AddBuildingRequirement( context, BuildingName.barrack, 10 );
-                //Requirement juggernautRequirement2 = AddTechnologyRequirement( context, TechnologyName.wings, 10 );
-                //Requirement juggernautRequirement3 = AddTechnologyRequirement( context, TechnologyName.claws, 10 );
-                //Requirement juggernautRequirement4 = AddTechnologyRequirement( context, TechnologyName.shell, 10 );
-                //Requirement juggernautRequirement5 = AddBuildingRequirement( context, BuildingName.invocation, 1 );
+                Requirement juggernautRequirement = AddBuildingRequirement( context, BuildingName.barrack, 10 );
+                Requirement juggernautRequirement2 = AddTechnologyRequirement( context, TechnologyName.wings, 10 );
+                Requirement juggernautRequirement3 = AddTechnologyRequirement( context, TechnologyName.claws, 10 );
+                Requirement juggernautRequirement4 = AddTechnologyRequirement( context, TechnologyName.shell, 10 );
+                Requirement juggernautRequirement5 = AddBuildingRequirement( context, BuildingName.invocation, 1 );
 
                 // Add Unit
                 Unit juggernaut = new Unit
@@ -561,9 +569,10 @@ namespace ITI.SkyLord
                     UnitDamageType = UnitDamageType.physical,
                     UnitCost = juggernautCost,
                     UnitStatistics = juggernautStatistics,
-                    //Requirements = CreateRequirementList( juggernautRequirement, juggernautRequirement2, juggernautRequirement3, juggernautRequirement4, juggernautRequirement5 ),
-                    Duration = 10 /*900*/,
-                    IsModel = true
+                    Requirements = CreateRequirementList( juggernautRequirement, juggernautRequirement2, juggernautRequirement3, juggernautRequirement4, juggernautRequirement5 ),
+                    Duration = 900,
+                    IsModel = true,
+                    Description = "Créé en mélangeant magie et sciences, le juggernaut est une monstruosité faite pour une chose et une seule : tout écraser sur son passage."
                 };
                 context.Add( juggernaut );
 
@@ -610,7 +619,8 @@ namespace ITI.SkyLord
                     UnitStatistics = wispStatistics,
                     Requirements = CreateRequirementList( wispRequirement, wispRequirement2 ),
                     Duration = 50,
-                    IsModel = true
+                    IsModel = true,
+                    Description = "Les feux follets sont des incarnations d'esprits magiques mineurs, qui courent les cieux par milliers. Ce sont des créatures conscientes qui pratiquent elle-même la magie et aident les mages au combat."
                 };
                 context.Add( wisp );
 
@@ -655,7 +665,8 @@ namespace ITI.SkyLord
                     UnitStatistics = noviceStatistics,
                     Requirements = CreateRequirementList( noviceRequirement, noviceRequirement2, noviceRequirement3 ),
                     Duration = 100,
-                    IsModel = true
+                    IsModel = true,
+                    Description = " Le novice est un jeune mage tout juste sorti de l'académie, capable de lancer des sorts de base et de soutenir ses camarades sur le champs de bataille."
                 };
                 context.Add( novice );
 
@@ -675,9 +686,9 @@ namespace ITI.SkyLord
                 // Set up Statistics
                 UnitStatistics necromancerStatistics = new UnitStatistics
                 {
-                    Attack = 350,
-                    PhysicResist = 200,
-                    MagicResist = 200,
+                    Attack = 200,
+                    PhysicResist = 350,
+                    MagicResist = 150,
                     Speed = 100,
                     Capacity = 150,
                     Consumption = 25
@@ -701,7 +712,8 @@ namespace ITI.SkyLord
                     UnitStatistics = necromancerStatistics,
                     Requirements = CreateRequirementList( necromancerRequirement, necromancerRequirement2, necromancerRequirement3, necromancerRequirement4 ),
                     Duration = 260,
-                    IsModel = true
+                    IsModel = true,
+                    Description = "Formé dans les arts sombres de la magie, le nécromancien ramène ceux tombés au combat pour qu'il se battent de son côté. C'est une unité équilibrée puissante, particulièrement forte en défense contre les soldats."
                 };
                 context.Add( necromancer );
 
@@ -747,7 +759,8 @@ namespace ITI.SkyLord
                     UnitStatistics = summonerStatistics,
                     Requirements = CreateRequirementList( summonerRequirement, summonerRequirement2, summonerRequirement3, summonerRequirement4 ),
                     Duration = 800,
-                    IsModel = true
+                    IsModel = true,
+                    Description = "L'invocateur est un puissant maître des arcanes qui invoque des créatures éthérées qui combattent pour lui, il est particulièrement efficace en attaque comme en défense."
                 };
                 context.Add( summoner );
 
@@ -794,7 +807,8 @@ namespace ITI.SkyLord
                     UnitStatistics = prophetStatistics,
                     Requirements = CreateRequirementList( prophetRequirement, prophetRequirement2, prophetRequirement3, prophetRequirement4, prophetRequirement5 ),
                     Duration = 1850,
-                    IsModel = true
+                    IsModel = true,
+                    Description = "Le prophète est la sagesse et la puissance magique incarnée, il n'aime pas la violence mais sait utiliser ses pouvoirs prodigieux quand il le faut."
                 };
                 context.Add( prophet );
 
@@ -842,7 +856,8 @@ namespace ITI.SkyLord
                     UnitStatistics = scorpionStatistics,
                     Requirements = CreateRequirementList( scorpionRequirement, scorpionRequirement2 ),
                     Duration = 75,
-                    IsModel = true
+                    IsModel = true,
+                    Description = "Cette petite machine de guerre envoit de gros carreaux à grande distance, avec plus ou moins de précision. C'est une machine basique surtout utile en défense."
                 };
                 context.Add( scorpion );
 
@@ -862,9 +877,9 @@ namespace ITI.SkyLord
                 // Set up Statistics
                 UnitStatistics flameThrowerStatistics = new UnitStatistics
                 {
-                    Attack = 150,
+                    Attack = 250,
                     PhysicResist = 150,
-                    MagicResist = 225,
+                    MagicResist = 200,
                     Speed = 50,
                     Capacity = 25,
                     Consumption = 20
@@ -887,7 +902,8 @@ namespace ITI.SkyLord
                     UnitStatistics = flameThrowerStatistics,
                     Requirements = CreateRequirementList( flameThrowerRequirement, flameThrowerRequirement2, flameThrowerRequirement3 ),
                     Duration = 140,
-                    IsModel = true
+                    IsModel = true,
+                    Description = "Cette machine envoit de longues langues de feu pour enflammer les ennemis, très puissante en attaque."
                 };
                 context.Add( flameThrower );
 
@@ -933,7 +949,8 @@ namespace ITI.SkyLord
                     UnitStatistics = saboteurStatistics,
                     Requirements = CreateRequirementList( saboteurRequirement, saboteurRequirement2, saboteurRequirement3, saboteurRequirement4 ),
                     Duration = 260,
-                    IsModel = true
+                    IsModel = true,
+                    Description = "Un amas d'armes sur des bras articulés faits pour détruire tout ce peut l'être, particulièrement utile en attaque contre les soldats."
                 };
                 context.Add( saboteur );
 
@@ -978,7 +995,8 @@ namespace ITI.SkyLord
                     UnitStatistics = livingArmorStatistics,
                     Requirements = CreateRequirementList( livingArmorRequirement, livingArmorRequirement2, livingArmorRequirement3 ),
                     Duration = 500,
-                    IsModel = true
+                    IsModel = true,
+                    Description = "Une grande armure vide animée par un mélange de mécanique et de magie, cette unité est aussi forte en attaque qu'en défense."
                 };
                 context.Add( livingArmor );
 
@@ -986,50 +1004,51 @@ namespace ITI.SkyLord
             }
         }
 
-        public void SeedIronGolem()
-        {
-            using ( SetupContext context = new SetupContext() )
-            {
-                // Set up Cost
+        //public void SeedIronGolem()
+        //{
+        //    using ( SetupContext context = new SetupContext() )
+        //    {
+        //        // Set up Cost
 
-                Ressource ironGolemCost = new Ressource { Wood = 5000, Metal = 7500, Cristal = 2500, Magic = 1000 };
-                context.Add( ironGolemCost );
+        //        Ressource ironGolemCost = new Ressource { Wood = 5000, Metal = 7500, Cristal = 2500, Magic = 1000 };
+        //        context.Add( ironGolemCost );
 
-                // Set up Statistics
-                UnitStatistics ironGolemStatistics = new UnitStatistics
-                {
-                    Attack = 150,
-                    PhysicResist = 1000,
-                    MagicResist = 1000,
-                    Speed = 25,
-                    Capacity = 25,
-                    Consumption = 300
-                };
-                context.Add( ironGolemStatistics );
+        //        // Set up Statistics
+        //        UnitStatistics ironGolemStatistics = new UnitStatistics
+        //        {
+        //            Attack = 150,
+        //            PhysicResist = 1000,
+        //            MagicResist = 1000,
+        //            Speed = 25,
+        //            Capacity = 25,
+        //            Consumption = 300
+        //        };
+        //        context.Add( ironGolemStatistics );
 
-                // Set up Requirements
-                Requirement ironGolemRequirement = AddBuildingRequirement( context, BuildingName.forge, 7 );
-                Requirement ironGolemRequirement2 = AddTechnologyRequirement( context, TechnologyName.plating, 8 );
-                Requirement ironGolemRequirement3 = AddBuildingRequirement( context, BuildingName.invocation, 1 );
+        //        // Set up Requirements
+        //        Requirement ironGolemRequirement = AddBuildingRequirement( context, BuildingName.forge, 7 );
+        //        Requirement ironGolemRequirement2 = AddTechnologyRequirement( context, TechnologyName.plating, 8 );
+        //        Requirement ironGolemRequirement3 = AddBuildingRequirement( context, BuildingName.invocation, 1 );
 
-                // Add Unit
-                Unit ironGolem = new Unit
-                {
-                    Name = "Golem de fer",
-                    UnitName = UnitName.ironGolem,
-                    UnitType = UnitType.mecanical,
-                    UnitDamageType = UnitDamageType.physical,
-                    UnitCost = ironGolemCost,
-                    UnitStatistics = ironGolemStatistics,
-                    Requirements = CreateRequirementList( ironGolemRequirement, ironGolemRequirement2, ironGolemRequirement3 ),
-                    Duration = 1200,
-                    IsModel = true
-                };
-                context.Add( ironGolem );
+        //        // Add Unit
+        //        Unit ironGolem = new Unit
+        //        {
+        //            Name = "Golem de fer",
+        //            UnitName = UnitName.ironGolem,
+        //            UnitType = UnitType.mecanical,
+        //            UnitDamageType = UnitDamageType.physical,
+        //            UnitCost = ironGolemCost,
+        //            UnitStatistics = ironGolemStatistics,
+        //            Requirements = CreateRequirementList( ironGolemRequirement, ironGolemRequirement2, ironGolemRequirement3 ),
+        //            Duration = 1200,
+        //            IsModel = true,
+        //            Description = "Le golem de fer est une construction de métal brute qui résiste à presque tout, ce qui la rend très bonne en défense."
+        //        };
+        //        context.Add( ironGolem );
 
-                context.SaveChanges();
-            }
-        }
+        //        context.SaveChanges();
+        //    }
+        //}
 
         public void SeedPrismaticGolem()
         {
@@ -1043,9 +1062,9 @@ namespace ITI.SkyLord
                 // Set up Statistics
                 UnitStatistics prismaticGolemStatistics = new UnitStatistics
                 {
-                    Attack = 1250,
-                    PhysicResist = 1000,
-                    MagicResist = 1000,
+                    Attack = 500,
+                    PhysicResist = 6000,
+                    MagicResist = 5000,
                     Speed = 100,
                     Capacity = 200,
                     Consumption = 250
@@ -1069,7 +1088,8 @@ namespace ITI.SkyLord
                     UnitStatistics = prismaticGolemStatistics,
                     Requirements = CreateRequirementList( prismaticGolemRequirement, prismaticGolemRequirement2, prismaticGolemRequirement3, prismaticGolemRequirement4 ),
                     Duration = 2600,
-                    IsModel = true
+                    IsModel = true,
+                    Description = "Seuls les plus puissants mages peuvent créer et contrôler cette machine fantastique, faite de lumière solidifiée, elle est presque indestructible."
                 };
                 context.Add( prismaticGolem );
 
@@ -1077,49 +1097,49 @@ namespace ITI.SkyLord
             }
         }
 
-        //public void SeedCanoe()
-        //{
-        //    using ( SetupContext context = new SetupContext() )
-        //    {
-        //        // Set up Cost
+        public void SeedCanoe()
+        {
+            using ( SetupContext context = new SetupContext() )
+            {
+                // Set up Cost
 
-        //        Ressource canoeCost = new Ressource { Wood = 500, Metal = 250, Cristal = 0, Magic = 0 };
-        //        context.Add( canoeCost );
+                Ressource canoeCost = new Ressource { Wood = 500, Metal = 250, Cristal = 0, Magic = 0 };
+                context.Add( canoeCost );
 
-        //        // Set up Statistics
-        //        UnitStatistics canoeStatistics = new UnitStatistics
-        //        {
-        //            Attack = 5,
-        //            PhysicResist = 100,
-        //            MagicResist = 100,
-        //            Speed = 125,
-        //            Capacity = 5000,
-        //            Consumption = 25
-        //        };
-        //        context.Add( canoeStatistics );
+                // Set up Statistics
+                UnitStatistics canoeStatistics = new UnitStatistics
+                {
+                    Attack = 5,
+                    PhysicResist = 100,
+                    MagicResist = 100,
+                    Speed = 125,
+                    Capacity = 5000,
+                    Consumption = 25
+                };
+                context.Add( canoeStatistics );
 
-        //        // Set up Requirements
-        //        Requirement canoeRequirement = AddBuildingRequirement( context, BuildingName.tower, 2 );
-        //        Requirement canoeRequirement2 = AddBuildingRequirement( context, BuildingName.invocation, 1 );
+                // Set up Requirements
+                Requirement canoeRequirement = AddBuildingRequirement( context, BuildingName.tower, 2 );
+                Requirement canoeRequirement2 = AddBuildingRequirement( context, BuildingName.invocation, 1 );
 
-        //        // Add Unit
-        //        Unit canoe = new Unit
-        //        {
-        //            Name = "Pirogue",
-        //            UnitName = UnitName.canoe,
-        //            UnitType = UnitType.mecanical,
-        //            UnitDamageType = UnitDamageType.physical,
-        //            UnitCost = canoeCost,
-        //            UnitStatistics = canoeStatistics,
-        //            Requirements = CreateRequirementList( canoeRequirement, canoeRequirement2 ),
-        //            Duration = 120,
-        //            IsModel = true
-        //        };
-        //        context.Add( canoe );
+                // Add Unit
+                Unit canoe = new Unit
+                {
+                    Name = "Pirogue",
+                    UnitName = UnitName.canoe,
+                    UnitType = UnitType.mecanical,
+                    UnitDamageType = UnitDamageType.physical,
+                    UnitCost = canoeCost,
+                    UnitStatistics = canoeStatistics,
+                    Requirements = CreateRequirementList( canoeRequirement, canoeRequirement2 ),
+                    Duration = 120,
+                    IsModel = true
+                };
+                context.Add( canoe );
 
-        //        context.SaveChanges();
-        //    }
-        //}
+                context.SaveChanges();
+            }
+        }
 
         #endregion
 
@@ -1161,7 +1181,8 @@ namespace ITI.SkyLord
                     UnitStatistics = carrierStatistics,
                     Requirements = CreateRequirementList( carrierRequirement, carrierRequirement2 ),
                     Duration = 250,
-                    IsModel = true
+                    IsModel = true,
+                    Description = "Fait pour transporter des ressources en grandes quantité, cette grande montgolfière n'est pas faire pour le combat et doit être protégé."
                 };
                 context.Add( carrier );
 
@@ -1190,8 +1211,7 @@ namespace ITI.SkyLord
                 context.Add( apprenticeStatistics );
 
                 // Set up Requirements
-                // /!\ POUR LES TESTS
-               // Requirement apprenticeRequirement = AddTechnologyRequirement( context, TechnologyName.conquest, 2 );
+                Requirement apprenticeRequirement = AddTechnologyRequirement( context, TechnologyName.conquest, 2 );
 
                 // Add Unit
                 Unit apprentice = new Unit
@@ -1202,10 +1222,10 @@ namespace ITI.SkyLord
                     UnitDamageType = UnitDamageType.physical,
                     UnitCost = apprenticeCost,
                     UnitStatistics = apprenticeStatistics,
-                   // Requirements = CreateRequirementList( apprenticeRequirement ),
-                    //Duration = 600,
-                    Duration = 10,
-                    IsModel = true
+                    Requirements = CreateRequirementList( apprenticeRequirement ),
+                    Duration = 600,
+                    IsModel = true,
+                    Description = "L'apprenti est formé non pas pour le combat, mais pour construire sa propre tour de mage et prendre le contrôle d'une nouvelle île. Il est faible en attaque et en défense, il doit donc être protégé."
                 };
                 context.Add( apprentice );
 

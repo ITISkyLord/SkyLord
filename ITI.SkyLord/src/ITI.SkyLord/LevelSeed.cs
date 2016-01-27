@@ -61,7 +61,7 @@ namespace ITI.SkyLord
         {
             SeedAcademyLevels();
             SeedBarrackLevels();
-            SeedCacheLevels();
+            //SeedCacheLevels();
             SeedCristalLevels();
             SeedForgeLevels();
             SeedInvocationLevels();
@@ -545,73 +545,73 @@ namespace ITI.SkyLord
             }
         }
 
-        public void SeedCacheLevels()
-        {
-            using ( SetupContext context = new SetupContext() )
-            {
-                // Add cacheCosts
-                Ressource cacheLevel1Cost = AddRessource( context, 100, 100, 50, 0 );
-                Ressource cacheLevel2Cost = AddMiltipliedRessource( context, cacheLevel1Cost, 2.5 );
-                Ressource cacheLevel3Cost = AddMiltipliedRessource( context, cacheLevel2Cost, 2.5 );
-                Ressource cacheLevel4Cost = AddMiltipliedRessource( context, cacheLevel3Cost, 2.75 );
-                Ressource cacheLevel5Cost = AddRessource( context, 1718, 1718, 859, 259 );
-                Ressource cacheLevel6Cost = AddMiltipliedRessource( context, cacheLevel5Cost, 2.75 );
-                Ressource cacheLevel7Cost = AddMiltipliedRessource( context, cacheLevel6Cost, 3 );
-                Ressource cacheLevel8Cost = AddMiltipliedRessource( context, cacheLevel7Cost, 3 );
-                Ressource cacheLevel9Cost = AddMiltipliedRessource( context, cacheLevel8Cost, 3.25 );
-                Ressource cacheLevel10Cost = AddMiltipliedRessource( context, cacheLevel9Cost, 3.5 );
+        //public void SeedCacheLevels()
+        //{
+        //    using ( SetupContext context = new SetupContext() )
+        //    {
+        //        // Add cacheCosts
+        //        Ressource cacheLevel1Cost = AddRessource( context, 100, 100, 50, 0 );
+        //        Ressource cacheLevel2Cost = AddMiltipliedRessource( context, cacheLevel1Cost, 2.5 );
+        //        Ressource cacheLevel3Cost = AddMiltipliedRessource( context, cacheLevel2Cost, 2.5 );
+        //        Ressource cacheLevel4Cost = AddMiltipliedRessource( context, cacheLevel3Cost, 2.75 );
+        //        Ressource cacheLevel5Cost = AddRessource( context, 1718, 1718, 859, 259 );
+        //        Ressource cacheLevel6Cost = AddMiltipliedRessource( context, cacheLevel5Cost, 2.75 );
+        //        Ressource cacheLevel7Cost = AddMiltipliedRessource( context, cacheLevel6Cost, 3 );
+        //        Ressource cacheLevel8Cost = AddMiltipliedRessource( context, cacheLevel7Cost, 3 );
+        //        Ressource cacheLevel9Cost = AddMiltipliedRessource( context, cacheLevel8Cost, 3.25 );
+        //        Ressource cacheLevel10Cost = AddMiltipliedRessource( context, cacheLevel9Cost, 3.5 );
 
-                // Add cacheRequirements
-                Requirement cacheLevel1Requirement = AddBuildingRequirement( context, BuildingName.tower, 3 );
-                Requirement cacheLevel2Requirement = AddBuildingRequirement( context, BuildingName.cache, 1 );
-                Requirement cacheLevel3Requirement = AddBuildingRequirement( context, BuildingName.cache, 2 );
-                Requirement cacheLevel4Requirement = AddBuildingRequirement( context, BuildingName.cache, 3 );
-                Requirement cacheLevel5Requirement = AddBuildingRequirement( context, BuildingName.cache, 4 );
-                Requirement cacheLevel6Requirement = AddBuildingRequirement( context, BuildingName.cache, 5 );
-                Requirement cacheLevel7Requirement = AddBuildingRequirement( context, BuildingName.cache, 6 );
-                Requirement cacheLevel8Requirement = AddBuildingRequirement( context, BuildingName.cache, 7 );
-                Requirement cacheLevel9Requirement = AddBuildingRequirement( context, BuildingName.cache, 8 );
-                Requirement cacheLevel10Requirement = AddBuildingRequirement( context, BuildingName.cache, 9 );
+        //        // Add cacheRequirements
+        //        Requirement cacheLevel1Requirement = AddBuildingRequirement( context, BuildingName.tower, 3 );
+        //        Requirement cacheLevel2Requirement = AddBuildingRequirement( context, BuildingName.cache, 1 );
+        //        Requirement cacheLevel3Requirement = AddBuildingRequirement( context, BuildingName.cache, 2 );
+        //        Requirement cacheLevel4Requirement = AddBuildingRequirement( context, BuildingName.cache, 3 );
+        //        Requirement cacheLevel5Requirement = AddBuildingRequirement( context, BuildingName.cache, 4 );
+        //        Requirement cacheLevel6Requirement = AddBuildingRequirement( context, BuildingName.cache, 5 );
+        //        Requirement cacheLevel7Requirement = AddBuildingRequirement( context, BuildingName.cache, 6 );
+        //        Requirement cacheLevel8Requirement = AddBuildingRequirement( context, BuildingName.cache, 7 );
+        //        Requirement cacheLevel9Requirement = AddBuildingRequirement( context, BuildingName.cache, 8 );
+        //        Requirement cacheLevel10Requirement = AddBuildingRequirement( context, BuildingName.cache, 9 );
 
-                //Add cacheSize Bonuses 
-                BonusOnBuilding unitDurationBonusLevel1 = AddBonus( context, BonusType.cacheSize, BuildingName.cache, 200 );
-                BonusOnBuilding unitDurationBonusLevel2 = AddBonus( context, BonusType.cacheSize, BuildingName.cache, 500 );
-                BonusOnBuilding unitDurationBonusLevel3 = AddBonus( context, BonusType.cacheSize, BuildingName.cache, 1000 );
-                BonusOnBuilding unitDurationBonusLevel4 = AddBonus( context, BonusType.cacheSize, BuildingName.cache, 2500 );
-                BonusOnBuilding unitDurationBonusLevel5 = AddBonus( context, BonusType.cacheSize, BuildingName.cache, 5000 );
-                BonusOnBuilding unitDurationBonusLevel6 = AddBonus( context, BonusType.cacheSize, BuildingName.cache, 10000 );
-                BonusOnBuilding unitDurationBonusLevel7 = AddBonus( context, BonusType.cacheSize, BuildingName.cache, 25000 );
-                BonusOnBuilding unitDurationBonusLevel8 = AddBonus( context, BonusType.cacheSize, BuildingName.cache, 50000 );
+        //        //Add cacheSize Bonuses 
+        //        BonusOnBuilding unitDurationBonusLevel1 = AddBonus( context, BonusType.cacheSize, BuildingName.cache, 200 );
+        //        BonusOnBuilding unitDurationBonusLevel2 = AddBonus( context, BonusType.cacheSize, BuildingName.cache, 500 );
+        //        BonusOnBuilding unitDurationBonusLevel3 = AddBonus( context, BonusType.cacheSize, BuildingName.cache, 1000 );
+        //        BonusOnBuilding unitDurationBonusLevel4 = AddBonus( context, BonusType.cacheSize, BuildingName.cache, 2500 );
+        //        BonusOnBuilding unitDurationBonusLevel5 = AddBonus( context, BonusType.cacheSize, BuildingName.cache, 5000 );
+        //        BonusOnBuilding unitDurationBonusLevel6 = AddBonus( context, BonusType.cacheSize, BuildingName.cache, 10000 );
+        //        BonusOnBuilding unitDurationBonusLevel7 = AddBonus( context, BonusType.cacheSize, BuildingName.cache, 25000 );
+        //        BonusOnBuilding unitDurationBonusLevel8 = AddBonus( context, BonusType.cacheSize, BuildingName.cache, 50000 );
 
-                // Set up Levels
-                BuildingLevel cacheLevel1 = AddBuildingLevel( context, BuildingName.cache, 1, cacheLevel1Cost, 30,
-                    CreateRequirementList( cacheLevel1Requirement ),
-                    CreateBonusList( unitDurationBonusLevel1 ) );
-                BuildingLevel cacheLevel2 = AddBuildingLevel( context, BuildingName.cache, 2, cacheLevel2Cost, (int)( cacheLevel1.Duration * 2.5 ),
-                    CreateRequirementList( cacheLevel2Requirement ),
-                    CreateBonusList( unitDurationBonusLevel2 ) );
-                BuildingLevel cacheLevel3 = AddBuildingLevel( context, BuildingName.cache, 3, cacheLevel3Cost, (int)( cacheLevel2.Duration * 2.5 ),
-                    CreateRequirementList( cacheLevel3Requirement ),
-                    CreateBonusList( unitDurationBonusLevel3 ) );
-                BuildingLevel cacheLevel4 = AddBuildingLevel( context, BuildingName.cache, 4, cacheLevel3Cost, (int)( cacheLevel3.Duration * 2.5 ),
-                    CreateRequirementList( cacheLevel4Requirement ),
-                    CreateBonusList( unitDurationBonusLevel4 ) );
-                BuildingLevel cacheLevel5 = AddBuildingLevel( context, BuildingName.cache, 5, cacheLevel5Cost, (int)( cacheLevel4.Duration * 2.75 ),
-                    CreateRequirementList( cacheLevel5Requirement ),
-                    CreateBonusList( unitDurationBonusLevel5 ) );
-                BuildingLevel cacheLevel6 = AddBuildingLevel( context, BuildingName.cache, 6, cacheLevel6Cost, (int)( cacheLevel5.Duration * 2.75 ),
-                    CreateRequirementList( cacheLevel6Requirement ),
-                    CreateBonusList( unitDurationBonusLevel6 ) );
-                BuildingLevel cacheLevel7 = AddBuildingLevel( context, BuildingName.cache, 7, cacheLevel7Cost, (int)( cacheLevel6.Duration * 2.75 ),
-                    CreateRequirementList( cacheLevel7Requirement ),
-                    CreateBonusList( unitDurationBonusLevel7 ) );
-                BuildingLevel cacheLevel8 = AddBuildingLevel( context, BuildingName.cache, 8, cacheLevel8Cost, (int)( cacheLevel7.Duration * 3.0 ),
-                    CreateRequirementList( cacheLevel8Requirement ),
-                    CreateBonusList( unitDurationBonusLevel8 ) );
+        //        // Set up Levels
+        //        BuildingLevel cacheLevel1 = AddBuildingLevel( context, BuildingName.cache, 1, cacheLevel1Cost, 30,
+        //            CreateRequirementList( cacheLevel1Requirement ),
+        //            CreateBonusList( unitDurationBonusLevel1 ) );
+        //        BuildingLevel cacheLevel2 = AddBuildingLevel( context, BuildingName.cache, 2, cacheLevel2Cost, (int)( cacheLevel1.Duration * 2.5 ),
+        //            CreateRequirementList( cacheLevel2Requirement ),
+        //            CreateBonusList( unitDurationBonusLevel2 ) );
+        //        BuildingLevel cacheLevel3 = AddBuildingLevel( context, BuildingName.cache, 3, cacheLevel3Cost, (int)( cacheLevel2.Duration * 2.5 ),
+        //            CreateRequirementList( cacheLevel3Requirement ),
+        //            CreateBonusList( unitDurationBonusLevel3 ) );
+        //        BuildingLevel cacheLevel4 = AddBuildingLevel( context, BuildingName.cache, 4, cacheLevel3Cost, (int)( cacheLevel3.Duration * 2.5 ),
+        //            CreateRequirementList( cacheLevel4Requirement ),
+        //            CreateBonusList( unitDurationBonusLevel4 ) );
+        //        BuildingLevel cacheLevel5 = AddBuildingLevel( context, BuildingName.cache, 5, cacheLevel5Cost, (int)( cacheLevel4.Duration * 2.75 ),
+        //            CreateRequirementList( cacheLevel5Requirement ),
+        //            CreateBonusList( unitDurationBonusLevel5 ) );
+        //        BuildingLevel cacheLevel6 = AddBuildingLevel( context, BuildingName.cache, 6, cacheLevel6Cost, (int)( cacheLevel5.Duration * 2.75 ),
+        //            CreateRequirementList( cacheLevel6Requirement ),
+        //            CreateBonusList( unitDurationBonusLevel6 ) );
+        //        BuildingLevel cacheLevel7 = AddBuildingLevel( context, BuildingName.cache, 7, cacheLevel7Cost, (int)( cacheLevel6.Duration * 2.75 ),
+        //            CreateRequirementList( cacheLevel7Requirement ),
+        //            CreateBonusList( unitDurationBonusLevel7 ) );
+        //        BuildingLevel cacheLevel8 = AddBuildingLevel( context, BuildingName.cache, 8, cacheLevel8Cost, (int)( cacheLevel7.Duration * 3.0 ),
+        //            CreateRequirementList( cacheLevel8Requirement ),
+        //            CreateBonusList( unitDurationBonusLevel8 ) );
 
-                context.SaveChanges();
-            }
-        }
+        //        context.SaveChanges();
+        //    }
+        //}
 
         public void SeedWoodLevels()
         {

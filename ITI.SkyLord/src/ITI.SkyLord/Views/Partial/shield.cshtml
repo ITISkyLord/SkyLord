@@ -8,7 +8,9 @@
 
 
 @{
-    Write(Html.Partial("~/Views/Partial/DescriptionPartial.cshtml", new DescriptionPartial { Description = "Je suis un woodField", FullNameOfImage = "shield.gif" }));
+    Write(Html.Partial("~/Views/Partial/DescriptionPartial.cshtml", new DescriptionPartial {
+        Description = @BuildingManager.StaticBuildingNameToDescription( Model.CurrentBuilding.BuildingName ),
+        FullNameOfImage = "shield.gif" }));
     Write(Html.Partial("~/Views/Partial/LevelUpBuilding.cshtml", Model));
 
     ShieldLevel building = (ShieldLevel)Model.CurrentBuilding.Level;
