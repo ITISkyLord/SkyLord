@@ -118,6 +118,7 @@ namespace ITI.SkyLord
             {
                 ctx.Ressources.Add( _pillagedRessources );
                 ae.PillagedRessources = _pillagedRessources;
+                RessourceManager.RemoveRessource( _loosingArmy.Island.AllRessources, _pillagedRessources );
                 ctx.SaveChanges();
             }
 

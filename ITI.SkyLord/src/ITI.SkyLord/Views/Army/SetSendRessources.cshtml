@@ -10,9 +10,6 @@
 <div class="armyContainer">
     <div class="army">
         <div class="army-body">
-            <div class="army-head">
-                Transporteurs
-            </div>
 
             <div class="army-head">
                 Planification d'un envoi de ressources
@@ -23,6 +20,8 @@
                     <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
                     @*<p>Chacun de vos transporteurs peut transporter @Model.CapacityOfCarrier ressources.</p>*@
                     @* Tableau pour voir nos unité et voir qui l'on envoi *@
+                    <p>Un transporteur peut transporter @Model.CapacityOfCarrier ressources.</p>
+                    
                     <div class="numberArmy">
                         <table class="table table-hover">
                             <thead>
@@ -42,8 +41,8 @@
                             </tbody>
                         </table>
                     </div>
-                    }
-                    <table>
+                    
+                    <table class="table">
                         <tr>
                             <td>Bois</td>
                             <td>Métal</td>

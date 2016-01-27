@@ -6777,6 +6777,11 @@ button.close {
   color: whitesmoke;
   text-decoration: none;
 }
+.armyContainer .army .army-body .ressourcesTable {
+  border: 2px solid black;
+  width: 100%;
+  max-width: 100%;
+}
 .armyContainer .army .army-body .numberArmy input[type=number] {
   font-size: 1em;
   width: 2.5em;

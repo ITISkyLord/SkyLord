@@ -90,7 +90,7 @@
                             <form asp-controller="Message" asp-action="Answer" asp-route-islandId="@Model.Layout.IslandId" asp-route-messageId="@Model.Message.MessageId" role="form" method="post">
                                 <input type="hidden" asp-for="@Model.FromId" value="@Model.FromId" />
                                 <div class="form-group">
-                                    <span class="glyphicon glyphicon-user"></span><input type="text" class="form-control" asp-for="ObjectOfSender" id="object" value="A  @Model.Message.Sender.Mail" />
+                                    <span class="glyphicon glyphicon-user"></span><input type="text" class="form-control" asp-for="ObjectOfSender" id="object" value="À  @Model.Message.Sender.Mail" />
                                 </div>
 
                                 <br />
