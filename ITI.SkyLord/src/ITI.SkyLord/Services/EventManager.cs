@@ -72,7 +72,7 @@ namespace ITI.SkyLord
                 Army = army,
                 ArmyIdd = army.ArmyId,
                 ArmyMovement = am,
-                BegginningDate = begginningDate,
+                BegginningDate = DateTime.Now,
                 EndingDate = DateTime.Now.AddSeconds( secondsToGo ),
                 Destination = destination,
                 DestinationIdd = destination.IslandId,
@@ -103,7 +103,7 @@ namespace ITI.SkyLord
             {
                 EventType = EventDiscrimator.BuildingEvent,
                 BuildingToBuild = buildingName,
-                BegginningDate = begginningDate,
+                BegginningDate = DateTime.Now,
                 // Get the duration affected by bonuses
                 EndingDate = DateTime.Now.AddSeconds( _allManager.BonusManager.GetModifiedDuration( buildingLevel, island.Owner.PlayerId, island.IslandId ) ),
                 Done = false,
@@ -121,7 +121,7 @@ namespace ITI.SkyLord
             {
                 EventType = EventDiscrimator.UpgradeEvent,
                 BuildingToUpgrade = building,
-                BegginningDate = begginningDate,
+                BegginningDate = DateTime.Now,
                 EndingDate = DateTime.Now.AddSeconds( _allManager.BonusManager.GetModifiedDuration( building.Level, island.Owner.PlayerId, island.IslandId ) ),
                 Done = false,
                 Island = island
@@ -154,9 +154,19 @@ namespace ITI.SkyLord
             {
                 if ( _unitEvents.Count == 0 )
                 {
-                    lastEndingDate = _context.UnitEvents.Where( u => u.Island.Equals( island ) && u.Done == false )
-                                .OrderByDescending( d => d.EndingDate ).Select( d => d.EndingDate )
-                                .FirstOrDefault();
+                    UnitEvent unitEvent = _context.UnitEvents.Where( u => u.Island.Equals( island ) && u.Done == false )
+                               .OrderByDescending( d => d.EndingDate ).FirstOrDefault();
+
+                    if( unitEvent != null )
+                    {
+                        lastEndingDate = unitEvent.EndingDate;
+                    }
+
+                    //lastEndingDate = _context.UnitEvents.Where( u => u.Island.Equals( island ) && u.Done == false )
+                    //            .OrderByDescending( d => d.EndingDate ).Select( d => d.EndingDate )
+                    //            .FirstOrDefault();
+
+                    //lastEndingDate = DateTime.Now;
                 }
                 else
                 {

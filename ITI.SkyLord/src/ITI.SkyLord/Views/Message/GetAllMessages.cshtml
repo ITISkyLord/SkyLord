@@ -114,7 +114,7 @@
                                 @foreach (Message message in Model.AllMessages.Where(u => !u.isCombatReport))
                                 {
                                     <tr>
-                                        <td><a asp-controller="Profil" id="coreMessage" asp-action="ProfilOfAPlayer" asp-route-playerId="@message.Sender.PlayerId" asp-route-islandId="@Model.Layout.IslandId">@message.Sender.Name</a></td>
+                                        <td><a asp-action="ProfilOfOtherPlayer" asp-controller="Profil" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId" asp-route-otherPlayerId="@message.Sender.PlayerId">@message.Sender.Name</a></td>
 
                                         @if (message.Read)
                                         {
