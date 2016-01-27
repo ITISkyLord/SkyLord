@@ -133,7 +133,7 @@ namespace ITI.SkyLord.Models.Entity_Framework.Controllers
                     p.World = SetupContext.GetWorld();
                     p.Name = model.registerViewModel.Pseudo;
                     p.Mail = model.registerViewModel.Email;
-                    p.Password = model.registerViewModel.Password;
+                    //p.Password = model.registerViewModel.Password;
                     //p.Name = model.Pseudo;
                     //p.Mail = model.Email;
                     //p.Password = model.Password;
