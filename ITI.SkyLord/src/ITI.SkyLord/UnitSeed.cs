@@ -49,7 +49,7 @@ namespace ITI.SkyLord
         {
             //SeedCanoe();
             SeedFlameThrower();
-            SeedIronGolem();
+            //SeedIronGolem();
             SeedLivingArmor();
             SeedPrismaticGolem();
             SeedSaboteur();
@@ -328,7 +328,7 @@ namespace ITI.SkyLord
                 // Add Unit
                 Unit gobelin = new Unit
                 {
-                    Name = "Gobelin",
+                    Name = "Squelette",
                     UnitName = UnitName.gobelin,
                     UnitType = UnitType.monster,
                     UnitDamageType = UnitDamageType.physical,
@@ -337,7 +337,8 @@ namespace ITI.SkyLord
                     Requirements = CreateRequirementList( gobelinRequirement, gobelinRequirement2 ),
                     Duration = 50,
                     IsModel = true,
-                    Description = "Cette petite créature est stupide, méchante et agressive, surtout stupide, ce qui les rend facile à contrôler. Bons marché et rapides, c'est la chair à canon idéale."
+                    //Description = "Cette petite créature est stupide, méchante et agressive, surtout stupide, ce qui les rend facile à contrôler. Bons marché et rapides, c'est la chair à canon idéale."
+                    Description = "Cette créature animée par magie est stupide, méchante et agressive, surtout stupide, ce qui les rend facile à contrôler. Bons marché et rapides, ce sont des os à canon idéaux."
                 };
                 context.Add( gobelin );
 
@@ -1003,51 +1004,51 @@ namespace ITI.SkyLord
             }
         }
 
-        public void SeedIronGolem()
-        {
-            using ( SetupContext context = new SetupContext() )
-            {
-                // Set up Cost
+        //public void SeedIronGolem()
+        //{
+        //    using ( SetupContext context = new SetupContext() )
+        //    {
+        //        // Set up Cost
 
-                Ressource ironGolemCost = new Ressource { Wood = 5000, Metal = 7500, Cristal = 2500, Magic = 1000 };
-                context.Add( ironGolemCost );
+        //        Ressource ironGolemCost = new Ressource { Wood = 5000, Metal = 7500, Cristal = 2500, Magic = 1000 };
+        //        context.Add( ironGolemCost );
 
-                // Set up Statistics
-                UnitStatistics ironGolemStatistics = new UnitStatistics
-                {
-                    Attack = 150,
-                    PhysicResist = 1000,
-                    MagicResist = 1000,
-                    Speed = 25,
-                    Capacity = 25,
-                    Consumption = 300
-                };
-                context.Add( ironGolemStatistics );
+        //        // Set up Statistics
+        //        UnitStatistics ironGolemStatistics = new UnitStatistics
+        //        {
+        //            Attack = 150,
+        //            PhysicResist = 1000,
+        //            MagicResist = 1000,
+        //            Speed = 25,
+        //            Capacity = 25,
+        //            Consumption = 300
+        //        };
+        //        context.Add( ironGolemStatistics );
 
-                // Set up Requirements
-                Requirement ironGolemRequirement = AddBuildingRequirement( context, BuildingName.forge, 7 );
-                Requirement ironGolemRequirement2 = AddTechnologyRequirement( context, TechnologyName.plating, 8 );
-                Requirement ironGolemRequirement3 = AddBuildingRequirement( context, BuildingName.invocation, 1 );
+        //        // Set up Requirements
+        //        Requirement ironGolemRequirement = AddBuildingRequirement( context, BuildingName.forge, 7 );
+        //        Requirement ironGolemRequirement2 = AddTechnologyRequirement( context, TechnologyName.plating, 8 );
+        //        Requirement ironGolemRequirement3 = AddBuildingRequirement( context, BuildingName.invocation, 1 );
 
-                // Add Unit
-                Unit ironGolem = new Unit
-                {
-                    Name = "Golem de fer",
-                    UnitName = UnitName.ironGolem,
-                    UnitType = UnitType.mecanical,
-                    UnitDamageType = UnitDamageType.physical,
-                    UnitCost = ironGolemCost,
-                    UnitStatistics = ironGolemStatistics,
-                    Requirements = CreateRequirementList( ironGolemRequirement, ironGolemRequirement2, ironGolemRequirement3 ),
-                    Duration = 1200,
-                    IsModel = true,
-                    Description = "Le golem de fer est une construction de métal brute qui résiste à presque tout, ce qui la rend très bonne en défense."
-                };
-                context.Add( ironGolem );
+        //        // Add Unit
+        //        Unit ironGolem = new Unit
+        //        {
+        //            Name = "Golem de fer",
+        //            UnitName = UnitName.ironGolem,
+        //            UnitType = UnitType.mecanical,
+        //            UnitDamageType = UnitDamageType.physical,
+        //            UnitCost = ironGolemCost,
+        //            UnitStatistics = ironGolemStatistics,
+        //            Requirements = CreateRequirementList( ironGolemRequirement, ironGolemRequirement2, ironGolemRequirement3 ),
+        //            Duration = 1200,
+        //            IsModel = true,
+        //            Description = "Le golem de fer est une construction de métal brute qui résiste à presque tout, ce qui la rend très bonne en défense."
+        //        };
+        //        context.Add( ironGolem );
 
-                context.SaveChanges();
-            }
-        }
+        //        context.SaveChanges();
+        //    }
+        //}
 
         public void SeedPrismaticGolem()
         {
@@ -1096,49 +1097,49 @@ namespace ITI.SkyLord
             }
         }
 
-        //public void SeedCanoe()
-        //{
-        //    using ( SetupContext context = new SetupContext() )
-        //    {
-        //        // Set up Cost
+        public void SeedCanoe()
+        {
+            using ( SetupContext context = new SetupContext() )
+            {
+                // Set up Cost
 
-        //        Ressource canoeCost = new Ressource { Wood = 500, Metal = 250, Cristal = 0, Magic = 0 };
-        //        context.Add( canoeCost );
+                Ressource canoeCost = new Ressource { Wood = 500, Metal = 250, Cristal = 0, Magic = 0 };
+                context.Add( canoeCost );
 
-        //        // Set up Statistics
-        //        UnitStatistics canoeStatistics = new UnitStatistics
-        //        {
-        //            Attack = 5,
-        //            PhysicResist = 100,
-        //            MagicResist = 100,
-        //            Speed = 125,
-        //            Capacity = 5000,
-        //            Consumption = 25
-        //        };
-        //        context.Add( canoeStatistics );
+                // Set up Statistics
+                UnitStatistics canoeStatistics = new UnitStatistics
+                {
+                    Attack = 5,
+                    PhysicResist = 100,
+                    MagicResist = 100,
+                    Speed = 125,
+                    Capacity = 5000,
+                    Consumption = 25
+                };
+                context.Add( canoeStatistics );
 
-        //        // Set up Requirements
-        //        Requirement canoeRequirement = AddBuildingRequirement( context, BuildingName.tower, 2 );
-        //        Requirement canoeRequirement2 = AddBuildingRequirement( context, BuildingName.invocation, 1 );
+                // Set up Requirements
+                Requirement canoeRequirement = AddBuildingRequirement( context, BuildingName.tower, 2 );
+                Requirement canoeRequirement2 = AddBuildingRequirement( context, BuildingName.invocation, 1 );
 
-        //        // Add Unit
-        //        Unit canoe = new Unit
-        //        {
-        //            Name = "Pirogue",
-        //            UnitName = UnitName.canoe,
-        //            UnitType = UnitType.mecanical,
-        //            UnitDamageType = UnitDamageType.physical,
-        //            UnitCost = canoeCost,
-        //            UnitStatistics = canoeStatistics,
-        //            Requirements = CreateRequirementList( canoeRequirement, canoeRequirement2 ),
-        //            Duration = 120,
-        //            IsModel = true
-        //        };
-        //        context.Add( canoe );
+                // Add Unit
+                Unit canoe = new Unit
+                {
+                    Name = "Pirogue",
+                    UnitName = UnitName.canoe,
+                    UnitType = UnitType.mecanical,
+                    UnitDamageType = UnitDamageType.physical,
+                    UnitCost = canoeCost,
+                    UnitStatistics = canoeStatistics,
+                    Requirements = CreateRequirementList( canoeRequirement, canoeRequirement2 ),
+                    Duration = 120,
+                    IsModel = true
+                };
+                context.Add( canoe );
 
-        //        context.SaveChanges();
-        //    }
-        //}
+                context.SaveChanges();
+            }
+        }
 
         #endregion
 
@@ -1221,9 +1222,8 @@ namespace ITI.SkyLord
                     UnitDamageType = UnitDamageType.physical,
                     UnitCost = apprenticeCost,
                     UnitStatistics = apprenticeStatistics,
-                   // Requirements = CreateRequirementList( apprenticeRequirement ),
-                    //Duration = 600,
-                    Duration = 10,
+                    Requirements = CreateRequirementList( apprenticeRequirement ),
+                    Duration = 600,
                     IsModel = true,
                     Description = "L'apprenti est formé non pas pour le combat, mais pour construire sa propre tour de mage et prendre le contrôle d'une nouvelle île. Il est faible en attaque et en défense, il doit donc être protégé."
                 };
