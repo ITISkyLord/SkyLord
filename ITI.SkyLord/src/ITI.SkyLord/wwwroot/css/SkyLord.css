@@ -7201,6 +7201,7 @@ footer li a:hover {
   }
 }
 #degage .production .head {
+  margin-top: 20px;
   text-align: center;
   color: whitesmoke;
   font-weight: bold;
@@ -7222,7 +7223,7 @@ footer li a:hover {
   text-align: center;
 }
 #degage .production .body-prod-txt {
-  padding: 10px;
+  padding: 5px;
 }
 #UI {
   position: relative;
