@@ -19,9 +19,6 @@ namespace ITI.SkyLord
 
         [DataType(DataType.EmailAddress)]
         public string Mail { get; set; }
-
-        [DataType(DataType.Password)]
-        public string Password { get; set; }
        
         public Profil Profil { get; set; }
 
@@ -34,5 +31,7 @@ namespace ITI.SkyLord
         public World World { get; set; }
         public int MaxIsland { get; set; }
         public User_Player UserPlayer { get; set; }
+        public int NumberOfVictory { get; set; }
+        public int RessourcePillaged { get; set; }
     }
 }

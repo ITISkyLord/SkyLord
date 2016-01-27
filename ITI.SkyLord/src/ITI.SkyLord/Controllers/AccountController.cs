@@ -85,8 +85,10 @@ namespace ITI.SkyLord.Models.Entity_Framework.Controllers
                 else
                 {
                     ModelState.AddModelError( string.Empty, "Invalid login attempt." );
-                    return View( model );
-                    //return RedirectToAction("Index", "Home");
+
+                    model.Errors = new Dictionary<string, string>();
+                    model.Errors.Add( "LoginError", "Le login ou le mot de passe est incorrect." );
+                    return RedirectToAction( "Index", "Home", new { error = true } );
                 }
             }
 
@@ -133,7 +135,7 @@ namespace ITI.SkyLord.Models.Entity_Framework.Controllers
                     p.World = SetupContext.GetWorld();
                     p.Name = model.registerViewModel.Pseudo;
                     p.Mail = model.registerViewModel.Email;
-                    p.Password = model.registerViewModel.Password;
+                    //p.Password = model.registerViewModel.Password;
                     //p.Name = model.Pseudo;
                     //p.Mail = model.Email;
                     //p.Password = model.Password;

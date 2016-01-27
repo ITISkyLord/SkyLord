@@ -10,6 +10,7 @@ namespace ITI.SkyLord.ViewModel.Account
     {
         public RegisterViewModel registerViewModel {get;set;}
         public LoginViewModel loginViewModel {get;set;}
+        public Dictionary<string, string> Errors { get; set; }
 
     }
 }
