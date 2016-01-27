@@ -83,7 +83,7 @@
                 @foreach (Island island in Model.Layout.AllIslands)
                 {
                     string selector = island.IslandId == Model.Layout.IslandId ? "CurrentIsland" : "OtherIsland";
-                    string islandName = island.IsCapital ? "Capitale" : island.Name;
+                    string islandName = island.Name;
 
                     <div class="@selector"><a asp-controller="Island" asp-action="SeeMyIsland" asp-route-islandId="@island.IslandId"> @islandName [@island.Coordinates.X, @island.Coordinates.Y]</a></div>
                 }
