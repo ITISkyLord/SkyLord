@@ -7187,7 +7187,6 @@ footer li a:hover {
   background-repeat: no-repeat !important;
   background-size: 100% 100% !important;
   overflow: auto;
-  /*margin-top : 200px;*/
 }
 #degage .production > .navbar-header,
 #degage .production > .navbar-collapse {
@@ -7200,6 +7199,31 @@ footer li a:hover {
     margin-right: 0;
     margin-left: 0;
   }
+}
+#degage .production .head {
+  margin-top: 20px;
+  text-align: center;
+  color: whitesmoke;
+  font-weight: bold;
+  font-size: 25px;
+  background-image: url("../images/Site/site_haut2low.jpg");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  padding: 10px;
+  border-bottom: 1px solid transparent;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+#degage .production .body-prod {
+  color: #825847;
+  font-weight: bold;
+  font-size: 13px;
+  text-align: center;
+}
+#degage .production .body-prod-txt {
+  padding: 5px;
 }
 #UI {
   position: relative;
