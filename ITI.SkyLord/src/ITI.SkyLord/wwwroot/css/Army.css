@@ -6727,8 +6727,10 @@ button.close {
 .armyContainer {
   border: 1px solid #825847;
   border-radius: 0;
+  padding-bottom: 10px;
+  padding-left: 10px;
   transition: box-shadow 0.5s;
-  background-image: url("../images/Site/site_ressource.png");
+  background-image: url("../images/Site/site_ressourcelow.jpg");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   background-position: center;
@@ -6737,10 +6739,11 @@ button.close {
 }
 .armyContainer .army .army-head {
   text-align: center;
+  margin-left: -8px;
   color: whitesmoke;
   font-weight: bold;
   font-size: 25px;
-  background-image: url("../images/Site/site_haut2.png");
+  background-image: url("../images/Site/site_haut2low.jpg");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   padding: 5px;

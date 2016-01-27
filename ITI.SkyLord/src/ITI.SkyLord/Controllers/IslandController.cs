@@ -225,8 +225,8 @@ namespace ITI.SkyLord.Controllers
         {
             SeeOtherIslandViewModel model = new SeeOtherIslandViewModel();
             model.IslandIdOfOther = islandIdOfOtherPlayer;
-            model.targetIsland = SetupContext.Islands.Include( i => i.Coordinates ).Single( i => i.IslandId == islandIdOfOtherPlayer );
-            if( model.targetIsland.Owner == null )
+            model.TargetIsland = SetupContext.Islands.Include( i => i.Coordinates ).Include( i => i.Owner ).Single( i => i.IslandId == islandIdOfOtherPlayer );
+            if( model.TargetIsland.Owner == null )
                 model.HasOwner = false;
             else
                 model.HasOwner = true;

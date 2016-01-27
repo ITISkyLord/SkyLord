@@ -6459,7 +6459,9 @@ button.close {
 .modal-header:before,
 .modal-header:after,
 .modal-footer:before,
-.modal-footer:after {
+.modal-footer:after,
+#degage .production:before,
+#degage .production:after {
   content: " ";
   display: table;
 }
@@ -6478,7 +6480,8 @@ button.close {
 .pager:after,
 .panel-body:after,
 .modal-header:after,
-.modal-footer:after {
+.modal-footer:after,
+#degage .production:after {
   clear: both;
 }
 .center-block {
@@ -6731,7 +6734,7 @@ button.close {
   min-height: 1px;
   padding-left: 15px;
   padding-right: 15px;
-  background-image: url("../images/Site/sitecarton.png");
+  background-image: url("../images/Site/sitecartonlow.jpg");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   text-align: center;
@@ -6909,11 +6912,63 @@ button.close {
   height: 175px !important;
 }
 #SeeMyIsland .Building[buildingname="tower"] img {
-  width: 100% !important
-        height: 100% !important;
+  width: 100% !important;
+  height: 100% !important;
 }
 #degage {
   position: relative;
+}
+#degage .production {
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 1px;
+  background-color: "white";
+  height: auto;
+  width: 100%;
+  height: 100%;
+  background-image: url("../images/Site/sitecartonlow.jpg") !important;
+  background-repeat: no-repeat !important;
+  background-size: 100% 100% !important;
+  overflow: auto;
+}
+#degage .production > .navbar-header,
+#degage .production > .navbar-collapse {
+  margin-right: -15px;
+  margin-left: -15px;
+}
+@media (min-width: 768px) {
+  #degage .production > .navbar-header,
+  #degage .production > .navbar-collapse {
+    margin-right: 0;
+    margin-left: 0;
+  }
+}
+#degage .production .head {
+  margin-top: 20px;
+  text-align: center;
+  color: whitesmoke;
+  font-weight: bold;
+  font-size: 25px;
+  background-image: url("../images/Site/site_haut2low.jpg");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  padding: 10px;
+  border-bottom: 1px solid transparent;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+#degage .production .body-prod {
+  color: #825847;
+  font-weight: bold;
+  font-size: 13px;
+  text-align: center;
+}
+#degage .production .body-prod-txt {
+  padding: 5px;
 }
 #UI {
   position: relative;
@@ -6942,14 +6997,14 @@ button.close {
   }
 }
 .templatebuilding {
-  position: absolute!important;
-  top: 0px!important;
+  position: absolute !important;
+  top: 0px !important;
   border: 1px solid #825847;
   border-radius: 0;
   transition: box-shadow 0.5s;
   width: 100%;
   height: 580px;
-  background-image: url("../images/Site/site_ressource.png");
+  background-image: url("../images/Site/site_ressourcelow.jpg");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   background-position: center;
@@ -6964,7 +7019,7 @@ button.close {
   color: whitesmoke;
   font-weight: bold;
   font-size: 17px;
-  background-image: url("../images/Site/site_haut2.png");
+  background-image: url("../images/Site/site_haut2low.jpg");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   padding: 5px;
@@ -7026,7 +7081,7 @@ button.close {
   color: #825847;
   font-weight: bold;
   font-size: 17px;
-  background-image: url("../images/Site/site_haut2.png");
+  background-image: url("../images/Site/site_haut2low.jpg");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   padding: 5px;
@@ -7044,7 +7099,7 @@ button.close {
   color: whitesmoke;
   font-weight: bold;
   font-size: 25px;
-  background-image: url("../images/Site/site_haut2.png");
+  background-image: url("../images/Site/site_haut2low.jpg");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   padding: 10px;
@@ -7082,7 +7137,7 @@ button.close {
   color: whitesmoke;
   font-weight: bold;
   font-size: 17px;
-  background-image: url("../images/Site/site_haut2.png");
+  background-image: url("../images/Site/site_haut2low.jpg");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   padding: 5px;

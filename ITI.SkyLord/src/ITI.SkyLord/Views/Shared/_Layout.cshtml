@@ -63,10 +63,8 @@
                         <form asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm">
                             <button type="submit" class="btn btn-link">Déconnexion</button>
                         </form>
-                    </li>
-                    <li>
+                    </li>              
                     <li><a>Heure : @DateTime.Now.ToString( @"HH\hmm\mss\s" )</a></li>
-                    </li>
                 </ul>
             </div>
         </div>
@@ -83,7 +81,7 @@
                 @foreach (Island island in Model.Layout.AllIslands)
                 {
                     string selector = island.IslandId == Model.Layout.IslandId ? "CurrentIsland" : "OtherIsland";
-                    string islandName = island.IsCapital ? "Capitale" : island.Name;
+                    string islandName = island.Name;
 
                     <div class="@selector"><a asp-controller="Island" asp-action="SeeMyIsland" asp-route-islandId="@island.IslandId"> @islandName [@island.Coordinates.X, @island.Coordinates.Y]</a></div>
                 }

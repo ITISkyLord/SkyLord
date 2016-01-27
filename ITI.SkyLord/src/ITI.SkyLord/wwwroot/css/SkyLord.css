@@ -6466,6 +6466,8 @@ button.close {
 .SkyLordContainer .SkyLordMainRow:after,
 .SkyLordContainer .SkyLordMainRow .PageContent .ViewContentRow:before,
 .SkyLordContainer .SkyLordMainRow .PageContent .ViewContentRow:after,
+#degage .production:before,
+#degage .production:after,
 .playerContainer:before,
 .playerContainer:after,
 .profilContainer:before,
@@ -6492,6 +6494,7 @@ button.close {
 .SkyLordContainer:after,
 .SkyLordContainer .SkyLordMainRow:after,
 .SkyLordContainer .SkyLordMainRow .PageContent .ViewContentRow:after,
+#degage .production:after,
 .playerContainer:after,
 .profilContainer:after {
   clear: both;
@@ -6745,7 +6748,7 @@ body {
 }
 .navbar {
   margin-bottom: 0;
-  background-image: url("../images/Site/site_haut2.png");
+  background-image: url("../images/Site/site_haut2low.jpg");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   z-index: 9999;
@@ -6810,7 +6813,7 @@ body {
   left: 0px;
 }
 .ui-autocomplete {
-  background-image: url("../images/Site/site_ressource.png");
+  background-image: url("../images/Site/site_ressourcelow.jpg");
   width: 100%;
   height: 10px;
   background-repeat: no-repeat;
@@ -6831,7 +6834,7 @@ body {
   height: auto;
   width: 100%;
   height: 100%;
-  background-image: url("../images/Site/site_fond.png");
+  background-image: url("../images/Site/site_fondlow.jpg");
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }
@@ -6869,7 +6872,7 @@ body {
   width: auto;
   padding: 0;
   margin: 0;
-  background-image: url("../images/Site/site_side.png");
+  background-image: url("../images/Site/site_sidelow.jpg");
   background-size: 100% 100%;
 }
 @media (min-width: 1200px) {
@@ -6942,7 +6945,7 @@ body {
   }
 }
 .SkyLordContainer .SkyLordMainRow .PageContent .RessourceLine {
-  background-image: url("../images/Site/site_ressource.png");
+  background-image: url("../images/Site/site_ressourcelow.jpg");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   /*padding: 50px;*/
@@ -6965,7 +6968,7 @@ body {
 footer {
   font-size: 17px;
   margin-bottom: 1px;
-  background-image: url("../images/Site/site_haut3.png");
+  background-image: url("../images/Site/site_haut3low.jpg");
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }
@@ -6986,7 +6989,7 @@ footer li a:hover {
   min-height: 1px;
   padding-left: 15px;
   padding-right: 15px;
-  background-image: url("../images/Site/sitecarton.png");
+  background-image: url("../images/Site/sitecartonlow.jpg");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   text-align: center;
@@ -7164,11 +7167,63 @@ footer li a:hover {
   height: 175px !important;
 }
 #SeeMyIsland .Building[buildingname="tower"] img {
-  width: 100% !important
-        height: 100% !important;
+  width: 100% !important;
+  height: 100% !important;
 }
 #degage {
   position: relative;
+}
+#degage .production {
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 1px;
+  background-color: "white";
+  height: auto;
+  width: 100%;
+  height: 100%;
+  background-image: url("../images/Site/sitecartonlow.jpg") !important;
+  background-repeat: no-repeat !important;
+  background-size: 100% 100% !important;
+  overflow: auto;
+}
+#degage .production > .navbar-header,
+#degage .production > .navbar-collapse {
+  margin-right: -15px;
+  margin-left: -15px;
+}
+@media (min-width: 768px) {
+  #degage .production > .navbar-header,
+  #degage .production > .navbar-collapse {
+    margin-right: 0;
+    margin-left: 0;
+  }
+}
+#degage .production .head {
+  margin-top: 20px;
+  text-align: center;
+  color: whitesmoke;
+  font-weight: bold;
+  font-size: 25px;
+  background-image: url("../images/Site/site_haut2low.jpg");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  padding: 10px;
+  border-bottom: 1px solid transparent;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+#degage .production .body-prod {
+  color: #825847;
+  font-weight: bold;
+  font-size: 13px;
+  text-align: center;
+}
+#degage .production .body-prod-txt {
+  padding: 5px;
 }
 #UI {
   position: relative;
@@ -7197,14 +7252,14 @@ footer li a:hover {
   }
 }
 .templatebuilding {
-  position: absolute!important;
-  top: 0px!important;
+  position: absolute !important;
+  top: 0px !important;
   border: 1px solid #825847;
   border-radius: 0;
   transition: box-shadow 0.5s;
   width: 100%;
   height: 580px;
-  background-image: url("../images/Site/site_ressource.png");
+  background-image: url("../images/Site/site_ressourcelow.jpg");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   background-position: center;
@@ -7219,7 +7274,7 @@ footer li a:hover {
   color: whitesmoke;
   font-weight: bold;
   font-size: 17px;
-  background-image: url("../images/Site/site_haut2.png");
+  background-image: url("../images/Site/site_haut2low.jpg");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   padding: 5px;
@@ -7281,7 +7336,7 @@ footer li a:hover {
   color: #825847;
   font-weight: bold;
   font-size: 17px;
-  background-image: url("../images/Site/site_haut2.png");
+  background-image: url("../images/Site/site_haut2low.jpg");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   padding: 5px;
@@ -7299,7 +7354,7 @@ footer li a:hover {
   color: whitesmoke;
   font-weight: bold;
   font-size: 25px;
-  background-image: url("../images/Site/site_haut2.png");
+  background-image: url("../images/Site/site_haut2low.jpg");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   padding: 10px;
@@ -7337,7 +7392,7 @@ footer li a:hover {
   color: whitesmoke;
   font-weight: bold;
   font-size: 17px;
-  background-image: url("../images/Site/site_haut2.png");
+  background-image: url("../images/Site/site_haut2low.jpg");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   padding: 5px;
@@ -7357,7 +7412,7 @@ footer li a:hover {
   height: auto;
   width: 100%;
   height: 100%;
-  background-image: url("../images/Site/sitecarton.png") !important;
+  background-image: url("../images/Site/sitecartonlow.jpg") !important;
   background-repeat: no-repeat !important;
   background-size: 100% 100% !important;
   overflow: auto;
@@ -7397,7 +7452,7 @@ footer li a:hover {
   height: auto;
   width: 100%;
   height: 100%;
-  background-image: url("../images/Site/sitecarton.png") !important;
+  background-image: url("../images/Site/sitecartonlow.jpg") !important;
   background-repeat: no-repeat !important;
   background-size: 100% 100% !important;
   overflow: auto;
@@ -7423,8 +7478,10 @@ footer li a:hover {
 .armyContainer {
   border: 1px solid #825847;
   border-radius: 0;
+  padding-bottom: 10px;
+  padding-left: 10px;
   transition: box-shadow 0.5s;
-  background-image: url("../images/Site/site_ressource.png");
+  background-image: url("../images/Site/site_ressourcelow.jpg");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   background-position: center;
@@ -7433,10 +7490,11 @@ footer li a:hover {
 }
 .armyContainer .army .army-head {
   text-align: center;
+  margin-left: -8px;
   color: whitesmoke;
   font-weight: bold;
   font-size: 25px;
-  background-image: url("../images/Site/site_haut2.png");
+  background-image: url("../images/Site/site_haut2low.jpg");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   padding: 5px;
@@ -7503,7 +7561,7 @@ footer li a:hover {
   border: 1px solid #825847;
   border-radius: 0;
   transition: box-shadow 0.5s;
-  background-image: url("../images/Site/site_ressource.png");
+  background-image: url("../images/Site/site_ressourcelow.jpg");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   background-position: center;
@@ -7627,7 +7685,7 @@ button {
 }
 .carousel-control.right,
 .carousel-control.left {
-  background-image: url("../images/site_fond2.png");
+  background-image: url("../images/site_fond2low.jpg");
   color: red;
 }
 .carousel-indicators li {
