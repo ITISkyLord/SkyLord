@@ -39,6 +39,10 @@
                                     @{Write(CurrentBuilding.Name);}
                                 </div>
 
+                                <div class="building-description">
+                                    @BuildingManager.StaticBuildingNameToDescription( CurrentBuilding.BuildingName )
+                                </div>
+
                                 <div class="building-body">
 
                                     @if (CurrentBuilding.Level != null)

@@ -73,7 +73,9 @@
     <h2>@BuildingManager.StaticBuildingNameToName(Model.CurrentBuilding.BuildingName)</h2>
 </div>
 @{
-    Write(Html.Partial("~/Views/Partial/DescriptionPartial.cshtml", new DescriptionPartial { Description = "Je suis un woodField", FullNameOfImage = "invocation.gif" }));
+    Write(Html.Partial("~/Views/Partial/DescriptionPartial.cshtml", new DescriptionPartial {
+        Description = @BuildingManager.StaticBuildingNameToDescription( Model.CurrentBuilding.BuildingName ),
+        FullNameOfImage = "invocation.gif" }));
     Write(Html.Partial("~/Views/Partial/LevelUpBuilding.cshtml", Model));
     Write(Html.Partial("~/Views/Partial/UnitsQueue.cshtml", Model));
 }
@@ -195,6 +197,10 @@
                     </tr>
                 </tbody>
             </table>
+
+            <div class="buildings"> 
+            <div class="building-body"> @unit.Description  </div>
+            </div>
 
             Prérequis pour construire @unit.Name<br />
             @if (unit.Requirements != null)
