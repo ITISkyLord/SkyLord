@@ -18,12 +18,12 @@
     <div class="row">
         <div id="Test">
             <div id="SeeMyIsland">
-                @for( var i = 1; i != 11; i++ )
+                @for (var i = 1; i != 11; i++)
                 {
                     Building myBuilding;
                     string name;
 
-                    @if( Model.DicoBuildings.TryGetValue( i.ToString(), out myBuilding ) )
+                    @if (Model.DicoBuildings.TryGetValue(i.ToString(), out myBuilding))
                     {
                         name = myBuilding.BuildingName.ToString();
                     }
@@ -34,9 +34,9 @@
 
                     <div class="Building" buildingname="@name" id="place_@i" templateid="@i">
                         @{
-                            if( myBuilding != null )
+                            if (myBuilding != null)
                             {
-                                switch( myBuilding.BuildingName )
+                                switch (myBuilding.BuildingName)
                                 {
                                     case BuildingName.woodField:
                                     case BuildingName.academy:
@@ -50,9 +50,9 @@
                                 }
                             }
                         }
-                        <img src="~/images/SeeMyIsland/@name" alt="" onerror='this.style.display = "none"'/>
+                        <img src="~/images/SeeMyIsland/@name" alt="" onerror='this.style.display = "none"' />
                     </div>
-            }
+                            }
             </div>
         </div>
 
@@ -60,84 +60,85 @@
 
         <div id="UI">
             <div id="degage">
-                @if( Model.MovementTowardThisIsland.Count > 0 )
-                {
-
-                    <h4>Attaque vers l'île.</h4>
-                    @foreach( ArmyEvent ae in Model.MovementTowardThisIsland )
+                <div class="production">
+                    @if (Model.MovementTowardThisIsland.Count > 0)
                     {
-                        if( ae.ArmyMovement == ArmyMovement.attacking )
+
+                        <h4>Attaque vers l'île.</h4>
+                        @foreach (ArmyEvent ae in Model.MovementTowardThisIsland)
                         {
+                            if (ae.ArmyMovement == ArmyMovement.attacking)
+                            {
                             <div>Nous sommes en danger, une attaque arrive depuis l'île <a asp-controller="Island" asp-action="SeeOtherIsland" asp-route-islandIdOfOtherPlayer="@ae.Island.Owner.PlayerId" asp-route-islandId="@Model.Layout.IslandId"> @ae.Island.Name [@ae.Island.Coordinates.X, @ae.Island.Coordinates.Y]</a> qui appartient à <a asp-controller="Profil" asp-action="ProfilOfOtherPlayer" asp-route-otherPlayerId=@ae.Island.Owner.PlayerId asp-route-islandId=@Model.Layout.IslandId>@ae.Island.Owner.Name</a>. Impact à @ae.EndingDate.ToString( @"HH\hmm\mss\s" )</div>
-                        }
-                        else if( ae.ArmyMovement == ArmyMovement.sendingRessources )
-                        {
+                            }
+                            else if (ae.ArmyMovement == ArmyMovement.sendingRessources)
+                            {
                             <div>Hourra ! Des transporteurs alliés se dirigent vers notre île depuis <a asp-controller="Island" asp-action="SeeOtherIsland" asp-route-islandIdOfOtherPlayer="@ae.Island.Owner.PlayerId" asp-route-islandId="@Model.Layout.IslandId"> @ae.Island.Name [@ae.Island.Coordinates.X, @ae.Island.Coordinates.Y]</a>. Ils transportent avec eux @ae.PillagedRessources.Wood bois, @ae.PillagedRessources.Metal métal, @ae.PillagedRessources.Cristal cristal et @ae.PillagedRessources.Magic magie. Impact à @ae.EndingDate.ToString( @"HH\hmm\mss\s" )</div>
-                        }
-                        else if( ae.ArmyMovement == ArmyMovement.moving )
-                        {
+                            }
+                            else if (ae.ArmyMovement == ArmyMovement.moving)
+                            {
                             <div>Des troupes alliés se dirigent vers notre île depuis <a asp-controller="Island" asp-action="SeeOtherIsland" asp-route-islandIdOfOtherPlayer="@ae.Island.Owner.PlayerId" asp-route-islandId="@Model.Layout.IslandId"> @ae.Island.Name [@ae.Island.Coordinates.X, @ae.Island.Coordinates.Y]</a>. Impact à @ae.EndingDate.ToString( @"HH\hmm\mss\s" ) </div>
+                            }
                         }
                     }
-                }
-                @if( Model.MovementFromThisIsland.Count > 0 )
-                {
-                    <h2>Nos attaques</h2>
-                    @foreach( ArmyEvent ae in Model.MovementFromThisIsland )
+                    @if (Model.MovementFromThisIsland.Count > 0)
                     {
-                        if( ae.Destination.Owner != null )
+                        <h4>Nos attaques</h4>
+                        @foreach (ArmyEvent ae in Model.MovementFromThisIsland)
                         {
-                            if( ae.ArmyMovement == ArmyMovement.attacking )
+                            if (ae.Destination.Owner != null)
                             {
+                                if (ae.ArmyMovement == ArmyMovement.attacking)
+                                {
                                 <div>Attaque vers <a asp-controller="Island" asp-action="SeeOtherIsland" asp-route-islandIdOfOtherPlayer="@ae.Destination.IslandId" asp-route-islandId="@Model.Layout.IslandId"> @ae.Destination.Name [@ae.Destination.Coordinates.X, @ae.Destination.Coordinates.Y]</a> chez <a asp-controller="Profil" asp-action="ProfilOfOtherPlayer" asp-route-otherPlayerId=@ae.Destination.Owner.PlayerId asp-route-islandId=@Model.Layout.IslandId>@ae.Destination.Owner.Name</a>. Impact à @ae.EndingDate.ToString( @"HH\hmm\mss\s" )</div>
-                            }
-                            else if( ae.ArmyMovement == ArmyMovement.sendingRessources )
-                            {
+                                }
+                                else if (ae.ArmyMovement == ArmyMovement.sendingRessources)
+                                {
                                 <div>Envoi de ressources vers <a asp-controller="Island" asp-action="SeeOtherIsland" asp-route-islandIdOfOtherPlayer="@ae.Destination.IslandId" asp-route-islandId="@Model.Layout.IslandId"> @ae.Destination.Name [@ae.Destination.Coordinates.X, @ae.Destination.Coordinates.Y]</a> chez <a asp-controller="Profil" asp-action="ProfilOfOtherPlayer" asp-route-otherPlayerId=@ae.Island.Owner.PlayerId asp-route-islandId=@Model.Layout.IslandId>@ae.Island.Owner.Name</a>. Elles arriveront à @ae.EndingDate.ToString( @"HH\hmm\mss\s" )</div>
-                            }
-                            else if( ae.ArmyMovement == ArmyMovement.returning )
-                            {
+                                }
+                                else if (ae.ArmyMovement == ArmyMovement.returning)
+                                {
                                 <div>Vos unités sont en train de revenir de <a asp-controller="Island" asp-action="SeeOtherIsland" asp-route-islandIdOfOtherPlayer="@ae.Destination.IslandId" asp-route-islandId="@Model.Layout.IslandId"> @ae.Destination.Name [@ae.Destination.Coordinates.X, @ae.Destination.Coordinates.Y]</a> chez <a asp-controller="Profil" asp-action="ProfilOfOtherPlayer" asp-route-otherPlayerId=@ae.Destination.Owner.PlayerId asp-route-islandId=@Model.Layout.IslandId>@ae.Destination.Owner.Name</a>. Elles arriveront à @ae.EndingDate.ToString( @"HH\hmm\mss\s" )</div>
+                                }
                             }
-                        }
-                        else if( ae.ArmyMovement == ArmyMovement.attacking )
-                        {
+                            else if (ae.ArmyMovement == ArmyMovement.attacking)
+                            {
                             <div>Attaque vers une <a asp-controller="Island" asp-action="SeeOtherIsland" asp-route-islandIdOfOtherPlayer="ae.Destination.IslandId" asp-route-islandId="@Model.Layout.IslandId"> île sauvage [@ae.Destination.Coordinates.X, @ae.Destination.Coordinates.Y]</a>. Impact à @ae.EndingDate.ToString( @"HH\hmm\mss\s" )</div>
-                        }
-                        else if( ae.ArmyMovement == ArmyMovement.returning )
-                        {
+                            }
+                            else if (ae.ArmyMovement == ArmyMovement.returning)
+                            {
                             <div>Vos unités sont en train de revenir de <a asp-controller="Island" asp-action="SeeOtherIsland" asp-route-islandIdOfOtherPlayer="ae.Destination.IslandId" asp-route-islandId="@Model.Layout.IslandId"> @ae.Destination.Name [@ae.Destination.Coordinates.X, @ae.Destination.Coordinates.Y]</a>. Elles arriveront à @ae.EndingDate.ToString( @"HH\hmm\mss\s" )</div>
 
-                        }
-                        else if( ae.ArmyMovement == ArmyMovement.colonising )
-                        {
+                            }
+                            else if (ae.ArmyMovement == ArmyMovement.colonising)
+                            {
                             <div>Colonisation vers une <a asp-controller="Island" asp-action="SeeOtherIsland" asp-route-islandIdOfOtherPlayer="ae.Destination.IslandId" asp-route-islandId="@Model.Layout.IslandId"> île sauvage [@ae.Destination.Coordinates.X, @ae.Destination.Coordinates.Y]</a>. Arrivée à @ae.EndingDate.ToString( @"HH\hmm\mss\s" )</div>
-                        }
+                            }
 
+                        }
+                        <br />
                     }
+
+                    @if (Model.UnitsQueue.Count > 0)
+                    {
                     <br />
-                }
+                        <div>
+                            <h4>Troupes en constructions</h4>
 
-                @if( Model.UnitsQueue.Count > 0 )
-                {
-                    <br />
-                    <div>
-                        <h4>Troupes en constructions</h4>
+                            @foreach (UnitQueue queueElement in Model.UnitsQueue)
+                            {
+                                <div>Unité : @queueElement.Unit.Name</div>
+                                <div>Nombre : @queueElement.Number <br /></div>
 
-                        @foreach( UnitQueue queueElement in Model.UnitsQueue )
-                        {
-                            <div>Unité : @queueElement.Unit.Name</div>
-                            <div>Nombre : @queueElement.Number <br /></div>
+                                var dureeFin = queueElement.EndingDate - DateTime.Now;
 
-                            var dureeFin = queueElement.EndingDate - DateTime.Now;
+                                <div class="time" hours="@dureeFin.Hours" minutes="@dureeFin.Minutes" secondes="@dureeFin.Seconds">Time</div>
+                                <br />
+                            }
+                        </div>
+                    }
 
-                            <div class="time" hours="@dureeFin.Hours" minutes="@dureeFin.Minutes" secondes="@dureeFin.Seconds">Time</div>
-                            <br />
-                        }
-                    </div>
-                }
 
-                <div>
                     <h4>Production</h4>
 
                     Bois : @Model.Production.Wood par heure<br />
@@ -145,33 +146,35 @@
                     Cristal : @Model.Production.Cristal par heure<br />
                     Magie : @Model.Production.Magic par heure<br />
 
-                </div>
 
-                @if( Model.BuildingDeveloping != null )
-                {
+
+                    @if (Model.BuildingDeveloping != null)
+                    {
                     <br />
-                    TimeSpan timetoEnd = Model.BuildingDeveloping.EndingDate - DateTime.Now;
+                        TimeSpan timetoEnd = Model.BuildingDeveloping.EndingDate - DateTime.Now;
 
-                    <div>
-                        @BuildingManager.StaticBuildingNameToName(Model.BuildingDeveloping.BuildingToBuild) est en construction et finira dans <span class="time" hours="@timetoEnd.Hours" minutes="@timetoEnd.Minutes" secondes="@timetoEnd.Seconds"> à @Model.BuildingDeveloping.EndingDate.ToString( @"HH\hmm\mss\s" ) </span> 
-                    </div>
-                }
-                @if( Model.CurrentResearch != null )
-                {
-                    TimeSpan timetoEnd = Model.CurrentResearch.EndingDate - DateTime.Now;
+                        <div>
+                            @BuildingManager.StaticBuildingNameToName(Model.BuildingDeveloping.BuildingToBuild) est en construction et finira dans <span class="time" hours="@timetoEnd.Hours" minutes="@timetoEnd.Minutes" secondes="@timetoEnd.Seconds"> à @Model.BuildingDeveloping.EndingDate.ToString(@"HH\hmm\mss\s") </span>
+                        </div>
+                    }
+                    @if (Model.CurrentResearch != null)
+                    {
+                        TimeSpan timetoEnd = Model.CurrentResearch.EndingDate - DateTime.Now;
 
-                    <div>
-                        @TechnologyManager.StaticTechnologyNameToName(Model.CurrentResearch.TechnologyName) est en recherche et finira dans <span class="time" hours="@timetoEnd.Hours" minutes="@timetoEnd.Minutes" secondes="@timetoEnd.Seconds"> à @Model.CurrentResearch.EndingDate.ToString( @"HH\hmm\mss\s" ) </span>
-                    </div>
-                }
+                        <div>
+                            @TechnologyManager.StaticTechnologyNameToName(Model.CurrentResearch.TechnologyName) est en recherche et finira dans <span class="time" hours="@timetoEnd.Hours" minutes="@timetoEnd.Minutes" secondes="@timetoEnd.Seconds"> à @Model.CurrentResearch.EndingDate.ToString(@"HH\hmm\mss\s") </span>
+                        </div>
+                    }
 
+                </div>
             </div>
-            @for( var i = 1; i != 11; i++ )
+
+            @for (var i = 1; i != 11; i++)
             {
                 Building myBuilding;
                 string name;
 
-                @if( Model.DicoBuildings.TryGetValue( i.ToString(), out myBuilding ) )
+                @if (Model.DicoBuildings.TryGetValue(i.ToString(), out myBuilding))
                 {
                     name = myBuilding.BuildingName.ToString();
                 }
@@ -186,11 +189,11 @@
                     @{
                         // On cherche le next s'il existe
                         Level nextLevel = null;
-                        Model.NextLevel.TryGetValue( i, out nextLevel );
+                        Model.NextLevel.TryGetValue(i, out nextLevel);
 
                         // On cherche les buildings event s'ils existent
                         List<BuildingEvent> buildingEvent = new List<BuildingEvent>();
-                        Model.AllBuildingEventOnIsland.TryGetValue( i, out buildingEvent );
+                        Model.AllBuildingEventOnIsland.TryGetValue(i, out buildingEvent);
 
                         bool isInConstruction = Model.AllBuildingEventOnIsland.Where(kvp => kvp.Value.Count != 0).Count() != 0;
 
@@ -210,11 +213,11 @@
                             TargetTechnology = Model.TargetTechnology,
                             TechnologyManager = Model.TechnologyManager,
                             UnitsQueue = Model.UnitsQueue,
-                            IsInConstruction =  isInConstruction,
+                            IsInConstruction = isInConstruction,
                             CurrentResearch = Model.CurrentResearch
 
                         };
-                        Write( Html.Partial( "~/Views/Partial/" + name + ".cshtml", partialModel ) );
+                        Write(Html.Partial("~/Views/Partial/" + name + ".cshtml", partialModel));
                     }
                 </div>
                         }

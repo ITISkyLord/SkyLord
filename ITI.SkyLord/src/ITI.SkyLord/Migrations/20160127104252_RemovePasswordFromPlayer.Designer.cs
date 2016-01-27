@@ -8,9 +8,10 @@ using ITI.SkyLord.Models.Entity_Framework.Contexts;
 namespace ITI.SkyLord.Migrations
 {
     [DbContext(typeof(SetupContext))]
-    partial class SetupContextModelSnapshot : ModelSnapshot
+    [Migration("20160127104252_RemovePasswordFromPlayer")]
+    partial class RemovePasswordFromPlayer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.0-rc1-16348")
@@ -277,11 +278,7 @@ namespace ITI.SkyLord.Migrations
                     b.Property<string>("Name")
                         .HasAnnotation("MaxLength", 20);
 
-                    b.Property<int>("NumberOfVictory");
-
                     b.Property<long?>("ProfilProfilId");
-
-                    b.Property<int>("RessourcePillaged");
 
                     b.Property<long?>("WorldWorldId");
 

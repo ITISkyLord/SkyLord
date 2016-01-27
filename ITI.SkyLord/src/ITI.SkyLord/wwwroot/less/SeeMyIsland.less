@@ -2,7 +2,7 @@
 
 .island-header {
     .Col(12);
-    .Image(url("../images/Site/sitecarton.png"));
+    .Image(url("../images/Site/sitecartonlow.jpg"));
     text-align: center;
     color: #825847;
 }
@@ -51,12 +51,12 @@
         height: 50px;
 
         img {
-            display:block !important;
-            width:100% !important;
+            display: block !important;
+            width: 100% !important;
             height: 100% !important;
             position: relative !important;
             top: 0px !important;
-            left:0px !important;
+            left: 0px !important;
         }
 
         &:hover {
@@ -120,30 +120,38 @@
         left: 141px;
     }
 
-    .Building[buildingname="shield"]
-    {
+    .Building[buildingname="shield"] {
         width: 216px !important;
         height: 91px !important;
     }
-    .Building[buildingname="shield"] img
-    {
+
+    .Building[buildingname="shield"] img {
         width: 216px !important;
         height: 91px !important;
     }
 
     .Building[buildingname="tower"] {
-        
         width: 350px/3 !important;
         height: 525px/3 !important;
     }
 
     .Building[buildingname="tower"] img {
-        width: 100% !important
+        width: 100% !important;
         height: 100% !important;
     }
 }
+
 #degage {
-    position : relative;
+    position: relative;
+
+    .production {
+        .container-fluid;
+        .Section();
+        height: 100%;
+        .Image(url("../images/Site/sitecartonlow.jpg")) !important;
+        overflow: auto;
+        /*margin-top : 200px;*/
+    }
 }
 
 #UI {
@@ -153,15 +161,14 @@
 
 
 .templatebuilding {
-    position : absolute!important;
-    top : 0px!important;
-
+    position: absolute !important;
+    top: 0px !important;
     border: 1px solid #825847;
     border-radius: 0;
     transition: box-shadow 0.5s;
     width: 100%;
     height: 580px;
-    .Image(url("../images/Site/site_ressource.png"));
+    .Image(url("../images/Site/site_ressourcelow.jpg"));
     background-repeat: no-repeat;
     background-position: center;
     display: block;
@@ -175,7 +182,7 @@
             color: whitesmoke;
             font-weight: bold;
             font-size: 17px;
-            background-image: url("../images/Site/site_haut2.png");
+            background-image: url("../images/Site/site_haut2low.jpg");
             background-repeat: no-repeat;
             background-size: 100% 100%;
             padding: 5px;
@@ -222,7 +229,7 @@
         color: #825847;
         font-weight: bold;
         font-size: 17px;
-        background-image: url("../images/Site/site_haut2.png");
+        background-image: url("../images/Site/site_haut2low.jpg");
         background-repeat: no-repeat;
         background-size: 100% 100%;
         padding: 5px;
@@ -241,7 +248,7 @@
             color: whitesmoke;
             font-weight: bold;
             font-size: 25px;
-            background-image: url("../images/Site/site_haut2.png");
+            background-image: url("../images/Site/site_haut2low.jpg");
             background-repeat: no-repeat;
             background-size: 100% 100%;
             padding: 10px;
@@ -273,7 +280,7 @@
         color: whitesmoke;
         font-weight: bold;
         font-size: 17px;
-        background-image: url("../images/Site/site_haut2.png");
+        background-image: url("../images/Site/site_haut2low.jpg");
         background-repeat: no-repeat;
         background-size: 100% 100%;
         padding: 5px;
