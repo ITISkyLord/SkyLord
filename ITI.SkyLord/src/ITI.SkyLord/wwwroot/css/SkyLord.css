@@ -7579,7 +7579,7 @@ footer li a:hover {
   overflow: auto;
 }
 .messageContainer #sendMessage {
-  margin-top: 3px;
+  margin-top: 10px;
 }
 .messageContainer #answerMessage {
   margin-bottom: 10px;
