@@ -28,7 +28,7 @@
                     <h2><a asp-controller="Profil" asp-action="ProfilOfOtherPlayer" asp-route-islandId="@Model.Layout.IslandId" asp-route-otherPlayerId="@Model.TargetIsland.Owner.PlayerId">@Model.TargetIsland.Owner.Name</a></h2>
                     <a asp-controller="Army" asp-action="SetAttackingArmy" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId" asp-route-ennemyIslandId="@Model.IslandIdOfOther">Attaquer</a><br />
                     <a asp-controller="Army" asp-action="SetMovement" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId" asp-route-ennemyIslandId="@Model.IslandIdOfOther">Envoyer des renforts</a><br />
-                    <a asp-controller="Army" asp-action="SetSendRessources" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId" asp-route-ennemyIslandId="@Model.IslandIdOfOther">Envoyer des ressources</a><br />
+                    @*<a asp-controller="Army" asp-action="SetSendRessources" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId" asp-route-ennemyIslandId="@Model.IslandIdOfOther">Envoyer des ressources</a><br />*@
 
                 }
                 else

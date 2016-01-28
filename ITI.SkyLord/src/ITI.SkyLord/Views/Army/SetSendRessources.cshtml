@@ -69,7 +69,7 @@
                     <select asp-for="@Model.Target" id="EnnemyToAttack">
                         @foreach (Island i in Model.SendableIslands)
                         {
-                            string name = i.Owner.Name;
+                            string name = i.Name;
 
                             string selected = "";
                             if (Model.AllyIslandId == i.IslandId)
