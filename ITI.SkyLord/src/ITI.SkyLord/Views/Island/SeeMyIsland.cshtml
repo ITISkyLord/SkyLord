@@ -64,7 +64,13 @@
         <div id="UI">
             <div id="degage">
                 <div class="production">
-
+                    <div class="head">@Model.CurrentIsland.Name
+                        <form asp-controller="Island" asp-action="ChangeName" asp-route-islandId="@Model.CurrentIsland.IslandId" id="special-form">
+                            <input type="text" name="name" />
+                            <button><span style="font-size:1.1em;" id="pencil" class="glyphicon glyphicon-ok"></span></button>
+                        </form>
+                    </div>
+                    
                     <div class="head">
                         <h4>Production</h4>
                     </div>
@@ -83,6 +89,32 @@
                             Magie : @Model.Production.Magic par heure<br />
                         </div>
 
+                        @if( Model.DefenseArmy.Regiments != null && Model.DefenseArmy.Regiments.Count > 0 )
+                        {
+                            <div class="head">
+                                <h4>Armée présente</h4>
+                            </div>
+
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <td>Unité</td>
+                                            <td>Nombre</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach( Regiment r in Model.DefenseArmy.Regiments )
+                                        {
+                                            <tr>
+                                                <td>@r.Unit.Name</td>
+                                                <td>@r.Number</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+
+                                </table>
+
+                        }
                         @if( Model.BuildingDeveloping != null )
                         {
                             <br />

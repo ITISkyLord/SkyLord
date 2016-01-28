@@ -56,11 +56,11 @@
                         {
                             if ( Model.CurrentBuilding.BuildingName == BuildingName.laboratory && Model.CurrentResearch != null )
                             {
-                                <div>Vous ne pouvez pas faire de travaux sur votre laboratoire si vous êtes en recherche.</div>
+                                <div>Vous ne pouvez pas faire de travaux sur votre laboratoire si vous effectuez en recherche.</div>
                             }
                             else if ( Model.CurrentBuilding.BuildingName == BuildingName.invocation && Model.UnitsQueue.Count() != 0 )
                             {
-                                <div>Vous ne pouvez pas faire de travaux sur votre cercle d'invocation si vous produisez des unités.</div>
+                                <div>Vous ne pouvez pas faire de travaux sur votre portail d'invocation si vous produisez des unités.</div>
                             }
                             else if ( Model.IsInConstruction )
                             {
@@ -68,7 +68,7 @@
                             }
                             else if ( RessourceManager.IsEnough( Model.Layout.CurrentIsland.AllRessources, Model.NextBuildingLevel.Cost ) )
                             {
-                                <input type="submit" class="btn btn-link" value="Upgrade" />
+                                <input type="submit" class="btn btn-link" value="Augmenter" />
 
                                 <div>Temps de construction : @TimeSpan.FromSeconds( Model.NextBuildingLevel.Duration ).CustomToString() </div>
                             }
