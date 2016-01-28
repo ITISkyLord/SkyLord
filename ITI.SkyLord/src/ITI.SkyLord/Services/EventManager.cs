@@ -57,14 +57,20 @@ namespace ITI.SkyLord
             }
         }
 
-        public void AddArmyEvent( IArmyEventContext ctx, Army army, Island island, ArmyMovement am, Island destination, Ressource pillagedRessources = null )
+        public void AddArmyEvent( IArmyEventContext ctx, Army army, Island island, ArmyMovement am, Island destination, Ressource pillagedRessources = null, bool isReturning = false )
         {
             // NE PAS OUBLIER D'AJOUTER L'ÉVÈNEMENT DE RETOUR
             int secondsToGo = TimeToGoHereFromHere( island, destination, army );
-            DateTime begginningDate = FindLastEndingDateInQueue( EventDiscrimator.ArmyEvent, island );
+            DateTime begginningDate;
+            if( isReturning )
+                begginningDate = FindLastEndingDateInQueue( EventDiscrimator.ArmyEvent, island, army.ArmyId );
+            else
+                begginningDate = DateTime.Now;
+
             long pillagedRessourceId;
             if ( pillagedRessources == null ) pillagedRessourceId = 0;
             else pillagedRessourceId = pillagedRessources.RessourceId;
+
 
             ctx.ArmyEvents.Add( new ArmyEvent()
             {
@@ -72,8 +78,8 @@ namespace ITI.SkyLord
                 Army = army,
                 ArmyIdd = army.ArmyId,
                 ArmyMovement = am,
-                BegginningDate = DateTime.Now,
-                EndingDate = DateTime.Now.AddSeconds( secondsToGo ),
+                BegginningDate = begginningDate,
+                EndingDate = begginningDate.AddSeconds( secondsToGo ),
                 Destination = destination,
                 DestinationIdd = destination.IslandId,
                 Done = false,
@@ -96,9 +102,6 @@ namespace ITI.SkyLord
         public void AddBuildingEvent( IBuildingEventContext ctx, BuildingName buildingName, Island island, int position, BuildingLevel buildingLevel )
         {
             DateTime begginningDate = FindLastEndingDateInQueue( EventDiscrimator.BuildingEvent, island );
-
-            DateTime test = DateTime.Now.AddSeconds( _allManager.BonusManager.GetModifiedDuration( buildingLevel, island.Owner.PlayerId, island.IslandId ) );
-            TimeSpan time = test - begginningDate;
 
             ctx.BuildingEvents.Add( new BuildingEvent()
             {
@@ -148,7 +151,7 @@ namespace ITI.SkyLord
             return ctx.Events.Include( e => e.Island ).Where( e => e.Island.IslandId == islandId ).ToList();
         }
 
-        private DateTime FindLastEndingDateInQueue( string eventType, Island island )
+        private DateTime FindLastEndingDateInQueue( string eventType, Island island, long armyId = 0 )
         {
             DateTime lastEndingDate = DateTime.Now;
             if ( eventType == EventDiscrimator.UnitEvent )
@@ -178,7 +181,7 @@ namespace ITI.SkyLord
             }
             else if ( eventType == EventDiscrimator.ArmyEvent )
             {
-                lastEndingDate = _context.ArmyEvents.Where( u => u.Island.Equals( island ) && u.Done == false ).OrderByDescending( d => d.EndingDate ).Select( d => d.EndingDate ).FirstOrDefault();
+                lastEndingDate = _context.ArmyEvents.Where( u => u.Island.Equals( island ) && u.Done == false && u.ArmyIdd == armyId ).OrderByDescending( d => d.EndingDate ).Select( d => d.EndingDate ).FirstOrDefault();
             }
             else if ( eventType == EventDiscrimator.BuildingEvent )
             {
@@ -351,7 +354,7 @@ namespace ITI.SkyLord
                 _context.Messages.Add( combatResult.CombatReportLooser );
                 _context.SaveChanges();
                 if ( combatResult.CombatReportWinner.Receiver == armyOnMovement.Island.Owner ) // S'il n'y a plus de troupes dans l'armées attaquante, il n'y a pas de retour.
-                    this.AddArmyEvent( _context, armyOnMovement, armyOnMovement.Island, ArmyMovement.returning, destination, combatResult.PillagedRessources );
+                    this.AddArmyEvent( _context, armyOnMovement, armyOnMovement.Island, ArmyMovement.returning, destination, combatResult.PillagedRessources, true );
             }
             else if ( armyEvent.ArmyMovement == ArmyMovement.sendingRessources )
             {
@@ -361,7 +364,7 @@ namespace ITI.SkyLord
                 CombatResult combatResult = armyManager.ResolveSendingRessources( armyOnMovement, armyEvent, _context );
                 _context.Messages.Add( combatResult.CombatReportWinner );
                 _context.SaveChanges();
-                this.AddArmyEvent( _context, armyOnMovement, armyOnMovement.Island, ArmyMovement.returning, destination );
+                this.AddArmyEvent( _context, armyOnMovement, armyOnMovement.Island, ArmyMovement.returning, destination, null, true);
             }
             else if ( armyEvent.ArmyMovement == ArmyMovement.returning )
             {
@@ -393,7 +396,7 @@ namespace ITI.SkyLord
                 Ressource transportedRessource = _context.Ressources.Where( r => r.RessourceId == armyEvent.PillagedRessourcesIdd ).SingleOrDefault();
                 if ( destination.Owner != null )
                 {
-                    this.AddArmyEvent( _context, armyOnMovement, armyOnMovement.Island, ArmyMovement.returning, destination, transportedRessource );
+                    this.AddArmyEvent( _context, armyOnMovement, armyOnMovement.Island, ArmyMovement.returning, destination, transportedRessource, true );
                 }
                 else
                 {
