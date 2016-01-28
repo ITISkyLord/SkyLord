@@ -7479,6 +7479,9 @@ footer li a:hover {
     margin-left: 0;
   }
 }
+.profilContainer .margin {
+  margin-top: 10px;
+}
 .profilContainer #pp {
   padding: 5px;
 }
@@ -7580,6 +7583,9 @@ footer li a:hover {
 }
 .messageContainer .margin {
   margin-top: 10px;
+}
+.messageContainer .margin-bottom {
+  margin-bottom: 10px;
 }
 .messageContainer #sendMessage {
   margin-top: 10px;
@@ -7690,6 +7696,10 @@ button {
 .container-home .background-container {
   height: 100%;
   background-color: #0a0001;
+}
+.container-home .space-btn {
+  margin-top: 50px;
+  margin-bottom: 50px;
 }
 #footer-home {
   padding: 26px;

@@ -6738,6 +6738,9 @@ button.close {
 .messageContainer .margin {
   margin-top: 10px;
 }
+.messageContainer .margin-bottom {
+  margin-bottom: 10px;
+}
 .messageContainer #sendMessage {
   margin-top: 10px;
 }

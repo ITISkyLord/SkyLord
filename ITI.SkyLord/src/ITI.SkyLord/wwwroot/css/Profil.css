@@ -6754,6 +6754,9 @@ button.close {
     margin-left: 0;
   }
 }
+.profilContainer .margin {
+  margin-top: 10px;
+}
 .profilContainer #pp {
   padding: 5px;
 }
