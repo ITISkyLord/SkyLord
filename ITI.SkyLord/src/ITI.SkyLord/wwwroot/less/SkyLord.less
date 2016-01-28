@@ -13,52 +13,6 @@
 .ViewContentRow {
 }
 
-/*.SkyLordNavBar {
-    .Col(12);
-    background-color: red;
-    border-bottom: solid black 2px;
-
-    ul {
-        .nav;
-        .navbar;
-        height: 50px;
-
-        li {
-            .navbar-btn;
-            .pull-left;
-
-            h1, a {
-                margin-left: 50px;
-            }
-        }
-
-        img {
-            height: 50px;
-        }
-    }
-}*/
-
-/*.HomeContainer {
-    .row;
-    margin-top: 100px;
-
-    .Block {
-        .Col(4);
-        .MakeOffset(1,1,1,1);
-        .text-center;
-    }
-
-    .RegisterBlock {
-        .Block;
-        .Section(coral);
-    }
-
-    .ConnectionBlock {
-        .Block;
-        .Section(#bada55);
-    }
-}*/
-
 .modal-header, .close {
     background-color: #5cb85c;
     color: white !important;
@@ -74,6 +28,19 @@ a {
     color: #825847;
 }
 
+#Mynavbar {
+    li, a {
+        color: #825847;
+        font-weight: bold;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+
+    li a:hover {
+        color: #825847;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+}
+
 button {
     color: whitesmoke;
     border: none;
@@ -81,50 +48,37 @@ button {
     background-color: #825847;
 }
 
-.carousel-control.right, .carousel-control.left {
-    background-image: url("../images/site_fond2low.jpg");
-    color: red;
+.carousel-inner img {
+    width: 100%; /* Set width to 100% */
+    margin: auto;
 }
 
-.carousel-indicators li {
-    border-color: red;
+.carousel-caption h3 {
+    color: #fff !important;
+}
 
-    li.active {
-        background-color: red;
+@media (max-width: 600px) {
+    .carousel-caption {
+        display: none; /* Hide the carousel text when the screen is less than 600 pixels wide */
     }
 }
 
-.carousel-inner {
-    img {
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-        height: 200px;
-        width: 150px;
-    }
-}
 
-.bg-1 {
-    background: #2d2d30;
-    color: #bdbdbd;
-}
-
-.bg-1 h3 {
-    color: #fff;
-}
-
-.bg-1 p {
+.container-home {
+    .Image();
     font-style: italic;
+    color: #bdbdbd;
+    text-align: center;
+    font-size: 17px;
+    font-weight: bold;
+    /*margin-bottom:20px;*/
+  
+    .background-container {
+        height: 100%;
+        background-color: #0a0001;       
+    }
 }
 
-.person {
-    border: 10px solid transparent;
-    margin-bottom: 25px;
-    width: 80%;
-    height: 80%;
-    opacity: 0.7;
-
-    person:hover {
-        border-color: #f1f1f1;
-    }
+#footer-home {
+    padding: 26px;
 }

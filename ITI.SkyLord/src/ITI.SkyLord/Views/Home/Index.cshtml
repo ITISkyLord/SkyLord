@@ -29,125 +29,18 @@
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
                 </button>
-                @*<img src="~/images/SkyLord.png" class="img-responsive" />*@
             </div>
 
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="#game">Le jeu</a></li>
-                    <li><a href="#team">L'équipe</a></li>
+                    <li><a href="#trame">Trame</a></li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <div class="container">
-        <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
-        <!-- Trigger the modal with a button -->
-        <br /><br /><br /><center><button type="button" class="btn btn-default btn-lg" id="BtnRegister">Inscription</button></center>
-
-        <!-- Modal -->
-        <div class="modal fade" id="ModalRegister" role="dialog">
-            <div class="modal-dialog">
-
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header" style="padding:35px 50px;">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4><span class="glyphicon glyphicon-lock"></span> Inscription</h4>
-                    </div>
-                    <div class="modal-body" style="padding:40px 50px;">
-                        <form asp-controller="Account" asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal" role="form">
-                            <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
-                            <div class="form-group">
-                                <label for="usrname"><span class="glyphicon glyphicon-user"></span> Pseudo</label>
-                                <input asp-for="@Model.registerViewModel.Pseudo" class="form-control" />
-                                <span asp-validation-for="@Model.registerViewModel.Pseudo" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label for="mail"><span class="glyphicon glyphicon-eye-open"></span> Email</label>
-                                <input asp-for="@Model.registerViewModel.Email" class="form-control" />
-                                <span asp-validation-for="@Model.registerViewModel.Email" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Mot de passe</label>
-                                <input type="password" asp-for="@Model.registerViewModel.Password" class="form-control" />
-                                <span asp-validation-for="@Model.registerViewModel.Password" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Confirmez votre mot de passe</label>
-                                <input type="password" asp-for="@Model.registerViewModel.ConfirmPassword" class="form-control" />
-                                <span asp-validation-for="@Model.registerViewModel.ConfirmPassword" class="text-danger"></span>
-                            </div>
-                            <button type="submit" class="btn btn-default btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Enregistrer</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <script>
-            $(document).ready(function () {
-                $("#BtnRegister").click(function () {
-                    $("#ModalRegister").modal();
-                });
-            });
-        </script>
-    </div>
-
-    <div class="container">
-        <!-- Trigger the modal with a button -->
-        <center><button type="button" class="btn btn-default btn-lg" id="BtnLogin">Connexion</button></center>
-
-        <!-- Modal -->
-        <div class="modal fade" id="ModalLogin" role="dialog">
-            <div class="modal-dialog">
-
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header" style="padding:35px 50px;">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4><span class="glyphicon glyphicon-lock"></span> Connexion</h4>
-                    </div>
-                    <div class="modal-body" style="padding:40px 50px;">
-                        <form asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal" role="form">
-                            <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
-                            <div class="form-group">
-                                <label for="usrname"><span class="glyphicon glyphicon-user"></span> Mail utilisateur</label>
-                                <input asp-for="@Model.loginViewModel.Email" class="form-control" placeholder="Entrez votre mail" />
-                                <span asp-validation-for="@Model.loginViewModel.Email" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Mot de passe</label>
-                                <input asp-for="@Model.loginViewModel.Password" class="form-control" placeholder="Entrez votre mot de passe" />
-                                <span asp-validation-for="@Model.loginViewModel.Password" class="text-danger"></span>
-                            </div>
-                            <div class="checkbox">
-                                <label><input type="checkbox" value="" checked>Se souvenir de moi</label>
-                            </div>
-                            <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Jouer</button>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Annuler</button>
-                        <p>Pas encore un membre ? <a href="#">S'enregistrer</a></p>
-                        <p>Oublie de votre <a href="#">mot de passe ?</a></p>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-        <script>
-            $(document).ready(function () {
-                $("#BtnLogin").click(function () {
-                    $("#ModalLogin").modal();
-                });
-            });
-        </script>
-    </div>
-
-    <center><h2>Le jeu</h2></center>
     <div id="myCarousel" class="carousel slide text-center" data-ride="carousel">
         <!-- Indicators -->
         <ol class="carousel-indicators">
@@ -160,16 +53,16 @@
         <!-- Wrapper for slides -->
         <div class="carousel-inner" role="listbox">
             <div class="item active">
-                <img src="~/images/Caroussel/villagechibi.png" />
+                <img src="~/images/Caroussel/bannière1.jpg" />
             </div>
             <div class="item">
-                <img src="~/images/Caroussel/portail.png" />
+                <img src="~/images/Caroussel/bannière2.jpg" />
             </div>
             <div class="item">
-                <img src="~/images/Caroussel/labo.png" />
+                <img src="~/images/Caroussel/bannière3.jpg" />
             </div>
             <div class="item">
-                <img src="~/images/Caroussel/avatar.jpg" />
+                <img src="~/images/Caroussel/bannière4.jpg" />
             </div>
         </div>
 
@@ -184,87 +77,123 @@
         </a>
     </div>
 
-    @*<div id="team" class="container text-center">
-            <h3>L'équipe</h3>
-            <p><em>Présentation de la team !</em></p>
-            <br>
-            <div class="row">
-                <div class="col-sm-2">
-                    <p><strong>Kévin Roussel</strong></p><br>
-                    <a href="#demo" data-toggle="collapse">
-                        <img src="~/images/team/kevin.jpg" class="img-circle person" alt="Random Name">
-                    </a>
-                    <div id="demo" class="collapse">
-                        <p>Développeur de SkyLord et chef de projet</p>
-                        <p>Membre depuis 2015</p>
-                    </div>
-                </div>
-                <div class="col-sm-2">
-                    <p><strong>Tristan Letrou</strong></p><br>
-                    <a href="#demo2" data-toggle="collapse">
-                        <img src="~/images/team/alternant09.jpg" class="img-circle person" alt="Random Name">
-                    </a>
-                    <div id="demo2" class="collapse">
-                        <p>Développeur de SkyLord</p>
-                        <p>Membre depuis 2015</p>
-                    </div>
-                </div>
-                <div class="col-sm-2">
-                    <p><strong>Aymeric Richard</strong></p><br>
-                    <a href="#demo3" data-toggle="collapse">
-                        <img src="~/images/team/pese.jpg" class="img-circle person" alt="Random Name">
-                    </a>
-                    <div id="demo3" class="collapse">
-                        <p>Développeur de SkyLord</p>
-                        <p>Membre depuis 2015</p>
-                    </div>
-                </div>
-                <div class="col-sm-2">
-                    <p><strong>Erwan</strong></p><br>
-                    <a href="#demo4" data-toggle="collapse">
-                        <img src="~/images/team/alternant07.jpg" class="img-circle person" alt="Random Name">
-                    </a>
-                    <div id="demo4" class="collapse">
-                        <p>Développeur de SkyLord</p>
-                        <p>Membre depuis 2015</p>
-                    </div>
-                </div>
-                <div class="col-sm-2">
-                    <p><strong>Maxime</strong></p><br>
-                    <a href="#demo5" data-toggle="collapse">
-                        <img src="~/images/team/maxime.jpg" class="img-circle person" alt="Random Name">
-                    </a>
-                    <div id="demo5" class="collapse">
-                        <p>Graphiste de SkyLord</p>
-                        <p>Membre depuis 2015</p>
-                    </div>
-                </div>
-                <div class="col-sm-2">
-                    <p><strong>Loïc</strong></p><br>
-                    <a href="#demo6" data-toggle="collapse">
-                        <img src="~/images/team/loic.jpg" class="img-circle person" alt="Random Name">
-                    </a>
-                    <div id="demo6" class="collapse">
-                        <p>Développeur & designer de SkyLord</p>
-                        <p>Membre depuis 2015</p>
+    <div class="container-home">
+        <div class="container">
+            <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
+            <!-- Trigger the modal with a button -->
+            <br /><br /><br /><center><button type="button" class="btn btn-default btn-lg" id="BtnRegister">Inscription</button></center>
+
+            <!-- Modal -->
+            <div class="modal fade" id="ModalRegister" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header" style="padding:35px 50px;">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4><span class="glyphicon glyphicon-lock"></span> Inscription</h4>
+                        </div>
+                        <div class="modal-body" style="padding:40px 50px;">
+                            <form asp-controller="Account" asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal" role="form">
+                                <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
+                                <div class="form-group">
+                                    <label for="usrname"><span class="glyphicon glyphicon-user"></span> Pseudo</label>
+                                    <input asp-for="@Model.registerViewModel.Pseudo" class="form-control" />
+                                    <span asp-validation-for="@Model.registerViewModel.Pseudo" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="mail"><span class="glyphicon glyphicon-eye-open"></span> Email</label>
+                                    <input asp-for="@Model.registerViewModel.Email" class="form-control" />
+                                    <span asp-validation-for="@Model.registerViewModel.Email" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Mot de passe</label>
+                                    <input type="password" asp-for="@Model.registerViewModel.Password" class="form-control" />
+                                    <span asp-validation-for="@Model.registerViewModel.Password" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Confirmez votre mot de passe</label>
+                                    <input type="password" asp-for="@Model.registerViewModel.ConfirmPassword" class="form-control" />
+                                    <span asp-validation-for="@Model.registerViewModel.ConfirmPassword" class="text-danger"></span>
+                                </div>
+                                <button type="submit" class="btn btn-default btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Enregistrer</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>*@
+            <script>
+                $(document).ready(function () {
+                    $("#BtnRegister").click(function () {
+                        $("#ModalRegister").modal();
+                    });
+                });
+            </script>
 
-    <div class="bg-1">
-        <div class="container">
-            <h3 class="text-center">TRAME</h3>
-            <p class="text-center">
-                Incarnez un puissant mage et partez à la conquète des cieux.<br />
-                Étendez votre empire, entretenez vos alliances, créez des troupes et écrasez vos ennemis.<br />
-                Prenez garde cependant, le monde de SkyLord contient bien des dangers !<br />
-               <br /> Projet visant à démontrer la faisabilité de la mise en production d'un programme utilisant la nouvelle technologie ASP 5 avec DNX.
-            </p>
+            <!-- Trigger the modal with a button -->
+            <center><button type="button" class="btn btn-default btn-lg" id="BtnLogin">Connexion</button></center>
+
+            <!-- Modal -->
+            <div class="modal fade" id="ModalLogin" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header" style="padding:35px 50px;">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4><span class="glyphicon glyphicon-lock"></span> Connexion</h4>
+                        </div>
+                        <div class="modal-body" style="padding:40px 50px;">
+                            <form asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal" role="form">
+                                <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
+                                <div class="form-group">
+                                    <label for="usrname"><span class="glyphicon glyphicon-user"></span> Mail utilisateur</label>
+                                    <input asp-for="@Model.loginViewModel.Email" class="form-control" placeholder="Entrez votre mail" />
+                                    <span asp-validation-for="@Model.loginViewModel.Email" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Mot de passe</label>
+                                    <input asp-for="@Model.loginViewModel.Password" class="form-control" placeholder="Entrez votre mot de passe" />
+                                    <span asp-validation-for="@Model.loginViewModel.Password" class="text-danger"></span>
+                                </div>
+                                <div class="checkbox">
+                                    <label><input type="checkbox" value="" checked>Se souvenir de moi</label>
+                                </div>
+                                <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Jouer</button>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Annuler</button>
+                            <p>Pas encore un membre ? <a href="#">S'enregistrer</a></p>
+                            <p>Oublie de votre <a href="#">mot de passe ?</a></p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <script>
+                $(document).ready(function () {
+                    $("#BtnLogin").click(function () {
+                        $("#ModalLogin").modal();
+                    });
+                });
+            </script>
+        </div>
+
+        <div class="background-container">
+            <div class="container">
+                <h3 class="text-center">TRAME</h3>
+                <p class="text-center">
+                    Incarnez un puissant mage et partez à la conquète des cieux.<br />
+                    Étendez votre empire, entretenez vos alliances, créez des troupes et écrasez vos ennemis.<br />
+                    Prenez garde cependant, le monde de SkyLord contient bien des dangers !<br />
+                    <br /> Projet visant à démontrer la faisabilité de la mise en production d'un programme utilisant la nouvelle technologie ASP 5 avec DNX.<br /><br />
+                </p>
+            </div>
         </div>
     </div>
 
-    <footer class="container-fluid text-center">
+    <footer class="container-fluid text-center" id="footer-home">
         <ul class="nav nav-pills nav-justified">
             <li><a asp-controller="Home" asp-action="Index">Mentions légales</a></li>
             <li><a asp-controller="Home" asp-action="Index">Support</a></li>
