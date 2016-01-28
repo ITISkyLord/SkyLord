@@ -304,7 +304,7 @@ namespace ITI.SkyLord.Controllers
             //    .Single( i => i.IslandId == islandId ).Armies.Single( a => a.ArmyState != ArmyState.obsolete );
             ArmyManager am = new ArmyManager( SetupContext, new BonusManager( SetupContext ) );
             Army defenseArmy = am.GetCurrentDefenseArmy( islandId );
-            if( defenseArmy == null && defenseArmy.Regiments.Count < 1 )
+            if( defenseArmy == null )
             {
                 model.NumberOfTransportorToSend = 0;
             }
