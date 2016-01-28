@@ -52,7 +52,7 @@
                 }
                 else if( ae.ArmyMovement == ArmyMovement.returning )
                 {
-                    <div>Vos unités sont en train de revenir de <a asp-action="SeeOtherIsland" asp-controller="Island" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId" asp-route-islandIdOfOtherPlayer="@ae.Island.IslandId"> @ae.Island.Name [@ae.Island.Coordinates.X, @ae.Island.Coordinates.Y]</a>. Elles arriveront à @ae.EndingDate.ToString( @"HH\hmm\mss\s" )</div>
+                    <div>Vos unités sont en train de revenir d'une <a asp-action="SeeOtherIsland" asp-controller="Island" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId" asp-route-islandIdOfOtherPlayer="@ae.Destination.IslandId"> île sauvage [@ae.Destination.Coordinates.X, @ae.Destination.Coordinates.Y]</a>. Elles arriveront à @ae.EndingDate.ToString( @"HH\hmm\mss\s" )</div>
 
                 }
                 else if( ae.ArmyMovement == ArmyMovement.colonising )

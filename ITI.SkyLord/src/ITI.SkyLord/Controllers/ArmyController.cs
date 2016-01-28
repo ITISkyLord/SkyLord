@@ -298,7 +298,10 @@ namespace ITI.SkyLord.Controllers
         private SetSendRessourcesViewModel CreateSetSendRessourceViewModel( long islandId, long EnnemyIslandId, SetSendRessourcesViewModel model )
         {
             model.SendableIslands = SetupContext.Islands.Include( i => i.Coordinates ).Include( i => i.Owner ).Where( i => i.Owner != null && i.IslandId != islandId ).ToList();
-            if( EnnemyIslandId == 0 ) model.TargetIslandId = EnnemyIslandId;
+            if( EnnemyIslandId != 0 )
+            {
+                model.Target = EnnemyIslandId;
+            }
             //model.CurrentTransportorArmy = SetupContext.Islands.Include( i => i.Armies ).ThenInclude( a => a.Regiments )
             //    .ThenInclude( r => r.Unit ).ThenInclude( u => u.UnitStatistics )
             //    .Single( i => i.IslandId == islandId ).Armies.Single( a => a.ArmyState != ArmyState.obsolete );
