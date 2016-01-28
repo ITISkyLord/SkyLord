@@ -2,35 +2,38 @@
 
 
 <div class="row">
-
-    @if (Model.FullNameOfImage == "shield.gif")
-    {
-        <div class="DescriptionImage col-lg-4">
-            <img src="~/images/SeeMyIsland/buildingbig/@Model.FullNameOfImage" style="height: 200px;background-color:rgba(255,255,255,0.2);border-radius:50px;margin-bottom:10px;" />
-        </div>
-
-        <div class="DescriptionText col-lg-4" style="margin-left:200px;">
-            <p>@Model.Description</p>
-        </div>
-    }
-    else
-    {
-        <div class="DescriptionImage col-lg-4">
-            <img src="~/images/SeeMyIsland/buildingbig/@Model.FullNameOfImage" style="height: 200px;background-color:rgba(255,255,255,0.2);border-radius:50px;margin-bottom:10px;" />
-        </div>
-
-        <div class="DescriptionText col-lg-4">
-            <p>@Model.Description</p>
-        </div>
-    }
+    <div class="buildings-build">
 
 
-    @if (Model.NameOfGif != null)
-    {
-        <div class="descriptionGif col-lg-4">
-            <img src=@Model.NameOfGif style="height: 200px;background-color:rgba(255,255,255,0.2);border-radius:50px;margin-bottom:10px;padding:26px;" />
-        </div>
-    }
-   
+        @if (Model.FullNameOfImage == "shield.gif")
+        {
+            <div class="DescriptionImage col-lg-4">
+                <img src="~/images/SeeMyIsland/buildingbig/@Model.FullNameOfImage" style="height: 200px;background-color:rgba(255,255,255,0.2);border-radius:50px;margin-bottom:10px;" />
+            </div>
+
+            <div class="buildings-build-body col-lg-4" style="margin-left:200px;">
+                <p>@Model.Description</p>
+            </div>
+        }
+        else
+        {
+            <div class="DescriptionImage col-lg-4">
+                <img src="~/images/SeeMyIsland/buildingbig/@Model.FullNameOfImage" style="height: 200px;background-color:rgba(255,255,255,0.2);border-radius:50px;margin-bottom:10px;" />
+            </div>
+
+            <div class="buildings-build-body col-lg-4">
+                <p>@Model.Description</p>
+            </div>
+        }
+
+
+        @if (Model.NameOfGif != null)
+        {
+            <div class="descriptionGif col-lg-4">
+                <img src=@Model.NameOfGif style="height: 200px;background-color:rgba(255,255,255,0.2);border-radius:50px;margin-bottom:10px;padding:26px;" />
+            </div>
+        }
+
+    </div>
 </div>
 

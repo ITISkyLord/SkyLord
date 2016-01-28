@@ -6948,7 +6948,10 @@ body {
   background-image: url("../images/Site/site_ressourcelow.jpg");
   background-size: 100% 100%;
   background-repeat: no-repeat;
-  /*padding: 50px;*/
+  color: #825847;
+  font-weight: bold;
+  font-size: 13px;
+  text-align: center;
   margin: 5px;
 }
 .SkyLordContainer .SkyLordMainRow .PageContent .RessourceLine form {
