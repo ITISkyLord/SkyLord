@@ -6,6 +6,7 @@ $(document).ready(function () {
         if ( +$(this).attr("secondes") == 0 && +$(this).attr("minutes") == 0 && +$(this).attr("hours") == 0)
         {
             $(this).removeClass(".time");
+            $(this).text("Tâche finie actualisez pour appliquer.");
         }
     });
 
