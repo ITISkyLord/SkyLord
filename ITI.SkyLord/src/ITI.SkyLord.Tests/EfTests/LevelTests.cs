@@ -25,16 +25,6 @@ namespace ITI.SkyLord.Tests.EfTests
 
         #endregion
 
-        [Test]
-        public void RoundTest()
-        {
-            TimeSpan t = TimeSpan.FromSeconds( 500 );
-            TimeSpan t2 = TimeSpan.FromDays( 5 );
-
-            Console.WriteLine( t.CustomToString()  );
-            Console.WriteLine( t2.CustomToString()  );
-        }
-
         private Ressource Multiplyressource( Ressource initialRessource, int factor )
         {
             return new Ressource

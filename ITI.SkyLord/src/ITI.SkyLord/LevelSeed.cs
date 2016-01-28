@@ -856,7 +856,7 @@ namespace ITI.SkyLord
                 // Set up Levels
                 ShieldLevel shieldLevel1 = AddShieldLevel( context, BuildingName.shield, 1, shieldLevel1Cost, 30,
                     null, 250 );
-                ShieldLevel shieldLevel2 = AddShieldLevel( context, BuildingName.shield, 2, shieldLevel2Cost, 60,
+                ShieldLevel shieldLevel2 = AddShieldLevel( context, BuildingName.shield, 2, shieldLevel2Cost, 90,
                     CreateRequirementList( shieldLevel2Requirement ), 500 );
                 ShieldLevel shieldLevel3 = AddShieldLevel( context, BuildingName.shield, 3, shieldLevel3Cost, (int)( shieldLevel2.Duration * 2.5 ),
                     CreateRequirementList( shieldLevel3Requirement ), 1000 );
@@ -1977,7 +1977,8 @@ namespace ITI.SkyLord
                 BuildingName = buildingName,
                 Cost = cost,
                 Requirements = requirements,
-                Defense = defense
+                Defense = defense, 
+                Duration = duration
             };
             context.Add( fieldLevel );
             return fieldLevel;
