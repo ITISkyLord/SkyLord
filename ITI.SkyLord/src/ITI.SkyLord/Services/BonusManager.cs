@@ -525,7 +525,7 @@ namespace ITI.SkyLord.Services
 
         public static string StaticBonusToString( Bonus bonus )
         {
-            return "Bonus de " + bonus.Modifier.ToString() + "% sur" + BonusTypeToString( bonus.BonusType ) + "de" + BonusTargetToString( bonus );
+            return "Bonus de " + bonus.Modifier.ToString() + "% sur" + BonusTypeToString( bonus.BonusType ) + BonusTargetToString( bonus );
         }
 
         private static string BonusTargetToString( Bonus bonus )
@@ -537,10 +537,10 @@ namespace ITI.SkyLord.Services
                 switch ( bonusOnBuilding.TargetBuilding )
                 {
                     case BuildingName.none:
-                        result = " tous les bâtiments";
+                        result = " de tous les bâtiments";
                         break;
                     default:
-                        result = " tous les bâtiments";
+                        result = " de tous les bâtiments";
                         break;
                 }
             }
@@ -550,10 +550,10 @@ namespace ITI.SkyLord.Services
                 switch ( bonusOnTechnology.TargetTechnology )
                 {
                     case TechnologyName.none:
-                        result = " toutes les technologies";
+                        result = " de toutes les technologies";
                         break;
                     default:
-                        result = " toutes les technologies";
+                        result = " de toutes les technologies";
                         break;
                 }
             }
@@ -563,19 +563,19 @@ namespace ITI.SkyLord.Services
                 switch ( bonusOnUnit.TargetUnit )
                 {
                     case UnitType.soldier:
-                        result = " les unités de type soldat";
+                        result = " des unités de type soldat";
                         break;
                     case UnitType.monster:
-                        result = " les unités de type monstre";
+                        result = " des unités de type monstre";
                         break;
                     case UnitType.mecanical:
-                        result = " les unités de type mécanique";
+                        result = " des unités de type mécanique";
                         break;
                     case UnitType.magic:
-                        result = " les unités de type mage";
+                        result = " des unités de type mage";
                         break;
                     case UnitType.utility:
-                        result = " les unités de type utilitaire";
+                        result = " des unités de type utilitaire";
                         break;
                     case UnitType.all:
                         result = " toutes les unités";

@@ -61,13 +61,18 @@
                                         <input type="hidden" asp-for="@Model.TargetBuilding" value="@CurrentBuilding.BuildingName" />
                                         <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
 
-                                        @if (CurrentBuilding.Level != null && CurrentBuilding.Level.Cost != null && RessourceManager.IsEnough(Model.Layout.CurrentIsland.AllRessources, CurrentBuilding.Level.Cost))
+                                        @if ( CurrentBuilding.Level != null && CurrentBuilding.Level.Cost != null && RessourceManager.IsEnough( Model.Layout.CurrentIsland.AllRessources, CurrentBuilding.Level.Cost ) )
                                         {
-                                            <center><input type="submit" class="btn btn-link" value="Construire" name="Construire"></center>
+                                            <center>
+                                                <input type="submit" class="btn btn-link" value="Construire" name="Construire">
+
+                                                <div>Temps de construction : @TimeSpan.FromSeconds( CurrentBuilding.Level.Duration ).CustomToString() </div>
+                                            </center>
+
                                         }
                                         else
                                         {
-                                            Write("Pas assez de ressources");
+                                            Write( "Pas assez de ressources" );
                                         }
 
                                     </form>

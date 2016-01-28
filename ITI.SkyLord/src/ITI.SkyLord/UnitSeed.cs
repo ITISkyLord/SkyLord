@@ -98,7 +98,7 @@ namespace ITI.SkyLord
                     UnitCost = soliderCost,
                     UnitStatistics = soliderStatistics,
                     Requirements = CreateRequirementList( soldierRequirement, soldierRequirement2 ),
-                    Duration = 60,
+                    Duration = /*Pour la présentation 60*/ 30,
                     IsModel = true,
                     Description = "Habillé de son armure toute neuve, il sait par quel bout prendre son épée et obéir aux ordres. Le soldat n'est pas très efficace mais il est peu cher à recruter et à entretenir."
                 };
@@ -179,7 +179,7 @@ namespace ITI.SkyLord
                 Requirement knightRequirement = AddBuildingRequirement( context, BuildingName.barrack, 5 );
                 Requirement knightRequirement2 = AddTechnologyRequirement( context, TechnologyName.armor, 2 );
                 Requirement knightRequirement3 = AddTechnologyRequirement( context, TechnologyName.magicBoots, 2 );
-                Requirement knightRequirement4 = AddBuildingRequirement( context, BuildingName.invocation, 1 );
+                Requirement knightRequirement4 = AddBuildingRequirement( context, BuildingName.invocation, 2 );
 
                 // Add Unit
                 Unit knight = new Unit
@@ -226,7 +226,7 @@ namespace ITI.SkyLord
                 Requirement griffinRequirement = AddBuildingRequirement( context, BuildingName.barrack, 7 );
                 Requirement griffinRequirement2 = AddTechnologyRequirement( context, TechnologyName.magicBoots, 5 );
                 Requirement griffinRequirement3 = AddTechnologyRequirement( context, TechnologyName.weapons, 4 );
-                Requirement griffinRequirement4 = AddBuildingRequirement( context, BuildingName.invocation, 1 );
+                Requirement griffinRequirement4 = AddBuildingRequirement( context, BuildingName.invocation, 4 );
 
                 // Add Unit
                 Unit griffin = new Unit
@@ -274,7 +274,7 @@ namespace ITI.SkyLord
                 Requirement championRequirement2 = AddTechnologyRequirement( context, TechnologyName.magicBoots, 7 );
                 Requirement championRequirement3 = AddTechnologyRequirement( context, TechnologyName.weapons, 7 );
                 Requirement championRequirement44 = AddTechnologyRequirement( context, TechnologyName.armor, 8 );
-                Requirement championRequirement5 = AddBuildingRequirement( context, BuildingName.invocation, 1 );
+                Requirement championRequirement5 = AddBuildingRequirement( context, BuildingName.invocation, 6 );
 
                 // Add Unit
                 Unit champion = new Unit
@@ -335,10 +335,10 @@ namespace ITI.SkyLord
                     UnitCost = gobelinCost,
                     UnitStatistics = gobelinStatistics,
                     Requirements = CreateRequirementList( gobelinRequirement, gobelinRequirement2 ),
-                    Duration = 50,
+                    Duration = /*Pour la présentation 50*/ 25,
                     IsModel = true,
                     //Description = "Cette petite créature est stupide, méchante et agressive, surtout stupide, ce qui les rend facile à contrôler. Bons marché et rapides, c'est la chair à canon idéale."
-                    Description = "Cette créature animée par magie est stupide, méchante et agressive, surtout stupide, ce qui les rend facile à contrôler. Bons marché et rapides, ce sont des os à canon idéaux."
+                    Description = "Cette créature animée par magie est stupide, méchante et agressive, surtout stupide, ce qui les rend facile à contrôler. Bons marché et rapides, ils sont une chair à canon idéale."
                 };
                 context.Add( gobelin );
 
@@ -370,7 +370,7 @@ namespace ITI.SkyLord
                 // Set up Requirements
                 Requirement harpyRequirement = AddBuildingRequirement( context, BuildingName.barrack, 2 );
                 Requirement harpyRequirement2 = AddTechnologyRequirement( context, TechnologyName.claws, 1 );
-                Requirement harpyRequirement3 = AddBuildingRequirement( context, BuildingName.invocation, 1 );
+                Requirement harpyRequirement3 = AddBuildingRequirement( context, BuildingName.invocation, 2 );
 
                 // Add Unit
                 Unit harpy = new Unit
@@ -416,7 +416,7 @@ namespace ITI.SkyLord
                 // Set up Requirements
                 Requirement dirtGolemRequirement = AddBuildingRequirement( context, BuildingName.barrack, 4 );
                 Requirement dirtGolemRequirement2 = AddTechnologyRequirement( context, TechnologyName.shell, 2 );
-                Requirement dirtGolemRequirement3 = AddBuildingRequirement( context, BuildingName.invocation, 1 );
+                Requirement dirtGolemRequirement3 = AddBuildingRequirement( context, BuildingName.invocation, 3 );
 
                 // Add Unit
                 Unit dirtGolem = new Unit
@@ -463,7 +463,7 @@ namespace ITI.SkyLord
                 Requirement trollRequirement = AddBuildingRequirement( context, BuildingName.barrack, 6 );
                 Requirement trollRequirement2 = AddTechnologyRequirement( context, TechnologyName.shell, 4 );
                 Requirement trollRequirement3 = AddTechnologyRequirement( context, TechnologyName.claws, 4 );
-                Requirement trollRequirement4 = AddBuildingRequirement( context, BuildingName.invocation, 1 );
+                Requirement trollRequirement4 = AddBuildingRequirement( context, BuildingName.invocation, 4 );
 
                 // Add Unit
                 Unit troll = new Unit
@@ -510,7 +510,7 @@ namespace ITI.SkyLord
                 Requirement phenixRequirement = AddBuildingRequirement( context, BuildingName.barrack, 8 );
                 Requirement phenixRequirement2 = AddTechnologyRequirement( context, TechnologyName.wings, 6 );
                 Requirement phenixRequirement3 = AddTechnologyRequirement( context, TechnologyName.claws, 7 );
-                Requirement phenixRequirement4 = AddBuildingRequirement( context, BuildingName.invocation, 1 );
+                Requirement phenixRequirement4 = AddBuildingRequirement( context, BuildingName.invocation, 6 );
 
                 // Add Unit
                 Unit phenix = new Unit
@@ -522,7 +522,7 @@ namespace ITI.SkyLord
                     UnitCost = phenixCost,
                     UnitStatistics = phenixStatistics,
                     Requirements = CreateRequirementList( phenixRequirement, phenixRequirement2, phenixRequirement3, phenixRequirement4 ),
-                    Duration = 900,
+                    Duration = 1600,
                     IsModel = true,
                     Description = "L'oiseau légendaire, révéré et craint de tous, supposé immortel car renaissant à l'infini de ses cendres selon les légendes. Il est particulièrement efficace en attaque."
                 };
@@ -558,7 +558,7 @@ namespace ITI.SkyLord
                 Requirement juggernautRequirement2 = AddTechnologyRequirement( context, TechnologyName.wings, 10 );
                 Requirement juggernautRequirement3 = AddTechnologyRequirement( context, TechnologyName.claws, 10 );
                 Requirement juggernautRequirement4 = AddTechnologyRequirement( context, TechnologyName.shell, 10 );
-                Requirement juggernautRequirement5 = AddBuildingRequirement( context, BuildingName.invocation, 1 );
+                Requirement juggernautRequirement5 = AddBuildingRequirement( context, BuildingName.invocation, 10 );
 
                 // Add Unit
                 Unit juggernaut = new Unit
@@ -570,7 +570,7 @@ namespace ITI.SkyLord
                     UnitCost = juggernautCost,
                     UnitStatistics = juggernautStatistics,
                     Requirements = CreateRequirementList( juggernautRequirement, juggernautRequirement2, juggernautRequirement3, juggernautRequirement4, juggernautRequirement5 ),
-                    Duration = 900,
+                    Duration = 5000,
                     IsModel = true,
                     Description = "Créé en mélangeant magie et sciences, le juggernaut est une monstruosité faite pour une chose et une seule : tout écraser sur son passage."
                 };
@@ -652,7 +652,7 @@ namespace ITI.SkyLord
                 // Set up Requirements
                 Requirement noviceRequirement = AddBuildingRequirement( context, BuildingName.academy, 2 );
                 Requirement noviceRequirement2 = AddTechnologyRequirement( context, TechnologyName.magicalProtection, 2 );
-                Requirement noviceRequirement3 = AddBuildingRequirement( context, BuildingName.invocation, 1 );
+                Requirement noviceRequirement3 = AddBuildingRequirement( context, BuildingName.invocation, 2 );
 
                 // Add Unit
                 Unit novice = new Unit
@@ -699,7 +699,7 @@ namespace ITI.SkyLord
                 Requirement necromancerRequirement = AddBuildingRequirement( context, BuildingName.academy, 4 );
                 Requirement necromancerRequirement2 = AddTechnologyRequirement( context, TechnologyName.magicalStaff, 2 );
                 Requirement necromancerRequirement3 = AddTechnologyRequirement( context, TechnologyName.levitation, 1 );
-                Requirement necromancerRequirement4 = AddBuildingRequirement( context, BuildingName.invocation, 1 );
+                Requirement necromancerRequirement4 = AddBuildingRequirement( context, BuildingName.invocation, 3 );
 
                 // Add Unit
                 Unit necromancer = new Unit
@@ -746,7 +746,7 @@ namespace ITI.SkyLord
                 Requirement summonerRequirement = AddBuildingRequirement( context, BuildingName.academy, 6 );
                 Requirement summonerRequirement2 = AddTechnologyRequirement( context, TechnologyName.magicalStaff, 4 );
                 Requirement summonerRequirement3 = AddTechnologyRequirement( context, TechnologyName.magicalProtection, 4 );
-                Requirement summonerRequirement4 = AddBuildingRequirement( context, BuildingName.invocation, 1 );
+                Requirement summonerRequirement4 = AddBuildingRequirement( context, BuildingName.invocation, 5 );
 
                 // Add Unit
                 Unit summoner = new Unit
@@ -794,7 +794,7 @@ namespace ITI.SkyLord
                 Requirement prophetRequirement2 = AddTechnologyRequirement( context, TechnologyName.magicalStaff, 7 );
                 Requirement prophetRequirement3 = AddTechnologyRequirement( context, TechnologyName.magicalProtection, 7 );
                 Requirement prophetRequirement4 = AddTechnologyRequirement( context, TechnologyName.levitation, 6 );
-                Requirement prophetRequirement5 = AddBuildingRequirement( context, BuildingName.invocation, 1 );
+                Requirement prophetRequirement5 = AddBuildingRequirement( context, BuildingName.invocation, 7 );
 
                 // Add Unit
                 Unit prophet = new Unit
@@ -843,7 +843,7 @@ namespace ITI.SkyLord
 
                 // Set up Requirements
                 Requirement scorpionRequirement = AddBuildingRequirement( context, BuildingName.forge, 1 );
-                Requirement scorpionRequirement2 = AddBuildingRequirement( context, BuildingName.invocation, 1 );
+                Requirement scorpionRequirement2 = AddBuildingRequirement( context, BuildingName.invocation, 2 );
 
                 // Add Unit
                 Unit scorpion = new Unit
@@ -889,7 +889,7 @@ namespace ITI.SkyLord
                 // Set up Requirements
                 Requirement flameThrowerRequirement = AddBuildingRequirement( context, BuildingName.forge, 2 );
                 Requirement flameThrowerRequirement2 = AddTechnologyRequirement( context, TechnologyName.plating, 2 );
-                Requirement flameThrowerRequirement3 = AddBuildingRequirement( context, BuildingName.invocation, 1 );
+                Requirement flameThrowerRequirement3 = AddBuildingRequirement( context, BuildingName.invocation, 3 );
 
                 // Add Unit
                 Unit flameThrower = new Unit
@@ -936,7 +936,7 @@ namespace ITI.SkyLord
                 Requirement saboteurRequirement = AddBuildingRequirement( context, BuildingName.forge, 4 );
                 Requirement saboteurRequirement2 = AddTechnologyRequirement( context, TechnologyName.plating, 3 );
                 Requirement saboteurRequirement3 = AddTechnologyRequirement( context, TechnologyName.propulsion, 3 );
-                Requirement saboteurRequirement4 = AddBuildingRequirement( context, BuildingName.invocation, 1 );
+                Requirement saboteurRequirement4 = AddBuildingRequirement( context, BuildingName.invocation, 4 );
 
                 // Add Unit
                 Unit saboteur = new Unit
@@ -982,7 +982,7 @@ namespace ITI.SkyLord
                 // Set up Requirements
                 Requirement livingArmorRequirement = AddBuildingRequirement( context, BuildingName.forge, 5 );
                 Requirement livingArmorRequirement2 = AddTechnologyRequirement( context, TechnologyName.plating, 6 );
-                Requirement livingArmorRequirement3 = AddBuildingRequirement( context, BuildingName.invocation, 1 );
+                Requirement livingArmorRequirement3 = AddBuildingRequirement( context, BuildingName.invocation, 5 );
 
                 // Add Unit
                 Unit livingArmor = new Unit
@@ -1075,7 +1075,7 @@ namespace ITI.SkyLord
                 Requirement prismaticGolemRequirement = AddBuildingRequirement( context, BuildingName.forge, 10 );
                 Requirement prismaticGolemRequirement2 = AddTechnologyRequirement( context, TechnologyName.plating, 10 );
                 Requirement prismaticGolemRequirement3 = AddTechnologyRequirement( context, TechnologyName.propulsion, 10 );
-                Requirement prismaticGolemRequirement4 = AddBuildingRequirement( context, BuildingName.invocation, 1 );
+                Requirement prismaticGolemRequirement4 = AddBuildingRequirement( context, BuildingName.invocation, 10 );
 
                 // Add Unit
                 Unit prismaticGolem = new Unit
@@ -1087,7 +1087,7 @@ namespace ITI.SkyLord
                     UnitCost = prismaticGolemCost,
                     UnitStatistics = prismaticGolemStatistics,
                     Requirements = CreateRequirementList( prismaticGolemRequirement, prismaticGolemRequirement2, prismaticGolemRequirement3, prismaticGolemRequirement4 ),
-                    Duration = 2600,
+                    Duration = 5000,
                     IsModel = true,
                     Description = "Seuls les plus puissants mages peuvent créer et contrôler cette machine fantastique, faite de lumière solidifiée, elle est presque indestructible."
                 };
@@ -1097,49 +1097,49 @@ namespace ITI.SkyLord
             }
         }
 
-        public void SeedCanoe()
-        {
-            using ( SetupContext context = new SetupContext() )
-            {
-                // Set up Cost
+        //public void SeedCanoe()
+        //{
+        //    using ( SetupContext context = new SetupContext() )
+        //    {
+        //        // Set up Cost
 
-                Ressource canoeCost = new Ressource { Wood = 500, Metal = 250, Cristal = 0, Magic = 0 };
-                context.Add( canoeCost );
+        //        Ressource canoeCost = new Ressource { Wood = 500, Metal = 250, Cristal = 0, Magic = 0 };
+        //        context.Add( canoeCost );
 
-                // Set up Statistics
-                UnitStatistics canoeStatistics = new UnitStatistics
-                {
-                    Attack = 5,
-                    PhysicResist = 100,
-                    MagicResist = 100,
-                    Speed = 125,
-                    Capacity = 5000,
-                    Consumption = 25
-                };
-                context.Add( canoeStatistics );
+        //        // Set up Statistics
+        //        UnitStatistics canoeStatistics = new UnitStatistics
+        //        {
+        //            Attack = 5,
+        //            PhysicResist = 100,
+        //            MagicResist = 100,
+        //            Speed = 125,
+        //            Capacity = 5000,
+        //            Consumption = 25
+        //        };
+        //        context.Add( canoeStatistics );
 
-                // Set up Requirements
-                Requirement canoeRequirement = AddBuildingRequirement( context, BuildingName.tower, 2 );
-                Requirement canoeRequirement2 = AddBuildingRequirement( context, BuildingName.invocation, 1 );
+        //        // Set up Requirements
+        //        Requirement canoeRequirement = AddBuildingRequirement( context, BuildingName.tower, 2 );
+        //        Requirement canoeRequirement2 = AddBuildingRequirement( context, BuildingName.invocation, 1 );
 
-                // Add Unit
-                Unit canoe = new Unit
-                {
-                    Name = "Pirogue",
-                    UnitName = UnitName.canoe,
-                    UnitType = UnitType.mecanical,
-                    UnitDamageType = UnitDamageType.physical,
-                    UnitCost = canoeCost,
-                    UnitStatistics = canoeStatistics,
-                    Requirements = CreateRequirementList( canoeRequirement, canoeRequirement2 ),
-                    Duration = 120,
-                    IsModel = true
-                };
-                context.Add( canoe );
+        //        // Add Unit
+        //        Unit canoe = new Unit
+        //        {
+        //            Name = "Pirogue",
+        //            UnitName = UnitName.canoe,
+        //            UnitType = UnitType.mecanical,
+        //            UnitDamageType = UnitDamageType.physical,
+        //            UnitCost = canoeCost,
+        //            UnitStatistics = canoeStatistics,
+        //            Requirements = CreateRequirementList( canoeRequirement, canoeRequirement2 ),
+        //            Duration = 120,
+        //            IsModel = true
+        //        };
+        //        context.Add( canoe );
 
-                context.SaveChanges();
-            }
-        }
+        //        context.SaveChanges();
+        //    }
+        //}
 
         #endregion
 
@@ -1168,7 +1168,7 @@ namespace ITI.SkyLord
 
                 // Set up Requirements
                 Requirement carrierRequirement = AddTechnologyRequirement( context, TechnologyName.hold, 2 );
-                Requirement carrierRequirement2 = AddBuildingRequirement( context, BuildingName.invocation, 1 );
+                Requirement carrierRequirement2 = AddBuildingRequirement( context, BuildingName.invocation, 3 );
 
                 // Add Unit
                 Unit carrier = new Unit
@@ -1212,6 +1212,7 @@ namespace ITI.SkyLord
 
                 // Set up Requirements
                 Requirement apprenticeRequirement = AddTechnologyRequirement( context, TechnologyName.conquest, 2 );
+                Requirement apprenticeRequirement2 = AddBuildingRequirement( context, BuildingName.tower, 4 );
 
                 // Add Unit
                 Unit apprentice = new Unit
@@ -1222,7 +1223,7 @@ namespace ITI.SkyLord
                     UnitDamageType = UnitDamageType.physical,
                     UnitCost = apprenticeCost,
                     UnitStatistics = apprenticeStatistics,
-                    Requirements = CreateRequirementList( apprenticeRequirement ),
+                    Requirements = CreateRequirementList( apprenticeRequirement, apprenticeRequirement2 ),
                     Duration = 600,
                     IsModel = true,
                     Description = "L'apprenti est formé non pas pour le combat, mais pour construire sa propre tour de mage et prendre le contrôle d'une nouvelle île. Il est faible en attaque et en défense, il doit donc être protégé."

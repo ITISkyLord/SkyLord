@@ -89,11 +89,13 @@
                             Magie : @Model.Production.Magic par heure<br />
                         </div>
 
-                        @if( Model.DefenseArmy.Regiments != null && Model.DefenseArmy.Regiments.Count > 0 )
+                        @if( Model.DefenseArmy != null )
                         {
-                            <div class="head">
-                                <h4>Armée présente</h4>
-                            </div>
+                            @if ( Model.DefenseArmy.Regiments != null && Model.DefenseArmy.Regiments.Count > 0 )
+                            {
+                                <div class="head">
+                                    <h4>Armée présente</h4>
+                                </div>
 
                                 <table class="table">
                                     <thead>
@@ -103,7 +105,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach( Regiment r in Model.DefenseArmy.Regiments )
+                                        @foreach ( Regiment r in Model.DefenseArmy.Regiments )
                                         {
                                             <tr>
                                                 <td>@r.Unit.Name</td>
@@ -113,8 +115,9 @@
                                     </tbody>
 
                                 </table>
-
+                            }
                         }
+
                         @if( Model.BuildingDeveloping != null )
                         {
                             <br />
