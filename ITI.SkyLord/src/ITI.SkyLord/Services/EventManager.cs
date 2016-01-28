@@ -88,7 +88,8 @@ namespace ITI.SkyLord
             int numberOfSeconds;
             Unit slowerUnit = army.Regiments.Select( r => r.Unit ).OrderBy( u => u.UnitStatistics.Speed ).FirstOrDefault();
             double distance = IslandManager.DistanceBeetweenTwoIslands( island, destination );
-            numberOfSeconds = (int)distance * slowerUnit.UnitStatistics.Speed; // Voir si on modifie le ratio
+            numberOfSeconds = (int)((distance / slowerUnit.UnitStatistics.Speed ) * 3000 ); // Voir si on modifie le ratio
+            Console.WriteLine( "Nombre de secondes de transport : " + numberOfSeconds );
             return numberOfSeconds;
         }
 

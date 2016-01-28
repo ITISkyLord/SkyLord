@@ -70,7 +70,7 @@
                 <div class="col-lg-1">@technologyDisplay.CurrentLevel.Cost.Magic Magie</div>
                 <div class="col-lg-1">@technologyDisplay.CurrentLevel.Duration Temps de recherche</div>
                 
-                @if ( Model.CurrentResearch != null || Model.IsInConstruction )
+                @if ( Model.CurrentResearch != null || Model.EventsOnBuilding.Count != 0 )
                 {
                     <div class="col-lg-1"><input disabled="disabled" type="submit" value="Rechercher" /></div>
                 }
