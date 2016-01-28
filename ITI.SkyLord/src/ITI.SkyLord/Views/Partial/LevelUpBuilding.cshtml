@@ -7,7 +7,7 @@
             <div class="buildings-build-head">
                 Niveau : @Model.CurrentBuilding.Level.Number
             </div>
-            @if ( Model.NextBuildingLevel.Bonuses.Count() != 0 )
+            @if ( Model.CurrentBuilding.Level.Bonuses.Count() != 0 )
             {
                 <p>Bonus apportés </p>
             }
@@ -21,21 +21,21 @@
                     Niveau suivant
                 </div>
 
-                @if ( Model.NextBuildingLevel.Bonuses.Count() != 0 )
-                {
-                    <p>Bonus apportés au niveau suivant </p>
-                }
-                @foreach ( Bonus bonus in Model.NextBuildingLevel.Bonuses )
-                {
-                    @BonusManager.StaticBonusToString( bonus ) <br />
-                }
-
-                @if (Model.NextBuildingLevel == null)
+                @if ( Model.NextBuildingLevel == null )
                 {
                     <p class="col-lg-12">Niveau maximum atteint</p>
                 }
                 else
                 {
+                    @if ( Model.NextBuildingLevel.Bonuses.Count() != 0 )
+                    {
+                        <p>Bonus apportés au niveau suivant </p>
+                    }
+                    @foreach ( Bonus bonus in Model.NextBuildingLevel.Bonuses )
+                    {
+                        @BonusManager.StaticBonusToString( bonus ) <br />
+                    }
+
                     <div class="buildings-build-body-txt">
                         @{Write("Bois : " + Model.NextBuildingLevel.Cost.Wood + " " +
                  "Métal : " + Model.NextBuildingLevel.Cost.Metal + " " +
@@ -56,7 +56,7 @@
                         {
                             if ( Model.CurrentBuilding.BuildingName == BuildingName.laboratory && Model.CurrentResearch != null )
                             {
-                                <div>Vous ne pouvez pas faire de travaux sur votre laboratoire si vous effectuez en recherche.</div>
+                                <div>Vous ne pouvez pas faire de travaux sur votre laboratoire si vous effectuez une recherche.</div>
                             }
                             else if ( Model.CurrentBuilding.BuildingName == BuildingName.invocation && Model.UnitsQueue.Count() != 0 )
                             {
@@ -69,6 +69,8 @@
                             else if ( RessourceManager.IsEnough( Model.Layout.CurrentIsland.AllRessources, Model.NextBuildingLevel.Cost ) )
                             {
                                 <input type="submit" class="btn btn-link" value="Augmenter" />
+
+                                <div>Temps de construction : @TimeSpan.FromSeconds( Model.NextBuildingLevel.Duration ).CustomToString() </div>
                             }
                             else
                             {
