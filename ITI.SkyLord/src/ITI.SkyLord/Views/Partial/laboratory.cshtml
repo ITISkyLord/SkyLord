@@ -32,7 +32,7 @@
                 <div class="col-lg-1">@technologyDisplay.NextLevel.Cost.Metal Métal</div>
                 <div class="col-lg-1">@technologyDisplay.NextLevel.Cost.Cristal Cristal</div>
                 <div class="col-lg-1">@technologyDisplay.NextLevel.Cost.Magic Magie</div>
-                <div class="col-lg-1">@technologyDisplay.NextLevel.Duration Temps de recherche</div>
+                <div class="col-lg-1"> @TimeSpan.FromSeconds( @technologyDisplay.NextLevel.Duration ).CustomToString() Temps de recherche</div>
 
                 @if ( Model.CurrentResearch != null || Model.IsInConstruction )
                 {

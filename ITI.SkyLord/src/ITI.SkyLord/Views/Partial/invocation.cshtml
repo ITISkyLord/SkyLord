@@ -133,7 +133,7 @@
                         <div class="col col-lg-1 col-sm-1">Métal @unit.UnitCost.Metal</div>
                         <div class="col col-lg-1 col-sm-1">Cristal @unit.UnitCost.Cristal</div>
                         <div class="col col-lg-1 col-sm-1">Magie @unit.UnitCost.Magic</div>
-                        <div class="col col-lg-1 col-sm-1">@unit.Duration s</div>
+                        <div class="col col-lg-1 col-sm-1"> @TimeSpan.FromSeconds( @unit.Duration ).CustomToString()</div>
                         @*<div class="col col-lg-1 col-sm-1">Nombre maximum @maxUnit</div>*@
                     </div>
                     @if ( Model.EventsOnBuilding.Count() != 0 )
