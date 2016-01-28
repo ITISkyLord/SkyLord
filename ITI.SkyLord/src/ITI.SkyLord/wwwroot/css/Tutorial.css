@@ -6754,9 +6754,6 @@ button.close {
     margin-left: 0;
   }
 }
-.tutorialContainer .tutorial {
-  /*border: 1px solid white;*/
-}
 .tutorialContainer .tutorial .tutorial-head {
   text-align: center;
   color: whitesmoke;
