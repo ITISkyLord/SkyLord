@@ -58,13 +58,13 @@
                     <li><a asp-controller="Player" asp-action="SeePlayers" asp-route-islandId="@Model.Layout.IslandId">Joueurs</a></li>
                     <li><a asp-controller="Message" asp-action="GetAllMessages" asp-route-islandId="@Model.Layout.IslandId">Messages</a></li>
                     <li><a asp-controller="Profil" asp-action="Index" asp-route-islandId="@Model.Layout.IslandId">Profil</a></li>
-                    <li><a  asp-route-islandId="@Model.Layout.IslandId">Tutoriel</a></li>
+                    <li><a asp-route-islandId="@Model.Layout.IslandId">Tutoriel</a></li>
                     <li>
                         <form asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm">
                             <button type="submit" class="btn btn-link">Déconnexion</button>
                         </form>
-                    </li>              
-                    <li><a>Heure : @DateTime.Now.ToString( @"HH\hmm\mss\s" )</a></li>
+                    </li>
+                    <li><a>Heure : @DateTime.Now.ToString(@"HH\hmm\mss\s")</a></li>
                 </ul>
             </div>
         </div>
@@ -91,10 +91,10 @@
 
                 <div class="RessourceLine">
                     <form class="form-inline">
-                        Bois : <input type="text" class="form-control" size="5" placeholder=@Model.Layout.CurrentIsland.AllRessources.Wood readonly>
-                        Métal : <input type="text" class="form-control" size="5" placeholder=@Model.Layout.CurrentIsland.AllRessources.Metal readonly>
-                        Cristal : <input type="text" class="form-control" size="5" placeholder=@Model.Layout.CurrentIsland.AllRessources.Cristal readonly>
-                        Magie : <input type="text" class="form-control" size="5" placeholder=@Model.Layout.CurrentIsland.AllRessources.Magic readonly>
+                        <img src="~/images/Ressources/bois.jpg" /> : @Model.Layout.CurrentIsland.AllRessources.Wood
+                        <img src="~/images/Ressources/fer.jpg" /> : @Model.Layout.CurrentIsland.AllRessources.Metal
+                        <img src="~/images/Ressources/cristaux.jpg" /> : @Model.Layout.CurrentIsland.AllRessources.Cristal
+                        <img src="~/images/Ressources/magie.jpg" /> : @Model.Layout.CurrentIsland.AllRessources.Magic
                     </form>
                 </div>
 
