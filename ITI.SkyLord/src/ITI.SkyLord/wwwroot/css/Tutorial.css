@@ -6460,8 +6460,8 @@ button.close {
 .modal-header:after,
 .modal-footer:before,
 .modal-footer:after,
-.playerContainer:before,
-.playerContainer:after {
+.tutorialContainer:before,
+.tutorialContainer:after {
   content: " ";
   display: table;
 }
@@ -6481,7 +6481,7 @@ button.close {
 .panel-body:after,
 .modal-header:after,
 .modal-footer:after,
-.playerContainer:after {
+.tutorialContainer:after {
   clear: both;
 }
 .center-block {
@@ -6727,7 +6727,7 @@ button.close {
     display: none !important;
   }
 }
-.playerContainer {
+.tutorialContainer {
   margin-right: auto;
   margin-left: auto;
   padding-left: 15px;
@@ -6742,30 +6742,38 @@ button.close {
   background-size: 100% 100% !important;
   overflow: auto;
 }
-.playerContainer > .navbar-header,
-.playerContainer > .navbar-collapse {
+.tutorialContainer > .navbar-header,
+.tutorialContainer > .navbar-collapse {
   margin-right: -15px;
   margin-left: -15px;
 }
 @media (min-width: 768px) {
-  .playerContainer > .navbar-header,
-  .playerContainer > .navbar-collapse {
+  .tutorialContainer > .navbar-header,
+  .tutorialContainer > .navbar-collapse {
     margin-right: 0;
     margin-left: 0;
   }
 }
-.playerContainer .seePlayers {
-  color: white;
+.tutorialContainer .tutorial .tutorial-head {
+  text-align: center;
+  color: whitesmoke;
   font-weight: bold;
-  font-size: 20px;
-  overflow: auto;
+  font-size: 25px;
+  background-image: url("../images/Site/site_haut2low.jpg");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  padding: 10px;
+  border-bottom: 1px solid transparent;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
 }
-.playerContainer .seePlayers .table th {
-  color: white;
-  font-weight: bold;
-}
-.playerContainer .seePlayers .table td {
+.tutorialContainer .tutorial .tutorial-body {
+  margin-top: 50px;
+  margin-bottom: 50px;
   color: #825847;
   font-weight: bold;
-  overflow: auto;
+  font-size: 13px;
+  text-align: center;
 }

@@ -67,6 +67,9 @@
     .disabledInput {
 
     }
+
+    .UnitInfo:hover {
+    }   
 </style>
 
 <div class="head">
@@ -111,9 +114,14 @@
                     }
 
                     <div class="col-lg-2  MisEnAvant">
-                        <div class="text">
-                            @unit.Name<br />
-                            <div class="UnitInfo" id="@unit.UnitName.ToString()" style="cursor: pointer;">Voir</div>
+                        <div class="text" style="position: relative; top:-24px; margin-left: 10px;">
+                            @{ 
+                                var name = unit.Name + ".jpg";
+                            }
+                            
+                            <div class="UnitInfo" id="@unit.UnitName.ToString()" style="cursor: pointer;">
+                                <img src="~/images/Units/@name" title="@unit.Name" /><br />Voir
+                            </div>
 
                         </div>
                     </div>

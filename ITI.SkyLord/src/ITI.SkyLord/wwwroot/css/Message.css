@@ -6735,8 +6735,14 @@ button.close {
   display: block;
   overflow: auto;
 }
+.messageContainer .margin {
+  margin-top: 10px;
+}
+.messageContainer .margin-bottom {
+  margin-bottom: 10px;
+}
 .messageContainer #sendMessage {
-  margin-top: 3px;
+  margin-top: 10px;
 }
 .messageContainer #answerMessage {
   margin-bottom: 10px;

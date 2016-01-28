@@ -1080,7 +1080,7 @@ namespace ITI.SkyLord
                 // Add Unit
                 Unit prismaticGolem = new Unit
                 {
-                    Name = "Golem  prismatique",
+                    Name = "Golem prismatique",
                     UnitName = UnitName.prismaticGolem,
                     UnitType = UnitType.mecanical,
                     UnitDamageType = UnitDamageType.magical,

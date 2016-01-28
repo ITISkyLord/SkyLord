@@ -6471,7 +6471,9 @@ button.close {
 .playerContainer:before,
 .playerContainer:after,
 .profilContainer:before,
-.profilContainer:after {
+.profilContainer:after,
+.tutorialContainer:before,
+.tutorialContainer:after {
   content: " ";
   display: table;
 }
@@ -6496,7 +6498,8 @@ button.close {
 .SkyLordContainer .SkyLordMainRow .PageContent .ViewContentRow:after,
 #degage .production:after,
 .playerContainer:after,
-.profilContainer:after {
+.profilContainer:after,
+.tutorialContainer:after {
   clear: both;
 }
 .center-block {
@@ -6834,7 +6837,7 @@ body {
   height: auto;
   width: 100%;
   height: 100%;
-  background-image: url("../images/Site/site_fondlow.jpg");
+  background-image: url("../images/Site/site_fond2low.jpg");
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }
@@ -6948,7 +6951,10 @@ body {
   background-image: url("../images/Site/site_ressourcelow.jpg");
   background-size: 100% 100%;
   background-repeat: no-repeat;
-  /*padding: 50px;*/
+  color: #825847;
+  font-weight: bold;
+  font-size: 13px;
+  text-align: center;
   margin: 5px;
 }
 .SkyLordContainer .SkyLordMainRow .PageContent .RessourceLine form {
@@ -7191,7 +7197,7 @@ footer li a:hover {
   height: 100%;
   width: auto;
   padding-bottom: 100px;
-  background-image: url("../images/Site/sitecartonlow.jpg") !important;
+  background-image: url("../images/Site/site_fond2low.jpg") !important;
   background-repeat: no-repeat !important;
   background-size: 100% 100% !important;
   overflow: auto;
@@ -7266,8 +7272,8 @@ footer li a:hover {
   border-radius: 0;
   transition: box-shadow 0.5s;
   width: 100%;
-  height: 580px;
-  background-image: url("../images/Site/site_ressourcelow.jpg");
+  height: 565px;
+  background-image: url("../images/Site/site_fond2low.jpg");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   background-position: center;
@@ -7420,7 +7426,7 @@ footer li a:hover {
   height: auto;
   width: 100%;
   height: 100%;
-  background-image: url("../images/Site/sitecartonlow.jpg") !important;
+  background-image: url("../images/Site/site_fond2low.jpg") !important;
   background-repeat: no-repeat !important;
   background-size: 100% 100% !important;
   overflow: auto;
@@ -7441,6 +7447,7 @@ footer li a:hover {
   color: white;
   font-weight: bold;
   font-size: 20px;
+  overflow: auto;
 }
 .playerContainer .seePlayers .table th {
   color: white;
@@ -7449,6 +7456,7 @@ footer li a:hover {
 .playerContainer .seePlayers .table td {
   color: #825847;
   font-weight: bold;
+  overflow: auto;
 }
 .profilContainer {
   margin-right: auto;
@@ -7476,6 +7484,9 @@ footer li a:hover {
     margin-right: 0;
     margin-left: 0;
   }
+}
+.profilContainer .margin {
+  margin-top: 10px;
 }
 .profilContainer #pp {
   padding: 5px;
@@ -7576,8 +7587,14 @@ footer li a:hover {
   display: block;
   overflow: auto;
 }
+.messageContainer .margin {
+  margin-top: 10px;
+}
+.messageContainer .margin-bottom {
+  margin-bottom: 10px;
+}
 .messageContainer #sendMessage {
-  margin-top: 3px;
+  margin-top: 10px;
 }
 .messageContainer #answerMessage {
   margin-bottom: 10px;
@@ -7627,50 +7644,56 @@ footer li a:hover {
   color: whitesmoke;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
-/*.SkyLordNavBar {
-    .Col(12);
-    background-color: red;
-    border-bottom: solid black 2px;
-
-    ul {
-        .nav;
-        .navbar;
-        height: 50px;
-
-        li {
-            .navbar-btn;
-            .pull-left;
-
-            h1, a {
-                margin-left: 50px;
-            }
-        }
-
-        img {
-            height: 50px;
-        }
-    }
-}*/
-/*.HomeContainer {
-    .row;
-    margin-top: 100px;
-
-    .Block {
-        .Col(4);
-        .MakeOffset(1,1,1,1);
-        .text-center;
-    }
-
-    .RegisterBlock {
-        .Block;
-        .Section(coral);
-    }
-
-    .ConnectionBlock {
-        .Block;
-        .Section(#bada55);
-    }
-}*/
+.tutorialContainer {
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 1px;
+  background-color: "white";
+  height: auto;
+  width: 100%;
+  height: 100%;
+  background-image: url("../images/Site/site_fond2low.jpg") !important;
+  background-repeat: no-repeat !important;
+  background-size: 100% 100% !important;
+  overflow: auto;
+}
+.tutorialContainer > .navbar-header,
+.tutorialContainer > .navbar-collapse {
+  margin-right: -15px;
+  margin-left: -15px;
+}
+@media (min-width: 768px) {
+  .tutorialContainer > .navbar-header,
+  .tutorialContainer > .navbar-collapse {
+    margin-right: 0;
+    margin-left: 0;
+  }
+}
+.tutorialContainer .tutorial .tutorial-head {
+  text-align: center;
+  color: whitesmoke;
+  font-weight: bold;
+  font-size: 25px;
+  background-image: url("../images/Site/site_haut2low.jpg");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  padding: 10px;
+  border-bottom: 1px solid transparent;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+.tutorialContainer .tutorial .tutorial-body {
+  margin-top: 50px;
+  margin-bottom: 50px;
+  color: #825847;
+  font-weight: bold;
+  font-size: 13px;
+  text-align: center;
+}
 .modal-header,
 .close {
   background-color: #5cb85c;
@@ -7685,47 +7708,55 @@ footer li a:hover {
 a {
   color: #825847;
 }
+#Mynavbar li,
+#Mynavbar a {
+  color: #825847;
+  font-weight: bold;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+#Mynavbar li a:hover {
+  color: #825847;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
 button {
   color: whitesmoke;
   border: none;
   border-radius: 50px;
   background-color: #825847;
 }
-.carousel-control.right,
-.carousel-control.left {
-  background-image: url("../images/site_fond2low.jpg");
-  color: red;
-}
-.carousel-indicators li {
-  border-color: red;
-}
-.carousel-indicators li li.active {
-  background-color: red;
-}
 .carousel-inner img {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  height: 200px;
-  width: 150px;
+  width: 100%;
+  /* Set width to 100% */
+  margin: auto;
 }
-.bg-1 {
-  background: #2d2d30;
-  color: #bdbdbd;
+.carousel-caption h3 {
+  color: #fff !important;
 }
-.bg-1 h3 {
-  color: #fff;
+@media (max-width: 600px) {
+  .carousel-caption {
+    display: none;
+    /* Hide the carousel text when the screen is less than 600 pixels wide */
+  }
 }
-.bg-1 p {
+.container-home {
+  background-image: url("../images/Site/site_fond2low.jpg");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
   font-style: italic;
+  color: #bdbdbd;
+  text-align: center;
+  font-size: 17px;
+  font-weight: bold;
+  /*margin-bottom:20px;*/
 }
-.person {
-  border: 10px solid transparent;
-  margin-bottom: 25px;
-  width: 80%;
-  height: 80%;
-  opacity: 0.7;
+.container-home .background-container {
+  height: 100%;
+  background-color: #0a0001;
 }
-.person person:hover {
-  border-color: #f1f1f1;
+.container-home .space-btn {
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+#footer-home {
+  padding: 26px;
 }
