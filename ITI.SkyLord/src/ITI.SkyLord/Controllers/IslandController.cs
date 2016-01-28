@@ -15,15 +15,15 @@ namespace ITI.SkyLord.Controllers
 {
     public class IslandController : GenericController
     {
-        public IActionResult OverView( long islandId )
+        public IActionResult OverView(long islandId)
         {
             OverViewViewModel ovvm = new OverViewViewModel();
 
-            SetupContext.GetIsland( islandId, SetupContext.GetPlayer( User ) );
-            SetupContext.ValidateIsland( islandId, SetupContext.GetPlayer( User ) );
+            SetupContext.GetIsland(islandId, SetupContext.GetPlayer(User));
+            SetupContext.ValidateIsland(islandId, SetupContext.GetPlayer(User));
 
-            SetupContext.FillStandardVM( ovvm, SetupContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
-            return View( ovvm );
+            SetupContext.FillStandardVM(ovvm, SetupContext.GetPlayer(User.GetUserId()).PlayerId, islandId);
+            return View(ovvm);
         }
         public IActionResult Index()
         {
@@ -34,95 +34,95 @@ namespace ITI.SkyLord.Controllers
         /// </summary>
         /// <param name="id">Mail of player</param>
         /// <returns></returns>
-        public IActionResult SeeMyIsland( long islandId = 0 )
+        public IActionResult SeeMyIsland(long islandId = 0)
         {
-            Island currentIsland = GetIsland( islandId );
+            Island currentIsland = GetIsland(islandId);
 
-            SeeMyIslandViewModel islandViewModel = CreateBuildingViewModel( currentIsland.IslandId, SetupContext.GetPlayer( User.GetUserId() ).PlayerId );
+            SeeMyIslandViewModel islandViewModel = CreateBuildingViewModel(currentIsland.IslandId, SetupContext.GetPlayer(User.GetUserId()).PlayerId);
 
-            return View( islandViewModel );
+            return View(islandViewModel);
         }
-        public IActionResult ChangeName( long islandId, string name )
+        public IActionResult ChangeName(long islandId, string name)
         {
-            Island currentIsland = GetIsland( islandId );
-            if( !string.IsNullOrWhiteSpace( name ) )
+            Island currentIsland = GetIsland(islandId);
+            if (!string.IsNullOrWhiteSpace(name))
             {
                 currentIsland.Name = name;
                 SetupContext.SaveChanges();
             }
 
-            SeeMyIslandViewModel islandViewModel = CreateBuildingViewModel( currentIsland.IslandId, SetupContext.GetPlayer( User.GetUserId() ).PlayerId );
+            SeeMyIslandViewModel islandViewModel = CreateBuildingViewModel(currentIsland.IslandId, SetupContext.GetPlayer(User.GetUserId()).PlayerId);
 
-            return View( "SeeMyIsland", islandViewModel );
+            return View("SeeMyIsland", islandViewModel);
         }
-        private Island GetIsland( long islandId )
+        private Island GetIsland(long islandId)
         {
-            if( islandId == 0 )
+            if (islandId == 0)
             {
-                long activePlayerId = SetupContext.GetPlayer( User );
+                long activePlayerId = SetupContext.GetPlayer(User);
                 return SetupContext.Islands
-                    .Include( i => i.Armies )
-                    .ThenInclude( a => a.Regiments )
-                    .ThenInclude( r => r.Unit )
-                    .Include( i => i.AllRessources )
-                    .Include( i => i.Owner )
-                    .Include( i => i.Coordinates )
-                    .Include( i => i.Buildings )
-                    .SingleOrDefault( i => i.IsCapital && i.Owner.PlayerId == activePlayerId );
+                    .Include(i => i.Armies)
+                    .ThenInclude(a => a.Regiments)
+                    .ThenInclude(r => r.Unit)
+                    .Include(i => i.AllRessources)
+                    .Include(i => i.Owner)
+                    .Include(i => i.Coordinates)
+                    .Include(i => i.Buildings)
+                    .SingleOrDefault(i => i.IsCapital && i.Owner.PlayerId == activePlayerId);
             }
             else
             {
-                long activePlayerId = SetupContext.GetPlayer( User.GetUserId() ).PlayerId;
+                long activePlayerId = SetupContext.GetPlayer(User.GetUserId()).PlayerId;
                 return SetupContext.Islands
-                    .Include( i => i.Armies )
-                    .ThenInclude( a => a.Regiments )
-                    .ThenInclude( r => r.Unit )
-                    .Include( i => i.AllRessources )
-                    .Include( i => i.Owner )
-                    .Include( i => i.Coordinates )
-                    .SingleOrDefault( i => i.IslandId == islandId && i.Owner.PlayerId == activePlayerId );
+                    .Include(i => i.Armies)
+                    .ThenInclude(a => a.Regiments)
+                    .ThenInclude(r => r.Unit)
+                    .Include(i => i.AllRessources)
+                    .Include(i => i.Owner)
+                    .Include(i => i.Coordinates)
+                    .SingleOrDefault(i => i.IslandId == islandId && i.Owner.PlayerId == activePlayerId);
             }
         }
-        private SeeMyIslandViewModel CreateBuildingViewModel( SeeMyIslandViewModel model, long islandId, long playerId )
+        private SeeMyIslandViewModel CreateBuildingViewModel(SeeMyIslandViewModel model, long islandId, long playerId)
         {
-            LevelManager levelManager = new LevelManager( SetupContext );
-            BuildingManager buildingManager = new BuildingManager( SetupContext, levelManager );
-            BonusManager bonusManager = new BonusManager( SetupContext );
-            ArmyManager armyManager = new ArmyManager( SetupContext, bonusManager );
-            EventManager eventManager = new EventManager( SetupContext, new EventPackManager( SetupContext ) );
+            LevelManager levelManager = new LevelManager(SetupContext);
+            BuildingManager buildingManager = new BuildingManager(SetupContext, levelManager);
+            BonusManager bonusManager = new BonusManager(SetupContext);
+            ArmyManager armyManager = new ArmyManager(SetupContext, bonusManager);
+            EventManager eventManager = new EventManager(SetupContext, new EventPackManager(SetupContext));
 
             // Fill Standard
-            SetupContext.FillStandardVM( model, playerId, islandId );
+            SetupContext.FillStandardVM(model, playerId, islandId);
 
             // Current Player & Island
-            model.Layout.CurrentPlayer = SetupContext.Players.Include( p => p.Islands ).Single( p => p.PlayerId == playerId );
-            Island currentIsland = SetupContext.GetIsland( islandId, model.Layout.CurrentPlayer.PlayerId );
+            model.Layout.CurrentPlayer = SetupContext.Players.Include(p => p.Islands).Single(p => p.PlayerId == playerId);
+            Island currentIsland = SetupContext.GetIsland(islandId, model.Layout.CurrentPlayer.PlayerId);
             model.CurrentIsland = currentIsland;
 
             // Tous les buildings sur l'island (modifés par leurs bonus)
-            model.Buildings = bonusManager.GetResolvedBuildings( buildingManager.GetBuildingsOnCurrentIsland( islandId, playerId ), playerId, islandId );
+            model.Buildings = bonusManager.GetResolvedBuildings(buildingManager.GetBuildingsOnCurrentIsland(islandId, playerId), playerId, islandId);
             model.DicoBuildings = new Dictionary<string, Building>();
-            foreach( var building in model.Buildings )
+            foreach (var building in model.Buildings)
             {
-                model.DicoBuildings.Add( building.Position.ToString(), building );
+                model.DicoBuildings.Add(building.Position.ToString(), building);
             }
 
             // Récupère tout les events de tout les batiments (de 0 à 10 donc)
             model.AllBuildingEventOnIsland = new Dictionary<int, List<BuildingEvent>>();
-            for( var i = 0; i <= 10; i++ )
+            for (var i = 0; i <= 10; i++)
             {
-                model.AllBuildingEventOnIsland.Add( i, eventManager.GetBuildingEventsOnThisBuildingPosition( islandId, i ) );
+                model.AllBuildingEventOnIsland.Add(i, eventManager.GetBuildingEventsOnThisBuildingPosition(islandId, i));
             }
 
             // Tout les nexts level de chaque batiments
             model.NextLevel = new Dictionary<int, Level>();
-            foreach( Building building in model.Buildings )
+            foreach (Building building in model.Buildings)
             {
                 // Si le next level existe => on l'ajoute au dico OTD
-                var nextLevel = levelManager.FindNextLevel( building.Level );
-                if( nextLevel != null )
+                var nextLevel = levelManager.FindNextLevel(building.Level);
+                if (nextLevel != null)
                 {
-                    model.NextLevel.Add( building.Position, bonusManager.ResolveBonuses( (BuildingLevel)nextLevel, playerId, islandId ) );
+                    model.NextLevel.Add(building.Position, bonusManager.ResolveBonuses((BuildingLevel)nextLevel, playerId, islandId));
                 }
             }
 
@@ -130,62 +130,62 @@ namespace ITI.SkyLord.Controllers
             model.AvailableBuildings = buildingManager.GetAvailableBuildings();
 
             // On retire tout les bâtiments qui sont uniques et que l'on a déjà construit sur notre island
-            model.AvailableBuildings = buildingManager.RemoveAlreadyBuiltBuilding( model.AvailableBuildings, model.Buildings );
+            model.AvailableBuildings = buildingManager.RemoveAlreadyBuiltBuilding(model.AvailableBuildings, model.Buildings);
 
             // Army sur l'island
-            model.DefenseArmy = armyManager.GetCurrentDefenseArmy( islandId );
+            model.DefenseArmy = armyManager.GetCurrentDefenseArmy(islandId);
 
             // Toutes les unités possibles  
-            model.AllUnits = bonusManager.GetResolvedUnits( armyManager.GetExistingUnits(), playerId, islandId );
+            model.AllUnits = bonusManager.GetResolvedUnits(armyManager.GetExistingUnits(), playerId, islandId);
 
-            model.AvailableUnit = model.AllUnits.Where( u => levelManager.GetAvailablility( u, islandId ).IsItemAvailable ).ToList();
+            model.AvailableUnit = model.AllUnits.Where(u => levelManager.GetAvailablility(u, islandId).IsItemAvailable).ToList();
 
             // La queue de création des unités
-            model.UnitsQueue = eventManager.GetCurrentUnitQueue( islandId );
+            model.UnitsQueue = eventManager.GetCurrentUnitQueue(islandId);
 
 
             // SeeDetailsIslands complétion
-            model.MovementFromThisIsland = model.AttacksFromThisPlayer.Where( ae => ae.Island.IslandId == islandId ).ToList();
-            model.MovementTowardThisIsland = model.AttacksTowardThisPlayer.Where( ae => ae.DestinationIdd == islandId ).ToList();
+            model.MovementFromThisIsland = model.AttacksFromThisPlayer.Where(ae => ae.Island.IslandId == islandId).ToList();
+            model.MovementTowardThisIsland = model.AttacksTowardThisPlayer.Where(ae => ae.DestinationIdd == islandId).ToList();
 
 
-            model.Production = RessourceManager.GetProductionByHour( islandId, model.Buildings );
+            model.Production = RessourceManager.GetProductionByHour(islandId, model.Buildings);
             //model.BuildingDeveloping
-            model.BuildingDeveloping = eventManager.GetCurrentConstruction( islandId );
+            model.BuildingDeveloping = eventManager.GetCurrentConstruction(islandId);
             // Toutes les technologies possibles
-            TechnologyManager techManager = new TechnologyManager( SetupContext, levelManager, new BonusManager( SetupContext ) );
-            model = CreateTechnologyItems( model, eventManager, islandId, playerId );
+            TechnologyManager techManager = new TechnologyManager(SetupContext, levelManager, new BonusManager(SetupContext));
+            model = CreateTechnologyItems(model, eventManager, islandId, playerId);
             return model;
         }
-        private SeeMyIslandViewModel CreateBuildingViewModel( long islandId, long playerId )
+        private SeeMyIslandViewModel CreateBuildingViewModel(long islandId, long playerId)
         {
             SeeMyIslandViewModel model = new SeeMyIslandViewModel();
-            SetupContext.FillStandardVM( model, playerId, islandId );
+            SetupContext.FillStandardVM(model, playerId, islandId);
 
-            return CreateBuildingViewModel( model, islandId, playerId );
+            return CreateBuildingViewModel(model, islandId, playerId);
         }
-        private SeeMyIslandViewModel CreateTechnologyItems( SeeMyIslandViewModel model, EventManager eventManager, long islandId, long playerId )
+        private SeeMyIslandViewModel CreateTechnologyItems(SeeMyIslandViewModel model, EventManager eventManager, long islandId, long playerId)
         {
             //model.Layout.CurrentPlayer = SetupContext.GetPlayer( User.GetUserId() );
-            Island currentIsland = SetupContext.GetIsland( islandId, model.Layout.CurrentPlayer.PlayerId );
+            Island currentIsland = SetupContext.GetIsland(islandId, model.Layout.CurrentPlayer.PlayerId);
 
-            LevelManager levelManager = new LevelManager( SetupContext );
-            BonusManager bonusManager = new BonusManager( SetupContext );
-            model.TechnologyManager = new TechnologyManager( SetupContext, levelManager, new BonusManager( SetupContext ) );
+            LevelManager levelManager = new LevelManager(SetupContext);
+            BonusManager bonusManager = new BonusManager(SetupContext);
+            model.TechnologyManager = new TechnologyManager(SetupContext, levelManager, new BonusManager(SetupContext));
 
             // Get the existing technologies
             List<TechnologyLevel> existingTechnologies = model.TechnologyManager.GetExistingTechnologies();
             // Get the player's current technologies
-            List<Technology> playersTechnologies = model.TechnologyManager.GetPlayersTechnologies( playerId ).ToList();
+            List<Technology> playersTechnologies = model.TechnologyManager.GetPlayersTechnologies(playerId).ToList();
 
             // Check if the player is currently researching a technology
-            model.CurrentResearch = eventManager.GetCurrentResearch( playerId );
+            model.CurrentResearch = eventManager.GetCurrentResearch(playerId);
 
             model.TechnologyDisplays = new List<TechnologyDisplay>();
-            foreach( TechnologyLevel technologyLevel in existingTechnologies )
+            foreach (TechnologyLevel technologyLevel in existingTechnologies)
             {
                 // Look for the technology in the player's technology list
-                Technology technologyFound = playersTechnologies.SingleOrDefault( t => t.Level.TechnologyName == technologyLevel.TechnologyName );
+                Technology technologyFound = playersTechnologies.SingleOrDefault(t => t.Level.TechnologyName == technologyLevel.TechnologyName);
 
                 bool isResearched = false;
                 bool isAvailable = false;
@@ -195,16 +195,16 @@ namespace ITI.SkyLord.Controllers
                 TechnologyLevel nextLevelToAdd = null;
 
                 // If a technology was found, the player already has it, so we add the current level and the next level ( or make it unavailable if there is no next level )
-                if( technologyFound != null )
+                if (technologyFound != null)
                 {
                     // Get the next level of the technology
-                    nextLevelToAdd = (TechnologyLevel)levelManager.FindNextLevel( technologyFound.Level );
-                    if( nextLevelToAdd != null )
+                    nextLevelToAdd = (TechnologyLevel)levelManager.FindNextLevel(technologyFound.Level);
+                    if (nextLevelToAdd != null)
                     {
                         isResearched = true;
                         isAvailable = true;
                         // Get the next level with resolved bonuses
-                        nextLevelToAdd = bonusManager.ResolveBonuses( nextLevelToAdd, playerId, islandId );
+                        nextLevelToAdd = bonusManager.ResolveBonuses(nextLevelToAdd, playerId, islandId);
                     }
                     else
                     {
@@ -212,40 +212,49 @@ namespace ITI.SkyLord.Controllers
                         isAvailable = false;
                     }
                     // Get the current level with resolved bonuses
-                    levelToAdd = bonusManager.ResolveBonuses( technologyFound.Level, playerId, islandId );
+                    levelToAdd = bonusManager.ResolveBonuses(technologyFound.Level, playerId, islandId);
                 }
                 // If no technology was found, we check if the technology is available to the player
-                else if( levelManager.GetAvailablility( technologyLevel, islandId ).IsItemAvailable )
+                else if (levelManager.GetAvailablility(technologyLevel, islandId).IsItemAvailable)
                 {
                     isAvailable = true;
-                    levelToAdd = bonusManager.ResolveBonuses( levelToAdd, playerId, islandId );
+                    levelToAdd = bonusManager.ResolveBonuses(levelToAdd, playerId, islandId);
                     durationToDisplay = levelToAdd.Duration;
                 }
 
-                model.TechnologyDisplays.Add( new TechnologyDisplay
+                model.TechnologyDisplays.Add(new TechnologyDisplay
                 {
                     IsResearched = isResearched,
                     IsAvailable = isAvailable,
                     CurrentLevel = levelToAdd,
                     NextLevel = nextLevelToAdd
-                } );
+                });
             }
 
             return model;
         }
 
-        public IActionResult SeeOtherIsland( long islandIdOfOtherPlayer, long islandId )
+        public IActionResult SeeOtherIsland(long islandIdOfOtherPlayer, long islandId)
         {
             SeeOtherIslandViewModel model = new SeeOtherIslandViewModel();
             model.IslandIdOfOther = islandIdOfOtherPlayer;
-            model.TargetIsland = SetupContext.Islands.Include( i => i.Coordinates ).Include( i => i.Owner ).Single( i => i.IslandId == islandIdOfOtherPlayer );
-            if( model.TargetIsland.Owner == null )
+            model.TargetIsland = SetupContext.Islands.Include(i => i.Coordinates).Include(i => i.Owner).Single(i => i.IslandId == islandIdOfOtherPlayer);
+            if (model.TargetIsland.Owner == null)
                 model.HasOwner = false;
             else
                 model.HasOwner = true;
-            SetupContext.FillStandardVM( model, SetupContext.GetPlayer( User.GetUserId() ).PlayerId, islandId );
+            SetupContext.FillStandardVM(model, SetupContext.GetPlayer(User.GetUserId()).PlayerId, islandId);
 
-            return View( model );
+            return View(model);
+        }
+
+        public IActionResult Tutorial(long islandId)
+        {
+            TutorialViewModel model = new TutorialViewModel();
+            model.IslandId = islandId;
+
+            SetupContext.FillStandardVM(model, SetupContext.GetPlayer(User.GetUserId()).PlayerId, islandId);
+            return View(model);
         }
     }
 }

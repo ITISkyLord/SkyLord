@@ -58,7 +58,7 @@
                     <li><a asp-controller="Player" asp-action="SeePlayers" asp-route-islandId="@Model.Layout.IslandId">Joueurs</a></li>
                     <li><a asp-controller="Message" asp-action="GetAllMessages" asp-route-islandId="@Model.Layout.IslandId">Messages</a></li>
                     <li><a asp-controller="Profil" asp-action="Index" asp-route-islandId="@Model.Layout.IslandId">Profil</a></li>
-                    <li><a asp-route-islandId="@Model.Layout.IslandId">Tutoriel</a></li>
+                    <li><a asp-controller="Island" asp-action="Tutorial" asp-route-islandId="@Model.Layout.IslandId">Tutoriel</a></li>
                     <li>
                         <form asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm">
                             <button type="submit" class="btn btn-link">Déconnexion</button>
