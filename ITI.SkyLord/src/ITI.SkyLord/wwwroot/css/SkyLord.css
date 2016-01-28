@@ -7578,6 +7578,9 @@ footer li a:hover {
   display: block;
   overflow: auto;
 }
+.messageContainer .margin {
+  margin-top: 10px;
+}
 .messageContainer #sendMessage {
   margin-top: 10px;
 }
