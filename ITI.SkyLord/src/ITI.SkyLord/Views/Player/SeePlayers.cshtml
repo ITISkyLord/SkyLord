@@ -16,6 +16,7 @@
                 <thead>
                     <tr>
                         <th>Joueurs</th>
+                        <th>Victoires</th>
                         <th>Plus d'informations</th>
                     </tr>
                 </thead>
@@ -24,6 +25,7 @@
             {
                         <tr>
                             <td>@p.Name</td>
+                            <td>@p.NumberOfVictory</td>
                             <td><a asp-action="ProfilOfOtherPlayer" asp-controller="Profil" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId" asp-route-otherPlayerId="@p.PlayerId" >Voir plus d'info</a></td>
                         </tr>
                     }

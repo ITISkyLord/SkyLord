@@ -34,6 +34,7 @@ namespace ITI.SkyLord.Controllers
             Player player = PlayerContext.GetPlayer(User.GetUserId());
             if (player != null)
             {
+                // Pourquoi ne pas inclure le joueur courant ? On ne se voit pas dans la liste des joueurs !!! wtf
                 List<Player> othersPlayer = PlayerContext.Players
                     .Include(p => p.Profil)
                     .Include(i => i.Islands)

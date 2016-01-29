@@ -110,7 +110,6 @@ namespace ITI.SkyLord
             {
                 CalculatePillagedResult();
 
-
                 //ae.PillagedRessources = new Ressource() { Cristal = 100, Magic = 100, Metal = 100, Wood = 100 };
                 if( _pillagedRessources != null )
                 {
@@ -121,6 +120,11 @@ namespace ITI.SkyLord
                 }
             }
             else _pillagedRessources = null;
+             
+                #region Highscores Managment
+               // _winningArmy.Island.Owner.NumberOfVictory++;
+                #endregion
+
 
             #region CombatReport
             string coreMessageWinner = "";
@@ -159,8 +163,8 @@ namespace ITI.SkyLord
 
             foreach( KeyValuePair<string, int> kvp in cm.Loss )
             {
-                coreMessageWinner += " \n" + kvp.Value + " " + kvp.Key + " sur " + tmpWinArmy.Regiments.Where(a => a.Unit.Name == kvp.Key).Select( b => b.Number.ToString()).First() + "    " ;
-                coreMessageLooser += " \n" + kvp.Value + " " + kvp.Key + " sur " + tmpWinArmy.Regiments.Where(a => a.Unit.Name == kvp.Key).Select( b => b.Number.ToString()).First() + "    ";
+                coreMessageWinner += " \n" + kvp.Value + " " + kvp.Key + " sur " + tmpWinArmy.Regiments.Where( a => a.Unit.Name == kvp.Key ).Select( b => b.Number.ToString() ).First() + "    ";
+                coreMessageLooser += " \n" + kvp.Value + " " + kvp.Key + " sur " + tmpWinArmy.Regiments.Where( a => a.Unit.Name == kvp.Key ).Select( b => b.Number.ToString() ).First() + "    ";
 
             }
 
@@ -259,7 +263,7 @@ namespace ITI.SkyLord
                 rest = FindRest( "wood", ressources );
                 _winningRessource.AddWood( _loosingRessource.Wood );
                 _pillagedRessources.AddWood( _loosingRessource.Wood );
-                _loosingRessource.AddWood( -( _loosingRessource.Wood ) );
+                _loosingRessource.AddWood( -(_loosingRessource.Wood) );
                 _capacityOfPillaged += rest;
                 ressources = recursivite();
                 _flag -= 1;
@@ -269,7 +273,7 @@ namespace ITI.SkyLord
                 rest = FindRest( "metal", ressources );
                 _winningRessource.AddMetal( _loosingRessource.Metal );
                 _pillagedRessources.AddMetal( _loosingRessource.Metal );
-                _loosingRessource.AddMetal( -( _loosingRessource.Metal ) );
+                _loosingRessource.AddMetal( -(_loosingRessource.Metal) );
 
                 _capacityOfPillaged += rest;
                 ressources = recursivite();
@@ -281,7 +285,7 @@ namespace ITI.SkyLord
                 rest = FindRest( "cristal", ressources );
                 _winningRessource.AddCristal( _loosingRessource.Cristal );
                 _pillagedRessources.AddCristal( _loosingRessource.Cristal );
-                _loosingRessource.AddCristal( -( _loosingRessource.Cristal ) );
+                _loosingRessource.AddCristal( -(_loosingRessource.Cristal) );
 
                 _capacityOfPillaged += rest;
                 ressources = recursivite();
@@ -292,7 +296,7 @@ namespace ITI.SkyLord
                 rest = FindRest( "magic", ressources );
                 _winningRessource.AddMagic( _loosingRessource.Magic );
                 _pillagedRessources.AddMagic( _loosingRessource.Magic );
-                _loosingRessource.AddMagic( -( _loosingRessource.Magic ) );
+                _loosingRessource.AddMagic( -(_loosingRessource.Magic) );
 
                 _capacityOfPillaged += rest;
                 ressources = recursivite();
