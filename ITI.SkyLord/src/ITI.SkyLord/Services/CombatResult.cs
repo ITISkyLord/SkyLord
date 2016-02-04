@@ -153,7 +153,7 @@ namespace ITI.SkyLord
                 + _loosingArmy.Island.Name + " a perdu toutes ses troupes et " + _winningArmy.Island.Name + " (vous) a perdu : ";
 
                 coreMessageLooser = _loosingArmy.Island.Name + " (vous) a perdu contre " + _winningArmy.Island.Name + ".\n "
-                 + _loosingArmy.Island.Name + " a perdu toutes ses troupes et " + _loosingArmy.Island.Name + " (vous) a perdu : ";
+                 + _loosingArmy.Island.Name + " a perdu toutes ses troupes et " + _winningArmy.Island.Name + " (vous) a perdu : ";
             }
 
 
@@ -254,7 +254,7 @@ namespace ITI.SkyLord
             Ressource ressources = new Ressource { Wood = eachCapacityPillaged, Metal = eachCapacityPillaged, Cristal = eachCapacityPillaged, Magic = eachCapacityPillaged };
 
             int rest = 0;
-            if( ressources.Wood > _loosingRessource.Wood && _loosingRessource.Wood > 1 )
+            if( ressources.Wood > _loosingRessource.Wood )
             {
                 rest = FindRest( "wood", ressources );
                 _winningRessource.AddWood( _loosingRessource.Wood );
@@ -264,7 +264,7 @@ namespace ITI.SkyLord
                 ressources = recursivite();
                 _flag -= 1;
             }
-            if( ressources.Metal > _loosingRessource.Metal && _loosingRessource.Metal > 1 )
+            if( ressources.Metal > _loosingRessource.Metal )
             {
                 rest = FindRest( "metal", ressources );
                 _winningRessource.AddMetal( _loosingRessource.Metal );
@@ -276,7 +276,7 @@ namespace ITI.SkyLord
                 _flag -= 1;
 
             }
-            if( ressources.Cristal > _loosingRessource.Cristal && _loosingRessource.Cristal > 1 )
+            if( ressources.Cristal > _loosingRessource.Cristal )
             {
                 rest = FindRest( "cristal", ressources );
                 _winningRessource.AddCristal( _loosingRessource.Cristal );
@@ -287,7 +287,7 @@ namespace ITI.SkyLord
                 ressources = recursivite();
                 _flag -= 1;
             }
-            if( ressources.Magic > _loosingRessource.Magic && _loosingRessource.Magic > 1 )
+            if( ressources.Magic > _loosingRessource.Magic )
             {
                 rest = FindRest( "magic", ressources );
                 _winningRessource.AddMagic( _loosingRessource.Magic );
