@@ -59,6 +59,26 @@ namespace ITI.SkyLord
 
             return true;
         }
+        public bool RemoveBuildingToIsland( Building building, long currentIslandId, long playerId )
+        {
+
+            // If the building already exists AND is supposed to be unique on the island, or if the position is not free, don't add it and return false
+            if( GetBuildingsOnCurrentIsland( currentIslandId, playerId ).Any( b => b.BuildingId == building.BuildingId) )
+            {
+                Island currentIsland = CurrentContext.GetIsland( currentIslandId, playerId );
+                Building buildingToRemove = CurrentContext.Buildings.Single( b => b.BuildingId == building.BuildingId );
+                currentIsland.Buildings.Remove( buildingToRemove );
+                CurrentContext.Buildings.Remove( buildingToRemove );
+                // Remove batiment
+            }
+            else
+                return false;
+
+            // Create and add building on the island
+
+
+            return true;
+        }
 
         public bool LevelUpBuilding( BuildingName buildingNameToLevelUp, long currentIslandId, long playerId, int position )
         {
@@ -240,12 +260,6 @@ namespace ITI.SkyLord
         public List<Building> GetBuildingsOnCurrentIsland( long currentIslandId, long playerId )
         {
             // Search Capital if islandId is not set
-            if ( currentIslandId == 0 )
-            {
-                currentIslandId = CurrentContext.Islands.Include( i => i.Owner ).Single( i => i.IsCapital && i.Owner.PlayerId == playerId ).IslandId;
-            }
-
-
             if ( _lastCurrentIsland != currentIslandId )
             {
                 _buildingsOnIlsand = CurrentContext.Islands

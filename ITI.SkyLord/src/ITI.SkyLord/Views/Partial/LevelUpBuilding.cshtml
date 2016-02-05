@@ -7,11 +7,11 @@
             <div class="buildings-build-head">
                 Niveau : @Model.CurrentBuilding.Level.Number
             </div>
-            @if ( Model.CurrentBuilding.Level.Bonuses.Count() != 0 )
+            @if( Model.CurrentBuilding.Level.Bonuses.Count() != 0 )
             {
                 <p>Bonus apportés </p>
             }
-            @foreach ( Bonus bonus in @Model.CurrentBuilding.Level.Bonuses )
+            @foreach( Bonus bonus in @Model.CurrentBuilding.Level.Bonuses )
             {
                 @BonusManager.StaticBonusToString( bonus ) <br />
             }
@@ -21,31 +21,31 @@
                     Niveau suivant
                 </div>
 
-                @if ( Model.NextBuildingLevel == null )
+                @if( Model.NextBuildingLevel == null )
                 {
                     <p class="col-lg-12">Niveau maximum atteint</p>
                 }
                 else
                 {
-                    @if ( Model.NextBuildingLevel.Bonuses.Count() != 0 )
+                    @if( Model.NextBuildingLevel.Bonuses.Count() != 0 )
                     {
                         <p>Bonus apportés au niveau suivant </p>
                     }
-                    @foreach ( Bonus bonus in Model.NextBuildingLevel.Bonuses )
+                    @foreach( Bonus bonus in Model.NextBuildingLevel.Bonuses )
                     {
                         @BonusManager.StaticBonusToString( bonus ) <br />
                     }
 
                     <div class="buildings-build-body-txt">
-                        @{Write("Bois : " + Model.NextBuildingLevel.Cost.Wood + " " +
-                 "Métal : " + Model.NextBuildingLevel.Cost.Metal + " " +
-                "Cristal : " + Model.NextBuildingLevel.Cost.Cristal + " " +
-                  "Magie : " + Model.NextBuildingLevel.Cost.Magic);}
+                        Coût d'amélioration : 
+                        @{Write( "Bois : " + Model.NextBuildingLevel.Cost.Wood + " " +
+    "Métal : " + Model.NextBuildingLevel.Cost.Metal + " " +
+    "Cristal : " + Model.NextBuildingLevel.Cost.Cristal + " " +
+    "Magie : " + Model.NextBuildingLevel.Cost.Magic );}
                     </div>
 
 
-                    <form asp-controller="Building" asp-action="LevelUpBuilding" asp-route-buildingPosition="@Model.Position" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId">
-                        @if (Model.EventsOnBuilding.Count() != 0)
+                        @if( Model.EventsOnBuilding.Count() != 0 )
                         {
                             var dureeFin = Model.EventsOnBuilding.First().EndingDate - DateTime.Now;
 
@@ -54,32 +54,58 @@
                         }
                         else
                         {
-                            if ( Model.CurrentBuilding.BuildingName == BuildingName.laboratory && Model.CurrentResearch != null )
+                            if( Model.CurrentBuilding.BuildingName == BuildingName.laboratory && Model.CurrentResearch != null )
                             {
                                 <div>Vous ne pouvez pas faire de travaux sur votre laboratoire si vous effectuez une recherche.</div>
                             }
-                            else if ( Model.CurrentBuilding.BuildingName == BuildingName.invocation && Model.UnitsQueue.Count() != 0 )
+                            else if( Model.CurrentBuilding.BuildingName == BuildingName.invocation && Model.UnitsQueue.Count() != 0 )
                             {
                                 <div>Vous ne pouvez pas faire de travaux sur votre portail d'invocation si vous produisez des unités.</div>
                             }
-                            else if ( Model.IsInConstruction )
+                            else if( Model.IsInConstruction )
                             {
                                 <div>Un autre bâtiment est en train d'être construit ou amélioré</div>
                             }
-                            else if ( RessourceManager.IsEnough( Model.Layout.CurrentIsland.AllRessources, Model.NextBuildingLevel.Cost ) )
-                            {
-                                <input type="submit" class="btn btn-link" value="Augmenter" />
-
-                                <div>Temps de construction : @TimeSpan.FromSeconds( Model.NextBuildingLevel.Duration ).CustomToString() </div>
-                            }
                             else
                             {
-                                <div>Vous n'avez pas assez de ressources pour passer au niveau suivant.</div>
-                            }
 
-                        }
-                    </form>
-                    }
+                                if( RessourceManager.IsEnough( Model.Layout.CurrentIsland.AllRessources, Model.NextBuildingLevel.Cost ) )
+                                {
+                                    <form asp-controller="Building" asp-action="LevelUpBuilding" asp-route-buildingPosition="@Model.Position" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId">
+
+                                        <input type="submit" class="btn btn-link" value="Améliorer" />
+
+                                        <div>Temps de construction : @TimeSpan.FromSeconds( Model.NextBuildingLevel.Duration ).CustomToString() </div>
+                                    </form>
+                                }
+                                else
+                                {
+                                            <div>Vous n'avez pas assez de ressources pour passer au niveau suivant.</div>
+                                }
+                                <div class="buildings-build-body-txt">
+                                    Coût de destruction : 
+                                    @{Write( "Bois : 1000 " +
+                                    "Métal : 1000 " +
+                                    "Cristal : 1000 " +
+                                    "Magie : 1000 " );}
+                                </div>
+                                        if( RessourceManager.IsEnough( Model.Layout.CurrentIsland.AllRessources, new Ressource() { Wood = 1000, Metal = 1000, Cristal = 1000, Magic = 1000 } ) )
+                                        {
+                                            <form asp-controller="Building" asp-action="RemoveBuilding" asp-route-buildingPosition="@Model.Position" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId">
+
+                                                <input type="submit" class="btn btn-link" value="Détruire" />
+
+                                            </form>
+                                        }
+                                        else
+                                        {
+                                            <div>Vous n'avez pas assez de ressources pour détruire ce bâtiment.</div>
+                                                }
+                                            }
+
+                                        }
+                    
+                                        }
             </div>
         </div>
     </div>
