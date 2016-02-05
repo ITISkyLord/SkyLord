@@ -67,7 +67,7 @@
                     <div class="head">
                         @Model.CurrentIsland.Name
                     <form asp-controller="Island" asp-action="ChangeName" asp-route-islandId="@Model.CurrentIsland.IslandId" id="special-form">
-                        <input type="text" name="name" />
+                        <input type="text" name="name" maxlength="20"/>
                         <button><span style="font-size:1.1em;" id="pencil" class="glyphicon glyphicon-ok"></span></button>
                     </form>
                     <h4>Production</h4>

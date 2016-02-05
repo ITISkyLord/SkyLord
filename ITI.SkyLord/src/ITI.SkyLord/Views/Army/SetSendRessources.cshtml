@@ -50,10 +50,10 @@
                             <td>Magie</td>
                         </tr>
                         <tr>
-                            <td><input type="number" min="0" max="@Model.SenderIsland.AllRessources.Wood" step="1" asp-for="Wood" value="0" /></td>
-                            <td><input type="number" min="0" max="@Model.SenderIsland.AllRessources.Metal" step="1" asp-for="Metal" value="0" /></td>
-                            <td><input type="number" min="0" max="@Model.SenderIsland.AllRessources.Cristal" step="1" asp-for="Cristal" value="0" /></td>
-                            <td><input type="number" min="0" max="@Model.SenderIsland.AllRessources.Magic" step="1" asp-for="Magic" value="0" /></td>
+                            <td><input type="number" min="0" max="@Model.SenderIsland.AllRessources.Wood" asp-for="Wood" value="0" /></td>
+                            <td><input type="number" min="0" max="@Model.SenderIsland.AllRessources.Metal"  asp-for="Metal" value="0" /></td>
+                            <td><input type="number" min="0" max="@Model.SenderIsland.AllRessources.Cristal" asp-for="Cristal" value="0" /></td>
+                            <td><input type="number" min="0" max="@Model.SenderIsland.AllRessources.Magic" asp-for="Magic" value="0" /></td>
                         </tr>
                     </table>
                     <input type="hidden" asp-for="@Model.CapacityOfCarrier" value="@Model.CapacityOfCarrier" />
