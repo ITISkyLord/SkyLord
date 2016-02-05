@@ -90,7 +90,7 @@ namespace ITI.SkyLord
                 DateSent = DateTime.Now
             };
         }
-        public CombatResult( Army winningArmy, Army loosingArmy, CombatManager cm, ArmyEvent ae, SetupContext ctx, Army tmpWinArmy )
+        public CombatResult( Army winningArmy, Army loosingArmy, CombatManager cm, ArmyEvent ae, SetupContext ctx, Army tmpWinArmy, Army tmpLooseArmy )
         {
             if( winningArmy == null ) throw new ArgumentNullException( "Winning Army", "The winning army cannot be null" );
             if( loosingArmy == null ) throw new ArgumentNullException( "Loosing Army", "The loosing army cannot be null" );
@@ -127,36 +127,40 @@ namespace ITI.SkyLord
             string coreMessageLooser = "";
             if( String.IsNullOrEmpty( _loosingArmy.Island.Name ) )
                 _loosingArmy.Island.Name = "Île sauvage";
-            if( _pillagedRessources == null && winningArmy.ArmyState == ArmyState.movement )
-            {
-                coreMessageWinner = _winningArmy.Island.Name + " (vous) a gagné contre " + _loosingArmy.Island.Name + ".\n "
-                + _winningArmy.Island.Name + " n'a pillé aucune ressource."
-                + _loosingArmy.Island.Name + " a perdu toutes ses troupes et " + _winningArmy.Island.Name + " (vous) a perdu : ";
-
-                coreMessageLooser = _loosingArmy.Island.Name + " (vous) a perdu contre " + _winningArmy.Island.Name + ".\n Mais "
-                + _winningArmy.Island.Name + " n'a pillé aucune ressource."
-                + " Vous avez perdu toutes vos troupes et " + _winningArmy.Island.Name + " a perdu : ";
-            }
-            else if( winningArmy.ArmyState == ArmyState.movement )
+            if( winningArmy.ArmyState == ArmyState.movement )
             {
                 coreMessageWinner = _winningArmy.Island.Name + " a gagné contre " + _loosingArmy.Island.Name + ".\n "
-                + _winningArmy.Island.Name + " a pillé " + _pillagedRessources.Wood + " bois, " + _pillagedRessources.Metal + " métaux, " + _pillagedRessources.Cristal + " cristaux et " + _pillagedRessources.Wood + " magie."
-                + _loosingArmy.Island.Name + " a perdu toutes ses troupes en défense et " + _winningArmy.Island.Name + " a perdu : ";
+                + _winningArmy.Island.Name + " a pillé " + _pillagedRessources.Wood + " bois, " + _pillagedRessources.Metal + " métaux, " + _pillagedRessources.Cristal + " cristaux et " + _pillagedRessources.Wood + " magie. ";
 
                 coreMessageLooser = _loosingArmy.Island.Name + " a perdu contre " + _winningArmy.Island.Name + ".\n "
-                + _winningArmy.Island.Name + " a pillé " + _pillagedRessources.Wood + " bois, " + _pillagedRessources.Metal + " métaux, " + _pillagedRessources.Cristal + " cristaux et " + _pillagedRessources.Wood + " magie. "
-                + _loosingArmy.Island.Name + " a perdu toutes ses troupes en défense et " + _winningArmy.Island.Name + " a perdu : ";
+                + _winningArmy.Island.Name + " a pillé " + _pillagedRessources.Wood + " bois, " + _pillagedRessources.Metal + " métaux, " + _pillagedRessources.Cristal + " cristaux et " + _pillagedRessources.Wood + " magie. ";
             }
             else
             {
-                coreMessageWinner = _winningArmy.Island.Name + " (vous) a gagné contre " + _loosingArmy.Island.Name + ".\n "
-                + _loosingArmy.Island.Name + " a perdu toutes ses troupes et " + _winningArmy.Island.Name + " (vous) a perdu : ";
+                coreMessageWinner = _winningArmy.Island.Name + " (vous) a gagné contre " + _loosingArmy.Island.Name + ".\n ";
 
-                coreMessageLooser = _loosingArmy.Island.Name + " (vous) a perdu contre " + _winningArmy.Island.Name + ".\n "
-                 + _loosingArmy.Island.Name + " a perdu toutes ses troupes et " + _winningArmy.Island.Name + " (vous) a perdu : ";
+                coreMessageLooser = _loosingArmy.Island.Name + " (vous) a perdu contre " + _winningArmy.Island.Name + ".\n ";
+            }
+
+            coreMessageWinner += _loosingArmy.Island.Name + " a perdu toutes ses troupes soit : ";
+            coreMessageLooser += _loosingArmy.Island.Name + " (vous) a perdu toutes ses troupes soit : ";
+            if( tmpLooseArmy != null && tmpLooseArmy.Regiments.Count > 0 )
+            {
+                foreach( Regiment regiment in tmpLooseArmy.Regiments )
+                {
+                    coreMessageWinner += " \n" + regiment.Number + "    ";
+                    coreMessageLooser += " \n" + regiment.Number + regiment.Number + "    ";
+
+                }
+            } else
+            {
+                coreMessageWinner += " \n aucune unité. ";
+                coreMessageLooser += " \n aucune unité. ";
             }
 
 
+            coreMessageWinner += "et " + _winningArmy.Island.Name + " (vous) a perdu : ";
+            coreMessageLooser += "et " + _winningArmy.Island.Name + " a perdu : ";
             foreach( KeyValuePair<string, int> kvp in cm.Loss )
             {
                 coreMessageWinner += " \n" + kvp.Value + " " + kvp.Key + " sur " + tmpWinArmy.Regiments.Where(a => a.Unit.Name == kvp.Key).Select( b => b.Number.ToString()).First() + "    " ;
@@ -167,7 +171,7 @@ namespace ITI.SkyLord
             coreMessageWinner += ".";
             _combatReportWinner = new Message()
             {
-                MessageObject = _winningArmy.Island.Name + " a gagné contre " + _loosingArmy.Island.Name + ".",
+                MessageObject = _winningArmy.Island.Name + " (vous) a gagné contre " + _loosingArmy.Island.Name + ".",
                 Read = false,
                 isCombatReport = true,
                 Sender = _winningArmy.Island.Owner,
@@ -178,7 +182,7 @@ namespace ITI.SkyLord
             coreMessageLooser += ".";
             _combatReportLooser = new Message()
             {
-                MessageObject = _loosingArmy.Island.Name + " a perdu contre " + _winningArmy.Island.Name + ".",
+                MessageObject = _loosingArmy.Island.Name + " (vous) a perdu contre " + _winningArmy.Island.Name + ".",
                 Read = false,
                 isCombatReport = true,
                 Sender = _loosingArmy.Island.Owner,

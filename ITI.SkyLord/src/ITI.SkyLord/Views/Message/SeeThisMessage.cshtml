@@ -73,9 +73,8 @@
 
                 <div id="msgCore">
                     @Model.Message.DateSent<hr />
-                    @Model.Message.CoreMessage<hr />
+                    @Model.Message.CoreMessage.Replace( "\n", "\n" )<hr />
                 </div>
-
 
                 @if (!Model.Message.isCombatReport)
                 {

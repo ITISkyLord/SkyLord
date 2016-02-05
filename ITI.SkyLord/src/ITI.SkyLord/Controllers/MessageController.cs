@@ -41,6 +41,7 @@ namespace ITI.SkyLord.Controllers
 
             mvm.Message = messageManager.GetThisMessage(messageId);
             mvm.Message.Read = true;
+            
             mvm.FromId = mvm.Message.Sender.PlayerId;
             SetupContext.SaveChanges();
             SetupContext.FillStandardVM(mvm, SetupContext.GetPlayer(User.GetUserId()).PlayerId, islandId);
