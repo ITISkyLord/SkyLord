@@ -15,6 +15,7 @@ namespace ITI.SkyLord
         private Army _winningArmy;
         private Army _loosingArmy;
         private Army _tmpWin;
+        private Army _tmpLoose;
 
 
         internal Dictionary<string, int> Loss { get; set; }
@@ -59,7 +60,7 @@ namespace ITI.SkyLord
             magicResist = GetMagicResist( defendingArmy );
             Fight( attackingArmy, defendingArmy, attackPointsPhysic, physicResist, attackPointsMagic, magicResist, ratioPhysicAttack, ratioMagicAttack );
 
-            return new CombatResult( _winningArmy, _loosingArmy, this, ae, ctx, _tmpWin );
+            return new CombatResult( _winningArmy, _loosingArmy, this, ae, ctx, _tmpWin, _tmpLoose );
         }
 
         internal CombatResult ResolveSendingRessources( Army sendingArmy, ArmyEvent ae, SetupContext ctx )
@@ -140,6 +141,7 @@ namespace ITI.SkyLord
             if( totalAttack > totalDefense )
             {
                 _tmpWin = _armyManager.CopyArmy( attackingArmy );
+                _tmpLoose = _armyManager.CopyArmy( defendingArmy );
                 _winningArmy = attackingArmy;
                 _loosingArmy = defendingArmy;
                 totalWinner = totalAttack;
@@ -148,6 +150,7 @@ namespace ITI.SkyLord
             else
             {
                 _tmpWin = _armyManager.CopyArmy( defendingArmy );
+                _tmpLoose = _armyManager.CopyArmy( attackingArmy );
                 _winningArmy = defendingArmy;
                 _loosingArmy = attackingArmy;
                 totalWinner = totalDefense;

@@ -32,8 +32,7 @@ namespace ITI.SkyLord.Controllers
             if (Request.Query.ContainsKey("islandId"))
             {
                 // If islandId is present, check it with ValidateIsland method
-                long activePlayerId = SetupContext.GetPlayer(User.GetUserId()).PlayerId;
-                SetupContext.ValidateIsland(long.Parse(Request.Query["islandId"]), activePlayerId);
+                SetupContext.ValidateIsland(long.Parse(Request.Query["islandId"]), player.PlayerId );
             }
 
 
@@ -48,11 +47,12 @@ namespace ITI.SkyLord.Controllers
             }
 
             // Resolve Loyalty
-            LoyaltyManager loyaltyManager = new LoyaltyManager(SetupContext);
-            foreach( Island island in SetupContext.GetAllIslands( player.PlayerId ) )
-            {
-                loyaltyManager.ResolveLoyalty( island );
-            }
+            // Pas encore en place
+            //LoyaltyManager loyaltyManager = new LoyaltyManager(SetupContext);
+            //foreach( Island island in SetupContext.GetAllIslands( player.PlayerId ) )
+            //{
+            //    loyaltyManager.ResolveLoyalty( island );
+            //}
         }
 
 

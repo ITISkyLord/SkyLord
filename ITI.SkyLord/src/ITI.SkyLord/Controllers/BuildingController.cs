@@ -18,14 +18,14 @@ namespace ITI.SkyLord.Controllers
     {
         public override void OnActionExecuting( ActionExecutingContext context )
         {
-            if ( User.IsSignedIn() )
+            if( User.IsSignedIn() )
             {
                 // On executing any controller check if the query holds the islandId
-                if ( Request.Query.ContainsKey( "islandId" ) )
+                if( Request.Query.ContainsKey( "islandId" ) )
                 {
                     // If islandId is present, check it with ValidateIsland method
                     long activePlayerId = SetupContext.GetPlayer( User.GetUserId() ).PlayerId;
-                    SetupContext.ValidateIsland( long.Parse( Request.Query[ "islandId" ] ), activePlayerId );
+                    SetupContext.ValidateIsland( long.Parse( Request.Query["islandId"] ), activePlayerId );
                 }
                 //else
                 //{
@@ -63,11 +63,8 @@ namespace ITI.SkyLord.Controllers
         /// <param name="islandId">Current Island Id</param>
         /// <returns>Redirects to SeeBuildings</returns>
         [HttpPost]
-        public IActionResult AddBuilding( BuildingPartialViewModel model, long islandId = 0 )
+        public IActionResult AddBuilding( BuildingPartialViewModel model, long islandId )
         {
-
-            BuildingViewModel buildingViewModel = new BuildingViewModel();
-
             long playerId = SetupContext.GetPlayer( User.GetUserId() ).PlayerId;
             Island island = SetupContext.GetIsland( islandId, playerId );
 
@@ -75,7 +72,7 @@ namespace ITI.SkyLord.Controllers
             EventManager eventManager = new EventManager( SetupContext, new EventPackManager( SetupContext ) );
 
             // Test assez de ressource
-            if ( !buildingManager.IsEnoughForFirstLevel( model.TargetBuilding, islandId, playerId ) )
+            if( !buildingManager.IsEnoughForFirstLevel( model.TargetBuilding, islandId, playerId ) )
             {
                 return RedirectToAction( "SeeBuildings", new { islandId = islandId } );
             }
@@ -85,6 +82,48 @@ namespace ITI.SkyLord.Controllers
 
             // Maintenant création de l'event pour la construction du building
             eventManager.AddBuildingEvent( SetupContext, model.TargetBuilding, island, model.Position, firstLevel );
+
+            return RedirectToAction( "SeeMyIsland", "Island", new { islandId = islandId } );
+        }
+        public IActionResult RemoveBuilding( int buildingPosition, long islandId )
+        {
+            long playerId = SetupContext.GetPlayer( User.GetUserId() ).PlayerId;
+            Island island = SetupContext.GetIsland( islandId, playerId );
+
+            BuildingManager buildingManager = new BuildingManager( SetupContext, new LevelManager( SetupContext ) );
+            EventManager eventManager = new EventManager( SetupContext, new EventPackManager( SetupContext ) );
+            Ressource cost = new Ressource()
+            {
+                Wood = 1000,
+                Metal = 1000,
+                Cristal = 1000,
+                Magic = 1000
+            };
+            // Test assez de ressource
+            // Coût de la destruction d'un bâtiment à moduler 
+            if( !RessourceManager.IsEnough( island.AllRessources, cost ) )
+            {
+                // Erreur, pas assez de ressources
+                return RedirectToAction( "SeeBuildings", new { islandId = islandId } );
+
+            }
+            else
+            {
+
+                Building buildingToRemove = SetupContext.Islands
+                                            .Include(i => i.Buildings )
+                                            .Where( i => i.IslandId == islandId ).Single()
+                                            .Buildings
+                                            .Single( b => b.Position == buildingPosition );
+                RessourceManager.RemoveRessource( island.AllRessources, cost );
+
+                buildingManager.RemoveBuildingToIsland( buildingToRemove, islandId, playerId );
+                SetupContext.SaveChanges();
+            }
+
+
+            // Maintenant création de l'event pour la construction du building
+
 
             return RedirectToAction( "SeeMyIsland", "Island", new { islandId = islandId } );
         }
@@ -102,7 +141,7 @@ namespace ITI.SkyLord.Controllers
             Building buildingTarget = buildingManager.GetBuildingOnPosition( islandId, buildingPosition );
 
             // Si pas assez de ressource
-            if ( !buildingManager.IsEnoughForNextLevel( buildingTarget, islandId, playerId, buildingTarget.Position ) )
+            if( !buildingManager.IsEnoughForNextLevel( buildingTarget, islandId, playerId, buildingTarget.Position ) )
             {
                 return RedirectToAction( "SeeMyIsland", "Island", new { islandId = islandId } );
             }
@@ -139,7 +178,7 @@ namespace ITI.SkyLord.Controllers
 
             model.Buildings = buildingManager.GetBuildingsOnCurrentIsland( islandId, playerId );
             model.NextLevelCosts = new Dictionary<int, Ressource>();
-            foreach ( Building building in model.Buildings )
+            foreach( Building building in model.Buildings )
             {
                 model.NextLevelCosts.Add( building.Position, levelManager.FindNextLevel( building.Level ).Cost );
             }

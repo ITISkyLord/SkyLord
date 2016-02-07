@@ -84,7 +84,7 @@
                                         </tr>
                                     </thead>
 
-                                    @foreach (Message m in Model.AllMessages.Where(u => u.isCombatReport))
+                                    @foreach (Message m in Model.AllMessages.Where(u => u.isCombatReport).OrderByDescending( e => e.DateSent))
                                     {
                                         <tr>
                                             @if (m.Read)

@@ -90,8 +90,14 @@ namespace ITI.SkyLord.Controllers
 
             return View( CreateSetAttackingArmyViewModel( model, islandId ) );
         }
-        public IActionResult Fight( SetAttackingArmyViewModel model, long islandId = 0 )
+        public IActionResult Fight( SetAttackingArmyViewModel model, long islandId )
         {
+            if( !model.UnitsToSend.Any( a => a.Value > 0) )
+            {
+                ModelState.AddModelError( "UnitsToSend", "Aucune armée envoyée." );
+                return RedirectToAction( "SetAttackingArmy", new { islandId = islandId } );
+            }
+            
             Army defendingArmyFromAttacker = SetupContext.Armies
                                     .Include( a => a.Island )
                                     .Include( a => a.Regiments )
@@ -244,7 +250,7 @@ namespace ITI.SkyLord.Controllers
             Island senderIsland = GetIsland( islandId );
             Ressource sendingRessource = new Ressource() { Wood = model.Wood, Metal = model.Metal, Cristal = model.Cristal, Magic = model.Magic };
 
-            if( model.NumberOfTransportorToSend > 0 && RessourceManager.IsEnough( senderIsland.AllRessources, sendingRessource ) && ((model.Wood + model.Cristal + model.Metal + model.Magic) < model.CapacityOfCarrier) )
+            if( model.NumberOfTransportorToSend > 0 && RessourceManager.IsEnough( senderIsland.AllRessources, sendingRessource ) && ((model.Wood + model.Cristal + model.Metal + model.Magic) <= model.CapacityOfCarrier * model.NumberOfTransportorToSend) )
             {
                 EventManager eventManager = new EventManager( SetupContext, new EventPackManager( SetupContext ) );
 
