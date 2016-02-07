@@ -117,12 +117,14 @@ namespace ITI.SkyLord
                     ctx.SaveChanges();
                     ae.PillagedRessources = _pillagedRessources;
                     RessourceManager.RemoveRessource( _loosingArmy.Island.AllRessources, _pillagedRessources );
+
+                    _winningArmy.Island.Owner.RessourcePillaged +=  RessourceManager.GetRessourcesSumForHighscores(_pillagedRessources);
                 }
             }
             else _pillagedRessources = null;
              
                 #region Highscores Managment
-               // _winningArmy.Island.Owner.NumberOfVictory++;
+                _winningArmy.Island.Owner.NumberOfVictory++;
                 #endregion
 
 
