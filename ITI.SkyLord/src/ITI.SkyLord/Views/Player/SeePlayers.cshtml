@@ -4,30 +4,34 @@
 @using ITI.SkyLord
 
 @*@{
-    ViewData["Title"] = "View Players";
-    Layout = "_Layout";
-}*@
+        ViewData["Title"] = "View Players";
+        Layout = "_Layout";
+    }*@
 
 <div class="playerContainer">
-        <div class="seePlayers">
+    <div class="seePlayers">
 
-            <h1>Liste des joueurs</h1>
-            <table class="table table-hover">
-                <thead>
+        <h1>Liste des joueurs</h1>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Joueurs</th>
+                    <th>Victoires</th>
+                    <th>Ressources Pilliées</th>
+                    <th>Plus d'informations</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach( Player p in Model.Players.OrderByDescending( p => p.NumberOfVictory ) )
+                {
                     <tr>
-                        <th>Joueurs</th>
-                        <th>Plus d'informations</th>
+                        <td>@p.Name</td>
+                        <td>@p.NumberOfVictory</td>
+                        <td>@p.RessourcePillaged</td>
+                        <td><a asp-action="ProfilOfOtherPlayer" asp-controller="Profil" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId" asp-route-otherPlayerId="@p.PlayerId">Voir plus d'info</a></td>
                     </tr>
-                </thead>
-                <tbody>
-                    @foreach (Player p in Model.Players)
-            {
-                        <tr>
-                            <td>@p.Name</td>
-                            <td><a asp-action="ProfilOfOtherPlayer" asp-controller="Profil" asp-route-islandId="@Model.Layout.CurrentIsland.IslandId" asp-route-otherPlayerId="@p.PlayerId" >Voir plus d'info</a></td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
+                }
+            </tbody>
+        </table>
     </div>
+</div>
