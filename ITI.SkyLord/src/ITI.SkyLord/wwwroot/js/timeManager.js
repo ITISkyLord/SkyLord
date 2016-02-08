@@ -1,17 +1,11 @@
 /// <reference path="jquery.d.ts" />
 $(document).ready(function () {
-    $(".time").each(function () {
-        if (+$(this).attr("secondes") == 0 && +$(this).attr("minutes") == 0 && +$(this).attr("hours") == 0) {
-            $(this).removeClass(".time");
-            $(this).text("Tâche finie actualisez pour appliquer.");
-        }
-    });
     setInterval(function () {
         $(".time").each(function (key, value) {
-            console.log("update");
             var node = $(value);
-            DecresingTime(node);
-            VerboseTime(node);
+            if (DecresingTime(node)) {
+                VerboseTime(node);
+            }
         });
     }, 1000);
 });
@@ -20,8 +14,9 @@ function DecresingTime(node) {
     var minutes = +$(node).attr("minutes");
     var hours = +$(node).attr("hours");
     if (secondes == 0 && minutes == 0 && hours == 0) {
+        $(node).html($(node).html() + "<br><button class='button' onclick='location.reload();'>Cliquez pour rafraichir !</button>");
         $(node).removeClass("time");
-        return;
+        return false;
     }
     secondes--;
     if (secondes < 0) {
@@ -38,6 +33,7 @@ function DecresingTime(node) {
     $(node).attr("secondes", secondes);
     $(node).attr("minutes", minutes);
     $(node).attr("hours", hours);
+    return true;
 }
 function VerboseTime(node) {
     var secondes = +$(node).attr("secondes");
