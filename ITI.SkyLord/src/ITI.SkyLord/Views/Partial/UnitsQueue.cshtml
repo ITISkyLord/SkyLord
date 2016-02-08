@@ -12,7 +12,7 @@
 
             var dureeFin = queueElement.EndingDate - DateTime.Now;
 
-            <div class="time" hours="@dureeFin.Hours" minutes="@dureeFin.Minutes" secondes="@dureeFin.Seconds">Time</div>
+            <div class="time" days="@((int)dureeFin.TotalDays)" hours="@dureeFin.Hours" minutes="@dureeFin.Minutes" secondes="@dureeFin.Seconds">Time</div>
             <br />
         }
     </div>

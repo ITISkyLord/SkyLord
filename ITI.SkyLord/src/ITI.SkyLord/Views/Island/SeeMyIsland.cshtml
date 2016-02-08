@@ -123,7 +123,7 @@
                             TimeSpan timetoEnd = Model.BuildingDeveloping.EndingDate - DateTime.Now;
 
                             <div>
-                                @BuildingManager.StaticBuildingNameToName( Model.BuildingDeveloping.BuildingToBuild ) est en construction et finira dans <span class="time" hours="@timetoEnd.Hours" minutes="@timetoEnd.Minutes" secondes="@timetoEnd.Seconds"> à @Model.BuildingDeveloping.EndingDate.ToString( @"HH\hmm\mss\s" ) </span>
+                                @BuildingManager.StaticBuildingNameToName( Model.BuildingDeveloping.BuildingToBuild ) est en construction et finira dans <span class="time" days="@((int)timetoEnd.TotalDays)" hours="@timetoEnd.Hours" minutes="@timetoEnd.Minutes" secondes="@timetoEnd.Seconds">chargement...</span>
                             </div>
                         }
                         @if( Model.CurrentResearch != null )
@@ -131,7 +131,7 @@
                             TimeSpan timetoEnd = Model.CurrentResearch.EndingDate - DateTime.Now;
 
                             <div>
-                                @TechnologyManager.StaticTechnologyNameToName( Model.CurrentResearch.TechnologyName ) est en recherche et finira dans <span class="time" hours="@timetoEnd.Hours" minutes="@timetoEnd.Minutes" secondes="@timetoEnd.Seconds"> à @Model.CurrentResearch.EndingDate.ToString( @"HH\hmm\mss\s" ) </span>
+                                @TechnologyManager.StaticTechnologyNameToName( Model.CurrentResearch.TechnologyName ) est en recherche et finira dans <span class="time" days="@((int)timetoEnd.TotalDays)" hours="@timetoEnd.Hours" minutes="@timetoEnd.Minutes" secondes="@timetoEnd.Seconds">chargement... </span>
                             </div>
                         }
 
@@ -216,7 +216,7 @@
 
                                 var dureeFin = queueElement.EndingDate - DateTime.Now;
 
-                                <div class="time" hours="@dureeFin.Hours" minutes="@dureeFin.Minutes" secondes="@dureeFin.Seconds">Time</div>
+                                <div class="time" days="@((int)dureeFin.TotalDays)" hours="@dureeFin.Hours" minutes="@dureeFin.Minutes" secondes="@dureeFin.Seconds">chargement...</div>
                                 <br />
                             }
                         </div>

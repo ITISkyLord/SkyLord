@@ -50,7 +50,7 @@
                             var dureeFin = Model.EventsOnBuilding.First().EndingDate - DateTime.Now;
 
                             <div>Amélioration en cours ...</div>
-                            <div class="time" hours="@dureeFin.Hours" minutes="@dureeFin.Minutes" secondes="@dureeFin.Seconds">Time </div>
+                            <div class="time" days="@((int)dureeFin.TotalDays)" hours="@dureeFin.Hours" minutes="@dureeFin.Minutes" secondes="@dureeFin.Seconds">Time </div>
                         }
                         else
                         {

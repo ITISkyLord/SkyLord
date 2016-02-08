@@ -15,7 +15,7 @@
     var dureeFin = Model.CurrentResearch.EndingDate - DateTime.Now;
 
     <div>Recherche de la technologie @TechnologyManager.StaticTechnologyNameToName( Model.CurrentResearch.TechnologyName )</div>
-    <div class="time" hours="@dureeFin.Hours" minutes="@dureeFin.Minutes" secondes="@dureeFin.Seconds">Time </div>
+    <div class="time" days="@((int)dureeFin.TotalDays)" hours="@dureeFin.Hours" minutes="@dureeFin.Minutes" secondes="@dureeFin.Seconds">Time </div>
 }
 
 @foreach ( TechnologyDisplay technologyDisplay in Model.TechnologyDisplays )

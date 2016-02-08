@@ -39,7 +39,8 @@ function DecresingTime(node) {
     var secondes = +$(node).attr("secondes");
     var minutes = +$(node).attr("minutes");
     var hours = +$(node).attr("hours");
-    if (secondes == 0 && minutes == 0 && hours == 0) {
+    var days = +$(node).attr("days");
+    if (secondes == 0 && minutes == 0 && hours == 0 && days == 0) {
         $(node).html($(node).html() + "<br><button class='button' onclick='location.reload();'>Cliquez pour rafraichir !</button>");
         $(node).removeClass("time");
         return false;
@@ -54,16 +55,22 @@ function DecresingTime(node) {
         hours--;
     }
     if (hours < 0) {
-        hours = 0;
+        hours = 23;
+        days--;
+    }
+    if (days < 0) {
+        days = 0;
     }
     $(node).attr("secondes", secondes);
     $(node).attr("minutes", minutes);
     $(node).attr("hours", hours);
+    $(node).attr("days", days);
     return true;
 }
 function VerboseTime(node) {
     var secondes = +$(node).attr("secondes");
     var minutes = +$(node).attr("minutes");
     var hours = +$(node).attr("hours");
-    $(node).text((hours < 10 ? "0" + hours : hours) + ":" + (minutes < 10 ? "0" + minutes : minutes) + ":" + (secondes < 10 ? "0" + secondes : secondes));
+    var days = +$(node).attr("days");
+    $(node).text((days == 0 ? "" : days + "j et ") + (hours < 10 ? "0" + hours : hours) + ":" + (minutes < 10 ? "0" + minutes : minutes) + ":" + (secondes < 10 ? "0" + secondes : secondes));
 }
