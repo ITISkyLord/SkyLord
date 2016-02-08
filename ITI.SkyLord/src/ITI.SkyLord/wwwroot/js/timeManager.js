@@ -8,7 +8,33 @@ $(document).ready(function () {
             }
         });
     }, 1000);
+    setInterval(function () {
+        $(".hour").each(function (key, value) {
+            DecresingHour($(value));
+        });
+    }, 1000);
 });
+function DecresingHour(node) {
+    var second = +$(node).attr("second");
+    var minute = +$(node).attr("minute");
+    var hour = +$(node).attr("hour");
+    second++;
+    if (second == 60) {
+        second = 0;
+        minute++;
+    }
+    if (minute == 60) {
+        minute = 0;
+        hour++;
+    }
+    if (hour == 24) {
+        hour = 0;
+    }
+    $(node).attr("second", second);
+    $(node).attr("minute", minute);
+    $(node).attr("hour", hour);
+    $(node).text((hour < 10 ? "0" + hour : hour) + "h" + (minute < 10 ? "0" + minute : minute) + "m" + (second < 10 ? "0" + second : second) + "s");
+}
 function DecresingTime(node) {
     var secondes = +$(node).attr("secondes");
     var minutes = +$(node).attr("minutes");

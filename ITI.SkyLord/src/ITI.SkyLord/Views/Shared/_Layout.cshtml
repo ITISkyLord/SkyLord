@@ -64,7 +64,7 @@
                             <button type="submit" class="btn btn-link">Déconnexion</button>
                         </form>
                     </li>
-                    <li><a>Heure : @DateTime.Now.ToString(@"HH\hmm\mss\s")</a></li>
+                    <li><a class="hour" hour="@DateTime.Now.Hour" minute="@DateTime.Now.Minute" second="@DateTime.Now.Second">Heure : @DateTime.Now.ToString(@"HH\hmm\mss\s")</a></li>
                 </ul>
             </div>
         </div>
