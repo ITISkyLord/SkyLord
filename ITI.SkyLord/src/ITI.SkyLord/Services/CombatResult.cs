@@ -136,10 +136,10 @@ namespace ITI.SkyLord
             if( winningArmy.ArmyState == ArmyState.movement )
             {
                 coreMessageWinner = _winningArmy.Island.Name + " a gagné contre " + _loosingArmy.Island.Name + ".\n "
-                + _winningArmy.Island.Name + " a pillé " + _pillagedRessources.Wood + " bois, " + _pillagedRessources.Metal + " métaux, " + _pillagedRessources.Cristal + " cristaux et " + _pillagedRessources.Wood + " magie. ";
+                + _winningArmy.Island.Name + " a pillé " + _pillagedRessources.Wood + " bois, " + _pillagedRessources.Metal + " métaux, " + _pillagedRessources.Cristal + " cristaux et " + _pillagedRessources.Magic + " magie. ";
 
                 coreMessageLooser = _loosingArmy.Island.Name + " a perdu contre " + _winningArmy.Island.Name + ".\n "
-                + _winningArmy.Island.Name + " a pillé " + _pillagedRessources.Wood + " bois, " + _pillagedRessources.Metal + " métaux, " + _pillagedRessources.Cristal + " cristaux et " + _pillagedRessources.Wood + " magie. ";
+                + _winningArmy.Island.Name + " a pillé " + _pillagedRessources.Wood + " bois, " + _pillagedRessources.Metal + " métaux, " + _pillagedRessources.Cristal + " cristaux et " + _pillagedRessources.Magic + " magie. ";
             }
             else
             {
