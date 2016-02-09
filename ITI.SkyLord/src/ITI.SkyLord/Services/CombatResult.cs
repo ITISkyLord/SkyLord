@@ -154,8 +154,8 @@ namespace ITI.SkyLord
             {
                 foreach( Regiment regiment in tmpLooseArmy.Regiments )
                 {
-                    coreMessageWinner += " \n" + regiment.Number + "    ";
-                    coreMessageLooser += " \n" + regiment.Number + regiment.Number + "    ";
+                    coreMessageWinner += " \n" + regiment.Number + " " + regiment.Unit.Name + "   ";
+                    coreMessageLooser += " \n" + regiment.Number + " " + regiment.Unit.Name + "   ";
 
                 }
             } else
